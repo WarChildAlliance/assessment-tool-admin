@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { AssessmentsRoutingModule } from './assessments-routing.module';
 import { AssessmentsComponent } from './assessments.component';
 import { AssessmentDetailComponent } from './assessment-detail/assessment-detail.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
 
 
 
@@ -13,7 +15,9 @@ import { AssessmentDetailComponent } from './assessment-detail/assessment-detail
   ],
   imports: [
     CommonModule,
-    AssessmentsRoutingModule
+    AssessmentsRoutingModule,
+    MatTableModule,
+    MatButtonModule
   ]
 })
 export class AssessmentsModule { }

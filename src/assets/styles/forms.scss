@@ -1,0 +1,9 @@
+.custom-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .mat-form-field {
+        width: 100%;
+    }
+}

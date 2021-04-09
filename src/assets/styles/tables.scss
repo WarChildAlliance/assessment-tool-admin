@@ -1,0 +1,13 @@
+table {
+    width: 100%;
+
+    .mat-row {
+        transition: background-color 0.5s ease;
+        background-color: #424242;
+
+        &:hover {
+            cursor: pointer;
+            background-color: #7e7e7e;
+        }
+    }
+}

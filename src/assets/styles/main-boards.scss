@@ -1,0 +1,12 @@
+.main-board {
+    &__top-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 36px 0;
+
+        & > h1 {
+            margin: 0;
+        }
+    }
+}
