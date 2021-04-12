@@ -13,4 +13,10 @@ export class AppComponent {
   get isAuthenticated(): boolean {
     return this.authService.isAuthenticated;
   }
+
+  logout(): void {
+    if(window.confirm('Are you sure you want to logout?')) {
+      this.authService.logout();
+    }
+  }
 }
