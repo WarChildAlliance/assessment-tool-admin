@@ -39,7 +39,6 @@ export class AssessmentService {
   getAssessmentTopics(id: string): void {
     this.http.get<Topic[]>(`${environment.API_URL}/assessments/${id}/topics/`).subscribe(res => {
       this.topicsListSource.next(res);
-      console.log("TOPS", res);
     });
   }
 

@@ -17,7 +17,7 @@ export class AssessmentDetailComponent implements OnInit {
 
   displayedColumns: string[] = ['select', 'name', 'order'];
   assessment: Assessment;
-  topicsList: Topic[];
+  topicsList: Topic[] = [];
 
   selection = new SelectionModel<Topic>(true, []);
 

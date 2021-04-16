@@ -26,14 +26,6 @@ export class UserService {
     return this.http.get<User>(`${environment.API_URL}/users/get_self/`);
   }
 
-  getSelfId(): number {
-    let id : number;
-    this.http.get<User>(`${environment.API_URL}/users/get_self/`).subscribe(res => {
-      id = res.id
-    })
-    return id;
-  }
-
   getStudentsList(): void {
     this.http.get<User[]>(`${environment.API_URL}/users/`).subscribe(res => {
       this.studentsListSource.next(res);
