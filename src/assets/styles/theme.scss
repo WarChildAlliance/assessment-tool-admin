@@ -1,7 +1,6 @@
-
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
-@import '~@angular/material/theming';
+@import "~@angular/material/theming";
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
@@ -9,37 +8,101 @@
 // Be sure that you only ever include this mixin once!
 @include mat-core();
 
+/* For use in src/lib/core/theming/_palette.scss */
+$admin-dashboard-palette: (
+  50: #ffffff,
+  100: #f4fafd,
+  200: #c4e1f5,
+  300: #87c2eb,
+  400: #6db5e6,
+  500: #53a8e2,
+  600: #399bde,
+  700: #248dd4,
+  800: #1f7bba,
+  900: #1b6aa0,
+  A100: #ffffff,
+  A200: #cfecff,
+  A400: #73c0f5,
+  A700: #64b4ea,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #ffffff,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+
+$admin-dashboard-accent: (
+  50 : #ffffff,
+  100 : #fff6f1,
+  200 : #ffd5b9,
+  300 : #ffaa71,
+  400 : #ff9853,
+  500 : #ff8634,
+  600 : #ff7415,
+  700 : #f66300,
+  800 : #d75700,
+  900 : #b94b00,
+  A100 : #ffffff,
+  A200 : #ffe1cd,
+  A400 : #ffa467,
+  A700 : #ff954d,
+  contrast: (
+      50 : #000000,
+      100 : #000000,
+      200 : #000000,
+      300 : #000000,
+      400 : #000000,
+      500 : #ffffff,
+      600 : #ffffff,
+      700 : #ffffff,
+      800 : #ffffff,
+      900 : #ffffff,
+      A100 : #000000,
+      A200 : #000000,
+      A400 : #000000,
+      A700 : #000000,
+  )
+
+);
+
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$admin-dashboard-primary: mat-palette($mat-indigo);
-$admin-dashboard-accent: mat-palette($mat-pink, A200, A100, A400);
+$admin-dashboard-primary: mat-palette($admin-dashboard-palette);
+$admin-dashboard-accent: mat-palette($admin-dashboard-accent);
 
 // The warn palette is optional (defaults to red).
 $admin-dashboard-warn: mat-palette($mat-red);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$admin-dashboard-theme: mat-dark-theme((
-  color: (
-    primary: $admin-dashboard-primary,
-    accent: $admin-dashboard-accent,
-    warn: $admin-dashboard-warn,
-  )
-));
+$admin-dashboard-theme: mat-light-theme(
+  $admin-dashboard-primary,
+  $admin-dashboard-accent,
+  $admin-dashboard-warn
+  );
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include angular-material-theme($admin-dashboard-theme);
 
-
 // Mixins
 
 @mixin nav-theme($theme) {
   .list-item-active {
-    font-weight: bold;
-    color: mat-color(map-get($theme, accent), darker) !important;
+    color: mat-color(map-get($theme, primary)) !important;
     background: rgba(0, 0, 0, 0.04);
   }
 
@@ -49,7 +112,6 @@ $admin-dashboard-theme: mat-dark-theme((
 }
 
 @include nav-theme($admin-dashboard-theme);
-
 
 @mixin snackbar-theme($theme) {
   snack-bar-container {
@@ -76,3 +138,12 @@ $admin-dashboard-theme: mat-dark-theme((
 }
 
 @include snackbar-theme($admin-dashboard-theme);
+
+@mixin table-theme($theme) {
+  .mat-row:hover {
+    background-color: mat-color(map-get($theme, primary), 200);
+    color: mat-color(map-get($theme, primary), default-contrast);
+  }
+}
+
+@include table-theme($admin-dashboard-theme);

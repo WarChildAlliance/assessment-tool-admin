@@ -3,11 +3,9 @@ table {
 
     .mat-row {
         transition: background-color 0.5s ease;
-        background-color: #424242;
 
-        &:hover {
+        &>.mat-cell:not(:first-child):hover {
             cursor: pointer;
-            background-color: #7e7e7e;
         }
     }
 }

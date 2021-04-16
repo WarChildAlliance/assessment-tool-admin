@@ -2,10 +2,12 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { first } from 'rxjs/operators';
 import { Assessment } from '../core/models/assessment.model';
 import { User } from '../core/models/user.model';
 import { AssessmentService } from '../core/services/assessment.service';
 import { UserService } from '../core/services/user.service';
+import {SelectionModel} from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-assessments',
@@ -14,12 +16,13 @@ import { UserService } from '../core/services/user.service';
 })
 export class AssessmentsComponent implements OnInit {
 
-  displayedColumns: string[] = ['title', 'grade', 'subject', 'language', 'country', 'private', 'arrow'];
+  displayedColumns: string[] = ['select', 'title', 'grade', 'subject', 'language', 'country', 'private'];
   assessmentsList: Assessment[] = [];
   subjects = ['MATH', 'LITERACY'];
   countries = ['USA', 'JOR'];
   languages = ['ARA', 'ENG'];
   isAssessmentPrivate: boolean = false;
+  selection = new SelectionModel<Assessment>(true, []);
 
   user: User;
 
@@ -34,15 +37,16 @@ export class AssessmentsComponent implements OnInit {
     private: new FormControl(''),
   });
 
-  constructor(private assessmentService: AssessmentService, 
-    private router: Router, 
+  constructor(private assessmentService: AssessmentService,
+    private router: Router,
     private userService: UserService,
     private dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.assessmentService.getAssessmentsList().subscribe(res => {
-      this.assessmentsList = res;
+    this.assessmentService.assessmentsList.pipe(first()).subscribe((newList) => {
+      this.assessmentsList = newList;
     });
+    this.assessmentService.getAssessmentsList();
     this.userService.getSelf().subscribe(res => {
       this.user = res;
     });
@@ -58,6 +62,24 @@ export class AssessmentsComponent implements OnInit {
 
   togglePrivate(event) {
     this.isAssessmentPrivate = event.checked
+  }
+
+  deleteSelection() {
+    console.log("DEL", this.selection.selected);
+  }
+
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.assessmentsList.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+        this.selection.clear() :
+        this.assessmentsList.forEach(row => this.selection.select(row));
   }
 
   onSubmit() {

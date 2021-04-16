@@ -4,6 +4,8 @@ import { User } from 'src/app/core/models/user.model';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { first } from 'rxjs/operators';
+import {SelectionModel} from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-students',
@@ -12,11 +14,12 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class StudentsComponent implements OnInit {
 
-  displayedColumns: string[] = ['username', 'first_name', 'last_name', 'language', 'country', 'arrow'];
-  usersList: User[] = [];
+  displayedColumns: string[] = ['select', 'username', 'first_name', 'last_name', 'language', 'country'];
+  studentsList: User[] = [];
   user: User;
   countries = ['USA', 'JOR'];
   languages = ['ARA', 'ENG'];
+  selection = new SelectionModel<User>(true, []);
 
   @ViewChild('createStudentDialog') createStudentDialog: TemplateRef<any>;
 
@@ -33,9 +36,11 @@ export class StudentsComponent implements OnInit {
     this.userService.getSelf().subscribe(res => {
       this.user = res;
     });
-    this.userService.getStudentsList().subscribe(res => {
-      this.usersList = res;
+
+    this.userService.studentsList.pipe(first()).subscribe((newList) => {
+      this.studentsList = newList;
     });
+    this.userService.getStudentsList();
   }
 
   openStudentDetails(id: string) {
@@ -55,5 +60,27 @@ export class StudentsComponent implements OnInit {
       country: this.createNewStudentForm.value.country
     }
     this.userService.createNewStudent(studentToCreate);
+  }
+
+  deleteSelection() {
+    console.log("DEL", this.selection.selected);
+  }
+
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.studentsList.length;
+    return numSelected === numRows;
+  }
+
+  isNoneSelected() {
+    return this.selection.selected.length == 0;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+        this.selection.clear() :
+        this.studentsList.forEach(row => this.selection.select(row));
   }
 }

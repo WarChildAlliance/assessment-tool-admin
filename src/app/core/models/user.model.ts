@@ -8,6 +8,7 @@ export interface User {
   role?: UserRoles;
   language?: string;
   country?: string;
+  created_by?: number;
 }
 
 enum UserRoles {

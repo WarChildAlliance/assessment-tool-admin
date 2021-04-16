@@ -9,4 +9,9 @@
             margin: 0;
         }
     }
+    
+    &__current-object-details {
+        display: flex;
+        justify-content: space-evenly;
+    }
 }

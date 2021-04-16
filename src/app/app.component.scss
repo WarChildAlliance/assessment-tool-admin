@@ -1,11 +1,20 @@
 .mat-sidenav-container {
   height: 100vh;
   width: 100vw;
-}
 
-.mat-sidenav-content {
-  padding: 24px;
-  height: calc(100% - 48px);
+  & > .mat-sidenav {
+    padding: 16px;
+    font-weight: bold; // Fixes a glitch where sidenav width varies because of text getting bolder when clicked
+  }
+
+  & > .mat-sidenav-content {
+    padding: 24px;
+
+    & > .account-toolbar {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
 }
 
 .mat-list-item:last-child {
