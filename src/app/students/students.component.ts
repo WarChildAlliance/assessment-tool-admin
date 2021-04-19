@@ -6,6 +6,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import {SelectionModel} from '@angular/cdk/collections';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-students',
@@ -14,14 +16,17 @@ import {SelectionModel} from '@angular/cdk/collections';
 })
 export class StudentsComponent implements OnInit {
 
-  displayedColumns: string[] = ['select', 'username', 'first_name', 'last_name', 'language', 'country'];
-  studentsList: User[] = [];
   user: User;
+
+  displayedColumns: string[] = ['select', 'username', 'first_name', 'last_name', 'language', 'country'];
+  studentsDataSource: MatTableDataSource<User> = new MatTableDataSource([])
+
   countries = ['USA', 'JOR'];
   languages = ['ARA', 'ENG'];
   selection = new SelectionModel<User>(true, []);
 
   @ViewChild('createStudentDialog') createStudentDialog: TemplateRef<any>;
+  @ViewChild(MatSort) studentsSort: MatSort;
 
   createNewStudentForm: FormGroup = new FormGroup({
     first_name: new FormControl('', [Validators.required]),
@@ -38,7 +43,8 @@ export class StudentsComponent implements OnInit {
     });
 
     this.userService.studentsList.pipe(first()).subscribe((newList) => {
-      this.studentsList = newList;
+      this.studentsDataSource = new MatTableDataSource(newList);
+      this.studentsDataSource.sort = this.studentsSort;
     });
     this.userService.getStudentsList();
   }
@@ -66,10 +72,20 @@ export class StudentsComponent implements OnInit {
     console.log('DEL', this.selection.selected);
   }
 
+  downloadData(): void {
+    console.log('Work In Progress');
+  }
+
+
+  applyFilter(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.studentsDataSource.filter = filterValue.trim().toLowerCase();
+  }
+
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected(): boolean {
     const numSelected = this.selection.selected.length;
-    const numRows = this.studentsList.length;
+    const numRows = this.studentsDataSource.data.length;
     return numSelected === numRows;
   }
 
@@ -81,6 +97,9 @@ export class StudentsComponent implements OnInit {
   masterToggle(): void {
     this.isAllSelected() ?
         this.selection.clear() :
-        this.studentsList.forEach(row => this.selection.select(row));
+        this.studentsDataSource.filteredData.forEach(
+          ass => {
+            this.selection.select(ass);
+          });
   }
 }

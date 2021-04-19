@@ -1,12 +1,12 @@
 .main-board {
     &__top-container {
         display: flex;
-        justify-content: space-between;
+        justify-content: end;
         align-items: center;
         margin: 36px 0;
 
         & > h1 {
-            margin: 0;
+            margin:0 auto 0 0;
         }
     }
     

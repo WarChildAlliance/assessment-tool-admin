@@ -49,14 +49,15 @@ export class AssessmentsComponent implements OnInit {
     private dialog: MatDialog) { }
 
   ngOnInit(): void {
+    this.userService.getSelf().subscribe(res => {
+      this.user = res;
+    });
+
     this.assessmentService.assessmentsList.pipe(first()).subscribe((assessmentsList) => {
       this.assessmentsDataSource = new MatTableDataSource(assessmentsList);
       this.assessmentsDataSource.sort = this.assessmentsSort;
     });
     this.assessmentService.getAssessmentsList();
-    this.userService.getSelf().subscribe(res => {
-      this.user = res;
-    });
   }
 
   openAssessmentDetails(id: string): void {
