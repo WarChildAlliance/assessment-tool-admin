@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs';
-//import * as moment from 'moment';
+// import * as moment from 'moment';
 // import 'moment/locale/ar';
 // import 'moment/locale/es';
 // import 'moment/locale/fr';
@@ -46,13 +46,13 @@ export class LanguageService {
 
   setLanguage(language: { name: string, code: string, direction: 'rtl' | 'ltr' }): void {
 
-    console.log("LANGUAGE: ", language);
+    console.log('LANGUAGE: ', language);
 
     this.language = language;
     localStorage.setItem('cwtl-language', language.code);
     this.translateService.use(language.code);
     this.setDirection();
-    //moment.locale(language.code);
+    // moment.locale(language.code);
   }
 
   getDirection(): BehaviorSubject<'rtl' | 'ltr'> {

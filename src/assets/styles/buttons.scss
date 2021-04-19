@@ -1,0 +1,13 @@
+.main-board {
+    &__top-container {
+    
+        button {
+            mat-icon {
+                margin-right: 8px;
+            }
+
+            margin:0 4px;
+            font-size: 16px;
+        }
+    }
+}

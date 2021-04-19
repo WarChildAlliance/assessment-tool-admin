@@ -11,7 +11,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSortModule } from '@angular/material/sort';
 import { TopicDetailComponent } from './topic-detail/topic-detail.component';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @NgModule({
@@ -31,7 +33,9 @@ import { TopicDetailComponent } from './topic-detail/topic-detail.component';
     MatSelectModule,
     MatInputModule,
     MatButtonModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSortModule,
+    MatIconModule
   ]
 })
 export class AssessmentsModule { }

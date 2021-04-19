@@ -1,58 +1,75 @@
 <div class="main-board">
 
   <div class="main-board__top-container">
-    <h1>Assessments - {{assessmentsList.length}}</h1>
+    <h1>Assessments - {{assessmentsDataSource.data.length}}</h1>
     <div>
-      <button mat-flat-button [disabled]="!selection.selected.length" color="accent" (click)="deleteSelection()">Delete assessment(s)</button>
-      <button mat-flat-button color="primary" (click)="openCreateAssessmentDialog()">Create an assessment</button>
+      <button mat-flat-button [disabled]="selection.isEmpty()" color="accent" (click)="deleteSelection()">
+        <mat-icon>delete_outline</mat-icon><span>Delete assessment(s)</span>
+      </button>
+      <button mat-flat-button color="primary" (click)="openCreateAssessmentDialog()">
+        <mat-icon>add_circle_outline</mat-icon><span>Create assessment</span>
+      </button>
+      <button mat-flat-button color="primary" (click)="downloadData()">
+        <mat-icon>cloud_download</mat-icon><span>Download</span>
+      </button>
     </div>
   </div>
 
-  <table mat-table [dataSource]="assessmentsList">
+  <mat-form-field>
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="You can filter on any column" #input>
+  </mat-form-field>
+
+  <table mat-table matSort [dataSource]="assessmentsDataSource">
     <ng-container matColumnDef="select">
       <th mat-header-cell *matHeaderCellDef>
-        <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()">
+        <mat-checkbox color="primary" (change)="$event ? masterToggle() : null" [checked]="isAllSelected()"
+          [indeterminate]="!selection.isEmpty() && !isAllSelected()">
         </mat-checkbox>
       </th>
-      <td mat-cell *matCellDef="let row" (click)="$event.stopPropagation()" >
-        <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
-          [checked]="selection.isSelected(row)">
+      <td mat-cell *matCellDef="let row" (click)="$event.stopPropagation()">
+        <mat-checkbox color="primary" (click)="$event.stopPropagation()"
+          (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
         </mat-checkbox>
       </td>
     </ng-container>
-    
+
     <ng-container matColumnDef="title">
-      <th mat-header-cell *matHeaderCellDef>Assessment</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Assessment</th>
       <td mat-cell *matCellDef="let element">{{element.title}}</td>
     </ng-container>
 
     <ng-container matColumnDef="grade">
-      <th mat-header-cell *matHeaderCellDef>Grade</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Grade</th>
       <td mat-cell *matCellDef="let element">{{element.grade}}</td>
     </ng-container>
 
     <ng-container matColumnDef="subject">
-      <th mat-header-cell *matHeaderCellDef>Subject</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Subject</th>
       <td mat-cell *matCellDef="let element">{{element.subject}}</td>
     </ng-container>
 
     <ng-container matColumnDef="language">
-      <th mat-header-cell *matHeaderCellDef>Language</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Language</th>
       <td mat-cell *matCellDef="let element">{{element.language}}</td>
     </ng-container>
 
     <ng-container matColumnDef="country">
-      <th mat-header-cell *matHeaderCellDef>Country</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Country</th>
       <td mat-cell *matCellDef="let element">{{element.country}}</td>
     </ng-container>
 
     <ng-container matColumnDef="private">
-      <th mat-header-cell *matHeaderCellDef>Is private</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Is private</th>
       <td mat-cell *matCellDef="let element">{{element.private}}</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="openAssessmentDetails(row.id)"></tr>
+
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="7">No assessment matching the filter "{{input.value}}"</td>
+    </tr>
   </table>
 
   <ng-template #createAssessmentDialog>

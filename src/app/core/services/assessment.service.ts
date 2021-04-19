@@ -42,8 +42,8 @@ export class AssessmentService {
     });
   }
 
-  getTopicQuestions(assessment_id: string, topic_id: string) {
-    this.http.get<Question[]>(`${environment.API_URL}/assessments/${assessment_id}/topics/${topic_id}/questions/`).subscribe(res => {
+  getTopicQuestions(assessmentId: string, topicId: string): void {
+    this.http.get<Question[]>(`${environment.API_URL}/assessments/${assessmentId}/topics/${topicId}/questions/`).subscribe(res => {
       this.questionsListSource.next(res);
     });
   }

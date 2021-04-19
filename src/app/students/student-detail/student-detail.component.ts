@@ -10,7 +10,7 @@ import { UserService } from 'src/app/core/services/user.service';
 })
 export class StudentDetailComponent implements OnInit {
 
-  student: User
+  student: User;
 
   constructor(private userService: UserService, private route: ActivatedRoute) { }
 
@@ -20,5 +20,5 @@ export class StudentDetailComponent implements OnInit {
       this.student = res;
     });
   }
-  
+
 }

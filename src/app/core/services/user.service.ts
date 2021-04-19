@@ -37,8 +37,9 @@ export class UserService {
   }
 
   createNewStudent(user: { first_name: string, last_name: string, role: string, language: string, country: string }): void {
-    this.http.post(`${environment.API_URL}/users/`, user).subscribe(res => {
-      this.alertService.success(`Student ${res['first_name'] + ' ' + res['last_name']} with ID ${res['username']} was successfully created`);
+    // TODO not sure if strict typing to "User" is correct below, might need further testing
+    this.http.post(`${environment.API_URL}/users/`, user).subscribe((res: User) => {
+      this.alertService.success(`Student ${res.first_name + ' ' + res.last_name} with ID ${res.username} was successfully created`);
     });
     this.getStudentsList();
   }

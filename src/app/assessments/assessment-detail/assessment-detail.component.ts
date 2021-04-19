@@ -39,7 +39,7 @@ export class AssessmentDetailComponent implements OnInit {
   ngOnInit(): void {
     this.assessmentService.topicsList.pipe(first()).subscribe((newList) => {
       this.topicsList = newList;
-    })
+    });
 
     this.assessmentService.getAssessmentDetails(this.route.snapshot.paramMap.get('id')).subscribe(res => {
       this.assessment = res;
@@ -48,37 +48,37 @@ export class AssessmentDetailComponent implements OnInit {
   }
 
 
-  openCreateTopicDialog() {
+  openCreateTopicDialog(): void {
     this.dialog.open(this.createTopicDialog);
   }
 
-  openTopicDetails(id: number) {
+  openTopicDetails(id: number): void {
     this.router.navigate([`/assessments/${this.assessment.id}/topics/${id}`]);
   }
 
-  deleteSelection() {
+  deleteSelection(): void {
     // TODO implement the proper deletion
-    console.log("DEL", this.selection.selected);
+    console.log('DEL', this.selection.selected);
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
+  isAllSelected(): boolean {
     return this.selection.selected.length === this.topicsList.length;
   }
-  
+
   /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
+  masterToggle(): void {
     this.isAllSelected() ?
       this.selection.clear() :
       this.topicsList.forEach(row => this.selection.select(row));
   }
 
-  onSubmit() {
+  onSubmit(): void {
     const topicToCreate = {
       name: this.createNewTopicForm.value.name,
       order: this.createNewTopicForm.value.order,
       assessment: this.assessment
-    }
+    };
     // TODO implement the proper creation of object
     console.log('NEW TOPIC: ', topicToCreate);
   }

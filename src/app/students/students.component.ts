@@ -43,42 +43,42 @@ export class StudentsComponent implements OnInit {
     this.userService.getStudentsList();
   }
 
-  openStudentDetails(id: string) {
+  openStudentDetails(id: string): void {
     this.router.navigate([`/students/${id}`]);
   }
 
-  openCreateStudentDialog() {
+  openCreateStudentDialog(): void {
     this.dialog.open(this.createStudentDialog);
   }
 
-  onSubmit() {
+  onSubmit(): void {
     const studentToCreate = {
       first_name: this.createNewStudentForm.value.first_name,
       last_name: this.createNewStudentForm.value.last_name,
       role: 'STUDENT',
       language: this.createNewStudentForm.value.language,
       country: this.createNewStudentForm.value.country
-    }
+    };
     this.userService.createNewStudent(studentToCreate);
   }
 
-  deleteSelection() {
-    console.log("DEL", this.selection.selected);
+  deleteSelection(): void {
+    console.log('DEL', this.selection.selected);
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
+  isAllSelected(): boolean {
     const numSelected = this.selection.selected.length;
     const numRows = this.studentsList.length;
     return numSelected === numRows;
   }
 
-  isNoneSelected() {
-    return this.selection.selected.length == 0;
+  isNoneSelected(): boolean {
+    return this.selection.selected.length === 0;
   }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
+  masterToggle(): void {
     this.isAllSelected() ?
         this.selection.clear() :
         this.studentsList.forEach(row => this.selection.select(row));

@@ -1,4 +1,4 @@
-import { Topic } from "./topic.models";
+import { Topic } from './topic.models';
 
 export interface Question {
     title: string;

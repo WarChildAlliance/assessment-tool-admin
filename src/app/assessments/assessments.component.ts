@@ -1,13 +1,15 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSort } from '@angular/material/sort';
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { Assessment } from '../core/models/assessment.model';
 import { User } from '../core/models/user.model';
 import { AssessmentService } from '../core/services/assessment.service';
 import { UserService } from '../core/services/user.service';
-import {SelectionModel} from '@angular/cdk/collections';
+import { SelectionModel } from '@angular/cdk/collections';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-assessments',
@@ -16,17 +18,20 @@ import {SelectionModel} from '@angular/cdk/collections';
 })
 export class AssessmentsComponent implements OnInit {
 
+  user: User;
+
   displayedColumns: string[] = ['select', 'title', 'grade', 'subject', 'language', 'country', 'private'];
-  assessmentsList: Assessment[] = [];
+  assessmentsDataSource: MatTableDataSource<Assessment> = new MatTableDataSource([]);
+
   subjects = ['MATH', 'LITERACY'];
   countries = ['USA', 'JOR'];
   languages = ['ARA', 'ENG'];
-  isAssessmentPrivate: boolean = false;
+
+  isAssessmentPrivate = false;
   selection = new SelectionModel<Assessment>(true, []);
 
-  user: User;
-
   @ViewChild('createAssessmentDialog') createAssessmentDialog: TemplateRef<any>;
+  @ViewChild(MatSort) assessmentsSort: MatSort;
 
   createNewAssessmentForm: FormGroup = new FormGroup({
     title: new FormControl('', [Validators.required]),
@@ -37,14 +42,16 @@ export class AssessmentsComponent implements OnInit {
     private: new FormControl(''),
   });
 
-  constructor(private assessmentService: AssessmentService,
+  constructor(
+    private assessmentService: AssessmentService,
     private router: Router,
     private userService: UserService,
     private dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.assessmentService.assessmentsList.pipe(first()).subscribe((newList) => {
-      this.assessmentsList = newList;
+    this.assessmentService.assessmentsList.pipe(first()).subscribe((assessmentsList) => {
+      this.assessmentsDataSource = new MatTableDataSource(assessmentsList);
+      this.assessmentsDataSource.sort = this.assessmentsSort;
     });
     this.assessmentService.getAssessmentsList();
     this.userService.getSelf().subscribe(res => {
@@ -52,37 +59,49 @@ export class AssessmentsComponent implements OnInit {
     });
   }
 
-  openAssessmentDetails(id: string) {
+  openAssessmentDetails(id: string): void {
     this.router.navigate([`/assessments/${id}`]);
   }
 
-  openCreateAssessmentDialog() {
+  openCreateAssessmentDialog(): void {
     this.dialog.open(this.createAssessmentDialog);
   }
 
-  togglePrivate(event) {
-    this.isAssessmentPrivate = event.checked
+  togglePrivate(event: { checked: boolean; }): void {
+    this.isAssessmentPrivate = event.checked;
   }
 
-  deleteSelection() {
-    console.log("DEL", this.selection.selected);
+  deleteSelection(): void {
+    console.log('DEL', this.selection.selected);
+  }
+
+  downloadData(): void {
+    console.log('Work In Progress');
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
+  isAllSelected(): boolean {
     const numSelected = this.selection.selected.length;
-    const numRows = this.assessmentsList.length;
+    const numRows = this.assessmentsDataSource.data.length;
     return numSelected === numRows;
   }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
+  masterToggle(): void {
     this.isAllSelected() ?
-        this.selection.clear() :
-        this.assessmentsList.forEach(row => this.selection.select(row));
+      this.selection.clear() :
+      this.assessmentsDataSource.filteredData.forEach(
+        ass => {
+          this.selection.select(ass);
+        });
   }
 
-  onSubmit() {
+  applyFilter(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.assessmentsDataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  onSubmit(): void {
     const assessmentToCreate = {
       title: this.createNewAssessmentForm.value.title,
       grade: this.createNewAssessmentForm.value.grade,
@@ -91,7 +110,7 @@ export class AssessmentsComponent implements OnInit {
       country: this.createNewAssessmentForm.value.country,
       private: this.isAssessmentPrivate,
       created_by: this.user.id
-    }
+    };
     console.log('NEW ASSESSMENT: ', assessmentToCreate);
   }
 }
