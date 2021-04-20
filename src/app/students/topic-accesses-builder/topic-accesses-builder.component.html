@@ -1,0 +1,22 @@
+<p>topic-accesses-builder works!</p>
+
+<div *ngFor="let student of studentsList">
+    <mat-checkbox (change)="$event ? studentsSelection.toggle(student) : null; log();" [checked]="studentsSelection.isSelected(student)"></mat-checkbox>
+    <span>
+        {{ student.first_name + ' ' + student.last_name }}
+    </span>
+</div>
+
+
+<div *ngFor="let ass of assessmentsList">
+    <span (click)="loadTopicsList(ass.id.toString())">
+        {{ ass.title }}
+    </span>
+</div>
+
+
+<div *ngFor="let top of topicsList">
+    <span>
+        {{ top.name }}
+    </span>
+</div>

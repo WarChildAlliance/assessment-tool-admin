@@ -2,13 +2,16 @@
 
   <div class="main-board__top-container">
     <h1>Students - {{studentsDataSource.data.length}}</h1>
-    <button mat-flat-button [disabled]="selection.isEmpty()" color="accent" (click)="deleteSelection()">
-      <mat-icon>delete_outline</mat-icon><span>Delete studend(s)</span>
+    <button mat-stroked-button [disabled]="selection.isEmpty()" color="primary" (click)="openAssignTopicDialog()">
+      <mat-icon>event_available</mat-icon><span>Assign a topic</span>
     </button>
-    <button mat-flat-button color="primary" (click)="openCreateStudentDialog()">
+    <button mat-stroked-button [disabled]="selection.isEmpty()" color="accent" (click)="deleteSelection()">
+      <mat-icon>delete_outline</mat-icon><span>Delete student(s)</span>
+    </button>
+    <button mat-stroked-button color="primary" (click)="openCreateStudentDialog()">
       <mat-icon>add_circle_outline</mat-icon><span>Add student</span>
     </button>
-    <button mat-flat-button color="primary" (click)="downloadData()">
+    <button mat-stroked-button color="primary" (click)="downloadData()">
       <mat-icon>cloud_download</mat-icon><span>Download</span>
     </button>
   </div>
@@ -92,5 +95,9 @@
         <button mat-button color="accent" type="submit" mat-dialog-close>Add</button>
       </form>
     </mat-dialog-content>
+  </ng-template>
+
+  <ng-template #assignTopicDialog>
+    <app-topic-accesses-builder [studentsList]="selection.selected"></app-topic-accesses-builder>
   </ng-template>
 </div>

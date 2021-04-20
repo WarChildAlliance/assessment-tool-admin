@@ -13,10 +13,6 @@
         <mat-icon matListIcon class="nav-list-icon">people</mat-icon>
         Students
       </a>
-      <a mat-list-item (click)="logout()">
-        <mat-icon matListIcon class="nav-list-icon" type="submit">logout</mat-icon>
-        Logout
-      </a>
     </mat-nav-list>
   </mat-sidenav>
 
@@ -24,10 +20,20 @@
 
     <mat-toolbar class="account-toolbar" *ngIf="isAuthenticated">
 
-      <button mat-button class="account-button" aria-label="Access account settings">
+      <button mat-button class="account-button" aria-label="Access account settings" [matMenuTriggerFor]="accountMenu">
         <mat-icon>account_circle</mat-icon>
-        {{ selfUsername }}
+        <span>{{ selfUsername }}</span>
       </button>
+      <mat-menu #accountMenu>
+        <button mat-flat-button>
+          <mat-icon matListIcon type="submit">settings</mat-icon>
+          <span>Settings</span>
+        </button>
+        <button mat-flat-button (click)="logout()">
+          <mat-icon matListIcon type="submit">logout</mat-icon>
+          <span>Logout</span>
+        </button>
+      </mat-menu>
 
     </mat-toolbar>
 

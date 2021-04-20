@@ -53,11 +53,10 @@ export class AssessmentsComponent implements OnInit {
       this.user = res;
     });
 
-    this.assessmentService.assessmentsList.pipe(first()).subscribe((assessmentsList) => {
+    this.assessmentService.getAssessmentsList().subscribe((assessmentsList) => {
       this.assessmentsDataSource = new MatTableDataSource(assessmentsList);
       this.assessmentsDataSource.sort = this.assessmentsSort;
     });
-    this.assessmentService.getAssessmentsList();
   }
 
   openAssessmentDetails(id: string): void {

@@ -5,9 +5,10 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
-import {SelectionModel} from '@angular/cdk/collections';
+import { SelectionModel } from '@angular/cdk/collections';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { AlertService } from '../core/services/alert.service';
 
 @Component({
   selector: 'app-students',
@@ -17,7 +18,7 @@ import { MatTableDataSource } from '@angular/material/table';
 export class StudentsComponent implements OnInit {
 
   user: User;
-
+  studentsList: User [];
   displayedColumns: string[] = ['select', 'username', 'first_name', 'last_name', 'language', 'country'];
   studentsDataSource: MatTableDataSource<User> = new MatTableDataSource([])
 
@@ -26,6 +27,7 @@ export class StudentsComponent implements OnInit {
   selection = new SelectionModel<User>(true, []);
 
   @ViewChild('createStudentDialog') createStudentDialog: TemplateRef<any>;
+  @ViewChild('assignTopicDialog') assignTopicDialog: TemplateRef<any>
   @ViewChild(MatSort) studentsSort: MatSort;
 
   createNewStudentForm: FormGroup = new FormGroup({
@@ -35,18 +37,17 @@ export class StudentsComponent implements OnInit {
     language: new FormControl('', [Validators.required]),
   });
 
-  constructor(private userService: UserService, private router: Router, private dialog: MatDialog) { }
+  constructor(private userService: UserService, private alertService: AlertService, private router: Router, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.userService.getSelf().subscribe(res => {
       this.user = res;
     });
-
-    this.userService.studentsList.pipe(first()).subscribe((newList) => {
-      this.studentsDataSource = new MatTableDataSource(newList);
+    this.userService.getStudentsList().subscribe((studentsList) => {
+      this.studentsList = studentsList;
+      this.studentsDataSource = new MatTableDataSource(this.studentsList);
       this.studentsDataSource.sort = this.studentsSort;
     });
-    this.userService.getStudentsList();
   }
 
   openStudentDetails(id: string): void {
@@ -65,7 +66,11 @@ export class StudentsComponent implements OnInit {
       language: this.createNewStudentForm.value.language,
       country: this.createNewStudentForm.value.country
     };
-    this.userService.createNewStudent(studentToCreate);
+    this.userService.createNewStudent(studentToCreate).subscribe((res) => {
+      this.alertService.success(`Student ${res.first_name + ' ' + res.last_name} with ID ${res.username} was successfully created`);
+      this.studentsList.push(res);
+      this.studentsDataSource = new MatTableDataSource(this.studentsList);
+    });
   }
 
   deleteSelection(): void {
@@ -96,10 +101,14 @@ export class StudentsComponent implements OnInit {
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle(): void {
     this.isAllSelected() ?
-        this.selection.clear() :
-        this.studentsDataSource.filteredData.forEach(
-          ass => {
-            this.selection.select(ass);
-          });
+      this.selection.clear() :
+      this.studentsDataSource.filteredData.forEach(
+        student => {
+          this.selection.select(student);
+        });
+  }
+
+  openAssignTopicDialog() {
+    this.dialog.open(this.assignTopicDialog);
   }
 }

@@ -37,13 +37,15 @@ export class AssessmentDetailComponent implements OnInit {
     private dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.assessmentService.topicsList.pipe(first()).subscribe((newList) => {
-      this.topicsList = newList;
+
+    const assessmentId = this.route.snapshot.paramMap.get('id');
+    
+    this.assessmentService.getAssessmentTopics(assessmentId).subscribe((topicsList) => {
+      this.topicsList = topicsList;
     });
 
-    this.assessmentService.getAssessmentDetails(this.route.snapshot.paramMap.get('id')).subscribe(res => {
-      this.assessment = res;
-      this.assessmentService.getAssessmentTopics(this.assessment.id.toString());
+    this.assessmentService.getAssessmentDetails(assessmentId).subscribe(assessment => {
+      this.assessment = assessment;
     });
   }
 

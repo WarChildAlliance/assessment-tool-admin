@@ -10,12 +10,7 @@ import { AlertService } from './alert.service';
 })
 export class UserService {
 
-  // If at some point we need to programmatically get the current studentsList value,
-  // we could change Subject to BehaviorSubject and destroy the subscriptions on
-  // component's ngDestroy to avoid subscripting multiple times
-  private studentsListSource: Subject<User[]> = new Subject();
-
-  public studentsList = this.studentsListSource.asObservable();
+  newUser: User;
 
   constructor(
     private http: HttpClient,
@@ -26,21 +21,15 @@ export class UserService {
     return this.http.get<User>(`${environment.API_URL}/users/get_self/`);
   }
 
-  getStudentsList(): void {
-    this.http.get<User[]>(`${environment.API_URL}/users/`).subscribe(res => {
-      this.studentsListSource.next(res);
-    });
+  getStudentsList(): Observable<User[]> {
+    return this.http.get<User[]>(`${environment.API_URL}/users/`)
   }
 
   getStudentDetails(id: string): Observable<User> {
     return this.http.get<User>(`${environment.API_URL}/users/${id}`);
   }
 
-  createNewStudent(user: { first_name: string, last_name: string, role: string, language: string, country: string }): void {
-    // TODO not sure if strict typing to "User" is correct below, might need further testing
-    this.http.post(`${environment.API_URL}/users/`, user).subscribe((res: User) => {
-      this.alertService.success(`Student ${res.first_name + ' ' + res.last_name} with ID ${res.username} was successfully created`);
-    });
-    this.getStudentsList();
+  createNewStudent(user: { first_name: string, last_name: string, role: string, language: string, country: string }): Observable<User> {
+    return this.http.post<User>(`${environment.API_URL}/users/`, user);
   }
 }

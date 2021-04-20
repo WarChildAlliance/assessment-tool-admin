@@ -13,13 +13,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSortModule } from '@angular/material/sort';
+import { TopicAccessesBuilderComponent } from './topic-accesses-builder/topic-accesses-builder.component';
 
 
 
 @NgModule({
   declarations: [
     StudentsComponent,
-    StudentDetailComponent
+    StudentDetailComponent,
+    TopicAccessesBuilderComponent
   ],
   imports: [
     CommonModule,
