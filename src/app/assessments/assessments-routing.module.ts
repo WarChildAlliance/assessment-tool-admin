@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AssessmentDetailComponent } from './assessment-detail/assessment-detail.component';
 import { AssessmentsComponent } from './assessments.component';
-import { TopicDetailComponent } from './topic-detail/topic-detail.component';
+import { QuestionDetailComponent } from './question-detail/question-detail.component';
+import { QuestionsListComponent } from './questions-list/questions-list.component';
 
 const routes: Routes = [
   {
@@ -14,8 +15,12 @@ const routes: Routes = [
     component: AssessmentDetailComponent
   },
   {
-    path: ':id/topics/:id',
-    component: TopicDetailComponent
+    path: ':assessment_id/topics/:topic_id',
+    component: QuestionsListComponent
+  },
+  {
+    path: ':assessment_id/topics/:topic_id/questions/:question_id',
+    component: QuestionDetailComponent
   },
   {
     path: '**',

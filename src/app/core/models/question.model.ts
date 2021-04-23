@@ -1,7 +1,7 @@
 import { Topic } from './topic.models';
 
 export interface Question {
-    title: string;
-    assessment_topic: Topic;
-    question_type: string;
-  }
+  title: string;
+  question_type: string;
+  assessment_topic: Topic;
+}

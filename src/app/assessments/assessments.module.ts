@@ -12,15 +12,18 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSortModule } from '@angular/material/sort';
-import { TopicDetailComponent } from './topic-detail/topic-detail.component';
+import { QuestionsListComponent } from './questions-list/questions-list.component';
 import { MatIconModule } from '@angular/material/icon';
+import { SharedModule } from '../shared/shared.module';
+import { QuestionDetailComponent } from './question-detail/question-detail.component';
 
 
 @NgModule({
   declarations: [
     AssessmentsComponent,
     AssessmentDetailComponent,
-    TopicDetailComponent
+    QuestionsListComponent,
+    QuestionDetailComponent
   ],
   imports: [
     CommonModule,
@@ -35,7 +38,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatButtonModule,
     MatCheckboxModule,
     MatSortModule,
-    MatIconModule
+    MatIconModule,
+    SharedModule
   ]
 })
 export class AssessmentsModule { }

@@ -1,13 +1,14 @@
 <div class="main-board">
 
-    <div class="main-board__top-container">
-      <h1>Student {{ student.username }} details</h1>
-    </div>
-    
-    <div *ngIf="student" class="main-board__current-object-details">
+  <div class="main-board__top-container">
+    <h1 *ngIf="student">Student {{ student.username }} details</h1>
+  </div>
+
+  <div *ngIf="student" class="main-board__current-object-details">
     <span>{{ student.first_name }}</span>
     <span>{{ student.last_name }}</span>
     <span>{{ student.username }}</span>
     <span>{{ student.country }}</span>
     <span>{{ student.language }}</span>
+  </div>
 </div>

@@ -7,16 +7,16 @@ import { UserService } from './core/services/user.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
 
-  selfUsername = '';
+  selfName = '';
 
   constructor(private authService: AuthService, private userService: UserService) { }
 
   ngOnInit(): void {
 
     this.userService.getSelf().subscribe(res => {
-      this.selfUsername = res.first_name + ' ' + res.last_name;
+      this.selfName = res.first_name + ' ' + res.last_name;
     });
   }
 

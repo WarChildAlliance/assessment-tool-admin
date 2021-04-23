@@ -1,68 +1,46 @@
 <div class="main-board">
 
-    <div class="main-board__top-container">
-        <h1>Topics - {{topicsList.length}}</h1>
-        <div>
-            <button mat-flat-button [disabled]="!selection.selected.length" color="accent" (click)="deleteSelection()">Delete
-                topic(s)</button>
-            <button mat-flat-button color="primary" (click)="openCreateTopicDialog()">Create a topic</button>
-        </div>
-    </div>
+  <div class="main-board__top-container">
+    <h1>Topics - {{topicsDataSource.data.length}} <span *ngIf="selectedTopics.length">({{ selectedTopics.length }}
+        selected)</span></h1>
+    <button mat-stroked-button [disabled]="!selectedTopics.length" color="accent" (click)="deleteSelection()">
+      <mat-icon>delete_outline</mat-icon><span>Delete topic(s)</span>
+    </button>
+    <button mat-stroked-button color="primary" (click)="openCreateTopicDialog()">
+      <mat-icon>add_circle_outline</mat-icon><span>Create a topic</span>
+    </button>
+    <button mat-stroked-button color="primary" (click)="downloadData()">
+      <mat-icon>get_app</mat-icon><span>Download</span>
+    </button>
+  </div>
 
-    <div *ngIf="assessment" class="main-board__current-object-details">
-        <p>{{ assessment.title }}</p>
-        <p>{{ assessment.subject }}</p>
-        <p>{{ assessment.grade }}</p>
-        <p>{{ assessment.country }}</p>
-        <p>{{ assessment.language }}</p>
-        <p>{{ assessment.private }}</p>
-    </div>
+  <div *ngIf="currentAssessment" class="main-board__current-object-details">
+    <p>{{ currentAssessment.title }}</p>
+    <p>{{ currentAssessment.subject }}</p>
+    <p>{{ currentAssessment.grade }}</p>
+    <p>{{ currentAssessment.country }}</p>
+    <p>{{ currentAssessment.language }}</p>
+    <p>{{ currentAssessment.private }}</p>
+  </div>
 
-    <div class="assessment-topics">
-        <table mat-table [dataSource]="topicsList">
+  <app-table [tableData]="topicsDataSource" [displayedColumns]="displayedColumns"
+    [filterableColumns]="filterableColumns" [isSelectable]="true" (selectionChangedEvent)="onSelectionChange($event)"
+    (openDetailsEvent)="onOpenDetails($event)"></app-table>
 
-            <ng-container matColumnDef="select">
-                <th mat-header-cell *matHeaderCellDef>
-                    <mat-checkbox (change)="$event ? masterToggle() : null"
-                        [checked]="selection.hasValue() && isAllSelected()">
-                    </mat-checkbox>
-                </th>
-                <td mat-cell *matCellDef="let row" (click)="$event.stopPropagation()">
-                    <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
-                        [checked]="selection.isSelected(row)">
-                    </mat-checkbox>
-                </td>
-            </ng-container>
-
-            <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef>Topic</th>
-                <td mat-cell *matCellDef="let element">{{element.name}}</td>
-            </ng-container>
-
-            <ng-container matColumnDef="order">
-                <th mat-header-cell *matHeaderCellDef>Order</th>
-                <td mat-cell *matCellDef="let element">{{element.order}}</td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="openTopicDetails(row.id)"></tr>
-        </table>
-    </div>
-
-    <ng-template #createTopicDialog>
-        <h2 mat-dialog-title>Create a new assessment</h2>
-        <mat-dialog-content>
-            <form [formGroup]="createNewTopicForm" (ngSubmit)="onSubmit()" class="custom-form">
-                <mat-form-field appearance="outline">
-                    <mat-label>Name</mat-label>
-                    <input matInput type="text" formControlName="name">
-                </mat-form-field>
-                <mat-form-field appearance="outline">
-                    <mat-label>Order</mat-label>
-                    <input matInput type="number" formControlName="order">
-                </mat-form-field>
-                <button mat-button color="accent" type="submit" mat-dialog-close>Add</button>
-            </form>
-        </mat-dialog-content>
-    </ng-template>
+  <ng-template #createTopicDialog>
+    <h2 mat-dialog-title>Create a new assessment</h2>
+    <mat-dialog-content>
+      <form [formGroup]="createNewTopicForm" (ngSubmit)="submitCreateNewTopic()" class="form-primary">
+        <mat-form-field appearance="outline">
+          <mat-label>Name</mat-label>
+          <input matInput type="text" formControlName="name">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Order</mat-label>
+          <input matInput type="number" formControlName="order">
+        </mat-form-field>
+        <button mat-button color="accent" type="submit" mat-dialog-close>Add</button>
+      </form>
+    </mat-dialog-content>
+  </ng-template>
 </div>

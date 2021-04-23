@@ -1,9 +1,8 @@
-import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { first } from 'rxjs/operators';
 import { Assessment } from 'src/app/core/models/assessment.model';
 import { Topic } from 'src/app/core/models/topic.models';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
@@ -15,20 +14,26 @@ import { AssessmentService } from 'src/app/core/services/assessment.service';
 })
 export class AssessmentDetailComponent implements OnInit {
 
-  displayedColumns: string[] = ['select', 'name', 'order'];
-  assessment: Assessment;
-  topicsList: Topic[] = [];
+  public displayedColumns: { key: string, value: string }[] = [
+    { key: 'name', value: 'Name' },
+    { key: 'order', value: 'Order' },
+  ]
 
-  selection = new SelectionModel<Topic>(true, []);
+  public filterableColumns = ["name"];
+  public topicsDataSource: MatTableDataSource<Topic> = new MatTableDataSource([]);
 
+  public isAssessmentPrivate = false;
+
+  public selectedTopics: Topic[] = [];
+
+  currentAssessment: Assessment;
 
   @ViewChild('createTopicDialog') createTopicDialog: TemplateRef<any>;
 
-  createNewTopicForm: FormGroup = new FormGroup({
+  public createNewTopicForm: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required]),
     order: new FormControl('', [Validators.required]),
   });
-
 
   constructor(
     private assessmentService: AssessmentService,
@@ -39,47 +44,43 @@ export class AssessmentDetailComponent implements OnInit {
   ngOnInit(): void {
 
     const assessmentId = this.route.snapshot.paramMap.get('id');
-    
+
     this.assessmentService.getAssessmentTopics(assessmentId).subscribe((topicsList) => {
-      this.topicsList = topicsList;
+      this.topicsDataSource = new MatTableDataSource(topicsList);
     });
 
     this.assessmentService.getAssessmentDetails(assessmentId).subscribe(assessment => {
-      this.assessment = assessment;
+      this.currentAssessment = assessment;
     });
   }
 
+  // This eventReceiver triggers a thousand times when user does "select all". We should find a way to improve this. (debouncer ?)
+  onSelectionChange(newSelection: Topic[]) {
+    this.selectedTopics = newSelection;
+  }
 
   openCreateTopicDialog(): void {
     this.dialog.open(this.createTopicDialog);
   }
 
-  openTopicDetails(id: number): void {
-    this.router.navigate([`/assessments/${this.assessment.id}/topics/${id}`]);
+  onOpenDetails(id: string): void {
+    this.router.navigate([`/assessments/${this.currentAssessment.id}/topics/${id}`]);
   }
 
   deleteSelection(): void {
     // TODO implement the proper deletion
-    console.log('DEL', this.selection.selected);
+    console.log('DEL', this.selectedTopics);
   }
 
-  /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected(): boolean {
-    return this.selection.selected.length === this.topicsList.length;
-  }
+  downloadData(): void {
+    console.log('Work In Progress');
+  };
 
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle(): void {
-    this.isAllSelected() ?
-      this.selection.clear() :
-      this.topicsList.forEach(row => this.selection.select(row));
-  }
-
-  onSubmit(): void {
+  submitCreateNewTopic(): void {
     const topicToCreate = {
       name: this.createNewTopicForm.value.name,
       order: this.createNewTopicForm.value.order,
-      assessment: this.assessment
+      assessment: this.currentAssessment
     };
     // TODO implement the proper creation of object
     console.log('NEW TOPIC: ', topicToCreate);

@@ -14,6 +14,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSortModule } from '@angular/material/sort';
 import { TopicAccessesBuilderComponent } from './topic-accesses-builder/topic-accesses-builder.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 
@@ -36,7 +37,8 @@ import { TopicAccessesBuilderComponent } from './topic-accesses-builder/topic-ac
     MatButtonModule,
     MatCheckboxModule,
     MatIconModule,
-    MatSortModule
+    MatSortModule,
+    SharedModule
   ]
 })
 export class StudentsModule { }

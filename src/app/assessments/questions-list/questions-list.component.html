@@ -1,0 +1,26 @@
+<div class="main-board">
+
+  <div class="main-board__top-container">
+    <h1>{{ questionsDataSource.data.length }} Questions <span *ngIf="selectedQuestions.length">({{
+        selectedQuestions.length }} selected)</span></h1>
+    <button mat-stroked-button [disabled]="!selectedQuestions.length" color="accent" (click)="deleteSelection()">
+      <mat-icon>delete_outline</mat-icon><span>Delete question(s)</span>
+    </button>
+    <button mat-stroked-button color="primary" (click)="openCreateQuestionDialog()">
+      <mat-icon>add_circle_outline</mat-icon><span>Add question</span>
+    </button>
+    <button mat-stroked-button color="primary" (click)="downloadData()">
+      <mat-icon>get_app</mat-icon><span>Download</span>
+    </button>
+  </div>
+
+  <app-table [tableData]="questionsDataSource" [displayedColumns]="displayedColumns"
+    [filterableColumns]="filterableColumns" [isSelectable]="true" (selectionChangedEvent)="onSelectionChange($event)"
+    (openDetailsEvent)="onOpenDetails($event)"></app-table>
+
+  <ng-template #createQuestionDialog>
+    <h2 mat-dialog-title>Create a question</h2>
+    <mat-dialog-content>
+    </mat-dialog-content>
+  </ng-template>
+</div>

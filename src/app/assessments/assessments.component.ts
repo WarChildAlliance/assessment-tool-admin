@@ -1,14 +1,9 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSort } from '@angular/material/sort';
 import { Router } from '@angular/router';
-import { first } from 'rxjs/operators';
 import { Assessment } from '../core/models/assessment.model';
-import { User } from '../core/models/user.model';
 import { AssessmentService } from '../core/services/assessment.service';
-import { UserService } from '../core/services/user.service';
-import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
@@ -18,22 +13,28 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class AssessmentsComponent implements OnInit {
 
-  user: User;
+  public displayedColumns: { key: string, value: string }[] = [
+    { key: 'title', value: 'Title' },
+    { key: 'grade', value: 'Grade' },
+    { key: 'subject', value: 'Subject' },
+    { key: 'language', value: 'Language' },
+    { key: 'country', value: 'Country' }
+  ];
 
-  displayedColumns: string[] = ['select', 'title', 'grade', 'subject', 'language', 'country', 'private'];
-  assessmentsDataSource: MatTableDataSource<Assessment> = new MatTableDataSource([]);
+  public filterableColumns = ["title", "grade", "subject", "language", "country"];
 
-  subjects = ['MATH', 'LITERACY'];
-  countries = ['USA', 'JOR'];
-  languages = ['ARA', 'ENG'];
+  public assessmentsDataSource: MatTableDataSource<Assessment> = new MatTableDataSource([]);
 
-  isAssessmentPrivate = false;
-  selection = new SelectionModel<Assessment>(true, []);
+  // Create a route to get the available subjects, languages & countries from the API
+  public subjects = ['MATH', 'LITERACY'];
+  public countries = ['USA', 'JOR', 'FRA'];
+  public languages = ['ARA', 'ENG', 'FRE'];
+
+  public isAssessmentPrivate = false;
 
   @ViewChild('createAssessmentDialog') createAssessmentDialog: TemplateRef<any>;
-  @ViewChild(MatSort) assessmentsSort: MatSort;
 
-  createNewAssessmentForm: FormGroup = new FormGroup({
+  public createNewAssessmentForm: FormGroup = new FormGroup({
     title: new FormControl('', [Validators.required]),
     grade: new FormControl('', [Validators.required]),
     subject: new FormControl('', [Validators.required]),
@@ -45,21 +46,16 @@ export class AssessmentsComponent implements OnInit {
   constructor(
     private assessmentService: AssessmentService,
     private router: Router,
-    private userService: UserService,
     private dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.userService.getSelf().subscribe(res => {
-      this.user = res;
-    });
 
     this.assessmentService.getAssessmentsList().subscribe((assessmentsList) => {
       this.assessmentsDataSource = new MatTableDataSource(assessmentsList);
-      this.assessmentsDataSource.sort = this.assessmentsSort;
     });
   }
 
-  openAssessmentDetails(id: string): void {
+  onOpenDetails(id: string): void {
     this.router.navigate([`/assessments/${id}`]);
   }
 
@@ -72,44 +68,21 @@ export class AssessmentsComponent implements OnInit {
   }
 
   deleteSelection(): void {
-    console.log('DEL', this.selection.selected);
+    console.log('DEL');
   }
 
   downloadData(): void {
     console.log('Work In Progress');
   }
 
-  /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected(): boolean {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.assessmentsDataSource.data.length;
-    return numSelected === numRows;
-  }
-
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle(): void {
-    this.isAllSelected() ?
-      this.selection.clear() :
-      this.assessmentsDataSource.filteredData.forEach(
-        ass => {
-          this.selection.select(ass);
-        });
-  }
-
-  applyFilter(event: Event): void {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.assessmentsDataSource.filter = filterValue.trim().toLowerCase();
-  }
-
-  onSubmit(): void {
+  submitCreateNewAssessment(): void {
     const assessmentToCreate = {
       title: this.createNewAssessmentForm.value.title,
       grade: this.createNewAssessmentForm.value.grade,
       subject: this.createNewAssessmentForm.value.subject,
       language: this.createNewAssessmentForm.value.language,
       country: this.createNewAssessmentForm.value.country,
-      private: this.isAssessmentPrivate,
-      created_by: this.user.id
+      private: this.isAssessmentPrivate
     };
     console.log('NEW ASSESSMENT: ', assessmentToCreate);
   }
