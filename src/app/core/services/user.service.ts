@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from '../models/user.model';
-import { AlertService } from './alert.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +12,7 @@ export class UserService {
   newUser: User;
 
   constructor(
-    private http: HttpClient,
-    private alertService: AlertService
+    private http: HttpClient
   ) {}
 
   getSelf(): Observable<User> {

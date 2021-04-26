@@ -9,7 +9,43 @@
 @include mat-core();
 
 /* For use in src/lib/core/theming/_palette.scss */
+/* For use in src/lib/core/theming/_palette.scss */
 $admin-dashboard-palette: (
+    50 : #ffffff,
+    100 : #ffffff,
+    200 : #e8e8e8,
+    300 : #c5c5c5,
+    400 : #b5b5b5,
+    500 : #a6a6a6,
+    600 : #979797,
+    700 : #878787,
+    800 : #787878,
+    900 : #696969,
+    A100 : #ffffff,
+    A200 : #f6efef,
+    A400 : #c9b6b6,
+    A700 : #b7afaf,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+
+
+$admin-dashboard-accent: (
   50: #ffffff,
   100: #f4fafd,
   200: #c4e1f5,
@@ -42,46 +78,12 @@ $admin-dashboard-palette: (
   ),
 );
 
-$admin-dashboard-accent: (
-  50 : #ffffff,
-  100 : #fff6f1,
-  200 : #ffd5b9,
-  300 : #ffaa71,
-  400 : #ff9853,
-  500 : #ff8634,
-  600 : #ff7415,
-  700 : #f66300,
-  800 : #d75700,
-  900 : #b94b00,
-  A100 : #ffffff,
-  A200 : #ffe1cd,
-  A400 : #ffa467,
-  A700 : #ff954d,
-  contrast: (
-      50 : #000000,
-      100 : #000000,
-      200 : #000000,
-      300 : #000000,
-      400 : #000000,
-      500 : #ffffff,
-      600 : #ffffff,
-      700 : #ffffff,
-      800 : #ffffff,
-      900 : #ffffff,
-      A100 : #000000,
-      A200 : #000000,
-      A400 : #000000,
-      A700 : #000000,
-  )
-
-);
-
 
 
 // Define a custom typography config that overrides the font-family as well as the
 // `headlines` and `body-1` levels.
 $custom-typography: mat-typography-config(
-  $font-family: 'Inv Maison neue, Roboto, monospace',
+  $font-family: 'Roboto, monospace',
   $headline: mat-typography-level(32px, 48px, 700),
   $body-1: mat-typography-level(16px, 24px, 500)
 );
@@ -121,18 +123,6 @@ $admin-dashboard-theme: mat-light-theme(
 
 // Mixins
 
-@mixin nav-theme($theme) {
-  .list-item-active {
-    color: mat-color(map-get($theme, primary)) !important;
-    background: rgba(0, 0, 0, 0.04);
-  }
-
-  .nav-list-icon {
-    margin: 0 12px;
-  }
-}
-
-@include nav-theme($admin-dashboard-theme);
 
 @mixin snackbar-theme($theme) {
   snack-bar-container {
@@ -168,3 +158,9 @@ $admin-dashboard-theme: mat-light-theme(
 }
 
 @include table-theme($admin-dashboard-theme);
+
+:root {
+  --color-primary: #{mat-color($admin-dashboard-primary)};
+  --color-accent: #{mat-color($admin-dashboard-accent)};
+  --color-warn: #{mat-color($admin-dashboard-warn)};
+}

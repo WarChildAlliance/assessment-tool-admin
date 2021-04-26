@@ -86,6 +86,7 @@ export class StudentsComponent implements OnInit {
       this.alertService.success(`Student ${student.first_name + ' ' + student.last_name} with ID ${student.username} was successfully created`);
       this.studentsDataSource.data.push(student);
       this.studentsDataSource.data = this.studentsDataSource.data;
+      this.createNewStudentForm.reset();
     });
   }
 }

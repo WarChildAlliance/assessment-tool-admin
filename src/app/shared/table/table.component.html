@@ -6,7 +6,7 @@
 <table mat-table matSort [dataSource]="tableData">
   <ng-container *ngIf="isSelectable" matColumnDef="select">
     <th mat-header-cell *matHeaderCellDef>
-      <mat-checkbox color="primary" (change)="masterToggle()" [checked]="isAllSelected()"
+      <mat-checkbox color="primary" (change)="masterToggle()" [checked]=" !selection.isEmpty() && isAllSelected()"
         [indeterminate]="!selection.isEmpty() && !isAllSelected()">
       </mat-checkbox>
     </th>
