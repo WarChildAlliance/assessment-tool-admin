@@ -1,22 +1,39 @@
-<p>topic-accesses-builder works!</p>
+<div class="topic-accesses-builder">
 
-<div *ngFor="let student of studentsList">
-    <mat-checkbox (change)="$event ? studentsSelection.toggle(student) : null; log();" [checked]="studentsSelection.isSelected(student)"></mat-checkbox>
-    <span>
-        {{ student.first_name + ' ' + student.last_name }}
-    </span>
-</div>
+    <div class="topic-accesses-builder__list">
+        <span>Students</span>
 
+        <div *ngFor="let student of studentsList">
+            <span>
+                {{ student.first_name + ' ' + student.last_name }}
+            </span>
+        </div>
+    </div>
 
-<div *ngFor="let ass of assessmentsList">
-    <span (click)="loadTopicsList(ass.id.toString())">
-        {{ ass.title }}
-    </span>
-</div>
+    <div class="topic-accesses-builder__list -assessments-list">
+        <span>Assessment</span>
 
+        <mat-radio-button *ngFor="let assessment of assessmentsList" value="{{ assessment.id }}"
+            (change)="loadTopicsList(assessment.id.toString())">{{ assessment.title }}</mat-radio-button>
+    </div>
 
-<div *ngFor="let top of topicsList">
-    <span>
-        {{ top.name }}
-    </span>
+    <div class="topic-accesses-builder__list">
+        <span>Assessment topic(s) and availability</span>
+
+        <div *ngFor="let topic of topicsList">
+            <mat-checkbox>
+                {{ topic.name }}
+            </mat-checkbox>
+            <mat-form-field  color="accent" appearance="outline">
+                <mat-date-range-input [rangePicker]="campaignOnePicker">
+                    <input matStartDate placeholder="Start date" (dateInput)="input($event, topic)"
+                        (dateChange)="change($event, topic)">
+                    <input matEndDate placeholder="End date" (dateInput)="input($event, topic)"
+                        (dateChange)="change($event, topic)">
+                </mat-date-range-input>
+                <mat-datepicker-toggle matSuffix [for]="campaignOnePicker"></mat-datepicker-toggle>
+                <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
+            </mat-form-field>
+        </div>
+    </div>
 </div>

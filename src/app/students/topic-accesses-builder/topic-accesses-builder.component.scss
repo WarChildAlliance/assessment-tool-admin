@@ -1,0 +1,41 @@
+.topic-accesses-builder {
+    display: flex;
+    justify-content: space-evenly;
+
+    padding: 60px;
+
+    width: 50vw;
+
+    &__list {
+        & > span {
+            text-align: center;
+            display: block;
+            margin-bottom: 16px;
+        }
+
+        &.-assessments-list {
+            & > * {
+                display: block;
+            }
+        }
+    }
+}
+
+::ng-deep .mat-form-field-flex {
+    align-items: flex-end;
+
+    & > .mat-form-field-infix {
+        width: 170px !important;
+        padding: 0.4em 0px !important;
+        border-top: none !important;
+
+        .mat-date-range-input-container {
+            align-items: normal !important;
+        }
+    }
+
+    .mat-form-field-suffix .mat-icon-button {
+        width: auto !important;
+        height: 38px !important;
+    }
+}

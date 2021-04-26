@@ -59,7 +59,12 @@ export class StudentsComponent implements OnInit {
   }
 
   openAssignTopicDialog() {
-    this.dialog.open(this.assignTopicDialog);
+    // Check if all students share the same language and country
+    if (!this.selectedUsers.every((student) => (student.country === this.selectedUsers[0].country && student.language === this.selectedUsers[0].language))){
+      this.alertService.error('You can only give access to a topic to students with the same country and language.');
+    } else {
+      this.dialog.open(this.assignTopicDialog);
+    }
   }
 
   openCreateStudentDialog(): void {

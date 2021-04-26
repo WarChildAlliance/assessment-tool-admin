@@ -6,12 +6,12 @@
 <table mat-table matSort [dataSource]="tableData">
   <ng-container *ngIf="isSelectable" matColumnDef="select">
     <th mat-header-cell *matHeaderCellDef>
-      <mat-checkbox color="primary" (change)="masterToggle()" [checked]=" !selection.isEmpty() && isAllSelected()"
+      <mat-checkbox color="accent" (change)="masterToggle()" [checked]=" !selection.isEmpty() && isAllSelected()"
         [indeterminate]="!selection.isEmpty() && !isAllSelected()">
       </mat-checkbox>
     </th>
     <td mat-cell *matCellDef="let row" (click)="$event.stopPropagation()">
-      <mat-checkbox color="primary" (click)="$event.stopPropagation()" (change)="selection.toggle(row)"
+      <mat-checkbox color="accent" (click)="$event.stopPropagation()" (change)="selection.toggle(row)"
         [checked]="selection.isSelected(row)">
       </mat-checkbox>
     </td>
