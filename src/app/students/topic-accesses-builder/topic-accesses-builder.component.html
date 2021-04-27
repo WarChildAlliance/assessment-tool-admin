@@ -3,7 +3,7 @@
     <div class="topic-accesses-builder__list">
         <span>Students</span>
 
-        <div *ngFor="let student of studentsList">
+        <div  class="topic-accesses-builder__list-row" *ngFor="let student of studentsList">
             <span>
                 {{ student.first_name + ' ' + student.last_name }}
             </span>
@@ -13,18 +13,19 @@
     <div class="topic-accesses-builder__list -assessments-list">
         <span>Assessment</span>
 
-        <mat-radio-button *ngFor="let assessment of assessmentsList" value="{{ assessment.id }}"
-            (change)="loadTopicsList(assessment.id.toString())">{{ assessment.title }}</mat-radio-button>
+        <mat-radio-button class="topic-accesses-builder__list-row" *ngFor="let assessment of assessmentsList"
+            value="{{ assessment.id }}" (change)="loadTopicsList(assessment.id.toString())">{{ assessment.title }}
+        </mat-radio-button>
     </div>
 
     <div class="topic-accesses-builder__list">
         <span>Assessment topic(s) and availability</span>
 
-        <div *ngFor="let topic of topicsList">
+        <div *ngFor="let topic of topicsList"  class="topic-accesses-builder__list-row">
             <mat-checkbox>
                 {{ topic.name }}
             </mat-checkbox>
-            <mat-form-field  color="accent" appearance="outline">
+            <mat-form-field color="accent" appearance="outline">
                 <mat-date-range-input [rangePicker]="campaignOnePicker">
                     <input matStartDate placeholder="Start date" (dateInput)="input($event, topic)"
                         (dateChange)="change($event, topic)">
