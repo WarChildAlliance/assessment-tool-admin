@@ -7,12 +7,20 @@
 
         & > h1 {
             font-size: 18px;
-            margin:0 auto 0 0;
+            margin: 0 auto 0 0;
         }
     }
-    
+
     &__current-object-details {
-        display: flex;
-        justify-content: space-evenly;
+        border: 1px solid var(--color-primary);
+        border-radius: 5px;
+
+        .header {
+            color: var(--color-accent);
+        }
+
+        .detail {
+            font-weight: bold;
+        }
     }
 }

@@ -1,5 +1,26 @@
 <div class="main-board">
 
+  <mat-grid-list *ngIf="currentAssessment" class="main-board__current-object-details" cols="7" rowHeight="36px">
+    <mat-grid-tile class="header">Title</mat-grid-tile>
+    <mat-grid-tile class="header">Subject</mat-grid-tile>
+    <mat-grid-tile class="header">Grade</mat-grid-tile>
+    <mat-grid-tile class="header">Country</mat-grid-tile>
+    <mat-grid-tile class="header">Language</mat-grid-tile>
+    <mat-grid-tile class="header">Private</mat-grid-tile>
+    <mat-grid-tile [rowspan]="2" class="delete-button">
+      <button mat-stroked-button color="primary" (click)="deleteCurrentAssessment()">
+        <mat-icon>delete_outline</mat-icon><span>Delete this assessment</span>
+      </button>
+    </mat-grid-tile>
+    <mat-grid-tile class="detail">{{ currentAssessment.title }}</mat-grid-tile>
+    <mat-grid-tile class="detail">{{ currentAssessment.subject }}</mat-grid-tile>
+    <mat-grid-tile class="detail">{{ currentAssessment.grade }}</mat-grid-tile>
+    <mat-grid-tile class="detail">{{ currentAssessment.country }}</mat-grid-tile>
+    <mat-grid-tile class="detail">{{ currentAssessment.language }}</mat-grid-tile>
+    <mat-grid-tile class="detail">{{ currentAssessment.private }}</mat-grid-tile>
+  </mat-grid-list>
+
+
   <div class="main-board__top-container">
     <h1>Topics - {{topicsDataSource.data.length}} <span *ngIf="selectedTopics.length">({{ selectedTopics.length }}
         selected)</span></h1>
@@ -12,15 +33,6 @@
     <button mat-stroked-button color="accent" (click)="downloadData()">
       <mat-icon>get_app</mat-icon><span>Download</span>
     </button>
-  </div>
-
-  <div *ngIf="currentAssessment" class="main-board__current-object-details">
-    <p>{{ currentAssessment.title }}</p>
-    <p>{{ currentAssessment.subject }}</p>
-    <p>{{ currentAssessment.grade }}</p>
-    <p>{{ currentAssessment.country }}</p>
-    <p>{{ currentAssessment.language }}</p>
-    <p>{{ currentAssessment.private }}</p>
   </div>
 
   <app-table [tableData]="topicsDataSource" [displayedColumns]="displayedColumns"

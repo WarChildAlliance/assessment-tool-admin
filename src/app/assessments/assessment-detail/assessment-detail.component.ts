@@ -67,6 +67,10 @@ export class AssessmentDetailComponent implements OnInit {
     this.router.navigate([`/assessments/${this.currentAssessment.id}/topics/${id}`]);
   }
 
+  deleteCurrentAssessment() {
+    console.log("DELETE CURRENT ASSESSMENT");
+  }
+
   deleteSelection(): void {
     // TODO implement the proper deletion
     console.log('DEL', this.selectedTopics);

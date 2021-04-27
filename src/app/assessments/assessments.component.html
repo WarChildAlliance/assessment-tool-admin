@@ -2,9 +2,6 @@
 
   <div class="main-board__top-container">
     <h1>Assessments ({{assessmentsDataSource.data.length}})</h1>
-    <button mat-stroked-button color="accent" (click)="openCreateAssessmentDialog()" [disabled]="true">
-      <mat-icon>add_circle_outline</mat-icon><span>Create assessment</span>
-    </button>
     <button mat-stroked-button [disabled]="true" color="accent" (click)="downloadData()">
       <mat-icon>get_app</mat-icon><span>Download</span>
     </button>
@@ -14,6 +11,7 @@
     [filterableColumns]="filterableColumns" [isSelectable]="false" (openDetailsEvent)="onOpenDetails($event)">
   </app-table>
 
+  <!-- TODO Delete the following dialog if it's decided not to implement the assessment creation -->
   <ng-template #createAssessmentDialog>
     <h2 mat-dialog-title>Create a new assessment</h2>
     <mat-dialog-content>

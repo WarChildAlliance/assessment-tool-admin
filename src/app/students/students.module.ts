@@ -18,6 +18,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { TopicAccessesBuilderComponent } from './topic-accesses-builder/topic-accesses-builder.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 
 
@@ -44,7 +45,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     SharedModule,
     MatRadioModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatGridListModule
   ]
 })
 export class StudentsModule { }

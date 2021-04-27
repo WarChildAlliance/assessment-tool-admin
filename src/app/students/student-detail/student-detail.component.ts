@@ -21,4 +21,7 @@ export class StudentDetailComponent implements OnInit {
     });
   }
 
+  deleteCurrentStudent() {
+    console.log("DELETE CURRENT USER");
+  }
 }

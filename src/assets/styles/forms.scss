@@ -1,10 +1,20 @@
 .form-primary {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
     max-width: 40vw;
 
-    &>.mat-button {
-        margin-top: 16px;
+    &__flex-container {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-evenly;
+
+        & > * {
+            flex: 0.4;
+            margin: 0 5%;
+        }
+    }
+
+    & > .mat-button {
+        display: block;
+        margin: 16px auto 0;
     }
 }

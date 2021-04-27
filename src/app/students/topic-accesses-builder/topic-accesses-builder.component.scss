@@ -1,23 +1,24 @@
 .topic-accesses-builder {
     display: flex;
     justify-content: space-evenly;
-
     padding: 60px;
-
     min-height: 240px;
-    width: 50vw;
+    min-width: 60vw;
 
     &__list {
-        & > span {
+        min-width: 12vw;
+        padding: 0 12px;
+
+        &.-students {
+            mat-icon {
+                margin-right: 8px;
+            }
+        }
+
+        & > .header {
             text-align: center;
             display: block;
             margin-bottom: 32px;
-        }
-
-        &.-assessments-list {
-            & > * {
-                display: block;
-            }
         }
     }
 
@@ -25,12 +26,7 @@
         min-height: 34px;
         display: flex !important;
         align-items: center;
-        justify-content: space-between;
         margin-bottom: 12px;
-
-        & > .mat-checkbox {
-            margin-right: 16px;
-        }
     }
 }
 

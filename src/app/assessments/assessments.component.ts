@@ -59,10 +59,6 @@ export class AssessmentsComponent implements OnInit {
     this.router.navigate([`/assessments/${id}`]);
   }
 
-  openCreateAssessmentDialog(): void {
-    this.dialog.open(this.createAssessmentDialog);
-  }
-
   togglePrivate(event: { checked: boolean; }): void {
     this.isAssessmentPrivate = event.checked;
   }
@@ -75,6 +71,7 @@ export class AssessmentsComponent implements OnInit {
     console.log('Work In Progress');
   }
 
+  // TODO Delete the following function if it's decided not to implement the assessment creation
   submitCreateNewAssessment(): void {
     const assessmentToCreate = {
       title: this.createNewAssessmentForm.value.title,
