@@ -54,6 +54,6 @@
   </ng-template>
 
   <ng-template #assignTopicDialog>
-    <app-topic-accesses-builder [studentsList]="selectedUsers"></app-topic-accesses-builder>
+    <app-topic-accesses-builder [studentsList]="selectedUsers" (closeTopicsDialogEvent)="onCloseTopicsDialogEvent()"></app-topic-accesses-builder>
   </ng-template>
 </div>

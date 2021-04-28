@@ -58,6 +58,10 @@ export class StudentsComponent implements OnInit {
     this.router.navigate([`/students/${id}`]);
   }
 
+  onCloseTopicsDialogEvent() {
+    this.dialog.closeAll();
+  }
+
   openAssignTopicDialog() {
     // Check if all students share the same language and country
     if (!this.selectedUsers.every((student) => (student.country === this.selectedUsers[0].country && student.language === this.selectedUsers[0].language))){

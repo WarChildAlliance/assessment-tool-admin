@@ -3,7 +3,7 @@
     <div class="topic-accesses-builder__list -students">
         <span class="header">Students</span>
 
-        <div  class="topic-accesses-builder__list-row" *ngFor="let student of studentsList">
+        <div class="topic-accesses-builder__list-row" *ngFor="let student of studentsList">
             <mat-icon color="accent">person</mat-icon>
             <span>
                 {{ student.first_name + ' ' + student.last_name }}
@@ -19,30 +19,27 @@
         </mat-radio-button>
     </div>
 
-    <div class="topic-accesses-builder__list">
-        <span class="header">Assessment topic(s)</span>
+    <div [formGroup]="assignTopicForm" class="topic-accesses-builder__list">
+        <span class="header">Assessment topic(s) availability</span>
 
-        <div *ngFor="let topic of topicsList"  class="topic-accesses-builder__list-row">
-            <mat-checkbox>
-                {{ topic.name }}
-            </mat-checkbox>
-        </div>
-    </div>
-    
-    <div class="topic-accesses-builder__list">
-        <span class="header">Availability</span>
+        <ng-container formArrayName="access">
+            <div *ngFor="let control of getControls(); let i=index;" [formGroupName]="i" class="topic-accesses-builder__list-row -topic-access">
+                
+                <mat-checkbox formControlName="selected">
+                    {{ control.get('topic').value.name }}
+                </mat-checkbox>
 
-        <div *ngFor="let topic of topicsList"  class="topic-accesses-builder__list-row">
-            <mat-form-field color="accent" appearance="outline">
-                <mat-date-range-input [rangePicker]="campaignOnePicker">
-                    <input matStartDate placeholder="Start date" (dateInput)="input($event, topic)"
-                        (dateChange)="change($event, topic)">
-                    <input matEndDate placeholder="End date" (dateInput)="input($event, topic)"
-                        (dateChange)="change($event, topic)">
-                </mat-date-range-input>
-                <mat-datepicker-toggle matSuffix [for]="campaignOnePicker"></mat-datepicker-toggle>
-                <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
-            </mat-form-field>
-        </div>
+                <mat-form-field color="accent" appearance="outline">
+                    <mat-date-range-input [rangePicker]="campaignOnePicker">
+                        <input matStartDate formControlName="start_date" placeholder="Start date">
+                        <input matEndDate formControlName="end_date" placeholder="End date">
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matSuffix [for]="campaignOnePicker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
+                </mat-form-field>
+            </div>
+        </ng-container>
     </div>
 </div>
+
+<input class="topic-accesses-builder__submit" type="submit" (click)="submitCreateTopicAccesses()" value="Click and pray" [disabled]="!assignTopicForm.controls.access" />
