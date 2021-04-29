@@ -17,6 +17,24 @@
     </button>
   </div>
 
+  <div class="main-board__select-container">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Country</mat-label>
+      <mat-select (selectionChange)="applySelectFilters('country', $event)">
+        <mat-option value="">All</mat-option>
+        <mat-option *ngFor="let country of countries" [value]="country">{{country}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Language</mat-label>
+      <mat-select (selectionChange)="applySelectFilters('language', $event)">
+        <mat-option value="">All</mat-option>
+        <mat-option *ngFor="let language of languages" [value]="language">{{language}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
   <app-table [tableData]="studentsDataSource" [displayedColumns]="displayedColumns"
     [filterableColumns]="filterableColumns" [isSelectable]="true" (selectionChangedEvent)="onSelectionChange($event)"
     (openDetailsEvent)="onOpenDetails($event)"></app-table>

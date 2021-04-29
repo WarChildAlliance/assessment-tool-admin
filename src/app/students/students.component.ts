@@ -31,6 +31,11 @@ export class StudentsComponent implements OnInit {
   public countries = ['USA', 'JOR', 'FRA'];
   public languages = ['ARA', 'ENG', 'FRE'];
 
+  private filteringOptions = {
+    country: '',
+    language: ''
+  }
+
   @ViewChild('createStudentDialog') createStudentDialog: TemplateRef<any>;
   @ViewChild('assignTopicDialog') assignTopicDialog: TemplateRef<any>
 
@@ -49,8 +54,18 @@ export class StudentsComponent implements OnInit {
     });
   }
 
+  applySelectFilters(param: string, $event) {
+
+    this.filteringOptions[param] = $event.value;
+
+    this.userService.getStudentsList(this.filteringOptions).subscribe((filteredStudentsList) => {
+      this.studentsDataSource = new MatTableDataSource(filteredStudentsList);
+    });
+  }
+
   // This eventReceiver triggers a thousand times when user does "select all". We should find a way to improve this. (debouncer ?)
   onSelectionChange(newSelection: User[]) {
+    console.log("Students selection changed !");
     this.selectedUsers = newSelection;
   }
 

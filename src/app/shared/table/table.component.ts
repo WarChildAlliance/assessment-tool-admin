@@ -21,7 +21,8 @@ export class TableComponent implements OnInit, OnChanges {
 
   public selection: SelectionModel<any> = new SelectionModel<any>(true, []);
 
-  @Output() selectionChangedEvent = new EventEmitter<any[]>();
+  // Notice here that the eventEmitter constructor accepts a "true" argument, which makes it asynchronous and prevents NG0100
+  @Output() selectionChangedEvent = new EventEmitter<any[]>(true);
   @Output() openDetailsEvent = new EventEmitter<string>();
 
   constructor() { }
@@ -32,14 +33,17 @@ export class TableComponent implements OnInit, OnChanges {
     });
   }
 
-  ngOnChanges() {
+  ngOnChanges(): void {
+    // Be careful: if ngOnChanges has reasons to trigger other than tableData being updated,
+    // it might be interesting to move the following line in a setter for tableData.
+    this.selection.clear();
     this.loadFilter();
 
     this.tableData.sort = this.tableSort;
     this.tableData.paginator = this.paginator;
   }
 
-  // Returns an array composed of exclusively of the keys of t he columns we want displayed
+  // Return an array exclusively composed of the keys of the columns we want displayed
   getDisplayedColumnsKeys(): string[] {
     let displayedColumnsKeys = [];
     if (this.isSelectable) { displayedColumnsKeys.push('select'); }
