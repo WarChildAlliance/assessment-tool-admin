@@ -1,3 +1,4 @@
+<h1>Assign a topic</h1>
 <div class="topic-accesses-builder">
 
     <div class="topic-accesses-builder__list -students">
@@ -23,8 +24,9 @@
         <span class="header">Assessment topic(s) availability</span>
 
         <ng-container formArrayName="access">
-            <div *ngFor="let control of getControls(); let i=index;" [formGroupName]="i" class="topic-accesses-builder__list-row -topic-access">
-                
+            <div *ngFor="let control of getControls(); let i=index;" [formGroupName]="i"
+                class="topic-accesses-builder__list-row -topic-access">
+
                 <mat-checkbox formControlName="selected">
                     {{ control.get('topic').value.name }}
                 </mat-checkbox>
@@ -42,4 +44,7 @@
     </div>
 </div>
 
-<input class="topic-accesses-builder__submit" type="submit" (click)="submitCreateTopicAccesses()" value="Click and pray" [disabled]="!assignTopicForm.controls.access" />
+
+<button mat-stroked-button class="topic-accesses-builder__submit" [disabled]="!getControls().length" color="accent"
+    (click)="submitCreateTopicAccesses()">Assign
+</button>

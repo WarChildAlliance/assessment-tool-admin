@@ -84,7 +84,7 @@ $admin-dashboard-accent: (
 // `headlines` and `body-1` levels.
 $custom-typography: mat-typography-config(
   $font-family: 'Roboto, monospace',
-  $headline: mat-typography-level(32px, 48px, 700),
+  $headline: mat-typography-level(24px, 32px, 500),
   $body-1: mat-typography-level(14px, 22px, normal)
 );
 

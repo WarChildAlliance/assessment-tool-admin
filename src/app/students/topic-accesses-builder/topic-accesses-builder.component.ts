@@ -43,6 +43,7 @@ export class TopicAccessesBuilderComponent implements OnInit {
 
   generateForm() {
     const accessForm = this.assignTopicForm.get('access') as FormArray;
+    accessForm.clear();
 
     this.topicsList.forEach((topic: Topic) => {
       const topicAccess = this.formBuilder.group({
@@ -56,7 +57,7 @@ export class TopicAccessesBuilderComponent implements OnInit {
   }
 
   submitCreateTopicAccesses() {
-
+    
     let studentsArray = new Array<{ student_id: number }>();
     this.studentsList.forEach(student => {
       studentsArray.push({ student_id: student.id });
