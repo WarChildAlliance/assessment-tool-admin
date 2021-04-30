@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Assessment } from 'src/app/core/models/assessment.model';
 import { Topic } from 'src/app/core/models/topic.models';
 import { User } from 'src/app/core/models/user.model';
@@ -29,7 +29,9 @@ export class TopicAccessesBuilderComponent implements OnInit {
 
   ngOnInit(): void {
     this.assessmentService.getAssessmentsList().subscribe((assessmentsList) => {
-      const filteredAssessment = assessmentsList.filter((assessment) => (assessment.country === this.studentsList[0].country && assessment.language === this.studentsList[0].language));
+      const filteredAssessment = assessmentsList.filter((assessment) => (
+        assessment.country === this.studentsList[0].country && assessment.language === this.studentsList[0].language
+      ));
       this.assessmentsList = filteredAssessment;
     });
   }
@@ -41,7 +43,7 @@ export class TopicAccessesBuilderComponent implements OnInit {
     });
   }
 
-  generateForm() {
+  generateForm(): void {
     const accessForm = this.assignTopicForm.get('access') as FormArray;
     accessForm.clear();
 
@@ -51,25 +53,25 @@ export class TopicAccessesBuilderComponent implements OnInit {
         selected: new FormControl(true),
         start_date: new FormControl(null),
         end_date: new FormControl(null)
-      })
+      });
       accessForm.push(topicAccess);
     });
   }
 
-  submitCreateTopicAccesses() {
-    
-    let studentsArray = new Array<{ student_id: number }>();
+  submitCreateTopicAccesses(): void {
+
+    const studentsArray = new Array<{ student_id: number }>();
     this.studentsList.forEach(student => {
       studentsArray.push({ student_id: student.id });
     });
 
-    let accessesArray = new Array<{
+    const accessesArray = new Array<{
       topic_id: number,
       start_date: Date,
       end_date: Date
     }>();
 
-    for (let element of this.assignTopicForm.value.access) {
+    for (const element of this.assignTopicForm.value.access) {
       if (element.selected) {
         if (element.start_date && element.end_date) {
           accessesArray.push({
@@ -84,12 +86,12 @@ export class TopicAccessesBuilderComponent implements OnInit {
       }
     }
 
-    let batchTopicAccessesData: BatchTopicAccesses = {
+    const batchTopicAccessesData: BatchTopicAccesses = {
       students: studentsArray,
       accesses: accessesArray
-    }
+    };
 
-    console.log("FINAL BIG BATCH: ", batchTopicAccessesData);
+    console.log('FINAL BIG BATCH: ', batchTopicAccessesData);
 
     // TODO POST request here
 
@@ -98,7 +100,7 @@ export class TopicAccessesBuilderComponent implements OnInit {
     this.closeTopicsDialogEvent.emit();
   }
 
-  getControls() {
+  getControls(): AbstractControl[] {
     return (this.assignTopicForm.get('access') as FormArray).controls;
   }
 }

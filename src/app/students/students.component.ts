@@ -22,7 +22,7 @@ export class StudentsComponent implements OnInit {
     { key: 'country', value: 'Country' }
   ];
 
-  public filterableColumns = ["username", "first_name", "last_name", "language", "country"];
+  public filterableColumns = ['username', 'first_name', 'last_name', 'language', 'country'];
 
   public studentsDataSource: MatTableDataSource<User> = new MatTableDataSource([]);
   public selectedUsers: User[] = [];
@@ -34,10 +34,10 @@ export class StudentsComponent implements OnInit {
   private filteringOptions = {
     country: '',
     language: ''
-  }
+  };
 
   @ViewChild('createStudentDialog') createStudentDialog: TemplateRef<any>;
-  @ViewChild('assignTopicDialog') assignTopicDialog: TemplateRef<any>
+  @ViewChild('assignTopicDialog') assignTopicDialog: TemplateRef<any>;
 
   public createNewStudentForm: FormGroup = new FormGroup({
     first_name: new FormControl('', [Validators.required]),
@@ -54,7 +54,7 @@ export class StudentsComponent implements OnInit {
     });
   }
 
-  applySelectFilters(param: string, $event) {
+  applySelectFilters(param: string, $event): void {
 
     this.filteringOptions[param] = $event.value;
 
@@ -64,8 +64,8 @@ export class StudentsComponent implements OnInit {
   }
 
   // This eventReceiver triggers a thousand times when user does "select all". We should find a way to improve this. (debouncer ?)
-  onSelectionChange(newSelection: User[]) {
-    console.log("Students selection changed !");
+  onSelectionChange(newSelection: User[]): void {
+    console.log('Students selection changed !');
     this.selectedUsers = newSelection;
   }
 
@@ -73,13 +73,15 @@ export class StudentsComponent implements OnInit {
     this.router.navigate([`/students/${id}`]);
   }
 
-  onCloseTopicsDialogEvent() {
+  onCloseTopicsDialogEvent(): void {
     this.dialog.closeAll();
   }
 
-  openAssignTopicDialog() {
+  openAssignTopicDialog(): void {
     // Check if all students share the same language and country
-    if (!this.selectedUsers.every((student) => (student.country === this.selectedUsers[0].country && student.language === this.selectedUsers[0].language))){
+    if (!this.selectedUsers.every((student) => (
+      student.country === this.selectedUsers[0].country && student.language === this.selectedUsers[0].language
+    ))) {
       this.alertService.error('You can only give access to a topic to students with the same country and language.');
     } else {
       this.dialog.open(this.assignTopicDialog);
@@ -92,11 +94,11 @@ export class StudentsComponent implements OnInit {
 
   deleteSelection(): void {
     console.log('DEL', this.selectedUsers);
-  };
+  }
 
   downloadData(): void {
     console.log('Work In Progress');
-  };
+  }
 
   submitCreateNewStudent(): void {
     const studentToCreate = {

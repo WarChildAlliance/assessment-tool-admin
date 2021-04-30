@@ -21,7 +21,7 @@ export class AssessmentsComponent implements OnInit {
     { key: 'country', value: 'Country' }
   ];
 
-  public filterableColumns = ["title", "grade", "subject", "language", "country"];
+  public filterableColumns = ['title', 'grade', 'subject', 'language', 'country'];
 
   public assessmentsDataSource: MatTableDataSource<Assessment> = new MatTableDataSource([]);
 
@@ -29,6 +29,14 @@ export class AssessmentsComponent implements OnInit {
   public subjects = ['MATH', 'LITERACY'];
   public countries = ['USA', 'JOR', 'FRA'];
   public languages = ['ARA', 'ENG', 'FRE'];
+  public grades = [1, 2, 3, 4, 5, 6];
+
+  private filteringOptions = {
+    subject: '',
+    grade: '',
+    country: '',
+    language: ''
+  };
 
   public isAssessmentPrivate = false;
 
@@ -52,6 +60,13 @@ export class AssessmentsComponent implements OnInit {
 
     this.assessmentService.getAssessmentsList().subscribe((assessmentsList) => {
       this.assessmentsDataSource = new MatTableDataSource(assessmentsList);
+    });
+  }
+
+  applySelectFilters(param: string, $event): void  {
+    this.filteringOptions[param] = $event.value;
+    this.assessmentService.getAssessmentsList(this.filteringOptions).subscribe((filteredAssessmentsList) => {
+      this.assessmentsDataSource = new MatTableDataSource(filteredAssessmentsList);
     });
   }
 

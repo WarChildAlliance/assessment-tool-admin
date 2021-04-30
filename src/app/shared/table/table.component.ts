@@ -45,7 +45,7 @@ export class TableComponent implements OnInit, OnChanges {
 
   // Return an array exclusively composed of the keys of the columns we want displayed
   getDisplayedColumnsKeys(): string[] {
-    let displayedColumnsKeys = [];
+    const displayedColumnsKeys = [];
     if (this.isSelectable) { displayedColumnsKeys.push('select'); }
 
     this.displayedColumns.forEach(element => {
@@ -62,13 +62,13 @@ export class TableComponent implements OnInit, OnChanges {
   isAllFilteredSelected(): boolean {
     const result = this.tableData.filteredData.every(element => {
       return this.selection.selected.includes(element);
-    })
+    });
     return result;
   }
 
   masterToggle(): void {
     if (this.isAllFilteredSelected()) {
-      this.selection.clear()
+      this.selection.clear();
     } else {
       this.tableData.filteredData.forEach(
         element => {
@@ -78,7 +78,7 @@ export class TableComponent implements OnInit, OnChanges {
   }
 
   // If there are performance issues, the foreach could be replaced
-  private loadFilter() {
+  private loadFilter(): void {
 
     this.tableData.filterPredicate = (data, filterValue) => {
       let applyFilter = false;
@@ -99,7 +99,7 @@ export class TableComponent implements OnInit, OnChanges {
         }
       });
       return applyFilter;
-    }
+    };
   }
 
   applyFilter(event: Event): void {
@@ -107,7 +107,7 @@ export class TableComponent implements OnInit, OnChanges {
     this.tableData.filter = filterValue.trim().toLowerCase();
   }
 
-  openElementDetails(id: number) {
+  openElementDetails(id: number): void {
     this.openDetailsEvent.emit(id.toString());
   }
 }

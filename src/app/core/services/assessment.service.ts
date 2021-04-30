@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { Assessment } from '../models/assessment.model';
 import { Question } from '../models/question.model';
 import { Topic } from '../models/topic.models';
+import { UtilitiesService } from './utilities.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +13,14 @@ import { Topic } from '../models/topic.models';
 export class AssessmentService {
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private utilitiesService: UtilitiesService
   ) {}
 
-  getAssessmentsList(): Observable<Assessment[]> {
-    return this.http.get<Assessment[]>(`${environment.API_URL}/assessments/`);
+  getAssessmentsList(filteringOptions?: object): Observable<Assessment[]> {
+    const initialUrl = `${environment.API_URL}/assessments/`;
+    const finalUrl = filteringOptions ? this.utilitiesService.urlBuilder(initialUrl, filteringOptions) : initialUrl;
+    return this.http.get<Assessment[]>(finalUrl);
   }
 
   getAssessmentDetails(id: string): Observable<Assessment> {

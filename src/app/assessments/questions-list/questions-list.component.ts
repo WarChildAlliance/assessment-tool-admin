@@ -4,7 +4,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Question } from 'src/app/core/models/question.model';
-import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 
 @Component({
@@ -22,7 +21,7 @@ export class QuestionsListComponent implements OnInit {
     { key: 'question_type', value: 'Question type' },
   ];
 
-  public filterableColumns = ["title", "question_type"];
+  public filterableColumns = ['title', 'question_type'];
 
   public questionsDataSource: MatTableDataSource<Question> = new MatTableDataSource([]);
   public selectedQuestions: Question[] = [];
@@ -36,7 +35,10 @@ export class QuestionsListComponent implements OnInit {
     language: new FormControl('', [Validators.required]),
   });
 
-  constructor(private assessmentService: AssessmentService, private route: ActivatedRoute, private alertService: AlertService, private router: Router, private dialog: MatDialog) { }
+  constructor(private assessmentService: AssessmentService,
+              private route: ActivatedRoute,
+              private router: Router,
+              private dialog: MatDialog) { }
 
   ngOnInit(): void {
 
@@ -46,7 +48,7 @@ export class QuestionsListComponent implements OnInit {
   }
 
   // This eventReceiver triggers a thousand times when user does "select all". We should find a way to improve this. (debouncer ?)
-  onSelectionChange(newSelection: Question[]) {
+  onSelectionChange(newSelection: Question[]): void {
     this.selectedQuestions = newSelection;
   }
 
@@ -60,9 +62,9 @@ export class QuestionsListComponent implements OnInit {
 
   deleteSelection(): void {
     console.log('DEL', this.selectedQuestions);
-  };
+  }
 
   downloadData(): void {
     console.log('Work In Progress');
-  };
+  }
 }

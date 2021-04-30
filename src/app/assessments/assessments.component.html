@@ -7,6 +7,37 @@
     </button>
   </div>
 
+  <div class="main-board__select-container">
+    <mat-form-field appearance="outline">
+      <mat-label>Subject</mat-label>
+      <mat-select (selectionChange)="applySelectFilters('subject', $event)">
+        <mat-option value="">All</mat-option>
+        <mat-option *ngFor="let subject of subjects" [value]="subject">{{subject}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Grade</mat-label>
+      <mat-select (selectionChange)="applySelectFilters('grade', $event)">
+        <mat-option value="">All</mat-option>
+        <mat-option *ngFor="let grade of grades" [value]="grade">{{grade}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Country</mat-label>
+      <mat-select (selectionChange)="applySelectFilters('country', $event)">
+        <mat-option value="">All</mat-option>
+        <mat-option *ngFor="let country of countries" [value]="country">{{country}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Language</mat-label>
+      <mat-select (selectionChange)="applySelectFilters('language', $event)">
+        <mat-option value="">All</mat-option>
+        <mat-option *ngFor="let language of languages" [value]="language">{{language}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
   <app-table [tableData]="assessmentsDataSource" [displayedColumns]="displayedColumns"
     [filterableColumns]="filterableColumns" [isSelectable]="false" (openDetailsEvent)="onOpenDetails($event)">
   </app-table>

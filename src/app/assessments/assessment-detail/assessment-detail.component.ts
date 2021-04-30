@@ -17,9 +17,9 @@ export class AssessmentDetailComponent implements OnInit {
   public displayedColumns: { key: string, value: string }[] = [
     { key: 'name', value: 'Name' },
     { key: 'order', value: 'Order' },
-  ]
+  ];
 
-  public filterableColumns = ["name"];
+  public filterableColumns = ['name'];
   public topicsDataSource: MatTableDataSource<Topic> = new MatTableDataSource([]);
 
   public isAssessmentPrivate = false;
@@ -55,7 +55,7 @@ export class AssessmentDetailComponent implements OnInit {
   }
 
   // This eventReceiver triggers a thousand times when user does "select all". We should find a way to improve this. (debouncer ?)
-  onSelectionChange(newSelection: Topic[]) {
+  onSelectionChange(newSelection: Topic[]): void {
     this.selectedTopics = newSelection;
   }
 
@@ -67,8 +67,8 @@ export class AssessmentDetailComponent implements OnInit {
     this.router.navigate([`/assessments/${this.currentAssessment.id}/topics/${id}`]);
   }
 
-  deleteCurrentAssessment() {
-    console.log("DELETE CURRENT ASSESSMENT");
+  deleteCurrentAssessment(): void {
+    console.log('DELETE CURRENT ASSESSMENT');
   }
 
   deleteSelection(): void {
@@ -78,7 +78,7 @@ export class AssessmentDetailComponent implements OnInit {
 
   downloadData(): void {
     console.log('Work In Progress');
-  };
+  }
 
   submitCreateNewTopic(): void {
     const topicToCreate = {
