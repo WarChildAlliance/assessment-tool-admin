@@ -1,11 +1,13 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { UserService } from '../core/services/user.service';
 import { User } from 'src/app/core/models/user.model';
+import { Language } from 'src/app/core/models/language.model';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { AlertService } from '../core/services/alert.service';
+import { Country } from '../core/models/country.model';
 
 @Component({
   selector: 'app-students',
@@ -28,8 +30,8 @@ export class StudentsComponent implements OnInit {
   public selectedUsers: User[] = [];
 
   // Create a route to get the available languages & countries from the API
-  public countries = ['USA', 'JOR', 'FRA'];
-  public languages = ['ARA', 'ENG', 'FRE'];
+  public countries: Country[] = [];
+  public languages: Language[] = [];
 
   private filteringParams = {
     country: '',
@@ -49,19 +51,17 @@ export class StudentsComponent implements OnInit {
   constructor(private userService: UserService, private alertService: AlertService, private router: Router, private dialog: MatDialog) { }
 
   ngOnInit(): void {
+    
+    this.userService.getCountries().subscribe((countries) => {
+      this.countries = countries
+    });
+
+    this.userService.getLanguages().subscribe((languages) => {
+      this.languages = languages;
+    });
+    
     this.userService.getStudentsList().subscribe((studentsList) => {
-
-      // Here we have to extract the wanted value from nested object because for now the
-      // way we use in table componenent MatTableDataSource only accepts simple objects.
-      let studentsListCleaned = [];
-
-      studentsList.forEach((student) => {
-        let studentCleaned = student as any;
-        studentCleaned['language'] = student.language.name_en
-        studentsListCleaned.push(studentCleaned);
-      })
-      
-      this.studentsDataSource = new MatTableDataSource(studentsListCleaned);
+      this.studentsDataSource = new MatTableDataSource(this.cleanUserData(studentsList));
     });
   }
 
@@ -70,7 +70,7 @@ export class StudentsComponent implements OnInit {
     this.filteringParams[param] = $event.value;
 
     this.userService.getStudentsList(this.filteringParams).subscribe((filteredStudentsList) => {
-      this.studentsDataSource = new MatTableDataSource(filteredStudentsList);
+      this.studentsDataSource = new MatTableDataSource(this.cleanUserData(filteredStudentsList));
     });
   }
 
@@ -111,13 +111,28 @@ export class StudentsComponent implements OnInit {
     console.log('Work In Progress');
   }
 
+  cleanUserData(studentsList): any[] {
+
+      // Here we have to extract the wanted value from nested object because for now the
+      // way we use in table componenent MatTableDataSource only accepts simple objects.
+      let studentsListCleaned = [];
+
+      studentsList.forEach((student) => {
+        let studentCleaned = student as any;
+        studentCleaned['language'] = student.language.name_en
+        studentsListCleaned.push(studentCleaned);
+      });
+      
+      return studentsListCleaned;
+  }
+
   submitCreateNewStudent(): void {
     const studentToCreate = {
       first_name: this.createNewStudentForm.value.first_name,
       last_name: this.createNewStudentForm.value.last_name,
       role: 'STUDENT',
-      language: this.createNewStudentForm.value.language,
-      country: this.createNewStudentForm.value.country
+      language: this.createNewStudentForm.value.language.code, // TODO Do we really want to only send the code ? Why the code precisely ?
+      country: this.createNewStudentForm.value.country.code
     };
     this.userService.createNewStudent(studentToCreate).subscribe((student: User) => {
       this.alertService.success(`Student ${student.first_name + ' ' + student.last_name} with ID ${student.username} was successfully created`);

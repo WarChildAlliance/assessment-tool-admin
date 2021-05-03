@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { BatchTopicAccesses } from '../models/batch-topic-accesses.model';
+import { Country } from '../models/country.model';
+import { Language } from '../models/language.model';
 import { User } from '../models/user.model';
 import { UtilitiesService } from './utilities.service';
 
@@ -38,5 +40,13 @@ export class UserService {
 
   assignTopicsAccesses(batch_topic_access: BatchTopicAccesses): Observable<BatchTopicAccesses> {
     return this.http.post<BatchTopicAccesses>(`${environment.API_URL}/assessments/never_gonna_give_you_up___never_gonna_let_you_down/accesses/bulk_create/`, batch_topic_access)
+  }
+
+  getLanguages(): Observable<Language[]> {
+    return this.http.get<Language[]>(`${environment.API_URL}/users/languages`);
+  }
+
+  getCountries(): Observable<Country[]> {
+    return this.http.get<Country[]>(`${environment.API_URL}/users/countries`);
   }
 }
