@@ -14,7 +14,7 @@ export class TableComponent implements OnInit, OnChanges {
   @Input() displayedColumns: { key: string, value: string }[];
   @Input() tableData: MatTableDataSource<any>;
   @Input() isSelectable: boolean;
-  @Input() filterableColumns: string[];
+  @Input() searchableColumns: string[];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) tableSort: MatSort;
@@ -84,7 +84,7 @@ export class TableComponent implements OnInit, OnChanges {
     this.tableData.filterPredicate = (data, filterValue) => {
       let applyFilter = false;
 
-      this.filterableColumns.forEach((key: string) => {
+      this.searchableColumns.forEach((key: string) => {
         let valueToMatchAgainst = data[key];
 
         if (valueToMatchAgainst && !applyFilter) {

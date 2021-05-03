@@ -35,7 +35,7 @@
   </div>
 
   <app-table [tableData]="topicsDataSource" [displayedColumns]="displayedColumns"
-    [filterableColumns]="filterableColumns" [isSelectable]="true" (selectionChangedEvent)="onSelectionChange($event)"
+    [searchableColumns]="searchableColumns" [isSelectable]="true" (selectionChangedEvent)="onSelectionChange($event)"
     (openDetailsEvent)="onOpenDetails($event)"></app-table>
 
   <ng-template #createTopicDialog>

@@ -19,7 +19,7 @@ export class AssessmentDetailComponent implements OnInit {
     { key: 'order', value: 'Order' },
   ];
 
-  public filterableColumns = ['name'];
+  public searchableColumns = ['name'];
   public topicsDataSource: MatTableDataSource<Topic> = new MatTableDataSource([]);
 
   public isAssessmentPrivate = false;

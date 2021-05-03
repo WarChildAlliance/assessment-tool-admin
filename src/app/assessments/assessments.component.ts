@@ -21,7 +21,7 @@ export class AssessmentsComponent implements OnInit {
     { key: 'country', value: 'Country' }
   ];
 
-  public filterableColumns = ['title', 'grade', 'subject', 'language', 'country'];
+  public searchableColumns = ['title', 'grade', 'subject', 'language', 'country'];
 
   public assessmentsDataSource: MatTableDataSource<Assessment> = new MatTableDataSource([]);
 

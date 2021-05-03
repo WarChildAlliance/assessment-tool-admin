@@ -24,12 +24,11 @@ export class StudentsComponent implements OnInit {
     { key: 'country', value: 'Country' }
   ];
 
-  public filterableColumns = ['username', 'first_name', 'last_name', 'language', 'country'];
+  public searchableColumns = ['username', 'first_name', 'last_name', 'language', 'country'];
 
   public studentsDataSource: MatTableDataSource<any> = new MatTableDataSource([]);
   public selectedUsers: User[] = [];
 
-  // Create a route to get the available languages & countries from the API
   public countries: Country[] = [];
   public languages: Language[] = [];
 
@@ -111,7 +110,7 @@ export class StudentsComponent implements OnInit {
     console.log('Work In Progress');
   }
 
-  cleanUserData(studentsList): any[] {
+  cleanUserData(studentsList: User[]): any[] {
 
       // Here we have to extract the wanted value from nested object because for now the
       // way we use in table componenent MatTableDataSource only accepts simple objects.

@@ -21,7 +21,7 @@ export class QuestionsListComponent implements OnInit {
     { key: 'question_type', value: 'Question type' },
   ];
 
-  public filterableColumns = ['title', 'question_type'];
+  public searchableColumns = ['title', 'question_type'];
 
   public questionsDataSource: MatTableDataSource<Question> = new MatTableDataSource([]);
   public selectedQuestions: Question[] = [];

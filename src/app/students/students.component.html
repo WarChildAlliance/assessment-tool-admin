@@ -36,7 +36,7 @@
   </div>
 
   <app-table [tableData]="studentsDataSource" [displayedColumns]="displayedColumns"
-    [filterableColumns]="filterableColumns" [isSelectable]="true" (selectionChangedEvent)="onSelectionChange($event)"
+    [searchableColumns]="searchableColumns" [isSelectable]="true" (selectionChangedEvent)="onSelectionChange($event)"
     (openDetailsEvent)="onOpenDetails($event)"></app-table>
 
   <ng-template #createStudentDialog>
