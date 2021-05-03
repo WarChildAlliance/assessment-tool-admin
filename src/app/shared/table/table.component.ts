@@ -48,6 +48,7 @@ export class TableComponent implements OnInit, OnChanges {
     const displayedColumnsKeys = [];
     if (this.isSelectable) { displayedColumnsKeys.push('select'); }
 
+    // TODO We can improve this function by making it iterate in nested objects and retrieve the wanted value (by splicing the key on ".")
     this.displayedColumns.forEach(element => {
       displayedColumnsKeys.push(element.key);
     });

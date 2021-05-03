@@ -1,9 +1,11 @@
+import { Language } from "./language.model";
+
 export interface Assessment {
   id: number;
   title: string;
   grade: number;
   subject: Subjects;
-  language?: string;
+  language?: Language;
   country?: string;
   private: boolean;
 }

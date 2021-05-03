@@ -1,11 +1,9 @@
 
 export interface BatchTopicAccesses {
-    students: {
-        student_id: number
-    }[];
+    students: number[];
     accesses: {
-        topic_id: number,
-        start_date: Date,
-        end_date: Date
+        topic: number,
+        start_date: string,
+        end_date: string
     }[];
 }

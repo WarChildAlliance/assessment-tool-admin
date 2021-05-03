@@ -24,7 +24,7 @@ export class StudentsComponent implements OnInit {
 
   public filterableColumns = ['username', 'first_name', 'last_name', 'language', 'country'];
 
-  public studentsDataSource: MatTableDataSource<User> = new MatTableDataSource([]);
+  public studentsDataSource: MatTableDataSource<any> = new MatTableDataSource([]);
   public selectedUsers: User[] = [];
 
   // Create a route to get the available languages & countries from the API
@@ -50,7 +50,18 @@ export class StudentsComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.getStudentsList().subscribe((studentsList) => {
-      this.studentsDataSource = new MatTableDataSource(studentsList);
+
+      // Here we have to extract the wanted value from nested object because for now the
+      // way we use in table componenent MatTableDataSource only accepts simple objects.
+      let studentsListCleaned = [];
+
+      studentsList.forEach((student) => {
+        let studentCleaned = student as any;
+        studentCleaned['language'] = student.language.name_en
+        studentsListCleaned.push(studentCleaned);
+      })
+
+      this.studentsDataSource = new MatTableDataSource(studentsListCleaned);
     });
   }
 

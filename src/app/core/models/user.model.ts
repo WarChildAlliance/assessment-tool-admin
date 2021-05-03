@@ -1,3 +1,5 @@
+import { Language } from "./language.model";
+
 export interface User {
   id: number;
   username?: string;
@@ -6,7 +8,7 @@ export interface User {
   email?: string;
   last_login?: Date;
   role?: UserRoles;
-  language?: string;
+  language?: Language;
   country?: string;
   created_by?: number;
 }

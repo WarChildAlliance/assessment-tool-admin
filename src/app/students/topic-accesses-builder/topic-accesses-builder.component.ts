@@ -5,6 +5,7 @@ import { Topic } from 'src/app/core/models/topic.models';
 import { User } from 'src/app/core/models/user.model';
 import { BatchTopicAccesses } from 'src/app/core/models/batch-topic-accesses.model';
 import { AlertService } from 'src/app/core/services/alert.service';
+import { UserService } from 'src/app/core/services/user.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 
 @Component({
@@ -25,12 +26,12 @@ export class TopicAccessesBuilderComponent implements OnInit {
 
   @Output() closeTopicsDialogEvent = new EventEmitter<void>();
 
-  constructor(private assessmentService: AssessmentService, private formBuilder: FormBuilder, private alertService: AlertService) { }
+  constructor(private assessmentService: AssessmentService, private userService: UserService, private formBuilder: FormBuilder, private alertService: AlertService) { }
 
   ngOnInit(): void {
     this.assessmentService.getAssessmentsList().subscribe((assessmentsList) => {
       const filteredAssessment = assessmentsList.filter((assessment) => (
-        assessment.country === this.studentsList[0].country && assessment.language === this.studentsList[0].language
+        assessment.country === this.studentsList[0].country && assessment.language.code === this.studentsList[0].language.code
       ));
       this.assessmentsList = filteredAssessment;
     });
@@ -60,24 +61,24 @@ export class TopicAccessesBuilderComponent implements OnInit {
 
   submitCreateTopicAccesses(): void {
 
-    const studentsArray = new Array<{ student_id: number }>();
+    const studentsArray: number[] = [];
     this.studentsList.forEach(student => {
-      studentsArray.push({ student_id: student.id });
+      studentsArray.push(student.id);
     });
 
     const accessesArray = new Array<{
-      topic_id: number,
-      start_date: Date,
-      end_date: Date
+      topic: number,
+      start_date: string,
+      end_date: string
     }>();
 
     for (const element of this.assignTopicForm.value.access) {
       if (element.selected) {
         if (element.start_date && element.end_date) {
           accessesArray.push({
-            topic_id: element.topic.id,
-            start_date: element.start_date,
-            end_date: element.end_date
+            topic: element.topic.id,
+            start_date: this.dateFormatter(element.start_date),
+            end_date: this.dateFormatter(element.end_date)
           });
         } else {
           this.alertService.error('You need to set a start date and an end date for each selected topic');
@@ -91,16 +92,31 @@ export class TopicAccessesBuilderComponent implements OnInit {
       accesses: accessesArray
     };
 
-    console.log('FINAL BIG BATCH: ', batchTopicAccessesData);
-
-    // TODO POST request here
-
-    this.alertService.success('The new topic accesses have been successfully set !');
-
-    this.closeTopicsDialogEvent.emit();
+    this.userService.assignTopicsAccesses(batchTopicAccessesData).subscribe(
+      result => {
+        this.alertService.success('The new topic accesses have been successfully set !');
+        this.closeTopicsDialogEvent.emit();
+      },
+      error => {
+        console.log('ERROR', error);
+        this.alertService.error('There was an error during the submission of the topic accesses');
+      }
+    );
   }
 
   getControls(): AbstractControl[] {
     return (this.assignTopicForm.get('access') as FormArray).controls;
+  }
+
+  // Move this function to utilities.service if it can be used anywhere else
+  dateFormatter(date: Date): string {
+    let month = (date.getMonth() + 1).toString();
+    let day = date.getDate().toString();
+    let year = date.getFullYear().toString();
+
+    if (month.length < 2) {month = '0' + month;}
+    if (day.length < 2){day = '0' + day;}
+
+    return [year, month, day].join('-');
   }
 }
