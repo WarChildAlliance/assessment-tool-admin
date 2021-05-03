@@ -31,7 +31,7 @@ export class StudentsComponent implements OnInit {
   public countries = ['USA', 'JOR', 'FRA'];
   public languages = ['ARA', 'ENG', 'FRE'];
 
-  private filteringOptions = {
+  private filteringParams = {
     country: '',
     language: ''
   };
@@ -60,16 +60,16 @@ export class StudentsComponent implements OnInit {
         studentCleaned['language'] = student.language.name_en
         studentsListCleaned.push(studentCleaned);
       })
-
+      
       this.studentsDataSource = new MatTableDataSource(studentsListCleaned);
     });
   }
 
   applySelectFilters(param: string, $event): void {
 
-    this.filteringOptions[param] = $event.value;
+    this.filteringParams[param] = $event.value;
 
-    this.userService.getStudentsList(this.filteringOptions).subscribe((filteredStudentsList) => {
+    this.userService.getStudentsList(this.filteringParams).subscribe((filteredStudentsList) => {
       this.studentsDataSource = new MatTableDataSource(filteredStudentsList);
     });
   }

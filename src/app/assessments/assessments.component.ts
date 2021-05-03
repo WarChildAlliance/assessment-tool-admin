@@ -26,12 +26,12 @@ export class AssessmentsComponent implements OnInit {
   public assessmentsDataSource: MatTableDataSource<Assessment> = new MatTableDataSource([]);
 
   // Create a route to get the available subjects, languages & countries from the API
-  public subjects = ['MATH', 'LITERACY'];
-  public countries = ['USA', 'JOR', 'FRA'];
-  public languages = ['ARA', 'ENG', 'FRE'];
-  public grades = [1, 2, 3, 4, 5, 6];
+  public subjects: string[] = [];
+  public countries: string[] = [];
+  public languages: string[] = [];
+  public grades: number[] = [];
 
-  private filteringOptions = {
+  private filteringParams = {
     subject: '',
     grade: '',
     country: '',
@@ -52,20 +52,30 @@ export class AssessmentsComponent implements OnInit {
   });
 
   constructor(
-    private assessmentService: AssessmentService,
-    private router: Router,
-    private dialog: MatDialog) { }
+    private assessmentService: AssessmentService, private router: Router) { }
 
   ngOnInit(): void {
 
+    // TODO See if we could reduce the number of lines here ?
     this.assessmentService.getAssessmentsList().subscribe((assessmentsList) => {
+      assessmentsList.forEach((assessment) => {
+        this.subjects.push(assessment.subject);
+        this.countries.push(assessment.country);
+        this.languages.push(assessment.language);
+        this.grades.push(assessment.grade);
+      });
+      // This removes duplicates in the arrays
+      this.subjects = [... new Set(this.subjects)];
+      this.countries = [... new Set(this.countries)];
+      this.languages = [... new Set(this.languages)];
+      this.grades = [... new Set(this.grades)];
       this.assessmentsDataSource = new MatTableDataSource(assessmentsList);
     });
   }
 
-  applySelectFilters(param: string, $event): void  {
-    this.filteringOptions[param] = $event.value;
-    this.assessmentService.getAssessmentsList(this.filteringOptions).subscribe((filteredAssessmentsList) => {
+  applySelectFilters(param: string, $event): void {
+    this.filteringParams[param] = $event.value;
+    this.assessmentService.getAssessmentsList(this.filteringParams).subscribe((filteredAssessmentsList) => {
       this.assessmentsDataSource = new MatTableDataSource(filteredAssessmentsList);
     });
   }
@@ -84,18 +94,5 @@ export class AssessmentsComponent implements OnInit {
 
   downloadData(): void {
     console.log('Work In Progress');
-  }
-
-  // TODO Delete the following function if it's decided not to implement the assessment creation
-  submitCreateNewAssessment(): void {
-    const assessmentToCreate = {
-      title: this.createNewAssessmentForm.value.title,
-      grade: this.createNewAssessmentForm.value.grade,
-      subject: this.createNewAssessmentForm.value.subject,
-      language: this.createNewAssessmentForm.value.language,
-      country: this.createNewAssessmentForm.value.country,
-      private: this.isAssessmentPrivate
-    };
-    console.log('NEW ASSESSMENT: ', assessmentToCreate);
   }
 }

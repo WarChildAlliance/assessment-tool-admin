@@ -17,9 +17,9 @@ export class AssessmentService {
     private utilitiesService: UtilitiesService
   ) {}
 
-  getAssessmentsList(filteringOptions?: object): Observable<Assessment[]> {
+  getAssessmentsList(filteringParams?: object): Observable<Assessment[]> {
     const initialUrl = `${environment.API_URL}/assessments/`;
-    const finalUrl = filteringOptions ? this.utilitiesService.urlBuilder(initialUrl, filteringOptions) : initialUrl;
+    const finalUrl = filteringParams ? this.utilitiesService.urlBuilder(initialUrl, filteringParams) : initialUrl;
     return this.http.get<Assessment[]>(finalUrl);
   }
 

@@ -42,40 +42,4 @@
     [filterableColumns]="filterableColumns" [isSelectable]="false" (openDetailsEvent)="onOpenDetails($event)">
   </app-table>
 
-  <!-- TODO Delete the following dialog if it's decided not to implement the assessment creation -->
-  <ng-template #createAssessmentDialog>
-    <h2 mat-dialog-title>Create a new assessment</h2>
-    <mat-dialog-content>
-      <form [formGroup]="createNewAssessmentForm" (ngSubmit)="submitCreateNewAssessment()" class="form-primary">
-        <mat-form-field appearance="outline">
-          <mat-label>Title</mat-label>
-          <input matInput type="text" formControlName="title">
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Grade</mat-label>
-          <input matInput type="number" formControlName="grade">
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Subject</mat-label>
-          <mat-select formControlName="subject">
-            <mat-option *ngFor="let subject of subjects" [value]="subject">{{subject}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Language</mat-label>
-          <mat-select formControlName="language">
-            <mat-option *ngFor="let language of languages" [value]="language">{{language}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Country</mat-label>
-          <mat-select formControlName="country">
-            <mat-option *ngFor="let country of countries" [value]="country">{{country}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-checkbox [checked]="false" (change)="togglePrivate($event)">Private</mat-checkbox>
-        <button mat-button color="accent" type="submit" mat-dialog-close>Add</button>
-      </form>
-    </mat-dialog-content>
-  </ng-template>
 </div>

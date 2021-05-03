@@ -9,7 +9,7 @@
     <mat-grid-tile class="header">Private</mat-grid-tile>
     <mat-grid-tile [rowspan]="2" class="delete-button">
       <button mat-stroked-button color="primary" (click)="deleteCurrentAssessment()">
-        <mat-icon>delete_outline</mat-icon><span>Delete this assessment</span>
+        <mat-icon>delete_outline</mat-icon>
       </button>
     </mat-grid-tile>
     <mat-grid-tile class="detail">{{ currentAssessment.title }}</mat-grid-tile>
@@ -20,9 +20,8 @@
     <mat-grid-tile class="detail">{{ currentAssessment.private }}</mat-grid-tile>
   </mat-grid-list>
 
-
   <div class="main-board__top-container">
-    <h1>Topics - {{topicsDataSource.data.length}} <span *ngIf="selectedTopics.length">({{ selectedTopics.length }}
+    <h1>Topics - {{ topicsDataSource.data.length }} <span *ngIf="selectedTopics.length">({{ selectedTopics.length }}
         selected)</span></h1>
     <button mat-stroked-button [disabled]="!selectedTopics.length" color="accent" (click)="deleteSelection()">
       <mat-icon>delete_outline</mat-icon><span>Delete topic(s)</span>

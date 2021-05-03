@@ -22,9 +22,9 @@ export class UserService {
     return this.http.get<User>(`${environment.API_URL}/users/get_self/`);
   }
 
-  getStudentsList(filteringOptions?: object): Observable<User[]> {
+  getStudentsList(filteringParams?: object): Observable<User[]> {
     const initialUrl = `${environment.API_URL}/users/`;
-    const finalUrl = filteringOptions ? this.utilitiesService.urlBuilder(initialUrl, filteringOptions) : initialUrl;
+    const finalUrl = filteringParams ? this.utilitiesService.urlBuilder(initialUrl, filteringParams) : initialUrl;
     return this.http.get<User[]>(finalUrl);
   }
 

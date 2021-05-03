@@ -8,14 +8,14 @@
     <mat-grid-tile class="header">Language</mat-grid-tile>
     <mat-grid-tile [rowspan]="2" class="delete-button">
       <button mat-stroked-button color="primary" (click)="deleteCurrentStudent()">
-        <mat-icon>delete_outline</mat-icon><span>Delete this student</span>
+        <mat-icon>delete_outline</mat-icon>
       </button>
     </mat-grid-tile>
     <mat-grid-tile class="detail">{{ student.first_name }}</mat-grid-tile>
     <mat-grid-tile class="detail">{{ student.last_name }}</mat-grid-tile>
     <mat-grid-tile class="detail">{{ student.username }}</mat-grid-tile>
     <mat-grid-tile class="detail">{{ student.country }}</mat-grid-tile>
-    <mat-grid-tile class="detail">{{ student.language }}</mat-grid-tile>
+    <mat-grid-tile class="detail">{{ student.language.name_local }}</mat-grid-tile>
   </mat-grid-list>
 
   <div class="main-board__top-container">
