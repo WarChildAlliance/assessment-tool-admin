@@ -31,7 +31,7 @@ export class TopicAccessesBuilderComponent implements OnInit {
   ngOnInit(): void {
     this.assessmentService.getAssessmentsList().subscribe((assessmentsList) => {
       const filteredAssessment = assessmentsList.filter((assessment) => (
-        assessment.country === this.studentsList[0].country && assessment.language === this.studentsList[0].language.code
+        assessment.country.code === this.studentsList[0].country.code && assessment.language.code === this.studentsList[0].language.code
       ));
       this.assessmentsList = filteredAssessment;
     });

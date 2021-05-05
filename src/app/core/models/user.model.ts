@@ -1,3 +1,4 @@
+import { Country } from "./country.model";
 import { Language } from "./language.model";
 
 export interface User {
@@ -9,7 +10,7 @@ export interface User {
   last_login?: Date;
   role?: UserRoles;
   language?: Language;
-  country?: string;
+  country?: Country;
   created_by?: number;
 }
 

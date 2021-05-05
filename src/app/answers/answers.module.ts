@@ -4,7 +4,7 @@ import { SessionsAnswersComponent } from './sessions-answers/sessions-answers.co
 import { AssessmentsAnswersComponent } from './assessments-answers/assessments-answers.component';
 import { TopicsListAnswersComponent } from './topics-list-answers/topics-list-answers.component';
 import { QuestionsListAnswersComponent } from './questions-list-answers/questions-list-answers.component';
-
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -15,7 +15,12 @@ import { QuestionsListAnswersComponent } from './questions-list-answers/question
     QuestionsListAnswersComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    SharedModule
+  ],
+  exports: [
+    AssessmentsAnswersComponent,
+    SessionsAnswersComponent
   ]
 })
 export class AnswersModule { }

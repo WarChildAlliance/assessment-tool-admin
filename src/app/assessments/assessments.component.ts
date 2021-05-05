@@ -60,8 +60,8 @@ export class AssessmentsComponent implements OnInit {
     this.assessmentService.getAssessmentsList().subscribe((assessmentsList) => {
       assessmentsList.forEach((assessment) => {
         this.subjects.push(assessment.subject);
-        this.countries.push(assessment.country);
-        this.languages.push(assessment.language);
+        this.countries.push(assessment.country.name_en);
+        this.languages.push(assessment.language.name_en);
         this.grades.push(assessment.grade);
       });
       // This removes duplicates in the arrays

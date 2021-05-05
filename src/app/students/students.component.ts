@@ -60,7 +60,7 @@ export class StudentsComponent implements OnInit {
     });
     
     this.userService.getStudentsList().subscribe((studentsList) => {
-      this.studentsDataSource = new MatTableDataSource(this.cleanUserData(studentsList));
+      this.studentsDataSource = new MatTableDataSource(studentsList);
     });
   }
 
@@ -68,8 +68,8 @@ export class StudentsComponent implements OnInit {
 
     this.filteringParams[param] = $event.value;
 
-    this.userService.getStudentsList(this.filteringParams).subscribe((filteredStudentsList) => {
-      this.studentsDataSource = new MatTableDataSource(this.cleanUserData(filteredStudentsList));
+    this.userService.getStudentsList(this.filteringParams).subscribe((studentsList) => {
+      this.studentsDataSource = new MatTableDataSource(studentsList);
     });
   }
 
@@ -108,21 +108,6 @@ export class StudentsComponent implements OnInit {
 
   downloadData(): void {
     console.log('Work In Progress');
-  }
-
-  cleanUserData(studentsList: User[]): any[] {
-
-      // Here we have to extract the wanted value from nested object because for now the
-      // way we use in table componenent MatTableDataSource only accepts simple objects.
-      let studentsListCleaned = [];
-
-      studentsList.forEach((student) => {
-        let studentCleaned = student as any;
-        studentCleaned['language'] = student.language.name_en
-        studentsListCleaned.push(studentCleaned);
-      });
-      
-      return studentsListCleaned;
   }
 
   submitCreateNewStudent(): void {

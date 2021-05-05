@@ -20,6 +20,7 @@ import { TopicAccessesBuilderComponent } from './topic-accesses-builder/topic-ac
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { AnswersModule } from '../answers/answers.module';
 
 
 
@@ -34,6 +35,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
     StudentsRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    AnswersModule,
     MatTableModule,
     MatDialogModule,
     MatFormFieldModule,

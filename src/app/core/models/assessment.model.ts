@@ -1,3 +1,4 @@
+import { Country } from "./country.model";
 import { Language } from "./language.model";
 
 export interface Assessment {
@@ -5,8 +6,8 @@ export interface Assessment {
   title: string;
   grade: number;
   subject: Subjects;
-  language?: string;
-  country?: string;
+  language?: Language;
+  country?: Country;
   private: boolean;
 }
 
