@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Assessment } from 'src/app/core/models/assessment.model';
 import { Topic } from 'src/app/core/models/topic.models';
-import { User } from 'src/app/core/models/user.model';
 import { BatchTopicAccesses } from 'src/app/core/models/batch-topic-accesses.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { UserService } from 'src/app/core/services/user.service';
@@ -15,7 +14,7 @@ import { AssessmentService } from 'src/app/core/services/assessment.service';
 })
 export class TopicAccessesBuilderComponent implements OnInit {
 
-  @Input() studentsList: User[];
+  @Input() studentsList: any[];
 
   assessmentsList: Assessment[] = [];
   topicsList: Topic[] = [];
@@ -29,11 +28,13 @@ export class TopicAccessesBuilderComponent implements OnInit {
   constructor(private assessmentService: AssessmentService, private userService: UserService, private formBuilder: FormBuilder, private alertService: AlertService) { }
 
   ngOnInit(): void {
-    this.assessmentService.getAssessmentsList().subscribe((assessmentsList) => {
-      const filteredAssessment = assessmentsList.filter((assessment) => (
-        assessment.country.code === this.studentsList[0].country.code && assessment.language.code === this.studentsList[0].language.code
-      ));
-      this.assessmentsList = filteredAssessment;
+    const filteringParams = {
+      country: this.studentsList[0].country_code,
+      language: this.studentsList[0].language_code,
+    };
+
+    this.assessmentService.getAssessmentsList(filteringParams).subscribe((assessmentsList) => {
+      this.assessmentsList = assessmentsList;
     });
   }
 
