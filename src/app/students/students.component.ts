@@ -17,17 +17,18 @@ import { Country } from '../core/models/country.model';
 export class StudentsComponent implements OnInit {
 
   public displayedColumns: { key: string, value: string }[] = [
-    { key: 'username', value: 'Username' },
-    { key: 'first_name', value: 'First name' },
-    { key: 'last_name', value: 'Last name' },
+    { key: 'full_name', value: 'Full name' },
+    { key: 'assessments_count', value: 'Number of completed assessments' },
+    { key: 'completed_topics_count', value: 'Number of completed topics' },
+    { key: 'last_session', value: 'Last session' },
     { key: 'language', value: 'Language' },
     { key: 'country', value: 'Country' }
   ];
 
-  public searchableColumns = ['username', 'first_name', 'last_name', 'language', 'country'];
+  public searchableColumns = ['full_name', 'language', 'country'];
 
   public studentsDataSource: MatTableDataSource<any> = new MatTableDataSource([]);
-  public selectedUsers: User[] = [];
+  public selectedUsers = [];
 
   public countries: Country[] = [];
   public languages: Language[] = [];
@@ -50,16 +51,15 @@ export class StudentsComponent implements OnInit {
   constructor(private userService: UserService, private alertService: AlertService, private router: Router, private dialog: MatDialog) { }
 
   ngOnInit(): void {
-    
+
     this.userService.getCountries().subscribe((countries) => {
       this.countries = countries
     });
-
     this.userService.getLanguages().subscribe((languages) => {
       this.languages = languages;
     });
-    
-    this.userService.getStudentsList().subscribe((studentsList) => {
+
+    this.userService.getStudentsTableData().subscribe((studentsList) => {
       this.studentsDataSource = new MatTableDataSource(studentsList);
     });
   }
@@ -68,14 +68,13 @@ export class StudentsComponent implements OnInit {
 
     this.filteringParams[param] = $event.value;
 
-    this.userService.getStudentsList(this.filteringParams).subscribe((studentsList) => {
+    this.userService.getStudentsTableData(this.filteringParams).subscribe((studentsList) => {
       this.studentsDataSource = new MatTableDataSource(studentsList);
     });
   }
 
   // This eventReceiver triggers a thousand times when user does "select all". We should find a way to improve this. (debouncer ?)
   onSelectionChange(newSelection: User[]): void {
-    console.log('Students selection changed !');
     this.selectedUsers = newSelection;
   }
 
@@ -89,12 +88,12 @@ export class StudentsComponent implements OnInit {
 
   openAssignTopicDialog(): void {
     // Check if all students share the same language and country
-    if (!this.selectedUsers.every((student) => (
-      student.country === this.selectedUsers[0].country && student.language === this.selectedUsers[0].language
+    if (this.selectedUsers.every((student) => (
+      student.country_code === this.selectedUsers[0].country_code && student.language_code === this.selectedUsers[0].language_code
     ))) {
-      this.alertService.error('You can only give access to a topic to students with the same country and language.');
-    } else {
       this.dialog.open(this.assignTopicDialog);
+    } else {
+      this.alertService.error('You can only give access to a topic to students with the same country and language.');
     }
   }
 
