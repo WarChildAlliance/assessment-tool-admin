@@ -1,25 +1,27 @@
 <div class="main-board">
 
-  <mat-grid-list *ngIf="student" class="main-board__current-object-details" cols="6" rowHeight="36px">
-    <mat-grid-tile class="header">First name</mat-grid-tile>
-    <mat-grid-tile class="header">Last name</mat-grid-tile>
-    <mat-grid-tile class="header">Username</mat-grid-tile>
-    <mat-grid-tile class="header">Country</mat-grid-tile>
+  <mat-grid-list *ngIf="student" class="main-board__current-object-details" cols="7" rowHeight="36px">
+    <mat-grid-tile class="header">Full name</mat-grid-tile>
+    <mat-grid-tile class="header">Number of completed assessments</mat-grid-tile>
+    <mat-grid-tile class="header">Number of completed topics</mat-grid-tile>
+    <mat-grid-tile class="header">Last session</mat-grid-tile>
     <mat-grid-tile class="header">Language</mat-grid-tile>
+    <mat-grid-tile class="header">Country</mat-grid-tile>
     <mat-grid-tile [rowspan]="2" class="delete-button">
       <button mat-stroked-button color="primary" (click)="deleteCurrentStudent()">
         <mat-icon>delete_outline</mat-icon>
       </button>
     </mat-grid-tile>
-    <mat-grid-tile class="detail">{{ student.first_name }}</mat-grid-tile>
-    <mat-grid-tile class="detail">{{ student.last_name }}</mat-grid-tile>
-    <mat-grid-tile class="detail">{{ student.username }}</mat-grid-tile>
-    <mat-grid-tile class="detail">{{ student.country }}</mat-grid-tile>
-    <mat-grid-tile class="detail">{{ student.language.name_local }}</mat-grid-tile>
+    <mat-grid-tile class="detail">{{ student.full_name }}</mat-grid-tile>
+    <mat-grid-tile class="detail">{{ student.assessments_count }}</mat-grid-tile>
+    <mat-grid-tile class="detail">{{ student.completed_topics_count }}</mat-grid-tile>
+    <mat-grid-tile class="detail">{{ student.last_session }}</mat-grid-tile>
+    <mat-grid-tile class="detail">{{ student.language_name }}</mat-grid-tile>
+    <mat-grid-tile class="detail">{{ student.country_name }}</mat-grid-tile>
   </mat-grid-list>
 
   <div class="main-board__top-container">
-    <h1 *ngIf="student">Student {{ student.username }} details</h1>
+    <h1 *ngIf="student">{{ student.full_name }} details</h1>
   </div>
 
   <div class="main-board__student-answers">

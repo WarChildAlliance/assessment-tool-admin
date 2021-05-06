@@ -21,11 +21,11 @@ export class StudentsComponent implements OnInit {
     { key: 'assessments_count', value: 'Number of completed assessments' },
     { key: 'completed_topics_count', value: 'Number of completed topics' },
     { key: 'last_session', value: 'Last session' },
-    { key: 'language', value: 'Language' },
-    { key: 'country', value: 'Country' }
+    { key: 'language_name', value: 'Language' },
+    { key: 'country_name', value: 'Country' }
   ];
 
-  public searchableColumns = ['full_name', 'language', 'country'];
+  public searchableColumns = ['full_name', 'language_name', 'country_name'];
 
   public studentsDataSource: MatTableDataSource<any> = new MatTableDataSource([]);
   public selectedUsers = [];
@@ -59,7 +59,7 @@ export class StudentsComponent implements OnInit {
       this.languages = languages;
     });
 
-    this.userService.getStudentsTableData().subscribe((studentsList) => {
+    this.userService.getStudentsTableList().subscribe((studentsList) => {
       this.studentsDataSource = new MatTableDataSource(studentsList);
     });
   }
@@ -68,7 +68,7 @@ export class StudentsComponent implements OnInit {
 
     this.filteringParams[param] = $event.value;
 
-    this.userService.getStudentsTableData(this.filteringParams).subscribe((studentsList) => {
+    this.userService.getStudentsTableList(this.filteringParams).subscribe((studentsList) => {
       this.studentsDataSource = new MatTableDataSource(studentsList);
     });
   }

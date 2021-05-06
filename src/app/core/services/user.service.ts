@@ -30,14 +30,18 @@ export class UserService {
     return this.http.get<User[]>(finalUrl);
   }
 
-  getStudentsTableData(filteringParams?: object): Observable<User[]> {
-    const initialUrl = `${environment.API_URL}/users/table_data`;
+  getStudentsTableList(filteringParams?: object): Observable<any[]> {
+    const initialUrl = `${environment.API_URL}/visualization/user_table/`;
     const finalUrl = filteringParams ? this.utilitiesService.urlBuilder(initialUrl, filteringParams) : initialUrl;
     return this.http.get<any[]>(finalUrl);
   }
 
   getStudentDetails(id: string): Observable<User> {
     return this.http.get<User>(`${environment.API_URL}/users/${id}`);
+  }
+
+  getStudentTableDetails(id: string): Observable<any> {
+    return this.http.get<any>(`${environment.API_URL}/visualization/user_table/${id}`);
   }
 
   createNewStudent(user: { first_name: string, last_name: string, role: string, language: string, country: string }): Observable<User> {

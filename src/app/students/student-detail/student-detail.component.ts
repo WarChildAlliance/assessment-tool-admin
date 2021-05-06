@@ -12,13 +12,13 @@ import { UserService } from 'src/app/core/services/user.service';
 })
 export class StudentDetailComponent implements OnInit {
 
-  student: User;
+  student: any;
 
   constructor(private userService: UserService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
 
-    this.userService.getStudentDetails(this.route.snapshot.paramMap.get('id')).subscribe(student => {
+    this.userService.getStudentTableDetails(this.route.snapshot.paramMap.get('id')).subscribe(student => {
       this.student = student;
     });
   }
