@@ -5,6 +5,9 @@ import { Router } from '@angular/router';
 import { Assessment } from '../core/models/assessment.model';
 import { AssessmentService } from '../core/services/assessment.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { UserService } from '../core/services/user.service';
+import { Country } from '../core/models/country.model';
+import { Language } from '../core/models/language.model';
 
 @Component({
   selector: 'app-assessments',
@@ -17,19 +20,21 @@ export class AssessmentsComponent implements OnInit {
     { key: 'title', value: 'Title' },
     { key: 'grade', value: 'Grade' },
     { key: 'subject', value: 'Subject' },
-    { key: 'language', value: 'Language' },
-    { key: 'country', value: 'Country' }
+    { key: 'language_name', value: 'Language' },
+    { key: 'country_name', value: 'Country' }
   ];
 
-  public searchableColumns = ['title', 'grade', 'subject', 'language', 'country'];
+  public searchableColumns = ['title', 'grade', 'subject', 'language_name', 'country_name'];
 
   public assessmentsDataSource: MatTableDataSource<Assessment> = new MatTableDataSource([]);
 
   // Create a route to get the available subjects, languages & countries from the API
   public subjects: string[] = [];
-  public countries: string[] = [];
-  public languages: string[] = [];
   public grades: number[] = [];
+
+  public countries: Country[] = [];
+  public languages: Language[] = [];
+
 
   private filteringParams = {
     subject: '',
@@ -52,7 +57,7 @@ export class AssessmentsComponent implements OnInit {
   });
 
   constructor(
-    private assessmentService: AssessmentService, private router: Router) { }
+    private assessmentService: AssessmentService, private router: Router, private userService: UserService) { }
 
   ngOnInit(): void {
 
@@ -60,21 +65,26 @@ export class AssessmentsComponent implements OnInit {
     this.assessmentService.getAssessmentsList().subscribe((assessmentsList) => {
       assessmentsList.forEach((assessment) => {
         this.subjects.push(assessment.subject);
-        this.countries.push(assessment.country.name_en);
-        this.languages.push(assessment.language.name_en);
         this.grades.push(assessment.grade);
       });
       // This removes duplicates in the arrays
       this.subjects = [... new Set(this.subjects)];
-      this.countries = [... new Set(this.countries)];
-      this.languages = [... new Set(this.languages)];
       this.grades = [... new Set(this.grades)];
       this.assessmentsDataSource = new MatTableDataSource(assessmentsList);
+    });
+
+    this.userService.getCountries().subscribe((countries) => {
+      this.countries = countries
+    });
+    this.userService.getLanguages().subscribe((languages) => {
+      this.languages = languages;
     });
   }
 
   applySelectFilters(param: string, $event): void {
+
     this.filteringParams[param] = $event.value;
+    
     this.assessmentService.getAssessmentsList(this.filteringParams).subscribe((filteredAssessmentsList) => {
       this.assessmentsDataSource = new MatTableDataSource(filteredAssessmentsList);
     });

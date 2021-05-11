@@ -17,10 +17,10 @@ export class AssessmentService {
     private utilitiesService: UtilitiesService
   ) {}
 
-  getAssessmentsList(filteringParams?: object): Observable<Assessment[]> {
-    const initialUrl = `${environment.API_URL}/assessments/`;
+  getAssessmentsList(filteringParams?: object): Observable<any[]> {
+    const initialUrl = `${environment.API_URL}/visualization/assessments/`;
     const finalUrl = filteringParams ? this.utilitiesService.urlBuilder(initialUrl, filteringParams) : initialUrl;
-    return this.http.get<Assessment[]>(finalUrl);
+    return this.http.get<any[]>(finalUrl);
   }
 
   getAssessmentDetails(id: string): Observable<Assessment> {

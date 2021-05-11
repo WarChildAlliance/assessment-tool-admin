@@ -6,8 +6,8 @@ export interface Assessment {
   title: string;
   grade: number;
   subject: Subjects;
-  language?: Language;
-  country?: Country;
+  language_name?: string;
+  country_name?: string;
   private: boolean;
 }
 

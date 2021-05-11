@@ -26,14 +26,14 @@
       <mat-label>Country</mat-label>
       <mat-select (selectionChange)="applySelectFilters('country', $event)">
         <mat-option value="">All</mat-option>
-        <mat-option *ngFor="let country of countries" [value]="country">{{country}}</mat-option>
+        <mat-option *ngFor="let country of countries" [value]="country.code">{{country.name_en}}</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>Language</mat-label>
       <mat-select (selectionChange)="applySelectFilters('language', $event)">
         <mat-option value="">All</mat-option>
-        <mat-option *ngFor="let language of languages" [value]="language">{{language}}</mat-option>
+        <mat-option *ngFor="let language of languages" [value]="language.code">{{language.name_en}}</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
