@@ -66,11 +66,11 @@ export class AssessmentDetailComponent implements OnInit {
   onOpenDetails(id: string): void {
     this.router.navigate([`/assessments/${this.currentAssessment.id}/topics/${id}`]);
   }
-
+/* 
   deleteCurrentAssessment(): void {
     console.log('DELETE CURRENT ASSESSMENT');
   }
-
+ */
   deleteSelection(): void {
     // TODO implement the proper deletion
     console.log('DEL', this.selectedTopics);
@@ -84,7 +84,7 @@ export class AssessmentDetailComponent implements OnInit {
     const topicToCreate = {
       name: this.createNewTopicForm.value.name,
       order: this.createNewTopicForm.value.order,
-      assessment: this.currentAssessment
+      assessment: this.currentAssessment.id
     };
     // TODO implement the proper creation of object
     console.log('NEW TOPIC: ', topicToCreate);

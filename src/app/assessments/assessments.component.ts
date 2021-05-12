@@ -20,8 +20,11 @@ export class AssessmentsComponent implements OnInit {
     { key: 'title', value: 'Title' },
     { key: 'grade', value: 'Grade' },
     { key: 'subject', value: 'Subject' },
+    { key: 'topics_count', value: 'Number of topics' },
+    { key: 'students_count', value: 'Number of student linked to this assessment' },
     { key: 'language_name', value: 'Language' },
-    { key: 'country_name', value: 'Country' }
+    { key: 'country_name', value: 'Country' },
+    { key: 'private', value: 'Is private ?' }
   ];
 
   public searchableColumns = ['title', 'grade', 'subject', 'language_name', 'country_name'];
