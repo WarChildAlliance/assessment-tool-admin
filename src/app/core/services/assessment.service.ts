@@ -24,7 +24,7 @@ export class AssessmentService {
   }
 
   getAssessmentDetails(id: string): Observable<Assessment> {
-    return this.http.get<Assessment>(`${environment.API_URL}/assessments/${id}/`);
+    return this.http.get<Assessment>(`${environment.API_URL}/visualization/assessments/${id}/`);
   }
 
   getAssessmentTopics(id: string): Observable<Topic[]> {

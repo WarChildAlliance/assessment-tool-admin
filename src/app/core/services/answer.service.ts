@@ -12,15 +12,19 @@ export class AnswerService {
 
   constructor(private http: HttpClient,) { }
 
-  getStudentAssessments(studentId: string): Observable<string> {
-    return this.http.get<string>(`${environment.API_URL}/assessments/${studentId}/fetch_for_student/`)
+  getStudentAssessments(studentId: string): Observable<any[]> {
+    return this.http.get<any[]>(`${environment.API_URL}/visualization/student_answers/${studentId}/assessments/`)
   }
 
-  getAssessmentTopicsAnwsers(studentId: string): Observable<Answer[]> {
-    return this.http.get<Answer[]>(`${environment.API_URL}/answers/${studentId}/topics/`);
+  getAssessmentTopicsAnwsers(studentId: string, assessmentId: string): Observable<any[]> {
+    return this.http.get<any[]>(`${environment.API_URL}/visualization/student_answers/${studentId}/assessments/${assessmentId}/topics`);
+  }
+
+  getQuestionsAnwsers(studentId: string, assessmentId: string, topicId: string): Observable<any[]> {
+    return this.http.get<any[]>(`${environment.API_URL}/visualization/student_answers/${studentId}/assessments/${assessmentId}/topics/${topicId}/questions`);
   }
 
   getSessionsAnswers(studentId: string): Observable<any[]> {
-    return this.http.get<any[]>(`${environment.API_URL}/answers/${studentId}/sessions/`);
+    return this.http.get<any[]>(`${environment.API_URL}/visualization/student_answers/${studentId}/sessions/`);
   }
 }
