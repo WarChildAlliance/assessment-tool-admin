@@ -1,1 +1,2 @@
-<p>topics-list-answers works!</p>
+<app-table [tableData]="topicsAnswersDataSource" [displayedColumns]="displayedColumns" [isSelectable]="false"
+    [searchableColumns]="searchableColumns" (openDetailsEvent)="onOpenDetails($event)"></app-table>

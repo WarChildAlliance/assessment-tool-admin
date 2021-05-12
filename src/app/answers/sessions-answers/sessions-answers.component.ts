@@ -11,10 +11,14 @@ import { AnswerService } from 'src/app/core/services/answer.service';
 export class SessionsAnswersComponent implements OnInit {
 
   sessionsAnswersDataSource: MatTableDataSource<any> = new MatTableDataSource([]);
+  currentStudentId: string;
 
   public displayedColumns: { key: string, value: string }[] = [
-    { key: 'duration', value: 'Duration' },
-    { key: 'date', value: 'Date' }
+    { key: 'start_date', value: 'Start date' },
+    { key: 'end_date', value: 'End date' },
+    { key: 'answered_questions_count', value: 'Number of answered questions' },
+    { key: 'completed_topics_count', value: 'Number of completed topics' },
+    { key: 'correct_answers_percentage', value: 'Percentage of correct answers' }
   ];
 
   public searchableColumns = ['duration', 'date'];
@@ -22,14 +26,17 @@ export class SessionsAnswersComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute, private answerService: AnswerService) { }
 
   ngOnInit(): void {
-    this.answerService.getSessionsAnswers(this.route.snapshot.paramMap.get('id')).subscribe(sessionsAnswers => {
-      
+    this.currentStudentId = this.route.snapshot.paramMap.get('student_id');
+    
+    this.answerService.getSessionsAnswers(this.currentStudentId).subscribe(sessionsAnswers => {
+      console.log('SESS', sessionsAnswers);
       this.sessionsAnswersDataSource = new MatTableDataSource(sessionsAnswers);
     });
   }
 
   onOpenDetails(id: string): void {
-    // this.router.navigate([`/students/${id}`]);
+    this.router.navigate([`students/${this.currentStudentId}/assessments`, {session_id: id}]);
+
   }
 
 }
