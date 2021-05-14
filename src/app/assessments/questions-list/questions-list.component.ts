@@ -19,12 +19,13 @@ export class QuestionsListComponent implements OnInit {
   public displayedColumns: { key: string, value: string }[] = [
     { key: 'title', value: 'Title' },
     { key: 'question_type', value: 'Question type' },
+    { key: 'has_attachment', value: 'Has attachment' },
   ];
 
   public searchableColumns = ['title', 'question_type'];
 
-  public questionsDataSource: MatTableDataSource<Question> = new MatTableDataSource([]);
-  public selectedQuestions: Question[] = [];
+  public questionsDataSource: MatTableDataSource<any> = new MatTableDataSource([]);
+  public selectedQuestions: any[] = [];
 
   @ViewChild('createQuestionDialog') createQuestionDialog: TemplateRef<any>;
 
@@ -48,7 +49,7 @@ export class QuestionsListComponent implements OnInit {
   }
 
   // This eventReceiver triggers a thousand times when user does "select all". We should find a way to improve this. (debouncer ?)
-  onSelectionChange(newSelection: Question[]): void {
+  onSelectionChange(newSelection: any[]): void {
     this.selectedQuestions = newSelection;
   }
 

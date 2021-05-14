@@ -3,8 +3,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Assessment } from 'src/app/core/models/assessment.model';
-import { Topic } from 'src/app/core/models/topic.models';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 
 @Component({
@@ -20,13 +18,13 @@ export class AssessmentDetailComponent implements OnInit {
   ];
 
   public searchableColumns = ['name'];
-  public topicsDataSource: MatTableDataSource<Topic> = new MatTableDataSource([]);
+  public topicsDataSource: MatTableDataSource<any> = new MatTableDataSource([]);
 
   public isAssessmentPrivate = false;
 
-  public selectedTopics: Topic[] = [];
+  public selectedTopics: any[] = [];
 
-  currentAssessment: Assessment;
+  currentAssessment: any;
 
   @ViewChild('createTopicDialog') createTopicDialog: TemplateRef<any>;
 
@@ -55,7 +53,7 @@ export class AssessmentDetailComponent implements OnInit {
   }
 
   // This eventReceiver triggers a thousand times when user does "select all". We should find a way to improve this. (debouncer ?)
-  onSelectionChange(newSelection: Topic[]): void {
+  onSelectionChange(newSelection: any[]): void {
     this.selectedTopics = newSelection;
   }
 

@@ -18,7 +18,7 @@ export class StudentDetailComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.userService.getStudentTableDetails(this.route.snapshot.paramMap.get('student_id')).subscribe(student => {
+    this.userService.getStudentDetails(this.route.snapshot.paramMap.get('student_id')).subscribe(student => {
       this.student = student;
     });
   }

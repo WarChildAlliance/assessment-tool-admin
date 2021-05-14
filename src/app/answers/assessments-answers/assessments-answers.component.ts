@@ -17,7 +17,7 @@ export class AssessmentsAnswersComponent implements OnInit {
   public displayedColumns: { key: string, value: string }[] = [
     { key: 'title', value: 'Title' },
     { key: 'subject', value: 'Subject' },
-    { key: 'accessible_topics_count', value: 'Number of topics accessible by the student' },
+    { key: 'accessible_topics_count', value: 'Global number of topics accessible by the student' },
     { key: 'completed_topics_count', value: 'Number of topics completed by the student' },
     { key: 'language_name', value: 'Language' },
     { key: 'country_name', value: 'Country' },
@@ -29,15 +29,17 @@ export class AssessmentsAnswersComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentStudentId = this.route.snapshot.paramMap.get('student_id');
-    this.sessionId = this.route.snapshot.paramMap.get('student_id');
-    // TODO Use the sessionId
+    this.sessionId = this.route.snapshot.paramMap.get('session_id');
 
-    this.answerService.getStudentAssessments(this.currentStudentId).subscribe(assessments => {
+    this.answerService.getAssessmentsAnswers(this.currentStudentId, this.sessionId).subscribe(assessments => {
       this.assessmentsAnswersDataSource = new MatTableDataSource(assessments)
     });
   }
 
   onOpenDetails(assessmentId: string): void {
-    this.router.navigate([`students/${this.currentStudentId}/assessments/${assessmentId}/topics`]);
+    let navigateUrl: any[] = [`students/${this.currentStudentId}/assessments/${assessmentId}/topics`];
+    if (this.sessionId) {navigateUrl.push({session_id: this.sessionId})} 
+
+    this.router.navigate(navigateUrl);
   }
 }

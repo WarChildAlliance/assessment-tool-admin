@@ -59,7 +59,7 @@ export class StudentsComponent implements OnInit {
       this.languages = languages;
     });
 
-    this.userService.getStudentsTableList().subscribe((studentsList) => {
+    this.userService.getStudentsList().subscribe((studentsList) => {
       this.studentsDataSource = new MatTableDataSource(studentsList);
     });
   }
@@ -68,7 +68,7 @@ export class StudentsComponent implements OnInit {
 
     this.filteringParams[param] = $event.value;
 
-    this.userService.getStudentsTableList(this.filteringParams).subscribe((studentsList) => {
+    this.userService.getStudentsList(this.filteringParams).subscribe((studentsList) => {
       this.studentsDataSource = new MatTableDataSource(studentsList);
     });
   }

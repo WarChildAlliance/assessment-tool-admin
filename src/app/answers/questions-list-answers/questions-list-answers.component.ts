@@ -30,16 +30,17 @@ export class QuestionsListAnswersComponent implements OnInit {
     this.currentStudentId = this.route.snapshot.paramMap.get('student_id');
     this.assessmentId = this.route.snapshot.paramMap.get('assessment_id');
     this.topicId = this.route.snapshot.paramMap.get('topic_id');
-    this.sessionId = this.route.snapshot.paramMap.get('student_id');
-    // TODO Use the sessionId
+    this.sessionId = this.route.snapshot.paramMap.get('session_id');
 
-    this.answerService.getQuestionsAnwsers(this.currentStudentId, this.assessmentId, this.topicId).subscribe(questions => {
-      console.log('Q', questions)
+    this.answerService.getQuestionsAnwsers(this.currentStudentId, this.assessmentId, this.topicId, this.sessionId).subscribe(questions => {
       this.questionsAnswersDataSource = new MatTableDataSource(questions)
     });
   }
 
-  onOpenDetails(topicId: string): void {
-    this.router.navigate([`students/${this.currentStudentId}/assessments/${this.assessmentId}/topics/${topicId}/questions`]);
+  onOpenDetails(questionId: string): void {
+    let navigateUrl: any[] = [`students/${this.currentStudentId}/assessments/${this.assessmentId}/topics/${this.topicId}/questions/${questionId}`];
+    if (this.sessionId) {navigateUrl.push({session_id: this.sessionId})} 
+
+    this.router.navigate(navigateUrl);
   }
 }

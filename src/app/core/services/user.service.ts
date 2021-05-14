@@ -24,23 +24,13 @@ export class UserService {
     return this.http.get<User>(`${environment.API_URL}/users/get_self/`);
   }
 
-  getStudentsList(filteringParams?: object): Observable<User[]> {
-    const initialUrl = `${environment.API_URL}/users/`;
-    const finalUrl = filteringParams ? this.utilitiesService.urlBuilder(initialUrl, filteringParams) : initialUrl;
-    return this.http.get<User[]>(finalUrl);
-  }
-
-  getStudentsTableList(filteringParams?: object): Observable<any[]> {
+  getStudentsList(filteringParams?: object): Observable<any[]> {
     const initialUrl = `${environment.API_URL}/visualization/students/`;
     const finalUrl = filteringParams ? this.utilitiesService.urlBuilder(initialUrl, filteringParams) : initialUrl;
     return this.http.get<any[]>(finalUrl);
   }
 
-  getStudentDetails(id: string): Observable<User> {
-    return this.http.get<User>(`${environment.API_URL}/users/${id}`);
-  }
-
-  getStudentTableDetails(id: string): Observable<any> {
+  getStudentDetails(id: string): Observable<any> {
     return this.http.get<any>(`${environment.API_URL}/visualization/students/${id}`);
   }
 
