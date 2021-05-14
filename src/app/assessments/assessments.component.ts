@@ -77,7 +77,7 @@ export class AssessmentsComponent implements OnInit {
     });
 
     this.userService.getCountries().subscribe((countries) => {
-      this.countries = countries
+      this.countries = countries;
     });
     this.userService.getLanguages().subscribe((languages) => {
       this.languages = languages;
@@ -87,7 +87,7 @@ export class AssessmentsComponent implements OnInit {
   applySelectFilters(param: string, $event): void {
 
     this.filteringParams[param] = $event.value;
-    
+
     this.assessmentService.getAssessmentsList(this.filteringParams).subscribe((filteredAssessmentsList) => {
       this.assessmentsDataSource = new MatTableDataSource(filteredAssessmentsList);
     });

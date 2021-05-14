@@ -25,7 +25,10 @@ export class TopicAccessesBuilderComponent implements OnInit {
 
   @Output() closeTopicsDialogEvent = new EventEmitter<void>();
 
-  constructor(private assessmentService: AssessmentService, private userService: UserService, private formBuilder: FormBuilder, private alertService: AlertService) { }
+  constructor(private assessmentService: AssessmentService,
+              private userService: UserService,
+              private formBuilder: FormBuilder,
+              private alertService: AlertService) { }
 
   ngOnInit(): void {
     const filteringParams = {
@@ -113,10 +116,10 @@ export class TopicAccessesBuilderComponent implements OnInit {
   dateFormatter(date: Date): string {
     let month = (date.getMonth() + 1).toString();
     let day = date.getDate().toString();
-    let year = date.getFullYear().toString();
+    const year = date.getFullYear().toString();
 
-    if (month.length < 2) {month = '0' + month;}
-    if (day.length < 2){day = '0' + day;}
+    if (month.length < 2) {month = '0' + month; }
+    if (day.length < 2){day = '0' + day; }
 
     return [year, month, day].join('-');
   }

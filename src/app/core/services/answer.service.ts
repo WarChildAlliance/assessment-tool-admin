@@ -15,7 +15,7 @@ export class AnswerService {
     return this.http.get<any[]>(`${environment.API_URL}/visualization/student_answers/${studentId}/sessions/`);
   }
 
-  getAssessmentsAnswers(studentId: string, sessionId: string): Observable<any[]> {   
+  getAssessmentsAnswers(studentId: string, sessionId: string): Observable<any[]> {
     const initialUrl = `${environment.API_URL}/visualization/student_answers/${studentId}/assessments/`;
     const finalUrl = sessionId ? this.utilitiesService.urlBuilder(initialUrl, {session: sessionId}) : initialUrl;
     return this.http.get<any[]>(finalUrl);

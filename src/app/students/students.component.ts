@@ -53,7 +53,7 @@ export class StudentsComponent implements OnInit {
   ngOnInit(): void {
 
     this.userService.getCountries().subscribe((countries) => {
-      this.countries = countries
+      this.countries = countries;
     });
     this.userService.getLanguages().subscribe((languages) => {
       this.languages = languages;

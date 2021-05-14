@@ -38,8 +38,8 @@ export class UserService {
     return this.http.post<User>(`${environment.API_URL}/users/`, user);
   }
 
-  assignTopicsAccesses(batch_topic_access: BatchTopicAccesses): Observable<BatchTopicAccesses> {
-    return this.http.post<BatchTopicAccesses>(`${environment.API_URL}/assessments/never_gonna_give_you_up___never_gonna_let_you_down/accesses/bulk_create/`, batch_topic_access)
+  assignTopicsAccesses(batchTopicAccesses: BatchTopicAccesses): Observable<BatchTopicAccesses> {
+    return this.http.post<BatchTopicAccesses>(`${environment.API_URL}/assessments/never_gonna_give_you_up___never_gonna_let_you_down/accesses/bulk_create/`, batchTopicAccesses);
   }
 
   getLanguages(): Observable<Language[]> {

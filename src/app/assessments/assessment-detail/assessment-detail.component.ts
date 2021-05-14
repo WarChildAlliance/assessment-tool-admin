@@ -64,7 +64,7 @@ export class AssessmentDetailComponent implements OnInit {
   onOpenDetails(id: string): void {
     this.router.navigate([`/assessments/${this.currentAssessment.id}/topics/${id}`]);
   }
-/* 
+  /*
   deleteCurrentAssessment(): void {
     console.log('DELETE CURRENT ASSESSMENT');
   }

@@ -27,7 +27,7 @@ export class SessionsAnswersComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentStudentId = this.route.snapshot.paramMap.get('student_id');
-    
+
     this.answerService.getSessionsAnswers(this.currentStudentId).subscribe(sessionsAnswers => {
       this.sessionsAnswersDataSource = new MatTableDataSource(sessionsAnswers);
     });
