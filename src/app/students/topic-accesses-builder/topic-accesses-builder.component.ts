@@ -18,6 +18,7 @@ export class TopicAccessesBuilderComponent implements OnInit {
 
   assessmentsList: Assessment[] = [];
   topicsList: Topic[] = [];
+  selectedAssessmentId: string;
 
   assignTopicForm: FormGroup = new FormGroup({
     access: new FormArray([]),
@@ -42,6 +43,7 @@ export class TopicAccessesBuilderComponent implements OnInit {
   }
 
   loadTopicsList(assessmentId: string): void {
+    this.selectedAssessmentId = assessmentId;
     this.assessmentService.getAssessmentTopics(assessmentId).subscribe((newList) => {
       this.topicsList = newList;
       this.generateForm();
@@ -63,7 +65,7 @@ export class TopicAccessesBuilderComponent implements OnInit {
     });
   }
 
-  submitCreateTopicAccesses(): void {
+  submitCreateTopicAccesses(assessmentId: string): void {
 
     const studentsArray: number[] = [];
     this.studentsList.forEach(student => {
@@ -96,7 +98,7 @@ export class TopicAccessesBuilderComponent implements OnInit {
       accesses: accessesArray
     };
 
-    this.userService.assignTopicsAccesses(batchTopicAccessesData).subscribe(
+    this.userService.assignTopicsAccesses(batchTopicAccessesData, this.selectedAssessmentId).subscribe(
       result => {
         this.alertService.success('The new topic accesses have been successfully set !');
         this.closeTopicsDialogEvent.emit();
