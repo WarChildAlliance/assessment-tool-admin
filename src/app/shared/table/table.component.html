@@ -24,7 +24,7 @@
   <tr mat-row *matRowDef="let row; columns: getDisplayedColumnsKeys();" (click)="openElementDetails(row.id)"></tr>
 
   <tr class="mat-row" *matNoDataRow>
-    <td class="mat-cell" colspan="getDisplayedColumnsKeys().length">No data to display</td>
+    <td class="mat-cell" [attr.colspan]="getDisplayedColumnsKeys().length">No data to display</td>
   </tr>
 </table>
 
