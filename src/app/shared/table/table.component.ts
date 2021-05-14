@@ -108,6 +108,9 @@ export class TableComponent implements OnInit, OnChanges {
     this.tableData.filter = filterValue.trim().toLowerCase();
   }
 
+  // If this function changes at some point, look into the backend API at : /visualization/serializers/TopicAnswerTableSerializer
+  // In the class we override the returned 'id' because it's simpler (by default it's an "AssessmentTopicAnswer" id
+  //  and we want an "AssessmentTopic" id), but it's not very clean, so change that if it's possible.
   openElementDetails(id: number): void {
     this.openDetailsEvent.emit(id.toString());
   }

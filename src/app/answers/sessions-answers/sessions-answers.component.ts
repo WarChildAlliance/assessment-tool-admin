@@ -29,14 +29,11 @@ export class SessionsAnswersComponent implements OnInit {
     this.currentStudentId = this.route.snapshot.paramMap.get('student_id');
     
     this.answerService.getSessionsAnswers(this.currentStudentId).subscribe(sessionsAnswers => {
-      console.log('SESS', sessionsAnswers);
       this.sessionsAnswersDataSource = new MatTableDataSource(sessionsAnswers);
     });
   }
 
   onOpenDetails(id: string): void {
     this.router.navigate([`students/${this.currentStudentId}/assessments`, {session_id: id}]);
-
   }
-
 }
