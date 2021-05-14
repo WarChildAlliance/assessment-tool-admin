@@ -33,13 +33,13 @@ export class TopicsListAnswersComponent implements OnInit {
     this.sessionId = this.route.snapshot.paramMap.get('session_id');
 
     this.answerService.getTopicsAnwsers(this.currentStudentId, this.assessmentId, this.sessionId).subscribe(topics => {
-      this.topicsAnswersDataSource = new MatTableDataSource(topics)
+      this.topicsAnswersDataSource = new MatTableDataSource(topics);
     });
   }
 
   onOpenDetails(topicId: string): void {
-    let navigateUrl: any[] = [`students/${this.currentStudentId}/assessments/${this.assessmentId}/topics/${topicId}/questions`];
-    if (this.sessionId) {navigateUrl.push({session_id: this.sessionId})} 
+    const navigateUrl: any[] = [`students/${this.currentStudentId}/assessments/${this.assessmentId}/topics/${topicId}/questions`];
+    if (this.sessionId) { navigateUrl.push({session_id: this.sessionId}); }
 
     this.router.navigate(navigateUrl);
   }
