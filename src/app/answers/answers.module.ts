@@ -5,6 +5,7 @@ import { AssessmentsAnswersComponent } from './assessments-answers/assessments-a
 import { TopicsListAnswersComponent } from './topics-list-answers/topics-list-answers.component';
 import { QuestionsListAnswersComponent } from './questions-list-answers/questions-list-answers.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { QuestionDetailAnswersComponent } from './question-detail-answers/question-detail-answers.component';
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     SessionsAnswersComponent,
     AssessmentsAnswersComponent,
     TopicsListAnswersComponent,
-    QuestionsListAnswersComponent
+    QuestionsListAnswersComponent,
+    QuestionDetailAnswersComponent
   ],
   imports: [
     CommonModule,
