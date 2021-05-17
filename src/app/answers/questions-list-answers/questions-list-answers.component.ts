@@ -17,9 +17,9 @@ export class QuestionsListAnswersComponent implements OnInit {
   sessionId: string;
 
   public displayedColumns: { key: string, value: string }[] = [
-    { key: 'question_type', value: 'Type of question' },
-    { key: 'duration', value: 'Time spent by the student to answer' },
-    { key: 'valid', value: 'Is the answer valid ?' }
+    { key: 'question_type', value: 'Question type' },
+    { key: 'duration', value: 'Duration' },
+    { key: 'valid', value: 'Valid' }
   ];
 
   public searchableColumns = ['question_type', 'valid'];

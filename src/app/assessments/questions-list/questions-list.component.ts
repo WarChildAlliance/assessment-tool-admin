@@ -19,7 +19,7 @@ export class QuestionsListComponent implements OnInit {
   public displayedColumns: { key: string, value: string }[] = [
     { key: 'title', value: 'Title' },
     { key: 'question_type', value: 'Question type' },
-    { key: 'has_attachment', value: 'Has attachment' },
+    { key: 'has_attachment', value: 'Attachments' },
   ];
 
   public searchableColumns = ['title', 'question_type'];

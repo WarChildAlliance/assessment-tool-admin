@@ -17,8 +17,8 @@ export class AssessmentsAnswersComponent implements OnInit {
   public displayedColumns: { key: string, value: string }[] = [
     { key: 'title', value: 'Title' },
     { key: 'subject', value: 'Subject' },
-    { key: 'accessible_topics_count', value: 'Global number of topics accessible by the student' },
-    { key: 'completed_topics_count', value: 'Number of topics completed by the student' },
+    { key: 'accessible_topics_count', value: 'Number of topics accessible' },
+    { key: 'completed_topics_count', value: 'Number of topics completed' },
     { key: 'language_name', value: 'Language' },
     { key: 'country_name', value: 'Country' },
   ];

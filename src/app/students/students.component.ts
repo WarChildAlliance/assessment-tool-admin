@@ -18,7 +18,7 @@ export class StudentsComponent implements OnInit {
 
   public displayedColumns: { key: string, value: string }[] = [
     { key: 'full_name', value: 'Full name' },
-    { key: 'assessments_count', value: 'Number of completed assessments' },
+    { key: 'assessments_count', value: 'Number of assessments' },
     { key: 'completed_topics_count', value: 'Number of completed topics' },
     { key: 'last_session', value: 'Last session' },
     { key: 'language_name', value: 'Language' },

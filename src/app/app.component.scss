@@ -22,7 +22,7 @@
 }
 
 .mat-sidenav-container {
-  height: 100vh;
+  height: calc(100vh - 64px); // Height of the toolbar
   width: 100vw;
 
   & > .mat-sidenav {
@@ -38,5 +38,6 @@
 
   & > .mat-sidenav-content {
     padding: 24px;
+    height: calc(100% - 48px); // Minus the padding
   }
 }

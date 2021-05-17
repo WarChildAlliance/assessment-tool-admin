@@ -18,7 +18,7 @@ export class TopicsListAnswersComponent implements OnInit {
   public displayedColumns: { key: string, value: string }[] = [
     { key: 'topic_name', value: 'Name' },
     { key: 'total_questions_count', value: 'Number of questions' },
-    { key: 'answered_questions_count', value: 'Number of questions answered by the student' },
+    { key: 'answered_questions_count', value: 'Number of answered questions' },
     { key: 'correct_answers_percentage', value: 'Percentage of correct answers' },
     { key: 'complete', value: 'Completed' },
   ];

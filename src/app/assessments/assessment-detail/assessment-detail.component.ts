@@ -14,7 +14,9 @@ export class AssessmentDetailComponent implements OnInit {
 
   public displayedColumns: { key: string, value: string }[] = [
     { key: 'name', value: 'Name' },
-    { key: 'order', value: 'Order' },
+    { key: 'students_count', value: 'Number of students with access' },
+    { key: 'students_completed_count', value: 'Number of students who completed' },
+    { key: 'questions_count', value: 'Number of questions' }
   ];
 
   public searchableColumns = ['name'];
@@ -29,8 +31,7 @@ export class AssessmentDetailComponent implements OnInit {
   @ViewChild('createTopicDialog') createTopicDialog: TemplateRef<any>;
 
   public createNewTopicForm: FormGroup = new FormGroup({
-    name: new FormControl('', [Validators.required]),
-    order: new FormControl('', [Validators.required]),
+    name: new FormControl('', [Validators.required])
   });
 
   constructor(

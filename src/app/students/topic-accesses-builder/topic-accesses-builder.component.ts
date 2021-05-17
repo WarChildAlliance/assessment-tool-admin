@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Assessment } from 'src/app/core/models/assessment.model';
-import { Topic } from 'src/app/core/models/topic.models';
 import { BatchTopicAccesses } from 'src/app/core/models/batch-topic-accesses.model';
+import { Topic } from 'src/app/core/models/topic.models';
 import { AlertService } from 'src/app/core/services/alert.service';
-import { UserService } from 'src/app/core/services/user.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
+import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
   selector: 'app-topic-accesses-builder',
@@ -65,8 +65,7 @@ export class TopicAccessesBuilderComponent implements OnInit {
     });
   }
 
-  submitCreateTopicAccesses(assessmentId: string): void {
-
+  submitCreateTopicAccesses(): void {
     const studentsArray: number[] = [];
     this.studentsList.forEach(student => {
       studentsArray.push(student.id);
@@ -120,8 +119,8 @@ export class TopicAccessesBuilderComponent implements OnInit {
     let day = date.getDate().toString();
     const year = date.getFullYear().toString();
 
-    if (month.length < 2) {month = '0' + month; }
-    if (day.length < 2){day = '0' + day; }
+    if (month.length < 2) { month = '0' + month; }
+    if (day.length < 2) { day = '0' + day; }
 
     return [year, month, day].join('-');
   }
