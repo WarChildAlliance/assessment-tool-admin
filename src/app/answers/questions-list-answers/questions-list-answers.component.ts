@@ -20,6 +20,7 @@ export class QuestionsListAnswersComponent implements OnInit {
 
   public displayedColumns: { key: string, value: string }[] = [
     { key: 'question_type', value: 'Question type' },
+    { key: 'question_order', value: 'Order' },
     { key: 'duration', value: 'Duration' },
     { key: 'valid', value: 'Valid' }
   ];
