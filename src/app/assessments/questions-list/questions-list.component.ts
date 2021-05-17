@@ -1,11 +1,9 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Question } from 'src/app/core/models/question.model';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 
 @Component({
@@ -28,15 +26,6 @@ export class QuestionsListComponent implements OnInit {
 
   public questionsDataSource: MatTableDataSource<any> = new MatTableDataSource([]);
   public selectedQuestions: any[] = [];
-
-  @ViewChild('createQuestionDialog') createQuestionDialog: TemplateRef<any>;
-
-  public createNewQuestionForm: FormGroup = new FormGroup({
-    first_name: new FormControl('', [Validators.required]),
-    last_name: new FormControl('', [Validators.required]),
-    country: new FormControl('', [Validators.required]),
-    language: new FormControl('', [Validators.required]),
-  });
 
   constructor(private assessmentService: AssessmentService,
               private route: ActivatedRoute,
@@ -65,10 +54,6 @@ export class QuestionsListComponent implements OnInit {
 
   onOpenDetails(id: string): void {
     this.router.navigate([`/assessments/${this.assessmentId}/topics/${this.topicId}/questions/${id}`]);
-  }
-
-  openCreateQuestionDialog(): void {
-    this.dialog.open(this.createQuestionDialog);
   }
 
   deleteSelection(): void {

@@ -6,9 +6,6 @@
     <button mat-stroked-button [disabled]="!selectedQuestions.length" color="accent" (click)="deleteSelection()">
       <mat-icon>delete_outline</mat-icon><span>Delete question(s)</span>
     </button>
-    <button mat-stroked-button color="accent" (click)="openCreateQuestionDialog()">
-      <mat-icon>add_circle_outline</mat-icon><span>Add question</span>
-    </button>
     <button mat-stroked-button color="accent" (click)="downloadData()">
       <mat-icon>get_app</mat-icon><span>Download</span>
     </button>
@@ -17,10 +14,4 @@
   <app-table [tableData]="questionsDataSource" [displayedColumns]="displayedColumns"
     [searchableColumns]="searchableColumns" [isSelectable]="true" (selectionChangedEvent)="onSelectionChange($event)"
     (openDetailsEvent)="onOpenDetails($event)"></app-table>
-
-  <ng-template #createQuestionDialog>
-    <h2 mat-dialog-title>Create a question</h2>
-    <mat-dialog-content>
-    </mat-dialog-content>
-  </ng-template>
 </div>
