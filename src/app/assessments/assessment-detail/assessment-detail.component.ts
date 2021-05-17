@@ -14,7 +14,9 @@ export class AssessmentDetailComponent implements OnInit {
 
   public displayedColumns: { key: string, value: string }[] = [
     { key: 'name', value: 'Name' },
-    { key: 'order', value: 'Order' },
+    { key: 'questions_count', value: 'Number of questions inside this topic' },
+    { key: 'students_count', value: 'Number of students linked to this topic' },
+    { key: 'students_completed_count', value: 'Number of students who finished this topic' },
   ];
 
   public searchableColumns = ['name'];

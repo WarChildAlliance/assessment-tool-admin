@@ -65,7 +65,7 @@ export class TopicAccessesBuilderComponent implements OnInit {
     });
   }
 
-  submitCreateTopicAccesses(assessmentId: string): void {
+  submitCreateTopicAccesses(): void {
 
     const studentsArray: number[] = [];
     this.studentsList.forEach(student => {
