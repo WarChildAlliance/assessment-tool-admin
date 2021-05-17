@@ -26,14 +26,16 @@ export class SessionsAnswersComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute, private answerService: AnswerService) { }
 
   ngOnInit(): void {
-    this.currentStudentId = this.route.snapshot.paramMap.get('student_id');
-
-    this.answerService.getSessionsAnswers(this.currentStudentId).subscribe(sessionsAnswers => {
-      this.sessionsAnswersDataSource = new MatTableDataSource(sessionsAnswers);
-    });
+    this.route.params.subscribe(params => {
+      this.currentStudentId = params.student_id;
+    
+      this.answerService.getSessionsAnswers(this.currentStudentId).subscribe(sessionsAnswers => {
+        this.sessionsAnswersDataSource = new MatTableDataSource(sessionsAnswers);
+      });
+    })
   }
 
   onOpenDetails(id: string): void {
-    this.router.navigate([`students/${this.currentStudentId}/assessments`, {session_id: id}]);
+    this.router.navigate([`students/${this.currentStudentId}/assessments`], { queryParams: { session_id: id }});
   }
 }

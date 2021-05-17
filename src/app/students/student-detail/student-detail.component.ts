@@ -18,9 +18,11 @@ export class StudentDetailComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.userService.getStudentDetails(this.route.snapshot.paramMap.get('student_id')).subscribe(student => {
-      this.student = student;
-    });
+    this.route.params.subscribe(params => {
+      this.userService.getStudentDetails(params.student_id).subscribe(student => {
+        this.student = student;
+      });
+    })
   }
 
   deleteCurrentStudent(): void {

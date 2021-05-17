@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
+import { forkJoin, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { AnswerService } from 'src/app/core/services/answer.service';
 
 @Component({
@@ -27,20 +29,23 @@ export class QuestionsListAnswersComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute, private answerService: AnswerService) { }
 
   ngOnInit(): void {
-    this.currentStudentId = this.route.snapshot.paramMap.get('student_id');
-    this.assessmentId = this.route.snapshot.paramMap.get('assessment_id');
-    this.topicId = this.route.snapshot.paramMap.get('topic_id');
-    this.sessionId = this.route.snapshot.paramMap.get('session_id');
+    forkJoin({
+      param1: this.route.params.subscribe(params => { this.currentStudentId = params.student_id }),
+      param2: this.route.params.subscribe(params => { this.assessmentId = params.assessment_id }),
+      param3: this.route.params.subscribe(params => { this.topicId = params.topic_id }),
+      param4: this.route.queryParams.subscribe(params => { this.sessionId = params.session_id })
 
-    this.answerService.getQuestionsAnwsers(this.currentStudentId, this.assessmentId, this.topicId, this.sessionId).subscribe(questions => {
-      this.questionsAnswersDataSource = new MatTableDataSource(questions);
-    });
+    }).pipe(
+      catchError(error => of(error))
+    ).subscribe(() => {
+
+      this.answerService.getQuestionsAnwsers(this.currentStudentId, this.assessmentId, this.topicId, this.sessionId).subscribe(questions => {
+        this.questionsAnswersDataSource = new MatTableDataSource(questions);
+      });
+    })
   }
 
   onOpenDetails(questionId: string): void {
-    const navigateUrl: any[] = [`students/${this.currentStudentId}/assessments/${this.assessmentId}/topics/${this.topicId}/questions/${questionId}`];
-    if (this.sessionId) {navigateUrl.push({session_id: this.sessionId}); }
-
-    this.router.navigate(navigateUrl);
+    this.router.navigate([`students/${this.currentStudentId}/assessments/${this.assessmentId}/topics/${this.topicId}/questions/${questionId}`], { queryParams: { session_id: this.sessionId }});
   }
 }

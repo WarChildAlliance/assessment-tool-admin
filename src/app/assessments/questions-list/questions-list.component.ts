@@ -3,6 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
+import { forkJoin, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { Question } from 'src/app/core/models/question.model';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 
@@ -13,8 +15,8 @@ import { AssessmentService } from 'src/app/core/services/assessment.service';
 })
 export class QuestionsListComponent implements OnInit {
 
-  private assessmentId = this.route.snapshot.paramMap.get('assessment_id');
-  private topicId = this.route.snapshot.paramMap.get('topic_id');
+  private assessmentId;
+  private topicId;
 
   public displayedColumns: { key: string, value: string }[] = [
     { key: 'title', value: 'Title' },
@@ -42,10 +44,18 @@ export class QuestionsListComponent implements OnInit {
               private dialog: MatDialog) { }
 
   ngOnInit(): void {
+    forkJoin({
+      param2: this.route.params.subscribe(params => { this.assessmentId = params.assessment_id }),
+      param4: this.route.params.subscribe(params => { this.topicId = params.topic_id })
 
-    this.assessmentService.getTopicQuestions(this.assessmentId, this.topicId).subscribe((questionsList) => {
-      this.questionsDataSource = new MatTableDataSource(questionsList);
-    });
+    }).pipe(
+      catchError(error => of(error))
+    ).subscribe(() => {
+
+      this.assessmentService.getTopicQuestions(this.assessmentId, this.topicId).subscribe((questionsList) => {
+        this.questionsDataSource = new MatTableDataSource(questionsList);
+      });
+    })
   }
 
   // This eventReceiver triggers a thousand times when user does "select all". We should find a way to improve this. (debouncer ?)

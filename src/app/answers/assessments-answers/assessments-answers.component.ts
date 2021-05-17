@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
+import { forkJoin, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { AnswerService } from 'src/app/core/services/answer.service';
 
 @Component({
@@ -28,18 +30,21 @@ export class AssessmentsAnswersComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute, private answerService: AnswerService) { }
 
   ngOnInit(): void {
-    this.currentStudentId = this.route.snapshot.paramMap.get('student_id');
-    this.sessionId = this.route.snapshot.paramMap.get('session_id');
+    forkJoin({
+      param1: this.route.params.subscribe(params => { this.currentStudentId = params.student_id }),
+      param2: this.route.queryParams.subscribe(params => { this.sessionId = params.session_id })
+      
+    }).pipe(
+      catchError(error => of(error))
+    ).subscribe(() => {
 
-    this.answerService.getAssessmentsAnswers(this.currentStudentId, this.sessionId).subscribe(assessments => {
-      this.assessmentsAnswersDataSource = new MatTableDataSource(assessments);
-    });
+      this.answerService.getAssessmentsAnswers(this.currentStudentId, this.sessionId).subscribe(assessments => {
+        this.assessmentsAnswersDataSource = new MatTableDataSource(assessments);
+      });
+    })
   }
 
   onOpenDetails(assessmentId: string): void {
-    const navigateUrl: any[] = [`students/${this.currentStudentId}/assessments/${assessmentId}/topics`];
-    if (this.sessionId) { navigateUrl.push({session_id: this.sessionId}); }
-
-    this.router.navigate(navigateUrl);
+    this.router.navigate([`students/${this.currentStudentId}/assessments/${assessmentId}/topics`], { queryParams: { session_id: this.sessionId } });
   }
 }

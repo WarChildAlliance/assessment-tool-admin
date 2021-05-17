@@ -42,15 +42,17 @@ export class AssessmentDetailComponent implements OnInit {
 
   ngOnInit(): void {
 
-    const assessmentId = this.route.snapshot.paramMap.get('id');
-
-    this.assessmentService.getAssessmentTopics(assessmentId).subscribe((topicsList) => {
-      this.topicsDataSource = new MatTableDataSource(topicsList);
-    });
-
-    this.assessmentService.getAssessmentDetails(assessmentId).subscribe(assessment => {
-      this.currentAssessment = assessment;
-    });
+    this.route.params.subscribe(params => {
+      const assessmentId = params.id
+      
+      this.assessmentService.getAssessmentTopics(assessmentId).subscribe((topicsList) => {
+        this.topicsDataSource = new MatTableDataSource(topicsList);
+      });
+  
+      this.assessmentService.getAssessmentDetails(assessmentId).subscribe(assessment => {
+        this.currentAssessment = assessment;
+      });
+    })
   }
 
   // This eventReceiver triggers a thousand times when user does "select all". We should find a way to improve this. (debouncer ?)
