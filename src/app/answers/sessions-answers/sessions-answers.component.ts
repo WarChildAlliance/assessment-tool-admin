@@ -16,8 +16,9 @@ export class SessionsAnswersComponent implements OnInit {
   public displayedColumns: { key: string, value: string }[] = [
     { key: 'start_date', value: 'Start date' },
     { key: 'end_date', value: 'End date' },
-    { key: 'answered_questions_count', value: 'Number of answered questions' },
     { key: 'completed_topics_count', value: 'Number of completed topics' },
+    { key: 'answered_questions_count', value: 'Number of answered questions' },
+    { key: 'correctly_answered_questions_count', value: 'Number of correctly answered questions' },
     { key: 'correct_answers_percentage', value: 'Percentage of correct answers' }
   ];
 
