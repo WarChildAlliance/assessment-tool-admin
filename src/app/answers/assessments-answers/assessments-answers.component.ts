@@ -21,11 +21,9 @@ export class AssessmentsAnswersComponent implements OnInit {
     { key: 'subject', value: 'Subject' },
     { key: 'accessible_topics_count', value: 'Number of topics accessible' },
     { key: 'completed_topics_count', value: 'Number of topics completed' },
-    { key: 'language_name', value: 'Language' },
-    { key: 'country_name', value: 'Country' },
   ];
 
-  public searchableColumns = ['title', 'language', 'subject'];
+  public searchableColumns = ['title', 'subject'];
 
   constructor(private router: Router, private route: ActivatedRoute, private answerService: AnswerService) { }
 
@@ -33,10 +31,17 @@ export class AssessmentsAnswersComponent implements OnInit {
     forkJoin({
       param1: this.route.params.subscribe(params => { this.currentStudentId = params.student_id }),
       param2: this.route.queryParams.subscribe(params => { this.sessionId = params.session_id })
-      
+
     }).pipe(
       catchError(error => of(error))
     ).subscribe(() => {
+      if (!this.sessionId) {
+        this.displayedColumns.push(
+          { key: 'first_session_correct_answers_percentage', value: 'Correct answers percentage of first session' },
+          { key: 'last_session_correct_answers_percentage', value: 'Correct answers percentage of last session' },
+          { key: 'last_session', value: 'Last session date' },
+        )
+      }
 
       this.answerService.getAssessmentsAnswers(this.currentStudentId, this.sessionId).subscribe(assessments => {
         this.assessmentsAnswersDataSource = new MatTableDataSource(assessments);
