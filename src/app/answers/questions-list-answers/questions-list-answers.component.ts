@@ -25,7 +25,7 @@ export class QuestionsListAnswersComponent implements OnInit {
     { key: 'question_order', name: 'Order', sorting:'asc' },
     { key: 'duration', name: 'Duration' },
     { key: 'valid', name: 'Valid', type:'boolean' },
-    { key: 'attachment_icon', name: 'Question has attachment', type: 'icon' }
+    { key: 'attachment_icon', name: 'Attachment', type: 'icon' }
   ];
 
   public searchableColumns = ['question_type', 'valid'];

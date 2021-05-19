@@ -19,9 +19,9 @@ import { Student } from '../core/models/answers/student.model';
 export class StudentsComponent implements OnInit {
 
   public displayedColumns: TableColumn[] = [
-    { key: 'full_name', name: 'Full name' },
-    { key: 'assessments_count', name: 'Number of assessments' },
-    { key: 'completed_topics_count', name: 'Number of completed topics' },
+    { key: 'full_name', name: 'Student name' },
+    { key: 'assessments_count', name: 'Total number of assessments' },
+    { key: 'completed_topics_count', name: 'Total number of completed topics' },
     { key: 'last_session', name: 'Last session', type: 'date' },
     { key: 'language_name', name: 'Language' },
     { key: 'country_name', name: 'Country' }

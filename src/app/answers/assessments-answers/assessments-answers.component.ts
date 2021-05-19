@@ -41,7 +41,7 @@ export class AssessmentsAnswersComponent implements OnInit {
         this.displayedColumns.push(
           { key: 'first_session_correct_answers_percentage', name: 'Correct answers percentage of first session', type: 'percentage' },
           { key: 'last_session_correct_answers_percentage', name: 'Correct answers percentage of last session', type: 'percentage' },
-          { key: 'last_session', name: 'Last session date', type: 'date', sorting: 'desc' },
+          { key: 'last_session', name: 'Last session', type: 'date', sorting: 'desc' },
         )
       }
 

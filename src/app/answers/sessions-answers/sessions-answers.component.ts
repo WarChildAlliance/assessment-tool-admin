@@ -16,8 +16,7 @@ export class SessionsAnswersComponent implements OnInit {
   currentStudentId: string;
 
   public displayedColumns: TableColumn[] = [
-    { key: 'start_date', name: 'Start date', type: 'date', sorting:"desc" },
-    { key: 'end_date', name: 'End date', type: 'date' },
+    { key: 'start_date', name: 'Session date', type: 'date', sorting:"desc" },
     { key: 'completed_topics_count', name: 'Number of completed topics' },
     { key: 'answered_questions_count', name: 'Number of answered questions' },
     { key: 'correctly_answered_questions_count', name: 'Number of correctly answered questions' },
