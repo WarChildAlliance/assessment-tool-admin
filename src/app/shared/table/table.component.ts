@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } 
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
+import { TableColumn } from 'src/app/core/models/table-column.model';
 
 @Component({
   selector: 'app-table',
@@ -11,7 +12,7 @@ import { MatPaginator } from '@angular/material/paginator';
 })
 export class TableComponent implements OnInit, OnChanges {
 
-  @Input() displayedColumns: { key: string, value: string }[];
+  @Input() displayedColumns: TableColumn[];
   @Input() tableData: MatTableDataSource<any>;
   @Input() isSelectable: boolean;
   @Input() searchableColumns: string[];
@@ -40,6 +41,7 @@ export class TableComponent implements OnInit, OnChanges {
     this.loadFilter();
 
     this.tableData.sort = this.tableSort;
+    if (this.tableSort) { this.loadInitialSorting(); }
     this.tableData.paginator = this.paginator;
   }
 
@@ -53,6 +55,20 @@ export class TableComponent implements OnInit, OnChanges {
       displayedColumnsKeys.push(element.key);
     });
     return displayedColumnsKeys;
+  }
+
+  // Returns the appropriate indicator color for a percentage
+  // TODO This part should be improved by removing the hard-coded values
+  getIndicatorColor(percentage: number) {
+    if (percentage < 41) {
+      return 'red'
+    } else if (percentage < 70) {
+      return 'orange'
+    } else if (percentage < 95) {
+      return 'limegreen'
+    } else {
+      return 'green'
+    }
   }
 
   isAllSelected(): boolean {
@@ -101,6 +117,25 @@ export class TableComponent implements OnInit, OnChanges {
       });
       return applyFilter;
     };
+  }
+
+  // Sort the table on one of its elements at initialization
+  private loadInitialSorting(): void {
+
+    // Look for an element that should be used as initial sorting reference in the table data
+    // Only one element can be used as such
+    let initialSortTarget = this.displayedColumns.find((element) => element.sorting)
+
+    if (initialSortTarget) {
+      // Find the corresponding MatSortable element
+      let initialSortElement = this.tableData.sort.sortables.get(initialSortTarget.key);
+
+      // Attribute the sorting order according to the specified parameter
+      initialSortElement.start = initialSortTarget.sorting;
+
+      // Do an initial sorting matching these conditions
+      this.tableData.sort.sort(initialSortElement)
+    }
   }
 
   applyFilter(event: Event): void {

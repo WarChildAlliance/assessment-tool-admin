@@ -3,6 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { TableColumn } from 'src/app/core/models/table-column.model';
 import { AnswerService } from 'src/app/core/services/answer.service';
 
 @Component({
@@ -16,11 +17,11 @@ export class AssessmentsAnswersComponent implements OnInit {
   currentStudentId: string;
   sessionId: string;
 
-  public displayedColumns: { key: string, value: string }[] = [
-    { key: 'title', value: 'Title' },
-    { key: 'subject', value: 'Subject' },
-    { key: 'accessible_topics_count', value: 'Number of topics accessible' },
-    { key: 'completed_topics_count', value: 'Number of topics completed' },
+  public displayedColumns: TableColumn[] = [
+    { key: 'title', name: 'Title' },
+    { key: 'subject', name: 'Subject' },
+    { key: 'accessible_topics_count', name: 'Number of topics accessible' },
+    { key: 'completed_topics_count', name: 'Number of topics completed' },
   ];
 
   public searchableColumns = ['title', 'subject'];
@@ -37,9 +38,9 @@ export class AssessmentsAnswersComponent implements OnInit {
     ).subscribe(() => {
       if (!this.sessionId) {
         this.displayedColumns.push(
-          { key: 'first_session_correct_answers_percentage', value: 'Correct answers percentage of first session' },
-          { key: 'last_session_correct_answers_percentage', value: 'Correct answers percentage of last session' },
-          { key: 'last_session', value: 'Last session date' },
+          { key: 'first_session_correct_answers_percentage', name: 'Correct answers percentage of first session', type: 'percentage' },
+          { key: 'last_session_correct_answers_percentage', name: 'Correct answers percentage of last session', type: 'percentage' },
+          { key: 'last_session', name: 'Last session date', type: 'date', sorting: 'desc' },
         )
       }
 

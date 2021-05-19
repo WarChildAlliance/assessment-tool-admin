@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TableColumn } from 'src/app/core/models/table-column.model';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 
 @Component({
@@ -13,9 +14,9 @@ export class QuestionDetailComponent implements OnInit {
   private assessmentId = this.route.snapshot.paramMap.get('assessment_id');
   private topicId = this.route.snapshot.paramMap.get('topic_id');
 
-  public displayedColumns: { key: string, value: string }[] = [
-    { key: 'title', value: 'Title' },
-    { key: 'question_type', value: 'Question type' },
+  public displayedColumns: TableColumn[] = [
+    { key: 'title', name: 'Title' },
+    { key: 'question_type', name: 'Question type' },
   ];
 
   public searchableColumns = ['title', 'question_type'];

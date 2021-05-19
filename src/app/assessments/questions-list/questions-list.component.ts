@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { TableColumn } from 'src/app/core/models/table-column.model';
+import { Question } from 'src/app/core/models/visualization/question.model';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 
 @Component({
@@ -13,26 +14,25 @@ import { AssessmentService } from 'src/app/core/services/assessment.service';
 })
 export class QuestionsListComponent implements OnInit {
 
-  private assessmentId;
-  private topicId;
+  private assessmentId: string;
+  private topicId: string;
 
-  public displayedColumns: { key: string, value: string }[] = [
-    { key: 'title', value: 'Title' },
-    { key: 'question_type', value: 'Question type' },
-    { key: 'order', value: 'Order' },
-    { key: 'has_attachment', value: 'Attachments' },
-    { key: 'correct_answers_percentage', value: 'Overall correct answers percentage'}
+  public displayedColumns: TableColumn[] = [
+    { key: 'title', name: 'Title' },
+    { key: 'question_type', name: 'Question type' },
+    { key: 'order', name: 'Order', sorting: 'asc' },
+    { key: 'attachment_icon', name: 'Attachment', type: 'icon' },
+    { key: 'correct_answers_percentage', name: 'Overall correct answers percentage', type: 'percentage' }
   ];
 
   public searchableColumns = ['title', 'question_type'];
 
-  public questionsDataSource: MatTableDataSource<any> = new MatTableDataSource([]);
+  public questionsDataSource: MatTableDataSource<Question> = new MatTableDataSource([]);
   public selectedQuestions: any[] = [];
 
   constructor(private assessmentService: AssessmentService,
               private route: ActivatedRoute,
-              private router: Router,
-              private dialog: MatDialog) { }
+              private router: Router) { }
 
   ngOnInit(): void {
     forkJoin({
@@ -44,6 +44,9 @@ export class QuestionsListComponent implements OnInit {
     ).subscribe(() => {
 
       this.assessmentService.getTopicQuestions(this.assessmentId, this.topicId).subscribe((questionsList) => {
+        questionsList.forEach((question: Question) => {
+          question.has_attachment ? question.attachment_icon = 'attachment' : question.attachment_icon = null;
+        })
         this.questionsDataSource = new MatTableDataSource(questionsList);
       });
     })

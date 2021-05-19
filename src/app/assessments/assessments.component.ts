@@ -1,6 +1,5 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Assessment } from '../core/models/assessment.model';
 import { AssessmentService } from '../core/services/assessment.service';
@@ -8,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { UserService } from '../core/services/user.service';
 import { Country } from '../core/models/country.model';
 import { Language } from '../core/models/language.model';
+import { TableColumn } from '../core/models/table-column.model';
 
 @Component({
   selector: 'app-assessments',
@@ -16,15 +16,15 @@ import { Language } from '../core/models/language.model';
 })
 export class AssessmentsComponent implements OnInit {
 
-  public displayedColumns: { key: string, value: string }[] = [
-    { key: 'title', value: 'Title' },
-    { key: 'grade', value: 'Grade' },
-    { key: 'subject', value: 'Subject' },
-    { key: 'topics_count', value: 'Number of topics' },
-    { key: 'students_count', value: 'Number of student linked to this assessment' },
-    { key: 'language_name', value: 'Language' },
-    { key: 'country_name', value: 'Country' },
-    { key: 'private', value: 'Private' }
+  public displayedColumns: TableColumn[] = [
+    { key: 'title', name: 'Title' },
+    { key: 'grade', name: 'Grade' },
+    { key: 'subject', name: 'Subject' },
+    { key: 'topics_count', name: 'Number of topics' },
+    { key: 'students_count', name: 'Number of student linked to this assessment' },
+    { key: 'language_name', name: 'Language' },
+    { key: 'country_name', name: 'Country' },
+    { key: 'private', name: 'Private' }
   ];
 
   public searchableColumns = ['title', 'grade', 'subject', 'language_name', 'country_name'];

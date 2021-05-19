@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Question } from '../models/visualization/question.model';
 import { UtilitiesService } from './utilities.service';
 
 @Injectable({
@@ -28,7 +29,7 @@ export class AssessmentService {
     return this.http.get<any[]>(`${environment.API_URL}/visualization/assessments/${id}/topics/`);
   }
 
-  getTopicQuestions(assessmentId: string, topicId: string): Observable<any[]> {
+  getTopicQuestions(assessmentId: string, topicId: string): Observable<Question[]> {
     return this.http.get<any[]>(`${environment.API_URL}/visualization/assessments/${assessmentId}/topics/${topicId}/questions/`);
   }
 }

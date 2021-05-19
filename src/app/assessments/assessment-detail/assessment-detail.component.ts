@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TableColumn } from 'src/app/core/models/table-column.model';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 
 @Component({
@@ -12,11 +13,11 @@ import { AssessmentService } from 'src/app/core/services/assessment.service';
 })
 export class AssessmentDetailComponent implements OnInit {
 
-  public displayedColumns: { key: string, value: string }[] = [
-    { key: 'name', value: 'Name' },
-    { key: 'students_count', value: 'Number of students with access' },
-    { key: 'students_completed_count', value: 'Number of students who completed' },
-    { key: 'questions_count', value: 'Number of questions' }
+  public displayedColumns: TableColumn[] = [
+    { key: 'name', name: 'Name' },
+    { key: 'students_count', name: 'Number of students with access' },
+    { key: 'students_completed_count', name: 'Number of students who completed' },
+    { key: 'questions_count', name: 'Number of questions' }
   ];
 
   public searchableColumns = ['name'];

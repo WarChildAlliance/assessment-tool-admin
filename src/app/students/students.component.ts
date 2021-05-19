@@ -8,6 +8,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { AlertService } from '../core/services/alert.service';
 import { Country } from '../core/models/country.model';
+import { TableColumn } from '../core/models/table-column.model';
 
 @Component({
   selector: 'app-students',
@@ -16,13 +17,13 @@ import { Country } from '../core/models/country.model';
 })
 export class StudentsComponent implements OnInit {
 
-  public displayedColumns: { key: string, value: string }[] = [
-    { key: 'full_name', value: 'Full name' },
-    { key: 'assessments_count', value: 'Number of assessments' },
-    { key: 'completed_topics_count', value: 'Number of completed topics' },
-    { key: 'last_session', value: 'Last session' },
-    { key: 'language_name', value: 'Language' },
-    { key: 'country_name', value: 'Country' }
+  public displayedColumns: TableColumn[] = [
+    { key: 'full_name', name: 'Full name' },
+    { key: 'assessments_count', name: 'Number of assessments' },
+    { key: 'completed_topics_count', name: 'Number of completed topics' },
+    { key: 'last_session', name: 'Last session', type: 'date' },
+    { key: 'language_name', name: 'Language' },
+    { key: 'country_name', name: 'Country' }
   ];
 
   public searchableColumns = ['full_name', 'language_name', 'country_name'];

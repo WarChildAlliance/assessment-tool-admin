@@ -3,6 +3,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { TableColumn } from 'src/app/core/models/table-column.model';
+import { Question } from 'src/app/core/models/visualization/question.model';
 import { AnswerService } from 'src/app/core/services/answer.service';
 
 @Component({
@@ -18,11 +20,12 @@ export class QuestionsListAnswersComponent implements OnInit {
   topicId: string;
   sessionId: string;
 
-  public displayedColumns: { key: string, value: string }[] = [
-    { key: 'question_type', value: 'Question type' },
-    { key: 'question_order', value: 'Order' },
-    { key: 'duration', value: 'Duration' },
-    { key: 'valid', value: 'Valid' }
+  public displayedColumns: TableColumn[] = [
+    { key: 'question_type', name: 'Question type' },
+    { key: 'question_order', name: 'Order', sorting:'asc' },
+    { key: 'duration', name: 'Duration' },
+    { key: 'valid', name: 'Valid' },
+    { key: 'attachment_icon', name: 'Question has attachment', type: 'icon' }
   ];
 
   public searchableColumns = ['question_type', 'valid'];
@@ -41,6 +44,10 @@ export class QuestionsListAnswersComponent implements OnInit {
     ).subscribe(() => {
 
       this.answerService.getQuestionsAnwsers(this.currentStudentId, this.assessmentId, this.topicId, this.sessionId).subscribe(questions => {
+        // There must be a prettier way of doing this, especially in the model...
+        questions.forEach((question: Question) => {
+          question.has_attachment ? question.attachment_icon = 'attachment' : question.attachment_icon = null;
+        })
         this.questionsAnswersDataSource = new MatTableDataSource(questions);
       });
     })

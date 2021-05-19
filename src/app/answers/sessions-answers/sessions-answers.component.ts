@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TableColumn } from 'src/app/core/models/table-column.model';
 import { AnswerService } from 'src/app/core/services/answer.service';
 
 @Component({
@@ -13,13 +14,13 @@ export class SessionsAnswersComponent implements OnInit {
   sessionsAnswersDataSource: MatTableDataSource<any> = new MatTableDataSource([]);
   currentStudentId: string;
 
-  public displayedColumns: { key: string, value: string }[] = [
-    { key: 'start_date', value: 'Start date' },
-    { key: 'end_date', value: 'End date' },
-    { key: 'completed_topics_count', value: 'Number of completed topics' },
-    { key: 'answered_questions_count', value: 'Number of answered questions' },
-    { key: 'correctly_answered_questions_count', value: 'Number of correctly answered questions' },
-    { key: 'correct_answers_percentage', value: 'Percentage of correct answers' }
+  public displayedColumns: TableColumn[] = [
+    { key: 'start_date', name: 'Start date', type: 'date', sorting:"desc" },
+    { key: 'end_date', name: 'End date', type: 'date' },
+    { key: 'completed_topics_count', name: 'Number of completed topics' },
+    { key: 'answered_questions_count', name: 'Number of answered questions' },
+    { key: 'correctly_answered_questions_count', name: 'Number of correctly answered questions' },
+    { key: 'correct_answers_percentage', name: 'Percentage of correct answers', type: 'percentage' }
   ];
 
   public searchableColumns = ['duration', 'date'];
@@ -29,7 +30,7 @@ export class SessionsAnswersComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.currentStudentId = params.student_id;
-    
+
       this.answerService.getSessionsAnswers(this.currentStudentId).subscribe(sessionsAnswers => {
         this.sessionsAnswersDataSource = new MatTableDataSource(sessionsAnswers);
       });
@@ -37,6 +38,6 @@ export class SessionsAnswersComponent implements OnInit {
   }
 
   onOpenDetails(id: string): void {
-    this.router.navigate([`students/${this.currentStudentId}/assessments`], { queryParams: { session_id: id }});
+    this.router.navigate([`students/${this.currentStudentId}/assessments`], { queryParams: { session_id: id } });
   }
 }
