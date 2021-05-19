@@ -13,14 +13,18 @@
 
     &__current-object-details {
         border: 1px solid var(--color-primary);
+        border-right: none;
+        border-left: none;
         border-radius: 5px;
 
-        .header {
-            color: var(--color-accent);
+        .mat-grid-tile {
+            border: 1px solid var(--color-primary);
+            border-top: none;
+            border-bottom: none;
         }
 
         .detail {
-            font-weight: bold;
+            font-size: large;
         }
     }
 }

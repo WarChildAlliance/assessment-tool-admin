@@ -1,9 +1,8 @@
 <div class="main-board">
 
-  <mat-grid-list *ngIf="student" class="main-board__current-object-details" cols="7" rowHeight="36px">
-    <mat-grid-tile class="header">Full name</mat-grid-tile>
-    <mat-grid-tile class="header">Number of completed assessments</mat-grid-tile>
-    <mat-grid-tile class="header">Number of completed topics</mat-grid-tile>
+  <mat-grid-list *ngIf="student" class="main-board__current-object-details" cols="6" rowHeight="50px">
+    <mat-grid-tile class="header">Number of assessments</mat-grid-tile>
+    <mat-grid-tile class="header">Total completed topics</mat-grid-tile>
     <mat-grid-tile class="header">Last session</mat-grid-tile>
     <mat-grid-tile class="header">Language</mat-grid-tile>
     <mat-grid-tile class="header">Country</mat-grid-tile>
@@ -12,10 +11,9 @@
         <mat-icon>delete_outline</mat-icon>
       </button>
     </mat-grid-tile>
-    <mat-grid-tile class="detail">{{ student.full_name }}</mat-grid-tile>
     <mat-grid-tile class="detail">{{ student.assessments_count }}</mat-grid-tile>
     <mat-grid-tile class="detail">{{ student.completed_topics_count }}</mat-grid-tile>
-    <mat-grid-tile class="detail">{{ student.last_session }}</mat-grid-tile>
+    <mat-grid-tile class="detail">{{ student.last_session | date:'short' }}</mat-grid-tile>
     <mat-grid-tile class="detail">{{ student.language_name }}</mat-grid-tile>
     <mat-grid-tile class="detail">{{ student.country_name }}</mat-grid-tile>
   </mat-grid-list>
