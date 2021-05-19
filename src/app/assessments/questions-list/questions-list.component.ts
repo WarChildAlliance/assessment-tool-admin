@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { TableColumn } from 'src/app/core/models/table-column.model';
-import { Question } from 'src/app/core/models/visualization/question.model';
+import { Question } from 'src/app/core/models/answers/question.model';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 
 @Component({

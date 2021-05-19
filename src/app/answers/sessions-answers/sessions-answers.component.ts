@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Session } from 'src/app/core/models/answers/session.model';
 import { TableColumn } from 'src/app/core/models/table-column.model';
 import { AnswerService } from 'src/app/core/services/answer.service';
 
@@ -11,7 +12,7 @@ import { AnswerService } from 'src/app/core/services/answer.service';
 })
 export class SessionsAnswersComponent implements OnInit {
 
-  sessionsAnswersDataSource: MatTableDataSource<any> = new MatTableDataSource([]);
+  sessionsAnswersDataSource: MatTableDataSource<Session> = new MatTableDataSource([]);
   currentStudentId: string;
 
   public displayedColumns: TableColumn[] = [

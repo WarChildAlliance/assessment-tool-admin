@@ -3,6 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { Topic } from 'src/app/core/models/answers/topic.model';
 import { TableColumn } from 'src/app/core/models/table-column.model';
 import { AnswerService } from 'src/app/core/services/answer.service';
 
@@ -13,7 +14,7 @@ import { AnswerService } from 'src/app/core/services/answer.service';
 })
 export class TopicsListAnswersComponent implements OnInit {
 
-  topicsAnswersDataSource: MatTableDataSource<any> = new MatTableDataSource([]);
+  topicsAnswersDataSource: MatTableDataSource<Topic> = new MatTableDataSource([]);
   currentStudentId: string;
   assessmentId: string;
   sessionId: string;
@@ -24,7 +25,7 @@ export class TopicsListAnswersComponent implements OnInit {
     { key: 'answered_questions_count', name: 'Number of answered questions' },
     { key: 'correct_answers_percentage', name: 'Percentage of correct answers', type: 'percentage'  },
     { key: 'start_date', name: 'Last submition', type: 'date', sorting:'desc'  },
-    { key: 'complete', name: 'Completed' },
+    { key: 'complete', name: 'Completed', type: 'boolean' },
   ];
 
   public searchableColumns = ['topic_name', 'complete'];

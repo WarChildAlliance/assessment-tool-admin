@@ -3,6 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { Assessment } from 'src/app/core/models/answers/assessment.model';
 import { TableColumn } from 'src/app/core/models/table-column.model';
 import { AnswerService } from 'src/app/core/services/answer.service';
 
@@ -13,7 +14,7 @@ import { AnswerService } from 'src/app/core/services/answer.service';
 })
 export class AssessmentsAnswersComponent implements OnInit {
 
-  assessmentsAnswersDataSource: MatTableDataSource<any> = new MatTableDataSource([]);
+  assessmentsAnswersDataSource: MatTableDataSource<Assessment> = new MatTableDataSource([]);
   currentStudentId: string;
   sessionId: string;
 

@@ -9,6 +9,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { AlertService } from '../core/services/alert.service';
 import { Country } from '../core/models/country.model';
 import { TableColumn } from '../core/models/table-column.model';
+import { Student } from '../core/models/answers/student.model';
 
 @Component({
   selector: 'app-students',
@@ -28,7 +29,7 @@ export class StudentsComponent implements OnInit {
 
   public searchableColumns = ['full_name', 'language_name', 'country_name'];
 
-  public studentsDataSource: MatTableDataSource<any> = new MatTableDataSource([]);
+  public studentsDataSource: MatTableDataSource<Student> = new MatTableDataSource([]);
   public selectedUsers = [];
 
   public countries: Country[] = [];
@@ -60,7 +61,7 @@ export class StudentsComponent implements OnInit {
       this.languages = languages;
     });
 
-    this.userService.getStudentsList().subscribe((studentsList) => {
+    this.userService.getStudentsList().subscribe((studentsList: Student[]) => {
       this.studentsDataSource = new MatTableDataSource(studentsList);
     });
   }
