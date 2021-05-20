@@ -16,6 +16,7 @@
         border-right: none;
         border-left: none;
         border-radius: 5px;
+        text-align: center;
 
         .mat-grid-tile {
             border: 1px solid var(--color-primary);
@@ -26,5 +27,9 @@
         .detail {
             font-size: large;
         }
+    }
+
+    &__select-container > * {
+        margin-right: 16px;
     }
 }

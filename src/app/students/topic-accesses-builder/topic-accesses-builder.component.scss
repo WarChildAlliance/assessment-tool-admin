@@ -30,9 +30,17 @@
         align-items: center;
         margin-bottom: 12px;
 
+        &.-assessment {
+            ::ng-deep .mat-radio-label-content {
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+
         &.-topic-access {
             justify-content: space-between;
         }
+
     }
 
     &__submit {

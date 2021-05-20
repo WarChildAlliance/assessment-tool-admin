@@ -1,3 +1,13 @@
+
+.table__searchbox {
+    width: 100%;
+
+    ::ng-deep .mat-form-field-underline {
+        display: none;
+    }
+}
+
+
 table {
     width: 100%;
     font-weight: normal;
@@ -5,8 +15,21 @@ table {
     .mat-row {
         transition: background-color 0.5s ease;
 
-        &>.mat-cell:not(:first-child):hover {
+        & > .mat-cell:not(:first-child):hover {
             cursor: pointer;
+        }
+    }
+}
+
+::ng-deep .mat-table {
+    
+    @media (max-width: 1240px) {
+        tbody {
+            text-align: center;
+        }
+
+        .mat-sort-header-container {
+            justify-content: center;
         }
     }
 }

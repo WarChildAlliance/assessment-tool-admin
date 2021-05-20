@@ -9,7 +9,6 @@
 @include mat-core();
 
 /* For use in src/lib/core/theming/_palette.scss */
-/* For use in src/lib/core/theming/_palette.scss */
 $admin-dashboard-palette: (
     50 : #ffffff,
     100 : #ffffff,
@@ -122,8 +121,6 @@ $admin-dashboard-theme: mat-light-theme(
 @include angular-material-theme($admin-dashboard-theme);
 
 // Mixins
-
-
 @mixin snackbar-theme($theme) {
   snack-bar-container {
     simple-snack-bar.mat-simple-snackbar {

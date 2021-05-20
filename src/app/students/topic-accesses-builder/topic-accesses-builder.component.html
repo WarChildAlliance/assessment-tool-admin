@@ -15,7 +15,7 @@
     <div class="topic-accesses-builder__list">
         <span class="header">Assessment</span>
 
-        <mat-radio-button class="topic-accesses-builder__list-row" *ngFor="let assessment of assessmentsList"
+        <mat-radio-button class="topic-accesses-builder__list-row -assessment" title="{{ assessment.title }}" *ngFor="let assessment of assessmentsList"
             value="{{ assessment.id }}" (change)="loadTopicsList(assessment.id.toString())">{{ assessment.title }}
         </mat-radio-button>
     </div>
