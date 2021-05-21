@@ -1,5 +1,5 @@
 
-export interface Assessment {
+export interface AssessmentTableData {
     id: number;
     title: string;
     subject: string;

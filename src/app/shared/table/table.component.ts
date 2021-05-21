@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { TableColumn } from 'src/app/core/models/table-column.model';
+import { TableFilter } from 'src/app/core/models/table-filter.model';
 
 @Component({
   selector: 'app-table',
@@ -14,16 +15,18 @@ export class TableComponent implements OnInit, OnChanges {
 
   @Input() displayedColumns: TableColumn[];
   @Input() tableData: MatTableDataSource<any>;
+  @Input() filtersData: TableFilter[];
   @Input() isSelectable: boolean;
   @Input() searchableColumns: string[];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) tableSort: MatSort;
+  @ViewChild(MatSort) sort: MatSort;
 
   public selection: SelectionModel<any> = new SelectionModel<any>(true, []);
 
   // Notice here that the eventEmitter constructor accepts a "true" argument, which makes it asynchronous and prevents NG0100
   @Output() selectionChangedEvent = new EventEmitter<any[]>(true);
+  @Output() filtersChangedEvent = new EventEmitter<{ key: string | number, value: any}>(true);
   @Output() openDetailsEvent = new EventEmitter<string>();
 
   constructor() { }
@@ -38,37 +41,40 @@ export class TableComponent implements OnInit, OnChanges {
     // Be careful: if ngOnChanges has reasons to trigger other than tableData being updated,
     // it might be interesting to move the following line in a setter for tableData.
     this.selection.clear();
-    this.loadFilter();
+    // this.loadFilter();
 
-    this.tableData.sort = this.tableSort;
-    if (this.tableSort) { this.loadInitialSorting(); }
+    this.tableData.sort = this.sort;
+    if (this.sort) {
+      this.loadInitialSorting();
+    }
     this.tableData.paginator = this.paginator;
   }
 
   // Return an array exclusively composed of the keys of the columns we want displayed
   getDisplayedColumnsKeys(): string[] {
-    const displayedColumnsKeys = [];
-    if (this.isSelectable) { displayedColumnsKeys.push('select'); }
-
-    // TODO We can improve this function by making it iterate in nested objects and retrieve the wanted value (by splicing the key on ".")
-    this.displayedColumns.forEach(element => {
-      displayedColumnsKeys.push(element.key);
-    });
+    const displayedColumnsKeys = this.displayedColumns.map(column => column.key);
+    if (this.isSelectable) {
+      displayedColumnsKeys.unshift('select');
+    }
     return displayedColumnsKeys;
   }
 
   // Returns the appropriate indicator color for a percentage
-  // TODO This part should be improved by removing the hard-coded values
-  getIndicatorColor(percentage: number) {
-    if (percentage < 41) {
-      return 'red'
-    } else if (percentage < 70) {
-      return 'orange'
-    } else if (percentage < 95) {
-      return 'limegreen'
-    } else {
-      return 'green'
+  // TODO This part should be improved by using class names instead
+  getIndicatorColor(percentage: number): string {
+    if (!percentage && percentage !== 0) {
+      return 'inherit';
     }
+    if (percentage < 41) {
+      return 'red';
+    }
+    if (percentage < 70) {
+      return 'orange';
+    }
+    if (percentage < 95) {
+      return 'limegreen';
+    }
+    return 'green';
   }
 
   isAllSelected(): boolean {
@@ -94,53 +100,31 @@ export class TableComponent implements OnInit, OnChanges {
     }
   }
 
-  // If there are performance issues, the foreach could be replaced
-  private loadFilter(): void {
-
-    this.tableData.filterPredicate = (data, filterValue) => {
-      let applyFilter = false;
-
-      this.searchableColumns.forEach((key: string) => {
-        let valueToMatchAgainst = data[key];
-
-        if (valueToMatchAgainst && !applyFilter) {
-          if (typeof (valueToMatchAgainst) === 'string') {
-            valueToMatchAgainst = valueToMatchAgainst.toLowerCase();
-          } else {
-            valueToMatchAgainst = valueToMatchAgainst.toString().toLowerCase();
-          }
-
-          if (valueToMatchAgainst.includes(filterValue)) {
-            applyFilter = true;
-          }
-        }
-      });
-      return applyFilter;
-    };
-  }
-
   // Sort the table on one of its elements at initialization
   private loadInitialSorting(): void {
-
     // Look for an element that should be used as initial sorting reference in the table data
     // Only one element can be used as such
-    let initialSortTarget = this.displayedColumns.find((element) => element.sorting)
+    const initialSortTarget = this.displayedColumns.find((element) => element.sorting);
 
     if (initialSortTarget) {
       // Find the corresponding MatSortable element
-      let initialSortElement = this.tableData.sort.sortables.get(initialSortTarget.key);
+      const initialSortElement = this.tableData.sort.sortables.get(initialSortTarget.key);
 
       // Attribute the sorting order according to the specified parameter
       initialSortElement.start = initialSortTarget.sorting;
 
       // Do an initial sorting matching these conditions
-      this.tableData.sort.sort(initialSortElement)
+      this.tableData.sort.sort(initialSortElement);
     }
   }
 
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.tableData.filter = filterValue.trim().toLowerCase();
+  }
+
+  applySelectFilters(key: string | number, value: any): void {
+    this.filtersChangedEvent.emit({ key, value });
   }
 
   // If this function changes at some point, look into the backend API at : /visualization/serializers/TopicAnswerTableSerializer

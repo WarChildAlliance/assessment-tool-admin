@@ -1,5 +1,5 @@
 
-export interface Session {
+export interface SessionTableData {
     id: number;
     start_date: Date;
     end_date: Date;

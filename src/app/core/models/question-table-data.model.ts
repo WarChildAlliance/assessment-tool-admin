@@ -1,5 +1,5 @@
 
-export interface Question {
+export interface QuestionTableData {
     id: number;
     title: string;
     order: number;

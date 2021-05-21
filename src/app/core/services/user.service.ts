@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { BatchTopicAccesses } from '../models/batch-topic-accesses.model';
 import { Country } from '../models/country.model';
 import { Language } from '../models/language.model';
+import { StudentTableData } from '../models/student-table-data.model';
 import { User } from '../models/user.model';
 import { UtilitiesService } from './utilities.service';
 
@@ -24,14 +25,14 @@ export class UserService {
     return this.http.get<User>(`${environment.API_URL}/users/get_self/`);
   }
 
-  getStudentsList(filteringParams?: object): Observable<any[]> {
+  getStudentsList(filteringParams?: object): Observable<StudentTableData[]> {
     const initialUrl = `${environment.API_URL}/visualization/students/`;
     const finalUrl = filteringParams ? this.utilitiesService.urlBuilder(initialUrl, filteringParams) : initialUrl;
-    return this.http.get<any[]>(finalUrl);
+    return this.http.get<StudentTableData[]>(finalUrl);
   }
 
-  getStudentDetails(id: string): Observable<any> {
-    return this.http.get<any>(`${environment.API_URL}/visualization/students/${id}`);
+  getStudentDetails(id: string): Observable<StudentTableData> {
+    return this.http.get<StudentTableData>(`${environment.API_URL}/visualization/students/${id}`);
   }
 
   createNewStudent(user: { first_name: string, last_name: string, role: string, language: string, country: string }): Observable<User> {
@@ -39,7 +40,8 @@ export class UserService {
   }
 
   assignTopicsAccesses(batchTopicAccesses: BatchTopicAccesses, assessmentId: string): Observable<BatchTopicAccesses> {
-    return this.http.post<BatchTopicAccesses>(`${environment.API_URL}/assessments/${assessmentId}/accesses/bulk_create/`, batchTopicAccesses);
+    return this.http.post<BatchTopicAccesses>(
+      `${environment.API_URL}/assessments/${assessmentId}/accesses/bulk_create/`, batchTopicAccesses);
   }
 
   getLanguages(): Observable<Language[]> {

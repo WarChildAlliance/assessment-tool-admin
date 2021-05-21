@@ -1,23 +1,21 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AssessmentsRoutingModule } from './assessments-routing.module';
-import { AssessmentsComponent } from './assessments.component';
-import { AssessmentDetailComponent } from './assessment-detail/assessment-detail.component';
-import { MatTableModule } from '@angular/material/table';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatSelectModule } from '@angular/material/select';
-import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatSortModule } from '@angular/material/sort';
-import { QuestionsListComponent } from './questions-list/questions-list.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
 import { SharedModule } from '../shared/shared.module';
+import { AssessmentDetailComponent } from './assessment-detail/assessment-detail.component';
+import { AssessmentsRoutingModule } from './assessments-routing.module';
+import { AssessmentsComponent } from './assessments.component';
 import { QuestionDetailComponent } from './question-detail/question-detail.component';
-
+import { QuestionsListComponent } from './questions-list/questions-list.component';
 
 @NgModule({
   declarations: [
@@ -40,8 +38,7 @@ import { QuestionDetailComponent } from './question-detail/question-detail.compo
     MatCheckboxModule,
     MatSortModule,
     MatIconModule,
-    SharedModule,
-    MatGridListModule
+    SharedModule
   ]
 })
 export class AssessmentsModule { }

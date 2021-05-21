@@ -3,8 +3,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Topic } from 'src/app/core/models/answers/topic.model';
 import { TableColumn } from 'src/app/core/models/table-column.model';
+import { TopicTableData } from 'src/app/core/models/topic-table-data.model';
 import { AnswerService } from 'src/app/core/services/answer.service';
 
 @Component({
@@ -14,7 +14,7 @@ import { AnswerService } from 'src/app/core/services/answer.service';
 })
 export class TopicsListAnswersComponent implements OnInit {
 
-  topicsAnswersDataSource: MatTableDataSource<Topic> = new MatTableDataSource([]);
+  topicsAnswersDataSource: MatTableDataSource<TopicTableData> = new MatTableDataSource([]);
   currentStudentId: string;
   assessmentId: string;
   sessionId: string;
@@ -23,8 +23,8 @@ export class TopicsListAnswersComponent implements OnInit {
     { key: 'topic_name', name: 'Name' },
     { key: 'total_questions_count', name: 'Number of questions' },
     { key: 'answered_questions_count', name: 'Number of answered questions' },
-    { key: 'correct_answers_percentage', name: 'Percentage of correct answers', type: 'percentage'  },
-    { key: 'start_date', name: 'Last submition', type: 'date', sorting:'desc'  },
+    { key: 'correct_answers_percentage', name: 'Percentage of correct answers', type: 'percentage' },
+    { key: 'start_date', name: 'Last submission', type: 'date', sorting: 'desc' },
     { key: 'complete', name: 'Completed', type: 'boolean' },
   ];
 
@@ -34,9 +34,9 @@ export class TopicsListAnswersComponent implements OnInit {
 
   ngOnInit(): void {
     forkJoin({
-      param1: this.route.params.subscribe(params => { this.currentStudentId = params.student_id }),
-      param2: this.route.params.subscribe(params => { this.assessmentId = params.assessment_id }),
-      param4: this.route.queryParams.subscribe(params => { this.sessionId = params.session_id })
+      param1: this.route.params.subscribe(params => { this.currentStudentId = params.student_id; }),
+      param2: this.route.params.subscribe(params => { this.assessmentId = params.assessment_id; }),
+      param4: this.route.queryParams.subscribe(params => { this.sessionId = params.session_id; })
 
     }).pipe(
       catchError(error => of(error))
@@ -45,10 +45,13 @@ export class TopicsListAnswersComponent implements OnInit {
       this.answerService.getTopicsAnwsers(this.currentStudentId, this.assessmentId, this.sessionId).subscribe(topics => {
         this.topicsAnswersDataSource = new MatTableDataSource(topics);
       });
-    })
+    });
   }
 
   onOpenDetails(topicId: string): void {
-    this.router.navigate([`students/${this.currentStudentId}/assessments/${this.assessmentId}/topics/${topicId}/questions`], { queryParams: { session_id: this.sessionId }});
+    this.router.navigate(
+      [`students/${this.currentStudentId}/assessments/${this.assessmentId}/topics/${topicId}/questions`],
+      { queryParams: { session_id: this.sessionId } }
+    );
   }
 }

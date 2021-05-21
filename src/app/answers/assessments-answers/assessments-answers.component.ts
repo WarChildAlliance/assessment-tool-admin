@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
-import { forkJoin, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { Assessment } from 'src/app/core/models/answers/assessment.model';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { combineLatest, forkJoin } from 'rxjs';
+import { first } from 'rxjs/operators';
+import { AssessmentTableData } from 'src/app/core/models/assessment-table-data.model';
 import { TableColumn } from 'src/app/core/models/table-column.model';
 import { AnswerService } from 'src/app/core/services/answer.service';
 
@@ -14,7 +14,7 @@ import { AnswerService } from 'src/app/core/services/answer.service';
 })
 export class AssessmentsAnswersComponent implements OnInit {
 
-  assessmentsAnswersDataSource: MatTableDataSource<Assessment> = new MatTableDataSource([]);
+  assessmentsAnswersDataSource: MatTableDataSource<AssessmentTableData> = new MatTableDataSource([]);
   currentStudentId: string;
   sessionId: string;
 
@@ -27,31 +27,37 @@ export class AssessmentsAnswersComponent implements OnInit {
 
   public searchableColumns = ['title', 'subject'];
 
-  constructor(private router: Router, private route: ActivatedRoute, private answerService: AnswerService) { }
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private answerService: AnswerService
+  ) { }
 
   ngOnInit(): void {
-    forkJoin({
-      param1: this.route.params.subscribe(params => { this.currentStudentId = params.student_id }),
-      param2: this.route.queryParams.subscribe(params => { this.sessionId = params.session_id })
+    combineLatest([this.route.paramMap, this.route.queryParamMap]).pipe(first()).subscribe(
+      ([params, queryParams]: [ParamMap, ParamMap]) => {
+        this.currentStudentId = params.get('student_id');
+        this.sessionId = queryParams.get('session_id');
 
-    }).pipe(
-      catchError(error => of(error))
-    ).subscribe(() => {
-      if (!this.sessionId) {
-        this.displayedColumns.push(
-          { key: 'first_session_correct_answers_percentage', name: 'Correct answers percentage of first session', type: 'percentage' },
-          { key: 'last_session_correct_answers_percentage', name: 'Correct answers percentage of last session', type: 'percentage' },
-          { key: 'last_session', name: 'Last session', type: 'date', sorting: 'desc' },
-        )
+        if (!this.sessionId) {
+          this.displayedColumns.push(
+            { key: 'first_session_correct_answers_percentage', name: 'Correct answers percentage of first session', type: 'percentage' },
+            { key: 'last_session_correct_answers_percentage', name: 'Correct answers percentage of last session', type: 'percentage' },
+            { key: 'last_session', name: 'Last session', type: 'date', sorting: 'desc' },
+          );
+        }
+
+        this.answerService.getAssessmentsAnswers(this.currentStudentId, this.sessionId).subscribe(assessments => {
+          this.assessmentsAnswersDataSource = new MatTableDataSource(assessments);
+        });
       }
-
-      this.answerService.getAssessmentsAnswers(this.currentStudentId, this.sessionId).subscribe(assessments => {
-        this.assessmentsAnswersDataSource = new MatTableDataSource(assessments);
-      });
-    })
+    );
   }
 
   onOpenDetails(assessmentId: string): void {
-    this.router.navigate([`students/${this.currentStudentId}/assessments/${assessmentId}/topics`], { queryParams: { session_id: this.sessionId } });
+    this.router.navigate(
+      [`students/${this.currentStudentId}/assessments/${assessmentId}/topics`],
+      { queryParams: { session_id: this.sessionId } }
+    );
   }
 }

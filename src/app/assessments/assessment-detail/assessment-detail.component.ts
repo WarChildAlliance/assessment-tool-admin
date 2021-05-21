@@ -20,7 +20,6 @@ export class AssessmentDetailComponent implements OnInit {
     { key: 'questions_count', name: 'Number of questions' }
   ];
 
-  public searchableColumns = ['name'];
   public topicsDataSource: MatTableDataSource<any> = new MatTableDataSource([]);
 
   public isAssessmentPrivate = false;
@@ -44,16 +43,16 @@ export class AssessmentDetailComponent implements OnInit {
   ngOnInit(): void {
 
     this.route.params.subscribe(params => {
-      const assessmentId = params.id
-      
+      const assessmentId = params.id;
+
       this.assessmentService.getAssessmentTopics(assessmentId).subscribe((topicsList) => {
         this.topicsDataSource = new MatTableDataSource(topicsList);
       });
-  
+
       this.assessmentService.getAssessmentDetails(assessmentId).subscribe(assessment => {
         this.currentAssessment = assessment;
       });
-    })
+    });
   }
 
   // This eventReceiver triggers a thousand times when user does "select all". We should find a way to improve this. (debouncer ?)

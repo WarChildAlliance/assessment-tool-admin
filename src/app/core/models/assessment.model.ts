@@ -1,5 +1,3 @@
-import { Country } from './country.model';
-import { Language } from './language.model';
 
 export interface Assessment {
   id: number;

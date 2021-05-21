@@ -8,6 +8,8 @@ import { UserService } from '../core/services/user.service';
 import { Country } from '../core/models/country.model';
 import { Language } from '../core/models/language.model';
 import { TableColumn } from '../core/models/table-column.model';
+import { TableFilter } from '../core/models/table-filter.model';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-assessments',
@@ -24,27 +26,14 @@ export class AssessmentsComponent implements OnInit {
     { key: 'students_count', name: 'Number of student linked to this assessment' },
     { key: 'language_name', name: 'Language' },
     { key: 'country_name', name: 'Country' },
-    { key: 'private', name: 'Private', type:'boolean' }
+    { key: 'private', name: 'Private', type: 'boolean' }
   ];
-
-  public searchableColumns = ['title', 'grade', 'subject', 'language_name', 'country_name'];
 
   public assessmentsDataSource: MatTableDataSource<Assessment> = new MatTableDataSource([]);
 
-  // Create a route to get the available subjects, languages & countries from the API
-  public subjects: string[] = [];
-  public grades: number[] = [];
 
-  public countries: Country[] = [];
-  public languages: Language[] = [];
-
-
-  private filteringParams = {
-    subject: '',
-    grade: '',
-    country: '',
-    language: ''
-  };
+  public filters: TableFilter[];
+  private filtersData = { country: '', language: '' };
 
   public isAssessmentPrivate = false;
 
@@ -60,36 +49,41 @@ export class AssessmentsComponent implements OnInit {
   });
 
   constructor(
-    private assessmentService: AssessmentService, private router: Router, private userService: UserService) { }
+    private assessmentService: AssessmentService,
+    private router: Router,
+    private userService: UserService
+  ) { }
 
   ngOnInit(): void {
+    forkJoin([this.userService.getCountries(), this.userService.getLanguages()]).subscribe(
+      ([countries, languages]: [Country[], Language[]]) => {
+        this.filters = [
+          {
+            key: 'country',
+            name: 'Country',
+            type: 'select',
+            options: [{ key: '', value: 'All' }].concat(countries.map(country => ({ key: country.code, value: country.name_en })))
+          },
+          {
+            key: 'language',
+            name: 'Language',
+            type: 'select',
+            options: [{ key: '', value: 'All' }].concat(languages.map(language => ({ key: language.code, value: language.name_en })))
+          }
+        ];
+      }
+    );
 
-    // TODO See if we could reduce the number of lines here ?
     this.assessmentService.getAssessmentsList().subscribe((assessmentsList) => {
-      assessmentsList.forEach((assessment) => {
-        this.subjects.push(assessment.subject);
-        this.grades.push(assessment.grade);
-      });
-      // This removes duplicates in the arrays
-      this.subjects = [... new Set(this.subjects)];
-      this.grades = [... new Set(this.grades)];
       this.assessmentsDataSource = new MatTableDataSource(assessmentsList);
-    });
-
-    this.userService.getCountries().subscribe((countries) => {
-      this.countries = countries;
-    });
-    this.userService.getLanguages().subscribe((languages) => {
-      this.languages = languages;
     });
   }
 
-  applySelectFilters(param: string, $event): void {
+  onFiltersChange(data: { key: string | number, value: any }): void {
+    this.filtersData[data.key] = data.value;
 
-    this.filteringParams[param] = $event.value;
-
-    this.assessmentService.getAssessmentsList(this.filteringParams).subscribe((filteredAssessmentsList) => {
-      this.assessmentsDataSource = new MatTableDataSource(filteredAssessmentsList);
+    this.assessmentService.getAssessmentsList(this.filtersData).subscribe((assessmentsList) => {
+      this.assessmentsDataSource = new MatTableDataSource(assessmentsList);
     });
   }
 

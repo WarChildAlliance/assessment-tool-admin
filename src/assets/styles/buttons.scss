@@ -1,13 +1,18 @@
 .main-board {
-    &__top-container {
-    
-        button {
-            mat-icon {
-                margin-right: 8px;
-                line-height: 22px;
-            }
+  &__top-container {
 
-            margin:0 4px;
-        }
+    button {
+      margin: 0 4px;
+
+      mat-icon {
+        margin-right: 8px;
+        line-height: 22px;
+      }
+
+      &.white-background {
+        background-color: white !important;
+      }
+
     }
+  }
 }

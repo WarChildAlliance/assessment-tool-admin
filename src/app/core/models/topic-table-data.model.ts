@@ -1,5 +1,5 @@
 
-export interface Topic {
+export interface TopicTableData {
     id: number;
     topic_name: string;
     complete: boolean;

@@ -1,4 +1,4 @@
-export interface Student {
+export interface StudentTableData {
     id: number;
     full_name: string;
     assessments_count: number;

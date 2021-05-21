@@ -12,33 +12,33 @@
 $admin-dashboard-palette: (
     50 : #ffffff,
     100 : #ffffff,
-    200 : #e8e8e8,
-    300 : #c5c5c5,
-    400 : #b5b5b5,
-    500 : #a6a6a6,
-    600 : #979797,
-    700 : #878787,
-    800 : #787878,
-    900 : #696969,
+    200 : #ffffff,
+    300 : #ffffff,
+    400 : #ffffff,
+    500 : #ffffff,
+    600 : #f2f2f2,
+    700 : #e6e6e6,
+    800 : #d9d9d9,
+    900 : #cccccc,
     A100 : #ffffff,
     A200 : #f6efef,
     A400 : #c9b6b6,
     A700 : #b7afaf,
     contrast: (
-        50 : #000000,
-        100 : #000000,
-        200 : #000000,
-        300 : #000000,
-        400 : #000000,
-        500 : #000000,
-        600 : #000000,
-        700 : #000000,
-        800 : #ffffff,
-        900 : #ffffff,
-        A100 : #000000,
-        A200 : #000000,
-        A400 : #000000,
-        A700 : #000000,
+        50 : rgba(0, 0, 0, 50%),
+        100 : rgba(0, 0, 0, 50%),
+        200 : rgba(0, 0, 0, 50%),
+        300 : rgba(0, 0, 0, 50%),
+        400 : rgba(0, 0, 0, 50%),
+        500 : rgba(0, 0, 0, 50%),
+        600 : rgba(0, 0, 0, 87%),
+        700 : rgba(0, 0, 0, 87%),
+        800 : rgba(0, 0, 0, 87%),
+        900 : rgba(0, 0, 0, 87%),
+        A100 : rgba(0, 0, 0, 87%),
+        A200 : rgba(0, 0, 0, 87%),
+        A400 : rgba(0, 0, 0, 87%),
+        A700 : rgba(0, 0, 0, 87%),
     )
 );
 
@@ -60,9 +60,9 @@ $admin-dashboard-accent: (
   A400: #73c0f5,
   A700: #64b4ea,
   contrast: (
-    50: #000000,
-    100: #000000,
-    200: #000000,
+    50: rgba(0, 0, 0, 87%),
+    100: rgba(0, 0, 0, 87%),
+    200: rgba(0, 0, 0, 87%),
     300: #ffffff,
     400: #ffffff,
     500: #ffffff,
@@ -70,10 +70,10 @@ $admin-dashboard-accent: (
     700: #ffffff,
     800: #ffffff,
     900: #ffffff,
-    A100: #000000,
-    A200: #000000,
-    A400: #000000,
-    A700: #000000,
+    A100: rgba(0, 0, 0, 87%),
+    A200: rgba(0, 0, 0, 87%),
+    A400: rgba(0, 0, 0, 87%),
+    A700: rgba(0, 0, 0, 87%),
   ),
 );
 
@@ -82,9 +82,10 @@ $admin-dashboard-accent: (
 // Define a custom typography config that overrides the font-family as well as the
 // `headlines` and `body-1` levels.
 $custom-typography: mat-typography-config(
-  $font-family: 'Roboto, monospace',
-  $headline: mat-typography-level(24px, 32px, 500),
-  $body-1: mat-typography-level(14px, 22px, normal)
+  $font-family: 'Roboto',
+  $headline: mat-typography-level(24px, 32px, 400),
+  $body-1: mat-typography-level(14px, 22px, 400),
+  $button: mat-typography-level(14px, 22px, 400),
 );
 
 // Override typography CSS classes (e.g., mat-h1, mat-display-1, mat-typography, etc.).
@@ -113,7 +114,7 @@ $admin-dashboard-theme: mat-light-theme(
   $admin-dashboard-primary,
   $admin-dashboard-accent,
   $admin-dashboard-warn
-  );
+);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
@@ -155,6 +156,43 @@ $admin-dashboard-theme: mat-light-theme(
 }
 
 @include table-theme($admin-dashboard-theme);
+
+@mixin nav-list-theme($theme) {
+  .mat-nav-list {
+    .mat-list-item-content {
+      font-size: 14px;
+    }
+
+    .mat-list-item {
+      border-left: 4px solid;
+      border-left-color: transparent;
+    }
+
+    .list-item-active {
+      color: mat-color(map-get($theme, accent), 700);
+      background:  mat-color(map-get($theme, accent), 100);
+      border-left: 4px solid;
+      border-left-color: mat-color(map-get($theme, accent), 700);
+    }
+  }
+}
+
+@include nav-list-theme($admin-dashboard-theme);
+
+@mixin form-field-theme($theme) {
+  .mat-form-field-appearance-fill {
+    .mat-form-field-flex {
+      background-color: white;
+      border-radius: 4px !important;
+    }
+
+    .mat-form-field-underline {
+      display: none;
+    }
+  }
+}
+
+@include form-field-theme($admin-dashboard-theme);
 
 :root {
   --color-primary: #{mat-color($admin-dashboard-primary)};

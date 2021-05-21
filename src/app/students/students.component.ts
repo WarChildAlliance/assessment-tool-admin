@@ -1,15 +1,17 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { UserService } from '../core/services/user.service';
-import { User } from 'src/app/core/models/user.model';
-import { Language } from 'src/app/core/models/language.model';
-import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { AlertService } from '../core/services/alert.service';
+import { Router } from '@angular/router';
+import { forkJoin } from 'rxjs';
+import { Language } from 'src/app/core/models/language.model';
+import { User } from 'src/app/core/models/user.model';
 import { Country } from '../core/models/country.model';
+import { StudentTableData } from '../core/models/student-table-data.model';
 import { TableColumn } from '../core/models/table-column.model';
-import { Student } from '../core/models/answers/student.model';
+import { TableFilter } from '../core/models/table-filter.model';
+import { AlertService } from '../core/services/alert.service';
+import { UserService } from '../core/services/user.service';
 
 @Component({
   selector: 'app-students',
@@ -27,18 +29,14 @@ export class StudentsComponent implements OnInit {
     { key: 'country_name', name: 'Country' }
   ];
 
-  public searchableColumns = ['full_name', 'language_name', 'country_name'];
-
-  public studentsDataSource: MatTableDataSource<Student> = new MatTableDataSource([]);
+  public studentsDataSource: MatTableDataSource<StudentTableData> = new MatTableDataSource([]);
   public selectedUsers = [];
 
   public countries: Country[] = [];
   public languages: Language[] = [];
 
-  private filteringParams = {
-    country: '',
-    language: ''
-  };
+  public filters: TableFilter[];
+  private filtersData = { country: '', language: '' };
 
   @ViewChild('createStudentDialog') createStudentDialog: TemplateRef<any>;
   @ViewChild('assignTopicDialog') assignTopicDialog: TemplateRef<any>;
@@ -50,27 +48,44 @@ export class StudentsComponent implements OnInit {
     language: new FormControl('', [Validators.required]),
   });
 
-  constructor(private userService: UserService, private alertService: AlertService, private router: Router, private dialog: MatDialog) { }
+  constructor(
+    private userService: UserService,
+    private alertService: AlertService,
+    private router: Router,
+    private dialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
+    forkJoin([this.userService.getCountries(), this.userService.getLanguages()]).subscribe(
+      ([countries, languages]: [Country[], Language[]]) => {
+        this.countries = countries;
+        this.languages = languages;
+        this.filters = [
+          {
+            key: 'country',
+            name: 'Country',
+            type: 'select',
+            options: [{ key: '', value: 'All' }].concat(countries.map(country => ({ key: country.code, value: country.name_en })))
+          },
+          {
+            key: 'language',
+            name: 'Language',
+            type: 'select',
+            options: [{ key: '', value: 'All' }].concat(languages.map(language => ({ key: language.code, value: language.name_en })))
+          }
+        ];
+      }
+    );
 
-    this.userService.getCountries().subscribe((countries) => {
-      this.countries = countries;
-    });
-    this.userService.getLanguages().subscribe((languages) => {
-      this.languages = languages;
-    });
-
-    this.userService.getStudentsList().subscribe((studentsList: Student[]) => {
+    this.userService.getStudentsList().subscribe((studentsList: StudentTableData[]) => {
       this.studentsDataSource = new MatTableDataSource(studentsList);
     });
   }
 
-  applySelectFilters(param: string, $event): void {
+  onFiltersChange(data: { key: string | number, value: any }): void {
+    this.filtersData[data.key] = data.value;
 
-    this.filteringParams[param] = $event.value;
-
-    this.userService.getStudentsList(this.filteringParams).subscribe((studentsList) => {
+    this.userService.getStudentsList(this.filtersData).subscribe((studentsList) => {
       this.studentsDataSource = new MatTableDataSource(studentsList);
     });
   }

@@ -21,11 +21,11 @@ export class UtilitiesService {
     // This loop builds the url with the parameters
     for (let i = 0; i < iterable.length; i++) {
 
-      if (!iterable[i - 1]) {url += '?'; }
+      if (!iterable[i - 1]) { url += '?'; }
 
       url += iterable[i] + '=' + filteringParams[iterable[i]];
 
-      if (iterable[i + 1]) {url += '&'; }
+      if (iterable[i + 1]) { url += '&'; }
     }
 
     return url;
