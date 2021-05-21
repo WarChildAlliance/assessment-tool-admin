@@ -1,23 +1,39 @@
+<mat-toolbar class="account-toolbar" *ngIf="isAuthenticated">
+
+  <button mat-button class="account-toolbar__menu-button" aria-label="Access account settings"
+    [matMenuTriggerFor]="accountMenu">
+    <mat-icon>account_circle</mat-icon>
+    <span>{{ selfName }}</span>
+  </button>
+  <mat-menu #accountMenu="matMenu" xPosition="before">
+    <button mat-menu-item (click)="logout()">
+      <mat-icon matListIcon type="submit">logout</mat-icon>
+      <span>Logout</span>
+    </button>
+  </mat-menu>
+
+</mat-toolbar>
+
+
 <mat-sidenav-container>
   <mat-sidenav #sidenav mode="side" [opened]="isAuthenticated">
     <mat-nav-list>
       <a mat-list-item routerLink="dashboard" routerLinkActive="list-item-active">
-        <mat-icon matListIcon class="nav-list-icon">space_dashboard</mat-icon>
+        <mat-icon matListIcon>space_dashboard</mat-icon>
         Dashboard
       </a>
-      <a mat-list-item routerLink="assessments" routerLinkActive="list-item-active">
-        <mat-icon matListIcon class="nav-list-icon">quiz</mat-icon>
-        Assessments
-      </a>
       <a mat-list-item routerLink="students" routerLinkActive="list-item-active">
-        <mat-icon matListIcon class="nav-list-icon">people</mat-icon>
+        <mat-icon matListIcon>account_box</mat-icon>
         Students
       </a>
-   </mat-nav-list>
+      <a mat-list-item routerLink="assessments" routerLinkActive="list-item-active">
+        <mat-icon matListIcon>quiz</mat-icon>
+        Assessments
+      </a>
+    </mat-nav-list>
   </mat-sidenav>
 
   <mat-sidenav-content>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
-

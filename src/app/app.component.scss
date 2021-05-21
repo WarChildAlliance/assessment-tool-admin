@@ -1,9 +1,26 @@
-.mat-sidenav-container {
-  height: 100vh;
-  width: 100vw;
+.account-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px;
+  -webkit-box-shadow: 0px 2px 4px 1px rgba(200, 200, 200, 0.5);
+  box-shadow: 0px 2px 4px 1px rgba(200, 200, 200, 0.5);
+  z-index: 10;
+  position: relative;
+  background-color: white;
+
+  &__menu-button {
+    .mat-icon {
+      margin-right: 10px;
+    }
+  }
 }
 
-.mat-sidenav-content {
-  padding: 24px;
-  height: calc(100% - 48px);
+.mat-sidenav-container {
+  height: calc(100vh - 64px); // Height of the toolbar
+  width: 100vw;
+
+  & > .mat-sidenav-content {
+    padding: 24px;
+    height: calc(100% - 48px); // Minus the padding
+  }
 }

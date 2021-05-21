@@ -1,0 +1,50 @@
+<h1>Assign a topic</h1>
+<div class="topic-accesses-builder">
+
+    <div class="topic-accesses-builder__list -students">
+        <span class="header">Students</span>
+
+        <div class="topic-accesses-builder__list-row" *ngFor="let student of studentsList">
+            <mat-icon color="accent">person</mat-icon>
+            <span>
+                {{ student.full_name }}
+            </span>
+        </div>
+    </div>
+
+    <div class="topic-accesses-builder__list">
+        <span class="header">Assessment</span>
+
+        <mat-radio-button class="topic-accesses-builder__list-row -assessment" title="{{ assessment.title }}" *ngFor="let assessment of assessmentsList"
+            value="{{ assessment.id }}" (change)="loadTopicsList(assessment.id.toString())">{{ assessment.title }}
+        </mat-radio-button>
+    </div>
+
+    <div [formGroup]="assignTopicForm" class="topic-accesses-builder__list">
+        <span class="header">Assessment topic(s) availability</span>
+
+        <ng-container formArrayName="access">
+            <div *ngFor="let control of getControls(); let i=index;" [formGroupName]="i"
+                class="topic-accesses-builder__list-row -topic-access">
+
+                <mat-checkbox formControlName="selected">
+                    {{ control.get('topic').value.name }}
+                </mat-checkbox>
+
+                <mat-form-field color="accent" appearance="outline">
+                    <mat-date-range-input [rangePicker]="campaignOnePicker">
+                        <input matStartDate formControlName="start_date" placeholder="Start date">
+                        <input matEndDate formControlName="end_date" placeholder="End date">
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matSuffix [for]="campaignOnePicker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
+                </mat-form-field>
+            </div>
+        </ng-container>
+    </div>
+</div>
+
+
+<button mat-stroked-button class="topic-accesses-builder__submit" [disabled]="!getControls().length" color="accent"
+    (click)="submitCreateTopicAccesses()">Assign
+</button>

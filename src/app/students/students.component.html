@@ -1,1 +1,61 @@
-<p>students works!</p>
+<div class="main-board">
+  <div class="main-board__top-container">
+    <h1>Students ({{ studentsDataSource.data.length }})
+      <span *ngIf="selectedUsers.length"> ({{ selectedUsers.length }} selected)</span>
+    </h1>
+    <div class="main-board__top-container__actions">
+      <button mat-flat-button color="accent" (click)="openCreateStudentDialog()">
+        <mat-icon>add_circle_outline</mat-icon><span>Add student</span>
+      </button>
+      <button mat-flat-button [disabled]="!selectedUsers.length" color="accent" (click)="openAssignTopicDialog()">
+        <mat-icon>event_available</mat-icon><span>Assign a topic</span>
+      </button>
+      <button mat-flat-button [disabled]="!selectedUsers.length" color="primary" (click)="deleteSelection()">
+        <mat-icon>delete_outline</mat-icon><span>Delete student(s)</span>
+      </button>
+      <button mat-flat-button [disabled]="true" color="primary" (click)="downloadData()">
+        <mat-icon>get_app</mat-icon><span>Download</span>
+      </button>
+    </div>
+  </div>
+
+  <app-table [tableData]="studentsDataSource" [filtersData]="filters" [displayedColumns]="displayedColumns"
+    [isSelectable]="true" (selectionChangedEvent)="onSelectionChange($event)"
+    (filtersChangedEvent)="onFiltersChange($event)" (openDetailsEvent)="onOpenDetails($event)"></app-table>
+
+  <ng-template #createStudentDialog>
+    <h2 mat-dialog-title>Create a new student</h2>
+    <mat-dialog-content>
+      <form class="form-primary" [formGroup]="createNewStudentForm" (ngSubmit)="submitCreateNewStudent()">
+        <div class="form-primary__flex-container">
+          <mat-form-field appearance="outline">
+            <mat-label>First Name</mat-label>
+            <input matInput type="text" formControlName="first_name">
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Last name</mat-label>
+            <input matInput type="text" formControlName="last_name">
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Country</mat-label>
+            <mat-select formControlName="country">
+              <mat-option *ngFor="let country of countries" [value]="country">{{country.name_en}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Language</mat-label>
+            <mat-select formControlName="language">
+              <mat-option *ngFor="let language of languages" [value]="language">{{language.name_en}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <button mat-button color="accent" type="submit" mat-dialog-close>Add</button>
+      </form>
+    </mat-dialog-content>
+  </ng-template>
+
+  <ng-template #assignTopicDialog>
+    <app-topic-accesses-builder [studentsList]="selectedUsers" (closeTopicsDialogEvent)="onCloseTopicsDialogEvent()"></app-topic-accesses-builder>
+  </ng-template>
+</div>

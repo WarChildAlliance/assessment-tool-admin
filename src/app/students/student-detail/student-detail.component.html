@@ -1,1 +1,46 @@
-<p>student-detail works!</p>
+<div class="main-board">
+  <div class="main-board__top-container">
+    <h1 *ngIf="student">{{ student.full_name }}</h1>
+
+    <div class="main-board__top-container__actions">
+      <button mat-flat-button color="primary" (click)="deleteCurrentStudent()" [disabled]="true">
+        <mat-icon>delete_outline</mat-icon> Delete student
+      </button>
+    </div>
+  </div>
+
+  <div class="main-board__details" *ngIf="student">
+    <div class="main-board__details__element">
+      <span class="title">Number of assessments</span>
+      <span class="value">{{ student.assessments_count }}</span>
+    </div>
+    <div class="main-board__details__element">
+      <span class="title">Total completed topics</span>
+      <span class="value">{{ student.completed_topics_count }}</span>
+    </div>
+    <div class="main-board__details__element">
+      <span class="title">Last session</span>
+      <span class="value">{{ student.last_session | date:'short' }}</span>
+    </div>
+    <div class="main-board__details__element">
+      <span class="title">Language</span>
+      <span class="value">{{ student.language_name }}</span>
+    </div>
+    <div class="main-board__details__element">
+      <span class="title">Country</span>
+      <span class="value">{{ student.country_name }}</span>
+    </div>
+  </div>
+
+  <div class="main-board__tabs-container">
+    <mat-tab-group mat-align-tabs="start" color="accent">
+      <mat-tab label="Assessments">
+        <app-assessments-answers></app-assessments-answers>
+      </mat-tab>
+      <mat-tab label="Sessions">
+        <app-sessions-answers></app-sessions-answers>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+
+</div>

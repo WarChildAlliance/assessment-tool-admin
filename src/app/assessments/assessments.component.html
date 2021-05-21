@@ -1,1 +1,16 @@
-<p>assessments works!</p>
+<div class="main-board">
+
+  <div class="main-board__top-container">
+    <h1>Assessments ({{assessmentsDataSource.data.length}})</h1>
+    <div class="main-board__top-container__actions">
+      <button mat-flat-button [disabled]="true" color="accent" (click)="downloadData()">
+        <mat-icon>get_app</mat-icon><span>Download</span>
+      </button>
+    </div>
+  </div>
+
+  <app-table [tableData]="assessmentsDataSource" [filtersData]="filters" [displayedColumns]="displayedColumns"
+    [isSelectable]="false" (openDetailsEvent)="onOpenDetails($event)" (filtersChangedEvent)="onFiltersChange($event)">
+  </app-table>
+
+</div>

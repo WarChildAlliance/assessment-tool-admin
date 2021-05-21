@@ -1,3 +1,6 @@
+import { Country } from './country.model';
+import { Language } from './language.model';
+
 export interface User {
   id: number;
   username?: string;
@@ -6,8 +9,9 @@ export interface User {
   email?: string;
   last_login?: Date;
   role?: UserRoles;
-  language?: string;
-  country?: string;
+  language?: Language;
+  country?: Country;
+  created_by?: number;
 }
 
 enum UserRoles {
