@@ -33,7 +33,6 @@ import { MatSortModule } from '@angular/material/sort';
     MatToolbarModule,
     MatFormFieldModule,
     MatSelectModule,
-    MatIconModule,
     MatSortModule,
     MatMenuModule
   ],
