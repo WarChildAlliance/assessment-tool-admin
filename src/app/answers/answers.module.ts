@@ -6,6 +6,7 @@ import { TopicsListAnswersComponent } from './topics-list-answers/topics-list-an
 import { QuestionsListAnswersComponent } from './questions-list-answers/questions-list-answers.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { QuestionDetailAnswersComponent } from './question-detail-answers/question-detail-answers.component';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { QuestionDetailAnswersComponent } from './question-detail-answers/questi
   ],
   imports: [
     CommonModule,
-    SharedModule
+    SharedModule,
+    MatIconModule
   ],
   exports: [
     AssessmentsAnswersComponent,
