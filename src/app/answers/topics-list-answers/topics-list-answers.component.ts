@@ -25,6 +25,7 @@ export class TopicsListAnswersComponent implements OnInit {
     { key: 'answered_questions_count', name: 'Number of answered questions' },
     { key: 'correct_answers_percentage', name: 'Percentage of correct answers', type: 'percentage' },
     { key: 'start_date', name: 'Last submission', type: 'date', sorting: 'desc' },
+    { key: 'evaluated', name: 'Evaluated', type: 'boolean' },
     { key: 'complete', name: 'Completed', type: 'boolean' },
   ];
 
