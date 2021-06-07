@@ -21,6 +21,7 @@ import { UserService } from '../core/services/user.service';
 export class StudentsComponent implements OnInit {
 
   public displayedColumns: TableColumn[] = [
+    { key: 'username', name: 'Student code'},
     { key: 'full_name', name: 'Student name' },
     { key: 'assessments_count', name: 'Total number of assessments' },
     { key: 'completed_topics_count', name: 'Total number of completed topics' },
@@ -78,6 +79,7 @@ export class StudentsComponent implements OnInit {
     );
 
     this.userService.getStudentsList().subscribe((studentsList: StudentTableData[]) => {
+      console.log('STU LIST', studentsList);
       this.studentsDataSource = new MatTableDataSource(studentsList);
     });
   }
