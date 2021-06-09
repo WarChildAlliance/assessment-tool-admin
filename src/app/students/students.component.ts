@@ -139,9 +139,9 @@ export class StudentsComponent implements OnInit {
     this.userService.createNewStudent(studentToCreate).subscribe((student: User) => {
       this.alertService.success(`Student ${student.first_name + ' ' + student.last_name} with ID ${student.username} was successfully created`);
       this.createNewStudentForm.reset();
-    });
-    this.userService.getStudentsList().subscribe((studentsList) => {
-      this.studentsDataSource = new MatTableDataSource(studentsList);
+      this.userService.getStudentsList().subscribe((studentsList) => {
+        this.studentsDataSource = new MatTableDataSource(studentsList);
+      });
     });
   }
 }
