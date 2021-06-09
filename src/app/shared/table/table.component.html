@@ -48,6 +48,10 @@
       <td mat-cell *matCellDef="let element"><mat-icon matListIcon>{{ element[column.key] }}</mat-icon></td>
     </ng-container>
 
+    <ng-container *ngSwitchCase="'copy'">
+      <td mat-cell *matCellDef="let element" matTooltip="Copy student's code" (click)="$event.stopPropagation()" [cdkCopyToClipboard]="element.username"><mat-icon matListIcon>{{ element[column.key] }}</mat-icon></td>
+    </ng-container>
+
     <ng-container *ngSwitchCase="'boolean'">
       <td mat-cell *matCellDef="let element">{{ element[column.key] ? 'Yes' : 'No' }}</td>
     </ng-container>
