@@ -5,6 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { TableColumn } from 'src/app/core/models/table-column.model';
 import { TableFilter } from 'src/app/core/models/table-filter.model';
+import { AlertService } from 'src/app/core/services/alert.service';
 
 @Component({
   selector: 'app-table',
@@ -29,7 +30,7 @@ export class TableComponent implements OnInit, OnChanges {
   @Output() filtersChangedEvent = new EventEmitter<{ key: string | number, value: any}>(true);
   @Output() openDetailsEvent = new EventEmitter<string>();
 
-  constructor() { }
+  constructor(private alertService: AlertService) { }
 
   ngOnInit(): void {
     this.selection.changed.subscribe(() => {
@@ -132,5 +133,9 @@ export class TableComponent implements OnInit, OnChanges {
   //  and we want an "AssessmentTopic" id), but it's not very clean, so change that if it's possible.
   openElementDetails(id: number): void {
     this.openDetailsEvent.emit(id.toString());
+  }
+
+  copyAlert(): void {
+    this.alertService.success('Successfully copied!');
   }
 }
