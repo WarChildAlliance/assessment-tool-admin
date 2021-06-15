@@ -22,6 +22,7 @@ export class StudentsComponent implements OnInit {
 
   public displayedColumns: TableColumn[] = [
     { key: 'username', name: 'Student code'},
+    { key: 'copy_icon', name: '', type: 'copy' },
     { key: 'full_name', name: 'Student name' },
     { key: 'assessments_count', name: 'Total number of assessments' },
     { key: 'completed_topics_count', name: 'Total number of completed topics' },
@@ -79,7 +80,9 @@ export class StudentsComponent implements OnInit {
     );
 
     this.userService.getStudentsList().subscribe((studentsList: StudentTableData[]) => {
-      console.log('STU LIST', studentsList);
+      studentsList.forEach((student) => {
+        student.copy_icon = 'content_copy';
+      });
       this.studentsDataSource = new MatTableDataSource(studentsList);
     });
   }
@@ -139,9 +142,9 @@ export class StudentsComponent implements OnInit {
     this.userService.createNewStudent(studentToCreate).subscribe((student: User) => {
       this.alertService.success(`Student ${student.first_name + ' ' + student.last_name} with ID ${student.username} was successfully created`);
       this.createNewStudentForm.reset();
-    });
-    this.userService.getStudentsList().subscribe((studentsList) => {
-      this.studentsDataSource = new MatTableDataSource(studentsList);
+      this.userService.getStudentsList().subscribe((studentsList) => {
+        this.studentsDataSource = new MatTableDataSource(studentsList);
+      });
     });
   }
 }

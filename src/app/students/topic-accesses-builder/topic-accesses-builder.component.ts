@@ -32,12 +32,7 @@ export class TopicAccessesBuilderComponent implements OnInit {
               private alertService: AlertService) { }
 
   ngOnInit(): void {
-    const filteringParams = {
-      country: this.studentsList[0].country_code,
-      language: this.studentsList[0].language_code,
-    };
-
-    this.assessmentService.getAssessmentsList(filteringParams).subscribe((assessmentsList) => {
+    this.assessmentService.getAssessmentsList().subscribe((assessmentsList) => {
       this.assessmentsList = assessmentsList;
     });
   }
