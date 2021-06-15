@@ -23,7 +23,6 @@ export class QuestionDetailComponent implements OnInit {
 
   public questionsDataSource: MatTableDataSource<any> = new MatTableDataSource([]);
   public selectedQuestions: any[] = [];
-  bullshitTest: boolean = true;  
 
   constructor(private assessmentService: AssessmentService,
               private route: ActivatedRoute,
