@@ -40,6 +40,8 @@ export class StudentsComponent implements OnInit {
   public filters: TableFilter[];
   private filtersData = { country: '', language: '' };
 
+  private edit: boolean;
+
   @ViewChild('createStudentDialog') createStudentDialog: TemplateRef<any>;
   @ViewChild('assignTopicDialog') assignTopicDialog: TemplateRef<any>;
 
@@ -78,8 +80,11 @@ export class StudentsComponent implements OnInit {
         ];
       }
     );
+    this.getStudentTableList();
+  }
 
-    this.userService.getStudentsList().subscribe((studentsList: StudentTableData[]) => {
+  private getStudentTableList(filtersData?): void {
+    this.userService.getStudentsList(filtersData).subscribe((studentsList: StudentTableData[]) => {
       studentsList.forEach((student) => {
         student.copy_icon = 'content_copy';
       });
@@ -90,9 +95,7 @@ export class StudentsComponent implements OnInit {
   onFiltersChange(data: { key: string | number, value: any }): void {
     this.filtersData[data.key] = data.value;
 
-    this.userService.getStudentsList(this.filtersData).subscribe((studentsList) => {
-      this.studentsDataSource = new MatTableDataSource(studentsList);
-    });
+    this.getStudentTableList(this.filtersData);
   }
 
   // This eventReceiver triggers a thousand times when user does "select all". We should find a way to improve this. (debouncer ?)
@@ -120,11 +123,24 @@ export class StudentsComponent implements OnInit {
   }
 
   openCreateStudentDialog(): void {
+    if (this.edit) {
+      this.createNewStudentForm.setValue({
+        first_name: this.selectedUsers[0].full_name.split(' ')[0],
+        last_name: this.selectedUsers[0].full_name.split(' ')[1],
+        country: this.selectedUsers[0].country_code,
+        language: this.selectedUsers[0].language_code,
+      });
+    }
     this.dialog.open(this.createStudentDialog);
   }
 
   deleteSelection(): void {
     console.log('DEL', this.selectedUsers);
+  }
+
+  editAStudent(): void {
+    this.edit = true;
+    this.openCreateStudentDialog();
   }
 
   downloadData(): void {
@@ -136,15 +152,22 @@ export class StudentsComponent implements OnInit {
       first_name: this.createNewStudentForm.value.first_name,
       last_name: this.createNewStudentForm.value.last_name,
       role: 'STUDENT',
-      language: this.createNewStudentForm.value.language.code, // TODO Do we really want to only send the code ? Why the code precisely ?
-      country: this.createNewStudentForm.value.country.code
+      language: this.createNewStudentForm.value.language, // TODO Do we really want to only send the code ? Why the code precisely ?
+      country: this.createNewStudentForm.value.country
     };
-    this.userService.createNewStudent(studentToCreate).subscribe((student: User) => {
-      this.alertService.success(`Student ${student.first_name + ' ' + student.last_name} with ID ${student.username} was successfully created`);
-      this.createNewStudentForm.reset();
-      this.userService.getStudentsList().subscribe((studentsList) => {
-        this.studentsDataSource = new MatTableDataSource(studentsList);
+
+    if (this.edit) {
+      this.userService.editStudent(this.selectedUsers[0].id, studentToCreate).subscribe((student: User) => {
+        this.alertService.success(`${student.first_name + ' ' + student.last_name}'s information have been edited successfully `);
+        this.getStudentTableList();
       });
-    });
+    } else {
+      this.userService.createNewStudent(studentToCreate).subscribe((student: User) => {
+        this.alertService.success(`Student ${student.first_name + ' ' + student.last_name} with ID ${student.username} was successfully created`);
+        this.getStudentTableList();
+      });
+    }
+
+    this.createNewStudentForm.reset();
   }
 }
