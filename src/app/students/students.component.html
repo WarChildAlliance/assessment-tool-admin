@@ -13,6 +13,9 @@
       <button mat-flat-button [disabled]="!selectedUsers.length" color="primary" (click)="deleteSelection()">
         <mat-icon>delete_outline</mat-icon><span>Delete student(s)</span>
       </button>
+      <button mat-flat-button [disabled]="!selectedUsers.length || selectedUsers.length > 1" color="accent" (click)="editAStudent()">
+        <mat-icon>edit_outline</mat-icon><span>Edit a student</span>
+      </button>
       <button mat-flat-button [disabled]="true" color="primary" (click)="downloadData()">
         <mat-icon>get_app</mat-icon><span>Download</span>
       </button>
@@ -39,18 +42,18 @@
           <mat-form-field appearance="outline">
             <mat-label>Country</mat-label>
             <mat-select formControlName="country">
-              <mat-option *ngFor="let country of countries" [value]="country">{{country.name_en}}</mat-option>
+              <mat-option *ngFor="let country of countries" [value]="country.code">{{country.name_en}}</mat-option>
             </mat-select>
           </mat-form-field>
           <mat-form-field appearance="outline">
             <mat-label>Language</mat-label>
             <mat-select formControlName="language">
-              <mat-option *ngFor="let language of languages" [value]="language">{{language.name_en}}</mat-option>
+              <mat-option *ngFor="let language of languages" [value]="language.code">{{language.name_en}}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
 
-        <button mat-button color="accent" type="submit" mat-dialog-close>Add</button>
+        <button mat-button color="accent" type="submit" mat-dialog-close>Submit</button>
       </form>
     </mat-dialog-content>
   </ng-template>

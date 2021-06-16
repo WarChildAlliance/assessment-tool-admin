@@ -39,6 +39,12 @@ export class UserService {
     return this.http.post<User>(`${environment.API_URL}/users/`, user);
   }
 
+  editStudent(id: string,
+              user: { first_name: string, last_name: string, role: string, language: string, country: string }
+    ): Observable<User> {
+    return this.http.put<User>(`${environment.API_URL}/users/${id}/`, user);
+  }
+
   assignTopicsAccesses(batchTopicAccesses: BatchTopicAccesses, assessmentId: string): Observable<BatchTopicAccesses> {
     return this.http.post<BatchTopicAccesses>(
       `${environment.API_URL}/assessments/${assessmentId}/accesses/bulk_create/`, batchTopicAccesses);
