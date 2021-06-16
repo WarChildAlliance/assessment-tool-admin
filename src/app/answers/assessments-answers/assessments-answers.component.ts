@@ -21,8 +21,8 @@ export class AssessmentsAnswersComponent implements OnInit {
   public displayedColumns: TableColumn[] = [
     { key: 'title', name: 'Title' },
     { key: 'subject', name: 'Subject' },
-    { key: 'accessible_topics_count', name: 'Number of topics accessible' },
-    { key: 'completed_topics_count', name: 'Number of topics completed' },
+    { key: 'accessible_topics_count', name: 'Number of topics linked to the student' },
+    { key: 'completed_topics_count', name: 'Number of topics completed by the student' },
   ];
 
   public searchableColumns = ['title', 'subject'];
@@ -41,8 +41,8 @@ export class AssessmentsAnswersComponent implements OnInit {
 
         if (!this.sessionId) {
           this.displayedColumns.push(
-            { key: 'first_session_correct_answers_percentage', name: 'Correct answers percentage of first session', type: 'percentage' },
-            { key: 'last_session_correct_answers_percentage', name: 'Correct answers percentage of last session', type: 'percentage' },
+            { key: 'earliest_topic_answers_correct_answers_percentage', name: 'Answered correctly on first answers submission', type: 'percentage' },
+            { key: 'latest_topic_answers_correct_answers_percentage', name: 'Answered correctly on last answers submission', type: 'percentage' },
             { key: 'last_session', name: 'Last session', type: 'date', sorting: 'desc' },
           );
         }

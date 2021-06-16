@@ -20,7 +20,7 @@ export class SessionsAnswersComponent implements OnInit {
     { key: 'completed_topics_count', name: 'Number of completed topics' },
     { key: 'answered_questions_count', name: 'Number of answered questions' },
     { key: 'correctly_answered_questions_count', name: 'Number of correctly answered questions' },
-    { key: 'correct_answers_percentage', name: 'Percentage of correct answers', type: 'percentage' }
+    { key: 'correct_answers_percentage', name: 'Answered correctly', type: 'percentage' }
   ];
 
   constructor(
