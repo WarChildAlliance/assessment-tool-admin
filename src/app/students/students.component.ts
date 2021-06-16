@@ -24,8 +24,8 @@ export class StudentsComponent implements OnInit {
     { key: 'username', name: 'Student code'},
     { key: 'copy_icon', name: '', type: 'copy' },
     { key: 'full_name', name: 'Student name' },
-    { key: 'assessments_count', name: 'Total number of assessments' },
-    { key: 'completed_topics_count', name: 'Total number of completed topics' },
+    { key: 'assessments_count', name: 'Number of currently linked assessments' },
+    { key: 'completed_topics_count', name: 'Number of completed topics' },
     { key: 'last_session', name: 'Last session', type: 'date' },
     { key: 'language_name', name: 'Language' },
     { key: 'country_name', name: 'Country' }

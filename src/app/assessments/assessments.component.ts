@@ -23,7 +23,7 @@ export class AssessmentsComponent implements OnInit {
     { key: 'grade', name: 'Grade' },
     { key: 'subject', name: 'Subject' },
     { key: 'topics_count', name: 'Number of topics' },
-    { key: 'students_count', name: 'Number of student linked to this assessment' },
+    { key: 'students_count', name: 'Number of student currently linked to this assessment' },
     { key: 'language_name', name: 'Language' },
     { key: 'country_name', name: 'Country' },
     { key: 'private', name: 'Private', type: 'boolean' }
