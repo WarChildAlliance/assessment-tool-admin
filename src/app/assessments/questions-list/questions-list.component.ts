@@ -58,10 +58,6 @@ export class QuestionsListComponent implements OnInit {
     this.router.navigate([`/assessments/${this.assessmentId}/topics/${this.topicId}/questions/${id}`]);
   }
 
-  deleteSelection(): void {
-    console.log('DEL', this.selectedQuestions);
-  }
-
   downloadData(): void {
     console.log('Work In Progress');
   }

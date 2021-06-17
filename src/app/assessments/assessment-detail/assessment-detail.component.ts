@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
@@ -29,8 +29,6 @@ export class AssessmentDetailComponent implements OnInit {
 
   currentAssessment: any;
 
-  @ViewChild('createTopicDialog') createTopicDialog: TemplateRef<any>;
-
   public createNewTopicForm: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required])
   });
@@ -38,8 +36,7 @@ export class AssessmentDetailComponent implements OnInit {
   constructor(
     private assessmentService: AssessmentService,
     private route: ActivatedRoute,
-    private router: Router,
-    private dialog: MatDialog) { }
+    private router: Router) { }
 
   ngOnInit(): void {
 
@@ -61,34 +58,11 @@ export class AssessmentDetailComponent implements OnInit {
     this.selectedTopics = newSelection;
   }
 
-  openCreateTopicDialog(): void {
-    this.dialog.open(this.createTopicDialog);
-  }
-
   onOpenDetails(id: string): void {
     this.router.navigate([`/assessments/${this.currentAssessment.id}/topics/${id}`]);
-  }
-  /*
-  deleteCurrentAssessment(): void {
-    console.log('DELETE CURRENT ASSESSMENT');
-  }
- */
-  deleteSelection(): void {
-    // TODO implement the proper deletion
-    console.log('DEL', this.selectedTopics);
   }
 
   downloadData(): void {
     console.log('Work In Progress');
-  }
-
-  submitCreateNewTopic(): void {
-    const topicToCreate = {
-      name: this.createNewTopicForm.value.name,
-      order: this.createNewTopicForm.value.order,
-      assessment: this.currentAssessment.id
-    };
-    // TODO implement the proper creation of object
-    console.log('NEW TOPIC: ', topicToCreate);
   }
 }
