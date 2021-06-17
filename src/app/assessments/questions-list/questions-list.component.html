@@ -5,9 +5,6 @@
         selectedQuestions.length }} selected)</span>
     </h1>
     <div class="main-board__top-container__actions">
-      <button mat-flat-button [disabled]="!selectedQuestions.length" color="primary" (click)="deleteSelection()">
-        <mat-icon>delete_outline</mat-icon><span>Delete question(s)</span>
-      </button>
       <button mat-flat-button color="primary" (click)="downloadData()" [disabled]="true">
         <mat-icon>get_app</mat-icon><span>Download</span>
       </button>

@@ -7,12 +7,6 @@
     </h1>
 
     <div class="main-board__top-container__actions">
-      <button mat-flat-button color="accent" (click)="openCreateTopicDialog()">
-        <mat-icon>add_circle_outline</mat-icon><span>Add topic</span>
-      </button>
-      <button mat-flat-button [disabled]="!selectedTopics.length" color="primary" (click)="deleteSelection()">
-        <mat-icon>delete_outline</mat-icon><span>Delete topic(s)</span>
-      </button>
       <button mat-flat-button color="primary" (click)="downloadData()" [disabled]="true">
         <mat-icon>get_app</mat-icon><span>Download</span>
       </button>
@@ -23,16 +17,4 @@
     [isSelectable]="true" (selectionChangedEvent)="onSelectionChange($event)"
     (openDetailsEvent)="onOpenDetails($event)"></app-table>
 
-  <ng-template #createTopicDialog>
-    <h2 mat-dialog-title>Create a new topic</h2>
-    <mat-dialog-content>
-      <form [formGroup]="createNewTopicForm" (ngSubmit)="submitCreateNewTopic()" class="form-primary">
-        <mat-form-field appearance="outline">
-          <mat-label>Name</mat-label>
-          <input matInput type="text" formControlName="name">
-        </mat-form-field>
-        <button mat-button color="accent" type="submit" mat-dialog-close>Add</button>
-      </form>
-    </mat-dialog-content>
-  </ng-template>
-</div>
+  </div>
