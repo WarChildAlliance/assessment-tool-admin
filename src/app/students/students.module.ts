@@ -20,10 +20,11 @@ import { StudentDetailComponent } from './student-detail/student-detail.componen
 import { StudentsRoutingModule } from './students-routing.module';
 import { StudentsComponent } from './students.component';
 import { TopicAccessesBuilderComponent } from './topic-accesses-builder/topic-accesses-builder.component';
+import { MatTreeModule } from '@angular/material/tree';
 
 @NgModule({
   declarations: [
-    StudentsComponent,
+    StudentsComponent, 
     StudentDetailComponent,
     TopicAccessesBuilderComponent
   ],
@@ -46,7 +47,8 @@ import { TopicAccessesBuilderComponent } from './topic-accesses-builder/topic-ac
     MatRadioModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatTabsModule
+    MatTabsModule,
+    MatTreeModule
   ]
 })
 export class StudentsModule { }
