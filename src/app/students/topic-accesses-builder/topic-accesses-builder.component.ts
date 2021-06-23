@@ -31,11 +31,8 @@ export class TopicAccessesBuilderComponent implements OnInit {
               private userService: UserService,
               private formBuilder: FormBuilder,
               private alertService: AlertService) {
-    const currentDay = new Date().getDate();
-    const currentMonth = new Date().getMonth();
-    const currentYear = new Date().getFullYear();
-    this.minDate = new Date(currentYear, currentMonth, currentDay);
-  }
+    this.minDate = new Date();
+ }
 
   ngOnInit(): void {
     this.assessmentService.getAssessmentsList().subscribe((assessmentsList) => {
