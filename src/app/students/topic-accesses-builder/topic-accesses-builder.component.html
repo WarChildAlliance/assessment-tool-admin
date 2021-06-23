@@ -32,7 +32,7 @@
                 </mat-checkbox>
 
                 <mat-form-field color="accent" appearance="outline">
-                    <mat-date-range-input [rangePicker]="campaignOnePicker">
+                    <mat-date-range-input [rangePicker]="campaignOnePicker" [min]="minDate">
                         <input matStartDate formControlName="start_date" placeholder="Start date">
                         <input matEndDate formControlName="end_date" placeholder="End date">
                     </mat-date-range-input>
