@@ -12,6 +12,7 @@ import { UserService } from 'src/app/core/services/user.service';
   templateUrl: './topic-accesses-builder.component.html',
   styleUrls: ['./topic-accesses-builder.component.scss']
 })
+
 export class TopicAccessesBuilderComponent implements OnInit {
 
   minDate: Date = new Date();
