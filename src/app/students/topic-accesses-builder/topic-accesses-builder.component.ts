@@ -12,8 +12,10 @@ import { UserService } from 'src/app/core/services/user.service';
   templateUrl: './topic-accesses-builder.component.html',
   styleUrls: ['./topic-accesses-builder.component.scss']
 })
+
 export class TopicAccessesBuilderComponent implements OnInit {
 
+  minDate: Date = new Date();
   @Input() studentsList: any[];
 
   assessmentsList: Assessment[] = [];
@@ -29,7 +31,8 @@ export class TopicAccessesBuilderComponent implements OnInit {
   constructor(private assessmentService: AssessmentService,
               private userService: UserService,
               private formBuilder: FormBuilder,
-              private alertService: AlertService) { }
+              private alertService: AlertService) {
+ }
 
   ngOnInit(): void {
     this.assessmentService.getAssessmentsList().subscribe((assessmentsList) => {
