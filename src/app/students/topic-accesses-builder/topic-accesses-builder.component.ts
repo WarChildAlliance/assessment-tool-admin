@@ -14,7 +14,7 @@ import { UserService } from 'src/app/core/services/user.service';
 })
 export class TopicAccessesBuilderComponent implements OnInit {
 
-  minDate: Date;
+  minDate: Date = new Date();
   @Input() studentsList: any[];
 
   assessmentsList: Assessment[] = [];
@@ -31,7 +31,6 @@ export class TopicAccessesBuilderComponent implements OnInit {
               private userService: UserService,
               private formBuilder: FormBuilder,
               private alertService: AlertService) {
-    this.minDate = new Date();
  }
 
   ngOnInit(): void {
