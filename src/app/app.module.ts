@@ -15,6 +15,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { httpInterceptorProviders } from './core/interceptors/index.interceptor';
 import { MatSortModule } from '@angular/material/sort';
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { MatSortModule } from '@angular/material/sort';
     MatMenuModule
   ],
   providers: [
-    httpInterceptorProviders
+    httpInterceptorProviders,
+      {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 8000}}
   ],
   bootstrap: [AppComponent]
 })
