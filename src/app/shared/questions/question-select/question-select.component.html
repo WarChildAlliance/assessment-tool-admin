@@ -1,0 +1,14 @@
+<div class="question-container">
+    <div class="question-header">
+        <h2>Q{{ question.order }}: {{ question.title }}</h2>
+    </div>
+    <mat-radio-group class="select-content">
+        <ng-container *ngFor="let option of question.options">
+            <div [style.background]="setAnswerBackground(option)" [ngClass]="[option.attachments.length ? 'select-radio-options-attachments' : 'select-radio-options']">
+                <mat-radio-button [value]="option">
+                    {{ option.value }}
+                </mat-radio-button>
+            </div>
+        </ng-container>
+    </mat-radio-group>
+</div>

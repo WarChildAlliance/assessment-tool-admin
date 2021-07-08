@@ -10,12 +10,24 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatRadioModule } from '@angular/material/radio';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { SelectAssessmentComponent } from './select-assessment/select-assessment.component';
+import { QuestionSelectComponent } from './questions/question-select/question-select.component';
+import { QuestionInputComponent } from './questions/question-input/question-input.component';
+import { QuestionSortComponent } from './questions/question-sort/question-sort.component';
+import { QuestionNumberlineComponent } from './questions/question-numberline/question-numberline.component';
 
 
 @NgModule({
   declarations: [
-    TableComponent
+    TableComponent,
+    SelectAssessmentComponent,
+    QuestionSelectComponent,
+    QuestionInputComponent,
+    QuestionSortComponent,
+    QuestionNumberlineComponent
   ],
   imports: [
     CommonModule,
@@ -25,12 +37,20 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    MatSliderModule,
+    MatRadioModule,
     MatPaginatorModule,
     MatIconModule,
     MatTooltipModule,
     ClipboardModule
   ],
-  exports: [TableComponent]
+  exports: [TableComponent,
+    QuestionSelectComponent,
+    SelectAssessmentComponent,
+    QuestionInputComponent,
+    QuestionSortComponent,
+    QuestionNumberlineComponent
+  ]
 })
 
 export class SharedModule { }

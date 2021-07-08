@@ -57,4 +57,8 @@ export class UserService {
   getCountries(): Observable<Country[]> {
     return this.http.get<Country[]>(`${environment.API_URL}/users/countries`);
   }
+
+  getStudentTopicsChart(assessmentId: number): Observable<any> {
+    return this.http.get<any[]>(`${environment.API_URL}/visualization/charts/score_by_topic/${assessmentId}/`);
+  }
 }
