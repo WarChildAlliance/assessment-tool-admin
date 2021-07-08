@@ -12,6 +12,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { QuestionsOverviewChartComponent } from './charts/questions-overview-chart/questions-overview-chart.component';
 import { ScoreByTopicChartComponent } from './charts/score-by-topic-chart/score-by-topic-chart.component';
 import { ScoreByTopicTableComponent } from './charts/score-by-topic-table/score-by-topic-table.component';
+import { AnswersOverviewComponent } from './charts/answers-overview/answers-overview.component';
 
 
 
@@ -20,7 +21,8 @@ import { ScoreByTopicTableComponent } from './charts/score-by-topic-table/score-
     DashboardComponent,
     QuestionsOverviewChartComponent,
     ScoreByTopicChartComponent,
-    ScoreByTopicTableComponent
+    ScoreByTopicTableComponent,
+    AnswersOverviewComponent
   ],
   imports: [
     CommonModule,
