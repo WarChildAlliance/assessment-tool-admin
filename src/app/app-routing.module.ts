@@ -28,6 +28,12 @@ const routes: Routes = [
     canLoad: [AuthGuard]
   },
   {
+    path: 'assessment-builder',
+    loadChildren: () => import('./assessment-builder/assessment-builder.module')
+      .then(m => m.AssessmentBuilderModule),
+    canLoad: [AuthGuard]
+  },
+  {
     path: '',
     redirectTo: 'dashboard',
     pathMatch: 'full'

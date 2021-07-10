@@ -1,0 +1,33 @@
+<form class="form-primary" [formGroup]="AssessmentForm" (ngSubmit)="createAssessment()">
+    <div>
+        <label for="title">Titel for Assessment </label>
+        <input id="title" type="text" formControlName="title">
+    </div>
+
+    <div>
+        <label for="grade">Grade </label>
+        <input id="grade" type="number" formControlName="grade">
+    </div>
+
+    <div>
+        <label for="subject">Subject</label>
+        <input id="subject" type="text" formControlName="subject">
+    </div>
+
+    <div>
+        <label for="language">Language </label>
+        <input id="language" type="text" formControlName="language">
+    </div>
+
+    <div>
+        <label for="country">Country</label>
+        <input id="country" type="text" formControlName="country">
+    </div>
+
+    <div>
+        <label for="private">Is private? </label>
+        <input id="private" type="checkbox" formControlName="private">
+    </div>
+
+    <button type="submit">Log me</button>
+</form>

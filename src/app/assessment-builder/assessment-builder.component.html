@@ -1,0 +1,49 @@
+<mat-accordion>
+    <mat-expansion-panel *ngFor="let assessment of currentAssessments" (opened)="getCurrentTopics(assessment.id)">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                {{ assessment.title }}
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <!-- TODO can we put this separately to have a better overview?-->
+        <mat-panel-description>
+            <mat-accordion>
+                <mat-expansion-panel *ngFor="let topic of currentTopics">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{ topic.name }}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <mat-panel-description>
+                        <app-create-question></app-create-question>
+                    </mat-panel-description>
+                </mat-expansion-panel>
+            
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Add Topic
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <mat-panel-description>
+                        <app-create-topic [assessmentId]="assessment.id"></app-create-topic>
+                    </mat-panel-description>
+                </mat-expansion-panel>
+            </mat-accordion>
+            
+        </mat-panel-description>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Add Assessment
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-panel-description>
+            <app-create-assessment></app-create-assessment>
+        </mat-panel-description>
+    </mat-expansion-panel>
+</mat-accordion>
+
+

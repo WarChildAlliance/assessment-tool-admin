@@ -14,20 +14,20 @@ export class LanguageService {
   private languages: { name: string, code: string, direction: 'rtl' | 'ltr' }[] = [
     {
       name: 'العربية',
-      code: 'ar',
+      code: 'ara',
       direction: 'rtl'
     },
     {
       name: 'English',
-      code: 'en',
+      code: 'eng',
       direction: 'ltr'
     }
   ];
   constructor(
     private translateService: TranslateService
   ) {
-    this.translateService.setDefaultLang('en');
-    const savedLanguage = localStorage.getItem('cwtl-language') || 'en';
+    this.translateService.setDefaultLang('eng');
+    const savedLanguage = localStorage.getItem('cwtl-language') || 'eng';
     this.setLanguage(this.languages.find((language) => language.code === savedLanguage));
     this.translateService.use(savedLanguage);
   }

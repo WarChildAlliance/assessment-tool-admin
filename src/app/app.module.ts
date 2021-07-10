@@ -16,6 +16,7 @@ import { AppComponent } from './app.component';
 import { httpInterceptorProviders } from './core/interceptors/index.interceptor';
 import { MatSortModule } from '@angular/material/sort';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
     MatFormFieldModule,
     MatSelectModule,
     MatSortModule,
-    MatMenuModule
+    MatMenuModule,
+    ReactiveFormsModule
   ],
   providers: [
     httpInterceptorProviders,
