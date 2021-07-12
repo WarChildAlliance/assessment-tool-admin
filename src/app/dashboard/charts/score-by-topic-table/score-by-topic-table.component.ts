@@ -82,6 +82,7 @@ export class ScoreByTopicTableComponent implements OnInit {
 
   getScoreByTopicsData(assessment, instentiateTable: boolean): void {
     this.userService.getStudentTopicsChart(assessment.id).subscribe(studentsList => {
+      console.log('1', studentsList);
       if (instentiateTable) {
         this.studentsListTable = studentsList;
       }

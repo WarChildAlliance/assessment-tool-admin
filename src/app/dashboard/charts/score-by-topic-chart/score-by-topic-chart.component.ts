@@ -85,10 +85,12 @@ export class ScoreByTopicChartComponent implements OnInit {
       };
 
       student.topics.forEach(topic => {
-        if (typeof Object.values(topic)[0] === 'number') {
-          lineChartDataObj.data.push(Object.values(topic)[0]);
-        } else {
-          lineChartDataObj.data.push(null);
+        if (Object.values(topic)[0] !== 'not_evaluated') {
+          if (typeof Object.values(topic)[0] === 'number') {
+            lineChartDataObj.data.push(Object.values(topic)[0]);
+          } else {
+            lineChartDataObj.data.push(null);
+          }
         }
       });
       this.studentsListChart.push(lineChartDataObj);

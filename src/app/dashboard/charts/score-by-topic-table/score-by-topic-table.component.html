@@ -1,4 +1,4 @@
-<app-select-assessment (assessmentSelection)="selectTableAssessment($event)" [selectTopic]="false" [multiple]="true"></app-select-assessment>
+<app-select-assessment (assessmentSelection)="selectTableAssessment($event)" [selectTopic]="false" [multiple]="true" [displayNonEvaluated]="false"></app-select-assessment>
 
 <div class="main-board__charts-container__chart">
     <app-table [tableData]="studentsDataSource" [displayedColumns]="displayedColumns"

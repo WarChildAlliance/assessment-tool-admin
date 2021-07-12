@@ -1,4 +1,4 @@
-<div class="question-header">
+<div class="question-header" *ngIf="evaluated">
     <h2>Q{{ question.order }}: {{ question.title }}</h2>
 </div>
 <div class="number-line">
@@ -14,6 +14,9 @@
     </mat-slider>
     <span>{{ question.end }}</span>
 </div>
-<div class="correct-answer">
+<div class="correct-answer" *ngIf="evaluated">
     Correct answer: {{question.expected_value}}
+</div>
+<div *ngIf="answer" class="student-answer">
+    Student answer: {{answer}}
 </div>

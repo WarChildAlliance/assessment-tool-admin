@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import * as Chart from 'chart.js';
 import { ChartData } from 'chart.js';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
@@ -45,7 +45,9 @@ export class QuestionsOverviewChartComponent implements OnInit {
             }]
         },
         onClick: event => {
+          /* tslint:disable:no-string-literal */
           const datasetIndex =  this.barChart.getElementAtEvent(event)[0]['_index'];
+          /* tslint:enable:no-string-literal */
           this.getQuestionDetails(datasetIndex);
         }
       },
@@ -85,8 +87,8 @@ export class QuestionsOverviewChartComponent implements OnInit {
 
   onTopicSelection(ids): void {
     this.assessmentId = ids.assessmentId;
-    this.topicId = ids.topicId;
-    this.assessmentService.getQuestionsOverview(ids.assessmentId, ids.topicId).subscribe(data => {
+    this.topicId = ids.topic.id;
+    this.assessmentService.getQuestionsOverview(ids.assessmentId, this.topicId).subscribe(data => {
       this.getBarChartData(data);
     });
   }

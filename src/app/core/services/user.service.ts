@@ -61,4 +61,16 @@ export class UserService {
   getStudentTopicsChart(assessmentId: number): Observable<any> {
     return this.http.get<any[]>(`${environment.API_URL}/visualization/charts/score_by_topic/${assessmentId}/`);
   }
+
+  getStudentsListForATopic(topicId: string): Observable<any> {
+    return this.http.get<any[]>(`${environment.API_URL}/visualization/charts/topic/${topicId}/students/`);
+  }
+
+  getAsnwersOverview(topicId: string, assessmentTopicAnswer: string): Observable<any> {
+    return this.http.get<any[]>(`${environment.API_URL}/visualization/charts/topic/${topicId}/student/${assessmentTopicAnswer}/answers/`);
+  }
+
+  getAnswerDetails(topicId: string, assessmentTopicAnswer: string, answerId: string): Observable<any> {
+    return this.http.get<any[]>(`${environment.API_URL}/visualization/charts/topic/${topicId}/student/${assessmentTopicAnswer}/answers/${answerId}`);
+  }
 }

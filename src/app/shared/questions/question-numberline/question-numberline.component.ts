@@ -8,6 +8,8 @@ import { Component, Input, OnInit } from '@angular/core';
 export class QuestionNumberlineComponent implements OnInit {
 
   @Input() question;
+  @Input() answer;
+  @Input() evaluated;
 
   constructor() { }
 

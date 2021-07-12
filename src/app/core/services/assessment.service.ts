@@ -43,11 +43,17 @@ export class AssessmentService {
   }
 
   getQuestionDetails(assessmentId, topicId, questionId): Observable<any[]>{
-    return this.http.get<any[]>(`${environment.API_URL}/visualization/assessments/${assessmentId}/topics/${topicId}/questions/${questionId}`);
+    return this.http.get<any[]>(`
+    ${environment.API_URL}/visualization/assessments/${assessmentId}/topics/${topicId}/questions/${questionId}`
+    );
   }
 
   getAssessmentsListforDashboard(): Observable<any[]> {
     return this.http.get<any[]>(`${environment.API_URL}/visualization/charts/assessments/`);
+  }
+
+  getTopicsListForDashboard(assessmentId: string): Observable<any[]> {
+    return this.http.get<any[]>(`${environment.API_URL}/visualization/charts/assessments/${assessmentId}/topics/`);
   }
 
   updateAssessmentsList(assessments): void {

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { TableComponent } from './table/table.component';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MatTableModule } from '@angular/material/table';
@@ -31,6 +32,7 @@ import { QuestionNumberlineComponent } from './questions/question-numberline/que
   ],
   imports: [
     CommonModule,
+    FormsModule,
     MatTableModule,
     MatSortModule,
     MatCheckboxModule,

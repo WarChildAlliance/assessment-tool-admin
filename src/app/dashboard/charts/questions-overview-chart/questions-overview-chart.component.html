@@ -1,4 +1,4 @@
-<app-select-assessment (topicSelection)="onTopicSelection($event)" [selectTopic]="true" [multiple]="false"></app-select-assessment>
+<app-select-assessment (topicSelection)="onTopicSelection($event)" [selectTopic]="true" [multiple]="false" [displayNonEvaluated]="false"></app-select-assessment>
 
 <div class="chart-container">
     <div class="barChart">
@@ -6,18 +6,18 @@
     </div>
   
   <ng-container *ngIf="questionDetails && questionDetails.question_type === 'SELECT'">
-    <app-question-select [question]="questionDetails"></app-question-select>
+    <app-question-select [question]="questionDetails" [evaluated]="true"></app-question-select>
   </ng-container>
 
   <ng-container *ngIf="questionDetails && questionDetails.question_type === 'INPUT'">
-    <app-question-input [question]="questionDetails"></app-question-input>
+    <app-question-input [question]="questionDetails" [evaluated]="true"></app-question-input>
   </ng-container>
 
   <ng-container *ngIf="questionDetails && questionDetails.question_type === 'SORT'">
-    <app-question-sort [question]="questionDetails"></app-question-sort>
+    <app-question-sort [question]="questionDetails" [evaluated]="true"></app-question-sort>
   </ng-container>
 
   <ng-container *ngIf="questionDetails && questionDetails.question_type === 'NUMBER_LINE'">
-    <app-question-numberline [question]="questionDetails"></app-question-numberline>
+    <app-question-numberline [question]="questionDetails" [evaluated]="true"></app-question-numberline>
   </ng-container>
 </div>
