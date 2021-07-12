@@ -11,7 +11,7 @@ import { AssessmentService } from '../core/services/assessment.service';
 export class AssessmentBuilderComponent implements OnInit {
 
   public currentAssessments: Assessment[] = [];
-  public currentTopics: Topic[] = [];
+  public currentTopics: any[] = [];
   public currentQuestions: any[] = [];
 
   constructor(
@@ -25,9 +25,15 @@ export class AssessmentBuilderComponent implements OnInit {
     });
   }
 
-  getCurrentTopics(id: number): void {
-    this.assessmentService.getAssessmentTopics(id.toString()).subscribe((topicsList) => {
+  getCurrentTopics(assessmentId: number): void {
+    this.assessmentService.getAssessmentTopics(assessmentId.toString()).subscribe((topicsList) => {
       this.currentTopics = topicsList;
+    });
+  }
+
+  getCurrentQuestions(assessmentId: number, topicId: number): void {
+    this.assessmentService.getTopicQuestions(assessmentId.toString(), topicId.toString()).subscribe((questionsList) => {
+      this.currentQuestions = questionsList;
     });
   }
 }

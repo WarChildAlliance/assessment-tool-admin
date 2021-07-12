@@ -8,6 +8,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CreateTopicComponent } from './components/create-topic/create-topic.component';
 import { CreateQuestionComponent } from './components/create-question/create-question.component';
+import { InputComponent } from './components/create-question/components/input/input.component';
+import { SelectComponent } from './components/create-question/components/select/select.component';
+import { NumberLineComponent } from './components/create-question/components/number-line/number-line.component';
+import { SortComponent } from './components/create-question/components/sort/sort.component';
 
 
 
@@ -16,7 +20,11 @@ import { CreateQuestionComponent } from './components/create-question/create-que
     AssessmentBuilderComponent,
     CreateAssessmentComponent,
     CreateTopicComponent,
-    CreateQuestionComponent
+    CreateQuestionComponent,
+    InputComponent,
+    SelectComponent,
+    NumberLineComponent,
+    SortComponent
   ],
   imports: [
     CommonModule,

@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreateQuestionComponent implements OnInit {
 
+  currentQuestionType = 'input';
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  setQuestionDisplay(questionType: string): void{
+    this.currentQuestionType = questionType;
   }
 
 }
