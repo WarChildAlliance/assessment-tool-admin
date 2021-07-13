@@ -6,65 +6,135 @@
             </mat-panel-title>
         </mat-expansion-panel-header>
         <mat-panel-description>
+            <div>
 
             <!-- TODO can we put this separately to have a better overview?-->
-            <mat-accordion>
-                <mat-expansion-panel *ngFor="let topic of currentTopics" (opened)="getCurrentQuestions(assessment.id, topic.id)">
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            {{ topic.name }}
-                        </mat-panel-title>
-                    </mat-expansion-panel-header>
-                    <mat-panel-description>
-                        <!-- TODO can we put this separately to have a better overview?-->
-                        <mat-accordion>
-                            <mat-expansion-panel *ngFor="let question of currentQuestions">
-                                <mat-expansion-panel-header>
-                                    <mat-panel-title>
-                                        {{ question.title }}
-                                    </mat-panel-title>
-                                </mat-expansion-panel-header>
-                                <mat-panel-description>
-                                    {{question.question_type}}
-                                </mat-panel-description>
-                            </mat-expansion-panel>
-                            
-                            <mat-expansion-panel>
-                                <mat-expansion-panel-header>
-                                    <mat-panel-title>
-                                        Add Question
-                                    </mat-panel-title>
-                                </mat-expansion-panel-header>
-                                <mat-panel-description>
-                                    <app-create-question></app-create-question>
-                                </mat-panel-description>
-                            </mat-expansion-panel>
-                        </mat-accordion>
+            <div>
+                <div class="title">
+                    <span>Details</span>
+                    <button mat-button>Edit</button>
+                    <button mat-button>Delete</button>
+                </div>
+                <table>
+                    <tr class="color-header">
+                        <th >Grade</th>
+                        <th>Subject</th>
+                        <th>Language</th>
+                        <th>Country</th>
+                        <th>Private</th>
+                    </tr>
+                    <tr>
+                        <td>{{assessment.grade}}</td>
+                        <td>{{assessment.subject}}</td>
+                        <td>{{assessment.language_name}}</td>
+                        <td>{{assessment.country_name}}</td>
+                        <td>{{assessment.private}}</td>
+                    </tr>
+                </table>
+            </div>
 
-                        <!-- End of Question Accordeon-->
-                    </mat-panel-description>
-                </mat-expansion-panel>
+            <div>
+                <h2>Topics</h2>
+                <mat-accordion>
+                    <mat-expansion-panel *ngFor="let topic of currentTopics" (opened)="getCurrentQuestions(assessment.id, topic.id)">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                {{ topic.name }}
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <mat-panel-description>
+                            <!-- TODO can we put this separately to have a better overview?-->
+                            <div>
+                                <div>
+                                <h2>Details</h2>
+                                <table>
+                                    <tr>
+                                        <td><b>Description</b></td>
+                                        <td>MISSING</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Attachments</b></td>
+                                        <td>MISSING</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Show Feedback</b></td>
+                                        <td>MISSING</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Allow Skip</b></td>
+                                        <td>MISSING</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Evaluated</b></td>
+                                        <td>MISSING</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Praise</b></td>
+                                        <td>MISSING</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Max Wrong Answers</b></td>
+                                        <td>MISSING</td>
+                                    </tr>
+                                </table>
+
+                                <button mat-button>Edit</button>
+                                <button mat-button>Delete</button>
+                            </div>
+                                <mat-accordion>
+                                    <mat-expansion-panel *ngFor="let question of currentQuestions">
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                {{ question.title }}
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <mat-panel-description>
+                                            {{question.question_type}}
+                                        </mat-panel-description>
+                                    </mat-expansion-panel>
+                                    
+                                    <mat-expansion-panel>
+                                        <mat-expansion-panel-header class="add-panel">
+                                            <mat-panel-title>
+                                                <mat-icon>add</mat-icon>
+                                                Create New Question 
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <mat-panel-description>
+                                            <app-create-question></app-create-question>
+                                        </mat-panel-description>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+                            </div>
+
+                            <!-- End of Question Accordeon-->
+                        </mat-panel-description>
+                    </mat-expansion-panel>
+                
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header class="add-panel">
+                            <mat-panel-title>
+                                <mat-icon>add</mat-icon>
+                                Create New Topic
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <mat-panel-description>
+                            <app-create-topic [assessmentId]="assessment.id"></app-create-topic>
+                        </mat-panel-description>
+                    </mat-expansion-panel>
+                </mat-accordion>
+                <!-- End of Topic Accordean-->
+            </div>
             
-                <mat-expansion-panel>
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            Add Topic
-                        </mat-panel-title>
-                    </mat-expansion-panel-header>
-                    <mat-panel-description>
-                        <app-create-topic [assessmentId]="assessment.id"></app-create-topic>
-                    </mat-panel-description>
-                </mat-expansion-panel>
-            </mat-accordion>
-            <!-- End of Topic Accordean-->
-            
+        </div>  
         </mat-panel-description>
     </mat-expansion-panel>
 
     <mat-expansion-panel>
-        <mat-expansion-panel-header>
+        <mat-expansion-panel-header class="add-panel">
             <mat-panel-title>
-                Add Assessment
+                <mat-icon>add</mat-icon>
+                Create New Assessment
             </mat-panel-title>
         </mat-expansion-panel-header>
         <mat-panel-description>

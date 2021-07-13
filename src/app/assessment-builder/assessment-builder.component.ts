@@ -28,6 +28,7 @@ export class AssessmentBuilderComponent implements OnInit {
   getCurrentTopics(assessmentId: number): void {
     this.assessmentService.getAssessmentTopics(assessmentId.toString()).subscribe((topicsList) => {
       this.currentTopics = topicsList;
+      console.log(this.currentTopics);
     });
   }
 
