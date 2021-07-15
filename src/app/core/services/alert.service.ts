@@ -4,12 +4,12 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 @Injectable({
   providedIn: 'root'
 })
+
 export class AlertService {
 
   private snackConfig: MatSnackBarConfig = {
     horizontalPosition: 'center',
     verticalPosition: 'bottom',
-    duration: 5000
   };
 
   private infoConfig: MatSnackBarConfig = {
