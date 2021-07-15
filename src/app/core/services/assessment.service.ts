@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { AssessmentDashboard } from '../models/assessment-dashboard.model';
 import { UtilitiesService } from './utilities.service';
 
 @Injectable({
@@ -48,15 +49,15 @@ export class AssessmentService {
     );
   }
 
-  getAssessmentsListforDashboard(): Observable<any[]> {
-    return this.http.get<any[]>(`${environment.API_URL}/visualization/charts/assessments/`);
+  getAssessmentsListforDashboard(): Observable<AssessmentDashboard[]> {
+    return this.http.get<AssessmentDashboard[]>(`${environment.API_URL}/visualization/charts/assessments/`);
   }
 
   getTopicsListForDashboard(assessmentId: string): Observable<any[]> {
     return this.http.get<any[]>(`${environment.API_URL}/visualization/charts/assessments/${assessmentId}/topics/`);
   }
 
-  updateAssessmentsList(assessments): void {
+  updateAssessmentsList(assessments: AssessmentDashboard[]): void {
     this.assessmentsListForDashboard.next(assessments);
   }
 }

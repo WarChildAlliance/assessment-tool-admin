@@ -5,7 +5,7 @@
       <h3>Assessment title</h3>
       <mat-radio-group class="radio-group">
         <ng-container *ngFor="let student of studentsListChart">
-          <mat-radio-button [value]="student" (change)="selectStudent(student)">{{ student.label }}</mat-radio-button>
+          <mat-radio-button [value]="student" [checked]="student === selectedStudent ? true : false" (change)="selectStudent(student)">{{ student.label }}</mat-radio-button>
         </ng-container>
       </mat-radio-group>
     </div>

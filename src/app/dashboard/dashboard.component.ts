@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { AssessmentDashboard } from '../core/models/assessment-dashboard.model';
 import { AssessmentService } from '../core/services/assessment.service';
-import { UserService } from '../core/services/user.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,10 +9,10 @@ import { UserService } from '../core/services/user.service';
 })
 export class DashboardComponent implements OnInit {
   public studentsListTable = [];
-  public assessmentList = [];
+  public assessmentList: AssessmentDashboard[];
 
 
-  constructor(private userService: UserService, private assessmentService: AssessmentService) { }
+  constructor(private assessmentService: AssessmentService) { }
 
   ngOnInit(): void {
 

@@ -1,20 +1,20 @@
 <div class="main-board__charts-container__select" *ngIf="!multiple && selectedAssessment">
   <mat-form-field appearance="outline" color="accent">
     <mat-label>Choose an assessment</mat-label>
-    <mat-select>
+    <mat-select [(value)]="selectedAssessment">
       <ng-container *ngFor="let assessment of assessmentsList">
-        <mat-option [value]="assessment" *ngIf="assessment.evaluated || displayNonEvaluated" (onSelectionChange)="selectAssessment(assessment)">{{ assessment.title }}</mat-option>
+        <mat-option [value]="assessment" *ngIf="assessment.evaluated || displayNonEvaluated" (click)="selectAssessment(assessment)">{{ assessment.title }}</mat-option>
       </ng-container>
     </mat-select>
   </mat-form-field>   
 </div>
 
-<div class="main-board__charts-container__select" *ngIf="multiple">
+<div class="main-board__charts-container__select" *ngIf="multiple && selectedAssessmentArr">
   <mat-form-field appearance="outline" color="accent">
-    <mat-label>Add an assessment</mat-label>
-    <mat-select multiple>
+    <mat-label>Add an assessment</mat-label> 
+    <mat-select multiple [(value)]="selectedAssessmentArr">
       <ng-container *ngFor="let assessment of assessmentsList">
-        <mat-option *ngIf="assessment.evaluated" (onSelectionChange)="selectAssessment(assessment)">{{ assessment.title }}</mat-option>
+        <mat-option *ngIf="assessment.evaluated" [value]="assessment" (click)="selectAssessment(assessment)">{{ assessment.title }}</mat-option>
       </ng-container>
     </mat-select>
   </mat-form-field>   
@@ -23,9 +23,9 @@
 <div class="main-board__charts-container__select" *ngIf="selectTopic">
   <mat-form-field appearance="outline" color="accent">
     <mat-label>Choose a topic</mat-label>
-    <mat-select>
+    <mat-select [(value)]="selectedTopic">
       <ng-container *ngFor="let topic of topicsList">
-        <mat-option [value]="topic" (onSelectionChange)="selectATopic(topic)">{{ topic.name }}</mat-option>
+        <mat-option [value]="topic" (click)="selectATopic(topic)">{{ topic.name }}</mat-option>
       </ng-container>
     </mat-select>
   </mat-form-field>

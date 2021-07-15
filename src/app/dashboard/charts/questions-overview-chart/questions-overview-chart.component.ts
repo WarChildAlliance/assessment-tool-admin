@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as Chart from 'chart.js';
 import { ChartData } from 'chart.js';
+import { TopicDashboard } from 'src/app/core/models/topic-dashboard.model';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 
 
@@ -77,6 +78,7 @@ export class QuestionsOverviewChartComponent implements OnInit {
     });
 
     this.barChart.update();
+    this.getQuestionDetails(0);
   }
 
   getQuestionDetails(index): any {
@@ -85,10 +87,10 @@ export class QuestionsOverviewChartComponent implements OnInit {
     });
   }
 
-  onTopicSelection(ids): void {
-    this.assessmentId = ids.assessmentId;
-    this.topicId = ids.topic.id;
-    this.assessmentService.getQuestionsOverview(ids.assessmentId, this.topicId).subscribe(data => {
+  onTopicSelection(assessmentTopicInfos: {assessmentId: string, topic: TopicDashboard}): void {
+    this.assessmentId = assessmentTopicInfos.assessmentId;
+    this.topicId = assessmentTopicInfos.topic.id;
+    this.assessmentService.getQuestionsOverview(assessmentTopicInfos.assessmentId, this.topicId).subscribe(data => {
       this.getBarChartData(data);
     });
   }

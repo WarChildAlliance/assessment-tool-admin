@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { AssessmentDashboard } from 'src/app/core/models/assessment-dashboard.model';
 import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
@@ -18,19 +19,15 @@ export class ScoreByTopicTableComponent implements OnInit {
 
   public isAssessmentSelected = false;
 
-  public studentsListChart = [];
-  public studentsListTable = [];
-  public assessmentsList = [];
-
-  public topicList = [];
+  public scoreByTopicTable = [];
 
 
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {}
 
-  selectTableAssessment(assessment): void {
-    if (!this.studentsListTable.length) {
+  selectTableAssessment(assessment: AssessmentDashboard): void {
+    if (!this.scoreByTopicTable.length) {
       this.getScoreByTopicsData(assessment, true);
     } else {
       const mathcingCol = this.displayedColumns.find(val => val.assmnt === assessment.title);
@@ -71,7 +68,7 @@ export class ScoreByTopicTableComponent implements OnInit {
   getTableData(newAssessmentData): any[]{
     this.newTableData = [];
     newAssessmentData.forEach(assessmentData => {
-      const studentObj = this.studentsListTable.find(val => val.full_name === assessmentData.full_name);
+      const studentObj = this.scoreByTopicTable.find(val => val.full_name === assessmentData.full_name);
       assessmentData.topics.forEach(topic => {
         studentObj[Object.keys(topic)[0].toLocaleLowerCase()] = Object.values(topic)[0];
       });
@@ -81,13 +78,12 @@ export class ScoreByTopicTableComponent implements OnInit {
   }
 
   getScoreByTopicsData(assessment, instentiateTable: boolean): void {
-    this.userService.getStudentTopicsChart(assessment.id).subscribe(studentsList => {
-      console.log('1', studentsList);
+    this.userService.getStudentTopicsChart(assessment.id).subscribe(scoreByTopic => {
       if (instentiateTable) {
-        this.studentsListTable = studentsList;
+        this.scoreByTopicTable = scoreByTopic;
       }
-      this.displayedColumns = this.displayedColumns.concat(this.getTableColumns(studentsList, assessment.title));
-      this.studentsDataSource = new MatTableDataSource(this.getTableData(studentsList));
+      this.displayedColumns = this.displayedColumns.concat(this.getTableColumns(scoreByTopic, assessment.title));
+      this.studentsDataSource = new MatTableDataSource(this.getTableData(scoreByTopic));
     });
   }
 

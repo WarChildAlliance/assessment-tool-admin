@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as Chart from 'chart.js';
-import { ChartData, ChartOptions } from 'chart.js';
+import { ChartData, ChartDataSets, ChartOptions } from 'chart.js';
+import { AssessmentDashboard } from 'src/app/core/models/assessment-dashboard.model';
 import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
@@ -10,10 +11,10 @@ import { UserService } from 'src/app/core/services/user.service';
 })
 export class ScoreByTopicChartComponent implements OnInit {
 
-  public studentsListChart = [];
+  public studentsListChart: ChartDataSets[];
   private lineChart: Chart;
 
-  public assessmentList = [];
+  public selectedStudent: ChartDataSets;
 
   public lineChartOptions: ChartOptions = {
     responsive: true,
@@ -55,13 +56,13 @@ export class ScoreByTopicChartComponent implements OnInit {
     this.lineChart.update();
   }
 
-  selectChartAssessment(assessment): void {
-    this.userService.getStudentTopicsChart(assessment.id).subscribe(assessmentData => {
-      this.getChartLineData(assessmentData, assessment);
+  selectChartAssessment(assessment: AssessmentDashboard): void {
+    this.userService.getStudentTopicsChart(assessment.id).subscribe(scoreByTopic => {
+      this.getChartLineData(scoreByTopic, assessment);
     });
   }
 
-  getChartLineData(studentsList, assessment): void{
+  getChartLineData(studentsList: {full_name: string, topics: {}[]}[], assessment: AssessmentDashboard): void{
     this.studentsListChart = [];
     this.lineChart.data.datasets = [];
     this.lineChart.data.labels = assessment.topics;
@@ -74,7 +75,7 @@ export class ScoreByTopicChartComponent implements OnInit {
     this.lineChart.update();
 
     let lineChartDataObj;
-    studentsList.forEach(student => {
+    studentsList.forEach(student  => {
       lineChartDataObj = {
         label: student.full_name,
         data: [],
@@ -95,6 +96,8 @@ export class ScoreByTopicChartComponent implements OnInit {
       });
       this.studentsListChart.push(lineChartDataObj);
     });
+    this.selectedStudent = this.studentsListChart[0];
+    this.selectStudent(this.selectedStudent);
   }
 
 }

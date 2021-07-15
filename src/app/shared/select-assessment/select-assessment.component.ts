@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { first } from 'rxjs/operators';
+import { AssessmentDashboard } from 'src/app/core/models/assessment-dashboard.model';
+import { TopicDashboard } from 'src/app/core/models/topic-dashboard.model';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 
 @Component({
@@ -9,12 +11,13 @@ import { AssessmentService } from 'src/app/core/services/assessment.service';
 })
 export class SelectAssessmentComponent implements OnInit {
 
-  public assessmentsList;
+  public assessmentsList: AssessmentDashboard[];
+  public topicsList: TopicDashboard[];
 
-  public selectedAssessment;
-  public selectedTopic;
-
-  public topicsList = [];
+  public selectedAssessment: AssessmentDashboard;
+  public selectedAssessmentArr: AssessmentDashboard[];
+  public selected: AssessmentDashboard[] = [];
+  public selectedTopic: TopicDashboard;
 
   private assessmentId: string;
 
@@ -24,8 +27,8 @@ export class SelectAssessmentComponent implements OnInit {
   @Input() multiple: boolean;
   @Input() displayNonEvaluated: boolean;
 
-  @Output() assessmentSelection = new EventEmitter<string>(true);
-  @Output() topicSelection = new EventEmitter<{assessmentId: string, topic: any}>(true);
+  @Output() assessmentSelection = new EventEmitter<AssessmentDashboard>();
+  @Output() topicSelection = new EventEmitter<{assessmentId: string, topic: TopicDashboard}>();
 
   constructor(private assessmentService: AssessmentService) { }
 
@@ -33,18 +36,18 @@ export class SelectAssessmentComponent implements OnInit {
     this.assessmentService.completeAssessmentsList.pipe(first()).subscribe(assessmentsList => {
       this.assessmentsList = assessmentsList;
       this.selectedAssessment = this.assessmentsList[0];
+      this.selectedAssessmentArr = this.assessmentsList.slice(0, 1);
 
       if (this.selectTopic) {
         this.assessmentId = this.assessmentsList[0].id;
         this.getTopics(this.assessmentsList[0].id);
-        this.selectedTopic = this.topicsList[0];
       } else {
         this.assessmentSelection.emit(this.assessmentsList[0]);
       }
     });
   }
 
-  selectAssessment(assessment): void {
+  selectAssessment(assessment: AssessmentDashboard): void {
     this.selectedAssessment = assessment;
     if (this.selectTopic){
       this.assessmentId = assessment.id;
@@ -54,7 +57,7 @@ export class SelectAssessmentComponent implements OnInit {
     }
   }
 
-  selectATopic(topic): void {
+  selectATopic(topic: TopicDashboard): void {
     this.selectedTopic = topic;
     this.topicSelection.emit({assessmentId: this.assessmentId, topic});
   }
@@ -64,6 +67,7 @@ export class SelectAssessmentComponent implements OnInit {
       this.topicsList = topics;
 
       if (this.firstTopicRequest) {
+        this.selectedTopic = this.topicsList[0];
         this.topicSelection.emit({assessmentId: this.assessmentId, topic: this.topicsList[0]});
         this.firstTopicRequest = false;
       }
