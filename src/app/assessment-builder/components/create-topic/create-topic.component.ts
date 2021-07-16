@@ -30,18 +30,7 @@ export class CreateTopicComponent implements OnInit {
   }
 
   createTopic(): void {
-    const formvalues = this.TopicForm.value;
-    const TopicToCreate: any = {
-      name: formvalues.name,
-      description: formvalues.description,
-      assessment: this.assessmentId,
-      showFeedback: formvalues.showFeedback,
-      allowSkip: formvalues.allowSkip,
-      evaluated: formvalues.evaluated,
-      praise: formvalues.praise,
-      maxWrongAnswers: formvalues.maxWrongAnswers,
-    };
-    this.assessmentService.createTopic(TopicToCreate, this.assessmentId.toString()).subscribe(res =>
+    this.assessmentService.createTopic(this.TopicForm.value, this.assessmentId.toString()).subscribe(res =>
       {
         // TODO put snackbar here
         console.log(res);
