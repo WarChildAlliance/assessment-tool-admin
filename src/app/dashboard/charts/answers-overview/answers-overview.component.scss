@@ -1,0 +1,13 @@
+.answers-list {
+    list-style: none;
+
+    li {
+
+        cursor: pointer;
+
+        mat-icon {
+            vertical-align: middle;
+        }
+    }
+
+}
