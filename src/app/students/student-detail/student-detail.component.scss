@@ -1,0 +1,21 @@
+.assessment-title {
+    font-weight: 500;
+}
+.linked-topics {
+    color: rgba(0, 0, 0, 0.74);
+    margin-left: 5px;
+}
+.main-board__accordions-container__topic {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    &__infos {
+        width: 30%;
+    }
+    font-weight: lighter;
+}
+
+h3{
+    margin-top: 50px;
+}

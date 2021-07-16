@@ -32,15 +32,44 @@
     </div>
   </div>
 
+  <div class="main-board__accordions-container">
+    <h3>Student's assessments</h3>
+    <p *ngIf="!studentAssessments">This student currently is not linked to any assessment.</p>
+    <mat-accordion multi>
+      <mat-expansion-panel *ngFor="let assessment of studentAssessments">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <span class="assessment-title">{{ assessment.title }} </span><span class="linked-topics">({{ assessment.topic_access.length }} linked topic(s))</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="main-board__accordions-container__topic" *ngFor="let topic of assessment.topic_access">
+          <div class="main-board__accordions-container__topic__infos">
+            <p>{{ topic.topic }}</p>
+          </div>
+          <div class="main-board__accordions-container__topic__infos" *ngIf="topic.start_date">
+            <p>from {{ topic.start_date }} to {{ topic.end_date }}</p>
+          </div>
+          <div class="main-board__accordions-container__topic__infos">
+            <p> {{topic.hasAccess ? 'Active access' : 'No active access'}} </p>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+
   <div class="main-board__tabs-container">
-    <mat-tab-group mat-align-tabs="start" color="accent">
-      <mat-tab label="Assessments">
+    <h3>Assessments Overview</h3>
+    <app-assessments-answers></app-assessments-answers>
+
+<!--  TODO remove this code later. Currently it is useful for session debugging
+  <mat-tab-group mat-align-tabs="start" color="accent">
+      <mat-tab label="By assessments">
         <app-assessments-answers></app-assessments-answers>
       </mat-tab>
-      <mat-tab label="Sessions">
+      <mat-tab label="By sessions">
         <app-sessions-answers></app-sessions-answers>
       </mat-tab>
-    </mat-tab-group>
+    </mat-tab-group> -->
   </div>
 
 </div>
