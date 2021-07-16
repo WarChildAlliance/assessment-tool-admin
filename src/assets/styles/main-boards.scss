@@ -60,4 +60,33 @@
       font-weight: bold;
     }
   }
+
+  &__charts-container {
+    display: flex;
+
+    &__chart {
+      width: 80vw;
+
+      &__legend {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 20px;
+
+        >p {
+          margin-left: 15px;
+          font-size: 13px;
+          color: grey;
+
+          >mat-icon {
+            vertical-align: middle;
+          }
+        }
+        
+      }
+    }
+
+    &__options {
+      width: 15vw;
+    }
+  }
 }
