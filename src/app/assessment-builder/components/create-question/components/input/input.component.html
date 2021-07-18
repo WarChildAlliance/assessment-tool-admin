@@ -1,27 +1,27 @@
 <form class="form-primary" [formGroup]="inputForm" (ngSubmit)="createInput()">
     <div>
         <label for="title">Titel for Question </label>
-        <input id="title" type="text" formControlName="title">
+        <input type="text" formControlName="title">
     </div>
 
     <div>
         <label for="order">Order </label>
-        <input id="order" type="number" formControlName="order">
+        <input type="number" formControlName="order">
     </div>
 
     <div>
         <label for="imageAttachment">Visual Attachment</label>
-        <input id="imageAttachment" type="text" formControlName="imageAttachment">
+        <input type="text" formControlName="imageAttachment">
     </div>
 
     <div>
         <label for="audioAttachment">Audio Attachment</label>
-        <input id="audioAttachment" type="text" formControlName="audioAttachment">
+        <input type="text" formControlName="audioAttachment">
     </div>
 
     <div>
         <label for="answer">Answer </label>
-        <input id="answer" type="text" formControlName="answer">
+        <input type="text" formControlName="answer">
     </div>
 
     <button type="submit">Save</button>

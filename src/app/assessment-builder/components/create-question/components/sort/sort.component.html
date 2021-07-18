@@ -1,1 +1,37 @@
-<p>sort works!</p>
+<form class="form-primary" [formGroup]="sortForm" (ngSubmit)="createSort()">
+    <div>
+        <label for="title">Titel for Question </label>
+        <input type="text" formControlName="title">
+    </div>
+
+    <div>
+        <label for="order">Order </label>
+        <input type="number" formControlName="order">
+    </div>
+
+    <div>
+        <label for="categoryA">Category A</label>
+        <input type="text" formControlName="categoryA">
+    </div>
+
+    <div>
+        <label for="categoryA">Category B</label>
+        <input type="text" formControlName="categoryB">
+    </div>
+
+
+    <div>
+        <h3>Category {{ sortForm.value.categoryA}}:</h3>
+        <input type="text">
+        <input type="text">
+        <input type="text">
+        <button>Add Option</button>
+
+        <h3>Category {{ sortForm.value.categoryB}}:</h3>
+        <input type="text">
+        <input type="text">
+        <input type="text">
+        <button>Add Option</button>
+    </div>
+    <button type="submit">Save</button>
+</form>

@@ -1,1 +1,25 @@
-<p>select works!</p>
+<form class="form-primary" [formGroup]="selectForm" (ngSubmit)="createSelect()">
+    <div>
+        <label for="title">Titel for Question </label>
+        <input type="text" formControlName="title">
+    </div>
+
+    <div>
+        <label for="order">Order </label>
+        <input type="number" formControlName="order">
+    </div>
+
+    <div>
+        <label for="multiple">Is multiple choice?</label>
+        <input type="checkbox" formControlName="multiple">
+    </div>
+
+
+    <div>
+        <h3>Options:</h3>
+        <app-select-option></app-select-option>
+        <app-select-option></app-select-option>
+        <button> Add Option</button>
+    </div>
+    <button type="submit">Save</button>
+</form>

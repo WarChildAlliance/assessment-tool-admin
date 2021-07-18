@@ -24,11 +24,12 @@ export class InputComponent implements OnInit {
 
   createInput(): void{
     const newQuestion = {
-      question_type: 'INPUT', 
+      question_type: 'INPUT',
       title: this.inputForm.value.title,
       order: this.inputForm.value.order,
       valid_answer: this.inputForm.value.answer
-    }
+    };
+
     this.assessmentService.createQuestion(newQuestion, '17', '7').subscribe((res) => {
       console.log('res', res);
     });

@@ -13,6 +13,9 @@ import { SelectComponent } from './components/create-question/components/select/
 import { NumberLineComponent } from './components/create-question/components/number-line/number-line.component';
 import { SortComponent } from './components/create-question/components/sort/sort.component';
 import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { SelectOptionComponent } from './components/create-question/components/select/components/select-option/select-option.component';
 
 
 
@@ -25,7 +28,8 @@ import { MatCardModule } from '@angular/material/card';
     InputComponent,
     SelectComponent,
     NumberLineComponent,
-    SortComponent
+    SortComponent,
+    SelectOptionComponent
   ],
   imports: [
     CommonModule,
@@ -33,7 +37,9 @@ import { MatCardModule } from '@angular/material/card';
     MatIconModule,
     ReactiveFormsModule,
     MatExpansionModule,
-    MatCardModule
+    MatCardModule,
+    MatFormFieldModule,
+    MatButtonModule
   ]
 })
 export class AssessmentBuilderModule { }

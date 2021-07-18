@@ -15,13 +15,18 @@
     </div>
 
     <div>
-        <label for="language">Language </label>
-        <input id="language" type="text" formControlName="language">
+        <label for="language">Language</label>
+        <select id="language" formControlName="language" >
+            <option *ngFor="let language of languages" [ngValue]="language.code">{{language.name_en}}</option>
+        </select>
+<!--         <input id="language" type="text" formControlName="language"> -->
     </div>
 
     <div>
         <label for="country">Country</label>
-        <input id="country" type="text" formControlName="country">
+        <select id="country" formControlName="country" >
+            <option *ngFor="let country of countries" [ngValue]="country.code">{{country.name_en}}</option>
+        </select>
     </div>
 
     <div>

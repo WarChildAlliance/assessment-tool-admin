@@ -1,1 +1,45 @@
-<p>number-line works!</p>
+<form [formGroup]="numberLineForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill"  class="form-group">
+        <mat-label for="title" >Title</mat-label>
+        <input formControlName="title"  class="form-control" matInput>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill"  class="form-group">
+        <mat-label for="order" >Order</mat-label>
+        <input formControlName="order"  class="form-control" matInput>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill"  class="form-group">
+        <mat-label for="startNumber">Start Number</mat-label>
+        <input formControlName="startNumber"  class="form-control" matInput>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill"  class="form-group">
+        <mat-label for="endNumber">End Number</mat-label>
+        <input formControlName="endNumber"  class="form-control" matInput>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill"  class="form-group">
+        <mat-label for="stepSize">Stepsize</mat-label>
+        <input formControlName="stepSize" class="form-control" matInput>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill"  class="form-group">
+        <mat-label for="solution">Solution</mat-label>
+        <input formControlName="solution"  class="form-control" matInput>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill"  class="form-group">
+        <mat-label for="showTicks">Show Ticks</mat-label>
+        <input formControlName="showTicks" class="form-control" matInput>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="form-group">
+        <mat-label for="showValue">Show Value</mat-label>
+        <input formControlName="showValue" class="form-control" matInput>
+    </mat-form-field>
+
+    <button class="login-button" mat-flat-button color="primary" type="submit" [disabled]="numberLineForm.invalid">
+        Login
+    </button>
+</form>

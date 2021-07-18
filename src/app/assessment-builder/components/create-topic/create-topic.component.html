@@ -1,42 +1,42 @@
 <form class="form-primary" [formGroup]="TopicForm" (ngSubmit)="createTopic()">
     <div>
         <label for="name">Titel for Topic </label>
-        <input id="name" type="text" formControlName="name">
+        <input type="text" formControlName="name">
     </div>
 
     <div>
         <label for="order">Order </label>
-        <input id="order" type="number" formControlName="order">
+        <input type="number" formControlName="order">
     </div>
 
     <div>
         <label for="description">Description</label>
-        <input id="description" type="text" formControlName="description">
+        <input type="text" formControlName="description">
     </div>
 
     <div>
         <label for="showFeedback">Show Feedback</label>
-        <input id="showFeedback" type="checkbox" formControlName="show_feedback">
+        <input type="checkbox" formControlName="showFeedback">
     </div>
 
     <div>
         <label for="allowSkip">Allow Skip </label>
-        <input id="allowSkip" type="checkbox" formControlName="allow_skip">
+        <input type="checkbox" formControlName="allowSkip">
     </div>
 
     <div>
         <label for="evaluated">Evaluated</label>
-        <input id="evaluated" type="checkbox" formControlName="evaluated">
+        <input type="checkbox" formControlName="evaluated">
     </div>
 
     <div>
         <label for="praise">Praise </label>
-        <input id="praise" type="number" formControlName="praise">
+        <input type="number" formControlName="praise">
     </div>
 
     <div>
         <label for="maxWrongAnswers">Max wrong answers </label>
-        <input id="maxWrongAnswers" type="number" formControlName="maxWrongAnswers">
+        <input type="number" formControlName="maxWrongAnswers">
     </div>
 
     <button type="submit">Save</button>

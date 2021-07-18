@@ -9,11 +9,13 @@
             <div>
 
             <!-- TODO can we put this separately to have a better overview?-->
-            <div>
-                <div class="title">
+            <div class="title">
+                <div>
+                <span >Topics</span>
                     <span>Details</span>
-                    <button mat-button>Edit</button>
-                    <button mat-button>Delete</button>
+                    <button mat-button mat-stroked-button color="accent">Edit</button>
+                    <button mat-button mat-stroked-button color="accent">Clone</button>
+                    <button mat-button mat-stroked-button color="warn">Delete</button>
                 </div>
                 <table>
                     <tr class="color-header">
@@ -34,7 +36,28 @@
             </div>
 
             <div>
-                <h2>Topics</h2>
+                <div class="title">
+                    <span >Topics</span>
+                    <button mat-button mat-stroked-button color="accent">Apply settings to all topics</button>
+
+                    <table>
+                        <tr class="color-header">
+                            <th>Show Feedback?</th>
+                            <th>Allow Skip?</th>
+                            <th>Evaluated</th>
+                            <th>Praise</th>
+                            <th>Max wrong answers</th>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="number"></td>
+                            <td><input type="number"></td>
+                        </tr>
+                    </table>
+
+                </div>
                 <mat-accordion>
                     <mat-expansion-panel *ngFor="let topic of currentTopics" (opened)="getCurrentQuestions(assessment.id, topic.id)">
                         <mat-expansion-panel-header>
@@ -46,40 +69,32 @@
                             <!-- TODO can we put this separately to have a better overview?-->
                             <div>
                                 <div>
-                                <h2>Details</h2>
+                                <div class="title">
+                                    <span >Details</span>
+                                    <button mat-button mat-stroked-button color="accent">Edit</button>
+                                    <button mat-button mat-stroked-button color="accent">Clone</button>
+                                    <button mat-button mat-stroked-button color="delete">Delete</button>
                                 <table>
-                                    <tr>
-                                        <td><b>Description</b></td>
-                                        <td>MISSING</td>
+                                    <tr class="color-header">
+                                        <th>Description</th>
+                                        <th>Attachments</th>
+                                        <th>Show Feedback?</th>
+                                        <th>Allow Skip?</th>
+                                        <th>Evaluated</th>
+                                        <th>Praise</th>
+                                        <th>Max wrong answers</th>
                                     </tr>
                                     <tr>
-                                        <td><b>Attachments</b></td>
-                                        <td>MISSING</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Show Feedback</b></td>
-                                        <td>MISSING</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Allow Skip</b></td>
-                                        <td>MISSING</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Evaluated</b></td>
-                                        <td>MISSING</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Praise</b></td>
-                                        <td>MISSING</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Max Wrong Answers</b></td>
-                                        <td>MISSING</td>
+                                        <td>missing :(</td>
+                                        <td>missing :(</td>
+                                        <td>missing :(</td>
+                                        <td>missing :(</td>
+                                        <td>missing :(</td>
+                                        <td>missing :(</td>
+                                        <td>missing :(</td>
                                     </tr>
                                 </table>
-
-                                <button mat-button>Edit</button>
-                                <button mat-button>Delete</button>
+                                </div>
                             </div>
                                 <mat-accordion>
                                     <mat-expansion-panel *ngFor="let question of currentQuestions">
@@ -90,7 +105,11 @@
                                         </mat-expansion-panel-header>
                                         <mat-panel-description>
                                             {{question.question_type}}
+                                            MORE QUESTION INFO HERE
                                         </mat-panel-description>
+                                        <button mat-button mat-stroked-button color="accent">Edit</button>
+                                        <button mat-button mat-stroked-button color="accent">Clone</button>
+                                        <button mat-button mat-stroked-button color="warn">Delete</button>
                                     </mat-expansion-panel>
                                     
                                     <mat-expansion-panel>

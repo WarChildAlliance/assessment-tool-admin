@@ -1,0 +1,23 @@
+<div class="select_option">
+    <form class="form-primary" [formGroup]="selectOptionForm" (ngSubmit)="createOption()">
+        <div>
+            <label for="value">Value </label>
+            <input type="text" formControlName="value">
+        </div>
+
+        <div>
+            <label for="valid">Order </label>
+            <input type="checkbox" formControlName="valid">
+        </div>
+
+        <div>
+            <label for="audioAttachment">Audio Attachment</label>
+            <input type="text" formControlName="audioAttachment">
+        </div>
+
+        <div>
+            <label for="imageAttachment">Image Attachment</label>
+            <input type="text" formControlName="imageAttachment">
+        </div>
+    </form>
+</div>

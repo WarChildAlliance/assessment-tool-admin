@@ -33,7 +33,7 @@ export class CreateTopicComponent implements OnInit {
     this.assessmentService.createTopic(this.TopicForm.value, this.assessmentId.toString()).subscribe(res =>
       {
         // TODO put snackbar here
-        console.log(res);
+        console.log('create Topic');
       });
 
   }

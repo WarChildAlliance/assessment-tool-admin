@@ -7,11 +7,11 @@
 }
 
 .title{
-    padding-bottom: 20px;
-
     span{
         font-size: 20px;
+        
     }
+    margin-bottom: 30px;
 }
 
 th{
@@ -32,4 +32,12 @@ table{
 
 .color-header{
     color:rgb(204, 204, 204);
+}
+
+h2{
+    margin: 20px 0px 0px 0px;
+}
+
+.mat-button{
+    margin: 10px 10px 10px 10px;
 }
