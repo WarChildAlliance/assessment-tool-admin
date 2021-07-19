@@ -4,7 +4,7 @@ import { AssessmentBuilderRoutingModule } from './assessment-builder-routing.mod
 import { AssessmentBuilderComponent } from './assessment-builder.component';
 import { MatIconModule } from '@angular/material/icon';
 import { CreateAssessmentComponent } from './components/create-assessment/create-assessment.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CreateTopicComponent } from './components/create-topic/create-topic.component';
 import { CreateQuestionComponent } from './components/create-question/create-question.component';
@@ -15,6 +15,7 @@ import { SortComponent } from './components/create-question/components/sort/sort
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
 import { SelectOptionComponent } from './components/create-question/components/select/components/select-option/select-option.component';
 
 
@@ -36,6 +37,8 @@ import { SelectOptionComponent } from './components/create-question/components/s
     AssessmentBuilderRoutingModule,
     MatIconModule,
     ReactiveFormsModule,
+    FormsModule,
+    MatInputModule,
     MatExpansionModule,
     MatCardModule,
     MatFormFieldModule,

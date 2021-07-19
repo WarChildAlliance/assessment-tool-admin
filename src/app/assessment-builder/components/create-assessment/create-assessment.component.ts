@@ -17,7 +17,7 @@ export class CreateAssessmentComponent implements OnInit {
     subject: new FormControl('', [Validators.required]),
     language: new FormControl('', [Validators.required]),
     country: new FormControl('', [Validators.required]),
-    private: new FormControl(''),
+    private: new FormControl(false),
   });
 
 
@@ -44,16 +44,8 @@ export class CreateAssessmentComponent implements OnInit {
 
   createAssessment(): void {
     const formvalues = this.AssessmentForm.value;
-    const AssessmentToCreate: any = {
-      id: 0,
-      title: formvalues.title,
-      grade: formvalues.grade,
-      subject: formvalues.subject,
-      language: formvalues.language,
-      country: formvalues.country,
-      private: formvalues.private,
-    };
-    this.assessmentService.createAssessment(AssessmentToCreate).subscribe(res =>
+
+    this.assessmentService.createAssessment(formvalues).subscribe(res =>
       {
         // TODO put snackbar here
         console.log(res);
