@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 
@@ -8,6 +8,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./sort.component.scss']
 })
 export class SortComponent implements OnInit {
+
+  @Input() assessmentId: number;
+  @Input() topicId: number;
 
   public sortForm: FormGroup = new FormGroup({
     title: new FormControl('', [Validators.required]),

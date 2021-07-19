@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -7,6 +7,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./select.component.scss']
 })
 export class SelectComponent implements OnInit {
+
+  @Input() assessmentId: number;
+  @Input() topicId: number;
 
   public selectForm: FormGroup = new FormGroup({
     title: new FormControl('', [Validators.required]),

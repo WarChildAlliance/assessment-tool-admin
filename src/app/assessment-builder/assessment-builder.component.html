@@ -120,7 +120,7 @@
                                             </mat-panel-title>
                                         </mat-expansion-panel-header>
                                         <mat-panel-description>
-                                            <app-create-question></app-create-question>
+                                            <app-create-question [assessmentId]="assessment.id" [topicId]="topic.id"></app-create-question>
                                         </mat-panel-description>
                                     </mat-expansion-panel>
                                 </mat-accordion>

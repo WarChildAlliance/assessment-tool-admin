@@ -18,6 +18,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { MatCardModule } from '@angular/material/card';
     MatSortModule,
     MatMenuModule,
     ReactiveFormsModule,
-    MatCardModule
+    MatCardModule,
+    MatInputModule
   ],
   providers: [
     httpInterceptorProviders,

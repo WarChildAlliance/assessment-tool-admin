@@ -3,7 +3,7 @@
 <button mat-button mat-stroked-button color="accent" (click)="setQuestionDisplay('select')">(Multi-) Select</button>
 <button mat-button mat-stroked-button color="accent" (click)="setQuestionDisplay('sort')">Sort</button>
 
-<app-input *ngIf="currentQuestionType === 'input' "></app-input>
-<app-number-line  *ngIf="currentQuestionType === 'numberLine' "></app-number-line>
-<app-select  *ngIf="currentQuestionType === 'select' "></app-select>
-<app-sort  *ngIf="currentQuestionType === 'sort' "></app-sort>
+<app-input *ngIf="currentQuestionType === 'input' " [assessmentId]="assessmentId" [topicId]="topicId"></app-input>
+<app-number-line  *ngIf="currentQuestionType === 'numberLine' " [assessmentId]="assessmentId" [topicId]="topicId"></app-number-line>
+<app-select  *ngIf="currentQuestionType === 'select' " [assessmentId]="assessmentId" [topicId]="topicId"></app-select>
+<app-sort  *ngIf="currentQuestionType === 'sort' " [assessmentId]="assessmentId" [topicId]="topicId"></app-sort>

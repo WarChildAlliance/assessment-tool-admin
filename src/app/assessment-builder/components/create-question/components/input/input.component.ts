@@ -9,6 +9,9 @@ import { AssessmentService } from 'src/app/core/services/assessment.service';
 })
 export class InputComponent implements OnInit {
 
+  @Input() assessmentId: number;
+  @Input() topicId: number;
+
   constructor(private assessmentService: AssessmentService) { }
 
   public inputForm: FormGroup = new FormGroup({
@@ -30,7 +33,7 @@ export class InputComponent implements OnInit {
       valid_answer: this.inputForm.value.answer
     };
 
-    this.assessmentService.createQuestion(newQuestion, '17', '7').subscribe((res) => {
+    this.assessmentService.createQuestion(newQuestion, this.topicId.toString(), this.assessmentId.toString()).subscribe((res) => {
       console.log('res', res);
     });
   }
