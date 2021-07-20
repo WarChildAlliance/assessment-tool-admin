@@ -17,6 +17,7 @@ import { AssessmentsComponent } from './assessments.component';
 import { QuestionDetailComponent } from './question-detail/question-detail.component';
 import { QuestionsListComponent } from './questions-list/questions-list.component';
 
+
 @NgModule({
   declarations: [
     AssessmentsComponent,
@@ -38,7 +39,7 @@ import { QuestionsListComponent } from './questions-list/questions-list.componen
     MatCheckboxModule,
     MatSortModule,
     MatIconModule,
-    SharedModule
+    SharedModule,
   ]
 })
 export class AssessmentsModule { }

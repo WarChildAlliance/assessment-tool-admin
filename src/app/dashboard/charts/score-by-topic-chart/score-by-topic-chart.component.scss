@@ -1,0 +1,27 @@
+mat-card-title {
+    font-size: 2rem;
+    text-align: center;
+    padding: 20px 0px 40px 0px;
+    color: rgb(66, 64, 64);
+}
+
+mat-card-content {
+    display:flex;
+    justify-content: center;
+
+  .left-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 35%;
+
+    li {
+        list-style-type: none;
+    }
+    .main-board__charts-container__chart {
+        display: flex;
+        flex-direction:column;
+    }
+}
+}

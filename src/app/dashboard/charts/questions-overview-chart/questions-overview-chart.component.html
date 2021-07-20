@@ -1,6 +1,11 @@
-<app-select-assessment (topicSelection)="onTopicSelection($event)" [selectTopic]="true" [multiple]="false" [displayNonEvaluated]="false"></app-select-assessment>
+<mat-card>
+<mat-card-title>Aggregates performance</mat-card-title>
 
-<div class="chart-container">
+<mat-card-content>
+<div class="left-column">
+  <app-select-assessment (topicSelection)="onTopicSelection($event)" [selectTopic]="true" [multiple]="false" [displayNonEvaluated]="false"></app-select-assessment>
+</div>
+
     <div class="barChart">
       <canvas id="barChart"></canvas>
     </div>
@@ -20,4 +25,7 @@
   <ng-container *ngIf="questionDetails && questionDetails.question_type === 'NUMBER_LINE'">
     <app-question-numberline [question]="questionDetails" [evaluated]="true"></app-question-numberline>
   </ng-container>
-</div>
+
+
+</mat-card-content>
+</mat-card>

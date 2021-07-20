@@ -35,7 +35,7 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
     MatFormFieldModule,
     MatSelectModule,
     MatSortModule,
-    MatMenuModule
+    MatMenuModule,
   ],
   providers: [
     httpInterceptorProviders,
