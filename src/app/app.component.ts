@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserRoles } from './core/models/user.model';
 import { AuthService } from './core/services/auth.service';
 import { UserService } from './core/services/user.service';
 
@@ -16,6 +17,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
 
     this.userService.getSelf().subscribe(res => {
+      if (res.role !== UserRoles.Supervisor) { this.authService.logout() }
       this.selfName = res.first_name + ' ' + res.last_name;
     });
   }

@@ -14,7 +14,7 @@ export interface User {
   created_by?: number;
 }
 
-enum UserRoles {
+export enum UserRoles {
   Supervisor = 'SUPERVISOR',
   Student = 'STUDENT'
 }
