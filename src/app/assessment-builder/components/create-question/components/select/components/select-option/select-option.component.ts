@@ -8,6 +8,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class SelectOptionComponent implements OnInit {
 
+
+
   public selectOptionForm: FormGroup = new FormGroup({
     value: new FormControl('', [Validators.required]),
     valid: new FormControl('', [Validators.required]),

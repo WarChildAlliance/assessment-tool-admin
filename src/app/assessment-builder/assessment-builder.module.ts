@@ -17,6 +17,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { SelectOptionComponent } from './components/create-question/components/select/components/select-option/select-option.component';
+import { SortOptionComponent } from './components/create-question/components/sort/components/sort-option/sort-option.component';
 
 
 
@@ -30,7 +31,8 @@ import { SelectOptionComponent } from './components/create-question/components/s
     SelectComponent,
     NumberLineComponent,
     SortComponent,
-    SelectOptionComponent
+    SelectOptionComponent,
+    SortOptionComponent
   ],
   imports: [
     CommonModule,

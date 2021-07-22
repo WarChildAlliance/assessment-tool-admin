@@ -17,6 +17,9 @@
 
     <div>
         <h3>Options:</h3>
+        <div *ngFor="let control of options.controls; index as i">
+            <!-- <input [formControl]="options.controls[i]" /> -->
+          </div>
         <app-select-option></app-select-option>
         <app-select-option></app-select-option>
         <button> Add Option</button>
