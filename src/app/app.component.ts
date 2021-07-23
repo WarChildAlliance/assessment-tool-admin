@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
 
     this.userService.getSelf().subscribe(res => {
-      if (res.role !== UserRoles.Supervisor) { this.authService.logout() }
+      if (res.role !== UserRoles.Supervisor) { this.authService.logout(); }
       this.selfName = res.first_name + ' ' + res.last_name;
     });
   }
