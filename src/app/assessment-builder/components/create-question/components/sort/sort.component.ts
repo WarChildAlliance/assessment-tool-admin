@@ -11,6 +11,7 @@ export class SortComponent implements OnInit {
 
   @Input() assessmentId: number;
   @Input() topicId: number;
+  @Input() question = null;
 
   public sortForm: FormGroup = new FormGroup({
     title: new FormControl('', [Validators.required]),

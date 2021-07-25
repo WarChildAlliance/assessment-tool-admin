@@ -2,10 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { AnswerDetails } from '../models/answer-details.model';
 import { BatchTopicAccesses } from '../models/batch-topic-accesses.model';
 import { Country } from '../models/country.model';
 import { Language } from '../models/language.model';
 import { StudentTableData } from '../models/student-table-data.model';
+import { TopicAccessStudents } from '../models/topic-access-students.model';
+import { TopicAnswer } from '../models/topic-answer.model';
 import { User } from '../models/user.model';
 import { UtilitiesService } from './utilities.service';
 
@@ -56,5 +59,23 @@ export class UserService {
 
   getCountries(): Observable<Country[]> {
     return this.http.get<Country[]>(`${environment.API_URL}/users/countries`);
+  }
+
+  getStudentTopicsChart(assessmentId: string): Observable<{full_name: string, topics: {}[]}[]> {
+    return this.http.get<{full_name: string, topics: {}[]}[]>(
+      `${environment.API_URL}/visualization/charts/score_by_topic/${assessmentId}/`
+      );
+  }
+
+  getStudentsListForATopic(topicId: string): Observable<TopicAccessStudents[]> {
+    return this.http.get<TopicAccessStudents[]>(`${environment.API_URL}/visualization/charts/topic/${topicId}/students/`);
+  }
+
+  getStudentTopicAnswers(topicId: string, assessmentTopicAnswer: string): Observable<TopicAnswer[]> {
+    return this.http.get<TopicAnswer[]>(`${environment.API_URL}/visualization/charts/topic/${topicId}/student/${assessmentTopicAnswer}/answers/`);
+  }
+
+  getAnswerDetails(topicId: string, assessmentTopicAnswer: string, answerId: string): Observable<AnswerDetails> {
+    return this.http.get<AnswerDetails>(`${environment.API_URL}/visualization/charts/topic/${topicId}/student/${assessmentTopicAnswer}/answers/${answerId}`);
   }
 }

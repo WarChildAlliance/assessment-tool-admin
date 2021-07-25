@@ -11,13 +11,13 @@
             <!-- TODO can we put this separately to have a better overview?-->
             <div class="title">
                 <div>
-                <span >Topics</span>
                     <span>Details</span>
-                    <button mat-button mat-stroked-button color="accent">Edit</button>
+                    <button mat-button mat-stroked-button color="accent" (click)="edit('assessment')">Edit</button>
                     <button mat-button mat-stroked-button color="accent">Clone</button>
-                    <button mat-button mat-stroked-button color="warn">Delete</button>
+                    <button mat-button mat-stroked-button color="warn" (click)="deleteAssessment(assessment.id)">Delete</button>
                 </div>
-                <table>
+                <app-create-assessment *ngIf="editAssessment" [assessment]="assessment"></app-create-assessment>
+                <table *ngIf="!editAssessment">
                     <tr class="color-header">
                         <th >Grade</th>
                         <th>Subject</th>
@@ -39,7 +39,6 @@
                 <div class="title">
                     <span >Topics</span>
                     <button mat-button mat-stroked-button color="accent">Apply settings to all topics</button>
-
                     <table>
                         <tr class="color-header">
                             <th>Show Feedback?</th>
@@ -71,10 +70,11 @@
                                 <div>
                                 <div class="title">
                                     <span >Details</span>
-                                    <button mat-button mat-stroked-button color="accent">Edit</button>
+                                    <button mat-button mat-stroked-button color="accent" (click)="edit('topic')">Edit</button>
                                     <button mat-button mat-stroked-button color="accent">Clone</button>
-                                    <button mat-button mat-stroked-button color="delete">Delete</button>
-                                <table>
+                                    <button mat-button mat-stroked-button color="delete" (click)="deleteTopic(assessment.id, topic.id)">Delete</button>
+                                    <app-create-topic *ngIf="editTopic" [assessmentId]="assessment.id" [topic]="currentTopic"></app-create-topic>
+                                <table *ngIf="currentTopic && !editTopic">
                                     <tr class="color-header">
                                         <th>Description</th>
                                         <th>Attachments</th>
@@ -85,31 +85,38 @@
                                         <th>Max wrong answers</th>
                                     </tr>
                                     <tr>
-                                        <td>missing :(</td>
-                                        <td>missing :(</td>
-                                        <td>missing :(</td>
-                                        <td>missing :(</td>
-                                        <td>missing :(</td>
-                                        <td>missing :(</td>
-                                        <td>missing :(</td>
+                                        <td>{{currentTopic.description}}</td>
+                                        <td>{{currentTopic.attachments}}</td>
+                                        <td>{{currentTopic.show_feedback}}</td>
+                                        <td>{{currentTopic.allow_skip}}</td>
+                                        <td>{{currentTopic.evaluated}}</td>
+                                        <td>{{currentTopic.praise}}</td>
+                                        <td>{{currentTopic.max_wrong_answers}}</td>
                                     </tr>
                                 </table>
                                 </div>
                             </div>
                                 <mat-accordion>
-                                    <mat-expansion-panel *ngFor="let question of currentQuestions">
+                                    <mat-expansion-panel *ngFor="let quest of currentQuestions" (opened)="getQuestionDetails(assessment.id, topic.id, quest.id)">
                                         <mat-expansion-panel-header>
                                             <mat-panel-title>
-                                                {{ question.title }}
+                                                {{ quest.title }}
                                             </mat-panel-title>
                                         </mat-expansion-panel-header>
                                         <mat-panel-description>
-                                            {{question.question_type}}
-                                            MORE QUESTION INFO HERE
+                                            <app-question-select *ngIf="quest.question_type === 'Select' && currentQuestion && !editSelect" [question]="currentQuestion" [evaluated]="false" [evaluated]="false"></app-question-select>
+                                            <app-question-input *ngIf="quest.question_type === 'Input' && currentQuestion && !editInput"[question]="currentQuestion" [evaluated]="false" [evaluated]="false"></app-question-input>
+                                            <app-question-sort *ngIf="quest.question_type === 'Sort' && currentQuestion && !editSort" [question]="currentQuestion" [evaluated]="false" [evaluated]="false"></app-question-sort>
+                                            <app-question-numberline *ngIf="quest.question_type === 'Number line' && currentQuestion && !editNumberLine" [question]="currentQuestion" [answer]="false" [evaluated]="false"></app-question-numberline>
+
+                                            <app-select *ngIf="quest.question_type === 'Select' && currentQuestion && editSelect"  [assessmentId]="assessment.id" [topicId]="topic.id" [question]="currentQuestion" ></app-select>
+                                            <app-input *ngIf="quest.question_type === 'Input' && currentQuestion && editInput" [assessmentId]="assessment.id" [topicId]="topic.id" [question]="currentQuestion" ></app-input>
+                                            <app-sort *ngIf="quest.question_type === 'Sort' && currentQuestion && editSort" [assessmentId]="assessment.id" [topicId]="topic.id" [question]="currentQuestion" ></app-sort>
+                                            <app-number-line *ngIf="quest.question_type === 'Number line' && currentQuestion && editNumberLine" [assessmentId]="assessment.id" [topicId]="topic.id" [question]="currentQuestion"></app-number-line>
                                         </mat-panel-description>
-                                        <button mat-button mat-stroked-button color="accent">Edit</button>
+                                        <button mat-button mat-stroked-button color="accent" (click)="edit(quest.question_type )">Edit</button>
                                         <button mat-button mat-stroked-button color="accent">Clone</button>
-                                        <button mat-button mat-stroked-button color="warn">Delete</button>
+                                        <button mat-button mat-stroked-button color="warn" (click)="deleteQuestion(assessment.id, topic.id, quest.id)">Delete</button>
                                     </mat-expansion-panel>
                                     
                                     <mat-expansion-panel>

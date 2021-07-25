@@ -19,6 +19,7 @@ export class TableComponent implements OnInit, OnChanges {
   @Input() filtersData: TableFilter[];
   @Input() isSelectable: boolean;
   @Input() searchableColumns: string[];
+  @Input() hideSearchBar: boolean;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

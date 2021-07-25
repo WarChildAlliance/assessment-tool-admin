@@ -18,7 +18,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { SelectOptionComponent } from './components/create-question/components/select/components/select-option/select-option.component';
 import { SortOptionComponent } from './components/create-question/components/sort/components/sort-option/sort-option.component';
-
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -44,7 +44,8 @@ import { SortOptionComponent } from './components/create-question/components/sor
     MatExpansionModule,
     MatCardModule,
     MatFormFieldModule,
-    MatButtonModule
+    MatButtonModule,
+    SharedModule
   ]
 })
 export class AssessmentBuilderModule { }

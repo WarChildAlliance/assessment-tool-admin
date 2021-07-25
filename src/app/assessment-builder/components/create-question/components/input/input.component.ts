@@ -11,6 +11,7 @@ export class InputComponent implements OnInit {
 
   @Input() assessmentId: number;
   @Input() topicId: number;
+  @Input() question = null;
 
   constructor(private assessmentService: AssessmentService) { }
 
@@ -23,6 +24,10 @@ export class InputComponent implements OnInit {
   });
 
   ngOnInit(): void {
+    if (this.question) {
+      const q = this.question;
+      this.inputForm.setValue({title: q.title, order: 1, answer: q.valid_answer, imageAttachment: null, audioAttachment: null});
+    }
   }
 
   createInput(): void{
@@ -33,8 +38,16 @@ export class InputComponent implements OnInit {
       valid_answer: this.inputForm.value.answer
     };
 
-    this.assessmentService.createQuestion(newQuestion, this.topicId.toString(), this.assessmentId.toString()).subscribe((res) => {
-      console.log('res', res);
-    });
+    if (this.question) {
+      this.assessmentService.editQuestion(this.assessmentId.toString(), this.topicId.toString(),
+      this.question.id,  newQuestion).subscribe(res => {
+          console.log('todo make snackbar', res);
+        });
+    } else {
+      this.assessmentService.createQuestion(newQuestion, this.topicId.toString(),
+      this.assessmentId.toString()).subscribe((res) => {
+        console.log('res', res);
+      });
+    }
   }
 }

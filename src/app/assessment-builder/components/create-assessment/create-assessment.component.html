@@ -11,7 +11,9 @@
 
     <div>
         <label for="subject">Subject</label>
-        <input id="subject" type="text" formControlName="subject">
+        <select id="subject" formControlName="subject" >
+            <option *ngFor="let subject of subjects" [ngValue]="subject">{{subject}}</option>
+        </select>
     </div>
 
     <div>

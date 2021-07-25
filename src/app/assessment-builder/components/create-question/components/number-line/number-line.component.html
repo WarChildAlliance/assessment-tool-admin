@@ -1,40 +1,40 @@
 <form [formGroup]="numberLineForm" (ngSubmit)="createNumberLine()">
-    <mat-form-field appearance="fill"  class="form-group">
+    <mat-form-field appearance="outline" class="form-group">
         <mat-label for="title" >Title</mat-label>
         <input matInput formControlName="title">
     </mat-form-field>
 
-    <mat-form-field appearance="fill"  class="form-group">
+    <mat-form-field appearance="outline" class="form-group">
         <mat-label for="order" >Order</mat-label>
-        <input matInput formControlName="order">
+        <input matInput formControlName="order" >
     </mat-form-field>
 
-    <mat-form-field appearance="fill"  class="form-group">
+    <mat-form-field appearance="outline" class="form-group">
         <mat-label for="startNumber">Start Number</mat-label>
         <input matInput formControlName="startNumber">
     </mat-form-field>
 
-    <mat-form-field appearance="fill"  class="form-group">
+    <mat-form-field appearance="outline" class="form-group">
         <mat-label for="endNumber">End Number</mat-label>
         <input matInput formControlName="endNumber">
     </mat-form-field>
 
-    <mat-form-field appearance="fill"  class="form-group">
+    <mat-form-field appearance="outline" class="form-group">
         <mat-label for="stepSize">Stepsize</mat-label>
         <input matInput formControlName="stepSize" class="form-control">
     </mat-form-field>
 
-    <mat-form-field appearance="fill"  class="form-group">
+    <mat-form-field appearance="outline" class="form-group">
         <mat-label for="solution">Solution</mat-label>
         <input matInput formControlName="solution"  class="form-control">
     </mat-form-field>
 
-    <mat-form-field appearance="fill"  class="form-group">
+    <mat-form-field appearance="outline"  class="form-group">
         <mat-label for="showTicks">Show Ticks</mat-label>
         <input matInput formControlName="showTicks" class="form-control">
     </mat-form-field>
 
-    <mat-form-field appearance="fill" class="form-group">
+    <mat-form-field appearance="outline" class="form-group">
         <mat-label for="showValue">Show Value</mat-label>
         <input matInput formControlName="showValue" class="form-control">
     </mat-form-field>

@@ -16,7 +16,9 @@
 
     <div>
         <label for="showFeedback">Show Feedback</label>
-        <input type="checkbox" formControlName="showFeedback">
+        <select formControlName="showFeedback" >
+            <option *ngFor="let feedbackType of feedback" [ngValue]="feedbackType.id">{{feedbackType.name}}</option>
+        </select>
     </div>
 
     <div>

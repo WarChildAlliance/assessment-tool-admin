@@ -11,6 +11,7 @@ export class NumberLineComponent implements OnInit {
 
   @Input() assessmentId: number;
   @Input() topicId: number;
+  @Input() question = null;
 
   public numberLineForm: FormGroup = new FormGroup({
     title: new FormControl('', [Validators.required]),
@@ -26,6 +27,11 @@ export class NumberLineComponent implements OnInit {
   constructor(private assessmentService: AssessmentService) { }
 
   ngOnInit(): void {
+    if (this.question){
+      const q = this.question;
+      this.numberLineForm.setValue({title: q.title, order: 1, startNumber: q.start, endNumber: q.end,
+        stepSize: q.step, solution: q.expected_value, showTicks: q.show_ticks, showValue: q.show_value});
+    }
   }
 
   createNumberLine(): void{
@@ -42,9 +48,18 @@ export class NumberLineComponent implements OnInit {
       show_value: values.showValue,
     };
 
-    this.assessmentService.createQuestion(newQuestion, this.topicId.toString(), this.assessmentId.toString()).subscribe((res) => {
-      console.log('res', res);
-    });
+    if (this.question) {
+      this.assessmentService.editQuestion(this.assessmentId.toString(), this.topicId.toString(),
+      this.question.id,  newQuestion).subscribe(res => {
+          console.log('todo make snackbar', res);
+        });
+    } else {
+      this.assessmentService.createQuestion(newQuestion, this.topicId.toString(),
+      this.assessmentId.toString()).subscribe((res) => {
+        console.log('res', res);
+      });
+    }
+
   }
 
 }
