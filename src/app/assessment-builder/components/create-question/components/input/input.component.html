@@ -1,28 +1,30 @@
 <form class="form-primary" [formGroup]="inputForm" (ngSubmit)="createInput()">
-    <div>
-        <label for="title">Titel for Question </label>
-        <input type="text" formControlName="title">
-    </div>
+    <mat-form-field appearance="outline" class="form-group"  color="accent">
+        <mat-label for="title" >Title</mat-label>
+        <input matInput formControlName="title">
+    </mat-form-field>
 
-    <div>
-        <label for="order">Order </label>
-        <input type="number" formControlName="order">
-    </div>
+    <mat-form-field appearance="outline" class="form-group" color="accent">
+        <mat-label for="order" >Order</mat-label>
+        <input matInput formControlName="order" >
+    </mat-form-field>
 
-    <div>
-        <label for="imageAttachment">Visual Attachment</label>
-        <input type="text" formControlName="imageAttachment">
-    </div>
+    <mat-form-field appearance="outline" class="form-group" color="accent">
+        <mat-label for="attachment-img">Image Attachment</mat-label>
+        <input matInput formControlName="startNumber">
+    </mat-form-field>
 
-    <div>
-        <label for="audioAttachment">Audio Attachment</label>
-        <input type="text" formControlName="audioAttachment">
-    </div>
+    <mat-form-field appearance="outline" class="form-group" color="accent">
+        <mat-label for="attachment-audio">Audio Attachment</mat-label>
+        <input matInput formControlName="endNumber">
+    </mat-form-field>
 
-    <div>
-        <label for="answer">Answer </label>
-        <input type="text" formControlName="answer">
-    </div>
+    <mat-form-field appearance="outline" class="form-group" color="accent">
+        <mat-label for="answer">Answer</mat-label>
+        <input matInput formControlName="stepSize" class="form-control">
+    </mat-form-field>
 
-    <button type="submit">Save</button>
+    <button mat-flat-button color="primary" type="submit" [disabled]="inputForm.invalid">
+        Save
+    </button>
 </form>

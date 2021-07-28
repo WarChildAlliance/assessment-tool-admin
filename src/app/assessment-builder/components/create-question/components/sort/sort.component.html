@@ -1,37 +1,72 @@
 <form class="form-primary" [formGroup]="sortForm" (ngSubmit)="createSort()">
-    <div>
-        <label for="title">Titel for Question </label>
-        <input type="text" formControlName="title">
-    </div>
 
-    <div>
-        <label for="order">Order </label>
-        <input type="number" formControlName="order">
-    </div>
+    <mat-form-field appearance="outline" class="form-group" color="accent">
+        <mat-label for="title" >Title</mat-label>
+        <input matInput formControlName="title">
+    </mat-form-field>
 
-    <div>
-        <label for="categoryA">Category A</label>
-        <input type="text" formControlName="categoryA">
-    </div>
+    <mat-form-field appearance="outline" class="form-group" color="accent">
+        <mat-label for="order" >Order</mat-label>
+        <input matInput formControlName="order" >
+    </mat-form-field>
 
-    <div>
-        <label for="categoryA">Category B</label>
-        <input type="text" formControlName="categoryB">
-    </div>
+    <mat-form-field appearance="outline" class="form-group" color="accent">
+        <mat-label for="categoryA">Category A</mat-label>
+        <input matInput formControlName="startNumber">
+    </mat-form-field>
 
+    <mat-form-field appearance="outline" class="form-group" color="accent">
+        <mat-label for="categoryB">Category B</mat-label>
+        <input matInput formControlName="endNumber">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form-group" color="accent">
+        <mat-label for="answer">Answer</mat-label>
+        <input matInput formControlName="stepSize" class="form-control">
+    </mat-form-field>
 
     <div>
         <h3>Category {{ sortForm.value.categoryA}}:</h3>
-        <input type="text">
-        <input type="text">
-        <input type="text">
-        <button>Add Option</button>
+        <mat-form-field appearance="outline">
+            <mat-label>Option 1</mat-label>
+        <input matInput>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Option 2</mat-label>
+        <input matInput>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Option 3</mat-label>
+        <input matInput>
+        </mat-form-field>
+       
+        <button mat-flat-button color="primary" type="submit">
+            Add Options
+        </button>
 
         <h3>Category {{ sortForm.value.categoryB}}:</h3>
-        <input type="text">
-        <input type="text">
-        <input type="text">
-        <button>Add Option</button>
+        <mat-form-field appearance="outline">
+            <mat-label>Option 1</mat-label>
+        <input matInput>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Option 2</mat-label>
+        <input matInput>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Option 3</mat-label>
+        <input matInput>
+        </mat-form-field>
+        <button mat-flat-button color="primary" type="submit">
+            Add Options
+        </button>
     </div>
-    <button type="submit">Save</button>
-</form>
+   
+
+    <button mat-flat-button color="primary" type="submit" [disabled]="sortForm.invalid">
+        Save
+    </button>
+    </form>
+
+   
+

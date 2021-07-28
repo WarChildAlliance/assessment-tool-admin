@@ -14,11 +14,13 @@ import { NumberLineComponent } from './components/create-question/components/num
 import { SortComponent } from './components/create-question/components/sort/sort.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { SelectOptionComponent } from './components/create-question/components/select/components/select-option/select-option.component';
 import { SortOptionComponent } from './components/create-question/components/sort/components/sort-option/sort-option.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+
 
 
 @NgModule({
@@ -45,7 +47,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     MatCardModule,
     MatFormFieldModule,
     MatButtonModule,
-    SharedModule
+    SharedModule,
+    MatCheckboxModule,
   ]
 })
 export class AssessmentBuilderModule { }

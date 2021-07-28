@@ -1,18 +1,18 @@
 <form class="form-primary" [formGroup]="selectForm" (ngSubmit)="createSelect()">
-    <div>
-        <label for="title">Titel for Question </label>
-        <input type="text" formControlName="title">
-    </div>
+    <mat-form-field appearance="outline" class="form-group"  color="accent">
+        <mat-label for="title" >Title</mat-label>
+        <input matInput formControlName="title">
+    </mat-form-field>
 
-    <div>
-        <label for="order">Order </label>
-        <input type="number" formControlName="order">
-    </div>
+    <mat-form-field appearance="outline" class="form-group" color="accent">
+        <mat-label for="order" >Order</mat-label>
+        <input matInput formControlName="order">
+    </mat-form-field>
 
-    <div>
-        <label for="multiple">Is multiple choice?</label>
-        <input type="checkbox" formControlName="multiple">
-    </div>
+    <mat-checkbox>
+        <mat-label for="multiple">Is multiple choice?</mat-label>
+        <input matInput formControlName="multiple">
+    </mat-checkbox>
 
 
     <div>
@@ -25,5 +25,8 @@
         </div>
         <button type="button" (click)="createOption()"> Add Option</button>
     </div>
-    <button type="submit">Save</button>
+
+    <button mat-flat-button color="primary" type="submit" [disabled]="selectForm.invalid">
+        Save
+    </button>
 </form>
