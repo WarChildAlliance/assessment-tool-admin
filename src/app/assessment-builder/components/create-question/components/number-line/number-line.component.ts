@@ -13,6 +13,14 @@ export class NumberLineComponent implements OnInit {
   @Input() topicId: number;
   @Input() question = null;
 
+  public attachment = null;
+  public icon = null;
+
+
+  public AttachmentForm: FormGroup = new FormGroup({
+    attachmentType: new FormControl(''),
+  });
+
   public numberLineForm: FormGroup = new FormGroup({
     title: new FormControl('', [Validators.required]),
     order: new FormControl('', [Validators.required]),
@@ -47,19 +55,37 @@ export class NumberLineComponent implements OnInit {
       show_ticks: values.showTicks,
       show_value: values.showValue,
     };
+    console.log(this.AttachmentForm);
 
-    if (this.question) {
+    /* if (this.question) {
       this.assessmentService.editQuestion(this.assessmentId.toString(), this.topicId.toString(),
       this.question.id,  newQuestion).subscribe(res => {
-          console.log('todo make snackbar', res);
+        if(this.attachment) {
+          console.log(res);
+          this.assessmentService.updateAttachments(this.assessmentId.toString(), this.attachment,
+          this.AttachmentForm.value.attachmentType, res.attachments[0].id).subscribe( attachment => {
+          });
+        }
         });
     } else {
       this.assessmentService.createQuestion(newQuestion, this.topicId.toString(),
       this.assessmentId.toString()).subscribe((res) => {
-        console.log('res', res);
+        if(this.attachment) {
+          this.assessmentService.addAttachments(this.assessmentId.toString(), this.attachment,
+          this.AttachmentForm.value.attachmentType, {name: "question", value: res.id}).subscribe( attachment => {
+            // TODO need snackbar here?
+          });
+        }
       });
-    }
+    } */
+  }
 
+  handleFileInput(event, type): void {
+    if (type === 'attachment'){
+      this.attachment = event.target.files[0];
+    } else {
+      this.icon = event.target.files[0];
+    }
   }
 
 }

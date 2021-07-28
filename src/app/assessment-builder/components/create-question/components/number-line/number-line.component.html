@@ -1,3 +1,18 @@
+<form [formGroup]="AttachmentForm">
+    <div>
+    <label for="attachmentType">Attachment Type</label>
+    <select formControlName="attachmentType" >
+        <option *ngFor="let a of ['Image', 'Audio']" [ngValue]="a">{{a}}</option>
+    </select>
+    </div>
+    <div>
+        <label>attachment</label>
+        <input type="file"
+            (change)="handleFileInput($event, 'attachment')">
+    </div>
+</form>
+
+
 <form [formGroup]="numberLineForm" (ngSubmit)="createNumberLine()">
     <mat-form-field appearance="outline" class="form-group">
         <mat-label for="title" >Title</mat-label>

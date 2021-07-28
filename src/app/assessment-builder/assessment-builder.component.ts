@@ -32,7 +32,6 @@ export class AssessmentBuilderComponent implements OnInit {
     this.assessmentService.getAssessmentsList().subscribe((assessmentsList) => {
       this.currentAssessments = assessmentsList;
     });
-
   }
 
   getCurrentTopics(assessmentId: number): void {

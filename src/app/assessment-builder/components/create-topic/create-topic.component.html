@@ -5,6 +5,32 @@
     </div>
 
     <div>
+        <label for="attachmentType">Attachment Type</label>
+        <select formControlName="attachmentType" >
+            <option *ngFor="let attachmentType of ['Image', 'Audio']" [ngValue]="attachmentType">{{attachmentType}}</option>
+        </select>
+    </div>
+    <div>
+        <label>attachment</label>
+        <input type="file"
+        formControlName="attachment"
+               (change)="handleFileInput($event, 'attachment')">
+    </div>
+
+    <div>
+        <label for="iconType">Icon Type</label>
+        <select formControlName="attachmentType" >
+            <option *ngFor="let iconType of ['Image', 'Audio']" [ngValue]="iconType">{{iconType}}</option>
+        </select>
+    </div>
+    <div>
+        <label>icon</label>
+        <input type="file"
+        formControlName="icon"
+               (change)="handleFileInput($event, 'icon')">
+    </div>
+
+    <div>
         <label for="order">Order </label>
         <input type="number" formControlName="order">
     </div>

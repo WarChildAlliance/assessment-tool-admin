@@ -69,11 +69,11 @@ export class AssessmentService {
     return this.http.post<any>(`${environment.API_URL}/assessments/${assessmentId}/topics/${topicId}/questions/`, question);
   }
 
-  editTopic(assessmentId: string, topicId: string, topic: any): Observable<Assessment> {
+  editTopic(assessmentId: string, topicId: string, topic: any): Observable<any> {
     return this.http.put<any>(`${environment.API_URL}/assessments/${assessmentId}/topics/${topicId}/`, topic);
   }
 
-  editQuestion(assessmentId: string,  topicId: string,  questionId: string, question: any): Observable<Assessment> {
+  editQuestion(assessmentId: string,  topicId: string,  questionId: string, question: any): Observable<any> {
     return this.http.put<any>(`${environment.API_URL}/assessments/${assessmentId}/topics/${topicId}/questions/${questionId}/`, question);
   }
 
@@ -105,6 +105,25 @@ export class AssessmentService {
 
   updateAssessmentsList(assessments: AssessmentDashboard[]): void {
     this.assessmentsListForDashboard.next(assessments);
+  }
+
+  getAttachmentsForAssessment(assessmentId: string): Observable<any[]> {
+    return this.http.get<any[]>(`${environment.API_URL}/assessments/${assessmentId}/attachments/`);
+  }
+
+  addAttachments(assessmentId: string, fileIn, attachmentType, destination): Observable<any[]> {
+    const formData: FormData = new FormData();
+    formData.append('file', fileIn);
+    formData.append('attachment_type', attachmentType);
+    formData.append(destination.name, destination.value);
+    return this.http.post<any[]>(`${environment.API_URL}/assessments/${assessmentId}/attachments/`, formData);
+  }
+
+  updateAttachments(assessmentId: string, fileIn, attachmentType, attachmentId: number): Observable<any[]> {
+    const formData: FormData = new FormData();
+    formData.append('file', fileIn);
+    formData.append('attachment_type', attachmentType);
+    return this.http.put<any[]>(`${environment.API_URL}/assessments/${assessmentId}/attachments/${attachmentId}/`, formData);
   }
 
 }

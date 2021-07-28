@@ -12,9 +12,20 @@ export class CreateTopicComponent implements OnInit {
   @Input() assessmentId: number;
   @Input() topic = null;
 
+  public attachment = null;
+  public icon = null;
+
+
+  public AttachmentForm: FormGroup = new FormGroup({
+    iconType : new FormControl(''),
+    attachmentType : new FormControl(''),
+  });
+
   public TopicForm: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required]),
     order: new FormControl('', [Validators.required]),
+    icon: new FormControl('', [Validators.required]),
+    attachment: new FormControl('', [Validators.required]),
     description: new FormControl('', [Validators.required]),
     showFeedback: new FormControl(0, [Validators.required]),
     allowSkip: new FormControl(false, [Validators.required]),
@@ -32,7 +43,8 @@ export class CreateTopicComponent implements OnInit {
   ngOnInit(): void {
     if (this.topic) {
       const t = this.topic;
-      this.TopicForm.setValue({name: t.name, order: 1, description: t.description, showFeedback: t.show_feedback,
+      console.log(t);
+      this.TopicForm.setValue({name: t.name, icon: '', attachment: '', order: 1, description: t.description, showFeedback: t.show_feedback,
         allowSkip: t.allow_skip, evaluated: t.evaluated, praise: t.praise, maxWrongAnswers: t.max_wrong_answers});
     }
   }
@@ -40,9 +52,30 @@ export class CreateTopicComponent implements OnInit {
   createTopic(): void {
     const formvalues = this.TopicForm.value;
     if (this.topic) {
-      this.assessmentService.editTopic(this.assessmentId.toString(), this.topic.id, formvalues).subscribe(res => console.log('todo make snackbar', res) );
+      this.assessmentService.editTopic(this.assessmentId.toString(), this.topic.id, formvalues).subscribe(res => {
+        if (this.attachment) {
+          this.assessmentService.updateAttachments(this.assessmentId.toString(), this.attachment,
+          this.AttachmentForm.value.attachmentType, res.attachments[0].id).subscribe( attachment => {
+          });
+        }
+      });
     } else {
-      this.assessmentService.createTopic(this.TopicForm.value, this.assessmentId.toString()).subscribe(res => console.log('todo make snackbar', res) );
+      this.assessmentService.createTopic(this.TopicForm.value, this.assessmentId.toString()).subscribe(res => {
+        if (this.attachment) {
+          this.assessmentService.addAttachments(this.assessmentId.toString(), this.attachment,
+          this.AttachmentForm.value.attachmentType, {name: 'topic', value: res.id}).subscribe( attachment => {
+            // TODO need snackbar here?
+          });
+        }
+      });
+    }
+  }
+
+  handleFileInput(event, type): void {
+    if (type === 'attachment'){
+      this.attachment = event.target.files[0];
+    } else {
+      this.icon = event.target.files[0];
     }
   }
 
