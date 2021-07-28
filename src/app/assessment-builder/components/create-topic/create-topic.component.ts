@@ -14,12 +14,9 @@ export class CreateTopicComponent implements OnInit {
 
   public attachment = null;
   public icon = null;
+  public attachmentType = null;
+  public iconType = null;
 
-
-  public AttachmentForm: FormGroup = new FormGroup({
-    iconType : new FormControl(''),
-    attachmentType : new FormControl(''),
-  });
 
   public TopicForm: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required]),
@@ -51,19 +48,41 @@ export class CreateTopicComponent implements OnInit {
 
   createTopic(): void {
     const formvalues = this.TopicForm.value;
+
+    const formData: FormData = new FormData();
+    formData.append('name', formvalues.name);
+    formData.append('order', formvalues.order);
+    formData.append('description', formvalues.description);
+    formData.append('showFeedback', formvalues.showFeedback);
+    formData.append('allowSkip', formvalues.allowSkip);
+    formData.append('evaluated', formvalues.evaluated);
+    formData.append('praise', formvalues.praise);
+    formData.append('maxWrongAnswers', formvalues.maxWrongAnswers);
+
+    if (this.icon) {
+      formData.append('icon', this.icon);
+    }
+
     if (this.topic) {
-      this.assessmentService.editTopic(this.assessmentId.toString(), this.topic.id, formvalues).subscribe(res => {
+      this.assessmentService.editTopic(this.assessmentId.toString(), this.topic.id, formData).subscribe(res => {
         if (this.attachment) {
-          this.assessmentService.updateAttachments(this.assessmentId.toString(), this.attachment,
-          this.AttachmentForm.value.attachmentType, res.attachments[0].id).subscribe( attachment => {
-          });
+          if (res.attachments.length === 0) {
+            this.assessmentService.addAttachments(this.assessmentId.toString(), this.attachment,
+            this.attachmentType, {name: 'topic', value: res.id}).subscribe( attachment => {
+              // TODO need snackbar here?
+            });
+          } else {
+            this.assessmentService.updateAttachments(this.assessmentId.toString(), this.attachment,
+            this.attachmentType, res.attachments[0].id).subscribe( attachment => {
+            });
+          }
         }
       });
     } else {
-      this.assessmentService.createTopic(this.TopicForm.value, this.assessmentId.toString()).subscribe(res => {
+      this.assessmentService.createTopic(this.assessmentId.toString(), formData).subscribe(res => {
         if (this.attachment) {
           this.assessmentService.addAttachments(this.assessmentId.toString(), this.attachment,
-          this.AttachmentForm.value.attachmentType, {name: 'topic', value: res.id}).subscribe( attachment => {
+          this.attachmentType, {name: 'topic', value: res.id}).subscribe( attachment => {
             // TODO need snackbar here?
           });
         }
@@ -76,6 +95,14 @@ export class CreateTopicComponent implements OnInit {
       this.attachment = event.target.files[0];
     } else {
       this.icon = event.target.files[0];
+    }
+  }
+
+  setType(item, type): void {
+    if (item === 'attachment') {
+      this.attachmentType = type;
+    } else {
+      this.iconType = type;
     }
   }
 

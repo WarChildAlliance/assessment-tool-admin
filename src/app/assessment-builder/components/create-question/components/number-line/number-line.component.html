@@ -1,16 +1,14 @@
-<!-- <form [formGroup]="AttachmentForm">
+
     <div>
-    <label for="attachmentType">Attachment Type</label>
-    <select formControlName="attachmentType" >
-        <option *ngFor="let a of ['Image', 'Audio']" [ngValue]="a">{{a}}</option>
-    </select>
+        <button (click)="setType('attachment', 'IMAGE')">Image</button>
+        <button (click)="setType('attachment', 'AUDIO')">Audio</button>
     </div>
     <div>
         <label>attachment</label>
         <input type="file"
             (change)="handleFileInput($event, 'attachment')">
     </div>
-</form> -->
+
 
 
 <form [formGroup]="numberLineForm" (ngSubmit)="createNumberLine()">

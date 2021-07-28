@@ -4,12 +4,8 @@
         <input type="text" formControlName="name">
     </div>
 
-<!--     <div>
-        <label for="attachmentType">Attachment Type</label>
-        <select formControlName="attachmentType" >
-            <option *ngFor="let attachmentType of ['Image', 'Audio']" [ngValue]="attachmentType">{{attachmentType}}</option>
-        </select>
-    </div> -->
+    <button type=button (click)="setType('attachment', 'IMAGE')">Image</button>
+    <button type=button (click)="setType('attachment', 'AUDIO')">Audio</button>
     <div>
         <label>attachment</label>
         <input type="file"
@@ -17,12 +13,8 @@
                (change)="handleFileInput($event, 'attachment')">
     </div>
 
-<!--     <div>
-        <label for="iconType">Icon Type</label>
-        <select formControlName="iconType" >
-            <option *ngFor="let iconType of ['Image', 'Audio']" [ngValue]="iconType">{{iconType}}</option>
-        </select>
-    </div> -->
+    <button type="button" (click)="setType('icon', 'IMAGE')">Image</button>
+    <button type="button"  (click)="setType('icon', 'AUDIO')">Audio</button>
     <div>
         <label>icon</label>
         <input type="file"
