@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SessionsAnswersComponent } from './sessions-answers/sessions-answers.component';
 import { AssessmentsAnswersComponent } from './assessments-answers/assessments-answers.component';
 import { TopicsListAnswersComponent } from './topics-list-answers/topics-list-answers.component';
 import { QuestionsListAnswersComponent } from './questions-list-answers/questions-list-answers.component';
@@ -11,7 +10,6 @@ import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
-    SessionsAnswersComponent,
     AssessmentsAnswersComponent,
     TopicsListAnswersComponent,
     QuestionsListAnswersComponent,
@@ -23,8 +21,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatIconModule
   ],
   exports: [
-    AssessmentsAnswersComponent,
-    SessionsAnswersComponent
+    AssessmentsAnswersComponent
   ]
 })
 export class AnswersModule { }

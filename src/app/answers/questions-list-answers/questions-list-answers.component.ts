@@ -18,7 +18,6 @@ export class QuestionsListAnswersComponent implements OnInit {
   currentStudentId: string;
   assessmentId: string;
   topicId: string;
-  sessionId: string;
 
   public displayedColumns: TableColumn[] = [
     { key: 'question_type', name: 'Question type' },
@@ -36,14 +35,13 @@ export class QuestionsListAnswersComponent implements OnInit {
     forkJoin({
       param1: this.route.params.subscribe(params => { this.currentStudentId = params.student_id; }),
       param2: this.route.params.subscribe(params => { this.assessmentId = params.assessment_id; }),
-      param3: this.route.params.subscribe(params => { this.topicId = params.topic_id; }),
-      param4: this.route.queryParams.subscribe(params => { this.sessionId = params.session_id; })
+      param3: this.route.params.subscribe(params => { this.topicId = params.topic_id; })
 
     }).pipe(
       catchError(error => of(error))
     ).subscribe(() => {
 
-      this.answerService.getQuestionsAnwsers(this.currentStudentId, this.assessmentId, this.topicId, this.sessionId)
+      this.answerService.getQuestionsAnwsers(this.currentStudentId, this.assessmentId, this.topicId)
         .subscribe(questions => {
           // There must be a prettier way of doing this, especially in the model...
           questions.forEach((question) => {
@@ -55,6 +53,6 @@ export class QuestionsListAnswersComponent implements OnInit {
   }
 
   onOpenDetails(questionId: string): void {
-    this.router.navigate([`students/${this.currentStudentId}/assessments/${this.assessmentId}/topics/${this.topicId}/questions/${questionId}`], { queryParams: { session_id: this.sessionId } });
+    this.router.navigate([`students/${this.currentStudentId}/assessments/${this.assessmentId}/topics/${this.topicId}/questions/${questionId}`]);
   }
 }

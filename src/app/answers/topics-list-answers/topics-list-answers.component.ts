@@ -17,7 +17,6 @@ export class TopicsListAnswersComponent implements OnInit {
   topicsAnswersDataSource: MatTableDataSource<TopicTableData> = new MatTableDataSource([]);
   currentStudentId: string;
   assessmentId: string;
-  sessionId: string;
 
   public displayedColumns: TableColumn[] = [
     { key: 'topic_name', name: 'Name' },
@@ -36,14 +35,13 @@ export class TopicsListAnswersComponent implements OnInit {
   ngOnInit(): void {
     forkJoin({
       param1: this.route.params.subscribe(params => { this.currentStudentId = params.student_id; }),
-      param2: this.route.params.subscribe(params => { this.assessmentId = params.assessment_id; }),
-      param4: this.route.queryParams.subscribe(params => { this.sessionId = params.session_id; })
+      param2: this.route.params.subscribe(params => { this.assessmentId = params.assessment_id; })
 
     }).pipe(
       catchError(error => of(error))
     ).subscribe(() => {
 
-      this.answerService.getTopicsAnwsers(this.currentStudentId, this.assessmentId, this.sessionId).subscribe(topics => {
+      this.answerService.getTopicsAnwsers(this.currentStudentId, this.assessmentId).subscribe(topics => {
         this.topicsAnswersDataSource = new MatTableDataSource(topics);
       });
     });
@@ -51,8 +49,7 @@ export class TopicsListAnswersComponent implements OnInit {
 
   onOpenDetails(topicId: string): void {
     this.router.navigate(
-      [`students/${this.currentStudentId}/assessments/${this.assessmentId}/topics/${topicId}/questions`],
-      { queryParams: { session_id: this.sessionId } }
+      [`students/${this.currentStudentId}/assessments/${this.assessmentId}/topics/${topicId}/questions`]
     );
   }
 }
