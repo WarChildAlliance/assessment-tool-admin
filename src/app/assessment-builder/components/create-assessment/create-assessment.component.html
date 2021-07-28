@@ -5,6 +5,13 @@
     </div>
 
     <div>
+        <label>icon</label>
+        <input type="file"
+        formControlName="icon"
+               (change)="handleFileInput($event)">
+    </div>
+
+    <div>
         <label for="grade">Grade </label>
         <input id="grade" type="number" formControlName="grade">
     </div>

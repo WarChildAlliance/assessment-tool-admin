@@ -61,7 +61,7 @@ export class AssessmentService {
     return this.http.put<Assessment>(`${environment.API_URL}/assessments/${assessmentId}/`, assessment);
   }
 
-  createTopic(topic: Topic, id: string): Observable<Topic> {
+  createTopic(id: string, topic: any, ): Observable<Topic> {
     return this.http.post<Topic>(`${environment.API_URL}/assessments/${id}/topics/`, topic);
   }
 

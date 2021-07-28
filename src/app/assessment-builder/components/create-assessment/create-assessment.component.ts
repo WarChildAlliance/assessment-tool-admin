@@ -12,10 +12,12 @@ import { Assessment } from '../../../core/models/assessment.model';
 export class CreateAssessmentComponent implements OnInit {
 
   @Input() assessment = null;
+  public icon = null;
 
   public AssessmentForm: FormGroup = new FormGroup({
     title: new FormControl('', [Validators.required]),
     grade: new FormControl(0, [Validators.required]),
+    icon: new FormControl(null),
     subject: new FormControl('', [Validators.required]),
     language: new FormControl('', [Validators.required]),
     country: new FormControl('', [Validators.required]),
@@ -44,10 +46,29 @@ export class CreateAssessmentComponent implements OnInit {
 
   createAssessment(): void {
     const formvalues = this.AssessmentForm.value;
+    const formData: FormData = new FormData();
+    formData.append('subject', formvalues.subject);
+    formData.append('language', formvalues.language);
+    formData.append('country', formvalues.country);
+    formData.append('private', formvalues.private);
+    formData.append('title', formvalues.title);
+    formData.append('grade', formvalues.grade);
+    if (this.icon) {
+      formData.append('icon', this.icon);
+
+    }
+
+
     if (this.assessment) {
-      this.assessmentService.editAssessment(this.assessment.id, formvalues).subscribe(res => console.log('todo make snackbar', res) );
+      this.assessmentService.editAssessment(this.assessment.id, formData).subscribe(res => console.log('todo make snackbar', res) );
     } else {
-      this.assessmentService.createAssessment(formvalues).subscribe(res => console.log('todo make snackbar', res) );
+      this.assessmentService.createAssessment(formData).subscribe(res => console.log('todo make snackbar', res) );
     }
   }
+
+  handleFileInput(event): void {
+     this.icon = event.target.files[0];
+  }
+
+
 }
