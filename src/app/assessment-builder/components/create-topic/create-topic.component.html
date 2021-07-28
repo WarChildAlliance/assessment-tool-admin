@@ -4,12 +4,12 @@
         <input type="text" formControlName="name">
     </div>
 
-    <div>
+<!--     <div>
         <label for="attachmentType">Attachment Type</label>
         <select formControlName="attachmentType" >
             <option *ngFor="let attachmentType of ['Image', 'Audio']" [ngValue]="attachmentType">{{attachmentType}}</option>
         </select>
-    </div>
+    </div> -->
     <div>
         <label>attachment</label>
         <input type="file"
@@ -17,12 +17,12 @@
                (change)="handleFileInput($event, 'attachment')">
     </div>
 
-    <div>
+<!--     <div>
         <label for="iconType">Icon Type</label>
-        <select formControlName="attachmentType" >
+        <select formControlName="iconType" >
             <option *ngFor="let iconType of ['Image', 'Audio']" [ngValue]="iconType">{{iconType}}</option>
         </select>
-    </div>
+    </div> -->
     <div>
         <label>icon</label>
         <input type="file"
