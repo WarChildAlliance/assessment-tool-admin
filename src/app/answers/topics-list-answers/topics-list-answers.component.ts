@@ -19,16 +19,15 @@ export class TopicsListAnswersComponent implements OnInit {
   assessmentId: string;
 
   public displayedColumns: TableColumn[] = [
-    { key: 'topic_name', name: 'Name' },
-    { key: 'total_questions_count', name: 'Number of questions' },
-    { key: 'answered_questions_count', name: 'Number of answered questions' },
-    { key: 'correct_answers_percentage', name: 'Answered correctly', type: 'percentage' },
-    { key: 'start_date', name: 'Last submission', type: 'date', sorting: 'desc' },
-    { key: 'evaluated', name: 'Evaluated', type: 'boolean' },
-    { key: 'complete', name: 'Completed', type: 'boolean' },
+    { key: 'name', name: 'Name' },
+    { key: 'questions_count', name: 'Number of questions' },
+    { key: 'student_tries_count', name: 'Number of tries' },
+    { key: 'correct_answers_percentage_first_try', name: 'Answered correctly on first try', type: 'percentage' },
+    { key: 'correct_answers_percentage_last_try', name: 'Answered correctly on first try', type: 'percentage' },
+    { key: 'last_submission', name: 'Last submission', type: 'date' },
   ];
 
-  public searchableColumns = ['topic_name', 'complete'];
+  public searchableColumns = ['name'];
 
   constructor(private router: Router, private route: ActivatedRoute, private answerService: AnswerService) { }
 

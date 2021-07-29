@@ -20,14 +20,16 @@ export class QuestionsListAnswersComponent implements OnInit {
   topicId: string;
 
   public displayedColumns: TableColumn[] = [
+    { key: 'title', name: 'Question title' },
     { key: 'question_type', name: 'Question type' },
-    { key: 'question_order', name: 'Order', sorting: 'asc' },
-    { key: 'duration', name: 'Duration' },
-    { key: 'valid', name: 'Valid', type: 'boolean' },
-    { key: 'attachment_icon', name: 'Attachment', type: 'icon' }
+    { key: 'order', name: 'Order', sorting: 'asc' },
+    { key: 'average_duration', name: 'Average time to answer', type: 'duration' },
+    { key: 'correctly_answered_first_try', name: 'Correct on first try', type: 'boolean' },
+    { key: 'correctly_answered_last_try', name: 'Correct on last try', type: 'boolean' },
+    { key: 'question_preview', name: 'Preview' },
   ];
 
-  public searchableColumns = ['question_type', 'valid'];
+  public searchableColumns = ['title', 'question_type'];
 
   constructor(private router: Router, private route: ActivatedRoute, private answerService: AnswerService) { }
 
