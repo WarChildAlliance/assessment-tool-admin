@@ -11,8 +11,16 @@
         </div>
 
         <div>
-            <label for="audioAttachment">Audio Attachment</label>
-            <input type="text" formControlName="audioAttachment">
+            <label>Image Attachment</label>
+            <input type="file"
+            formControlName="imageAttachment"
+                (change)="handleFileInput($event, 'IMAGE')">
+        </div>
+        <div>
+            <label>Audio Attachment</label>
+            <input type="file"
+            formControlName="audioAttachment"
+                (change)="handleFileInput($event, 'AUDIO')">
         </div>
 
         <div>

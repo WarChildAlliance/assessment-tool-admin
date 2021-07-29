@@ -11,6 +11,9 @@ export class SelectOptionComponent implements OnInit {
   @Input() option = null;
   @Output() saveOptionEvent = new EventEmitter<any>();
 
+  imageAttachment = null;
+  audioAttachment = null;
+
   public selectOptionForm: FormGroup = new FormGroup({
     value: new FormControl('', [Validators.required]),
     valid: new FormControl('', [Validators.required]),
@@ -27,7 +30,15 @@ export class SelectOptionComponent implements OnInit {
   }
 
   createOption(): void{
-    this.saveOptionEvent.emit(this.selectOptionForm);
+    this.saveOptionEvent.emit({option: this.selectOptionForm, image: this.imageAttachment, audio: this.audioAttachment});
+  }
+
+  handleFileInput(event, type): void {
+    if (type === 'IMAGE'){
+      this.imageAttachment = event.target.files[0];
+    } else {
+      this.audioAttachment = event.target.files[0];
+    }
   }
 
 }
