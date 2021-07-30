@@ -20,6 +20,8 @@ export class NumberLineComponent implements OnInit {
   public attachmentType = '';
   public iconType = '';
 
+  public fileName: string;
+
 
   public numberLineForm: FormGroup = new FormGroup({
     title: new FormControl('', [Validators.required]),
@@ -97,6 +99,7 @@ export class NumberLineComponent implements OnInit {
     } else {
       this.icon = event.target.files[0];
     }
+    this.fileName = event.target.files[0].name;
   }
 
   setType(item, type): void {

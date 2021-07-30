@@ -1,32 +1,31 @@
 <div class="select_option">
     <form class="form-primary" [formGroup]="selectOptionForm">
-        <div>
-            <label for="value">Value </label>
-            <input type="text" formControlName="value">
-        </div>
+        
+        <mat-form-field appearance="outline" class="form-group" color="accent">
+            <mat-label for="value">Value</mat-label>
+            <input matInput formControlName="value">
+        </mat-form-field>
 
-        <div>
-            <label for="valid">Valid </label>
-            <input type="checkbox" formControlName="valid">
-        </div>
+        <mat-form-field appearance="outline" class="form-group" color="accent">
+            <mat-label for="valid">Valid</mat-label>
+            <input matInput formControlName="valid">
+        </mat-form-field>
 
-        <div>
-            <label>Image Attachment</label>
-            <input type="file"
-            formControlName="imageAttachment"
-                (change)="handleFileInput($event, 'IMAGE')">
-        </div>
-        <div>
-            <label>Audio Attachment</label>
-            <input type="file"
-            formControlName="audioAttachment"
-                (change)="handleFileInput($event, 'AUDIO')">
-        </div>
 
-        <div>
-            <label for="imageAttachment">Image Attachment</label>
-            <input type="text" formControlName="imageAttachment">
-        </div>
+      
+<div>
+        <button type="button" mat-button mat-raised-button color="accent" (click)="fileInput.click()">Image Attachment</button>
+                    <input hidden formControlName="imageAttachment"
+                    (change)="handleFileInput($event, 'IMAGE')" #fileInput type="file">
+                    <p class="uploaded-file-name">{{fileName}}</p>
+</div>
+<div>
+            <button type="button" mat-button mat-raised-button color="accent" (click)="fileInput.click()">Audio Attachment</button>
+            <input hidden formControlName="audioAttachment"
+                 (change)="handleFileInput($event, 'AUDIO')" #fileInput type="file">      
+                    <p class="uploaded-file-name">{{fileName}}</p>
+</div>
+       
     </form>
-    <button type="button" (click)="createOption()">Save Option</button>
+    <button mat-stroked-button color="accent" (click)="createOption()">Save Option</button>
 </div>
