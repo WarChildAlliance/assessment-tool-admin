@@ -43,12 +43,13 @@ export class CreateTopicComponent implements OnInit {
   ngOnInit(): void {
     if (this.topic) {
       const t = this.topic;
-      this.TopicForm.setValue({name: t.name, icon: '', attachment: '', order: t.order, description: t.description, showFeedback: t.show_feedback,
+      this.TopicForm.setValue(
+        {name: t.name, icon: '', attachment: '', order: t.order, description: t.description, showFeedback: t.show_feedback,
         allowSkip: t.allow_skip, evaluated: t.evaluated, praise: t.praise, maxWrongAnswers: t.max_wrong_answers});
     } else {
       this.TopicForm.patchValue({
         order: this.topicAmount + 1
-      })
+      });
     }
   }
 

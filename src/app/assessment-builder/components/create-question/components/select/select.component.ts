@@ -38,7 +38,7 @@ export class SelectComponent implements OnInit {
     } else {
       this.selectForm.patchValue({
         order: this.questionsCount + 1
-      })
+      });
     }
   }
 

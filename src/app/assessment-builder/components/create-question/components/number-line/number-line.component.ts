@@ -42,7 +42,7 @@ export class NumberLineComponent implements OnInit {
     } else {
       this.numberLineForm.patchValue({
         order: this.questionsCount + 1
-      })
+      });
     }
   }
 

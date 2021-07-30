@@ -27,7 +27,7 @@ export class CreateAssessmentComponent implements OnInit {
 
   public languages;
   public countries;
-  public subjects = ['PRESEL', 'POSTSEL', 'MATH', 'LITERACY'];
+  public subjects = ['PRESEL', 'POSTSEL', 'MATH', 'LITERACY', 'TUTORIAL'];
 
   constructor(
     private assessmentService: AssessmentService,

@@ -21,8 +21,8 @@ export class InputComponent implements OnInit {
     title: new FormControl('', [Validators.required]),
     order: new FormControl('', [Validators.required]),
     answer: new FormControl('', [Validators.required]),
-    imageAttachment: new FormControl('', [Validators.required]),
-    audioAttachment: new FormControl('', [Validators.required]),
+    imageAttachment: new FormControl(''),
+    audioAttachment: new FormControl(''),
   });
 
   ngOnInit(): void {
@@ -32,7 +32,7 @@ export class InputComponent implements OnInit {
     } else {
       this.inputForm.patchValue({
         order: this.questionsCount + 1
-      })
+      });
     }
   }
 
