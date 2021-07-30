@@ -1,9 +1,9 @@
-<button mat-button mat-stroked-button color="accent" (click)="setQuestionDisplay('input')">Input</button>
-<button mat-button mat-stroked-button color="accent" (click)="setQuestionDisplay('numberLine')">Number Line</button>
-<button mat-button mat-stroked-button color="accent" (click)="setQuestionDisplay('select')">(Multi-) Select</button>
-<button mat-button mat-stroked-button color="accent" (click)="setQuestionDisplay('sort')">Sort</button>
+<button mat-button mat-stroked-button color="{{currentQuestionType === 'input' ? 'accent' : 'basic'}}" (click)="setQuestionDisplay('input')">Input</button>
+<button mat-button mat-stroked-button color="{{currentQuestionType === 'numberLine' ? 'accent' : 'basic'}}" (click)="setQuestionDisplay('numberLine')">Number Line</button>
+<button mat-button mat-stroked-button color="{{currentQuestionType === 'select' ? 'accent' : 'basic'}}" (click)="setQuestionDisplay('select')">(Multi-) Select</button>
+<button mat-button mat-stroked-button color="{{currentQuestionType === 'sort' ? 'accent' : 'basic'}}" (click)="setQuestionDisplay('sort')">Sort</button>
 
-<app-input *ngIf="currentQuestionType === 'input' " [assessmentId]="assessmentId" [topicId]="topicId"></app-input>
-<app-number-line  *ngIf="currentQuestionType === 'numberLine' " [assessmentId]="assessmentId" [topicId]="topicId"></app-number-line>
-<app-select  *ngIf="currentQuestionType === 'select' " [assessmentId]="assessmentId" [topicId]="topicId"></app-select>
-<app-sort  *ngIf="currentQuestionType === 'sort' " [assessmentId]="assessmentId" [topicId]="topicId"></app-sort>
+<app-input *ngIf="currentQuestionType === 'input' " [assessmentId]="assessmentId" [topicId]="topicId"  [questionsCount]="questionsCount"></app-input>
+<app-number-line  *ngIf="currentQuestionType === 'numberLine' " [assessmentId]="assessmentId" [topicId]="topicId"  [questionsCount]="questionsCount"></app-number-line>
+<app-select  *ngIf="currentQuestionType === 'select' " [assessmentId]="assessmentId" [topicId]="topicId"  [questionsCount]="questionsCount"></app-select>
+<app-sort  *ngIf="currentQuestionType === 'sort' " [assessmentId]="assessmentId" [topicId]="topicId" [questionsCount]="questionsCount"></app-sort>

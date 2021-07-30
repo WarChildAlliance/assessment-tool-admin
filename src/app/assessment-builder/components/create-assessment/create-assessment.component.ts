@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { Assessment } from '../../../core/models/assessment.model';
@@ -17,7 +18,6 @@ export class CreateAssessmentComponent implements OnInit {
   public AssessmentForm: FormGroup = new FormGroup({
     title: new FormControl('', [Validators.required]),
     grade: new FormControl(0, [Validators.required]),
-    icon: new FormControl(null),
     subject: new FormControl('', [Validators.required]),
     language: new FormControl('', [Validators.required]),
     country: new FormControl('', [Validators.required]),
@@ -31,7 +31,8 @@ export class CreateAssessmentComponent implements OnInit {
 
   constructor(
     private assessmentService: AssessmentService,
-    private userService: UserService
+    private userService: UserService,
+    private alertService: AlertService
   ) { }
 
   ngOnInit(): void {
@@ -55,14 +56,17 @@ export class CreateAssessmentComponent implements OnInit {
     formData.append('grade', formvalues.grade);
     if (this.icon) {
       formData.append('icon', this.icon);
-
     }
 
 
     if (this.assessment) {
-      this.assessmentService.editAssessment(this.assessment.id, formData).subscribe(res => console.log('todo make snackbar', res) );
+      this.assessmentService.editAssessment(this.assessment.id, formData).subscribe(() => {
+        this.alertService.success('Assessment was altered successfully');
+      } );
     } else {
-      this.assessmentService.createAssessment(formData).subscribe(res => console.log('todo make snackbar', res) );
+      this.assessmentService.createAssessment(formData).subscribe(() => {
+        this.alertService.success('Assessment was saved successfully');
+      });
     }
   }
 

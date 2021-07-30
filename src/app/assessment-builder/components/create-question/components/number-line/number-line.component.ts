@@ -12,6 +12,7 @@ export class NumberLineComponent implements OnInit {
   @Input() assessmentId: number;
   @Input() topicId: number;
   @Input() question = null;
+  @Input() questionsCount = 0;
 
   public attachment = null;
   public icon = null;
@@ -38,6 +39,10 @@ export class NumberLineComponent implements OnInit {
       const q = this.question;
       this.numberLineForm.setValue({title: q.title, order: 1, startNumber: q.start, endNumber: q.end,
         stepSize: q.step, solution: q.expected_value, showTicks: q.show_ticks, showValue: q.show_value});
+    } else {
+      this.numberLineForm.patchValue({
+        order: this.questionsCount + 1
+      })
     }
   }
 

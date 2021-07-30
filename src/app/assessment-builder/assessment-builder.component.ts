@@ -100,6 +100,10 @@ export class AssessmentBuilderComponent implements OnInit {
       default:
         break;
     }
+  }
+  
 
+  getCount(assessment: any): number {
+    return assessment.topics_count;
   }
 }

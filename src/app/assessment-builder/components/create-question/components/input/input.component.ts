@@ -12,6 +12,8 @@ export class InputComponent implements OnInit {
   @Input() assessmentId: number;
   @Input() topicId: number;
   @Input() question = null;
+  @Input() questionsCount = 0;
+
 
   constructor(private assessmentService: AssessmentService) { }
 
@@ -26,7 +28,11 @@ export class InputComponent implements OnInit {
   ngOnInit(): void {
     if (this.question) {
       const q = this.question;
-      this.inputForm.setValue({title: q.title, order: 1, answer: q.valid_answer, imageAttachment: null, audioAttachment: null});
+      this.inputForm.setValue({title: q.title, order: q.order, answer: q.valid_answer, imageAttachment: null, audioAttachment: null});
+    } else {
+      this.inputForm.patchValue({
+        order: this.questionsCount + 1
+      })
     }
   }
 

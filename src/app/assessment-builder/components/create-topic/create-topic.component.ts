@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 
 @Component({
@@ -11,6 +12,7 @@ export class CreateTopicComponent implements OnInit {
 
   @Input() assessmentId: number;
   @Input() topic = null;
+  @Input() topicAmount = 0;
 
   public attachment = null;
   public icon = null;
@@ -20,8 +22,8 @@ export class CreateTopicComponent implements OnInit {
 
   public TopicForm: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required]),
-    order: new FormControl('', [Validators.required]),
-    icon: new FormControl('', [Validators.required]),
+    order: new FormControl(0, [Validators.required]),
+    icon: new FormControl(null, [Validators.required]),
     attachment: new FormControl('', [Validators.required]),
     description: new FormControl('', [Validators.required]),
     showFeedback: new FormControl(0, [Validators.required]),
@@ -34,15 +36,19 @@ export class CreateTopicComponent implements OnInit {
   public feedback = [{id: 0, name: 'never'}, {id: 1, name: 'always'}, {id: 2, name: 'second attempt'}];
 
   constructor(
-    private assessmentService: AssessmentService
+    private assessmentService: AssessmentService,
+    private alertService: AlertService
   ) { }
 
   ngOnInit(): void {
     if (this.topic) {
       const t = this.topic;
-      console.log(t);
-      this.TopicForm.setValue({name: t.name, icon: '', attachment: '', order: 1, description: t.description, showFeedback: t.show_feedback,
+      this.TopicForm.setValue({name: t.name, icon: '', attachment: '', order: t.order, description: t.description, showFeedback: t.show_feedback,
         allowSkip: t.allow_skip, evaluated: t.evaluated, praise: t.praise, maxWrongAnswers: t.max_wrong_answers});
+    } else {
+      this.TopicForm.patchValue({
+        order: this.topicAmount + 1
+      })
     }
   }
 
@@ -58,10 +64,7 @@ export class CreateTopicComponent implements OnInit {
     formData.append('evaluated', formvalues.evaluated);
     formData.append('praise', formvalues.praise);
     formData.append('maxWrongAnswers', formvalues.maxWrongAnswers);
-
-    if (this.icon) {
-      formData.append('icon', this.icon);
-    }
+    formData.append('icon', this.icon);
 
     if (this.topic) {
       this.assessmentService.editTopic(this.assessmentId.toString(), this.topic.id, formData).subscribe(res => {

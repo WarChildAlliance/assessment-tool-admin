@@ -127,7 +127,7 @@
                                             </mat-panel-title>
                                         </mat-expansion-panel-header>
                                         <mat-panel-description>
-                                            <app-create-question [assessmentId]="assessment.id" [topicId]="topic.id"></app-create-question>
+                                            <app-create-question [assessmentId]="assessment.id" [topicId]="topic.id" [questionsCount]="topic.questions_count"></app-create-question>
                                         </mat-panel-description>
                                     </mat-expansion-panel>
                                 </mat-accordion>
@@ -145,7 +145,7 @@
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <mat-panel-description>
-                            <app-create-topic [assessmentId]="assessment.id"></app-create-topic>
+                            <app-create-topic [assessmentId]="assessment.id" [topicAmount]="getCount(assessment)"></app-create-topic>
                         </mat-panel-description>
                     </mat-expansion-panel>
                 </mat-accordion>

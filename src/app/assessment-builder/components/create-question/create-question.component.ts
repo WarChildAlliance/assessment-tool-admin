@@ -11,6 +11,7 @@ export class CreateQuestionComponent implements OnInit {
 
   @Input() assessmentId: number;
   @Input() topicId: number;
+  @Input() questionsCount: number;
 
   constructor() { }
 
@@ -20,5 +21,7 @@ export class CreateQuestionComponent implements OnInit {
   setQuestionDisplay(questionType: string): void{
     this.currentQuestionType = questionType;
   }
+
+
 
 }

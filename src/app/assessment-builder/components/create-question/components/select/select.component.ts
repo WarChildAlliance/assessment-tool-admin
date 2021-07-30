@@ -13,6 +13,7 @@ export class SelectComponent implements OnInit {
   @Input() assessmentId: number;
   @Input() topicId: number;
   @Input() question = null;
+  @Input() questionsCount = 0;
 
   public amountOptions = [0, 1];
   public options = [];
@@ -34,6 +35,10 @@ export class SelectComponent implements OnInit {
       const q = this.question;
       this.selectForm.setValue({title: q.title, order: 1, multiple: q.multiple});
       this.options = q.options;
+    } else {
+      this.selectForm.patchValue({
+        order: this.questionsCount + 1
+      })
     }
   }
 

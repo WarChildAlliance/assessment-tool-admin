@@ -1,31 +1,30 @@
 <form class="form-primary" [formGroup]="AssessmentForm" (ngSubmit)="createAssessment()">
     <div>
         <label for="title">Title for Assessment </label>
-        <input id="title" type="text" formControlName="title">
+        <input type="text" formControlName="title">
     </div>
 
     <div>
         <label>icon</label>
         <input type="file"
-        formControlName="icon"
                (change)="handleFileInput($event)">
     </div>
 
     <div>
         <label for="grade">Grade </label>
-        <input id="grade" type="number" formControlName="grade">
+        <input type="number" formControlName="grade">
     </div>
 
     <div>
         <label for="subject">Subject</label>
-        <select id="subject" formControlName="subject" >
+        <select formControlName="subject" >
             <option *ngFor="let subject of subjects" [ngValue]="subject">{{subject}}</option>
         </select>
     </div>
 
     <div>
         <label for="language">Language</label>
-        <select id="language" formControlName="language" >
+        <select formControlName="language" >
             <option *ngFor="let language of languages" [ngValue]="language.code">{{language.name_en}}</option>
         </select>
 <!--         <input id="language" type="text" formControlName="language"> -->
@@ -33,14 +32,14 @@
 
     <div>
         <label for="country">Country</label>
-        <select id="country" formControlName="country" >
+        <select formControlName="country" >
             <option *ngFor="let country of countries" [ngValue]="country.code">{{country.name_en}}</option>
         </select>
     </div>
 
     <div>
         <label for="private">Is private? </label>
-        <input id="private" type="checkbox" formControlName="private">
+        <input type="checkbox" formControlName="private">
     </div>
 
     <button type="submit">Save</button>
