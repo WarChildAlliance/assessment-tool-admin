@@ -14,6 +14,8 @@ export class SelectOptionComponent implements OnInit {
   imageAttachment = null;
   audioAttachment = null;
 
+  public fileName: string;
+
   public selectOptionForm: FormGroup = new FormGroup({
     value: new FormControl('', [Validators.required]),
     valid: new FormControl('', [Validators.required]),
@@ -39,6 +41,7 @@ export class SelectOptionComponent implements OnInit {
     } else {
       this.audioAttachment = event.target.files[0];
     }
+    this.fileName = event.target.files[0].name;
   }
 
 }

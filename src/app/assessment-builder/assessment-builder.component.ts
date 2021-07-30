@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Assessment } from '../core/models/assessment.model';
 import { AssessmentService } from '../core/services/assessment.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationModalComponent } from './components/confirmation-modal/confirmation-modal.component';
 
 @Component({
   selector: 'app-assessment-builder',
@@ -25,6 +27,7 @@ export class AssessmentBuilderComponent implements OnInit {
 
   constructor(
     private assessmentService: AssessmentService,
+    public dialog: MatDialog,
   ) { }
 
 
@@ -72,6 +75,14 @@ export class AssessmentBuilderComponent implements OnInit {
   }
 
   deleteQuestion(assessmentId: number, topicId: number, questionId: number): void {
+
+    const dialogRef = this.dialog.open(ConfirmationModalComponent, {
+      disableClose: true,
+      data: {
+          confirmationText: 'Are you sure you want to delete this question?',
+      }
+    });
+
     this.assessmentService.deleteQuestion(assessmentId.toString(), topicId.toString(), questionId.toString()).subscribe((question) => {
       console.log(question);
     });

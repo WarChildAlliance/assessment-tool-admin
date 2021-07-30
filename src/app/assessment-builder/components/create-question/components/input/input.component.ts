@@ -13,6 +13,15 @@ export class InputComponent implements OnInit {
   @Input() topicId: number;
   @Input() question = null;
 
+  public attachment = null;
+  public icon = null;
+
+  public attachmentType = '';
+  public iconType = '';
+
+  public fileName: string;
+
+
   constructor(private assessmentService: AssessmentService) { }
 
   public inputForm: FormGroup = new FormGroup({
@@ -48,6 +57,23 @@ export class InputComponent implements OnInit {
       this.assessmentId.toString()).subscribe((res) => {
         console.log('res', res);
       });
+    }
+  }
+
+  handleFileInput(event, type): void {
+    if (type === 'attachment'){
+      this.attachment = event.target.files[0];
+    } else {
+      this.icon = event.target.files[0];
+    }
+    this.fileName = event.target.files[0].name;
+  }
+
+  setType(item, type): void {
+    if (item === 'attachment') {
+      this.attachmentType = type;
+    } else {
+      this.iconType = type;
     }
   }
 }

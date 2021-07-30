@@ -1,0 +1,10 @@
+<div id="container">
+    
+    <h1 mat-dialog-title>Confirm</h1>
+   
+    <div>{{confirmationText}}</div>
+    <div class="buttons">
+        <button mat-button mat-stroked-button appearance="outline" color='basic' (click)="cancelAction()">Cancel</button>
+        <button mat-button mat-stroked-button color='accent' (click)="confirmAction()">Confirm</button>
+    </div>
+</div>

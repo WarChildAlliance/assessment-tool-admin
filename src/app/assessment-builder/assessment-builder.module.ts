@@ -13,6 +13,7 @@ import { SelectComponent } from './components/create-question/components/select/
 import { NumberLineComponent } from './components/create-question/components/number-line/number-line.component';
 import { SortComponent } from './components/create-question/components/sort/sort.component';
 import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
@@ -20,7 +21,7 @@ import { MatInputModule } from '@angular/material/input';
 import { SelectOptionComponent } from './components/create-question/components/select/components/select-option/select-option.component';
 import { SortOptionComponent } from './components/create-question/components/sort/components/sort-option/sort-option.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-
+import { ConfirmationModalComponent } from './components/confirmation-modal/confirmation-modal.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     NumberLineComponent,
     SortComponent,
     SelectOptionComponent,
-    SortOptionComponent
+    SortOptionComponent,
+    ConfirmationModalComponent
   ],
   imports: [
     CommonModule,
@@ -49,6 +51,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     MatButtonModule,
     SharedModule,
     MatCheckboxModule,
+    MatDialogModule,
   ]
 })
 export class AssessmentBuilderModule { }
