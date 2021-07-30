@@ -21,8 +21,7 @@ import { UserService } from '../core/services/user.service';
 export class StudentsComponent implements OnInit {
 
   public displayedColumns: TableColumn[] = [
-    { key: 'username', name: 'Student code'},
-    { key: 'copy_icon', name: '', type: 'copy' },
+    { key: 'username', name: 'Student code', type: 'copy'},
     { key: 'full_name', name: 'Student name' },
     { key: 'assessments_count', name: 'Number of currently linked assessments' },
     { key: 'completed_topics_count', name: 'Number of completed topics' },
@@ -85,9 +84,6 @@ export class StudentsComponent implements OnInit {
 
   private getStudentTableList(filtersData?): void {
     this.userService.getStudentsList(filtersData).subscribe((studentsList: StudentTableData[]) => {
-      studentsList.forEach((student) => {
-        student.copy_icon = 'content_copy';
-      });
       this.studentsDataSource = new MatTableDataSource(studentsList);
     });
   }

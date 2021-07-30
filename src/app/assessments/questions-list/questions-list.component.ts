@@ -20,7 +20,7 @@ export class QuestionsListComponent implements OnInit {
     { key: 'title', name: 'Title' },
     { key: 'question_type', name: 'Question type' },
     { key: 'order', name: 'Order', sorting: 'asc' },
-    { key: 'attachment_icon', name: 'Attachment', type: 'icon' },
+    { key: 'has_attachment', name: 'Attachment', type: 'boolean' },
     { key: 'correct_answers_percentage', name: 'Overall correct answers percentage', type: 'percentage' }
   ];
 
@@ -42,9 +42,6 @@ export class QuestionsListComponent implements OnInit {
         return this.assessmentService.getTopicQuestions(this.assessmentId, this.topicId);
       })
     ).subscribe((questionsList) => {
-      questionsList.forEach((question: QuestionTableData) => {
-        question.has_attachment ? question.attachment_icon = 'attachment' : question.attachment_icon = null;
-      });
       this.questionsDataSource = new MatTableDataSource(questionsList);
     });
   }
