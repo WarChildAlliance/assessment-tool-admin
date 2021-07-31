@@ -21,7 +21,7 @@ export class SelectComponent implements OnInit {
   public selectForm: FormGroup = new FormGroup({
     title: new FormControl('', [Validators.required]),
     order: new FormControl('', [Validators.required]),
-    display_type: new FormControl('GRID', [Validators.required]),
+    display: new FormControl('GRID', [Validators.required]),
     multiple: new FormControl(false)
   });
 
@@ -33,7 +33,7 @@ export class SelectComponent implements OnInit {
   ngOnInit(): void {
     if (this.question) {
       const q = this.question;
-      this.selectForm.setValue({title: q.title, order: 1, multiple: q.multiple});
+      this.selectForm.setValue({title: q.title, order: 1, display: q.display_type ? q.display_type : 'GRID', multiple: q.multiple});
       this.options = q.options;
     } else {
       this.selectForm.patchValue({
@@ -71,7 +71,7 @@ export class SelectComponent implements OnInit {
         question_type: 'SELECT',
         title: this.selectForm.value.title,
         order: this.selectForm.value.order,
-        display_type: 'GRID',
+        display_type: this.selectForm.value.display,
         multiple: this.selectForm.value.multiple ? true : false,
         options: this.options.map( o => o.option)
       };

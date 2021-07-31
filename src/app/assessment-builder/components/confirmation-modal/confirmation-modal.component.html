@@ -4,7 +4,7 @@
    
     <div>{{confirmationText}}</div>
     <div class="buttons">
-        <button mat-button mat-stroked-button appearance="outline" color='basic' (click)="cancelAction()">Cancel</button>
-        <button mat-button mat-stroked-button color='accent' (click)="confirmAction()">Confirm</button>
+        <button mat-button mat-stroked-button appearance="outline" color='basic' (click)="cancelAction()"  [mat-dialog-close]="false">Cancel</button>
+        <button mat-button mat-stroked-button color='accent' (click)="confirmAction()"  [mat-dialog-close]="true">Confirm</button>
     </div>
 </div>

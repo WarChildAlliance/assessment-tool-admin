@@ -9,6 +9,13 @@
         <input matInput formControlName="order">
     </mat-form-field>
 
+    <div>
+        <label for="display">Display</label>
+        <select formControlName="display" >
+            <option *ngFor="let type of ['GRID', 'VERTICAL', 'HORIZONTAL']" [ngValue]="type">{{type}}</option>
+        </select>
+    </div>
+
     <mat-checkbox>
         <mat-label for="multiple">Is multiple choice?</mat-label>
     </mat-checkbox>
@@ -22,7 +29,7 @@
         <div *ngIf="question" >
             <app-select-option (saveOptionEvent)="addOption($event, i)" *ngFor="let opt of options; let i = index" [option]="opt"></app-select-option>
         </div>
-        <button mat-button color="accent" (click)="createOption()"> Add Option</button>
+        <button type="button"  mat-button color="accent" (click)="createOption()"> Add Option</button>
     </div>
 
     <button class="submit-form-button" mat-flat-button color="primary" type="submit" [disabled]="selectForm.invalid">

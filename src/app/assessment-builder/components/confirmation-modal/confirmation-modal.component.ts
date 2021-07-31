@@ -14,28 +14,24 @@ interface DialogData {
 export class ConfirmationModalComponent implements OnInit {
 
 
-    public confirmationText = 'Are you sure?';
+  public confirmationText = 'Are you sure?';
 
 
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData) {
+    if (data.confirmationText) {
+        this.confirmationText = data.confirmationText;
+    }
+  }
 
-if (data.confirmationText) {
-    this.confirmationText = data.confirmationText;
-}
+  ngOnInit(): void {}
 
-}
+  cancelAction(): boolean {
+    return false;
+  }
 
-  ngOnInit(): void {
-
-}
-
-cancelAction(): boolean {
-  return false;
-}
-
-confirmAction(): boolean {
-  return true;
-}
+  confirmAction(): boolean {
+    return true;
+  }
 
 }

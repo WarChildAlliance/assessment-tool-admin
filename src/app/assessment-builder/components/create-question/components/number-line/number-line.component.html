@@ -29,26 +29,28 @@
                 <mat-label for="solution">Solution</mat-label>
                 <input matInput formControlName="solution"  class="form-control">
             </mat-form-field>
+           
+            <mat-label for="showTicks">Show Ticks</mat-label>
+            <mat-checkbox matInput formControlName="showTicks" class="form-control"></mat-checkbox>
 
-            <mat-form-field appearance="outline"  class="form-group" color="accent">
-                <mat-label for="showTicks">Show Ticks</mat-label>
-                <input matInput formControlName="showTicks" class="form-control">
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" class="form-group" color="accent">
-                <mat-label for="showValue">Show Value</mat-label>
-                <input matInput formControlName="showValue" class="form-control">
-            </mat-form-field>
-
-            <p>Attachment</p>
+            <mat-label for="showValue">Show Value</mat-label>
+            <mat-checkbox matInput formControlName="showValue" class="form-control"></mat-checkbox>
+            
+            <p>Attachments</p>
+            
+            <div>
+                <button type="button" mat-button mat-raised-button color="accent">Image Attachment</button>
+                            <input
+                            (change)="handleFileInput($event, 'IMAGE')" #fileInput type="file">
+                            <p class="uploaded-file-name">{{imageAttachment ? imageAttachment.name : ' '}}</p>
+            </div>
 
             <div>
-                <button mat-button mat-raised-button color="accent" (click)="setType('attachment', 'IMAGE')">Image</button>
-                <button mat-button mat-raised-button color="accent" (click)="setType('attachment', 'AUDIO')">Audio</button>
+                        <button type="button" mat-button mat-raised-button color="accent">Audio Attachment</button>
+                        <input
+                            (change)="handleFileInput($event, 'AUDIO')" #fileInput type="file">      
+                        <p class="uploaded-file-name">{{audioAttachment ? audioAttachment.name : ''}}</p>
             </div>
-                    <button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
-                    <input hidden (change)="handleFileInput($event, 'attachment')" #fileInput type="file">
-                    <p class="uploaded-file-name">{{fileName}}</p>
      
 
 <div>

@@ -4,19 +4,22 @@
         <input type="text" formControlName="name">
     </div>
 
-    <button type=button (click)="setType('attachment', 'IMAGE')">Image</button>
-    <button type=button (click)="setType('attachment', 'AUDIO')">Audio</button>
     <div>
-        <label>attachment</label>
+        <label>Image Attachment</label>
         <input type="file"
         formControlName="attachment"
-               (change)="handleFileInput($event, 'attachment')">
+               (change)="handleFileInput($event, 'IMAGE')">
     </div>
 
-    <button type="button" (click)="setType('icon', 'IMAGE')">Image</button>
-    <button type="button"  (click)="setType('icon', 'AUDIO')">Audio</button>
     <div>
-        <label>icon</label>
+        <label>Audio Attachment</label>
+        <input type="file"
+        formControlName="attachment"
+               (change)="handleFileInput($event, 'AUDIO')">
+    </div>
+
+    <div>
+        <label>Icon</label>
         <input type="file"
         formControlName="icon"
                (change)="handleFileInput($event, 'icon')">

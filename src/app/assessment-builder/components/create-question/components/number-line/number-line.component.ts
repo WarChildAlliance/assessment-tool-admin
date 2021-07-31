@@ -14,10 +14,10 @@ export class NumberLineComponent implements OnInit {
   @Input() question = null;
   @Input() questionsCount = 0;
 
-  public attachment = null;
+  public imageAttachment = null;
+  public audioAttachment = null;
   public icon = null;
 
-  public attachmentType = '';
   public iconType = '';
 
   public fileName: string;
@@ -30,8 +30,8 @@ export class NumberLineComponent implements OnInit {
     endNumber: new FormControl('', [Validators.required]),
     stepSize: new FormControl('', [Validators.required]),
     solution: new FormControl('', [Validators.required]),
-    showTicks: new FormControl('', [Validators.required]),
-    showValue: new FormControl('', [Validators.required]),
+    showTicks: new FormControl(false ),
+    showValue: new FormControl(false),
   });
 
   constructor(private assessmentService: AssessmentService) { }
@@ -66,26 +66,44 @@ export class NumberLineComponent implements OnInit {
     if (this.question) {
       this.assessmentService.editQuestion(this.assessmentId.toString(), this.topicId.toString(),
       this.question.id,  newQuestion).subscribe(res => {
-        if (this.attachment) {
+        // TODO very ugly solution. can be simplified similar to the select options
+        if (this.imageAttachment ) {
           if (res.attachments.length === 0 ) {
-            this.assessmentService.addAttachments(this.assessmentId.toString(), this.attachment,
-            this.attachmentType, {name: 'question', value: res.id}).subscribe( attachment => {
+            this.assessmentService.addAttachments(this.assessmentId.toString(), this.imageAttachment,
+            'IMAGE', {name: 'question', value: res.id}).subscribe( attachment => {
               // TODO need snackbar here?
             });
           } else {
-            this.assessmentService.updateAttachments(this.assessmentId.toString(), this.attachment,
-            this.attachmentType, res.attachments[0].id).subscribe( attachment => {
+            this.assessmentService.updateAttachments(this.assessmentId.toString(), this.imageAttachment,
+            'IMAGE', res.attachments[0].id).subscribe( attachment => {
             });
           }
-
+        }
+        if (this.audioAttachment ) {
+          if (res.attachments.length === 0 ) {
+            this.assessmentService.addAttachments(this.assessmentId.toString(), this.audioAttachment,
+            'AUDIO', {name: 'question', value: res.id}).subscribe( attachment => {
+              // TODO need snackbar here?
+            });
+          } else {
+            this.assessmentService.updateAttachments(this.assessmentId.toString(), this.audioAttachment,
+            'AUDIO', res.attachments[0].id).subscribe( attachment => {
+            });
+          }
         }
         });
     } else {
       this.assessmentService.createQuestion(newQuestion, this.topicId.toString(),
       this.assessmentId.toString()).subscribe((res) => {
-        if (this.attachment) {
-          this.assessmentService.addAttachments(this.assessmentId.toString(), this.attachment,
-          this.attachmentType, {name: 'question', value: res.id}).subscribe( attachment => {
+        if (this.imageAttachment) {
+          this.assessmentService.addAttachments(this.assessmentId.toString(), this.imageAttachment,
+          'IMAGE', {name: 'question', value: res.id}).subscribe( attachment => {
+            // TODO need snackbar here?
+          });
+        }
+        if (this.audioAttachment) {
+          this.assessmentService.addAttachments(this.assessmentId.toString(), this.audioAttachment,
+          'AUDIO', {name: 'question', value: res.id}).subscribe( attachment => {
             // TODO need snackbar here?
           });
         }
@@ -94,20 +112,13 @@ export class NumberLineComponent implements OnInit {
   }
 
   handleFileInput(event, type): void {
-    if (type === 'attachment'){
-      this.attachment = event.target.files[0];
-    } else {
-      this.icon = event.target.files[0];
+    if (type === 'IMAGE'){
+      this.imageAttachment = event.target.files[0];
+    } else if (type === 'AUDIO') {
+      this.audioAttachment = event.target.files[0];
     }
-    this.fileName = event.target.files[0].name;
+
   }
 
-  setType(item, type): void {
-    if (item === 'attachment') {
-      this.attachmentType = type;
-    } else {
-      this.iconType = type;
-    }
-  }
 
 }

@@ -3,6 +3,7 @@ import { Assessment } from '../core/models/assessment.model';
 import { AssessmentService } from '../core/services/assessment.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationModalComponent } from './components/confirmation-modal/confirmation-modal.component';
+import { AlertService } from '../core/services/alert.service';
 
 @Component({
   selector: 'app-assessment-builder',
@@ -28,6 +29,7 @@ export class AssessmentBuilderComponent implements OnInit {
   constructor(
     private assessmentService: AssessmentService,
     public dialog: MatDialog,
+    public alertService: AlertService
   ) { }
 
 
@@ -63,28 +65,50 @@ export class AssessmentBuilderComponent implements OnInit {
   }
 
   deleteAssessment(assessmentId: number): void {
-    this.assessmentService.deleteAssessment(assessmentId.toString()).subscribe((assessment) => {
-      console.log(assessment);
+    const dialogRef = this.dialog.open(ConfirmationModalComponent, {
+      disableClose: true,
+      data: {
+          confirmationText: 'Are you sure you want to delete this assessment?',
+      }
+    });
+    dialogRef.afterClosed().subscribe(value => {
+      if (value) {
+        this.assessmentService.deleteAssessment(assessmentId.toString()).subscribe((assessment) => {
+          this.alertService.success('Successfully deleted assessment');
+        });
+      }
     });
   }
 
   deleteTopic(assessmentId: number, topicId: number): void {
-    this.assessmentService.deleteTopic(assessmentId.toString(), topicId.toString()).subscribe((topic) => {
-      console.log(topic);
+    const dialogRef = this.dialog.open(ConfirmationModalComponent, {
+      disableClose: true,
+      data: {
+          confirmationText: 'Are you sure you want to delete this topic?',
+      }
+    });
+    dialogRef.afterClosed().subscribe(value => {
+      if (value) {
+        this.assessmentService.deleteTopic(assessmentId.toString(), topicId.toString()).subscribe((topic) => {
+          this.alertService.success('Successfully deleted topic');
+        });
+      }
     });
   }
 
   deleteQuestion(assessmentId: number, topicId: number, questionId: number): void {
-
     const dialogRef = this.dialog.open(ConfirmationModalComponent, {
       disableClose: true,
       data: {
           confirmationText: 'Are you sure you want to delete this question?',
       }
     });
-
-    this.assessmentService.deleteQuestion(assessmentId.toString(), topicId.toString(), questionId.toString()).subscribe((question) => {
-      console.log(question);
+    dialogRef.afterClosed().subscribe(value => {
+      if (value) {
+        this.assessmentService.deleteQuestion(assessmentId.toString(), topicId.toString(), questionId.toString()).subscribe((question) => {
+          this.alertService.success('Successfully deleted question');
+        });
+      }
     });
   }
 
