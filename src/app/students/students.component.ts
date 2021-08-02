@@ -21,11 +21,11 @@ import { UserService } from '../core/services/user.service';
 export class StudentsComponent implements OnInit {
 
   public displayedColumns: TableColumn[] = [
-    { key: 'username', name: 'Student code', type: 'copy'},
     { key: 'full_name', name: 'Student name' },
-    { key: 'assessments_count', name: 'Number of currently linked assessments' },
+    { key: 'username', name: 'Student code', type: 'copy'},
+    { key: 'assessments_count', name: 'Number of active assessments' },
     { key: 'completed_topics_count', name: 'Number of completed topics' },
-    { key: 'last_session', name: 'Last session', type: 'date' },
+    { key: 'last_session', name: 'Last login', type: 'date' },
     { key: 'language_name', name: 'Language' },
     { key: 'country_name', name: 'Country' }
   ];
@@ -37,7 +37,7 @@ export class StudentsComponent implements OnInit {
   public languages: Language[] = [];
 
   public filters: TableFilter[];
-  private filtersData = { country: '', language: '' };
+  private filtersData = { country: '', language: '', ordering: '-id' };
 
   private edit: boolean;
 
@@ -79,7 +79,7 @@ export class StudentsComponent implements OnInit {
         ];
       }
     );
-    this.getStudentTableList();
+    this.getStudentTableList(this.filtersData);
   }
 
   private getStudentTableList(filtersData?): void {

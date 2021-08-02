@@ -7,17 +7,17 @@
       <button mat-flat-button color="accent" (click)="openCreateStudentDialog()">
         <mat-icon>add_circle_outline</mat-icon><span>Add student</span>
       </button>
-      <button mat-flat-button [disabled]="!selectedUsers.length" color="accent" (click)="openAssignTopicDialog()">
-        <mat-icon>event_available</mat-icon><span>Assign a topic</span>
+      <button mat-flat-button [disabled]="!selectedUsers.length || selectedUsers.length > 1" color="accent" (click)="editAStudent()">
+        <mat-icon>edit_outline</mat-icon><span>Edit student</span>
       </button>
       <button mat-flat-button [disabled]="!selectedUsers.length" color="primary" (click)="deleteSelection()">
         <mat-icon>delete_outline</mat-icon><span>Delete student(s)</span>
       </button>
-      <button mat-flat-button [disabled]="!selectedUsers.length || selectedUsers.length > 1" color="accent" (click)="editAStudent()">
-        <mat-icon>edit_outline</mat-icon><span>Edit a student</span>
+      <button mat-flat-button [disabled]="!selectedUsers.length" color="accent" (click)="openAssignTopicDialog()">
+        <mat-icon>event_available</mat-icon><span>Assign a topic</span>
       </button>
       <button mat-flat-button [disabled]="true" color="primary" (click)="downloadData()">
-        <mat-icon>get_app</mat-icon><span>Download</span>
+        <mat-icon>get_app</mat-icon><span>Export</span>
       </button>
     </div>
   </div>
