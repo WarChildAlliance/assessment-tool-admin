@@ -20,18 +20,10 @@ export class AssessmentsAnswersComponent implements OnInit {
   public displayedColumns: TableColumn[] = [
     { key: 'title', name: 'Title' },
     { key: 'subject', name: 'Subject' },
-    { key: 'accessible_topics_count', name: 'Number of topics linked to the student' },
-    { key: 'completed_topics_count', name: 'Number of topics completed by the student' },
+    { key: 'accessible_topics_count', name: 'Number of linked topics' },
+    { key: 'completed_topics_count', name: 'Number of completed topics' },
     {
-      key: 'earliest_topic_answers_correct_answers_percentage', name: 'Answered correctly on first answers submission',
-      type: 'percentage'
-    },
-    {
-      key: 'latest_topic_answers_correct_answers_percentage', name: 'Answered correctly on last answers submission',
-      type: 'percentage'
-    },
-    {
-      key: 'last_session', name: 'Last session',
+      key: 'last_session', name: 'Last login',
       type: 'date', sorting: 'desc'
     }
   ];

@@ -1,11 +1,10 @@
 
 export interface TopicTableData {
     id: number;
-    topic_name: string;
-    complete: boolean;
-    total_questions_count: number;
-    answered_questions_count: number;
-    correct_answers_percentage: number;
-    start_date: Date;
-    end_date: Date;
+    name: string;
+    questions_count: number;
+    student_tries_count: number;
+    correct_answers_percentage_first_try: number;
+    correct_answers_percentage_last_try: number;
+    last_submission: Date;
 }

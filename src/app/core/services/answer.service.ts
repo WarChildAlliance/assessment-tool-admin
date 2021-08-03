@@ -17,8 +17,16 @@ export class AnswerService {
     return this.http.get<any[]>(`${environment.API_URL}/visualization/student_answers/${studentId}/assessments/`);
   }
 
-  getTopicsAnwsers(studentId: string, assessmentId: string): Observable<TopicTableData[]> {
+  getAssessmentsAnswersDetails(studentId: string, assessmentId: string): Observable<AssessmentTableData> {
+    return this.http.get<any>(`${environment.API_URL}/visualization/student_answers/${studentId}/assessments/${assessmentId}`);
+  }
+
+  getTopicsAnswers(studentId: string, assessmentId: string): Observable<TopicTableData[]> {
     return this.http.get<any[]>(`${environment.API_URL}/visualization/student_answers/${studentId}/assessments/${assessmentId}/topics`);
+  }
+
+  getTopicsAnswersDetails(studentId: string, assessmentId: string, topicId: string): Observable<TopicTableData> {
+    return this.http.get<any>(`${environment.API_URL}/visualization/student_answers/${studentId}/assessments/${assessmentId}/topics/${topicId}`);
   }
 
   getQuestionsAnwsers(studentId: string, assessmentId: string, topicId: string): Observable<QuestionTableData[]> {

@@ -8,6 +8,9 @@ import { QuestionTableData } from 'src/app/core/models/question-table-data.model
 import { AnswerService } from 'src/app/core/services/answer.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
+import { UserService } from 'src/app/core/services/user.service';
+import { StudentTableData } from 'src/app/core/models/student-table-data.model';
+import { TopicTableData } from 'src/app/core/models/topic-table-data.model';
 
 @Component({
   selector: 'app-questions-list-answers',
@@ -20,6 +23,9 @@ export class QuestionsListAnswersComponent implements OnInit {
   currentStudentId: string;
   assessmentId: string;
   topicId: string;
+
+  currentStudent: StudentTableData;
+  currentTopic: TopicTableData;
 
   @ViewChild('questionPreviewDialog') questionPreviewDialog: TemplateRef<any>;
 
@@ -41,7 +47,8 @@ export class QuestionsListAnswersComponent implements OnInit {
     private route: ActivatedRoute,
     private assessmentService: AssessmentService,
     private answerService: AnswerService,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private userService: UserService
   ) { }
 
   ngOnInit(): void {
@@ -56,6 +63,14 @@ export class QuestionsListAnswersComponent implements OnInit {
       this.answerService.getQuestionsAnwsers(this.currentStudentId, this.assessmentId, this.topicId)
         .subscribe(questions => {
           this.questionsAnswersDataSource = new MatTableDataSource(questions);
+        });
+
+      this.answerService.getTopicsAnswersDetails(this.currentStudentId, this.assessmentId, this.topicId).subscribe(topic => {
+          this.currentTopic = topic;
+        });
+
+      this.userService.getStudentDetails(this.currentStudentId).subscribe(student => {
+          this.currentStudent = student;
         });
     });
   }
