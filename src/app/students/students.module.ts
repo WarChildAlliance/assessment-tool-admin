@@ -21,12 +21,14 @@ import { StudentDetailComponent } from './student-detail/student-detail.componen
 import { StudentsRoutingModule } from './students-routing.module';
 import { StudentsComponent } from './students.component';
 import { TopicAccessesBuilderComponent } from './topic-accesses-builder/topic-accesses-builder.component';
+import { CreateStudentDialogComponent } from './create-student-dialog/create-student-dialog.component';
 
 @NgModule({
   declarations: [
     StudentsComponent,
     StudentDetailComponent,
-    TopicAccessesBuilderComponent
+    TopicAccessesBuilderComponent,
+    CreateStudentDialogComponent
   ],
   imports: [
     CommonModule,

@@ -32,6 +32,7 @@ export class StudentsComponent implements OnInit {
 
   public studentsDataSource: MatTableDataSource<StudentTableData> = new MatTableDataSource([]);
   public selectedUsers = [];
+  public studentToEdit: any;
 
   public countries: Country[] = [];
   public languages: Language[] = [];
@@ -39,9 +40,8 @@ export class StudentsComponent implements OnInit {
   public filters: TableFilter[];
   private filtersData = { country: '', language: '', ordering: '-id' };
 
-  private edit: boolean;
-
   @ViewChild('createStudentDialog') createStudentDialog: TemplateRef<any>;
+  @ViewChild('editStudentDialog') editStudentDialog: TemplateRef<any>;
   @ViewChild('assignTopicDialog') assignTopicDialog: TemplateRef<any>;
 
   public createNewStudentForm: FormGroup = new FormGroup({
@@ -103,10 +103,6 @@ export class StudentsComponent implements OnInit {
     this.router.navigate([`/students/${id}`]);
   }
 
-  onCloseTopicsDialogEvent(): void {
-    this.dialog.closeAll();
-  }
-
   openAssignTopicDialog(): void {
     // Check if all students share the same language and country
     if (this.selectedUsers.every((student) => (
@@ -119,51 +115,32 @@ export class StudentsComponent implements OnInit {
   }
 
   openCreateStudentDialog(): void {
-    if (this.edit) {
-      this.createNewStudentForm.setValue({
-        first_name: this.selectedUsers[0].full_name.split(' ')[0],
-        last_name: this.selectedUsers[0].full_name.split(' ')[1],
-        country: this.selectedUsers[0].country_code,
-        language: this.selectedUsers[0].language_code,
-      });
-    }
-    this.dialog.open(this.createStudentDialog);
+    const createStudentDialog = this.dialog.open(this.createStudentDialog);
+    createStudentDialog.afterClosed().subscribe(
+      () => {
+        this.getStudentTableList(this.filtersData);
+        this.dialog.closeAll();
+      }
+    );
+  }
+
+  openEditStudentDialog(): void {
+    this.studentToEdit = this.selectedUsers[0];
+    const editStudentDialog = this.dialog.open(this.createStudentDialog);
+    editStudentDialog.afterClosed().subscribe(
+      () => {
+        this.getStudentTableList(this.filtersData);
+        this.dialog.closeAll();
+        this.studentToEdit = null;
+      }
+    );
   }
 
   deleteSelection(): void {
     console.log('DEL', this.selectedUsers);
   }
 
-  editAStudent(): void {
-    this.edit = true;
-    this.openCreateStudentDialog();
-  }
-
   downloadData(): void {
     console.log('Work In Progress');
-  }
-
-  submitCreateNewStudent(): void {
-    const studentToCreate = {
-      first_name: this.createNewStudentForm.value.first_name,
-      last_name: this.createNewStudentForm.value.last_name,
-      role: 'STUDENT',
-      language: this.createNewStudentForm.value.language, // TODO Do we really want to only send the code ? Why the code precisely ?
-      country: this.createNewStudentForm.value.country
-    };
-
-    if (this.edit) {
-      this.userService.editStudent(this.selectedUsers[0].id, studentToCreate).subscribe((student: User) => {
-        this.alertService.success(`${student.first_name + ' ' + student.last_name}'s information have been edited successfully `);
-        this.getStudentTableList();
-      });
-    } else {
-      this.userService.createNewStudent(studentToCreate).subscribe((student: User) => {
-        this.alertService.success(`Student ${student.first_name + ' ' + student.last_name} with ID ${student.username} was successfully created`);
-        this.getStudentTableList();
-      });
-    }
-
-    this.createNewStudentForm.reset();
   }
 }

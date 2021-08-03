@@ -1,10 +1,11 @@
 import { formatDate } from '@angular/common';
 import * as moment from 'moment';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { StudentTableData } from 'src/app/core/models/student-table-data.model';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { UserService } from 'src/app/core/services/user.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-student-detail',
@@ -16,10 +17,13 @@ export class StudentDetailComponent implements OnInit {
   public student: StudentTableData;
   public studentAssessments;
 
+  @ViewChild('editStudentDialog') editStudentDialog: TemplateRef<any>;
+
   constructor(
     private userService: UserService,
     private assessmentService: AssessmentService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -37,6 +41,18 @@ export class StudentDetailComponent implements OnInit {
         });
       });
     });
+  }
+
+  editCurrentStudent(): void {
+    const editStudentDialog = this.dialog.open(this.editStudentDialog);
+    editStudentDialog.afterClosed().subscribe(
+      () => {
+        this.userService.getStudentDetails(this.student.id.toString()).subscribe(student => {
+          this.student = student;
+        });
+        this.dialog.closeAll();
+      }
+    );
   }
 
   deleteCurrentStudent(): void {
