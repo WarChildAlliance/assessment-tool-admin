@@ -81,8 +81,8 @@ export class ScoreByTopicChartComponent implements OnInit {
         data: [],
         fill: false,
         pointStyle: 'rect',
-        pointBackgroundColor: '#248dd4,',
-        borderColor: '#248dd4,'
+        pointBackgroundColor: '#FBC02D,',
+        borderColor: '#FBC02D,'
       };
 
       student.topics.forEach(topic => {
