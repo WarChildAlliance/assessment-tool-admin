@@ -1,16 +1,22 @@
-<app-select-assessment (assessmentSelection)="selectChartAssessment($event)" [selectTopic]="false" [multiple]="false" [displayNonEvaluated]="false"></app-select-assessment>
-
-  <div class="main-board__charts-container">
-    <div class="main-board__charts-container__options">
+<mat-card>
+<mat-card-title>Comparison to average</mat-card-title>
+<mat-card-content>
+    <div class="left-column">
+    <app-select-assessment (assessmentSelection)="selectChartAssessment($event)" [selectTopic]="false" [multiple]="false" [displayNonEvaluated]="false"></app-select-assessment>
+    
       <h3>Assessment title</h3>
       <mat-radio-group class="radio-group">
         <ng-container *ngFor="let student of studentsListChart">
-          <mat-radio-button [value]="student" [checked]="student === selectedStudent ? true : false" (change)="selectStudent(student)">{{ student.label }}</mat-radio-button>
+          <ul>
+            <li><mat-radio-button [value]="student" [checked]="student === selectedStudent ? true : false" (change)="selectStudent(student)">{{ student.label }}</mat-radio-button></li>
+          </ul>
         </ng-container>
       </mat-radio-group>
     </div>
+    
     <div class="main-board__charts-container__chart">
       <canvas id="currentChart"></canvas>
     </div>
-  </div>
+  </mat-card-content>
+  </mat-card>
 

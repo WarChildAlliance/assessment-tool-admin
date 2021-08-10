@@ -13,7 +13,7 @@ import { QuestionsOverviewChartComponent } from './charts/questions-overview-cha
 import { ScoreByTopicChartComponent } from './charts/score-by-topic-chart/score-by-topic-chart.component';
 import { ScoreByTopicTableComponent } from './charts/score-by-topic-table/score-by-topic-table.component';
 import { AnswersOverviewComponent } from './charts/answers-overview/answers-overview.component';
-
+import { MatCardModule } from '@angular/material/card';
 
 
 @NgModule({
@@ -34,7 +34,8 @@ import { AnswersOverviewComponent } from './charts/answers-overview/answers-over
     MatRadioModule,
     MatSelectModule,
     ChartsModule,
-    SharedModule
+    SharedModule,
+    MatCardModule
   ]
 })
 export class DashboardModule { }

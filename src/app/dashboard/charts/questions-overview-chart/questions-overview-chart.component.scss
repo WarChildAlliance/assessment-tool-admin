@@ -1,8 +1,30 @@
-.chart-container {
+mat-card-title {
+    font-size: 2rem;
+    text-align: center;
+    padding: 20px 0px 40px 0px;
+    color: rgb(66, 64, 64);
+}
 
-    display: flex;
+mat-card-content {
+    display:flex;
+
 
     .barChart {
-        width: 50vw;
+        max-height: 500px;
+        padding-right:10%;
     }
+
+
+.left-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 35%;
+}
+
+.right-section {
+    display: flex;
+    justify-content: space-between;
+}
 }

@@ -1,13 +1,22 @@
-<app-select-assessment (assessmentSelection)="selectTableAssessment($event)" [selectTopic]="false" [multiple]="true" [displayNonEvaluated]="false"></app-select-assessment>
-
+<mat-card> 
+  <mat-card-title>Student overview</mat-card-title>
+  <mat-card-content>
+  <div class="left-column">
+    <app-select-assessment (assessmentSelection)="selectTableAssessment($event)" [selectTopic]="false" [multiple]="true" [displayNonEvaluated]="false"></app-select-assessment>
+      
+       <h3>Chart Legend</h3>
+       <div class="main-board__charts-container__chart__legend">
+        <p><mat-icon [style.color]="'darkgrey'" matListIcon>close</mat-icon> The student is not linked to this topic</p>
+        <p><mat-icon matListIcon [style.color]="'red'">circle</mat-icon> Below 41% of correct answers</p>
+        <p><mat-icon matListIcon [style.color]="'orange'">circle</mat-icon> Between 41% and 70% of correct answers</p>
+        <p><mat-icon matListIcon [style.color]="'limegreen'">circle</mat-icon> Over 70% of correct answers</p>
+        <p><mat-icon matListIcon>radio_button_unchecked</mat-icon> The student has not started this topic yet</p>
+      </div>
+    </div>
 <div class="main-board__charts-container__chart">
     <app-table [tableData]="studentsDataSource" [displayedColumns]="displayedColumns"
     [isSelectable]="false" [hideSearchBar]="true"></app-table>
-  <div class="main-board__charts-container__chart__legend">
-    <p><mat-icon [style.color]="'darkgrey'" matListIcon>close</mat-icon> The student is not linked to this topic</p>
-    <p><mat-icon matListIcon [style.color]="'red'">circle</mat-icon> Below 41% of correct answers</p>
-    <p><mat-icon matListIcon [style.color]="'orange'">circle</mat-icon> Between 41% and 70% of correct answers</p>
-    <p><mat-icon matListIcon [style.color]="'limegreen'">circle</mat-icon> Over 70% of correct answers</p>
-    <p><mat-icon matListIcon>radio_button_unchecked</mat-icon> The student has not started this topic yet</p>
-  </div>
-</div>
+    </div>
+  </mat-card-content>
+   
+</mat-card>
