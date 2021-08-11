@@ -20,7 +20,7 @@ export class ScoreByTopicChartComponent implements OnInit {
     responsive: true,
     showLines: false,
     scales: {
-      yAxes: [{ gridLines: { display: false } }],
+      yAxes: [{ gridLines: { display: false }, ticks: {min: 0, max: 100} }],
       xAxes: [{ gridLines: { lineWidth: 2, color: 'darkgrey' } }]
     },
     elements: {
@@ -81,8 +81,8 @@ export class ScoreByTopicChartComponent implements OnInit {
         data: [],
         fill: false,
         pointStyle: 'rect',
-        pointBackgroundColor: '#FBC02D,',
-        borderColor: '#FBC02D,'
+        pointBackgroundColor: 'rgba(251, 192, 45, 1)',
+        borderColor: 'rgba(251, 192, 45, 1)'
       };
 
       student.topics.forEach(topic => {
