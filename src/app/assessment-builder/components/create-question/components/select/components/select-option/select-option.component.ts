@@ -18,7 +18,7 @@ export class SelectOptionComponent implements OnInit {
 
   public selectOptionForm: FormGroup = new FormGroup({
     value: new FormControl('', [Validators.required]),
-    valid: new FormControl('', [Validators.required]),
+    valid: new FormControl(false, [Validators.required]),
     audioAttachment: new FormControl('', [Validators.required]),
     imageAttachment: new FormControl('', [Validators.required])
   });
