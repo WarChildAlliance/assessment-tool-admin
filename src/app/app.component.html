@@ -1,6 +1,8 @@
-<mat-toolbar class="account-toolbar" *ngIf="isAuthenticated">
+<mat-toolbar class="header-toolbar" *ngIf="isAuthenticated">
+  
+  <lib-mat-breadcrumb class="header-toolbar__breadcrumbs"></lib-mat-breadcrumb>
 
-  <button mat-button class="account-toolbar__menu-button" aria-label="Access account settings"
+  <button mat-button class="header-toolbar__menu-button" aria-label="Access account settings"
     [matMenuTriggerFor]="accountMenu">
     <mat-icon>account_circle</mat-icon>
     <span>{{ selfName }}</span>
