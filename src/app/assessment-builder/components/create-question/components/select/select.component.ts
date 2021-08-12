@@ -46,7 +46,7 @@ export class SelectComponent implements OnInit {
   }
 
   createOption(): void {
-    this.amountOptions.push(this.addOption.length);
+    this.amountOptions.push(this.options.length);
     if (this.question) {
       this.options.push({valid: false, value: ''});
     }
@@ -76,7 +76,7 @@ export class SelectComponent implements OnInit {
         order: this.selectForm.value.order,
         display_type: this.selectForm.value.display,
         multiple: this.selectForm.value.multiple ? true : false,
-        options: this.options.map( o => o.option)
+        options: this.options
       };
       const hasAttachment = this.options.find( o => {
         return o.audioAttachment !== null || o.imageAttachment !== null;
