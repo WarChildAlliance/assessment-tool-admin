@@ -39,7 +39,7 @@ export class NumberLineComponent implements OnInit {
   ngOnInit(): void {
     if (this.question){
       const q = this.question;
-      this.numberLineForm.setValue({title: q.title, order: 1, startNumber: q.start, endNumber: q.end,
+      this.numberLineForm.setValue({title: q.title, order: q.order, startNumber: q.start, endNumber: q.end,
         stepSize: q.step, solution: q.expected_value, showTicks: q.show_ticks, showValue: q.show_value});
     } else {
       this.numberLineForm.patchValue({

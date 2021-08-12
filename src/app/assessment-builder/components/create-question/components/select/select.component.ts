@@ -36,7 +36,7 @@ export class SelectComponent implements OnInit {
   ngOnInit(): void {
     if (this.question) {
       const q = this.question;
-      this.selectForm.setValue({title: q.title, order: 1, display: q.display_type ? q.display_type : 'GRID', multiple: q.multiple});
+      this.selectForm.setValue({title: q.title, order: q.order, display: q.display_type ? q.display_type : 'GRID', multiple: q.multiple});
       this.options = q.options;
     } else {
       this.selectForm.patchValue({
