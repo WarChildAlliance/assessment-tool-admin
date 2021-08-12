@@ -18,6 +18,9 @@ export class SelectComponent implements OnInit {
   public amountOptions = [0, 1];
   public options = [];
 
+  public imageAttachment = null;
+  public audioAttachment = null;
+
   public selectForm: FormGroup = new FormGroup({
     title: new FormControl('', [Validators.required]),
     order: new FormControl('', [Validators.required]),
@@ -95,6 +98,30 @@ export class SelectComponent implements OnInit {
               }
             });
           }
+          if (this.imageAttachment ) {
+            if (res.attachments.length === 0 ) {
+              this.assessmentService.addAttachments(this.assessmentId.toString(), this.imageAttachment,
+              'IMAGE', {name: 'question', value: res.id}).subscribe( attachment => {
+                // TODO need snackbar here?
+              });
+            } else {
+              this.assessmentService.updateAttachments(this.assessmentId.toString(), this.imageAttachment,
+              'IMAGE', res.attachments[0].id).subscribe( attachment => {
+              });
+            }
+          }
+          if (this.audioAttachment ) {
+            if (res.attachments.length === 0 ) {
+              this.assessmentService.addAttachments(this.assessmentId.toString(), this.audioAttachment,
+              'AUDIO', {name: 'question', value: res.id}).subscribe( attachment => {
+                // TODO need snackbar here?
+              });
+            } else {
+              this.assessmentService.updateAttachments(this.assessmentId.toString(), this.audioAttachment,
+              'AUDIO', res.attachments[0].id).subscribe( attachment => {
+              });
+            }
+          }
           console.log('todo make snackbar', res); });
       } else {
         this.assessmentService.createQuestion(newQuestion, this.topicId.toString(),
@@ -111,11 +138,30 @@ export class SelectComponent implements OnInit {
               }
             });
           }
+          if (this.imageAttachment) {
+            this.assessmentService.addAttachments(this.assessmentId.toString(), this.imageAttachment,
+            'IMAGE', {name: 'question', value: res.id}).subscribe( attachment => {
+              // TODO need snackbar here?
+            });
+          }
+          if (this.audioAttachment) {
+            this.assessmentService.addAttachments(this.assessmentId.toString(), this.audioAttachment,
+            'AUDIO', {name: 'question', value: res.id}).subscribe( attachment => {
+              // TODO need snackbar here?
+            });
+          }
           console.log('res', res);
         });
       }
     }
   }
 
+  handleFileInput(event, type): void {
+    if (type === 'IMAGE'){
+      this.imageAttachment = event.target.files[0];
+    } else if (type === 'AUDIO') {
+      this.audioAttachment = event.target.files[0];
+    }
+  }
 
 }

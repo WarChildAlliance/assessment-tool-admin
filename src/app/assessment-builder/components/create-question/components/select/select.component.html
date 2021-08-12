@@ -9,6 +9,22 @@
         <input matInput formControlName="order">
     </mat-form-field>
 
+    <p>Title Attachments</p>
+            
+    <div>
+        <button type="button" mat-button mat-raised-button color="accent">Image Attachment</button>
+                    <input
+                    (change)="handleFileInput($event, 'IMAGE')" #fileInput type="file">
+                    <p class="uploaded-file-name">{{imageAttachment ? imageAttachment.name : ' '}}</p>
+    </div>
+
+    <div>
+                <button type="button" mat-button mat-raised-button color="accent">Audio Attachment</button>
+                <input
+                    (change)="handleFileInput($event, 'AUDIO')" #fileInput type="file">      
+                <p class="uploaded-file-name">{{audioAttachment ? audioAttachment.name : ''}}</p>
+    </div>
+
     <div>
         <label for="display">Display</label>
         <select formControlName="display" >

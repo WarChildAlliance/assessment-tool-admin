@@ -117,7 +117,6 @@ export class NumberLineComponent implements OnInit {
     } else if (type === 'AUDIO') {
       this.audioAttachment = event.target.files[0];
     }
-
   }
 
 
