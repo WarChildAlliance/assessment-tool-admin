@@ -19,6 +19,7 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
+import { MatBreadcrumbModule } from 'mat-breadcrumb';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { MatInputModule } from '@angular/material/input';
     MatMenuModule,
     ReactiveFormsModule,
     MatCardModule,
-    MatInputModule
+    MatInputModule,
+    MatBreadcrumbModule
   ],
   providers: [
     httpInterceptorProviders,

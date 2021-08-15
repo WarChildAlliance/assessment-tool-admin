@@ -3,9 +3,12 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { AssessmentTableData } from 'src/app/core/models/assessment-table-data.model';
+import { StudentTableData } from 'src/app/core/models/student-table-data.model';
 import { TableColumn } from 'src/app/core/models/table-column.model';
 import { TopicTableData } from 'src/app/core/models/topic-table-data.model';
 import { AnswerService } from 'src/app/core/services/answer.service';
+import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
   selector: 'app-topics-list-answers',
@@ -17,42 +20,53 @@ export class TopicsListAnswersComponent implements OnInit {
   topicsAnswersDataSource: MatTableDataSource<TopicTableData> = new MatTableDataSource([]);
   currentStudentId: string;
   assessmentId: string;
-  sessionId: string;
+
+  currentStudent: StudentTableData;
+  currentAssessment: AssessmentTableData;
 
   public displayedColumns: TableColumn[] = [
-    { key: 'topic_name', name: 'Name' },
-    { key: 'total_questions_count', name: 'Number of questions' },
-    { key: 'answered_questions_count', name: 'Number of answered questions' },
-    { key: 'correct_answers_percentage', name: 'Answered correctly', type: 'percentage' },
-    { key: 'start_date', name: 'Last submission', type: 'date', sorting: 'desc' },
-    { key: 'evaluated', name: 'Evaluated', type: 'boolean' },
-    { key: 'complete', name: 'Completed', type: 'boolean' },
+    { key: 'name', name: 'Name' },
+    { key: 'questions_count', name: 'Number of questions' },
+    { key: 'student_tries_count', name: 'Number of tries' },
+    { key: 'correct_answers_percentage_first_try', name: 'Answered correctly on first try', type: 'percentage' },
+    { key: 'correct_answers_percentage_last_try', name: 'Answered correctly on last try', type: 'percentage' },
+    { key: 'last_submission', name: 'Last submission', type: 'date' },
   ];
 
-  public searchableColumns = ['topic_name', 'complete'];
+  public searchableColumns = ['name'];
 
-  constructor(private router: Router, private route: ActivatedRoute, private answerService: AnswerService) { }
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private answerService: AnswerService,
+    private userService: UserService
+  ) { }
 
   ngOnInit(): void {
     forkJoin({
       param1: this.route.params.subscribe(params => { this.currentStudentId = params.student_id; }),
-      param2: this.route.params.subscribe(params => { this.assessmentId = params.assessment_id; }),
-      param4: this.route.queryParams.subscribe(params => { this.sessionId = params.session_id; })
+      param2: this.route.params.subscribe(params => { this.assessmentId = params.assessment_id; })
 
     }).pipe(
       catchError(error => of(error))
     ).subscribe(() => {
-
-      this.answerService.getTopicsAnwsers(this.currentStudentId, this.assessmentId, this.sessionId).subscribe(topics => {
+      this.answerService.getTopicsAnswers(this.currentStudentId, this.assessmentId).subscribe(topics => {
         this.topicsAnswersDataSource = new MatTableDataSource(topics);
+      });
+
+      this.answerService.getAssessmentsAnswersDetails(this.currentStudentId, this.assessmentId).subscribe(assessment => {
+        this.currentAssessment = assessment;
+      });
+
+      this.userService.getStudentDetails(this.currentStudentId).subscribe(student => {
+        this.currentStudent = student;
       });
     });
   }
 
   onOpenDetails(topicId: string): void {
     this.router.navigate(
-      [`students/${this.currentStudentId}/assessments/${this.assessmentId}/topics/${topicId}/questions`],
-      { queryParams: { session_id: this.sessionId } }
+      [`students/${this.currentStudentId}/assessments/${this.assessmentId}/topics/${topicId}/questions`]
     );
   }
 }

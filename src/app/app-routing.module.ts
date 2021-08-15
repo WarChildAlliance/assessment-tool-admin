@@ -13,25 +13,45 @@ const routes: Routes = [
     path: 'dashboard',
     loadChildren: () => import('./dashboard/dashboard.module')
       .then(m => m.DashboardModule),
-    canLoad: [AuthGuard]
+    canLoad: [AuthGuard],
+    data: {
+      breadcrumb: [
+        { label: 'Dashboard', url: '' }
+      ]
+    },
   },
   {
     path: 'students',
     loadChildren: () => import('./students/students.module')
       .then(m => m.StudentsModule),
-    canLoad: [AuthGuard]
+    canLoad: [AuthGuard],
+    data: {
+      breadcrumb: [
+        { label: 'Students overview', url: '' }
+      ]
+    },
   },
   {
     path: 'assessments',
     loadChildren: () => import('./assessments/assessments.module')
       .then(m => m.AssessmentsModule),
-    canLoad: [AuthGuard]
+    canLoad: [AuthGuard],
+    data: {
+      breadcrumb: [
+        { label: 'Assessments overview', url: '' }
+      ]
+    },
   },
   {
     path: 'assessment-builder',
     loadChildren: () => import('./assessment-builder/assessment-builder.module')
       .then(m => m.AssessmentBuilderModule),
-    canLoad: [AuthGuard]
+    canLoad: [AuthGuard],
+    data: {
+      breadcrumb: [
+        { label: 'Assessment Builder', url: '' }
+      ]
+    },
   },
   {
     path: '',

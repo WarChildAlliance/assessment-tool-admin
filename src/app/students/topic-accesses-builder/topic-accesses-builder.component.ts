@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Assessment } from 'src/app/core/models/assessment.model';
 import { BatchTopicAccesses } from 'src/app/core/models/batch-topic-accesses.model';
 import { Topic } from 'src/app/core/models/topic.models';
@@ -16,6 +17,7 @@ import { UserService } from 'src/app/core/services/user.service';
 export class TopicAccessesBuilderComponent implements OnInit {
 
   minDate: Date = new Date();
+
   @Input() studentsList: any[];
 
   assessmentsList: Assessment[] = [];
@@ -26,13 +28,13 @@ export class TopicAccessesBuilderComponent implements OnInit {
     access: new FormArray([]),
   });
 
-  @Output() closeTopicsDialogEvent = new EventEmitter<void>();
-
   constructor(private assessmentService: AssessmentService,
               private userService: UserService,
               private formBuilder: FormBuilder,
-              private alertService: AlertService) {
- }
+              private alertService: AlertService,
+              private selfDialog: MatDialogRef<TopicAccessesBuilderComponent>
+  ) {
+  }
 
   ngOnInit(): void {
     this.assessmentService.getAssessmentsList().subscribe((assessmentsList) => {
@@ -98,7 +100,7 @@ export class TopicAccessesBuilderComponent implements OnInit {
     this.userService.assignTopicsAccesses(batchTopicAccessesData, this.selectedAssessmentId).subscribe(
       result => {
         this.alertService.success('The new topic accesses have been successfully set !');
-        this.closeTopicsDialogEvent.emit();
+        this.selfDialog.close();
       },
       error => {
         console.log('ERROR', error);

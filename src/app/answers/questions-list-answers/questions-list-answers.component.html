@@ -1,2 +1,37 @@
+<div class="main-board__details" *ngIf="!!currentTopic && !!currentStudent">
+  <div class="main-board__details__element">
+      <span class="title">Student name</span>
+      <span class="value">{{ currentStudent.full_name }}</span>
+  </div>
+  <div class="main-board__details__element">
+      <span class="title">Topic name</span>
+      <span class="value">{{ currentTopic.name }}</span>
+  </div>
+  <div class="main-board__details__element">
+      <span class="title">Number of questions</span>
+      <span class="value">{{ currentTopic.questions_count }}</span>
+  </div>
+</div>
+
+
 <app-table [tableData]="questionsAnswersDataSource" [displayedColumns]="displayedColumns" [isSelectable]="false"
-  [searchableColumns]="searchableColumns" (openDetailsEvent)="onOpenDetails($event)"></app-table>
+  [searchableColumns]="searchableColumns" (openDetailsEvent)="onOpenDetails($event)"
+  (customActionEvent)="onCustomAction($event)"></app-table>
+
+<ng-template #questionPreviewDialog>
+  <ng-container *ngIf="questionDetails && questionDetails.question_type === 'SELECT'">
+    <app-question-select [question]="questionDetails" [evaluated]="true"></app-question-select>
+  </ng-container>
+
+  <ng-container *ngIf="questionDetails && questionDetails.question_type === 'INPUT'">
+    <app-question-input [question]="questionDetails" [evaluated]="true"></app-question-input>
+  </ng-container>
+
+  <ng-container *ngIf="questionDetails && questionDetails.question_type === 'SORT'">
+    <app-question-sort [question]="questionDetails" [evaluated]="true"></app-question-sort>
+  </ng-container>
+
+  <ng-container *ngIf="questionDetails && questionDetails.question_type === 'NUMBER_LINE'">
+    <app-question-numberline [question]="questionDetails" [evaluated]="true"></app-question-numberline>
+  </ng-container>
+</ng-template>

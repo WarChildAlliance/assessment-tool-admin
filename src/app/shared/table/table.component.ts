@@ -30,6 +30,7 @@ export class TableComponent implements OnInit, OnChanges {
   @Output() selectionChangedEvent = new EventEmitter<any[]>(true);
   @Output() filtersChangedEvent = new EventEmitter<{ key: string | number, value: any}>(true);
   @Output() openDetailsEvent = new EventEmitter<string>();
+  @Output() customActionEvent = new EventEmitter<any>();
 
   constructor(private alertService: AlertService) { }
 
@@ -129,14 +130,17 @@ export class TableComponent implements OnInit, OnChanges {
     this.filtersChangedEvent.emit({ key, value });
   }
 
-  // If this function changes at some point, look into the backend API at : /visualization/serializers/TopicAnswerTableSerializer
-  // In the class we override the returned 'id' because it's simpler (by default it's an "AssessmentTopicAnswer" id
-  //  and we want an "AssessmentTopic" id), but it's not very clean, so change that if it's possible.
   openElementDetails(id: number): void {
     this.openDetailsEvent.emit(id.toString());
   }
 
   copyAlert(): void {
     this.alertService.success('Successfully copied!');
+  }
+
+  // Emit an event asking for a custom action to trigger on parent element
+  // The element object is the row on wich the user triggered the action.
+  customAction(element: any): void {
+    this.customActionEvent.emit(element);
   }
 }
