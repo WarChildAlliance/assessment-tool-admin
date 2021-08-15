@@ -76,7 +76,10 @@ export class QuestionsListAnswersComponent implements OnInit {
   }
 
   onOpenDetails(questionId: string): void {
-    this.router.navigate([`students/${this.currentStudentId}/assessments/${this.assessmentId}/topics/${this.topicId}/questions/${questionId}`]);
+    /*
+    this.router.navigate([`students/${this.currentStudentId}/assessments/
+      ${this.assessmentId}/topics/${this.topicId}/questions/${questionId}`]);
+    */
   }
 
   onCustomAction(element: any): void {

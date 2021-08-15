@@ -53,7 +53,7 @@ export class QuestionsListComponent implements OnInit {
   }
 
   onOpenDetails(id: string): void {
-    this.router.navigate([`/assessments/${this.assessmentId}/topics/${this.topicId}/questions/${id}`]);
+    // this.router.navigate([`/assessments/${this.assessmentId}/topics/${this.topicId}/questions/${id}`]);
   }
 
   downloadData(): void {
