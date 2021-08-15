@@ -17,7 +17,7 @@ export class AssessmentDetailComponent implements OnInit {
     { key: 'name', name: 'Name' },
     { key: 'students_count', name: 'Number of students with active access' },
     { key: 'students_completed_count', name: 'Number of students with active access who completed it' },
-    { key: 'overall_students_completed_count', name: 'Overall number of students who completed it' },
+    { key: 'overall_students_completed_count', name: 'Total students who completed it' },
     { key: 'questions_count', name: 'Number of questions' }
   ];
 

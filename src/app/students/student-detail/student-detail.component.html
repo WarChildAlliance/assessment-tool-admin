@@ -1,15 +1,21 @@
 <div class="main-board">
   <div class="main-board__top-container">
-    <h1 *ngIf="student">{{ student.full_name }}</h1>
 
     <div class="main-board__top-container__actions">
-      <button mat-flat-button color="primary" (click)="deleteCurrentStudent()" [disabled]="true">
-        <mat-icon>delete_outline</mat-icon> Delete student
+      <button mat-flat-button color="accent" (click)="editCurrentStudent()">
+        <mat-icon>edit_outline</mat-icon><span>Edit student</span>
       </button>
+<!--       <button mat-flat-button color="primary" (click)="deleteCurrentStudent()" [disabled]="true">
+        <mat-icon>delete_outline</mat-icon> Delete student
+      </button> -->
     </div>
   </div>
 
   <div class="main-board__details" *ngIf="student">
+    <div class="main-board__details__element">
+      <span class="title">Name</span>
+      <span class="value">{{ student.full_name }}</span>
+    </div>
     <div class="main-board__details__element">
       <span class="title">Number of assessments</span>
       <span class="value">{{ student.assessments_count }}</span>
@@ -19,7 +25,7 @@
       <span class="value">{{ student.completed_topics_count }}</span>
     </div>
     <div class="main-board__details__element">
-      <span class="title">Last session</span>
+      <span class="title">Last login</span>
       <span class="value">{{ student.last_session | date:'short' }}</span>
     </div>
     <div class="main-board__details__element">
@@ -60,16 +66,9 @@
   <div class="main-board__tabs-container">
     <h3>Assessments Overview</h3>
     <app-assessments-answers></app-assessments-answers>
-
-<!--  TODO remove this code later. Currently it is useful for session debugging
-  <mat-tab-group mat-align-tabs="start" color="accent">
-      <mat-tab label="By assessments">
-        <app-assessments-answers></app-assessments-answers>
-      </mat-tab>
-      <mat-tab label="By sessions">
-        <app-sessions-answers></app-sessions-answers>
-      </mat-tab>
-    </mat-tab-group> -->
   </div>
 
+  <ng-template #editStudentDialog>
+    <app-create-student-dialog [newStudent]="student"></app-create-student-dialog>
+  </ng-template>
 </div>

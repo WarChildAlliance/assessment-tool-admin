@@ -1,7 +1,7 @@
 export interface StudentTableData {
     id: number;
+    username: string;
     full_name: string;
-    copy_icon: string;
     assessments_count: number;
     completed_topics_count: number;
     language_name: string;

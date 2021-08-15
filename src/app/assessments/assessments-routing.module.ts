@@ -12,15 +12,36 @@ const routes: Routes = [
   },
   {
     path: ':id',
-    component: AssessmentDetailComponent
+    component: AssessmentDetailComponent,
+    data: {
+      breadcrumb: [
+        { label: 'Assessments overview', url: '/assessments' },
+        { label: 'Topics', url: '' }
+      ]
+    },
   },
   {
     path: ':assessment_id/topics/:topic_id',
-    component: QuestionsListComponent
+    component: QuestionsListComponent,
+    data: {
+      breadcrumb: [
+        { label: 'Assessments overview', url: '/assessments' },
+        { label: 'Topics', url: '/assessments/:assessment_id' },
+        { label: 'Questions', url: '' }
+      ]
+    },
   },
   {
     path: ':assessment_id/topics/:topic_id/questions/:question_id',
-    component: QuestionDetailComponent
+    component: QuestionDetailComponent,
+    data: {
+      breadcrumb: [
+        { label: 'Assessments overview', url: '/assessments' },
+        { label: 'Topics', url: '/assessments/:assessment_id' },
+        { label: 'Questions', url: '/assessments/:assessment_id/topics/:topic_id' },
+        { label: 'Question details', url: '' }
+      ]
+    },
   },
   {
     path: '**',

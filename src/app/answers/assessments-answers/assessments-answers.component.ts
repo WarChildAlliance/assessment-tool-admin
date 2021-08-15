@@ -16,13 +16,16 @@ export class AssessmentsAnswersComponent implements OnInit {
 
   assessmentsAnswersDataSource: MatTableDataSource<AssessmentTableData> = new MatTableDataSource([]);
   currentStudentId: string;
-  sessionId: string;
 
   public displayedColumns: TableColumn[] = [
     { key: 'title', name: 'Title' },
     { key: 'subject', name: 'Subject' },
-    { key: 'accessible_topics_count', name: 'Number of topics linked to the student' },
-    { key: 'completed_topics_count', name: 'Number of topics completed by the student' },
+    { key: 'accessible_topics_count', name: 'Number of linked topics' },
+    { key: 'completed_topics_count', name: 'Number of completed topics' },
+    {
+      key: 'last_session', name: 'Last login',
+      type: 'date', sorting: 'desc'
+    }
   ];
 
   public searchableColumns = ['title', 'subject'];
@@ -37,17 +40,8 @@ export class AssessmentsAnswersComponent implements OnInit {
     combineLatest([this.route.paramMap, this.route.queryParamMap]).pipe(first()).subscribe(
       ([params, queryParams]: [ParamMap, ParamMap]) => {
         this.currentStudentId = params.get('student_id');
-        this.sessionId = queryParams.get('session_id');
 
-        if (!this.sessionId) {
-          this.displayedColumns.push(
-            { key: 'earliest_topic_answers_correct_answers_percentage', name: 'Answered correctly on first answers submission', type: 'percentage' },
-            { key: 'latest_topic_answers_correct_answers_percentage', name: 'Answered correctly on last answers submission', type: 'percentage' },
-            { key: 'last_session', name: 'Last session', type: 'date', sorting: 'desc' },
-          );
-        }
-
-        this.answerService.getAssessmentsAnswers(this.currentStudentId, this.sessionId).subscribe(assessments => {
+        this.answerService.getAssessmentsAnswers(this.currentStudentId).subscribe(assessments => {
           this.assessmentsAnswersDataSource = new MatTableDataSource(assessments);
         });
       }
@@ -56,8 +50,7 @@ export class AssessmentsAnswersComponent implements OnInit {
 
   onOpenDetails(assessmentId: string): void {
     this.router.navigate(
-      [`students/${this.currentStudentId}/assessments/${assessmentId}/topics`],
-      { queryParams: { session_id: this.sessionId } }
+      [`students/${this.currentStudentId}/assessments/${assessmentId}/topics`]
     );
   }
 }
