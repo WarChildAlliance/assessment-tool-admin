@@ -40,11 +40,13 @@ export class AnswersOverviewComponent implements OnInit {
 
   selectStudent(student: TopicAccessStudents): void {
     this.selectedStudent = student;
-    this.assessmentTopicAnswer = student.topic_first_try.id;
-    this.userService.getStudentTopicAnswers(this.topicId, student.topic_first_try.id).subscribe(topicAnswers => {
-      this.studentTopicAnswers = topicAnswers;
-      this.displayAnswerDetails(this.studentTopicAnswers[0]);
-    });
+    if (student.topic_first_try) {
+      this.assessmentTopicAnswer = student.topic_first_try.id;
+      this.userService.getStudentTopicAnswers(this.topicId, student.topic_first_try.id).subscribe(topicAnswers => {
+        this.studentTopicAnswers = topicAnswers;
+        this.displayAnswerDetails(this.studentTopicAnswers[0]);
+      });
+    }
   }
 
   isAnswerValid(validity: boolean): string {
