@@ -1,14 +1,13 @@
 <div class="main-board">
   <div class="main-board__top-container">
-    <h1 *ngIf="student">{{ student.full_name }}</h1>
 
     <div class="main-board__top-container__actions">
       <button mat-flat-button color="accent" (click)="editCurrentStudent()">
         <mat-icon>edit_outline</mat-icon><span>Edit student</span>
       </button>
-      <button mat-flat-button color="primary" (click)="deleteCurrentStudent()" [disabled]="true">
+<!--       <button mat-flat-button color="primary" (click)="deleteCurrentStudent()" [disabled]="true">
         <mat-icon>delete_outline</mat-icon> Delete student
-      </button>
+      </button> -->
     </div>
   </div>
 
