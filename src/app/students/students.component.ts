@@ -41,7 +41,6 @@ export class StudentsComponent implements OnInit {
   private filtersData = { country: '', language: '', ordering: '-id' };
 
   @ViewChild('createStudentDialog') createStudentDialog: TemplateRef<any>;
-  @ViewChild('editStudentDialog') editStudentDialog: TemplateRef<any>;
   @ViewChild('assignTopicDialog') assignTopicDialog: TemplateRef<any>;
 
   public createNewStudentForm: FormGroup = new FormGroup({

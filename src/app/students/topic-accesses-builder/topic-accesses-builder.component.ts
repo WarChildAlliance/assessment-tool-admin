@@ -1,6 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
 import { Assessment } from 'src/app/core/models/assessment.model';
 import { BatchTopicAccesses } from 'src/app/core/models/batch-topic-accesses.model';
 import { Topic } from 'src/app/core/models/topic.models';
@@ -31,8 +30,7 @@ export class TopicAccessesBuilderComponent implements OnInit {
   constructor(private assessmentService: AssessmentService,
               private userService: UserService,
               private formBuilder: FormBuilder,
-              private alertService: AlertService,
-              private selfDialog: MatDialogRef<TopicAccessesBuilderComponent>
+              private alertService: AlertService
   ) {
   }
 
@@ -100,7 +98,6 @@ export class TopicAccessesBuilderComponent implements OnInit {
     this.userService.assignTopicsAccesses(batchTopicAccessesData, this.selectedAssessmentId).subscribe(
       result => {
         this.alertService.success('The new topic accesses have been successfully set !');
-        this.selfDialog.close();
       },
       error => {
         console.log('ERROR', error);
