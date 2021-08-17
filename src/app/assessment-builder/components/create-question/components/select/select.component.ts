@@ -78,7 +78,6 @@ export class SelectComponent implements OnInit {
         multiple: this.selectForm.value.multiple ? true : false,
         options: this.options.map(o => o.option)
       };
-      console.log(newQuestion);
       const hasAttachment = this.options.find( o => {
         return o.audioAttachment !== null || o.imageAttachment !== null;
       });
