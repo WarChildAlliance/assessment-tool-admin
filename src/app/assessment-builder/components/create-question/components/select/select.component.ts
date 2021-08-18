@@ -37,7 +37,12 @@ export class SelectComponent implements OnInit {
     if (this.question) {
       const q = this.question;
       this.selectForm.setValue({title: q.title, order: q.order, display: q.display_type ? q.display_type : 'GRID', multiple: q.multiple});
-      this.options = q.options;
+      this.options = q.options.map( element => {
+        return {option: {value: element.value, valid: element.valid ? true : false},
+            audio: (element.attachments.find( a => a.attachment_type === 'AUDIO'))?.file,
+            image: (element.attachments.find( a => a.attachment_type === 'IMAGE'))?.file,
+        };
+      });
     } else {
       this.selectForm.patchValue({
         order: this.questionsCount + 1
@@ -57,6 +62,7 @@ export class SelectComponent implements OnInit {
     // TODO should be temporary until attachments are resolved
     const option = {option: {value: optionValue.value, valid: optionValue.valid ? true : false},
     image: event.image, audio: event.audio};
+
     if (this.options.length < index) {
       this.options.push(option);
     } else {
@@ -65,8 +71,7 @@ export class SelectComponent implements OnInit {
   }
 
 
-  createSelect(): void {
-
+  onSave(): void {
     if (this.options.length < 2) {
       this.alertService.error('You need at least 2 options for a select question');
     } else {
@@ -80,78 +85,12 @@ export class SelectComponent implements OnInit {
       };
       const hasAttachment = this.options.find( o => {
         return o.audioAttachment !== null || o.imageAttachment !== null;
-      });
-
+    });
 
       if (this.question) {
-        this.assessmentService.editQuestion(this.assessmentId.toString(), this.topicId.toString(),
-        this.question.id,  newQuestion).subscribe(res => {
-          if (hasAttachment) {
-            this.options.forEach( (o, index) => {
-              if (o.image) {
-                this.assessmentService.addAttachments(this.assessmentId.toString(), o.imageAttachment,
-                  'IMAGE', {name: 'select_option', value: res.select_options[index].id}).subscribe();
-              }
-              if (o.audio) {
-                this.assessmentService.addAttachments(this.assessmentId.toString(), o.audio,
-                  'AUDIO', {name: 'select_option', value: res.select_options[index].id}).subscribe();
-              }
-            });
-          }
-          if (this.imageAttachment ) {
-            if (res.attachments.length === 0 ) {
-              this.assessmentService.addAttachments(this.assessmentId.toString(), this.imageAttachment,
-              'IMAGE', {name: 'question', value: res.id}).subscribe( attachment => {
-                // TODO need snackbar here?
-              });
-            } else {
-              this.assessmentService.updateAttachments(this.assessmentId.toString(), this.imageAttachment,
-              'IMAGE', res.attachments[0].id).subscribe( attachment => {
-              });
-            }
-          }
-          if (this.audioAttachment ) {
-            if (res.attachments.length === 0 ) {
-              this.assessmentService.addAttachments(this.assessmentId.toString(), this.audioAttachment,
-              'AUDIO', {name: 'question', value: res.id}).subscribe( attachment => {
-                // TODO need snackbar here?
-              });
-            } else {
-              this.assessmentService.updateAttachments(this.assessmentId.toString(), this.audioAttachment,
-              'AUDIO', res.attachments[0].id).subscribe( attachment => {
-              });
-            }
-          }
-          console.log('todo make snackbar', res); });
+        this.updateQuestion(newQuestion, hasAttachment);
       } else {
-        this.assessmentService.createQuestion(newQuestion, this.topicId.toString(),
-        this.assessmentId.toString()).subscribe((res) => {
-          if (hasAttachment) {
-            this.options.forEach( (o, index) => {
-              if (o.image) {
-                this.assessmentService.addAttachments(this.assessmentId.toString(), o.image,
-                  'IMAGE', {name: 'select_option', value: res.options[index].id}).subscribe();
-              }
-              if (o.audio) {
-                this.assessmentService.addAttachments(this.assessmentId.toString(), o.audio,
-                  'AUDIO', {name: 'select_option', value: res.options[index].id}).subscribe();
-              }
-            });
-          }
-          if (this.imageAttachment) {
-            this.assessmentService.addAttachments(this.assessmentId.toString(), this.imageAttachment,
-            'IMAGE', {name: 'question', value: res.id}).subscribe( attachment => {
-              // TODO need snackbar here?
-            });
-          }
-          if (this.audioAttachment) {
-            this.assessmentService.addAttachments(this.assessmentId.toString(), this.audioAttachment,
-            'AUDIO', {name: 'question', value: res.id}).subscribe( attachment => {
-              // TODO need snackbar here?
-            });
-          }
-          console.log('res', res);
-        });
+        this.createQuestion(newQuestion, hasAttachment);
       }
     }
   }
@@ -163,5 +102,34 @@ export class SelectComponent implements OnInit {
       this.audioAttachment = event.target.files[0];
     }
   }
+  createQuestion(newQuestion, hasAttachment): void {
+    this.assessmentService.createQuestion(newQuestion, this.topicId.toString(),
+    this.assessmentId.toString()).subscribe((res) => {
+      this.saveAttachments(hasAttachment, res);
+    });
+  }
+
+  updateQuestion(newQuestion, hasAttachment): void {
+    this.assessmentService.editQuestion(this.assessmentId.toString(), this.topicId.toString(),
+      this.question.id,  newQuestion).subscribe(res => {
+        this.saveAttachments(hasAttachment, res);
+    });
+  }
+
+  saveAttachments(hasAttachment, question): void {
+    if (hasAttachment) {
+      this.options.forEach( (o, index) => {
+        if (o.image) {
+          this.assessmentService.addAttachments(this.assessmentId.toString(), o.image,
+            'IMAGE', {name: 'select_option', value: question.options[index].id}).subscribe();
+        }
+        if (o.audio) {
+          this.assessmentService.addAttachments(this.assessmentId.toString(), o.audio,
+            'AUDIO', {name: 'select_option', value: question.options[index].id}).subscribe();
+        }
+      });
+    }
+  }
+
 
 }

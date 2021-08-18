@@ -11,16 +11,16 @@
         </mat-checkbox>
       
         <div>
-            <button type="button" mat-button mat-raised-button color="accent">Image Attachment</button>
+            <h3 type="button" mat-button mat-raised-button color="accent">Image Attachment</h3>
             <input  formControlName="imageAttachment"
             (change)="handleFileInput($event, 'IMAGE')" #fileInput type="file">
-            <p class="uploaded-file-name">{{imageAttachment ? imageAttachment.name : ''}}</p>
+            <p *ngIf="option" class="uploaded-file-name"> Previous: {{option.image ?  option.image : ''}}</p>
         </div>
         <div>
-            <button type="button" mat-button mat-raised-button color="accent">Audio Attachment</button>
+            <h3 type="button" mat-button mat-raised-button color="accent">Audio Attachment</h3>
             <input  formControlName="audioAttachment"
                 (change)="handleFileInput($event, 'AUDIO')" #fileInput type="file">      
-            <p class="uploaded-file-name">{{audioAttachment ? audioAttachment.name : ''}}</p>
+            <p *ngIf="option"  class="uploaded-file-name">Previous: {{option?.image ?  option.image : ''}}</p>
         </div>
         
     </form>

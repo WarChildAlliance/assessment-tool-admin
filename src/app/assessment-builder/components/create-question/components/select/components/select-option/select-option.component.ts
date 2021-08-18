@@ -18,16 +18,18 @@ export class SelectOptionComponent implements OnInit {
 
   public selectOptionForm: FormGroup = new FormGroup({
     value: new FormControl('', [Validators.required]),
-    valid: new FormControl(false, [Validators.required]),
-    audioAttachment: new FormControl('', [Validators.required]),
-    imageAttachment: new FormControl('', [Validators.required])
+    valid: new FormControl('', [Validators.required]),
+    audioAttachment: new FormControl(null, [Validators.required]),
+    imageAttachment: new FormControl(null, [Validators.required])
   });
+  http: any;
 
   constructor() { }
 
   ngOnInit(): void {
-    if (this.option) {
-      this.selectOptionForm.setValue({value: this.option.value, valid: this.option.valid, audioAttachment: null, imageAttachment: null});
+    if (this.option?.option) {
+      const option = this.option.option;
+      this.selectOptionForm.setValue({value: option.value, valid: option.valid, audioAttachment: null, imageAttachment: null});
     }
   }
 
@@ -43,5 +45,6 @@ export class SelectOptionComponent implements OnInit {
     }
     this.fileName = event.target.files[0].name;
   }
+
 
 }
