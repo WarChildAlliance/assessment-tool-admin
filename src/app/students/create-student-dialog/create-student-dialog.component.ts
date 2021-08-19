@@ -40,8 +40,8 @@ export class CreateStudentDialogComponent implements OnInit {
       this.isStudentEdited = true;
 
       this.createNewStudentForm.setValue({
-        first_name: this.newStudent.full_name.split(' ')[0],
-        last_name: this.newStudent.full_name.split(' ')[1],
+        first_name: this.newStudent.first_name,
+        last_name: this.newStudent.last_name,
         country: this.newStudent.country_code,
         language: this.newStudent.language_code,
       });
