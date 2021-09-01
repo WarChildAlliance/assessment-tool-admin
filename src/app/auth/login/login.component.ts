@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/core/services/auth.service';
 
@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
     username: new FormControl(null, [Validators.required]),
     password: new FormControl(null, [Validators.required])
   });
+  @ViewChild('passwordElement') passwordElement: ElementRef<HTMLInputElement>;
 
   constructor(
     private authService: AuthService
@@ -28,4 +29,8 @@ export class LoginComponent implements OnInit {
     );
   }
 
+  showPassword(): void {
+    const newType = this.passwordElement.nativeElement.getAttribute('type') === 'password' ? 'text' : 'password';
+    this.passwordElement.nativeElement.setAttribute('type', newType);
+  }
 }
