@@ -10,21 +10,23 @@
       <canvas id="barChart"></canvas>
     </div>
   
-  <ng-container *ngIf="questionDetails && questionDetails.question_type === 'SELECT'">
-    <app-question-select [question]="questionDetails" [evaluated]="true"></app-question-select>
-  </ng-container>
-
-  <ng-container *ngIf="questionDetails && questionDetails.question_type === 'INPUT'">
-    <app-question-input [question]="questionDetails" [evaluated]="true"></app-question-input>
-  </ng-container>
-
-  <ng-container *ngIf="questionDetails && questionDetails.question_type === 'SORT'">
-    <app-question-sort [question]="questionDetails" [evaluated]="true"></app-question-sort>
-  </ng-container>
-
-  <ng-container *ngIf="questionDetails && questionDetails.question_type === 'NUMBER_LINE'">
-    <app-question-numberline [question]="questionDetails" [evaluated]="true"></app-question-numberline>
-  </ng-container>
+  <div class="question-details">
+    <ng-container *ngIf="questionDetails && questionDetails.question_type === 'SELECT'">
+      <app-question-select [question]="questionDetails" [evaluated]="true"></app-question-select>
+    </ng-container>
+  
+    <ng-container *ngIf="questionDetails && questionDetails.question_type === 'INPUT'">
+      <app-question-input [question]="questionDetails" [evaluated]="true"></app-question-input>
+    </ng-container>
+  
+    <ng-container *ngIf="questionDetails && questionDetails.question_type === 'SORT'">
+      <app-question-sort [question]="questionDetails" [evaluated]="true"></app-question-sort>
+    </ng-container>
+  
+    <ng-container *ngIf="questionDetails && questionDetails.question_type === 'NUMBER_LINE'">
+      <app-question-numberline [question]="questionDetails" [evaluated]="true"></app-question-numberline>
+    </ng-container>
+  </div>
 
 
 </mat-card-content>

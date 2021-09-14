@@ -7,11 +7,13 @@ mat-card-title {
 
 mat-card-content {
     display:flex;
+    justify-content: space-between;
+    align-items: center;
 
 
     .barChart {
-        max-height: 500px;
-        padding-right:10%;
+        height: 300px;
+        width: 40%;
     }
 
 
@@ -19,12 +21,20 @@ mat-card-content {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: center;
-    width: 35%;
 }
 
 .right-section {
     display: flex;
     justify-content: space-between;
 }
+}
+
+.question-details {
+    text-align: center;
+    border: 1px solid lightgray;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    min-height: 275px;
 }

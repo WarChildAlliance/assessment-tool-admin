@@ -58,7 +58,8 @@ export class ScoreByTopicChartComponent implements OnInit {
 
   selectChartAssessment(assessment: AssessmentDashboard): void {
     this.userService.getStudentTopicsChart(assessment.id).subscribe(scoreByTopic => {
-      this.getChartLineData(scoreByTopic, assessment);
+      const filteredScoreByTopic = scoreByTopic.filter(el => el.student_access)
+      this.getChartLineData(filteredScoreByTopic, assessment);
     });
   }
 

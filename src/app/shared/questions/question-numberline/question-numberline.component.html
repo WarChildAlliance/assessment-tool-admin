@@ -3,14 +3,14 @@
 </div>
 <div class="number-line">
     <span>{{ question.start }}</span>
-    <mat-slider class="number-line-slider"
-                [color]="'green'"
-                [max]="question.end"
-                [min]="question.start"
-                [step]="question.step"
-                [thumbLabel]="question.show_value"
-                [tickInterval]="question.show_ticks ? question.step : 0"
-                aria-labelledby="example-name-label">
+    <mat-slider
+            style="overflow-x: hidden"
+            class="number-line-slider"
+            [max]="question.end"
+            [min]="question.start"
+            [step]="question.step"
+            [thumbLabel]="question.show_value"
+            [tickInterval]="question.show_ticks ? question.step : 0">
     </mat-slider>
     <span>{{ question.end }}</span>
 </div>

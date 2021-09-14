@@ -59,6 +59,7 @@ export class AnswersOverviewComponent implements OnInit {
 
   displayAnswerDetails(answer: TopicAnswer): void {
     this.userService.getAnswerDetails(this.topicId, this.assessmentTopicAnswer, answer.id).subscribe(answerDetails => {
+      console.log('answer details', answerDetails);
       this.answerDetails = answerDetails;
     });
   }

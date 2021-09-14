@@ -17,7 +17,7 @@
   </div>
     <div class="answers-list">
         <ul>
-            <li *ngFor="let answer of studentTopicAnswers" (click)="displayAnswerDetails(answer)">Q{{ answer.question.order }}<span><mat-icon *ngIf="evaluated" [style.color]="isAnswerValid(answer.valid)" >stop</mat-icon><p *ngIf="!evaluated">{{answer.question.title}}</p></span></li>
+            <li *ngFor="let answer of studentTopicAnswers; let i = index" (click)="displayAnswerDetails(answer)">Q{{ i + 1 }}<span><mat-icon *ngIf="evaluated" [style.color]="isAnswerValid(answer.valid)" >stop</mat-icon><p *ngIf="!evaluated">{{answer.question.title}}</p></span></li>
         </ul>
     </div>
     <ng-container *ngIf="answerDetails && answerDetails.question.question_type === 'SELECT'">

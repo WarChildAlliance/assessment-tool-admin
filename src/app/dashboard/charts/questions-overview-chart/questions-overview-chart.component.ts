@@ -33,6 +33,7 @@ export class QuestionsOverviewChartComponent implements OnInit {
       type: 'horizontalBar',
       data: this.barChartData,
       options: {
+        maintainAspectRatio: false,
         scales: {
             xAxes: [{
                 ticks: {
@@ -61,9 +62,9 @@ export class QuestionsOverviewChartComponent implements OnInit {
     const incorrectAnswers = [];
     this.barChart.data.labels = [];
     this.barChart.data.datasets = [];
-    questionData.forEach(val => {
+    questionData.forEach((val, i) => {
       this.questionData.push(val);
-      this.barChart.data.labels.push('Q' + val.order);
+      this.barChart.data.labels.push('Q' + (i + 1));
       data.push(val.correct_answers_count);
       incorrectAnswers.push(val.incorrect_answers_count);
     });
