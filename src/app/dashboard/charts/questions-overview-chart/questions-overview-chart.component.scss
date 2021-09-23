@@ -17,24 +17,24 @@ mat-card-content {
     }
 
 
-.left-column {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-}
+    .left-column {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
 
-.right-section {
-    display: flex;
-    justify-content: space-between;
-}
-}
-
-.question-details {
-    text-align: center;
-    border: 1px solid lightgray;
-    border-radius: 4px;
-    display: flex;
-    flex-direction: column;
-    width: 30%;
-    min-height: 275px;
+    .right-section {
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    .question-details {
+        text-align: center;
+        border: 1px solid lightgray;
+        border-radius: 4px;
+        display: flex;
+        flex-direction: column;
+        width: 30%;
+        min-height: 275px;
+    }
 }

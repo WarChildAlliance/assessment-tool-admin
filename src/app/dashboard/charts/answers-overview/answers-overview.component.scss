@@ -7,8 +7,10 @@ mat-card-title {
 
 mat-card-content {
     display:flex;
+    justify-content: space-between;
+    align-items: center;
 
- .left-column {
+    .left-column {
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
@@ -20,18 +22,26 @@ mat-card-content {
         }
     }
    
-.answers-list {
-    
-    padding-right:20%;
+    .answers-list {
+        padding-right:20%;
 
-    li {
-        list-style: none;
-        cursor: pointer;
-        mat-icon {
-            vertical-align: middle;
+        li {
+            list-style: none;
+            cursor: pointer;
+            mat-icon {
+                vertical-align: middle;
+            }
         }
+
     }
 
+    .question-details {
+       text-align: center;
+       border: 1px solid lightgray;
+       border-radius: 4px;
+       display: flex;
+       flex-direction: column;
+       width: 30%;
+       padding: 0.5rem;
+    }
 }
-
- }

@@ -3,6 +3,10 @@ export interface AssessmentDashboard {
     id: string;
     title: string;
     evaluated: boolean;
-    topics: string[];
-    topics_average: number[];
+    topics: [{
+        id: string,
+        name: string,
+        average: number
+    }];
+    started: boolean;
 }

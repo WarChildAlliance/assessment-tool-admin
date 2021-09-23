@@ -24,6 +24,7 @@
     .option {
       padding: 0.5rem;
       border-radius: 1.25rem;
+      margin-bottom: 0.5rem;
       width: 35%;
   
       mat-checkbox {
@@ -52,6 +53,10 @@
   
       &.valid {
         background-color: #7EBF9A;
+      }
+
+      &.student {
+        background-color: blue;
       }
     }
   }

@@ -1,40 +1,56 @@
 <mat-card>
-<mat-card-title>Individual results</mat-card-title>
+  <mat-card-title>Individual results</mat-card-title>
 
-<mat-card-content>
-<div class="left-column"> 
-<app-select-assessment (topicSelection)="onTopicSelection($event)" [selectTopic]="true" [multiple]="false" [displayNonEvaluated]="true"></app-select-assessment>
+  <mat-card-content *ngIf="hasData">
+    <div class="left-column">
+      <app-select-assessment (topicSelection)="onTopicSelection($event)" [selectTopic]="true" [multiple]="false"
+        [displayNonEvaluated]="true"></app-select-assessment>
 
-    <div class="main-board__charts-container__options">
+      <div class="main-board__charts-container__options">
         <mat-radio-group class="radio-group">
-            <ng-container *ngFor="let student of studentsList">
-              <ul>
-                <li><mat-radio-button *ngIf="student.topic_first_try" [value]="student" [checked]="student === selectedStudent ? true : false" (change)="selectStudent(student)">{{ student.student.full_name }}</mat-radio-button></li>
-              </ul>
-            </ng-container>
+          <ng-container *ngFor="let student of studentsList">
+            <ul>
+              <li>
+                <mat-radio-button *ngIf="student.topic_first_try" [value]="student"
+                  [checked]="student === selectedStudent ? true : false" (change)="selectStudent(student)">{{
+                  student.student.full_name }}</mat-radio-button>
+              </li>
+            </ul>
+          </ng-container>
         </mat-radio-group>
+      </div>
     </div>
-  </div>
     <div class="answers-list">
-        <ul>
-            <li *ngFor="let answer of studentTopicAnswers; let i = index" (click)="displayAnswerDetails(answer)">Q{{ i + 1 }}<span><mat-icon *ngIf="evaluated" [style.color]="isAnswerValid(answer.valid)" >stop</mat-icon><p *ngIf="!evaluated">{{answer.question.title}}</p></span></li>
-        </ul>
+      <ul>
+        <li *ngFor="let answer of studentTopicAnswers; let i = index" (click)="displayAnswerDetails(answer)">Q{{ i + 1
+          }}<span>
+            <mat-icon *ngIf="evaluated" [style.color]="isAnswerValid(answer.valid)">stop</mat-icon>
+            <p *ngIf="!evaluated">{{answer.question.title}}</p>
+          </span></li>
+      </ul>
     </div>
-    <ng-container *ngIf="answerDetails && answerDetails.question.question_type === 'SELECT'">
-      <app-question-select [question]="answerDetails.question" [answer]="answerDetails.value" [evaluated]="evaluated"></app-question-select>
-    </ng-container>
-  
-    <ng-container *ngIf="answerDetails && answerDetails.question.question_type === 'INPUT'">
-      <app-question-input [question]="answerDetails.question" [answer]="answerDetails.value" [evaluated]="evaluated"></app-question-input>
-    </ng-container>
-  
-    <ng-container *ngIf="answerDetails && answerDetails.question.question_type === 'SORT'">
-      <app-question-sort [question]="answerDetails.question" [answer]="answerDetails.value" [evaluated]="evaluated"></app-question-sort>
-    </ng-container>
-  
-    <ng-container *ngIf="answerDetails && answerDetails.question.question_type === 'NUMBER_LINE'">
-      <app-question-numberline [question]="answerDetails.question" [answer]="answerDetails.value" [evaluated]="evaluated"></app-question-numberline>
-    </ng-container>
+    <div class="question-details">
+      <ng-container *ngIf="answerDetails && answerDetails.question.question_type === 'SELECT'">
+        <app-question-select [question]="answerDetails.question" [index]="index" [answer]="answerDetails"
+          [evaluated]="evaluated"></app-question-select>
+      </ng-container>
 
-</mat-card-content>
+      <ng-container *ngIf="answerDetails && answerDetails.question.question_type === 'INPUT'">
+        <app-question-input [question]="answerDetails.question" [index]="index" [answer]="answerDetails.value"
+          [evaluated]="evaluated"></app-question-input>
+      </ng-container>
+
+      <ng-container *ngIf="answerDetails && answerDetails.question.question_type === 'SORT'">
+        <app-question-sort [question]="answerDetails.question" [index]="index" [answer]="answerDetails.value"
+          [evaluated]="evaluated"></app-question-sort>
+      </ng-container>
+
+      <ng-container *ngIf="answerDetails && answerDetails.question.question_type === 'NUMBER_LINE'">
+        <app-question-numberline [question]="answerDetails.question" [index]="index" [answer]="answerDetails.value"
+          [evaluated]="evaluated"></app-question-numberline>
+      </ng-container>
+    </div>
+
+  </mat-card-content>
+  <p *ngIf="!hasData">No data to display</p>
 </mat-card>

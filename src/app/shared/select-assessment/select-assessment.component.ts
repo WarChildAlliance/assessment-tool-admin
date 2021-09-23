@@ -35,14 +35,14 @@ export class SelectAssessmentComponent implements OnInit {
   ngOnInit(): void {
     this.assessmentService.completeAssessmentsList.pipe(first()).subscribe(assessmentsList => {
       this.assessmentsList = assessmentsList;
-      this.selectedAssessment = this.assessmentsList[0];
-      this.selectedAssessmentArr = this.assessmentsList.slice(0, 1);
+      this.selectedAssessment = this.assessmentsList.find(el => el.started);
+      this.selectedAssessmentArr = this.assessmentsList.filter(el => el.started).slice(0, 1);
 
       if (this.selectTopic) {
-        this.assessmentId = this.assessmentsList[0].id;
-        this.getTopics(this.assessmentsList[0].id);
+        this.assessmentId = this.selectedAssessment.id;
+        this.getTopics(this.assessmentId);
       } else {
-        this.assessmentSelection.emit(this.assessmentsList[0]);
+        this.assessmentSelection.emit(this.selectedAssessment);
       }
     });
   }
@@ -67,8 +67,8 @@ export class SelectAssessmentComponent implements OnInit {
       this.topicsList = topics;
 
       if (this.firstTopicRequest) {
-        this.selectedTopic = this.topicsList[0];
-        this.topicSelection.emit({assessmentId: this.assessmentId, topic: this.topicsList[0]});
+        this.selectedTopic = this.topicsList.find(el => el.started);
+        this.topicSelection.emit({assessmentId: this.assessmentId, topic: this.selectedTopic});
         this.firstTopicRequest = false;
       }
     });

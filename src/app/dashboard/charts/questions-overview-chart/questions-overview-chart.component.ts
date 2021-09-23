@@ -26,34 +26,13 @@ export class QuestionsOverviewChartComponent implements OnInit {
 
   public questionDetails;
 
+  public index: number;
+
+  public hasData = true;
+
   constructor(private assessmentService: AssessmentService) { }
 
   ngOnInit(): void {
-    this.barChart = new Chart('barChart', {
-      type: 'horizontalBar',
-      data: this.barChartData,
-      options: {
-        maintainAspectRatio: false,
-        scales: {
-            xAxes: [{
-                ticks: {
-                    beginAtZero: true,
-                    stepSize: 1
-                },
-                stacked: true
-            }],
-            yAxes: [{
-              stacked: true
-            }]
-        },
-        onClick: event => {
-          /* tslint:disable:no-string-literal */
-          const datasetIndex =  this.barChart.getElementAtEvent(event)[0]['_index'];
-          /* tslint:enable:no-string-literal */
-          this.getQuestionDetails(datasetIndex);
-        }
-      },
-    });
   }
 
   getBarChartData(questionData): void {
@@ -83,6 +62,7 @@ export class QuestionsOverviewChartComponent implements OnInit {
   }
 
   getQuestionDetails(index): any {
+    this.index = index + 1;
     this.assessmentService.getQuestionDetails(this.assessmentId, this.topicId, this.questionData[index].id).subscribe(details => {
       this.questionDetails = details;
     });
@@ -90,10 +70,40 @@ export class QuestionsOverviewChartComponent implements OnInit {
 
   onTopicSelection(assessmentTopicInfos: {assessmentId: string, topic: TopicDashboard}): void {
     this.assessmentId = assessmentTopicInfos.assessmentId;
-    this.topicId = assessmentTopicInfos.topic.id;
-    this.assessmentService.getQuestionsOverview(assessmentTopicInfos.assessmentId, this.topicId).subscribe(data => {
-      this.getBarChartData(data);
-    });
+
+    if (assessmentTopicInfos.topic) {
+      this.barChart = new Chart('barChart', {
+        type: 'horizontalBar',
+        data: this.barChartData,
+        options: {
+          maintainAspectRatio: false,
+          scales: {
+              xAxes: [{
+                  ticks: {
+                      beginAtZero: true,
+                      stepSize: 1
+                  },
+                  stacked: true
+              }],
+              yAxes: [{
+                stacked: true
+              }]
+          },
+          onClick: event => {
+            /* tslint:disable:no-string-literal */
+            const datasetIndex =  this.barChart.getElementAtEvent(event)[0]['_index'];
+            /* tslint:enable:no-string-literal */
+            this.getQuestionDetails(datasetIndex);
+          }
+        },
+      });
+      this.topicId = assessmentTopicInfos.topic.id;
+      this.assessmentService.getQuestionsOverview(assessmentTopicInfos.assessmentId, this.topicId).subscribe(data => {
+        this.getBarChartData(data);
+      });
+    } else {
+      this.hasData = false;
+    }
   }
 
 }

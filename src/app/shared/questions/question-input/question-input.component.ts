@@ -10,6 +10,7 @@ export class QuestionInputComponent implements OnInit {
   @Input() question;
   @Input() answer;
   @Input() evaluated;
+  @Input() index;
 
   constructor() { }
 

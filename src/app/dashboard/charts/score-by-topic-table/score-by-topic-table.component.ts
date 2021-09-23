@@ -21,6 +21,8 @@ export class ScoreByTopicTableComponent implements OnInit {
 
   public scoreByTopicTable = [];
 
+  public hasData = true;
+
 
   constructor(private userService: UserService) { }
 
@@ -39,7 +41,7 @@ export class ScoreByTopicTableComponent implements OnInit {
           for (const key in data) {
             if (data.hasOwnProperty(key)) {
               assessment.topics.forEach(topic => {
-                if (topic.toLocaleLowerCase() === key) {
+                if (topic.name.toLocaleLowerCase() === key) {
                   delete data[key];
                 }
               });
@@ -79,11 +81,16 @@ export class ScoreByTopicTableComponent implements OnInit {
 
   getScoreByTopicsData(assessment, instentiateTable: boolean): void {
     this.userService.getStudentTopicsChart(assessment.id).subscribe(scoreByTopic => {
-      if (instentiateTable) {
-        this.scoreByTopicTable = scoreByTopic;
+
+      if (scoreByTopic.length) {
+        if (instentiateTable) {
+          this.scoreByTopicTable = scoreByTopic;
+        }
+        this.displayedColumns = this.displayedColumns.concat(this.getTableColumns(scoreByTopic, assessment.title));
+        this.studentsDataSource = new MatTableDataSource(this.getTableData(scoreByTopic));
+      } else {
+        this.hasData = false;
       }
-      this.displayedColumns = this.displayedColumns.concat(this.getTableColumns(scoreByTopic, assessment.title));
-      this.studentsDataSource = new MatTableDataSource(this.getTableData(scoreByTopic));
     });
   }
 

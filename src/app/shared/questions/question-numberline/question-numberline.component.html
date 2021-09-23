@@ -1,4 +1,4 @@
-<div class="question-header" *ngIf="evaluated">
+<div class="question-header">
     <h2>Q{{ question.order }}: {{ question.title }}</h2>
 </div>
 <div class="number-line">
@@ -6,10 +6,10 @@
     <mat-slider
             style="overflow-x: hidden"
             class="number-line-slider"
+            [value]="evaluated ? question.expected_value : answer"
             [max]="question.end"
             [min]="question.start"
             [step]="question.step"
-            [thumbLabel]="question.show_value"
             [tickInterval]="question.show_ticks ? question.step : 0">
     </mat-slider>
     <span>{{ question.end }}</span>

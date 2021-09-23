@@ -1,5 +1,5 @@
 <div class="question-header" *ngIf="evaluated">
-    <h2>Q{{ question.order }}: {{ question.title }}</h2>
+    <h2>Q{{ index }}: {{ question.title }}</h2>
 </div>
 <div class="correct-answer" *ngIf="evaluated">
     Correct answer: {{question.valid_answer}}
