@@ -48,15 +48,21 @@
       }
   
       &.invalid {
-        background-color: #F2836B;
+        outline-width: 2px;
+        outline-color: #F2836B;
+        outline-style: solid;
       }
   
       &.valid {
-        background-color: #7EBF9A;
+        outline-width: 2px;
+        outline-color: #7EBF9A;;
+        outline-style: solid;
       }
 
       &.student {
-        background-color: blue;
+        outline-width: 2px;
+        outline-color: #7e8abf;;
+        outline-style: solid;
       }
     }
   }

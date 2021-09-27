@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { StudentDetailComponent } from 'src/app/students/student-detail/student-detail.component';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -16,15 +17,17 @@ export class QuestionSelectComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log('answer', this.answer);
   }
 
   getAnswerBackground(option: any): string {
     if (this.answer) {
-      return option.id === this.answer.selected_options[0] ? 'student' : '';
-    } else {
-      return option.valid ? 'valid' : 'invalid';
+      if (option.id === this.answer.selected_options[0]) {
+        return 'student';
+      }
+      return  option.valid ? 'valid' : '';
     }
+    return option.valid ? 'valid' : 'invalid';
+
   }
 
   hasImageAttached(option): boolean {

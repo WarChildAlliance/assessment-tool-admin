@@ -1,8 +1,13 @@
 mat-card-title {
     font-size: 2rem;
     text-align: center;
-    padding: 20px 0px 40px 0px;
+    padding: 20px 0px 10px 0px;
     color: rgb(66, 64, 64);
+}
+
+mat-card-subtitle {
+    font-size: 1rem;
+    text-align: center;
 }
 
 mat-card-content {

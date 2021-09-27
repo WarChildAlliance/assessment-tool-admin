@@ -5,6 +5,11 @@ mat-card-title {
     color: rgb(66, 64, 64);
 }
 
+mat-card-subtitle {
+    font-size: 1rem;
+    text-align: center;
+}
+
 mat-card-content {
     display:flex;
     justify-content: center;
