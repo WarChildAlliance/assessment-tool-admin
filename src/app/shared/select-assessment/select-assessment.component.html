@@ -25,8 +25,11 @@
     <mat-label>Choose a topic</mat-label>
     <mat-select [(value)]="selectedTopic">
       <ng-container *ngFor="let topic of topicsList">
-        <mat-option [value]="topic" (click)="selectATopic(topic)">{{ topic.name }}</mat-option>
+        <mat-option [value]="topic" (click)="selectATopic(topic)" [disabled]="!topic.started">{{ topic.name }}</mat-option>
       </ng-container>
     </mat-select>
+    <mat-hint>
+      <mat-icon>info</mat-icon>If a topic is grayed out, it means that  no student has started it yet
+  </mat-hint>
   </mat-form-field>
 </div>

@@ -21,7 +21,11 @@ export class AnswersOverviewComponent implements OnInit {
 
   public evaluated: boolean;
 
+  public index = 0;
+
   public selectedStudent: TopicAccessStudents;
+
+  public hasData = true;
 
   constructor(private userService: UserService) { }
 
@@ -29,13 +33,17 @@ export class AnswersOverviewComponent implements OnInit {
   }
 
   onTopicSelection(assessmentTopicInfos: {assessmentId: string, topic: TopicDashboard}): void {
-    this.topicId = assessmentTopicInfos.topic.id;
-    this.evaluated = assessmentTopicInfos.topic.evaluated;
-    this.userService.getStudentsListForATopic(this.topicId).subscribe(studentsList => {
-      this.studentsList = studentsList;
-      this.selectedStudent = this.studentsList[0];
-      this.selectStudent(this.studentsList[0]);
-    });
+    if (assessmentTopicInfos.topic) {
+      this.topicId = assessmentTopicInfos.topic.id;
+      this.evaluated = assessmentTopicInfos.topic.evaluated;
+      this.userService.getStudentsListForATopic(this.topicId).subscribe(studentsList => {
+        this.studentsList = studentsList;
+        this.selectedStudent = this.studentsList[0];
+        this.selectStudent(this.studentsList[0]);
+      });
+    } else {
+      this.hasData = false;
+    }
   }
 
   selectStudent(student: TopicAccessStudents): void {

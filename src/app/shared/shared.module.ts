@@ -14,6 +14,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatCardModule } from '@angular/material/card';
 import { SelectAssessmentComponent } from './select-assessment/select-assessment.component';
 import { QuestionSelectComponent } from './questions/question-select/question-select.component';
 import { QuestionInputComponent } from './questions/question-input/question-input.component';
@@ -44,6 +45,7 @@ import { QuestionNumberlineComponent } from './questions/question-numberline/que
     MatPaginatorModule,
     MatIconModule,
     MatTooltipModule,
+    MatCardModule,
     ClipboardModule
   ],
   exports: [TableComponent,

@@ -1,22 +1,27 @@
 <mat-card>
-<mat-card-title>Comparison to average</mat-card-title>
-<mat-card-content>
+  <mat-card-title>Comparison to average</mat-card-title>
+  <mat-card-subtitle>of first try</mat-card-subtitle>
+  <mat-card-content *ngIf="hasData">
     <div class="left-column">
-    <app-select-assessment (assessmentSelection)="selectChartAssessment($event)" [selectTopic]="false" [multiple]="false" [displayNonEvaluated]="false"></app-select-assessment>
-    
+      <app-select-assessment (assessmentSelection)="selectChartAssessment($event)" [selectTopic]="false"
+        [multiple]="false" [displayNonEvaluated]="false"></app-select-assessment>
+
       <h3>Assessment title</h3>
       <mat-radio-group class="radio-group">
         <ng-container *ngFor="let student of studentsListChart">
           <ul>
-            <li><mat-radio-button [value]="student" [checked]="student === selectedStudent ? true : false" (change)="selectStudent(student)">{{ student.label }}</mat-radio-button></li>
+            <li>
+              <mat-radio-button [value]="student" [checked]="student === selectedStudent ? true : false"
+                (change)="selectStudent(student)">{{ student.label }}</mat-radio-button>
+            </li>
           </ul>
         </ng-container>
       </mat-radio-group>
     </div>
-    
+
     <div class="main-board__charts-container__chart">
       <canvas id="currentChart"></canvas>
     </div>
   </mat-card-content>
-  </mat-card>
-
+  <p *ngIf="!hasData">No data to display</p>
+</mat-card>

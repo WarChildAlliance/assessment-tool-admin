@@ -10,6 +10,7 @@ export class QuestionNumberlineComponent implements OnInit {
   @Input() question;
   @Input() answer;
   @Input() evaluated;
+  @Input() index;
 
   constructor() { }
 

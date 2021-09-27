@@ -1,17 +1,65 @@
-<div class="question-container">
-    <div class="question-header" *ngIf="evaluated">
-        <h2>Q{{ question.order }}: {{ question.title }}</h2>
-    </div>
-    <mat-radio-group class="select-content">
+<div class="question-header" *ngIf="evaluated">
+    <h2>Q{{ question.order }}: {{ question.title }}</h2>
+</div>
+<!-- Options with only one choice -->
+<section *ngIf="!question.multiple">
+    <div class="options-container" [class]="question.display_type | lowercase">
         <ng-container *ngFor="let option of question.options">
-            <div [style.background]="setAnswerBackground(option)" [ngClass]="[option.attachments.length ? 'select-radio-options-attachments' : 'select-radio-options']">
-                <mat-radio-button [value]="option">
-                    {{ option.value }}
-                </mat-radio-button>
+            <div [class]="getAnswerBackground(option)" *ngIf="hasImageAttached(option); else noImageAttached" class="option -card">
+                <mat-card>
+                    <mat-card-content>
+                        <div *ngFor="let attachment of option.attachments">
+                            <img *ngIf="attachment.attachment_type === 'IMAGE'" [src]="getSource(attachment.file)" alt="">
+                        </div>
+                    </mat-card-content>
+                    <mat-card-actions>
+                            {{ option.value }}
+                        <ng-container *ngFor="let attachment of option.attachments">
+                            <mat-icon (click)="playAudio(attachment.file)" *ngIf="attachment.attachment_type === 'AUDIO'">volume_up</mat-icon>
+                        </ng-container>
+                    </mat-card-actions>
+                </mat-card>
             </div>
+            <ng-template #noImageAttached>
+                <div [class]="getAnswerBackground(option)" class="option">
+                        {{ option.value }}
+                </div>
+            </ng-template>
         </ng-container>
-    </mat-radio-group>
-</div>
-<div *ngIf="answer" class="student-answer">
-    Student answer: {{answer}}
-</div>
+    </div>
+</section>
+
+<!-- Options with multiple choices -->
+<section class="options-container" [class]="question.display_type | lowercase" 
+         *ngIf="question.multiple">
+    <ng-container *ngFor="let option of question.options; let i = index">
+        <div [class]="getAnswerBackground(option)" *ngIf="hasImageAttached(option); else noImageAttachmentOption" class="option -card">
+            <mat-card>
+                <mat-card-content>
+                    <div *ngFor="let attachment of option.attachments">
+                        <img *ngIf="attachment.attachment_type === 'IMAGE'" [src]="getSource(attachment.file)" alt="">
+                    </div>
+                </mat-card-content>
+                <mat-card-actions>
+                    <mat-checkbox>
+                        <span>
+                            {{ option.value }}
+                        </span>
+                    </mat-checkbox>
+                    <ng-container *ngFor="let attachment of option.attachments">
+                        <mat-icon *ngIf="attachment.attachment_type === 'AUDIO'">volume_up</mat-icon>
+                    </ng-container>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+        <ng-template #noImageAttachmentOption>
+            <div [class]="getAnswerBackground(option)" class="option">
+                <mat-checkbox>
+                    <span>
+                        {{ option.value }}
+                    </span>
+                </mat-checkbox>
+            </div>
+        </ng-template>
+    </ng-container>
+</section>

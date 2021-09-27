@@ -61,8 +61,8 @@ export class UserService {
     return this.http.get<Country[]>(`${environment.API_URL}/users/countries`);
   }
 
-  getStudentTopicsChart(assessmentId: string): Observable<{full_name: string, topics: {}[]}[]> {
-    return this.http.get<{full_name: string, topics: {}[]}[]>(
+  getStudentTopicsChart(assessmentId: string): Observable<{full_name: string, topics: {}[], student_access: boolean}[]> {
+    return this.http.get<{full_name: string, topics: {}[], student_access: boolean}[]>(
       `${environment.API_URL}/visualization/charts/score_by_topic/${assessmentId}/`
       );
   }
