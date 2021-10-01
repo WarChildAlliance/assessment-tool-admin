@@ -1,4 +1,5 @@
-<mat-accordion>
+<button (click)="getAll()">get export</button>
+<!-- <mat-accordion>
     <mat-expansion-panel *ngFor="let assessment of currentAssessments" (opened)="getCurrentTopics(assessment.id)">
         <mat-expansion-panel-header>
             <mat-panel-title>
@@ -8,7 +9,6 @@
         <mat-panel-description>
             <div>
 
-            <!-- TODO can we put this separately to have a better overview?-->
             <div class="title">
                 <div>
                     <span>Details</span>
@@ -65,7 +65,6 @@
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <mat-panel-description>
-                            <!-- TODO can we put this separately to have a better overview?-->
                             <div>
                                 <div>
                                 <div class="title">
@@ -133,7 +132,6 @@
                                 </mat-accordion>
                             </div>
 
-                            <!-- End of Question Accordeon-->
                         </mat-panel-description>
                     </mat-expansion-panel>
                 
@@ -149,7 +147,7 @@
                         </mat-panel-description>
                     </mat-expansion-panel>
                 </mat-accordion>
-                <!-- End of Topic Accordean-->
+
             </div>
             
         </div>  
@@ -167,6 +165,6 @@
             <app-create-assessment></app-create-assessment>
         </mat-panel-description>
     </mat-expansion-panel>
-</mat-accordion>
+</mat-accordion> -->
 
 

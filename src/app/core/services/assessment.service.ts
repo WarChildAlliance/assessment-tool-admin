@@ -126,4 +126,8 @@ export class AssessmentService {
     return this.http.put<any[]>(`${environment.API_URL}/assessments/${assessmentId}/attachments/${attachmentId}/`, formData);
   }
 
+  getAllData(): Observable<any[]>  {
+    return this.http.get<any[]>(`${environment.API_URL}/export/answers/`);
+  }
+
 }

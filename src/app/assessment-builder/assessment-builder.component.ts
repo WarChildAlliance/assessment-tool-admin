@@ -39,6 +39,28 @@ export class AssessmentBuilderComponent implements OnInit {
     });
   }
 
+  getAll(): void {
+    this.assessmentService.getAllData().subscribe(res => {
+      const testCSV = this.objToCsv(res);
+      this.downloadBlob(testCSV, 'export.csv', 'text/csv;charset=utf-8;');
+    });
+  }
+
+  objToCsv(arr): any {
+    arr = [{student_id: 0, assessment_title: 'x', topic_name: 'x', question_id: 0, attempt: 0,
+      valid: false, start_datetime: 0, end_datetime: 0, value1: 'x', value2: []}, ...arr];
+    const array = [Object.keys(arr[0])].concat(arr);
+
+    const test = array.map( (item: any) => {
+      if (item.selected_options){
+        item.value = '';
+        item.selected_options = item.selected_options.map( i => i.value);
+      }
+      return Object.values(item).toString();
+    }).join('\n');
+    return test;
+  }
+
   getCurrentTopics(assessmentId: number): void {
     this.assessmentService.getAssessmentTopics(assessmentId.toString()).subscribe((topicsList) => {
       this.currentTopics = topicsList;
@@ -139,5 +161,17 @@ export class AssessmentBuilderComponent implements OnInit {
 
   getCount(assessment: any): number {
     return assessment.topics_count;
+  }
+
+  downloadBlob(content, filename, contentType): void {
+    // Create a blob
+    const blob = new Blob([content], { type: contentType });
+    const url = URL.createObjectURL(blob);
+
+    // Create a link to download it
+    const pom = document.createElement('a');
+    pom.href = url;
+    pom.setAttribute('download', filename);
+    pom.click();
   }
 }
