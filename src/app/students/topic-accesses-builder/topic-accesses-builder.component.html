@@ -1,4 +1,4 @@
-<h1>Assign a topic</h1>
+<h1>{{ "assignTopic" | translate }}</h1>
 <div class="topic-accesses-builder">
 
     <div class="topic-accesses-builder__list -students">
@@ -13,7 +13,7 @@
     </div>
 
     <div class="topic-accesses-builder__list">
-        <span class="header">Assessment</span>
+        <span class="header">{{ "assessment" | translate }}</span>
 
         <mat-radio-button class="topic-accesses-builder__list-row -assessment" title="{{ assessment.title }}" *ngFor="let assessment of assessmentsList"
             value="{{ assessment.id }}" (change)="loadTopicsList(assessment.id.toString())">{{ assessment.title }}
@@ -21,7 +21,9 @@
     </div>
 
     <div [formGroup]="assignTopicForm" class="topic-accesses-builder__list">
-        <span class="header">Assessment topic(s) availability</span>
+        <span class="header">
+            {{ "topicAvailability" | translate }}
+        </span>
 
         <ng-container formArrayName="access">
             <div *ngFor="let control of getControls(); let i=index;" [formGroupName]="i"
@@ -46,5 +48,6 @@
 
 
 <button mat-stroked-button mat-dialog-close class="topic-accesses-builder__submit" [disabled]="!getControls().length" color="accent"
-    (click)="submitCreateTopicAccesses()">Assign
+    (click)="submitCreateTopicAccesses()">
+    {{ "assign" | translate }}
 </button>

@@ -15,8 +15,8 @@
     <span>{{ question.end }}</span>
 </div>
 <div class="correct-answer" *ngIf="evaluated">
-    Correct answer: {{question.expected_value}}
+    {{ "correctAnswer" | translate }} {{question.expected_value}}
 </div>
 <div *ngIf="answer" class="student-answer">
-    Student answer: {{answer}}
+    {{ "studentAnswer" | translate }} {{answer}}
 </div>

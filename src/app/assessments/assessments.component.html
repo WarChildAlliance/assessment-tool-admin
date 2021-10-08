@@ -1,11 +1,11 @@
 <div class="main-board">
 
   <div class="main-board__top-container">
-    <h1>Assessments ({{assessmentsDataSource.data.length}})</h1>
+    <h1>{{ "assessments" | translate }} ({{assessmentsDataSource.data.length}})</h1>
     <div class="main-board__top-container__actions">
-      <button mat-flat-button [disabled]="true" color="accent" (click)="downloadData()">
+      <!-- <button mat-flat-button [disabled]="true" color="accent" (click)="downloadData()">
         <mat-icon>get_app</mat-icon><span>Download</span>
-      </button>
+      </button> -->
     </div>
   </div>
 

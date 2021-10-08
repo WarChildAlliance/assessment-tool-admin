@@ -28,7 +28,8 @@ export class LanguageService {
   ) {
     this.translateService.setDefaultLang('eng');
     const savedLanguage = localStorage.getItem('cwtl-language') || 'eng';
-    this.setLanguage(this.languages.find((language) => language.code === savedLanguage));
+    const l = this.languages.find((language) => language.code === savedLanguage.toLowerCase());
+    this.setLanguage(l);
     this.translateService.use(savedLanguage);
   }
 
@@ -45,11 +46,8 @@ export class LanguageService {
   }
 
   setLanguage(language: { name: string, code: string, direction: 'rtl' | 'ltr' }): void {
-
-    console.log('LANGUAGE: ', language);
-
     this.language = language;
-    localStorage.setItem('cwtl-language', language.code);
+    localStorage.setItem('cwtl-language', language.code.toLowerCase());
     this.translateService.use(language.code);
     this.setDirection();
     // moment.locale(language.code);

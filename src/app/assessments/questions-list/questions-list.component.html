@@ -1,13 +1,13 @@
 <div class="main-board">
   <div class="main-board__top-container">
-    <h1>Questions ({{ questionsDataSource.data.length }})
+    <h1>{{ "questions" | translate }} ({{ questionsDataSource.data.length }})
       <span *ngIf="selectedQuestions.length">({{
-        selectedQuestions.length }} selected)</span>
+        selectedQuestions.length }} {{ "selected" | translate }})</span>
     </h1>
     <div class="main-board__top-container__actions">
-      <button mat-flat-button color="primary" (click)="downloadData()" [disabled]="true">
+<!--       <button mat-flat-button color="primary" (click)="downloadData()" [disabled]="true">
         <mat-icon>get_app</mat-icon><span>Download</span>
-      </button>
+      </button> -->
     </div>
   </div>
 
