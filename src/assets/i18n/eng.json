@@ -65,15 +65,12 @@
     "publicAssessments": "Public assessment(s)",
     "assessmentGrade": "Grade",
     "assessmentSubject": "Subject",
-    "language": "language",
-    "country": "Country",
     "assessmentPrivate": "Private",
     "true": "true",
     "false": "false",
     "buttonEdit": "Edit",
     "buttonClone": "Clone",
     "buttonDelete": "Delete",
-    "addATopic": "Add a topic",
     "topicDescription": "description",
     "toTopicDetails": "Go to topic details",
     "topicEvaluated": "Evaluted",
@@ -81,7 +78,6 @@
     "topicMaxWrongAnswer": "Max wrong answers",
     "topicPraise": "praise",
     "showFeedback": "Show feedback",
-    "addAQuestion": "Add a question",
     "selectQuestion": "(Multi-) Select",
     "inputQuestion": "Input question",
     "sortQuestion": "Sort question",
@@ -108,7 +104,11 @@
     "questionAnswer": "Answer",
     "buttonCancel": "Cancel",
     "createNewAssessment": "Create a new assessment",
-    "createNewTopic": "Create a new topic"
-  }
-  
+    "createNewTopic": "Create a new topic",
+    "addQuestion": "Add a question",
+    "addTopic": "Add a topic"
+  },
+  "username": "Username",
+  "password": "Password",
+  "login": "Login"
 }

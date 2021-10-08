@@ -59,8 +59,12 @@ export class LanguageService {
   }
 
   private setDirection(): void {
-    document.getElementsByTagName('html')[0].setAttribute('dir', this.language.direction);
-    document.getElementsByTagName('html')[0].className = this.language.direction;
+    document.getElementsByTagName('html')[0].setAttribute('dir', 'ltr');
+    document.getElementsByTagName('html')[0].className = 'ltr';
+ // WARNING! We currently dont change the UI according to language but might need to do so in the future.
+  // To do so, uncomment the following two lines
+/*   document.getElementsByTagName('html')[0].setAttribute('dir', this.language.direction);
+    document.getElementsByTagName('html')[0].className = this.language.direction; */
     this.direction.next(this.language.direction);
   }
 }
