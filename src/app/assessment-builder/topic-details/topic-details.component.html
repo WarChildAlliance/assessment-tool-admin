@@ -1,0 +1,98 @@
+<div class="question-list-container" *ngIf="topicDetails">
+  <div class="topic-header">
+    <h1>{{ topicDetails.name }}</h1>
+    <button mat-button color="accent" (click)="openEditTopicDialog(topicDetails)">Edit</button>
+  </div>
+  <mat-card>
+    <div class="topic-infos" *ngIf="topicDetails">
+      <div class="detail">
+        <p>Description</p>
+        <p>{{ topicDetails.description}} </p>
+      </div>
+      <div class="detail">
+        <p>Evaluated</p>
+        <p>{{ topicDetails.evaluated}} </p>
+      </div>
+      <div class="detail">
+        <p>Allow skip</p>
+        <p>{{ topicDetails.allow_skip}} </p>
+      </div>
+      <div class="detail">
+        <p>Max wrong answer</p>
+        <p>{{ topicDetails.max_wrong_answers}} </p>
+      </div>
+      <div class="detail">
+        <p>Praise</p>
+        <p>{{ topicDetails.praise }} </p>
+      </div>
+      <div class="detail">
+        <p>Show feedback</p>
+        <p>{{ topicDetails.show_feedback }} </p>
+      </div>
+    </div>
+  </mat-card>
+  <div class="question">
+    <mat-card>
+      <h2>Add a question</h2>
+      <div class="question-options" *ngIf="questionType && order">
+        <div class="question-options-button">
+          <button mat-button mat-stroked-button color="{{questionType === 'SELECT' ? 'accent' : 'secondary'}}" (click)="setQuestionType('SELECT')">(Multi-)
+            Select</button>
+          <button mat-button mat-stroked-button
+            color="{{questionType === 'INPUT' ? 'accent' : 'secondary'}}" (click)="setQuestionType('INPUT')">Input</button>
+          <!--
+                  <button mat-button mat-stroked-button color="{{questionType === 'SORT' ? 'accent' : 'secondary'}}">Sort</button>
+                  -->
+          <button mat-button mat-stroked-button
+            color="{{questionType === 'NUMBER_LINE' ? 'accent' : 'secondary'}}" (click)="setQuestionType('NUMBER_LINE')">Number Line</button>
+        </div>
+        <hr>
+        <div class="question-form">
+          <app-question-input-form [assessmentId]="assessmentId" [topicId]="topicId" [order]="order"
+            *ngIf="questionType === 'INPUT'"></app-question-input-form>
+          <app-question-numberline-form [assessmentId]="assessmentId" [topicId]="topicId" [order]="order"
+            *ngIf="questionType === 'NUMBER_LINE'"></app-question-numberline-form>
+          <app-question-select-form [assessmentId]="assessmentId" [topicId]="topicId" [order]="order"
+            *ngIf="questionType === 'SELECT'"></app-question-select-form>
+        </div>
+      </div>
+    </mat-card>
+    <div class="question-details" *ngFor="let questionDetails of questionsList">
+      <button mat-button mat-stroked-button (click)="onEditQuestionDialog(questionDetails)">Edit</button>
+      <button mat-button mat-stroked-button (click)="cloneQuestion(questionDetails)">Clone</button>
+      <mat-card *ngIf="questionDetails && questionDetails.question_type === 'SELECT'">
+        <app-question-select [question]="questionDetails" [index]="1" [evaluated]="true"></app-question-select>
+      </mat-card>
+
+      <mat-card *ngIf="questionDetails && questionDetails.question_type === 'INPUT'">
+        <app-question-input [question]="questionDetails" [index]="1" [evaluated]="true"></app-question-input>
+      </mat-card>
+
+      <mat-card *ngIf="questionDetails && questionDetails.question_type === 'SORT'">
+        <app-question-sort [question]="questionDetails" [index]="1" [evaluated]="true"></app-question-sort>
+      </mat-card>
+
+      <mat-card *ngIf="questionDetails && questionDetails.question_type === 'NUMBER_LINE'">
+        <app-question-numberline [question]="questionDetails" [index]="1" [evaluated]="true">
+        </app-question-numberline>
+      </mat-card>
+    </div>
+  </div>
+</div>
+
+<ng-template #createTopicDialog>
+  <mat-dialog-content>
+    <app-topic-form-dialog [assessmentId]="assessmentId" [topic]="topic" [edit]="true"></app-topic-form-dialog>
+  </mat-dialog-content>
+</ng-template>
+
+<ng-template #editQuestionDialog>
+  <mat-dialog-content>
+    <app-question-input-form [assessmentId]="assessmentId" [topicId]="topicId" [order]="order" [toClone]="toClone"
+      *ngIf="question.question_type === 'INPUT'"></app-question-input-form>
+    <app-question-numberline-form [assessmentId]="assessmentId" [topicId]="topicId" [toClone]="toClone"
+      *ngIf="question.question_type === 'NUMBER_LINE'"></app-question-numberline-form>
+    <app-question-select-form [assessmentId]="assessmentId" [topicId]="topicId" [question]="question" [toClone]="toClone"
+      *ngIf="question.question_type === 'SELECT'"></app-question-select-form>
+  </mat-dialog-content>
+</ng-template>

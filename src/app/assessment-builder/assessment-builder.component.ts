@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Assessment } from '../core/models/assessment.model';
-import { AssessmentService } from '../core/services/assessment.service';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationModalComponent } from './components/confirmation-modal/confirmation-modal.component';
-import { AlertService } from '../core/services/alert.service';
+import { UserService } from 'src/app/core/services/user.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AlertService } from 'src/app/core/services/alert.service';
 
 @Component({
   selector: 'app-assessment-builder',
@@ -12,166 +12,73 @@ import { AlertService } from '../core/services/alert.service';
 })
 export class AssessmentBuilderComponent implements OnInit {
 
-  public currentAssessments: Assessment[] = [];
-  public currentTopics: any[] = [];
-  public currentTopic = null;
-  public currentQuestions: any[] = [];
-  public currentQuestion = null;
+  public currentAssessments: any[] = [];
 
-  public editAssessment = false;
-  public editTopic = false;
-  public editInput = false;
-  public editNumberLine = false;
-  public editSelect = false;
-  public editSort = false;
+  public languages;
+  public countries;
+  public subjects = ['PRESEL', 'POSTSEL', 'MATH', 'LITERACY'];
 
+  public icon = null;
+
+  public edit = false;
+
+  public assessmentId: string;
+
+  public createNewAssessmentForm: FormGroup = new FormGroup({
+    title: new FormControl('', [Validators.required]),
+    grade: new FormControl(0, [Validators.required]),
+    subject: new FormControl('', [Validators.required]),
+    language: new FormControl('', [Validators.required]),
+    country: new FormControl('', [Validators.required]),
+    icon: new FormControl('', [Validators.required]),
+    private: new FormControl(false, [Validators.required])
+  });
+
+  @ViewChild('createAssessmentDialog') createAssessmentDialog: TemplateRef<any>;
+  @ViewChild('createTopicDialog') createTopicDialog: TemplateRef<any>;
 
   constructor(
     private assessmentService: AssessmentService,
-    public dialog: MatDialog,
-    public alertService: AlertService
+    private userService: UserService,
+    private dialog: MatDialog,
+    private alertService: AlertService
   ) { }
-
 
   ngOnInit(): void {
     this.assessmentService.getAssessmentsList().subscribe((assessmentsList) => {
       this.currentAssessments = assessmentsList;
     });
+    this.userService.getLanguages().subscribe( res => this.languages = res);
+    this.userService.getCountries().subscribe( res => this.countries = res);
   }
 
-  getAll(): void {
-    this.assessmentService.getAllData().subscribe(res => {
-      const testCSV = this.objToCsv(res);
-      this.downloadBlob(testCSV, 'export.csv', 'text/csv;charset=utf-8;');
-    });
+  openCreateAssessmentDialog(): void {
+    this.dialog.open(this.createAssessmentDialog);
   }
 
-  objToCsv(arr): any {
-    arr = [{student_id: 0, assessment_title: 'x', topic_name: 'x', question_id: 0, attempt: 0,
-      valid: false, start_datetime: 0, end_datetime: 0, value1: 'x', value2: []}, ...arr];
-    const array = [Object.keys(arr[0])].concat(arr);
-
-    const test = array.map( (item: any) => {
-      if (item.selected_options){
-        item.value = '';
-        item.selected_options = item.selected_options.map( i => i.value);
-      }
-      return Object.values(item).toString();
-    }).join('\n');
-    return test;
+  openCreateTopicDialog(assessmentId: string): void {
+    this.assessmentId = assessmentId;
+    this.dialog.open(this.createTopicDialog);
   }
 
-  getCurrentTopics(assessmentId: number): void {
-    this.assessmentService.getAssessmentTopics(assessmentId.toString()).subscribe((topicsList) => {
-      this.currentTopics = topicsList;
-    });
-  }
-
-  getTopicDetails(assessmentId: number, topicId: number): void {
-    this.assessmentService.getTopicDetails(assessmentId.toString(), topicId.toString()).subscribe((topic) => {
-      this.currentTopic = topic;
-    });
-  }
-
-  getCurrentQuestions(assessmentId: number, topicId: number): void {
-    this.getTopicDetails(assessmentId, topicId);
-    this.assessmentService.getTopicQuestions(assessmentId.toString(), topicId.toString()).subscribe((questionsList) => {
-      this.currentQuestions = questionsList;
-    });
-  }
-
-  getQuestionDetails(assessmentId: number, topicId: number, questionId: number): void {
-    this.assessmentService.getQuestionDetails(assessmentId, topicId, questionId).subscribe((question) => {
-      this.currentQuestion = question;
-    });
-  }
-
-  deleteAssessment(assessmentId: number): void {
-    const dialogRef = this.dialog.open(ConfirmationModalComponent, {
-      disableClose: true,
-      data: {
-          confirmationText: 'Are you sure you want to delete this assessment?',
-      }
-    });
-    dialogRef.afterClosed().subscribe(value => {
-      if (value) {
-        this.assessmentService.deleteAssessment(assessmentId.toString()).subscribe((assessment) => {
-          this.alertService.success('Successfully deleted assessment');
-        });
-      }
-    });
-  }
-
-  deleteTopic(assessmentId: number, topicId: number): void {
-    const dialogRef = this.dialog.open(ConfirmationModalComponent, {
-      disableClose: true,
-      data: {
-          confirmationText: 'Are you sure you want to delete this topic?',
-      }
-    });
-    dialogRef.afterClosed().subscribe(value => {
-      if (value) {
-        this.assessmentService.deleteTopic(assessmentId.toString(), topicId.toString()).subscribe((topic) => {
-          this.alertService.success('Successfully deleted topic');
-        });
-      }
-    });
-  }
-
-  deleteQuestion(assessmentId: number, topicId: number, questionId: number): void {
-    const dialogRef = this.dialog.open(ConfirmationModalComponent, {
-      disableClose: true,
-      data: {
-          confirmationText: 'Are you sure you want to delete this question?',
-      }
-    });
-    dialogRef.afterClosed().subscribe(value => {
-      if (value) {
-        this.assessmentService.deleteQuestion(assessmentId.toString(), topicId.toString(), questionId.toString()).subscribe((question) => {
-          this.alertService.success('Successfully deleted question');
-        });
-      }
-    });
-  }
-
-  edit(type): void {
-    switch (type) {
-      case 'assessment':
-        this.editAssessment = !this.editAssessment;
-        break;
-      case 'topic':
-        this.editTopic = !this.editTopic;
-        break;
-      case 'Input':
-        this.editInput = !this.editInput;
-        break;
-      case 'Number line':
-        this.editNumberLine = !this.editNumberLine;
-        break;
-      case 'Select':
-        this.editSelect = !this.editSelect;
-        break;
-      case 'Sort':
-        this.editSort = !this.editSort;
-        break;
-      default:
-        break;
+  submitCreateNewAssessment(): void {
+    if (this.edit) {
+      this.assessmentService.editAssessment(this.assessmentId, this.createNewAssessmentForm.value).subscribe(() => {
+        this.alertService.success('Assessment was altered successfully');
+      } );
+    } else {
+      this.assessmentService.createAssessment(this.createNewAssessmentForm.value).subscribe(() => {
+        this.alertService.success('Assessment was saved successfully');
+      });
     }
+    this.createNewAssessmentForm.reset();
   }
 
-  getCount(assessment: any): number {
-    return assessment.topics_count;
+  handleFileInput(event): void {
+    this.icon = event.target.files[0];
+    this.createNewAssessmentForm.patchValue({
+      icon: this.icon
+    });
   }
 
-  downloadBlob(content, filename, contentType): void {
-    // Create a blob
-    const blob = new Blob([content], { type: contentType });
-    const url = URL.createObjectURL(blob);
-
-    // Create a link to download it
-    const pom = document.createElement('a');
-    pom.href = url;
-    pom.setAttribute('download', filename);
-    pom.click();
-  }
 }
