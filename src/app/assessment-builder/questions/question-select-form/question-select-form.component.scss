@@ -1,0 +1,15 @@
+.form-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+
+    .select-details-container, .attachments-container, .options-container {
+        flex: 1;
+    }
+}
+
+.question-form-button {
+    margin-top: 20px;
+    width: 50%;
+    margin-left: 25%;
+}

@@ -48,15 +48,28 @@ export class TopicAccessesBuilderComponent implements OnInit {
     });
   }
 
+  setAll(event): void {
+    const accessForm = this.assignTopicForm.get('access') as FormArray;
+    const startDate = accessForm.value[0].start_date;
+    accessForm.controls.forEach((access, i) => {
+      access.setValue({
+        topic: access.value.topic,
+        selected: access.value.selected,
+        start_date: event || i === 0 ? startDate : null,
+        end_date: access.value.end_date
+      });
+    });
+  }
+
   generateForm(): void {
     const accessForm = this.assignTopicForm.get('access') as FormArray;
     accessForm.clear();
 
-    this.topicsList.forEach((topic: Topic) => {
+    this.topicsList.forEach((topic: Topic, i: number) => {
       const topicAccess = this.formBuilder.group({
         topic: new FormControl(topic),
         selected: new FormControl(true),
-        start_date: new FormControl(null),
+        start_date: i === 0 ? new FormControl(new Date()) : new FormControl(null),
         end_date: new FormControl(null)
       });
       accessForm.push(topicAccess);

@@ -1,0 +1,42 @@
+<h2 mat-dialog-title>Create a new assessment</h2>
+<form class="form-primary" [formGroup]="createNewAssessmentForm" (ngSubmit)="submitCreateNewAssessment()">
+    <div class="form-primary__flex-container">
+        <mat-form-field appearance="outline" color="accent">
+            <mat-label>Title</mat-label>
+            <input matInput type="text" formControlName="title">
+        </mat-form-field>
+        <mat-form-field appearance="outline" color="accent">
+            <mat-label>Grade</mat-label>
+            <input matInput type="text" formControlName="grade">
+        </mat-form-field>
+        <mat-form-field appearance="outline" color="accent">
+            <mat-label>Subject</mat-label>
+            <mat-select formControlName="subject">
+                <mat-option *ngFor="let subject of subjects" [value]="subject">{{ subject }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" color="accent">
+            <mat-label>Language</mat-label>
+            <mat-select formControlName="language">
+                <mat-option *ngFor="let language of languages" [value]="language.code">{{language.name_en}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" color="accent">
+            <mat-label>Country</mat-label>
+            <mat-select formControlName="country">
+                <mat-option *ngFor="let country of countries" [value]="country.code">{{country.name_en}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <p>Icon</p>
+        <button type="button" mat-flat-button color="primary" (click)="imageFileInput.click()">Choose
+            File</button>
+        <input hidden (change)="handleFileInput($event)" #imageFileInput type="file">
+        <mat-checkbox formControlName="private">
+            Private
+        </mat-checkbox>
+    </div>
+    <div class="buttons">
+        <button mat-button color="accent" type="submit" mat-dialog-close>Submit</button>
+        <button mat-button color="secondary" mat-dialog-close>Cancel</button>
+    </div>
+</form>

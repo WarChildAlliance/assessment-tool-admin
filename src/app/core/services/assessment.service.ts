@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -17,7 +17,7 @@ export class AssessmentService {
   constructor(
     private http: HttpClient,
     private utilitiesService: UtilitiesService
-  ) {}
+  ) { }
 
   get completeAssessmentsList(): Observable<any> {
     return this.assessmentsListForDashboard.asObservable();
@@ -73,7 +73,7 @@ export class AssessmentService {
     return this.http.put<any>(`${environment.API_URL}/assessments/${assessmentId}/topics/${topicId}/`, topic);
   }
 
-  editQuestion(assessmentId: string,  topicId: string,  questionId: string, question: any): Observable<any> {
+  editQuestion(assessmentId: string, topicId: string, questionId: string, question: any): Observable<any> {
     return this.http.put<any>(`${environment.API_URL}/assessments/${assessmentId}/topics/${topicId}/questions/${questionId}/`, question);
   }
 
@@ -85,7 +85,7 @@ export class AssessmentService {
     return this.http.get<any[]>(`${environment.API_URL}/visualization/charts/assessments/${assessmentId}/topics/${topicId}/questions/`);
   }
 
-  getQuestionDetails(assessmentId, topicId, questionId): Observable<any[]>{
+  getQuestionDetails(assessmentId, topicId, questionId): Observable<any[]> {
     return this.http.get<any[]>(`
     ${environment.API_URL}/visualization/assessments/${assessmentId}/topics/${topicId}/questions/${questionId}`
     );
@@ -101,6 +101,10 @@ export class AssessmentService {
 
   getTopicDetails(assessmentId: string, topicId: string): Observable<any[]> {
     return this.http.get<any[]>(`${environment.API_URL}/assessments/${assessmentId}/topics/${topicId}`);
+  }
+
+  getQuestionsList(assessmentId: string, topicId: string): Observable<any[]> {
+    return this.http.get<any[]>(`${environment.API_URL}/assessments/${assessmentId}/topics/${topicId}/questions`);
   }
 
   updateAssessmentsList(assessments: AssessmentDashboard[]): void {

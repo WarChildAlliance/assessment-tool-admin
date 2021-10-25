@@ -1,57 +1,50 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AssessmentBuilderRoutingModule } from './assessment-builder-routing.module';
 import { AssessmentBuilderComponent } from './assessment-builder.component';
-import { MatIconModule } from '@angular/material/icon';
-import { CreateAssessmentComponent } from './components/create-assessment/create-assessment.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { CreateTopicComponent } from './components/create-topic/create-topic.component';
-import { CreateQuestionComponent } from './components/create-question/create-question.component';
-import { InputComponent } from './components/create-question/components/input/input.component';
-import { SelectComponent } from './components/create-question/components/select/select.component';
-import { NumberLineComponent } from './components/create-question/components/number-line/number-line.component';
-import { SortComponent } from './components/create-question/components/sort/sort.component';
+import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { SelectOptionComponent } from './components/create-question/components/select/components/select-option/select-option.component';
-import { SortOptionComponent } from './components/create-question/components/sort/components/sort-option/sort-option.component';
+import { MatSelectModule } from '@angular/material/select';
+import { TopicFormDialogComponent } from './topic-form-dialog/topic-form-dialog.component';
+import { AssessmentSummaryComponent } from './assessment-summary/assessment-summary.component';
+import { AssessmentFormDialogComponent } from './assessment-form-dialog/assessment-form-dialog.component';
+import { TopicDetailsComponent } from './topic-details/topic-details.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { ConfirmationModalComponent } from './components/confirmation-modal/confirmation-modal.component';
-
+import { QuestionInputFormComponent } from './questions/question-input-form/question-input-form.component';
+import { QuestionNumberlineFormComponent } from './questions/question-numberline-form/question-numberline-form.component';
+import { QuestionSelectFormComponent } from './questions/question-select-form/question-select-form.component';
 
 @NgModule({
   declarations: [
     AssessmentBuilderComponent,
-    CreateAssessmentComponent,
-    CreateTopicComponent,
-    CreateQuestionComponent,
-    InputComponent,
-    SelectComponent,
-    NumberLineComponent,
-    SortComponent,
-    SelectOptionComponent,
-    SortOptionComponent,
-    ConfirmationModalComponent
+    TopicFormDialogComponent,
+    AssessmentSummaryComponent,
+    AssessmentFormDialogComponent,
+    TopicDetailsComponent,
+    QuestionInputFormComponent,
+    QuestionNumberlineFormComponent,
+    QuestionSelectFormComponent
   ],
   imports: [
     CommonModule,
     AssessmentBuilderRoutingModule,
-    MatIconModule,
-    ReactiveFormsModule,
     FormsModule,
-    MatInputModule,
-    MatExpansionModule,
-    MatCardModule,
-    MatFormFieldModule,
+    ReactiveFormsModule,
     MatButtonModule,
-    SharedModule,
+    MatCardModule,
     MatCheckboxModule,
     MatDialogModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatSelectModule,
+    SharedModule
   ]
 })
 export class AssessmentBuilderModule { }

@@ -1,0 +1,51 @@
+<h2>Create a topic</h2>
+<form class="form-primary" [formGroup]="createNewTopicForm" (ngSubmit)="onSave()">
+    <div class="form-primary__flex-container">
+        <mat-form-field appearance="outline" color="accent">
+            <mat-label>Title</mat-label>
+            <input matInput type="text" formControlName="name">
+        </mat-form-field>
+        <mat-form-field appearance="outline" color="accent">
+            <mat-label>Description</mat-label>
+            <input matInput type="text" formControlName="description">
+        </mat-form-field>
+        <mat-form-field appearance="outline" color="accent">
+            <mat-label>When to show feedbacks ?</mat-label>
+            <mat-select formControlName="show_feedback">
+                <mat-option *ngFor="let feedback of feedbacks" [value]="feedback.id">{{ feedback.name }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" color="accent">
+            <mat-label>Praise</mat-label>
+            <input matInput type="number" formControlName="praise">
+        </mat-form-field>
+        <mat-form-field appearance="outline" color="accent">
+            <mat-label>Max wrong answers</mat-label>
+            <input matInput type="number" formControlName="max_wrong_answers">
+        </mat-form-field>
+        <mat-checkbox formControlName="evaluated">
+            Evaluated
+        </mat-checkbox>
+        <mat-checkbox formControlName="allow_skip">
+            Allow skip
+        </mat-checkbox>
+        <div class="attachments-container">
+            <p>Add an icon</p>
+            <button type="button" mat-flat-button color="primary" (click)="iconFileInput.click()">Choose a file</button>
+            <input hidden (change)="handleFileInput($event, 'icon')" #iconFileInput type="file">
+            <!--
+            <p>Add an image attachment</p>
+            <button type="button" mat-flat-button color="primary" (click)="imageFileInput.click()">Choose a file</button>
+            <input hidden (change)="handleFileInput($event, 'IMAGE')" #imageFileInput type="file">
+            <p>Add an audio attachment</p>
+            <button type="button" mat-flat-button color="primary" (click)="audioFileInput.click()">Choose a file</button>
+            <input hidden (change)="handleFileInput($event, 'AUDIO')" #audioFileInput type="file">
+            -->
+        </div>
+
+    </div>
+    <div class="buttons">
+        <button mat-button color="accent" type="submit" mat-dialog-close>Submit</button>
+        <button mat-button color="secondary" mat-dialog-close>Cancel</button>
+    </div>
+</form>

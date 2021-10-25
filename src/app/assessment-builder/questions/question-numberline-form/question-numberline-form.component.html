@@ -1,0 +1,62 @@
+<form [formGroup]="numberLineForm" (ngSubmit)="onSave()">
+
+    <mat-form-field appearance="outline" class="form-group" color="accent">
+        <mat-label>Title</mat-label>
+        <input type="text" matInput formControlName="title">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form-group" color="accent">
+        <mat-label>Order</mat-label>
+        <input type="number" matInput formControlName="order">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form-group" color="accent">
+        <mat-label>Start Number</mat-label>
+        <input type="number" matInput formControlName="start">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form-group" color="accent">
+        <mat-label>End Number</mat-label>
+        <input type="number" matInput formControlName="end">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form-group" color="accent">
+        <mat-label>Stepsize</mat-label>
+        <input type="number" matInput formControlName="step" class="form-control">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form-group" color="accent">
+        <mat-label>Tick step</mat-label>
+        <input type="number" matInput formControlName="tick_step" class="form-control">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form-group" color="accent">
+        <mat-label>Expected value</mat-label>
+        <input type="number" matInput formControlName="expected_value" class="form-control">
+    </mat-form-field>
+
+    <mat-label>Show Ticks</mat-label>
+    <mat-checkbox matInput formControlName="show_ticks" class="form-control"></mat-checkbox>
+
+    <mat-label>Show Value</mat-label>
+    <mat-checkbox matInput formControlName="show_value" class="form-control"></mat-checkbox>
+
+    <div class="attachments-container">
+        <p>Add an image attachment</p>
+        <button type="button" mat-flat-button color="primary" (click)="imageFileInput.click()">Choose
+            File</button>
+        <input hidden (change)="handleFileInput($event, 'IMAGE')" #imageFileInput type="file">
+        <p>Add an audio attachment</p>
+        <button type="button" mat-flat-button color="primary" (click)="audioFileInput.click()">Choose
+            File</button>
+        <input hidden (change)="handleFileInput($event, 'AUDIO')" #audioFileInput type="file">
+    </div>
+
+    <div>
+        <button class="submit-form-button" mat-flat-button color="primary" type="submit"
+            [disabled]="numberLineForm.invalid">
+            Save
+        </button>
+    </div>
+
+</form>

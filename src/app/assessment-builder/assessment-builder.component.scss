@@ -1,43 +1,40 @@
-.add-panel{
-    background-color: #d8e1e9;
+.assessments {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
 }
+.assessment-container {
+    margin: 10px 0px;
 
-.mat-card{
-    margin-right: 20px;
-}
-
-.title{
-    span{
-        font-size: 20px;
-        
+    .assessment-details {
+    
+        display: flex;
+        justify-content: space-between;
+    
+        .details {
+            display: flex;
+            width: 50%;
+            justify-content: space-evenly;
+        }
     }
-    margin-bottom: 30px;
 }
 
-th{
-    padding-right: 50px;
-    font-size: 15px;
-    font-weight: 400 !important;
-}
+.topics {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 
-td{
-    padding-right: 50px;
-    font-size: 20px;
-    color: rgb(99, 99, 99);
-}
+    .add-topic {
+        cursor: pointer;
+        text-align: center;
+        mat-icon{
+            font-size:50px;
+        }
+    }
 
-table{
-    text-align: center;
-}
-
-.color-header{
-    color:rgb(204, 204, 204);
-}
-
-h2{
-    margin: 20px 0px 0px 0px;
-}
-
-.mat-button{
-    margin: 10px 10px 10px 10px;
+    mat-card{
+        width: 20%;
+        height: 100px;
+    }
 }

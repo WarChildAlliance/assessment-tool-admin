@@ -1,0 +1,62 @@
+<mat-card class="assessment-container">
+    <div class="assessment-details">
+        <div class="general-information">
+            <img *ngIf="assessment.icon" [src]="getSource(assessment.icon)">
+            <span>{{ assessment.title }}</span>
+        </div>
+        <div class="details">
+            <div class="infos">
+                <p>Grade</p>
+                <p>{{ assessment.grade }}</p>
+            </div>
+            <div class="infos">
+                <p>Subject</p>
+                <p>{{ assessment.subject }}</p>
+            </div>
+            <div class="infos">
+                <p>Language</p>
+                <p>{{ assessment.language_code }}</p>
+            </div>
+            <div class="infos">
+                <p>Country</p>
+                <p>{{ assessment.country_code }}</p>
+            </div>
+            <div class="infos">
+                <p>Private</p>
+                <p>{{ assessment.private }}</p>
+            </div>
+        </div>
+        <div class="buttons">
+            <button *ngIf="canEdit" mat-button color="accent" (click)="editAssessment(assessment)">Edit</button>
+            <!--
+            <button mat-button color="secondary">Clone</button>
+            <button *ngIf="canEdit" mat-button color="secondary" (click)="deleteAssessment(assessment.id)">Delete</button>
+            -->
+        </div>
+    </div>
+    <hr>
+    <div class="topics">
+        <mat-card class="add-topic" (click)="openCreateTopicDialog(assessment.id)" *ngIf="canEdit">
+            <div class="add-topic-text">
+                Add a topic <mat-icon>add</mat-icon>
+            </div>
+        </mat-card>
+        <mat-card class="topic-card" (click)="goToTopicDetails(assessment.id, topic[0])" *ngFor="let topic of assessment.topics">
+            <div class="topic-general-information">
+                <img *ngIf="topic[3]" [src]="getSource(topic[3])">
+                <span>{{ topic[1] }}</span>
+            </div>
+            <p>{{ topic[2] }}</p>
+        </mat-card>
+    </div>
+</mat-card>
+
+<ng-template #createAssessmentDialog>
+    <app-assessment-form-dialog [assessment]="assessment" [edit]="edit"></app-assessment-form-dialog>
+</ng-template>
+
+<ng-template #createTopicDialog>
+    <mat-dialog-content>
+        <app-topic-form-dialog [assessmentId]="assessmentId"></app-topic-form-dialog>
+    </mat-dialog-content>
+</ng-template>

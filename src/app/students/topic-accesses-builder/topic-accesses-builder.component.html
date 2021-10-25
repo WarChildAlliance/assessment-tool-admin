@@ -24,6 +24,9 @@
         <span class="header">Assessment topic(s) availability</span>
 
         <ng-container formArrayName="access">
+            <mat-checkbox (change)="setAll($event.checked)" *ngIf="getControls().length">
+                Apply the same start date to all the topics ?
+            </mat-checkbox>
             <div *ngFor="let control of getControls(); let i=index;" [formGroupName]="i"
                 class="topic-accesses-builder__list-row -topic-access">
 
