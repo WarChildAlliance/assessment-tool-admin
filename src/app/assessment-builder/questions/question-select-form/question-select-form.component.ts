@@ -45,7 +45,8 @@ export class QuestionSelectFormComponent implements OnInit {
     options: new FormArray([
       this.formBuilder.group({
         value: new FormControl('', [Validators.required]),
-        valid: new FormControl(false)
+        valid: new FormControl(false),
+        identifier: new FormControl('', [Validators.required])
       })
     ])
   });
@@ -63,7 +64,8 @@ export class QuestionSelectFormComponent implements OnInit {
         this.optionsAttachmentEdit.push(attObj);
         const optOject = {
           valid: element.valid,
-          value: element.value
+          value: element.value,
+          identifier: element.identifier
         };
         options.push(optOject);
       });
@@ -73,7 +75,8 @@ export class QuestionSelectFormComponent implements OnInit {
       for (let i = 1; i < options.length; i++) {
         const optionsGroup = this.formBuilder.group({
           valid: new FormControl(null),
-          value: new FormControl(null)
+          value: new FormControl(null),
+          identifier: new FormControl(null)
         });
         optionsForm.push(optionsGroup);
       }
@@ -103,7 +106,8 @@ export class QuestionSelectFormComponent implements OnInit {
     } else {
       this.selectForm.setValue({
         question_type: 'SELECT',
-        identifier: '', title: '',
+        identifier: '', 
+        title: '',
         order: this.order, display: 'GRID',
         multiple: false,
         options: [{ value: '', valid: false }]
@@ -114,7 +118,8 @@ export class QuestionSelectFormComponent implements OnInit {
   addOptions(): void {
     const formGroup: FormGroup = this.formBuilder.group({
       value: this.formBuilder.control(null),
-      valid: this.formBuilder.control(false)
+      valid: this.formBuilder.control(false),
+      identifier: this.formBuilder.control(null)
     });
     (this.selectForm.controls.options as FormArray).push(formGroup);
     this.saveOptions = true;
@@ -124,6 +129,7 @@ export class QuestionSelectFormComponent implements OnInit {
     const formattedObj = {
       value: this.selectForm.value.options[index].value,
       valid: this.selectForm.value.options[index].valid,
+      identifier: this.selectForm.value.options[index].identifier,
       attachment: []
     };
     formattedObj.attachment.push({ attachment_type: this.type, file: this.attachment });
