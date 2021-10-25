@@ -44,7 +44,7 @@ export class QuestionSelectFormComponent implements OnInit {
     multiple: new FormControl(false),
     options: new FormArray([
       this.formBuilder.group({
-        value: new FormControl('', [Validators.required]),
+        value: new FormControl(''),
         valid: new FormControl(false),
         identifier: new FormControl('', [Validators.required])
       })
