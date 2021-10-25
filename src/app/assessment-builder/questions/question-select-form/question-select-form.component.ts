@@ -106,11 +106,11 @@ export class QuestionSelectFormComponent implements OnInit {
     } else {
       this.selectForm.setValue({
         question_type: 'SELECT',
-        identifier: '', 
+        identifier: '',
         title: '',
         order: this.order, display: 'GRID',
         multiple: false,
-        options: [{ value: '', valid: false }]
+        options: [{ value: '', valid: false, identifier: '' }]
       });
     }
   }

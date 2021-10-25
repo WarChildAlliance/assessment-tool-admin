@@ -88,9 +88,9 @@
 
 <ng-template #editQuestionDialog>
   <mat-dialog-content>
-    <app-question-input-form [assessmentId]="assessmentId" [topicId]="topicId" [order]="order" [toClone]="toClone"
+    <app-question-input-form [assessmentId]="assessmentId" [topicId]="topicId" [order]="order" [question]="question" [toClone]="toClone"
       *ngIf="question.question_type === 'INPUT'"></app-question-input-form>
-    <app-question-numberline-form [assessmentId]="assessmentId" [topicId]="topicId" [toClone]="toClone"
+    <app-question-numberline-form [assessmentId]="assessmentId" [topicId]="topicId" [question]="question" [toClone]="toClone"
       *ngIf="question.question_type === 'NUMBER_LINE'"></app-question-numberline-form>
     <app-question-select-form [assessmentId]="assessmentId" [topicId]="topicId" [question]="question" [toClone]="toClone"
       *ngIf="question.question_type === 'SELECT'"></app-question-select-form>
