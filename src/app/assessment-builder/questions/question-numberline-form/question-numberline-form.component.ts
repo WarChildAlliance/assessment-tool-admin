@@ -24,7 +24,7 @@ export class QuestionNumberlineFormComponent implements OnInit {
 
   public numberLineForm: FormGroup = new FormGroup({
     question_type: new FormControl('NUMBER_LINE'),
-    title: new FormControl('', [Validators.required]),
+    title: new FormControl(''),
     order: new FormControl('', [Validators.required]),
     start: new FormControl('', [Validators.required]),
     end: new FormControl('', [Validators.required]),

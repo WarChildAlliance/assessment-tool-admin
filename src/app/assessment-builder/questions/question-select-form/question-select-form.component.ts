@@ -37,7 +37,7 @@ export class QuestionSelectFormComponent implements OnInit {
 
   public selectForm: FormGroup = new FormGroup({
     question_type: new FormControl('SELECT'),
-    title: new FormControl('', [Validators.required]),
+    title: new FormControl(''),
     identifier: new FormControl('', [Validators.required]),
     order: new FormControl('', [Validators.required]),
     display: new FormControl('GRID', [Validators.required]),
