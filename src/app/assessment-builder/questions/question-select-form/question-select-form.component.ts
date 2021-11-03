@@ -131,17 +131,6 @@ export class QuestionSelectFormComponent implements OnInit {
     this.saveOptions = true;
   }
 
-  // saveOption(index): void {
-  //   const formattedObj = {
-  //     value: this.selectForm.value.options[index].value,
-  //     valid: this.selectForm.value.options[index].valid,
-  //     identifier: this.selectForm.value.options[index].identifier,
-  //     attachment: []
-  //   };
-  //   formattedObj.attachment.push({ attachment_type: this.type, file: this.attachment });
-  //   this.options.push(formattedObj);
-  // }
-
   onSave(): void {
     if (this.toClone) {
       this.selectForm.setValue({
@@ -174,7 +163,6 @@ export class QuestionSelectFormComponent implements OnInit {
   }
 
   updateQuestion(): void {
-    console.log('FFFFFFFFFFFFF', this.selectForm.value);
     this.assessmentService.editQuestion(this.assessmentId.toString(), this.topicId.toString(),
       this.question.id, this.selectForm.value).subscribe(res => {
         if (this.questionAttChange && this.imageAttachment) {
