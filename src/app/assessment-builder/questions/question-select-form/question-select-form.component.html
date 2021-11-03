@@ -58,22 +58,17 @@
                     <mat-label>Value</mat-label>
                     <input matInput formControlName="value">
                 </mat-form-field>
+                <mat-form-field appearance="outline" class="form-group" color="accent">
+                    <mat-label>Identifier</mat-label>
+                    <input matInput formControlName="identifier">
+                </mat-form-field>
                 <br>
                 <mat-checkbox formControlName="valid">
                     <mat-label>Is correct answer?</mat-label>
                 </mat-checkbox>
 
-                <mat-form-field appearance="outline" class="form-group" color="accent">
-                    <mat-label>Identifier</mat-label>
-                    <input matInput formControlName="identifier">
-                </mat-form-field>
-
                 <div class="attachments-container">
                     <p>Add an image attachment</p>
-                    <!--
-                <input type="file"
-                (change)="handleFileInputOptions($event, 'IMAGE', i)">
-                -->
                     <button type="button" mat-flat-button color="primary" (click)="imageFileInput.click()">Choose
                         File</button>
                     <input hidden (change)="handleFileInputOptions($event, 'IMAGE', i)" #imageFileInput type="file">
@@ -86,14 +81,10 @@
                     <p *ngIf="optionsAttachmentEdit.length && optionsAttachmentEdit[i].audio"> {{
                         optionsAttachmentEdit[i].audio }}</p>
                 </div>
-                <button mat-flat-button type="button" class="submit-form-button" color="primary" 
-                    (click)="saveOption(i)">
-                    Save option
-                </button>
             </div>
         </div>
     </div>
-    <button class="question-form-button" mat-flat-button color="accent" type="submit" [disabled]="selectForm.invalid">
+    <button class="question-form-button" mat-flat-button color="accent" type="submit">
         Save
     </button>
 </form>
