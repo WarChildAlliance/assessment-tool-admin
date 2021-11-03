@@ -19,6 +19,7 @@ export class QuestionSelectFormComponent implements OnInit {
   @ViewChild('fileInput') el: ElementRef;
 
   public options = [];
+  private optionsAtt = [];
 
   private imageAttachment = null;
   private audioAttachment = null;
@@ -45,7 +46,8 @@ export class QuestionSelectFormComponent implements OnInit {
     options: new FormArray([
       this.formBuilder.group({
         value: new FormControl('', [Validators.required]),
-        valid: new FormControl(false)
+        valid: new FormControl(false),
+        identifier: new FormControl('', [Validators.required])
       })
     ])
   });
@@ -53,6 +55,7 @@ export class QuestionSelectFormComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private assessmentService: AssessmentService, private alertService: AlertService) { }
 
   ngOnInit(): void {
+    const optionsForm = this.selectForm.get('options') as FormArray;
     if (this.question) {
       const options = [];
       this.question.options.forEach(element => {
@@ -60,20 +63,21 @@ export class QuestionSelectFormComponent implements OnInit {
           audio: (element.attachments.find(a => a.attachment_type === 'AUDIO'))?.file || null,
           image: (element.attachments.find(a => a.attachment_type === 'IMAGE'))?.file || null,
         };
+        this.optionsAtt.push({attachments: []});
         this.optionsAttachmentEdit.push(attObj);
         const optOject = {
           valid: element.valid,
-          value: element.value
+          value: element.value,
+          identifier: element.identifier
         };
         options.push(optOject);
       });
 
-      const optionsForm = this.selectForm.get('options') as FormArray;
-
       for (let i = 1; i < options.length; i++) {
         const optionsGroup = this.formBuilder.group({
           valid: new FormControl(null),
-          value: new FormControl(null)
+          value: new FormControl(null),
+          identifier: new FormControl(null)
         });
         optionsForm.push(optionsGroup);
       }
@@ -103,32 +107,40 @@ export class QuestionSelectFormComponent implements OnInit {
     } else {
       this.selectForm.setValue({
         question_type: 'SELECT',
-        identifier: '', title: '',
+        identifier: '',
+        title: '',
         order: this.order, display: 'GRID',
         multiple: false,
-        options: [{ value: '', valid: false }]
+        options: [{ value: '', valid: false, identifier: '' }]
       });
+      this.optionsAtt.push({attachments: []});
     }
+    optionsForm.valueChanges.subscribe(data => {
+      this.options = data;
+    });
   }
 
   addOptions(): void {
+    this.optionsAtt.push({attachments: []});
     const formGroup: FormGroup = this.formBuilder.group({
       value: this.formBuilder.control(null),
-      valid: this.formBuilder.control(false)
+      valid: this.formBuilder.control(false),
+      identifier: this.formBuilder.control(null)
     });
     (this.selectForm.controls.options as FormArray).push(formGroup);
     this.saveOptions = true;
   }
 
-  saveOption(index): void {
-    const formattedObj = {
-      value: this.selectForm.value.options[index].value,
-      valid: this.selectForm.value.options[index].valid,
-      attachment: []
-    };
-    formattedObj.attachment.push({ attachment_type: this.type, file: this.attachment });
-    this.options.push(formattedObj);
-  }
+  // saveOption(index): void {
+  //   const formattedObj = {
+  //     value: this.selectForm.value.options[index].value,
+  //     valid: this.selectForm.value.options[index].valid,
+  //     identifier: this.selectForm.value.options[index].identifier,
+  //     attachment: []
+  //   };
+  //   formattedObj.attachment.push({ attachment_type: this.type, file: this.attachment });
+  //   this.options.push(formattedObj);
+  // }
 
   onSave(): void {
     if (this.toClone) {
@@ -162,6 +174,7 @@ export class QuestionSelectFormComponent implements OnInit {
   }
 
   updateQuestion(): void {
+    console.log('FFFFFFFFFFFFF', this.selectForm.value);
     this.assessmentService.editQuestion(this.assessmentId.toString(), this.topicId.toString(),
       this.question.id, this.selectForm.value).subscribe(res => {
         if (this.questionAttChange && this.imageAttachment) {
@@ -183,9 +196,9 @@ export class QuestionSelectFormComponent implements OnInit {
   }
 
   saveOptionsAttachments(question): void {
-    this.options.forEach((o, index) => {
-      if (o.attachment) {
-        o.attachment.forEach(att => {
+    this.optionsAtt.forEach((o, index) => {
+      if (o.attachments.length) {
+        o.attachments.forEach(att => {
           if (att.attachment_type === 'IMAGE') {
             this.assessmentService.addAttachments(this.assessmentId.toString(), att.file,
               'IMAGE', { name: 'select_option', value: question.options[index].id }).subscribe();
@@ -210,9 +223,8 @@ export class QuestionSelectFormComponent implements OnInit {
   }
 
   handleFileInputOptions(event, type, i): void {
+    this.optionsAtt[i].attachments.push({ attachment_type: type, file: event.target.files[0]});
     this.optionAttChange = true;
     this.optionsAttachment = true;
-    this.type = type;
-    this.attachment = event.target.files[0];
   }
 }
