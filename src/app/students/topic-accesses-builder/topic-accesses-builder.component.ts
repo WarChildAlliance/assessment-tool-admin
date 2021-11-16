@@ -23,6 +23,11 @@ export class TopicAccessesBuilderComponent implements OnInit {
   topicsList: Topic[] = [];
   selectedAssessmentId: string;
 
+  private startDate;
+  private endDate;
+
+  private setDate: boolean;
+
   assignTopicForm: FormGroup = new FormGroup({
     access: new FormArray([]),
   });
@@ -48,15 +53,26 @@ export class TopicAccessesBuilderComponent implements OnInit {
     });
   }
 
+  onDate(date, event): void {
+    if (date === 'start_date') {
+      this.startDate = event;
+    }
+    if (date === 'end_date') {
+      this.endDate = event;
+    }
+  }
+
   setAll(event): void {
+    this.setDate = event;
     const accessForm = this.assignTopicForm.get('access') as FormArray;
-    const startDate = accessForm.value[0].start_date;
+    // const startDate = accessForm.value[0].start_date;
+    // const endDate = accessForm.value[0].end_date;
     accessForm.controls.forEach((access, i) => {
       access.setValue({
         topic: access.value.topic,
         selected: access.value.selected,
-        start_date: event || i === 0 ? startDate : null,
-        end_date: access.value.end_date
+        start_date: event || i === 0 ? this.startDate : null,
+        end_date: event || i === 0 ? this.endDate : null
       });
     });
   }
@@ -69,8 +85,8 @@ export class TopicAccessesBuilderComponent implements OnInit {
       const topicAccess = this.formBuilder.group({
         topic: new FormControl(topic),
         selected: new FormControl(true),
-        start_date: i === 0 ? new FormControl(new Date()) : new FormControl(null),
-        end_date: new FormControl(null)
+        start_date: this.setDate ? this.startDate : new FormControl(null),
+        end_date: this.setDate ? this.endDate : new FormControl(null)
       });
       accessForm.push(topicAccess);
     });

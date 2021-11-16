@@ -22,7 +22,8 @@ export class QuestionsListComponent implements OnInit {
     { key: 'order', name: 'Order', sorting: 'asc' },
     { key: 'has_attachment', name: 'Attachment', type: 'boolean' },
     { key: 'correct_answers_percentage_first', name: 'Total correct answers on students\' first try', type: 'percentage' },
-    { key: 'correct_answers_percentage_last', name: 'Total correct answers on students\' last try', type: 'percentage' }
+    { key: 'correct_answers_percentage_last', name: 'Total correct answers on students\' last try', type: 'percentage' },
+    { key: 'remove_red_eye', name: 'Preview', type: 'action' }
   ];
 
   public questionsDataSource: MatTableDataSource<QuestionTableData> = new MatTableDataSource([]);
