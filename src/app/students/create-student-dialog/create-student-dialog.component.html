@@ -1,35 +1,45 @@
-<h2 mat-dialog-title>Create a new student</h2>
+<h2 mat-dialog-title>
+    {{ "createStudent" | translate }}
+    </h2>
 <form class="form-primary" [formGroup]="createNewStudentForm" (ngSubmit)="submitCreateNewStudent()">
     <div class="form-primary__flex-container">
         <mat-form-field appearance="outline" color="accent">
-            <mat-label>First Name</mat-label>
+            <mat-label>
+                {{ "firstName" | translate }}
+                </mat-label>
             <input matInput type="text" formControlName="first_name">
         </mat-form-field>
         <small class="text-danger" *ngIf="createNewStudentForm.get('first_name').hasError('pattern')">
             Letters only
         </small>
         <mat-form-field appearance="outline" color="accent">
-            <mat-label>Last name</mat-label>
+            <mat-label>{{ "lastName" | translate }}
+                </mat-label>
             <input matInput type="text" formControlName="last_name">
         </mat-form-field>
         <small class="text-danger" *ngIf="createNewStudentForm.get('last_name').hasError('pattern')">
             Letters only
         </small>
         <mat-form-field appearance="outline" color="accent">
-            <mat-label>Country</mat-label>
+            <mat-label>{{ "country" | translate }}
+                </mat-label>
             <mat-select formControlName="country">
                 <mat-option *ngFor="let country of countries" [value]="country.code">{{country.name_en}}</mat-option>
             </mat-select>
         </mat-form-field>
         <mat-form-field appearance="outline" color="accent">
-            <mat-label>Language</mat-label>
+            <mat-label>{{ "language" | translate }}
+            </mat-label>
             <mat-select formControlName="language">
                 <mat-option *ngFor="let language of languages" [value]="language.code">{{language.name_en}}</mat-option>
             </mat-select>
         </mat-form-field>
     </div>
     <div class="buttons">
-        <button mat-button color="accent" type="submit" mat-dialog-close>Submit</button>
-        <button mat-button color="secondary" mat-dialog-close>Cancel</button>
+        <button mat-button color="accent" type="submit" mat-dialog-close>
+            {{ "submit" | translate }}
+        </button>
+        <button mat-button color="secondary" mat-dialog-close>{{ "cancel" | translate }}
+        </button>
     </div>
 </form>

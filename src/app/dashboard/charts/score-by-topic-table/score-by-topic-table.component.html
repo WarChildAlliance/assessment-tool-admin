@@ -1,30 +1,36 @@
 <mat-card>
-  <mat-card-title>Students overview</mat-card-title>
-  <mat-card-subtitle>of first try</mat-card-subtitle>
+  <mat-card-title>{{ "studentsOverview" | translate }}</mat-card-title>
+  <mat-card-subtitle>{{ "firstTry" | translate }}</mat-card-subtitle>
   <mat-card-content *ngIf="hasData">
     <div class="left-column">
       <app-select-assessment (assessmentSelection)="selectTableAssessment($event)" [selectTopic]="false"
         [multiple]="true" [displayNonEvaluated]="false"></app-select-assessment>
 
-      <h3>Chart Legend</h3>
+      <h3>{{ "chartLegend" | translate }}</h3>
       <div class="main-board__charts-container__chart__legend">
         <p>
-          <mat-icon [style.color]="'darkgrey'" matListIcon>close</mat-icon> The student is not linked to this topic
+          <mat-icon [style.color]="'darkgrey'" matListIcon>close</mat-icon>
+          {{ "studentNotLinked" | translate }}
         </p>
         <p>
-          <mat-icon matListIcon [style.color]="'red'">circle</mat-icon> Below 41% of correct answers
+          <mat-icon matListIcon [style.color]="'red'">circle</mat-icon>
+          {{ "41correct" | translate }}
         </p>
         <p>
-          <mat-icon matListIcon [style.color]="'orange'">circle</mat-icon> Between 41% and 70% of correct answers
+          <mat-icon matListIcon [style.color]="'orange'">circle</mat-icon>
+          {{ "4171correct" | translate }}
         </p>
         <p>
-          <mat-icon matListIcon [style.color]="'limegreen'">circle</mat-icon> Over 70% of correct answers
+          <mat-icon matListIcon [style.color]="'limegreen'">circle</mat-icon>
+          {{ "70correct" | translate }}
         </p>
         <p>
-          <mat-icon matListIcon [style.color]="'green'">circle</mat-icon> Over 95% of correct answers
+          <mat-icon matListIcon [style.color]="'green'">circle</mat-icon>
+          {{ "95correct" | translate }}
         </p>
         <p>
-          <mat-icon matListIcon>radio_button_unchecked</mat-icon> The student has not started this topic yet
+          <mat-icon matListIcon>radio_button_unchecked</mat-icon>
+          {{ "studentNotStarted" | translate }}
         </p>
       </div>
     </div>
@@ -33,5 +39,7 @@
         [hideSearchBar]="true"></app-table>
     </div>
   </mat-card-content>
-  <p *ngIf="!hasData">No data to display</p>
+  <p *ngIf="!hasData">
+    {{ "noData" | translate }}
+  </p>
 </mat-card>

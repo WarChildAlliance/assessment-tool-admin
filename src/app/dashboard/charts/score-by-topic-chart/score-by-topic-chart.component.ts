@@ -3,6 +3,7 @@ import * as Chart from 'chart.js';
 import { ChartData, ChartDataSets, ChartOptions } from 'chart.js';
 import { AssessmentDashboard } from 'src/app/core/models/assessment-dashboard.model';
 import { UserService } from 'src/app/core/services/user.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-score-by-topic-chart',
@@ -43,7 +44,10 @@ export class ScoreByTopicChartComponent implements OnInit {
     datasets: []
   };
 
-  constructor(private userService: UserService) { }
+  constructor(
+    private userService: UserService,
+    public translate: TranslateService
+  ) { }
 
   ngOnInit(): void {
   }

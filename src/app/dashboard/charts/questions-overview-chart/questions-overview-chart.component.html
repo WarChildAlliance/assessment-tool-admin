@@ -1,6 +1,8 @@
 <mat-card>
-  <mat-card-title>Group results</mat-card-title>
-  <mat-card-subtitle>of first try</mat-card-subtitle>
+  <mat-card-title>{{ "groupResults" | translate }}</mat-card-title>
+  <mat-card-subtitle>
+    {{ "firstTry" | translate }}
+  </mat-card-subtitle>
 
   <mat-card-content *ngIf="hasData">
     <div class="left-column">
@@ -33,5 +35,7 @@
 
 
   </mat-card-content>
-  <p *ngIf="!hasData">No data to display</p>
+  <p *ngIf="!hasData">
+    {{ "noData" | translate }}
+  </p>
 </mat-card>
