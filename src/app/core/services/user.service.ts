@@ -21,7 +21,7 @@ export class UserService {
 
   constructor(
     private http: HttpClient,
-    private utilitiesService: UtilitiesService
+    private utilitiesService: UtilitiesService,
   ) { }
 
   getSelf(): Observable<User> {

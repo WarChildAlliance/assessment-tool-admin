@@ -1,21 +1,26 @@
 <div class="main-board">
   <div class="main-board__top-container">
-    <h1>Students ({{ studentsDataSource.data.length }})
+    <h1>{{ "students" | translate }} ({{ studentsDataSource.data.length }})
       <span *ngIf="selectedUsers.length"> ({{ selectedUsers.length }} selected)</span>
     </h1>
     <div class="main-board__top-container__actions">
       <button mat-flat-button color="accent" (click)="openCreateStudentDialog()">
-        <mat-icon>add_circle_outline</mat-icon><span>Add student</span>
+        <mat-icon>add_circle_outline</mat-icon><span>
+          {{ "addStudent" | translate }}
+        </span>
       </button>
       <button mat-flat-button [disabled]="!selectedUsers.length || selectedUsers.length > 1" color="accent"
         (click)="openEditStudentDialog()">
-        <mat-icon>edit_outline</mat-icon><span>Edit student</span>
+        <mat-icon>edit_outline</mat-icon><span>
+          {{ "editStudent" | translate }}
+        </span>
       </button>
 <!--       <button mat-flat-button [disabled]="!selectedUsers.length" color="primary" (click)="deleteSelection()">
         <mat-icon>delete_outline</mat-icon><span>Delete student(s)</span>
       </button> -->
       <button mat-flat-button [disabled]="!selectedUsers.length" color="accent" (click)="openAssignTopicDialog()">
-        <mat-icon>event_available</mat-icon><span>Assign a topic</span>
+        <mat-icon>event_available</mat-icon><span>
+          {{ "assignTopic" | translate }}</span>
       </button>
 <!--       <button mat-flat-button [disabled]="true" color="primary" (click)="downloadData()">
         <mat-icon>get_app</mat-icon><span>Export</span>
