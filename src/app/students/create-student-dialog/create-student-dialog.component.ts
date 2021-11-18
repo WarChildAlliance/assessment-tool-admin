@@ -19,6 +19,8 @@ export class CreateStudentDialogComponent implements OnInit {
   // Defines if a student is edited or if a new one is created
   private isStudentEdited = false;
 
+  public formChanges = false;
+
   countries: Country[];
   languages: Language[];
 
@@ -53,6 +55,8 @@ export class CreateStudentDialogComponent implements OnInit {
         this.languages = languages;
       }
     );
+
+    this.createNewStudentForm.valueChanges.subscribe(() => { this.formChanges = true; });
   }
 
   submitCreateNewStudent(): void {

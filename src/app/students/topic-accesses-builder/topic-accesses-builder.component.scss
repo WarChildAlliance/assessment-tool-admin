@@ -22,6 +22,17 @@
             font-size: 16px;
             font-weight: 500;
         }
+
+        &__set-dates {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+
+            .apply-all {
+                margin-top: 5px;
+                margin-left: 13px;
+            }
+        }
     }
 
     &__list-row {
@@ -74,5 +85,14 @@
                 }
             }
         }
+    }
+}
+
+.topic-access-buttons {
+    float: right;
+    display: flex;
+
+    button {
+        margin-right: 5px;
     }
 }

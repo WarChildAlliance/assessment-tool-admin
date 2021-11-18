@@ -3,37 +3,51 @@
     </h2>
 <form class="form-primary" [formGroup]="createNewStudentForm" (ngSubmit)="submitCreateNewStudent()">
     <div class="form-primary__flex-container">
-        <mat-form-field appearance="outline" color="accent">
-            <mat-label>
-                {{ "firstName" | translate }}
+        <div class="form-primary__flex-container__field-container">
+            <mat-form-field appearance="outline" color="accent">
+                <mat-label>
+                    {{ "firstName" | translate }}
+                    </mat-label>
+                <input matInput type="text" formControlName="first_name">
+            </mat-form-field>
+            <small class="text-danger" *ngIf="formChanges && createNewStudentForm.get('first_name').hasError('required')">
+                This field is required
+            </small>
+        </div>
+        <div class="form-primary__flex-container__field-container">
+            <mat-form-field appearance="outline" color="accent">
+                <mat-label>{{ "lastName" | translate }}
+                    </mat-label>
+                <input matInput type="text" formControlName="last_name">
+            </mat-form-field>
+            <small class="text-danger" *ngIf="formChanges && createNewStudentForm.get('last_name').hasError('required')">
+                This field is required
+            </small>
+        </div>
+        <div class="form-primary__flex-container__field-container">
+            <mat-form-field appearance="outline" color="accent">
+                <mat-label>{{ "country" | translate }}
+                    </mat-label>
+                <mat-select formControlName="country">
+                    <mat-option *ngFor="let country of countries" [value]="country.code">{{country.name_en}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <small class="text-danger" *ngIf="formChanges && createNewStudentForm.get('country').hasError('required')">
+                This field is required
+            </small>
+        </div>
+        <div class="form-primary__flex-container__field-container">
+            <mat-form-field appearance="outline" color="accent">
+                <mat-label>{{ "language" | translate }}
                 </mat-label>
-            <input matInput type="text" formControlName="first_name">
-        </mat-form-field>
-        <small class="text-danger" *ngIf="createNewStudentForm.get('first_name').hasError('pattern')">
-            Letters only
-        </small>
-        <mat-form-field appearance="outline" color="accent">
-            <mat-label>{{ "lastName" | translate }}
-                </mat-label>
-            <input matInput type="text" formControlName="last_name">
-        </mat-form-field>
-        <small class="text-danger" *ngIf="createNewStudentForm.get('last_name').hasError('pattern')">
-            Letters only
-        </small>
-        <mat-form-field appearance="outline" color="accent">
-            <mat-label>{{ "country" | translate }}
-                </mat-label>
-            <mat-select formControlName="country">
-                <mat-option *ngFor="let country of countries" [value]="country.code">{{country.name_en}}</mat-option>
-            </mat-select>
-        </mat-form-field>
-        <mat-form-field appearance="outline" color="accent">
-            <mat-label>{{ "language" | translate }}
-            </mat-label>
-            <mat-select formControlName="language">
-                <mat-option *ngFor="let language of languages" [value]="language.code">{{language.name_en}}</mat-option>
-            </mat-select>
-        </mat-form-field>
+                <mat-select formControlName="language">
+                    <mat-option *ngFor="let language of languages" [value]="language.code">{{language.name_en}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <small class="text-danger" *ngIf="formChanges && createNewStudentForm.get('language').hasError('required')">
+                This field is required
+            </small>
+        </div>
     </div>
     <div class="buttons">
         <button mat-button color="accent" type="submit" mat-dialog-close>

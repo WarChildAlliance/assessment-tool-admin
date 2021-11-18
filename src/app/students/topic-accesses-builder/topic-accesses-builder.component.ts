@@ -65,8 +65,6 @@ export class TopicAccessesBuilderComponent implements OnInit {
   setAll(event): void {
     this.setDate = event;
     const accessForm = this.assignTopicForm.get('access') as FormArray;
-    // const startDate = accessForm.value[0].start_date;
-    // const endDate = accessForm.value[0].end_date;
     accessForm.controls.forEach((access, i) => {
       access.setValue({
         topic: access.value.topic,
