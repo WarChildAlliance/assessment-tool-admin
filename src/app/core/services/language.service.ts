@@ -28,7 +28,8 @@ export class LanguageService {
   ) {
     this.translateService.setDefaultLang('eng');
     const savedLanguage = localStorage.getItem('cwtl-language') || 'eng';
-    this.setLanguage(this.languages.find((language) => language.code === savedLanguage));
+    const l = this.languages.find((language) => language.code === savedLanguage.toLowerCase());
+    this.setLanguage(l);
     this.translateService.use(savedLanguage);
   }
 
@@ -45,11 +46,8 @@ export class LanguageService {
   }
 
   setLanguage(language: { name: string, code: string, direction: 'rtl' | 'ltr' }): void {
-
-    console.log('LANGUAGE: ', language);
-
     this.language = language;
-    localStorage.setItem('cwtl-language', language.code);
+    localStorage.setItem('cwtl-language', language.code.toLowerCase());
     this.translateService.use(language.code);
     this.setDirection();
     // moment.locale(language.code);
@@ -61,8 +59,12 @@ export class LanguageService {
   }
 
   private setDirection(): void {
-    document.getElementsByTagName('html')[0].setAttribute('dir', this.language.direction);
-    document.getElementsByTagName('html')[0].className = this.language.direction;
+    document.getElementsByTagName('html')[0].setAttribute('dir', 'ltr');
+    document.getElementsByTagName('html')[0].className = 'ltr';
+ // WARNING! We currently dont change the UI according to language but might need to do so in the future.
+  // To do so, uncomment the following two lines
+/*   document.getElementsByTagName('html')[0].setAttribute('dir', this.language.direction);
+    document.getElementsByTagName('html')[0].className = this.language.direction; */
     this.direction.next(this.language.direction);
   }
 }

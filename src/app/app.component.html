@@ -10,7 +10,9 @@
   <mat-menu #accountMenu="matMenu" xPosition="before">
     <button mat-menu-item (click)="logout()">
       <mat-icon matListIcon type="submit">logout</mat-icon>
-      <span>Logout</span>
+      <span>
+        {{ "logout" | translate }}
+      </span>
     </button>
   </mat-menu>
 
@@ -22,19 +24,19 @@
     <mat-nav-list>
       <a mat-list-item routerLink="dashboard" routerLinkActive="list-item-active">
         <mat-icon matListIcon>space_dashboard</mat-icon>
-        Dashboard
+        {{ "dashboard" | translate }}
       </a>
       <a mat-list-item routerLink="students" routerLinkActive="list-item-active">
         <mat-icon matListIcon>account_box</mat-icon>
-        Students
+        {{ "students" | translate }}
       </a>
       <a mat-list-item routerLink="assessments" routerLinkActive="list-item-active">
         <mat-icon matListIcon>quiz</mat-icon>
-        Assessments
+        {{ "assessments" | translate }}
       </a>
       <a mat-list-item routerLink="assessment-builder" routerLinkActive="list-item-active">
         <mat-icon matListIcon>space_dashboard</mat-icon>
-        BRAB
+        {{ "assessmentBuilder" | translate }}
       </a>
     </mat-nav-list>
   </mat-sidenav>

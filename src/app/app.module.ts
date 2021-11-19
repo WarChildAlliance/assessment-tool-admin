@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -20,6 +20,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatBreadcrumbModule } from 'mat-breadcrumb';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { HttpLoaderFactory } from './core/factories/http-loader-translate.factory';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,14 @@ import { MatBreadcrumbModule } from 'mat-breadcrumb';
     ReactiveFormsModule,
     MatCardModule,
     MatInputModule,
-    MatBreadcrumbModule
+    MatBreadcrumbModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      }
+    }),
   ],
   providers: [
     httpInterceptorProviders,

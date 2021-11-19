@@ -1,22 +1,22 @@
 <div class="main-board__details" *ngIf="!!currentAssessment && !!currentStudent">
     <div class="main-board__details__element">
-        <span class="title">Student name</span>
+        <span class="title">{{ "studentsName" | translate }}</span>
         <span class="value">{{ currentStudent.full_name }}</span>
     </div>
     <div class="main-board__details__element">
-        <span class="title">Assessment name</span>
+        <span class="title">{{ "studentsName" | translate }} Assessment name</span>
         <span class="value">{{ currentAssessment.title }}</span>
     </div>
     <div class="main-board__details__element">
-        <span class="title">Number of linked topics</span>
+        <span class="title">{{ "studentsName" | translate }}</span>
         <span class="value">{{ currentAssessment.accessible_topics_count }}</span>
     </div>
     <div class="main-board__details__element">
-        <span class="title">Number of completed topics</span>
+        <span class="title">{{ "totalCompletedTopics" | translate }}</span>
         <span class="value">{{ currentAssessment.completed_topics_count }}</span>
     </div>
     <div class="main-board__details__element">
-        <span class="title">Last login</span>
+        <span class="title">{{ "lastLogin" | translate }}</span>
         <span class="value">{{ currentAssessment.last_session | date:'mediumDate' }}</span>
     </div>
 </div>

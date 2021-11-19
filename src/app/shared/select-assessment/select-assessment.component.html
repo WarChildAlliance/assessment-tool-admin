@@ -1,6 +1,8 @@
 <div class="main-board__charts-container__select" *ngIf="!multiple && selectedAssessment">
   <mat-form-field appearance="outline" color="accent">
-    <mat-label>Choose an assessment</mat-label>
+    <mat-label>
+      {{ "chooseAssessment" | translate }}
+    </mat-label>
     <mat-select [(value)]="selectedAssessment">
       <ng-container *ngFor="let assessment of assessmentsList">
         <mat-option [value]="assessment" *ngIf="assessment.evaluated || displayNonEvaluated" (click)="selectAssessment(assessment)">{{ assessment.title }}</mat-option>
@@ -11,7 +13,9 @@
 
 <div class="main-board__charts-container__select" *ngIf="multiple && selectedAssessmentArr">
   <mat-form-field appearance="outline" color="accent">
-    <mat-label>Add an assessment</mat-label> 
+    <mat-label>
+      {{ "addAssessment" | translate }}
+    </mat-label> 
     <mat-select multiple [(value)]="selectedAssessmentArr">
       <ng-container *ngFor="let assessment of assessmentsList">
         <mat-option *ngIf="assessment.evaluated" [value]="assessment" (click)="selectAssessment(assessment)">{{ assessment.title }}</mat-option>
@@ -22,14 +26,17 @@
 
 <div class="main-board__charts-container__select" *ngIf="selectTopic">
   <mat-form-field appearance="outline" color="accent">
-    <mat-label>Choose a topic</mat-label>
+    <mat-label>
+      {{ "chooseTopic" | translate }}
+    </mat-label>
     <mat-select [(value)]="selectedTopic">
       <ng-container *ngFor="let topic of topicsList">
         <mat-option [value]="topic" (click)="selectATopic(topic)" [disabled]="!topic.started">{{ topic.name }}</mat-option>
       </ng-container>
     </mat-select>
     <mat-hint>
-      <mat-icon>info</mat-icon>If a topic is grayed out, it means that  no student has started it yet
+      <mat-icon>info</mat-icon>
+      {{ "hintNoStudent" | translate }}
   </mat-hint>
   </mat-form-field>
 </div>

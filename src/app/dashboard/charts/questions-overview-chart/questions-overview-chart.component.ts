@@ -3,6 +3,7 @@ import * as Chart from 'chart.js';
 import { ChartData } from 'chart.js';
 import { TopicDashboard } from 'src/app/core/models/topic-dashboard.model';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({

@@ -2,8 +2,8 @@
     <h2>Q{{ index }}: {{ question.title }}</h2>
 </div>
 <div class="correct-answer" *ngIf="evaluated">
-    Correct answer: {{question.valid_answer}}
+    {{ "correctAnswer" | translate }}: {{question.valid_answer}}
 </div>
 <div *ngIf="answer" class="student-answer">
-    Student answer: {{answer}}
+    {{ "studentAnswer" | translate }}: {{answer}}
 </div>

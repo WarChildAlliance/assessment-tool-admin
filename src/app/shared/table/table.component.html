@@ -9,7 +9,7 @@
   </ng-container>
 
   <mat-form-field class="table-actions__searchbox" appearance="fill" color="accent" *ngIf="!hideSearchBar">
-    <mat-label>Search...</mat-label>
+    <mat-label>{{ "search" | translate }}</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="You can search on any column!">
     <mat-icon matSuffix>search</mat-icon>
   </mat-form-field>
@@ -88,7 +88,9 @@
   <tr mat-row *matRowDef="let row; columns: getDisplayedColumnsKeys();" (click)="openElementDetails(row.id)"></tr>
 
   <tr class="mat-row" *matNoDataRow>
-    <td class="mat-cell" [attr.colspan]="getDisplayedColumnsKeys().length">No data to display</td>
+    <td class="mat-cell" [attr.colspan]="getDisplayedColumnsKeys().length">
+      {{ "noData" | translate }}
+    </td>
   </tr>
 </table>
 

@@ -15,6 +15,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCardModule } from '@angular/material/card';
+import { TranslateModule } from '@ngx-translate/core';
 import { SelectAssessmentComponent } from './select-assessment/select-assessment.component';
 import { QuestionSelectComponent } from './questions/question-select/question-select.component';
 import { QuestionInputComponent } from './questions/question-input/question-input.component';
@@ -46,14 +47,16 @@ import { QuestionNumberlineComponent } from './questions/question-numberline/que
     MatIconModule,
     MatTooltipModule,
     MatCardModule,
-    ClipboardModule
+    ClipboardModule,
+    TranslateModule,
   ],
   exports: [TableComponent,
     QuestionSelectComponent,
     SelectAssessmentComponent,
     QuestionInputComponent,
     QuestionSortComponent,
-    QuestionNumberlineComponent
+    QuestionNumberlineComponent,
+    TranslateModule,
   ]
 })
 

@@ -1,6 +1,6 @@
 export interface Language {
     code: string;
-    direction: string;
+    direction: 'rtl' | 'ltr';
     name_en: string;
     name_local?: string;
 }

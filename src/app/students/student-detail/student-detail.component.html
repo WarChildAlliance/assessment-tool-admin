@@ -3,7 +3,7 @@
 
     <div class="main-board__top-container__actions">
       <button mat-flat-button color="accent" (click)="editCurrentStudent()">
-        <mat-icon>edit_outline</mat-icon><span>Edit student</span>
+        <mat-icon>edit_outline</mat-icon><span>{{ "editStudent" | translate }}</span>
       </button>
 <!--       <button mat-flat-button color="primary" (click)="deleteCurrentStudent()" [disabled]="true">
         <mat-icon>delete_outline</mat-icon> Delete student
@@ -13,39 +13,54 @@
 
   <div class="main-board__details" *ngIf="student">
     <div class="main-board__details__element">
-      <span class="title">Name</span>
+      <span class="title">{{ "name" | translate }}</span>
       <span class="value">{{ student.full_name }}</span>
     </div>
     <div class="main-board__details__element">
-      <span class="title">Number of assessments</span>
+      <span class="title">
+        {{ "numberAssessments" | translate }}
+        </span>
       <span class="value">{{ student.assessments_count }}</span>
     </div>
     <div class="main-board__details__element">
-      <span class="title">Total completed topics</span>
+      <span class="title">
+        {{ "totalCompletedTopics" | translate }}
+      </span>
       <span class="value">{{ student.completed_topics_count }}</span>
     </div>
     <div class="main-board__details__element">
-      <span class="title">Last login</span>
+      <span class="title">
+        {{ "lastLogin" | translate }}
+        </span>
       <span class="value">{{ student.last_session | date:'short' }}</span>
     </div>
     <div class="main-board__details__element">
-      <span class="title">Language</span>
+      <span class="title">
+        {{ "language" | translate }}
+        </span>
       <span class="value">{{ student.language_name }}</span>
     </div>
     <div class="main-board__details__element">
-      <span class="title">Country</span>
+      <span class="title">
+        {{ "country" | translate }}
+        </span>
       <span class="value">{{ student.country_name }}</span>
     </div>
   </div>
 
   <div class="main-board__accordions-container">
-    <h3>Student's assessments</h3>
-    <p *ngIf="!studentAssessments">This student currently is not linked to any assessment.</p>
+    <h3>
+      {{ "studentsAssessments" | translate }}
+      </h3>
+    <p *ngIf="!studentAssessments">{{ "studentNotLinkedAssessment" | translate }}
+      </p>
     <mat-accordion multi>
       <mat-expansion-panel *ngFor="let assessment of studentAssessments">
         <mat-expansion-panel-header>
           <mat-panel-title>
-            <span class="assessment-title">{{ assessment.title }} </span><span class="linked-topics">({{ assessment.topic_access.length }} linked topic(s))</span>
+            <span class="assessment-title">{{ assessment.title }} </span><span class="linked-topics">({{ assessment.topic_access.length }} 
+              {{ "linkedTopics" | translate }})
+            </span>
           </mat-panel-title>
         </mat-expansion-panel-header>
         <div class="main-board__accordions-container__topic" *ngFor="let topic of assessment.topic_access">
@@ -53,10 +68,16 @@
             <p>{{ topic.topic }}</p>
           </div>
           <div class="main-board__accordions-container__topic__infos" *ngIf="topic.start_date">
-            <p>from {{ topic.start_date }} to {{ topic.end_date }}</p>
+            <p>{{ "from" | translate }} {{ topic.start_date }}
+              {{ "to" | translate }} {{ topic.end_date }}</p>
           </div>
           <div class="main-board__accordions-container__topic__infos">
-            <p> {{topic.hasAccess ? 'Active access' : 'No active access'}} </p>
+            <p *ngIf="topic.hasAccess">
+              {{ "activeAccess" | translate }}
+             </p>
+              <p *ngIf="!topic.hasAccess">
+                {{ "noActiveAccess" | translate }}
+                 </p>
           </div>
         </div>
       </mat-expansion-panel>
@@ -64,7 +85,9 @@
   </div>
 
   <div class="main-board__tabs-container">
-    <h3>Assessments Overview</h3>
+    <h3>
+      {{ "assessmentsOverview" | translate }}
+      </h3>
     <app-assessments-answers></app-assessments-answers>
   </div>
 

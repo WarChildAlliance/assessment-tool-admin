@@ -34,7 +34,7 @@ export class StudentDetailComponent implements OnInit {
         this.assessmentService.getStudentAssessments(this.student.id).subscribe(assessments => {
           assessments.forEach(assessment => {
             assessment.topic_access.forEach(topic => {
-              topic.hasAccess = moment(formatDate(new Date(), 'yyyy-MM-dd', 'en')).isBetween(topic.start_date, topic.end_date);
+              topic.hasAccess = moment(formatDate(new Date(), 'yyyy-MM-dd', 'en')).isBetween(topic.start_date, topic.end_date, null, '[]');
             });
           });
           this.studentAssessments = assessments;

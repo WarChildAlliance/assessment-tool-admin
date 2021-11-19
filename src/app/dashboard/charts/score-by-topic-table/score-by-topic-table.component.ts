@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { AssessmentDashboard } from 'src/app/core/models/assessment-dashboard.model';
 import { UserService } from 'src/app/core/services/user.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-score-by-topic-table',
@@ -26,7 +27,8 @@ export class ScoreByTopicTableComponent implements OnInit {
 
   constructor(private userService: UserService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   selectTableAssessment(assessment: AssessmentDashboard): void {
     if (!this.scoreByTopicTable.length) {
