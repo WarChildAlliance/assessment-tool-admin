@@ -19,6 +19,7 @@ export class AssessmentFormDialogComponent implements OnInit {
   public languages;
   public countries;
   public subjects = ['PRESEL', 'POSTSEL', 'MATH', 'LITERACY'];
+  public formData: FormData = new FormData();
 
   public createNewAssessmentForm: FormGroup = new FormGroup({
     title: new FormControl('', [Validators.required]),
@@ -26,7 +27,8 @@ export class AssessmentFormDialogComponent implements OnInit {
     subject: new FormControl('', [Validators.required]),
     language: new FormControl('', [Validators.required]),
     country: new FormControl('', [Validators.required]),
-    private: new FormControl(false, [Validators.required])
+    private: new FormControl(false, [Validators.required]),
+    icon: new FormControl(null),
   });
 
   constructor(private assessmentService: AssessmentService,
@@ -43,35 +45,43 @@ export class AssessmentFormDialogComponent implements OnInit {
         subject: this.assessment.subject.toUpperCase(),
         language: this.assessment.language_code,
         country: this.assessment.country_code,
-        private: this.assessment.private
+        private: this.assessment.private,
+        icon: this.icon,
       });
     }
   }
 
   submitCreateNewAssessment(): void {
+    const data = this.icon ? this.formData : this.createNewAssessmentForm.value;
     if (this.edit) {
-      this.assessmentService.editAssessment(this.assessment.id, this.createNewAssessmentForm.value).subscribe(() => {
+      this.assessmentService.editAssessment(this.assessment.id, data).subscribe(() => {
         this.alertService.success('Assessment was altered successfully');
       });
     } else {
-      this.assessmentService.createAssessment(this.createNewAssessmentForm.value).subscribe(res => {
-        if (this.icon) {
-          this.saveAttachments((res.id).toString(), this.icon, 'IMAGE', {name: 'assessment', value: res.id});
-        }
-        this.alertService.success('Assessment was saved successfully');
-      });
+      this.assessmentService.createAssessment(data).subscribe(res => {
+      this.alertService.success('Assessment was saved successfully');
+    });
     }
     this.createNewAssessmentForm.reset();
   }
 
   saveAttachments(assessmentId: string, attachment, type: string, obj): void {
-    this.assessmentService.addAttachments(assessmentId, attachment, type, obj).subscribe(() => {
+    this.assessmentService.addAttachments(assessmentId, attachment, type, obj).subscribe((res) => {
       this.alertService.success('Assessment was saved successfully');
     });
   }
 
   handleFileInput(event): void {
     this.icon = event.target.files[0];
+    this.formData.append('icon', this.icon);
+    this.formData.append('title', this.createNewAssessmentForm.value.title);
+    this.formData.append('grade', this.createNewAssessmentForm.value.grade);
+    this.formData.append('subject', this.createNewAssessmentForm.value.subject);
+    this.formData.append('language', this.createNewAssessmentForm.value.language);
+    this.formData.append('country', this.createNewAssessmentForm.value.country);
+    this.formData.append('private', this.createNewAssessmentForm.value.private);
+
+    this.createNewAssessmentForm.patchValue({icon: this.icon});
   }
 
 }

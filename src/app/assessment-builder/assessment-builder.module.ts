@@ -19,6 +19,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { QuestionInputFormComponent } from './questions/question-input-form/question-input-form.component';
 import { QuestionNumberlineFormComponent } from './questions/question-numberline-form/question-numberline-form.component';
 import { QuestionSelectFormComponent } from './questions/question-select-form/question-select-form.component';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { QuestionSelectFormComponent } from './questions/question-select-form/qu
     MatIconModule,
     MatInputModule,
     MatSelectModule,
-    SharedModule
+    SharedModule,
+    MatDividerModule
   ]
 })
 export class AssessmentBuilderModule { }

@@ -53,7 +53,7 @@ export class AssessmentService {
     return this.http.get<any[]>(`${environment.API_URL}/visualization/assessments/${assessmentId}/topics/${topicId}/questions/`);
   }
 
-  createAssessment(assessment: any): Observable<Assessment> {
+  createAssessment(assessment: FormData): Observable<Assessment> {
     return this.http.post<Assessment>(`${environment.API_URL}/assessments/`, assessment);
   }
 
