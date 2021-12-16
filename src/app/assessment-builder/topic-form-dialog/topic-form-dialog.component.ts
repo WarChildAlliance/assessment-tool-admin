@@ -13,6 +13,7 @@ export class TopicFormDialogComponent implements OnInit {
   @Input() assessmentId;
   @Input() topic;
   @Input() edit: boolean;
+  public formData: FormData = new FormData();
 
   public imageAttachment = null;
   public audioAttachment = null;
@@ -27,7 +28,8 @@ export class TopicFormDialogComponent implements OnInit {
     allow_skip: new FormControl(false, [Validators.required]),
     evaluated: new FormControl(true, [Validators.required]),
     praise: new FormControl(0, [Validators.required]),
-    max_wrong_answers: new FormControl(0, [Validators.required])
+    max_wrong_answers: new FormControl(0, [Validators.required]),
+    icon: new FormControl(null),
   });
 
   constructor(private assessmentService: AssessmentService,
@@ -48,21 +50,14 @@ export class TopicFormDialogComponent implements OnInit {
   }
 
   onSave(): void {
+    const data = this.formGroupToFormData(this.createNewTopicForm);
     if (this.edit) {
-      this.assessmentService.editTopic(this.assessmentId.toString(), this.topic.id, this.createNewTopicForm.value).subscribe(res => {
-        if (this.icon) {
-          this.saveAttachments(this.assessmentId, this.icon, 'IMAGE', {name: 'topic', value: res.id});
-        } else {
-          this.alertService.success('Topic was altered successfully');
-        }
+      this.assessmentService.editTopic(this.assessmentId.toString(), this.topic.id, data).subscribe(res => {
+        this.alertService.success('Topic was altered successfully');
       });
     } else {
-      this.assessmentService.createTopic(this.assessmentId.toString(), this.createNewTopicForm.value).subscribe(res => {
-        if (this.icon) {
-          this.saveAttachments(this.assessmentId, this.icon, 'IMAGE', {name: 'topic', value: res.id});
-        } else {
-          this.alertService.success('Topic was created successfully');
-        }
+      this.assessmentService.createTopic(this.assessmentId.toString(), data).subscribe(res => {
+        this.alertService.success('Topic was created successfully');
       });
     }
   }
@@ -73,19 +68,24 @@ export class TopicFormDialogComponent implements OnInit {
     });
   }
 
+
+  formGroupToFormData(formgroup): FormData {
+    this.formData.append('icon', this.icon);
+    this.formData.append('name', this.createNewTopicForm.value.name);
+    this.formData.append('description', this.createNewTopicForm.value.description);
+    this.formData.append('show_feedback', this.createNewTopicForm.value.show_feedback);
+    this.formData.append('allow_skip', this.createNewTopicForm.value.allow_skip);
+    this.formData.append('evaluated', this.createNewTopicForm.value.evaluated);
+    this.formData.append('praise', this.createNewTopicForm.value.praise);
+    this.formData.append('max_wrong_answers', this.createNewTopicForm.value.max_wrong_answers);
+
+    return this.formData;
+  }
+
   handleFileInput(event, type): void {
-
-    if (type === 'IMAGE') {
-      this.imageAttachment = event.target.files[0];
-    } else if  (type === 'AUDIO') {
-      this.audioAttachment = event.target.files[0];
-    } else {
-      this.icon = event.target.files[0];
-      this.createNewTopicForm.patchValue({
-        icon: this.icon
-      });
-
-    }
+    this.icon = event.target.files[0];
+    this.createNewTopicForm.patchValue({icon: this.icon});
   }
 
 }
+
