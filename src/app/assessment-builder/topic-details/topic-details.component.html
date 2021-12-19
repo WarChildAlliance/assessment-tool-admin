@@ -38,9 +38,9 @@
         <div class="question-options-button">
           <button mat-button mat-stroked-button color="{{questionType === 'SELECT' ? 'accent' : 'secondary'}}" (click)="setQuestionType('SELECT')">(Multi-)
             Select</button>
+          <!--
           <button mat-button mat-stroked-button
             color="{{questionType === 'INPUT' ? 'accent' : 'secondary'}}" (click)="setQuestionType('INPUT')">Input</button>
-          <!--
                   <button mat-button mat-stroked-button color="{{questionType === 'SORT' ? 'accent' : 'secondary'}}">Sort</button>
                   -->
           <button mat-button mat-stroked-button
@@ -48,12 +48,12 @@
         </div>
         <hr>
         <div class="question-form">
-          <app-question-input-form [assessmentId]="assessmentId" [topicId]="topicId" [order]="order"
-            *ngIf="questionType === 'INPUT'"></app-question-input-form>
+<!--           <app-question-input-form [assessmentId]="assessmentId" [topicId]="topicId" [order]="order"
+            *ngIf="questionType === 'INPUT'"></app-question-input-form> -->
+            <app-question-select-form [assessmentId]="assessmentId" [topicId]="topicId" [order]="order"
+            *ngIf="questionType === 'SELECT'"></app-question-select-form>
           <app-question-numberline-form [assessmentId]="assessmentId" [topicId]="topicId" [order]="order"
             *ngIf="questionType === 'NUMBER_LINE'"></app-question-numberline-form>
-          <app-question-select-form [assessmentId]="assessmentId" [topicId]="topicId" [order]="order"
-            *ngIf="questionType === 'SELECT'"></app-question-select-form>
         </div>
       </div>
     </mat-card>

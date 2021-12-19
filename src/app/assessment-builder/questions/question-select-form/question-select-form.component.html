@@ -2,10 +2,6 @@
     <div class="form-container">
         <div class="select-details-container">
             <h2>Question</h2>
-            <mat-form-field appearance="outline" class="form-group" color="accent">
-                <mat-label for="title">Select</mat-label>
-                <input matInput formControlName="question_type">
-            </mat-form-field>
 
             <mat-form-field appearance="outline" class="form-group" color="accent">
                 <mat-label for="title">Title</mat-label>
@@ -37,52 +33,62 @@
 
         <div class="attachments-container">
             <h2>Attachments</h2>
-            <p>Add an image attachment</p>
-            <button type="button" mat-flat-button color="primary" (click)="imageFileInput.click()">Choose
+            <p>Image attachment</p>
+            <button type="button" class="file_input" mat-flat-button color="primary" (click)="imageFileInput.click()">Choose
                 File</button>
-            <input hidden (change)="handleFileInput($event, 'IMAGE')" #imageFileInput type="file">
-            <p>Add an audio attachment</p>
-            <button type="button" mat-flat-button color="primary" (click)="audioFileInput.click()">Choose
+            <input hidden class="file_input" (change)="handleFileInput($event, 'IMAGE')" #imageFileInput type="file">
+            <p>{{imageAttachment ? imageAttachment.name : 'No file chosen'}}</p>
+            <p>Audio attachment</p>
+            <button type="button" class="file_input" mat-flat-button color="primary" (click)="audioFileInput.click()">Choose
                 File</button>
             <input hidden (change)="handleFileInput($event, 'AUDIO')" #audioFileInput type="file">
+            <p>{{audioAttachment ? audioAttachment.name : 'No file chosen'}}</p>
         </div>
+    </div>
+    <mat-divider></mat-divider>
 
-
-        <div class="options-container" formArrayName="options">
-            <h2>Options</h2>
-            <p>Add an option <mat-icon (click)="addOptions()">add</mat-icon>
-            </p>
-            <div class="option-form" *ngFor="let control of selectForm.controls.options['controls']; let i = index"
-                [formGroupName]="i">
+    <h2 style="margin-top: 20px;">Options</h2>
+    <div class="options-container" formArrayName="options">
+        <div class="option-form" *ngFor="let control of selectForm.controls.options['controls']; let i = index"
+            [formGroupName]="i">
+            <div>
                 <mat-form-field appearance="outline" class="form-group" color="accent">
                     <mat-label>Value</mat-label>
                     <input matInput formControlName="value">
                 </mat-form-field>
-                <mat-form-field appearance="outline" class="form-group" color="accent">
-                    <mat-label>Identifier</mat-label>
-                    <input matInput formControlName="identifier">
-                </mat-form-field>
-                <br>
-                <mat-checkbox formControlName="valid">
-                    <mat-label>Is correct answer?</mat-label>
-                </mat-checkbox>
+            </div>
+            <mat-form-field appearance="outline" class="form-group" color="accent">
+                <mat-label>Identifier</mat-label>
+                <input matInput formControlName="identifier">
+            </mat-form-field>
+            <br>
+            <mat-checkbox formControlName="valid">
+                <mat-label>Is correct answer?</mat-label>
+            </mat-checkbox>
 
-                <div class="attachments-container">
-                    <p>Add an image attachment</p>
-                    <button type="button" mat-flat-button color="primary" (click)="imageFileInput.click()">Choose
-                        File</button>
-                    <input hidden (change)="handleFileInputOptions($event, 'IMAGE', i)" #imageFileInput type="file">
-                    <p *ngIf="optionsAttachmentEdit.length &&  optionsAttachmentEdit[i].image"> {{
-                        optionsAttachmentEdit[i].image }}</p>
-                    <p>Add an audio attachment</p>
-                    <button type="button" mat-flat-button color="primary" (click)="audioFileInput.click()">Choose
-                        File</button>
-                    <input hidden (change)="handleFileInputOptions($event, 'AUDIO', i)" #audioFileInput type="file">
-                    <p *ngIf="optionsAttachmentEdit.length && optionsAttachmentEdit[i].audio"> {{
-                        optionsAttachmentEdit[i].audio }}</p>
-                </div>
+            <div class="attachments-container">
+                <p>Image attachment</p>
+                <button type="button" class="file_input" mat-flat-button color="primary" (click)="imageFileInput.click()">Choose
+                    File</button>
+                <input hidden (change)="handleFileInputOptions($event, 'IMAGE', i)" #imageFileInput type="file">
+                <p *ngIf="optionsAttachmentEdit.length &&  optionsAttachmentEdit[i].image"> {{
+                    optionsAttachmentEdit[i].image }}</p>
+                <p>Audio attachment</p>
+                <button type="button" class="file_input" mat-flat-button color="primary" (click)="audioFileInput.click()">Choose
+                    File</button>
+                <input hidden (change)="handleFileInputOptions($event, 'AUDIO', i)" #audioFileInput type="file">
+                <p *ngIf="optionsAttachmentEdit.length && optionsAttachmentEdit[i].audio"> {{
+                    optionsAttachmentEdit[i].audio }}</p>
+                
             </div>
         </div>
+        <div>
+            <button (click)="addOptions()" type="button" style="margin-left: 20px;" class="file_input" mat-button>
+                <mat-icon>add</mat-icon>
+                Add Option
+            </button>
+        </div>
+        
     </div>
     <button class="question-form-button" mat-flat-button color="accent" type="submit">
         Save

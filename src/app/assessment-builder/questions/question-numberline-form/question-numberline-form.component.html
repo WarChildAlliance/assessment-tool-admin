@@ -35,21 +35,31 @@
         <input type="number" matInput formControlName="expected_value" class="form-control">
     </mat-form-field>
 
-    <mat-label>Show Ticks</mat-label>
-    <mat-checkbox matInput formControlName="show_ticks" class="form-control"></mat-checkbox>
+    <span style="margin-right: 20px;">
+        <mat-label style="margin-right: 10px;">Show Ticks</mat-label>
+        <mat-checkbox matInput formControlName="show_ticks" class="form-control"></mat-checkbox>
+    </span>
 
-    <mat-label>Show Value</mat-label>
-    <mat-checkbox matInput formControlName="show_value" class="form-control"></mat-checkbox>
+    <span>
+        <mat-label style="margin-right: 10px;">Show Value</mat-label>
+        <mat-checkbox matInput formControlName="show_value" class="form-control"></mat-checkbox>
+    </span>
 
     <div class="attachments-container">
-        <p>Add an image attachment</p>
-        <button type="button" mat-flat-button color="primary" (click)="imageFileInput.click()">Choose
-            File</button>
-        <input hidden (change)="handleFileInput($event, 'IMAGE')" #imageFileInput type="file">
-        <p>Add an audio attachment</p>
-        <button type="button" mat-flat-button color="primary" (click)="audioFileInput.click()">Choose
-            File</button>
-        <input hidden (change)="handleFileInput($event, 'AUDIO')" #audioFileInput type="file">
+        <div style="margin-right: 20px;">
+            <h3>Image attachment</h3>
+            <button type="button"  class="file_input" mat-flat-button color="primary" (click)="imageFileInput.click()">Choose
+                File</button>
+            <input hidden (change)="handleFileInput($event, 'IMAGE')" #imageFileInput type="file">
+            <p>{{imageAttachment ? imageAttachment.name : 'No file chosen'}}</p>
+        </div>
+        <div>
+            <h3>Audio attachment</h3>
+            <button type="button" mat-flat-button  class="file_input" color="primary" (click)="audioFileInput.click()">Choose
+                File</button>
+            <input hidden (change)="handleFileInput($event, 'AUDIO')" #audioFileInput type="file">
+            <p>{{audioAttachment ? audioAttachment.name : 'No file chosen'}}</p>
+        </div>
     </div>
 
     <div>

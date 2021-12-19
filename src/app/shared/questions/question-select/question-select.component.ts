@@ -42,7 +42,6 @@ export class QuestionSelectComponent implements OnInit {
     const audio = new Audio(environment.API_URL + file);
     audio.load();
     audio.play();
-
   }
 
 }

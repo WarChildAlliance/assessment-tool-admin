@@ -21,8 +21,8 @@ export class QuestionSelectFormComponent implements OnInit {
   public options = [];
   private optionsAtt = [];
 
-  private imageAttachment = null;
-  private audioAttachment = null;
+  public imageAttachment = null;
+  public audioAttachment = null;
 
   private questionAttChange = false;
   private optionAttChange = false;
@@ -152,13 +152,14 @@ export class QuestionSelectFormComponent implements OnInit {
       this.assessmentId.toString()).subscribe((res) => {
         if (this.imageAttachment) {
           this.saveAttachments(this.assessmentId, this.imageAttachment, 'IMAGE', { name: 'question', value: res.id });
-        } else if (this.audioAttachment) {
-          this.saveAttachments(this.assessmentId, this.audioAttachment, 'AUDIO', { name: 'question', value: res.id });
-        } else if (this.optionsAttachment) {
-          this.saveOptionsAttachments(res);
-        } else {
-          this.alertService.success(this.alertMessage);
         }
+        if (this.audioAttachment) {
+          this.saveAttachments(this.assessmentId, this.audioAttachment, 'AUDIO', { name: 'question', value: res.id });
+        }
+        if (this.optionsAttachment) {
+          this.saveOptionsAttachments(res);
+        }
+        this.alertService.success(this.alertMessage);
       });
   }
 

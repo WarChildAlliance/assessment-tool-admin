@@ -3,13 +3,26 @@
     width: 100%;
     justify-content: space-between;
 
-    .select-details-container, .attachments-container, .options-container {
+
+    .select-details-container, .attachments-container {
         flex: 1;
-    }
+    } 
 }
 
 .question-form-button {
     margin-top: 20px;
     width: 50%;
     margin-left: 25%;
+}
+
+.file_input{
+    background-color: rgb(233, 233, 233);
+}
+
+.options-container{
+    display: flex;
+}
+
+.mat-form-field{
+    margin-right: 20px;
 }

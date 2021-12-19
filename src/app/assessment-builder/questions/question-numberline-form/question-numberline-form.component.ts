@@ -16,8 +16,11 @@ export class QuestionNumberlineFormComponent implements OnInit {
   @Input() question;
   @Input() toClone;
 
-  private imageAttachment = null;
-  private audioAttachment = null;
+  public imageAttachment = null;
+  public audioAttachment = null;
+  // making sure that we dont store an new attachment on editQuestion, if attachment didnt change
+  public changedAudio = false;
+  public changedImage = false;
 
   public alertMessage =  '';
 
@@ -51,6 +54,12 @@ export class QuestionNumberlineFormComponent implements OnInit {
         show_ticks: this.question.show_ticks,
         show_value: this.question.show_value
       });
+      const image = this.question.attachments.find( i => i.attachment_type === 'IMAGE');
+      const audio = this.question.attachments.find( a => a.attachment_type === 'AUDIO');
+      this.imageAttachment = image;
+      this.audioAttachment = audio;
+      this.imageAttachment.name = image ? image.file.split('/').at(-1) : null;
+      this.audioAttachment.name = audio ? audio.file.split('/').at(-1) : null;
     } else {
       this.numberLineForm.setValue({
         question_type: 'NUMBER_LINE',
@@ -83,27 +92,29 @@ export class QuestionNumberlineFormComponent implements OnInit {
   createNumberLineQuestion(): void {
     this.assessmentService.createQuestion(this.numberLineForm.value, this.topicId.toString(),
       this.assessmentId.toString()).subscribe((res) => {
-
         if (this.imageAttachment) {
           this.saveAttachments(this.assessmentId, this.imageAttachment, 'IMAGE', { name: 'question', value: res.id });
-        } else if (this.audioAttachment) {
-          this.saveAttachments(this.assessmentId, this.audioAttachment, 'AUDIO', { name: 'question', value: res.id });
-        } else {
-          this.alertService.success(this.alertMessage);
         }
+        if (this.audioAttachment) {
+          this.saveAttachments(this.assessmentId, this.audioAttachment, 'AUDIO', { name: 'question', value: res.id });
+        }
+        this.alertService.success(this.alertMessage);
+
       });
   }
 
   editQuestion(): void {
     this.assessmentService.editQuestion(this.assessmentId.toString(), this.topicId.toString(),
       this.question.id, this.numberLineForm.value).subscribe(res => {
-        if (this.imageAttachment) {
-          this.saveAttachments(this.assessmentId, this.imageAttachment, 'IMAGE', { name: 'question', value: res.id });
-        } else if (this.audioAttachment) {
-          this.saveAttachments(this.assessmentId, this.audioAttachment, 'AUDIO', { name: 'question', value: res.id });
-        } else {
-          this.alertService.success(this.alertMessage);
+        if (this.imageAttachment && this.changedImage) {
+          const image = this.question.attachments.find( i => i.attachment_type === 'IMAGE');
+          this.assessmentService.updateAttachments(this.assessmentId, this.imageAttachment, 'IMAGE', image.id).subscribe();
         }
+        if (this.audioAttachment && this.changedAudio) {
+          const audio = this.question.attachments.find( a => a.attachment_type === 'AUDIO');
+          this.assessmentService.updateAttachments(this.assessmentId, this.audioAttachment, 'AUDIO', audio.id).subscribe();
+        }
+        this.alertService.success(this.alertMessage);
       });
   }
 
@@ -115,8 +126,10 @@ export class QuestionNumberlineFormComponent implements OnInit {
 
   handleFileInput(event, type): void {
     if (type === 'IMAGE'){
+      if (this.imageAttachment) { this.changedImage = true; }
       this.imageAttachment = event.target.files[0];
     } else if (type === 'AUDIO') {
+      if (this.audioAttachment) { this.changedAudio = true; }
       this.audioAttachment = event.target.files[0];
     }
   }
