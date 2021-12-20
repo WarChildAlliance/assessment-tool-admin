@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
   templateUrl: './question-numberline.component.html',
   styleUrls: ['./question-numberline.component.scss']
 })
-export class QuestionNumberlineComponent implements OnInit {
+export class QuestionNumberlineComponent implements OnInit, OnChanges {
 
   @Input() question;
   @Input() answer;
@@ -19,12 +19,20 @@ export class QuestionNumberlineComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.setAttachments();
+  }
+
+  setAttachments(): void{
     this.imageAttachment = this.question.attachments.find( i => i.attachment_type === 'IMAGE');
     this.audioAttachment = this.question.attachments.find( a => a.attachment_type === 'AUDIO');
   }
 
   getSource(path: string): string {
-    return environment.API_URL + path;
+    // TODO find out why we get two different paths here!
+    return (path.slice(0, 5) === 'http:') ? path : environment.API_URL + path;
   }
 
   playAudio(file): void {

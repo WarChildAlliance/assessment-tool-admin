@@ -38,8 +38,8 @@ export class AnswersOverviewComponent implements OnInit {
       this.evaluated = assessmentTopicInfos.topic.evaluated;
       this.userService.getStudentsListForATopic(this.topicId).subscribe(studentsList => {
         this.studentsList = studentsList;
-        this.selectedStudent = this.studentsList[0];
-        this.selectStudent(this.studentsList[0]);
+        this.selectedStudent = this.studentsList.find(s => s.topic_first_try !== null);
+        this.selectStudent(this.selectedStudent);
       });
     } else {
       this.hasData = false;
