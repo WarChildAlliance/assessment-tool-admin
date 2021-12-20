@@ -1,5 +1,7 @@
 <div class="question-header" *ngIf="evaluated">
     <h2>Q{{ question.order }}: {{ question.title }}</h2>
+    <img *ngIf="imageAttachment" [src]="imageAttachment.file" alt="">
+    <mat-icon (click)="playAudio(audioAttachment.file)" *ngIf="audioAttachment">volume_up</mat-icon>
 </div>
 <!-- Options with only one choice -->
 <section *ngIf="!question.multiple">

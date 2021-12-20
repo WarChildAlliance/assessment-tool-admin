@@ -26,6 +26,7 @@
       border-radius: 1.25rem;
       margin-bottom: 0.5rem;
       width: 35%;
+      text-align: center;
   
       mat-checkbox {
         cursor: pointer;
@@ -44,17 +45,11 @@
       }
   
       &:not(.-card) {
-        background-color: white;
-      }
-  
-      &.invalid {
-        outline-width: 2px;
-        outline-color: #F2836B;
-        outline-style: solid;
+        background-color: rgb(223, 223, 223);
       }
   
       &.valid {
-        outline-width: 2px;
+        outline-width: 4px;
         outline-color: #7EBF9A;;
         outline-style: solid;
       }
@@ -65,5 +60,9 @@
         outline-style: solid;
       }
     }
-  }
+}
+
+.question-header{
+  text-align: center;
+}
   

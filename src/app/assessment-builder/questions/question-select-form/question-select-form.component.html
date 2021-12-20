@@ -71,15 +71,12 @@
                 <button type="button" class="file_input" mat-flat-button color="primary" (click)="imageFileInput.click()">Choose
                     File</button>
                 <input hidden (change)="handleFileInputOptions($event, 'IMAGE', i)" #imageFileInput type="file">
-                <p *ngIf="optionsAttachmentEdit.length &&  optionsAttachmentEdit[i].image"> {{
-                    optionsAttachmentEdit[i].image }}</p>
+                
                 <p>Audio attachment</p>
                 <button type="button" class="file_input" mat-flat-button color="primary" (click)="audioFileInput.click()">Choose
                     File</button>
                 <input hidden (change)="handleFileInputOptions($event, 'AUDIO', i)" #audioFileInput type="file">
-                <p *ngIf="optionsAttachmentEdit.length && optionsAttachmentEdit[i].audio"> {{
-                    optionsAttachmentEdit[i].audio }}</p>
-                
+
             </div>
         </div>
         <div>

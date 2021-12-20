@@ -54,12 +54,9 @@ export class QuestionNumberlineFormComponent implements OnInit {
         show_ticks: this.question.show_ticks,
         show_value: this.question.show_value
       });
-      const image = this.question.attachments.find( i => i.attachment_type === 'IMAGE');
-      const audio = this.question.attachments.find( a => a.attachment_type === 'AUDIO');
-      this.imageAttachment = image;
-      this.audioAttachment = audio;
-      this.imageAttachment.name = image ? image.file.split('/').at(-1) : null;
-      this.audioAttachment.name = audio ? audio.file.split('/').at(-1) : null;
+
+      this.setExistingAttachments();
+
     } else {
       this.numberLineForm.setValue({
         question_type: 'NUMBER_LINE',
@@ -132,6 +129,15 @@ export class QuestionNumberlineFormComponent implements OnInit {
       if (this.audioAttachment) { this.changedAudio = true; }
       this.audioAttachment = event.target.files[0];
     }
+  }
+
+  setExistingAttachments(): void{
+    const image = this.question.attachments.find( i => i.attachment_type === 'IMAGE');
+    const audio = this.question.attachments.find( a => a.attachment_type === 'AUDIO');
+    this.imageAttachment = image;
+    this.audioAttachment = audio;
+    this.imageAttachment.name = image ? image.file.split('/').at(-1) : null;
+    this.audioAttachment.name = audio ? audio.file.split('/').at(-1) : null;
   }
 
 }

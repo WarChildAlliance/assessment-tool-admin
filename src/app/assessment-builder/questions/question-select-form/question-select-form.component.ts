@@ -24,7 +24,8 @@ export class QuestionSelectFormComponent implements OnInit {
   public imageAttachment = null;
   public audioAttachment = null;
 
-  private questionAttChange = false;
+  public changedAudio = false;
+  public changedImage = false;
   private optionAttChange = false;
 
   public optionsAttachment = false;
@@ -57,6 +58,8 @@ export class QuestionSelectFormComponent implements OnInit {
   ngOnInit(): void {
     const optionsForm = this.selectForm.get('options') as FormArray;
     if (this.question) {
+      this.setExistingAttachments();
+
       const options = [];
       this.question.options.forEach(element => {
         const attObj = {
@@ -72,6 +75,7 @@ export class QuestionSelectFormComponent implements OnInit {
         };
         options.push(optOject);
       });
+
 
       for (let i = 1; i < options.length; i++) {
         const optionsGroup = this.formBuilder.group({
@@ -139,7 +143,7 @@ export class QuestionSelectFormComponent implements OnInit {
       this.createQuestion();
       this.alertMessage = 'Question successfully cloned';
     } else if (this.question && !this.toClone) {
-      this.updateQuestion();
+      this.editQuestion();
       this.alertMessage = 'Question successfully updated';
     } else {
       this.createQuestion();
@@ -163,15 +167,19 @@ export class QuestionSelectFormComponent implements OnInit {
       });
   }
 
-  updateQuestion(): void {
+  editQuestion(): void {
     this.assessmentService.editQuestion(this.assessmentId.toString(), this.topicId.toString(),
       this.question.id, this.selectForm.value).subscribe(res => {
-        if (this.questionAttChange && this.imageAttachment) {
-          this.saveAttachments(this.assessmentId, this.imageAttachment, 'IMAGE', { name: 'question', value: res.id });
-        } else if (this.optionAttChange && this.audioAttachment) {
-          this.saveAttachments(this.assessmentId, this.audioAttachment, 'AUDIO', { name: 'question', value: res.id });
-        } else if (this.optionAttChange && this.optionsAttachment) {
-          this.saveOptionsAttachments(res);
+        if (this.changedImage && this.imageAttachment) {
+          const image = this.question.attachments.find( i => i.attachment_type === 'IMAGE');
+          this.assessmentService.updateAttachments(this.assessmentId, this.imageAttachment, 'IMAGE', image.id).subscribe();
+        }
+        if (this.changedAudio && this.audioAttachment) {
+          const audio = this.question.attachments.find( a => a.attachment_type === 'AUDIO');
+          this.assessmentService.updateAttachments(this.assessmentId, this.audioAttachment, 'AUDIO', audio.id).subscribe();
+        }
+        if (this.optionAttChange && this.optionsAttachment) {
+          this.updateOptionsAttachments(res);
         } else {
           this.alertService.success(this.alertMessage);
         }
@@ -202,18 +210,65 @@ export class QuestionSelectFormComponent implements OnInit {
     });
   }
 
+  updateOptionsAttachments(question): void {
+    this.optionsAtt.forEach((o, index) => {
+      if (o.attachments.length) {
+        o.attachments.forEach(att => {
+          if (att.attachment_type === 'IMAGE') {
+           if (att.overwritePrevious === true) {
+            this.assessmentService.updateAttachments(this.assessmentId.toString(), att.file,
+              'IMAGE', att.id).subscribe();
+           } else if (att.overwritePrevious === false) {
+            this.assessmentService.addAttachments(this.assessmentId.toString(), att.file,
+              'IMAGE', { name: 'select_option', value: question.options[index].id }).subscribe();
+           }
+          }
+          if (att.attachment_type === 'AUDIO') {
+            if (att.overwritePrevious === true) {
+              this.assessmentService.updateAttachments(this.assessmentId.toString(), att.file,
+                'AUDIO', att.id).subscribe();
+            } else if (att.overwritePrevious === false) {
+              this.assessmentService.addAttachments(this.assessmentId.toString(), att.file,
+              'AUDIO', { name: 'select_option', value: question.options[index].id }).subscribe();
+            }
+          }
+        });
+      }
+    });
+  }
+
   handleFileInput(event, type): void {
-    this.questionAttChange = true;
     if (type === 'IMAGE') {
+      this.changedImage = true;
       this.imageAttachment = event.target.files[0];
     } else if (type === 'AUDIO') {
+      this.changedAudio = true;
       this.audioAttachment = event.target.files[0];
     }
   }
 
   handleFileInputOptions(event, type, i): void {
-    this.optionsAtt[i].attachments.push({ attachment_type: type, file: event.target.files[0]});
+    let overwritePrevious = false;
+    let id = 0;
+    if (type === 'IMAGE') {
+      overwritePrevious = this.optionsAttachmentEdit[i].image ? true : false;
+      id = this.question.options[i].attachments.find(a => a.attachment_type === 'IMAGE')?.id;
+    }
+    if (type === 'AUDIO') {
+      overwritePrevious = this.optionsAttachmentEdit[i].audio ? true : false;
+      id = this.question.options[i].attachments.find(a => a.attachment_type === 'AUDIO')?.id;
+    }
+    this.optionsAtt[i].attachments.push({ attachment_type: type, file: event.target.files[0], overwritePrevious, id});
     this.optionAttChange = true;
     this.optionsAttachment = true;
+  }
+
+  setExistingAttachments(): void{
+    const image = this.question.attachments.find( i => i.attachment_type === 'IMAGE');
+    const audio = this.question.attachments.find( a => a.attachment_type === 'AUDIO');
+    this.imageAttachment = image;
+    this.audioAttachment = audio;
+    if (this.imageAttachment) { this.imageAttachment.name = image ? image.file.split('/').at(-1) : null; }
+    if (this.audioAttachment) { this.audioAttachment.name = audio ? audio.file.split('/').at(-1) : null; }
   }
 }
