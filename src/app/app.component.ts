@@ -20,13 +20,16 @@ export class AppComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.userService.getSelf().subscribe(res => {
-      if (res.role !== UserRoles.Supervisor) { this.authService.logout(); }
-      this.selfName = res.first_name + ' ' + res.last_name;
-      const language = { name: res.language.name_en, code: res.language.code.toLowerCase(), direction: res.language.direction };
-      this.languageService.setLanguage(language);
+    this.authService.currentAuthentication.subscribe( authenticated => {
+      if (authenticated) {
+        this.userService.getSelf().subscribe(res => {
+          if (res.role !== UserRoles.Supervisor) { this.authService.logout(); }
+          this.selfName = res.first_name + ' ' + res.last_name;
+          const language = { name: res.language.name_en, code: res.language.code.toLowerCase(), direction: res.language.direction };
+          this.languageService.setLanguage(language);
+        });
+      }
     });
-
   }
 
   get isAuthenticated(): boolean {
