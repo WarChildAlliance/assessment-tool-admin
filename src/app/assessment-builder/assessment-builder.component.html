@@ -12,14 +12,15 @@
     </ng-container>
 </div>
 
-<div class="assessments-container">
+<!-- Temporarily disabled so noone can screw with the data -->
+<!-- <div class="assessments-container">
     <h1>Public assessment(s)</h1>
     <ng-container *ngFor="let assessment of currentAssessments">
         <ng-container *ngIf="!assessment.can_edit">
             <app-assessment-summary [assessment]="assessment" [canEdit]="false"></app-assessment-summary>
         </ng-container>
     </ng-container>
-</div>
+</div> -->
 
 <ng-template #createAssessmentDialog>
     <app-assessment-form-dialog [edit]="edit"></app-assessment-form-dialog>
