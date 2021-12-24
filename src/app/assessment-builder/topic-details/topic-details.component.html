@@ -1,7 +1,7 @@
 <div class="question-list-container" *ngIf="topicDetails">
   <div class="topic-header">
     <h1>{{ topicDetails.name }}</h1>
-    <button mat-button color="accent" (click)="openEditTopicDialog(topicDetails)">Edit</button>
+    <button mat-button color="accent" *ngIf="topicDetails.can_edit" (click)="openEditTopicDialog(topicDetails)">Edit</button>
   </div>
   <mat-card>
     <div class="topic-infos" *ngIf="topicDetails">
@@ -32,7 +32,7 @@
     </div>
   </mat-card>
   <div class="question">
-    <mat-card>
+    <mat-card *ngIf="topicDetails.can_edit">
       <h2>Add a question</h2>
       <div class="question-options" *ngIf="questionType && order">
         <div class="question-options-button">
@@ -58,8 +58,8 @@
       </div>
     </mat-card>
     <div class="question-details" *ngFor="let questionDetails of questionsList">
-      <button mat-button mat-stroked-button (click)="onEditQuestionDialog(questionDetails)">Edit</button>
-      <button mat-button mat-stroked-button (click)="cloneQuestion(questionDetails)">Clone</button>
+      <button mat-button mat-stroked-button  *ngIf="topicDetails.can_edit" (click)="onEditQuestionDialog(questionDetails)">Edit</button>
+      <button mat-button mat-stroked-button  *ngIf="topicDetails.can_edit" (click)="cloneQuestion(questionDetails)">Clone</button>
       <mat-card *ngIf="questionDetails && questionDetails.question_type === 'SELECT'">
         <app-question-select [question]="questionDetails" [index]="1" [evaluated]="true"></app-question-select>
       </mat-card>
