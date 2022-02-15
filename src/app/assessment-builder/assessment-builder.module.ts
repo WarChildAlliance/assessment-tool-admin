@@ -20,6 +20,7 @@ import { QuestionInputFormComponent } from './questions/question-input-form/ques
 import { QuestionNumberlineFormComponent } from './questions/question-numberline-form/question-numberline-form.component';
 import { QuestionSelectFormComponent } from './questions/question-select-form/question-select-form.component';
 import { MatDividerModule } from '@angular/material/divider';
+import { AudioRecorderComponent } from '../shared/audio-recorder/audio-recorder.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { MatDividerModule } from '@angular/material/divider';
     TopicDetailsComponent,
     QuestionInputFormComponent,
     QuestionNumberlineFormComponent,
-    QuestionSelectFormComponent
+    QuestionSelectFormComponent,
+    AudioRecorderComponent
   ],
   imports: [
     CommonModule,

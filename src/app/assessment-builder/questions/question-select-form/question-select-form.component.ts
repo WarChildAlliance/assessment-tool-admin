@@ -271,4 +271,13 @@ export class QuestionSelectFormComponent implements OnInit {
     if (this.imageAttachment) { this.imageAttachment.name = image ? image.file.split('/').at(-1) : null; }
     if (this.audioAttachment) { this.audioAttachment.name = audio ? audio.file.split('/').at(-1) : null; }
   }
+
+  addRecordedAudio(event): void {
+    const name = 'recording_' + new Date().toISOString() + '.wav';
+    this.audioAttachment = this.blobToFile(event, name);
+  }
+
+  public blobToFile = (theBlob: Blob, fileName: string): File => {
+    return new File([theBlob], fileName, { lastModified: new Date().getTime(), type: theBlob.type });
+  }
 }

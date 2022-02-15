@@ -43,6 +43,7 @@
                 File</button>
             <input hidden (change)="handleFileInput($event, 'AUDIO')" #audioFileInput type="file">
             <p>{{audioAttachment ? audioAttachment.name : 'No file chosen'}}</p>
+            <app-audio-recorder (audioRecordingEvent)="addRecordedAudio($event)"></app-audio-recorder>
         </div>
     </div>
     <mat-divider></mat-divider>

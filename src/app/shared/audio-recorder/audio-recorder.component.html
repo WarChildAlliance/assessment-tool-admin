@@ -1,0 +1,9 @@
+<div>
+    <button type="button" mat-flat-button  (click)="initiateRecording()" class="btn btn-primary" *ngIf="!recording" style="background-color: rgb(187, 226, 190)"> Start Recording </button>
+    <button type="button" mat-flat-button  (click)="stopRecording()" class="btn btn-danger" *ngIf="recording" style="background-color: rgb(228, 127, 127)"> Stop Recording </button>
+    <div>
+        <audio controls="" *ngIf="url">
+            <source [src]="sanitize(url)" type="audio/wav">
+        </audio>
+    </div>
+</div>

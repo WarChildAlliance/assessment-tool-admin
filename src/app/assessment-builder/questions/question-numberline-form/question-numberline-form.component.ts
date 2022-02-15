@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { dateInputsHaveChanged } from '@angular/material/datepicker/datepicker-input-base';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 
@@ -138,6 +139,15 @@ export class QuestionNumberlineFormComponent implements OnInit {
     this.audioAttachment = audio;
     this.imageAttachment.name = image ? image.file.split('/').at(-1) : null;
     this.audioAttachment.name = audio ? audio.file.split('/').at(-1) : null;
+  }
+
+  addRecordedAudio(event): void {
+    const name = 'recording_' + new Date().toISOString() + '.wav';
+    this.audioAttachment = this.blobToFile(event, name);
+  }
+
+  public blobToFile = (theBlob: Blob, fileName: string): File => {
+    return new File([theBlob], fileName, { lastModified: new Date().getTime(), type: theBlob.type });
   }
 
 }
