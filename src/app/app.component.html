@@ -14,6 +14,18 @@
         {{ "logout" | translate }}
       </span>
     </button>
+    <button mat-menu-item [matMenuTriggerFor]="langMenu" class="menu-button">
+      <i class="uil uil-globe"></i>
+      {{ "language" | translate }}
+    </button>
+
+    <mat-menu #langMenu="matMenu">
+      <ng-container *ngFor="let lang of languages">
+        <button mat-menu-item (click)="changeLanguage(lang)" [ngClass]="{'selected': languageCode === lang.code}">
+          {{ lang.name }}
+        </button>
+      </ng-container>
+    </mat-menu>
   </mat-menu>
 
 </mat-toolbar>

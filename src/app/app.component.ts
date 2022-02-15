@@ -13,6 +13,9 @@ export class AppComponent implements OnInit {
 
   selfName = '';
 
+  public languageCode: string = this.languageService.getLanguageCode();
+  public languages: { name: string, code: string, direction: 'rtl' | 'ltr' }[] = this.languageService.getLanguages();
+
   constructor(
     private authService: AuthService,
     private userService: UserService,
@@ -38,5 +41,10 @@ export class AppComponent implements OnInit {
 
   logout(): void {
     this.authService.logout();
+  }
+
+  changeLanguage(language: { name: string, code: string, direction: 'rtl' | 'ltr' }): void {
+    this.languageCode = language.code;
+    this.languageService.setLanguage(language);
   }
 }
