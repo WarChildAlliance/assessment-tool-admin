@@ -248,15 +248,16 @@ export class QuestionSelectFormComponent implements OnInit {
   }
 
   handleFileInputOptions(event, type, i): void {
+
     let overwritePrevious = false;
     let id = 0;
     if (type === 'IMAGE') {
-      overwritePrevious = this.optionsAttachmentEdit[i].image ? true : false;
-      id = this.question.options[i].attachments.find(a => a.attachment_type === 'IMAGE')?.id;
+      overwritePrevious = this.optionsAttachmentEdit[i]?.image ? true : false;
+      id = this.question ? this.question.options[i].attachments.find(a => a.attachment_type === 'IMAGE')?.id : i;
     }
     if (type === 'AUDIO') {
-      overwritePrevious = this.optionsAttachmentEdit[i].audio ? true : false;
-      id = this.question.options[i].attachments.find(a => a.attachment_type === 'AUDIO')?.id;
+      overwritePrevious = this.optionsAttachmentEdit[i]?.audio ? true : false;
+      id = this.question ? this.question.options[i].attachments.find(a => a.attachment_type === 'AUDIO')?.id : i;
     }
     this.optionsAtt[i].attachments.push({ attachment_type: type, file: event.target.files[0], overwritePrevious, id});
     this.optionAttChange = true;
