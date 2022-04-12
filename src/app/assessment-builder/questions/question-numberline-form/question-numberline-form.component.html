@@ -47,14 +47,14 @@
 
     <div class="attachments-container">
         <div style="margin-right: 20px;">
-            <h3>Image attachment</h3>
+            <h3><b>Image attachment</b></h3>
             <button type="button"  class="file_input" mat-flat-button color="primary" (click)="imageFileInput.click()">Choose
                 File</button>
             <input hidden (change)="handleFileInput($event, 'IMAGE')" #imageFileInput type="file">
             <p>{{imageAttachment ? imageAttachment.name : 'No file chosen'}}</p>
         </div>
         <div>
-            <h3>Audio attachment</h3>
+            <h3><b>Audio attachment</b></h3>
             <button type="button" mat-flat-button  class="file_input" color="primary" (click)="audioFileInput.click()">Choose
                 File</button>
             <input hidden (change)="handleFileInput($event, 'AUDIO')" #audioFileInput type="file">

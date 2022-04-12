@@ -33,12 +33,12 @@
 
         <div class="attachments-container">
             <h2>Attachments</h2>
-            <p>Image attachment</p>
+            <p><b>Image attachment</b></p>
             <button type="button" class="file_input" mat-flat-button color="primary" (click)="imageFileInput.click()">Choose
                 File</button>
             <input hidden class="file_input" (change)="handleFileInput($event, 'IMAGE')" #imageFileInput type="file">
             <p>{{imageAttachment ? imageAttachment.name : 'No file chosen'}}</p>
-            <p>Audio attachment</p>
+            <p><b>Audio attachment</b></p>
             <button type="button" class="file_input" mat-flat-button color="primary" (click)="audioFileInput.click()">Choose
                 File</button>
             <input hidden (change)="handleFileInput($event, 'AUDIO')" #audioFileInput type="file">
@@ -68,16 +68,22 @@
             </mat-checkbox>
 
             <div class="attachments-container">
-                <p>Image attachment</p>
-                <button type="button" class="file_input" mat-flat-button color="primary" (click)="imageFileInput.click()">Choose
-                    File</button>
-                <input hidden (change)="handleFileInputOptions($event, 'IMAGE', i)" #imageFileInput type="file">
-                
-                <p>Audio attachment</p>
-                <button type="button" class="file_input" mat-flat-button color="primary" (click)="audioFileInput.click()">Choose
-                    File</button>
-                <input hidden (change)="handleFileInputOptions($event, 'AUDIO', i)" #audioFileInput type="file">
+                <div>
+                    <p><b>Image attachment</b></p>
+                    <button type="button" class="file_input" mat-flat-button color="primary" (click)="imageFileInput.click()">Choose
+                        File</button>
+                    <input hidden (change)="handleFileInputOptions($event, 'IMAGE', i)" #imageFileInput type="file">
+                    <p>{{imageAttachment ? imageAttachment.name : 'No file chosen'}}</p>
+                </div>
 
+                <div>
+                    <p><b>Audio attachment</b></p>
+                    <button type="button" class="file_input" mat-flat-button color="primary" (click)="audioFileInput.click()">Choose
+                        File</button>
+                    <input hidden (change)="handleFileInputOptions($event, 'AUDIO', i)" #audioFileInput type="file">
+                    <p>{{audioAttachment ? audioAttachment.name : 'No file chosen'}}</p>
+                    <app-audio-recorder (audioRecordingEvent)="addRecordedAudio($event)"></app-audio-recorder>
+                </div>
             </div>
         </div>
         <div>
