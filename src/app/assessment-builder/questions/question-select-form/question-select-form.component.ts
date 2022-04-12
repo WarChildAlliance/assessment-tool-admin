@@ -254,10 +254,12 @@ export class QuestionSelectFormComponent implements OnInit {
     if (type === 'IMAGE') {
       overwritePrevious = this.optionsAttachmentEdit[i]?.image ? true : false;
       id = this.question ? this.question.options[i].attachments.find(a => a.attachment_type === 'IMAGE')?.id : i;
+      this.imageAttachment = event.target.files[0];
     }
     if (type === 'AUDIO') {
       overwritePrevious = this.optionsAttachmentEdit[i]?.audio ? true : false;
       id = this.question ? this.question.options[i].attachments.find(a => a.attachment_type === 'AUDIO')?.id : i;
+      this.audioAttachment = event.target.files[0];
     }
     this.optionsAtt[i].attachments.push({ attachment_type: type, file: event.target.files[0], overwritePrevious, id});
     this.optionAttChange = true;
