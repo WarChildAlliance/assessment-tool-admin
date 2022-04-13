@@ -71,6 +71,7 @@ export class QuestionInputFormComponent implements OnInit {
         } else {
           this.alertService.success(this.alertMessage);
         }
+        location.reload();
       });
   }
 
@@ -84,6 +85,7 @@ export class QuestionInputFormComponent implements OnInit {
         } else {
           this.alertService.success(this.alertMessage);
         }
+        location.reload();
       });
   }
 

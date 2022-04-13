@@ -164,6 +164,7 @@ export class QuestionSelectFormComponent implements OnInit {
           this.saveOptionsAttachments(res);
         }
         this.alertService.success(this.alertMessage);
+        location.reload();
       });
   }
 
@@ -182,6 +183,7 @@ export class QuestionSelectFormComponent implements OnInit {
           this.updateOptionsAttachments(res);
         } else {
           this.alertService.success(this.alertMessage);
+          location.reload();
         }
       });
   }

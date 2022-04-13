@@ -97,7 +97,7 @@ export class QuestionNumberlineFormComponent implements OnInit {
           this.saveAttachments(this.assessmentId, this.audioAttachment, 'AUDIO', { name: 'question', value: res.id });
         }
         this.alertService.success(this.alertMessage);
-
+        location.reload();
       });
   }
 
@@ -113,6 +113,7 @@ export class QuestionNumberlineFormComponent implements OnInit {
           this.assessmentService.updateAttachments(this.assessmentId, this.audioAttachment, 'AUDIO', audio.id).subscribe();
         }
         this.alertService.success(this.alertMessage);
+        location.reload();
       });
   }
 
