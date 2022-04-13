@@ -72,12 +72,13 @@
                 <button type="button" class="file_input" mat-flat-button color="primary" (click)="imageFileInput.click()">Choose
                     File</button>
                 <input hidden (change)="handleFileInputOptions($event, 'IMAGE', i)" #imageFileInput type="file">
-                
+                <p>{{imageAttachment ? imageAttachment.name : 'No file chosen'}}</p>
+
                 <p>Audio attachment</p>
                 <button type="button" class="file_input" mat-flat-button color="primary" (click)="audioFileInput.click()">Choose
                     File</button>
                 <input hidden (change)="handleFileInputOptions($event, 'AUDIO', i)" #audioFileInput type="file">
-
+                <p>{{audioAttachment ? audioAttachment.name : 'No file chosen'}}</p>
             </div>
         </div>
         <div>
