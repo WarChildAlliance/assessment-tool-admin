@@ -22,11 +22,11 @@
             <p>Add an image attachment</p>
             <button type="button" mat-flat-button color="primary" (click)="imageFileInput.click()">Choose
                 File</button>
-            <input hidden (change)="handleFileInput($event, 'IMAGE')" #imageFileInput type="file">
+            <input hidden accept="image/*" (change)="handleFileInput($event, 'IMAGE')" #imageFileInput type="file">
             <p>Add an audio attachment</p>
             <button type="button" mat-flat-button color="primary" (click)="audioFileInput.click()">Choose
                 File</button>
-            <input hidden (change)="handleFileInput($event, 'AUDIO')" #audioFileInput type="file">
+            <input hidden accept="audio/*" (change)="handleFileInput($event, 'AUDIO')" #audioFileInput type="file">
         </div>
         <button mat-button color="accent" type="submit" [disabled]="inputForm.invalid || !inputForm.dirty">Submit</button>
 
