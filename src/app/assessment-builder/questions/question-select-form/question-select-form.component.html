@@ -94,7 +94,7 @@
         </div>
         
     </div>
-    <button class="question-form-button" mat-flat-button color="accent" type="submit">
+    <button class="question-form-button" mat-flat-button color="accent" type="submit" [disabled]="selectForm.invalid || !selectForm.dirty">
         Save
     </button>
 </form>
