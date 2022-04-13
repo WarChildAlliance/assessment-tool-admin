@@ -50,7 +50,7 @@
         </div>
     </div>
     <div class="buttons">
-        <button mat-button color="accent" type="submit" mat-dialog-close>
+        <button mat-button color="accent" type="submit" mat-dialog-close [disabled]="createNewStudentForm.invalid || !createNewStudentForm.dirty">
             {{ "submit" | translate }}
         </button>
         <button mat-button color="secondary" mat-dialog-close>{{ "cancel" | translate }}
