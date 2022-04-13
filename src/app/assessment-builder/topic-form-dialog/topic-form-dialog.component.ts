@@ -50,7 +50,7 @@ export class TopicFormDialogComponent implements OnInit {
   }
 
   onSave(): void {
-    const data = this.formGroupToFormData();
+    const data = this.icon ? this.formGroupToFormData() : this.createNewTopicForm.value;
     if (this.edit) {
       this.assessmentService.editTopic(this.assessmentId.toString(), this.topic.id, data).subscribe(res => {
         this.alertService.success('Topic was altered successfully');
