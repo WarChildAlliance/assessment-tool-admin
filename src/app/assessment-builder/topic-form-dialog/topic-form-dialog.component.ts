@@ -50,7 +50,7 @@ export class TopicFormDialogComponent implements OnInit {
   }
 
   onSave(): void {
-    const data = this.formGroupToFormData(this.createNewTopicForm);
+    const data = this.formGroupToFormData();
     if (this.edit) {
       this.assessmentService.editTopic(this.assessmentId.toString(), this.topic.id, data).subscribe(res => {
         this.alertService.success('Topic was altered successfully');
@@ -69,7 +69,7 @@ export class TopicFormDialogComponent implements OnInit {
   }
 
 
-  formGroupToFormData(formgroup): FormData {
+  formGroupToFormData(): FormData {
     this.formData.append('icon', this.icon);
     this.formData.append('name', this.createNewTopicForm.value.name);
     this.formData.append('description', this.createNewTopicForm.value.description);
@@ -82,7 +82,7 @@ export class TopicFormDialogComponent implements OnInit {
     return this.formData;
   }
 
-  handleFileInput(event, type): void {
+  handleFileInput(event): void {
     this.icon = event.target.files[0];
     this.createNewTopicForm.patchValue({icon: this.icon});
   }
