@@ -31,9 +31,11 @@ export class AssessmentSummaryComponent implements OnInit {
   ngOnInit(): void {}
 
 
-  private getAssessmentDetails(assessmentId: string): void {
-    this.assessmentService.getAssessmentDetails(assessmentId).subscribe(assessmentDetails => {
-      this.assessment = assessmentDetails;
+  getAssessmentDetails(assessmentId: string): void {
+    this.assessmentService.getAssessmentTopics(assessmentId).subscribe(() => {
+      this.assessmentService.getAssessmentDetails(assessmentId).subscribe(assessmentDetails => {
+        this.assessment = assessmentDetails;
+      });
     });
   }
 
