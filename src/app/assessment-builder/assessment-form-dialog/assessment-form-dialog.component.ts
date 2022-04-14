@@ -56,12 +56,10 @@ export class AssessmentFormDialogComponent implements OnInit {
     if (this.edit) {
       this.assessmentService.editAssessment(this.assessment.id, data).subscribe(() => {
         this.alertService.success('Assessment was altered successfully');
-        location.reload();
       });
     } else {
       this.assessmentService.createAssessment(data).subscribe(res => {
         this.alertService.success('Assessment was saved successfully');
-        location.reload();
     });
     }
     this.createNewAssessmentForm.reset();

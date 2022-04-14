@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
@@ -15,6 +15,8 @@ export class QuestionSelectFormComponent implements OnInit {
   @Input() order;
   @Input() question;
   @Input() toClone;
+
+  @Output() questionCreatedEvent = new EventEmitter<boolean>();
 
   @ViewChild('fileInput') el: ElementRef;
 
@@ -164,7 +166,7 @@ export class QuestionSelectFormComponent implements OnInit {
           this.saveOptionsAttachments(res);
         }
         this.alertService.success(this.alertMessage);
-        location.reload();
+        this.questionCreatedEvent.emit(true);
       });
   }
 
@@ -183,7 +185,7 @@ export class QuestionSelectFormComponent implements OnInit {
           this.updateOptionsAttachments(res);
         } else {
           this.alertService.success(this.alertMessage);
-          location.reload();
+          this.questionCreatedEvent.emit(true);
         }
       });
   }

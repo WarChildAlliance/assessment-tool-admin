@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -20,15 +21,31 @@ export class AssessmentSummaryComponent implements OnInit {
   @ViewChild('createAssessmentDialog') createAssessmentDialog: TemplateRef<any>;
   @ViewChild('createTopicDialog') createTopicDialog: TemplateRef<any>;
 
-  constructor(private dialog: MatDialog,
-              private router: Router,
-              private route: ActivatedRoute, ) { }
+  constructor(
+    private dialog: MatDialog,
+    private router: Router,
+    private route: ActivatedRoute,
+    private assessmentService: AssessmentService
+  ) { }
 
   ngOnInit(): void {}
 
+
+  private getAssessmentDetails(assessmentId: string): void {
+    this.assessmentService.getAssessmentDetails(assessmentId).subscribe(assessmentDetails => {
+      this.assessment = assessmentDetails;
+    });
+  }
+
   openCreateTopicDialog(assessmentId: string): void {
     this.assessmentId = assessmentId;
-    this.dialog.open(this.createTopicDialog);
+
+    const createTopicDialog = this.dialog.open(this.createTopicDialog);
+    createTopicDialog.afterClosed().subscribe(
+      () => {
+      this.getAssessmentDetails(this.assessmentId);
+      this.dialog.closeAll();
+    });
   }
 
   // deleteAssessment(assessmentId: string): void {
@@ -38,7 +55,12 @@ export class AssessmentSummaryComponent implements OnInit {
   editAssessment(assessment): void{
     this.edit = true;
     this.assessment = assessment;
-    this.dialog.open(this.createAssessmentDialog);
+    const createAssessmentDialog = this.dialog.open(this.createAssessmentDialog);
+    createAssessmentDialog.afterClosed().subscribe(
+      () => {
+        this.getAssessmentDetails(this.assessment.id);
+        this.dialog.closeAll();
+    });
   }
 
   goToTopicDetails(assessmentId, topicId): void {

@@ -45,15 +45,24 @@ export class AssessmentBuilderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.assessmentService.getAssessmentsList().subscribe((assessmentsList) => {
-      this.currentAssessments = assessmentsList;
-    });
+    this.getAssessments();
     this.userService.getLanguages().subscribe( res => this.languages = res);
     this.userService.getCountries().subscribe( res => this.countries = res);
   }
 
+  getAssessments(): void {
+    this.assessmentService.getAssessmentsList().subscribe((assessmentsList) => {
+      this.currentAssessments = assessmentsList;
+    });
+  }
+
   openCreateAssessmentDialog(): void {
-    this.dialog.open(this.createAssessmentDialog);
+    const createAssessmentDialog = this.dialog.open(this.createAssessmentDialog);
+    createAssessmentDialog.afterClosed().subscribe(
+      () => {
+        this.getAssessments();
+        this.dialog.closeAll();
+    });
   }
 
   openCreateTopicDialog(assessmentId: string): void {

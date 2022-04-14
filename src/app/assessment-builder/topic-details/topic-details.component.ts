@@ -41,39 +41,60 @@ export class TopicDetailsComponent implements OnInit {
       this.assessmentId = params.assessment_id;
       this.topicId = params.topic_id;
 
-      this.assessmentService.getQuestionsList(this.assessmentId, this.topicId).subscribe(questionList => {
+      this.getQuestionsList();
+      this.getTopicDetails();
+    });
+  }
 
-        if (questionList.length) {
-          this.questionType = questionList[0].question_type;
-          this.questionsList = questionList;
-          this.order = questionList.sort((a, b) => parseFloat(a.order) - parseFloat(b.order))[questionList.length - 1].order + 1;
-        } else {
-          this.questionType = 'SELECT';
-          this.order = 1;
-        }
-      });
+  getQuestionsList(): void {
+    this.assessmentService.getQuestionsList(this.assessmentId, this.topicId).subscribe(questionList => {
+      if (questionList.length) {
+        this.questionType = questionList[0].question_type;
+        this.questionsList = questionList;
+        this.order = questionList.sort((a, b) => parseFloat(a.order) - parseFloat(b.order))[questionList.length - 1].order + 1;
+      } else {
+        this.questionType = 'SELECT';
+        this.order = 1;
+      }
+    });
+  }
 
-      this.assessmentService.getTopicDetails(this.assessmentId, this.topicId).subscribe(topicDetails => {
-        this.topicDetails = topicDetails;
-      });
+  getTopicDetails(): void {
+    this.assessmentService.getTopicDetails(this.assessmentId, this.topicId).subscribe(topicDetails => {
+      this.topicDetails = topicDetails;
     });
   }
 
   openEditTopicDialog(topic): void {
     this.topic = topic;
-    this.dialog.open(this.createTopicDialog);
+    const createTopicDialog = this.dialog.open(this.createTopicDialog);
+    createTopicDialog.afterClosed().subscribe(
+      () => {
+        this.getTopicDetails();
+        this.dialog.closeAll();
+    });
   }
 
   onEditQuestionDialog(question): void {
     this.question = question;
     this.toClone = false;
-    this.dialog.open(this.editQuestionDialog);
+    const editQuestionDialog = this.dialog.open(this.editQuestionDialog);
+    editQuestionDialog.afterClosed().subscribe(
+      () => {
+        this.getQuestionsList();
+        this.dialog.closeAll();
+    });
   }
 
   cloneQuestion(question): void  {
     this.toClone = true;
     this.question = question;
-    this.dialog.open(this.editQuestionDialog);
+    const editQuestionDialog = this.dialog.open(this.editQuestionDialog);
+    editQuestionDialog.afterClosed().subscribe(
+      () => {
+        this.getQuestionsList();
+        this.dialog.closeAll();
+    });
   }
 
   setQuestionType(questionType: string): void {

@@ -54,12 +54,10 @@ export class TopicFormDialogComponent implements OnInit {
     if (this.edit) {
       this.assessmentService.editTopic(this.assessmentId.toString(), this.topic.id, data).subscribe(res => {
         this.alertService.success('Topic was altered successfully');
-        location.reload();
       });
     } else {
       this.assessmentService.createTopic(this.assessmentId.toString(), data).subscribe(res => {
         this.alertService.success('Topic was created successfully');
-        location.reload();
       });
     }
   }
