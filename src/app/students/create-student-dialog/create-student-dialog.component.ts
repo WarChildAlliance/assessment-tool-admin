@@ -17,7 +17,7 @@ export class CreateStudentDialogComponent implements OnInit {
   @Input() newStudent: any;
 
   // Defines if a student is edited or if a new one is created
-  private isStudentEdited = false;
+  public isStudentEdited = false;
 
   public formChanges = false;
 
