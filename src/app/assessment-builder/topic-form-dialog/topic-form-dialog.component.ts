@@ -45,12 +45,13 @@ export class TopicFormDialogComponent implements OnInit {
         evaluated: this.topic.evaluated,
         praise: this.topic.praise,
         max_wrong_answers: this.topic.max_wrong_answers,
+        icon: this.icon
       });
     }
   }
 
   onSave(): void {
-    const data = this.icon ? this.formGroupToFormData() : this.createNewTopicForm.value;
+    const data = this.formGroupToFormData();
     if (this.edit) {
       this.assessmentService.editTopic(this.assessmentId.toString(), this.topic.id, data).subscribe(res => {
         this.alertService.success('Topic was altered successfully');
@@ -70,7 +71,9 @@ export class TopicFormDialogComponent implements OnInit {
 
 
   formGroupToFormData(): FormData {
-    this.formData.append('icon', this.icon);
+    if (this.icon) {
+      this.formData.append('icon', this.icon);
+    }
     this.formData.append('name', this.createNewTopicForm.value.name);
     this.formData.append('description', this.createNewTopicForm.value.description);
     this.formData.append('show_feedback', this.createNewTopicForm.value.show_feedback);
