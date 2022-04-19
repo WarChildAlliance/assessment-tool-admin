@@ -43,10 +43,11 @@
         </mat-card>
         <mat-card class="topic-card" (click)="goToTopicDetails(assessment.id, topic[0])" *ngFor="let topic of assessment.topics">
             <div class="topic-general-information">
-                <img *ngIf="topic[3]" [src]="getSource(topic[3])">
-                <span>{{ topic[1] }}</span>
+                <img *ngIf="topic[4]" [src]="getMediaSource(topic[4])">
+                <span class="question_count">{{ topic[3] }}</span>
+                <span class="topic-title">{{ topic[1] }}</span>
+                <p class="small-description">{{ topic[2] }}</p>
             </div>
-            <p>{{ topic[2] }}</p>
         </mat-card>
     </div>
 </mat-card>

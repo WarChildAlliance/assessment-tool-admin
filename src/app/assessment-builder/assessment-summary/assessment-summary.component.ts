@@ -16,13 +16,16 @@ export class AssessmentSummaryComponent implements OnInit {
   public assessmentId: string;
 
   public edit: boolean;
+  public smallScreen: boolean;
 
   @ViewChild('createAssessmentDialog') createAssessmentDialog: TemplateRef<any>;
   @ViewChild('createTopicDialog') createTopicDialog: TemplateRef<any>;
 
-  constructor(private dialog: MatDialog,
-              private router: Router,
-              private route: ActivatedRoute, ) { }
+  constructor(
+    private dialog: MatDialog,
+    private router: Router,
+    private route: ActivatedRoute,
+  ) {}
 
   ngOnInit(): void {}
 
@@ -46,7 +49,10 @@ export class AssessmentSummaryComponent implements OnInit {
   }
 
   getSource(path: string): string {
-    return environment.API_URL + path;
+    return `${environment.API_URL}${path}`;
   }
 
+  getMediaSource(path: string): string {
+    return `${environment.API_URL}/media/${path}`;
+  }
 }
