@@ -28,6 +28,8 @@ export class QuestionsListComponent implements OnInit {
 
   public questionsDataSource: MatTableDataSource<QuestionTableData> = new MatTableDataSource([]);
   public selectedQuestions: any[] = [];
+  public questionDetails: any;
+  public questionPreview = false;
 
   constructor(
     private assessmentService: AssessmentService,
@@ -59,5 +61,12 @@ export class QuestionsListComponent implements OnInit {
 
   downloadData(): void {
     console.log('Work In Progress');
+  }
+
+  onCustomAction(element: any): void {
+    this.assessmentService.getQuestionDetails(this.assessmentId, this.topicId, element.id).subscribe(details => {
+      this.questionDetails = details;
+      this.questionPreview = true;
+    });
   }
 }

@@ -40,7 +40,7 @@ export class QuestionSelectComponent implements OnInit {
   }
 
   getSource(path: string): string {
-    return path;
+    return (path.slice(0, 5) === 'http:') ? path : environment.API_URL + path;
   }
 
   playAudio(file): void {
