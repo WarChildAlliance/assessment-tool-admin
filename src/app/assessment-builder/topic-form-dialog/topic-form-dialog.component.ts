@@ -19,6 +19,8 @@ export class TopicFormDialogComponent implements OnInit {
   public audioAttachment = null;
   public icon = null;
 
+  public iconOptions = ['flower_green.svg', 'flower_purple.svg', 'flower_cyan.svg'];
+
   public feedbacks = [{id: 0, name: 'Never'}, {id: 1, name: 'Always'}, {id: 2, name: 'Second attempt'}];
 
   public createNewTopicForm: FormGroup = new FormGroup({
@@ -45,12 +47,13 @@ export class TopicFormDialogComponent implements OnInit {
         evaluated: this.topic.evaluated,
         praise: this.topic.praise,
         max_wrong_answers: this.topic.max_wrong_answers,
+        icon: this.icon
       });
     }
   }
 
-  onSave(): void {
-    const data = this.formGroupToFormData();
+  async onSave(): Promise<void> {
+    const data = await this.formGroupToFormData();
     if (this.edit) {
       this.assessmentService.editTopic(this.assessmentId.toString(), this.topic.id, data).subscribe(res => {
         this.alertService.success('Topic was altered successfully');
@@ -69,8 +72,16 @@ export class TopicFormDialogComponent implements OnInit {
   }
 
 
-  formGroupToFormData(): FormData {
-    this.formData.append('icon', this.icon);
+  async formGroupToFormData(): Promise<FormData> {
+    // if user upload an icon
+    if (this.icon) {
+      this.formData.append('icon', this.icon);
+    }
+    // if user doesn’t upload an icon (on edit mode: set default icon if no icon has been uploaded before)
+    else if (!this.topic?.icon) {
+      await this.setDefaultIcon();
+    }
+
     this.formData.append('name', this.createNewTopicForm.value.name);
     this.formData.append('description', this.createNewTopicForm.value.description);
     this.formData.append('show_feedback', this.createNewTopicForm.value.show_feedback);
@@ -87,5 +98,12 @@ export class TopicFormDialogComponent implements OnInit {
     this.createNewTopicForm.patchValue({icon: this.icon});
   }
 
+   async setDefaultIcon(): Promise<void> {
+    const imageName = this.iconOptions[Math.floor(Math.random() * 3)];
+    const imagePath = '../../../../assets/icons/' + imageName;
+    await fetch(imagePath)
+      .then((res) => res.arrayBuffer())
+      .then((buf) =>  new File([buf], imageName, {type: 'image/svg+xml'}))
+      .then((file) => this.formData.append('icon', file));
+   }
 }
-
