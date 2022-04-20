@@ -1,3 +1,26 @@
+.dialog-container {
+    position: relative;
+
+    .close-dialog-button {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 2px;
+        border-radius: 9999px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: rgb(223, 223, 223);
+            transition-property: background-color;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 150ms;
+        }
+        mat-icon {
+            display: block;
+            scale: .8;
+        }
+    }
+}
 .topic-accesses-builder {
     display: flex;
     justify-content: space-evenly;
@@ -87,7 +110,6 @@
         }
     }
 }
-
 .topic-access-buttons {
     float: right;
     display: flex;
