@@ -35,7 +35,6 @@ export class AssessmentBuilderComponent implements OnInit {
   });
 
   @ViewChild('createAssessmentDialog') createAssessmentDialog: TemplateRef<any>;
-  @ViewChild('createTopicDialog') createTopicDialog: TemplateRef<any>;
 
   constructor(
     private assessmentService: AssessmentService,
@@ -58,16 +57,11 @@ export class AssessmentBuilderComponent implements OnInit {
 
   openCreateAssessmentDialog(): void {
     const createAssessmentDialog = this.dialog.open(this.createAssessmentDialog);
-    createAssessmentDialog.afterClosed().subscribe(
-      () => {
+    createAssessmentDialog.afterClosed().subscribe((value) => {
+      if (value) {
         this.getAssessments();
-        this.dialog.closeAll();
+      }
     });
-  }
-
-  openCreateTopicDialog(assessmentId: string): void {
-    this.assessmentId = assessmentId;
-    this.dialog.open(this.createTopicDialog);
   }
 
   submitCreateNewAssessment(): void {

@@ -68,10 +68,10 @@ export class TopicDetailsComponent implements OnInit {
   openEditTopicDialog(topic): void {
     this.topic = topic;
     const createTopicDialog = this.dialog.open(this.createTopicDialog);
-    createTopicDialog.afterClosed().subscribe(
-      () => {
+    createTopicDialog.afterClosed().subscribe((value) => {
+      if (value) {
         this.getTopicDetails();
-        this.dialog.closeAll();
+      }
     });
   }
 
@@ -79,10 +79,10 @@ export class TopicDetailsComponent implements OnInit {
     this.question = question;
     this.toClone = false;
     const editQuestionDialog = this.dialog.open(this.editQuestionDialog);
-    editQuestionDialog.afterClosed().subscribe(
-      () => {
+    editQuestionDialog.afterClosed().subscribe((value) => {
+      if (value) {
         this.getQuestionsList();
-        this.dialog.closeAll();
+      }
     });
   }
 
@@ -90,10 +90,10 @@ export class TopicDetailsComponent implements OnInit {
     this.toClone = true;
     this.question = question;
     const editQuestionDialog = this.dialog.open(this.editQuestionDialog);
-    editQuestionDialog.afterClosed().subscribe(
-      () => {
+    editQuestionDialog.afterClosed().subscribe((value) => {
+      if (value) {
         this.getQuestionsList();
-        this.dialog.closeAll();
+      }
     });
   }
 
