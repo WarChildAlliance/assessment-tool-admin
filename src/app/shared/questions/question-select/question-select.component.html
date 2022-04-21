@@ -15,7 +15,7 @@
                         </div>
                     </mat-card-content>
                     <mat-card-actions>
-                            {{ option.value }}
+                            {{ option.title }}
                         <ng-container *ngFor="let attachment of option.attachments">
                             <mat-icon (click)="playAudio(attachment.file)" *ngIf="attachment.attachment_type === 'AUDIO'">volume_up</mat-icon>
                         </ng-container>
@@ -24,7 +24,7 @@
             </div>
             <ng-template #noImageAttached>
                 <div [class]="getAnswerBackground(option)" class="option">
-                        {{ option.value }}
+                        {{ option.title }}
                 </div>
             </ng-template>
         </ng-container>
@@ -45,7 +45,7 @@
                 <mat-card-actions>
                     <mat-checkbox>
                         <span>
-                            {{ option.value }}
+                            {{ option.title }}
                         </span>
                     </mat-checkbox>
                     <ng-container *ngFor="let attachment of option.attachments">
@@ -58,7 +58,7 @@
             <div [class]="getAnswerBackground(option)" class="option">
                 <mat-checkbox>
                     <span>
-                        {{ option.value }}
+                        {{ option.title }}
                     </span>
                 </mat-checkbox>
             </div>

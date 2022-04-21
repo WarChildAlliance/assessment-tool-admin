@@ -42,15 +42,15 @@ export class QuestionSelectFormComponent implements OnInit {
   public selectForm: FormGroup = new FormGroup({
     question_type: new FormControl('SELECT'),
     title: new FormControl(''),
-    identifier: new FormControl('', [Validators.required]),
+    value: new FormControl('', [Validators.required]),
     order: new FormControl('', [Validators.required]),
     display: new FormControl('GRID', [Validators.required]),
     multiple: new FormControl(false),
     options: new FormArray([
       this.formBuilder.group({
-        value: new FormControl(''),
+        title: new FormControl(''),
         valid: new FormControl(false),
-        identifier: new FormControl('', [Validators.required])
+        value: new FormControl('', [Validators.required])
       })
     ])
   });
@@ -72,8 +72,8 @@ export class QuestionSelectFormComponent implements OnInit {
         this.optionsAttachmentEdit.push(attObj);
         const optOject = {
           valid: element.valid,
-          value: element.value,
-          identifier: element.identifier
+          title: element.title,
+          value: element.value
         };
         options.push(optOject);
       });
@@ -82,8 +82,8 @@ export class QuestionSelectFormComponent implements OnInit {
       for (let i = 1; i < options.length; i++) {
         const optionsGroup = this.formBuilder.group({
           valid: new FormControl(null),
-          value: new FormControl(null),
-          identifier: new FormControl(null)
+          title: new FormControl(null),
+          value: new FormControl(null)
         });
         optionsForm.push(optionsGroup);
       }
@@ -92,7 +92,7 @@ export class QuestionSelectFormComponent implements OnInit {
       if (this.toClone) {
         this.selectForm.setValue({
           question_type: 'SELECT',
-          identifier: q.identifier,
+          value: q.value,
           title: q.title,
           order: this.order,
           display: q.display_type ? q.display_type : 'GRID',
@@ -102,7 +102,7 @@ export class QuestionSelectFormComponent implements OnInit {
       } else {
         this.selectForm.setValue({
           question_type: 'SELECT',
-          identifier: q.identifier,
+          value: q.value,
           title: q.title,
           order: q.order,
           display: q.display_type ? q.display_type : 'GRID',
@@ -113,11 +113,11 @@ export class QuestionSelectFormComponent implements OnInit {
     } else {
       this.selectForm.setValue({
         question_type: 'SELECT',
-        identifier: '',
+        value: '',
         title: '',
         order: this.order, display: 'GRID',
         multiple: false,
-        options: [{ value: '', valid: false, identifier: '' }]
+        options: [{ title: '', valid: false, value: '' }]
       });
       this.optionsAtt.push({attachments: []});
     }
@@ -129,9 +129,9 @@ export class QuestionSelectFormComponent implements OnInit {
   addOptions(): void {
     this.optionsAtt.push({attachments: []});
     const formGroup: FormGroup = this.formBuilder.group({
-      value: this.formBuilder.control(null),
+      title: this.formBuilder.control(null),
       valid: this.formBuilder.control(false),
-      identifier: this.formBuilder.control(null)
+      value: this.formBuilder.control(null)
     });
     (this.selectForm.controls.options as FormArray).push(formGroup);
     this.saveOptions = true;

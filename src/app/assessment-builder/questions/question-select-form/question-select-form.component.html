@@ -9,8 +9,8 @@
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form-group" color="accent">
-                <mat-label>Identifier</mat-label>
-                <input matInput formControlName="identifier">
+                <mat-label>Value</mat-label>
+                <input matInput formControlName="value">
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form-group" color="accent">
@@ -36,12 +36,12 @@
             <p><b>Image attachment</b></p>
             <button type="button" class="file_input" mat-flat-button color="primary" (click)="imageFileInput.click()">Choose
                 File</button>
-            <input hidden class="file_input" (change)="handleFileInput($event, 'IMAGE')" #imageFileInput type="file">
+            <input hidden class="file_input" accept="image/*" (change)="handleFileInput($event, 'IMAGE')" #imageFileInput type="file">
             <p>{{imageAttachment ? imageAttachment.name : 'No file chosen'}}</p>
             <p><b>Audio attachment</b></p>
             <button type="button" class="file_input" mat-flat-button color="primary" (click)="audioFileInput.click()">Choose
                 File</button>
-            <input hidden (change)="handleFileInput($event, 'AUDIO')" #audioFileInput type="file">
+            <input hidden accept="audio/*" (change)="handleFileInput($event, 'AUDIO')" #audioFileInput type="file">
             <p>{{audioAttachment ? audioAttachment.name : 'No file chosen'}}</p>
             <app-audio-recorder (audioRecordingEvent)="addRecordedAudio($event)"></app-audio-recorder>
         </div>
@@ -54,13 +54,13 @@
             [formGroupName]="i">
             <div>
                 <mat-form-field appearance="outline" class="form-group" color="accent">
-                    <mat-label>Value</mat-label>
-                    <input matInput formControlName="value">
+                    <mat-label>Title</mat-label>
+                    <input matInput formControlName="title">
                 </mat-form-field>
             </div>
             <mat-form-field appearance="outline" class="form-group" color="accent">
-                <mat-label>Identifier</mat-label>
-                <input matInput formControlName="identifier">
+                <mat-label>Value</mat-label>
+                <input matInput formControlName="value">
             </mat-form-field>
             <br>
             <mat-checkbox formControlName="valid">
@@ -72,7 +72,7 @@
                     <p><b>Image attachment</b></p>
                     <button type="button" class="file_input" mat-flat-button color="primary" (click)="imageFileInput.click()">Choose
                         File</button>
-                    <input hidden (change)="handleFileInputOptions($event, 'IMAGE', i)" #imageFileInput type="file">
+                    <input hidden accept="image/*" (change)="handleFileInputOptions($event, 'IMAGE', i)" #imageFileInput type="file">
                     <p>{{imageAttachment ? imageAttachment.name : 'No file chosen'}}</p>
                 </div>
 
@@ -80,7 +80,7 @@
                     <p><b>Audio attachment</b></p>
                     <button type="button" class="file_input" mat-flat-button color="primary" (click)="audioFileInput.click()">Choose
                         File</button>
-                    <input hidden (change)="handleFileInputOptions($event, 'AUDIO', i)" #audioFileInput type="file">
+                    <input hidden accept="audio/*" (change)="handleFileInputOptions($event, 'AUDIO', i)" #audioFileInput type="file">
                     <p>{{audioAttachment ? audioAttachment.name : 'No file chosen'}}</p>
                     <app-audio-recorder (audioRecordingEvent)="addRecordedAudio($event)"></app-audio-recorder>
                 </div>
@@ -95,6 +95,6 @@
         
     </div>
     <button class="question-form-button" mat-flat-button color="accent" type="submit" [disabled]="selectForm.invalid || !selectForm.dirty">
-        Save
+        {{ question ? 'Save' : 'Create' }}
     </button>
 </form>

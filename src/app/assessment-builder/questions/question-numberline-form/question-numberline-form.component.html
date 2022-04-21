@@ -50,14 +50,14 @@
             <h3><b>Image attachment</b></h3>
             <button type="button"  class="file_input" mat-flat-button color="primary" (click)="imageFileInput.click()">Choose
                 File</button>
-            <input hidden (change)="handleFileInput($event, 'IMAGE')" #imageFileInput type="file">
+            <input hidden accept="image/*" (change)="handleFileInput($event, 'IMAGE')" #imageFileInput type="file">
             <p>{{imageAttachment ? imageAttachment.name : 'No file chosen'}}</p>
         </div>
         <div>
             <h3><b>Audio attachment</b></h3>
             <button type="button" mat-flat-button  class="file_input" color="primary" (click)="audioFileInput.click()">Choose
                 File</button>
-            <input hidden (change)="handleFileInput($event, 'AUDIO')" #audioFileInput type="file">
+            <input hidden accept="audio/*" (change)="handleFileInput($event, 'AUDIO')" #audioFileInput type="file">
             <p>{{audioAttachment ? audioAttachment.name : 'No file chosen'}}</p>
             <p style="text-align: center"><b>OR </b></p>
             <app-audio-recorder (audioRecordingEvent)="addRecordedAudio($event)"></app-audio-recorder>
@@ -65,7 +65,7 @@
     </div>
 
     <div>
-        <button class="submit-form-button" mat-flat-button color="primary" type="submit"
+        <button class="submit-form-button" mat-flat-button color="accent" type="submit"
             [disabled]="numberLineForm.invalid || !numberLineForm.dirty">
             Save
         </button>
