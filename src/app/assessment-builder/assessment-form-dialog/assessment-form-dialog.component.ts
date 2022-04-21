@@ -59,7 +59,7 @@ export class AssessmentFormDialogComponent implements OnInit {
       });
     } else {
       this.assessmentService.createAssessment(data).subscribe(res => {
-      this.alertService.success('Assessment was saved successfully');
+        this.alertService.success('Assessment was saved successfully');
     });
     }
     this.createNewAssessmentForm.reset();

@@ -51,9 +51,9 @@
 <!--           <app-question-input-form [assessmentId]="assessmentId" [topicId]="topicId" [order]="order"
             *ngIf="questionType === 'INPUT'"></app-question-input-form> -->
             <app-question-select-form [assessmentId]="assessmentId" [topicId]="topicId" [order]="order"
-            *ngIf="questionType === 'SELECT'"></app-question-select-form>
+            *ngIf="questionType === 'SELECT'" (questionCreatedEvent)="getQuestionsList()"></app-question-select-form>
           <app-question-numberline-form [assessmentId]="assessmentId" [topicId]="topicId" [order]="order"
-            *ngIf="questionType === 'NUMBER_LINE'"></app-question-numberline-form>
+            *ngIf="questionType === 'NUMBER_LINE'" (questionCreatedEvent)="getQuestionsList()"></app-question-numberline-form>
         </div>
       </div>
     </mat-card>

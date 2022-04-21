@@ -28,7 +28,7 @@
                 File</button>
             <input hidden accept="audio/*" (change)="handleFileInput($event, 'AUDIO')" #audioFileInput type="file">
         </div>
-        <button mat-button color="accent" type="submit" [disabled]="inputForm.invalid || !inputForm.dirty">Submit</button>
-
+        <button mat-button [mat-dialog-close]="inputForm.value" color="accent" type="submit"
+         [disabled]="inputForm.invalid || !inputForm.dirty">{{ question ? 'Save' : 'Create' }}</button>
     </div>
 </form>

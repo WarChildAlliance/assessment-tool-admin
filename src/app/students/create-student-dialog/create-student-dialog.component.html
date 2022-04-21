@@ -53,7 +53,8 @@
         <button mat-button color="secondary" class="dialog-buttons__cancel" mat-dialog-close>
             {{ "cancel" | translate }}
         </button>
-        <button mat-flat-button color="accent" type="submit" class="dialog-buttons__submit" mat-dialog-close [disabled]="createNewStudentForm.invalid || !createNewStudentForm.dirty">
+        <button mat-flat-button color="accent" type="submit" class="dialog-buttons__submit"
+         [mat-dialog-close]="createNewStudentForm.value" [disabled]="createNewStudentForm.invalid || !createNewStudentForm.dirty">
             {{ ( isStudentEdited ? 'save' : 'submit' ) | translate }}
         </button>
     </div>

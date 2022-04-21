@@ -94,7 +94,8 @@
         </div>
         
     </div>
-    <button class="question-form-button" mat-flat-button color="accent" type="submit" [disabled]="selectForm.invalid || !selectForm.dirty">
+    <button class="question-form-button" [mat-dialog-close]="selectForm.value" color="accent" 
+     mat-flat-button type="submit" [disabled]="selectForm.invalid || !selectForm.dirty">
         {{ question ? 'Save' : 'Create' }}
     </button>
 </form>

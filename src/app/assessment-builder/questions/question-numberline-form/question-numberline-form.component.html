@@ -66,8 +66,8 @@
 
     <div>
         <button class="submit-form-button" mat-flat-button color="accent" type="submit"
-            [disabled]="numberLineForm.invalid || !numberLineForm.dirty">
-            Save
+            [disabled]="numberLineForm.invalid || !numberLineForm.dirty" [mat-dialog-close]="numberLineForm.value">
+            {{ question ? 'Save' : 'Create' }}
         </button>
     </div>
 
