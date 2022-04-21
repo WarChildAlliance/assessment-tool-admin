@@ -49,11 +49,12 @@
             </small>
         </div>
     </div>
-    <div class="buttons">
-        <button mat-button color="accent" type="submit" mat-dialog-close [disabled]="createNewStudentForm.invalid || !createNewStudentForm.dirty">
-            {{ ( isStudentEdited ? 'save' : 'submit' ) | translate }}
+    <div class="dialog-buttons">
+        <button mat-button color="secondary" class="dialog-buttons__cancel" mat-dialog-close>
+            {{ "cancel" | translate }}
         </button>
-        <button mat-button color="secondary" mat-dialog-close>{{ "cancel" | translate }}
+        <button mat-flat-button color="accent" type="submit" class="dialog-buttons__submit" mat-dialog-close [disabled]="createNewStudentForm.invalid || !createNewStudentForm.dirty">
+            {{ ( isStudentEdited ? 'save' : 'submit' ) | translate }}
         </button>
     </div>
 </form>

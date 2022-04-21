@@ -76,3 +76,12 @@
         </div>
     </div>
 </div>
+<div class="dialog-buttons">
+    <button mat-flat-button mat-dialog-close class="dialog-buttons__cancel" color="secondary">
+        {{ "cancel" | translate }}
+    </button>
+    <button mat-flat-button class="dialog-buttons__submit" [disabled]="!getControls().length" color="accent"
+    (click)="submitCreateTopicAccesses()">
+        {{ "assign" | translate }}
+    </button>
+</div>
