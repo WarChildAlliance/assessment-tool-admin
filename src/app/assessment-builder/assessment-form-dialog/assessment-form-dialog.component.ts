@@ -99,7 +99,7 @@ export class AssessmentFormDialogComponent implements OnInit {
   }
 
    async setDefaultIcon(): Promise<void> {
-    const imageName = this.iconOptions[Math.floor(Math.random() * 3)];
+    const imageName = this.iconOptions[Math.floor(Math.random() * this.iconOptions.length)];
     const imagePath = '../../../../assets/icons/' + imageName;
     await fetch(imagePath)
       .then((res) => res.arrayBuffer())
