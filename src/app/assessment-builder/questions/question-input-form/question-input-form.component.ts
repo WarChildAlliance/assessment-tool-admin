@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
@@ -15,6 +15,9 @@ export class QuestionInputFormComponent implements OnInit {
   @Input() order;
   @Input() question;
   @Input() toClone;
+
+  @Output() questionCreatedEvent = new EventEmitter<boolean>();
+  @Output() closeModalEvent = new EventEmitter<boolean>();
 
   private imageAttachment = null;
   private audioAttachment = null;
@@ -70,6 +73,7 @@ export class QuestionInputFormComponent implements OnInit {
           this.saveAttachments(this.assessmentId, this.audioAttachment, 'AUDIO', { name: 'question', value: res.id });
         } else {
           this.alertService.success(this.alertMessage);
+          this.questionCreatedEvent.emit(true);
         }
       });
   }
@@ -83,6 +87,8 @@ export class QuestionInputFormComponent implements OnInit {
           this.saveAttachments(this.assessmentId, this.audioAttachment, 'AUDIO', { name: 'question', value: res.id });
         } else {
           this.alertService.success(this.alertMessage);
+          this.questionCreatedEvent.emit(true);
+          this.closeModalEvent.emit(true);
         }
       });
   }

@@ -18,6 +18,7 @@ export class QuestionNumberlineFormComponent implements OnInit {
   @Input() toClone;
 
   @Output() questionCreatedEvent = new EventEmitter<boolean>();
+  @Output() closeModalEvent = new EventEmitter<boolean>();
 
   public imageAttachment = null;
   public audioAttachment = null;
@@ -116,6 +117,7 @@ export class QuestionNumberlineFormComponent implements OnInit {
         }
         this.alertService.success(this.alertMessage);
         this.questionCreatedEvent.emit(true);
+        this.closeModalEvent.emit(true);
       });
   }
 
