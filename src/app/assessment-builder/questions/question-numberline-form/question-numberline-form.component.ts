@@ -108,11 +108,19 @@ export class QuestionNumberlineFormComponent implements OnInit {
       this.question.id, this.numberLineForm.value).subscribe(res => {
         if (this.imageAttachment && this.changedImage) {
           const image = this.question.attachments.find( i => i.attachment_type === 'IMAGE');
-          this.assessmentService.updateAttachments(this.assessmentId, this.imageAttachment, 'IMAGE', image.id).subscribe();
+          if (image) {
+            this.assessmentService.updateAttachments(this.assessmentId, this.imageAttachment, 'IMAGE', image.id).subscribe();
+          } else {
+            this.saveAttachments(this.assessmentId, this.imageAttachment, 'IMAGE', { name: 'question', value: res.id });
+          }
         }
         if (this.audioAttachment && this.changedAudio) {
           const audio = this.question.attachments.find( a => a.attachment_type === 'AUDIO');
-          this.assessmentService.updateAttachments(this.assessmentId, this.audioAttachment, 'AUDIO', audio.id).subscribe();
+          if (audio) {
+            this.assessmentService.updateAttachments(this.assessmentId, this.audioAttachment, 'AUDIO', audio.id).subscribe();
+          } else {
+            this.saveAttachments(this.assessmentId, this.audioAttachment, 'AUDIO', { name: 'question', value: res.id });
+          }
         }
         this.alertService.success(this.alertMessage);
         this.questionCreatedEvent.emit(true);
@@ -127,10 +135,10 @@ export class QuestionNumberlineFormComponent implements OnInit {
 
   handleFileInput(event, type): void {
     if (type === 'IMAGE'){
-      if (this.imageAttachment) { this.changedImage = true; }
+      this.changedImage = true;
       this.imageAttachment = event.target.files[0];
     } else if (type === 'AUDIO') {
-      if (this.audioAttachment) { this.changedAudio = true; }
+      this.changedAudio = true;
       this.audioAttachment = event.target.files[0];
     }
   }
@@ -138,15 +146,20 @@ export class QuestionNumberlineFormComponent implements OnInit {
   setExistingAttachments(): void{
     const image = this.question.attachments.find( i => i.attachment_type === 'IMAGE');
     const audio = this.question.attachments.find( a => a.attachment_type === 'AUDIO');
-    this.imageAttachment = image;
-    this.audioAttachment = audio;
-    this.imageAttachment.name = image ? image.file.split('/').at(-1) : null;
-    this.audioAttachment.name = audio ? audio.file.split('/').at(-1) : null;
+    if (image) {
+      this.imageAttachment = image;
+      this.imageAttachment.name = image ? image.file.split('/').at(-1) : null;
+    }
+    if (audio) {
+      this.audioAttachment = audio;
+      this.audioAttachment.name = audio ? audio.file.split('/').at(-1) : null;
+    }
   }
 
   addRecordedAudio(event): void {
     const name = 'recording_' + new Date().toISOString() + '.wav';
     this.audioAttachment = this.blobToFile(event, name);
+    this.changedAudio = true;
   }
 
   public blobToFile = (theBlob: Blob, fileName: string): File => {

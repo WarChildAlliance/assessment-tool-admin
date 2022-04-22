@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
@@ -16,8 +16,14 @@ export class QuestionInputFormComponent implements OnInit {
   @Input() question;
   @Input() toClone;
 
-  private imageAttachment = null;
-  private audioAttachment = null;
+  @Output() questionCreatedEvent = new EventEmitter<boolean>();
+
+  public imageAttachment = null;
+  public audioAttachment = null;
+  // making sure that we dont store an new attachment on editQuestion, if attachment didnt change
+  public changedAudio = false;
+  public changedImage = false;
+
   public alertMessage =  '';
 
   public inputForm: FormGroup = new FormGroup({
@@ -38,6 +44,8 @@ export class QuestionInputFormComponent implements OnInit {
         order: this.question.order,
         valid_answer: this.question.valid_answer
       });
+
+      this.setExistingAttachments();
     } else {
       this.inputForm.setValue({
         question_type: 'INPUT',
@@ -66,24 +74,36 @@ export class QuestionInputFormComponent implements OnInit {
 
         if (this.imageAttachment) {
           this.saveAttachments(this.assessmentId, this.imageAttachment, 'IMAGE', { name: 'question', value: res.id });
-        } else if (this.audioAttachment) {
-          this.saveAttachments(this.assessmentId, this.audioAttachment, 'AUDIO', { name: 'question', value: res.id });
-        } else {
-          this.alertService.success(this.alertMessage);
         }
+        if (this.audioAttachment) {
+          this.saveAttachments(this.assessmentId, this.audioAttachment, 'AUDIO', { name: 'question', value: res.id });
+        }
+        this.alertService.success(this.alertMessage);
+        this.questionCreatedEvent.emit(true);
       });
   }
 
   editQuestion(): void {
     this.assessmentService.editQuestion(this.assessmentId.toString(), this.topicId.toString(),
       this.question.id, this.inputForm.value).subscribe(res => {
-        if (this.imageAttachment) {
-          this.saveAttachments(this.assessmentId, this.imageAttachment, 'IMAGE', { name: 'question', value: res.id });
-        } else if (this.audioAttachment) {
-          this.saveAttachments(this.assessmentId, this.audioAttachment, 'AUDIO', { name: 'question', value: res.id });
-        } else {
-          this.alertService.success(this.alertMessage);
+        if (this.imageAttachment && this.changedImage) {
+          const image = this.question.attachments.find( i => i.attachment_type === 'IMAGE');
+          if (image) {
+            this.assessmentService.updateAttachments(this.assessmentId, this.imageAttachment, 'IMAGE', image.id).subscribe();
+          } else {
+            this.saveAttachments(this.assessmentId, this.imageAttachment, 'IMAGE', { name: 'question', value: res.id });
+          }
         }
+        if (this.audioAttachment && this.changedAudio) {
+          const audio = this.question.attachments.find( a => a.attachment_type === 'AUDIO');
+          if (audio) {
+            this.assessmentService.updateAttachments(this.assessmentId, this.audioAttachment, 'AUDIO', audio.id).subscribe();
+          } else {
+            this.saveAttachments(this.assessmentId, this.audioAttachment, 'AUDIO', { name: 'question', value: res.id });
+          }
+        }
+        this.alertService.success(this.alertMessage);
+        this.questionCreatedEvent.emit(true);
       });
   }
 
@@ -94,10 +114,36 @@ export class QuestionInputFormComponent implements OnInit {
   }
 
   handleFileInput(event, type): void {
-    if (type === 'IMAGE') {
+    if (type === 'IMAGE'){
+      this.changedImage = true;
       this.imageAttachment = event.target.files[0];
     } else if (type === 'AUDIO') {
+      this.changedAudio = true;
       this.audioAttachment = event.target.files[0];
     }
+  }
+  setExistingAttachments(): void{
+    const image = this.question.attachments.find( i => i.attachment_type === 'IMAGE');
+    const audio = this.question.attachments.find( a => a.attachment_type === 'AUDIO');
+
+    if (image) {
+      this.imageAttachment = image;
+      this.imageAttachment.name = image ? image.file.split('/').at(-1) : null;
+    }
+
+    if (audio) {
+      this.audioAttachment = audio;
+      this.audioAttachment.name = audio ? audio.file.split('/').at(-1) : null;
+    }
+  }
+
+  addRecordedAudio(event): void {
+    const name = 'recording_' + new Date().toISOString() + '.wav';
+    this.audioAttachment = this.blobToFile(event, name);
+    this.changedAudio = true;
+  }
+
+  public blobToFile = (theBlob: Blob, fileName: string): File => {
+    return new File([theBlob], fileName, { lastModified: new Date().getTime(), type: theBlob.type });
   }
 }

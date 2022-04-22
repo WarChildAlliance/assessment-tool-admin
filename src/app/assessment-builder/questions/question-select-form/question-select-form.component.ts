@@ -175,18 +175,25 @@ export class QuestionSelectFormComponent implements OnInit {
       this.question.id, this.selectForm.value).subscribe(res => {
         if (this.changedImage && this.imageAttachment) {
           const image = this.question.attachments.find( i => i.attachment_type === 'IMAGE');
-          this.assessmentService.updateAttachments(this.assessmentId, this.imageAttachment, 'IMAGE', image.id).subscribe();
+          if (image) {
+            this.assessmentService.updateAttachments(this.assessmentId, this.imageAttachment, 'IMAGE', image.id).subscribe();
+          } else {
+            this.saveAttachments(this.assessmentId, this.imageAttachment, 'IMAGE', { name: 'question', value: res.id });
+          }
         }
         if (this.changedAudio && this.audioAttachment) {
           const audio = this.question.attachments.find( a => a.attachment_type === 'AUDIO');
-          this.assessmentService.updateAttachments(this.assessmentId, this.audioAttachment, 'AUDIO', audio.id).subscribe();
+          if (audio) {
+            this.assessmentService.updateAttachments(this.assessmentId, this.audioAttachment, 'AUDIO', audio.id).subscribe();
+          } else {
+            this.saveAttachments(this.assessmentId, this.audioAttachment, 'AUDIO', { name: 'question', value: res.id });
+          }
         }
         if (this.optionAttChange && this.optionsAttachment) {
           this.updateOptionsAttachments(res);
-        } else {
-          this.alertService.success(this.alertMessage);
-          this.questionCreatedEvent.emit(true);
         }
+        this.alertService.success(this.alertMessage);
+        this.questionCreatedEvent.emit(true);
       });
   }
 
@@ -282,6 +289,7 @@ export class QuestionSelectFormComponent implements OnInit {
   addRecordedAudio(event): void {
     const name = 'recording_' + new Date().toISOString() + '.wav';
     this.audioAttachment = this.blobToFile(event, name);
+    this.changedAudio = true;
   }
 
   public blobToFile = (theBlob: Blob, fileName: string): File => {
