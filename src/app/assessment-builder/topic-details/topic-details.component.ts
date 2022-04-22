@@ -101,5 +101,4 @@ export class TopicDetailsComponent implements OnInit {
   setQuestionType(questionType: string): void {
     this.questionType = questionType;
   }
-
 }
