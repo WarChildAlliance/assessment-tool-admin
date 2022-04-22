@@ -1,5 +1,5 @@
 <h2 mat-dialog-title>
-    {{ "createStudent" | translate }}
+    {{ ( isStudentEdited ? 'editStudent' : 'createStudent' ) | translate }}
     </h2>
 <form class="form-primary" [formGroup]="createNewStudentForm" (ngSubmit)="submitCreateNewStudent()">
     <div class="form-primary__flex-container">
@@ -49,11 +49,13 @@
             </small>
         </div>
     </div>
-    <div class="buttons">
-        <button mat-button color="accent" type="submit" mat-dialog-close [disabled]="createNewStudentForm.invalid || !createNewStudentForm.dirty">
-            {{ "submit" | translate }}
+    <div class="dialog-buttons">
+        <button mat-button color="secondary" class="dialog-buttons__cancel" mat-dialog-close>
+            {{ "cancel" | translate }}
         </button>
-        <button mat-button color="secondary" mat-dialog-close>{{ "cancel" | translate }}
+        <button mat-flat-button color="accent" type="submit" class="dialog-buttons__submit"
+         [mat-dialog-close]="createNewStudentForm.value" [disabled]="createNewStudentForm.invalid || !createNewStudentForm.dirty">
+            {{ ( isStudentEdited ? 'save' : 'submit' ) | translate }}
         </button>
     </div>
 </form>

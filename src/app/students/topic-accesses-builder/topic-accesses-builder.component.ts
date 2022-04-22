@@ -127,7 +127,6 @@ export class TopicAccessesBuilderComponent implements OnInit {
         this.alertService.success('The new topic accesses have been successfully set !');
       },
       error => {
-        console.log('ERROR', error);
         this.alertService.error('There was an error during the submission of the topic accesses');
       }
     );

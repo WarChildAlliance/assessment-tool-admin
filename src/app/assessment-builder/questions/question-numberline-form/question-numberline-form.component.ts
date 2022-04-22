@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { dateInputsHaveChanged } from '@angular/material/datepicker/datepicker-input-base';
 import { AlertService } from 'src/app/core/services/alert.service';
@@ -16,6 +16,9 @@ export class QuestionNumberlineFormComponent implements OnInit {
   @Input() order;
   @Input() question;
   @Input() toClone;
+
+  @Output() questionCreatedEvent = new EventEmitter<boolean>();
+  @Output() closeModalEvent = new EventEmitter<boolean>();
 
   public imageAttachment = null;
   public audioAttachment = null;
@@ -97,7 +100,7 @@ export class QuestionNumberlineFormComponent implements OnInit {
           this.saveAttachments(this.assessmentId, this.audioAttachment, 'AUDIO', { name: 'question', value: res.id });
         }
         this.alertService.success(this.alertMessage);
-
+        this.questionCreatedEvent.emit(true);
       });
   }
 
@@ -113,6 +116,8 @@ export class QuestionNumberlineFormComponent implements OnInit {
           this.assessmentService.updateAttachments(this.assessmentId, this.audioAttachment, 'AUDIO', audio.id).subscribe();
         }
         this.alertService.success(this.alertMessage);
+        this.questionCreatedEvent.emit(true);
+        this.closeModalEvent.emit(true);
       });
   }
 

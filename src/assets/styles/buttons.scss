@@ -12,7 +12,19 @@
       &.white-background {
         background-color: white !important;
       }
-
     }
+  }
+}
+.dialog-buttons {
+  display: flex;
+  justify-content: flex-end;
+  column-gap: 16px;
+
+  &__cancel {
+    background-color: rgb(240, 240, 240);
+    padding: 1px 20px;
+  }
+  &__submit {
+    padding: 1px 20px;
   }
 }
