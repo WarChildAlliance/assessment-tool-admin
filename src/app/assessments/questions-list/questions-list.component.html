@@ -13,5 +13,23 @@
 
   <app-table [tableData]="questionsDataSource" [displayedColumns]="displayedColumns"
     [isSelectable]="true" (selectionChangedEvent)="onSelectionChange($event)"
-    (openDetailsEvent)="onOpenDetails($event)"></app-table>
+    (openDetailsEvent)="onOpenDetails($event)" (customActionEvent)="onCustomAction($event)"></app-table>
+
+  <div *ngIf="questionPreview">
+    <mat-card *ngIf="questionDetails && questionDetails.question_type === 'SELECT'">
+      <app-question-select [question]="questionDetails" [evaluated]="true"></app-question-select>
+    </mat-card>
+  
+    <mat-card *ngIf="questionDetails && questionDetails.question_type === 'INPUT'">
+      <app-question-input [question]="questionDetails" [evaluated]="true"></app-question-input>
+    </mat-card>
+  
+    <mat-card *ngIf="questionDetails && questionDetails.question_type === 'SORT'">
+      <app-question-sort [question]="questionDetails" [evaluated]="true"></app-question-sort>
+    </mat-card>
+  
+    <mat-card *ngIf="questionDetails && questionDetails.question_type === 'NUMBER_LINE'">
+      <app-question-numberline [question]="questionDetails" [evaluated]="true"></app-question-numberline>
+    </mat-card>
+  </div>
 </div>
