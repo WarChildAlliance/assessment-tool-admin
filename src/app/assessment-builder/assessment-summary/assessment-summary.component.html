@@ -41,11 +41,11 @@
                 Add a topic <mat-icon>add</mat-icon>
             </div>
         </mat-card>
-        <mat-card class="topic-card" (click)="goToTopicDetails(assessment.id, topic[0])" *ngFor="let topic of assessment.topics">
-            <img *ngIf="topic[4]" [src]="getMediaSource(topic[4])">
-            <span class="topic-title">{{ topic[1] }}</span>
-            <p class="small-description">{{ topic[2] }}</p>
-            <span class="question_count">({{ topic[3] }} questions)</span>
+        <mat-card class="topic-card" (click)="goToTopicDetails(assessment.id, topic.id)" *ngFor="let topic of assessment.topics">
+            <img *ngIf="topic.icon" [src]="getMediaSource(topic.icon)">
+            <span class="topic-title">{{ topic.title }}</span>
+            <p class="small-description">{{ topic.description }}</p>
+            <span class="question_count">({{ topic.questionsCount }} questions)</span>
         </mat-card>
     </div>
 </mat-card>
