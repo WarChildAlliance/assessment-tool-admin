@@ -41,9 +41,9 @@
         </div>
     </div>
     <mat-divider></mat-divider>
-    <div class="buttons">
-        <button mat-button class="submit" color="accent" type="submit" 
-        mat-dialog-close [disabled]="createNewTopicForm.invalid || !createNewTopicForm.dirty">{{ topic ? 'Save' : 'Create' }}</button>
-        <button mat-button class="cancel" color="secondary" mat-dialog-close>Cancel</button>
+    <div class="dialog-buttons buttons-margin">
+        <button mat-button class="dialog-buttons__cancel" color="secondary" mat-dialog-close>Cancel</button>
+        <button mat-flat-button class="dialog-buttons__submit" color="accent" type="submit"
+        [mat-dialog-close]="createNewTopicForm.value" [disabled]="createNewTopicForm.invalid || !createNewTopicForm.dirty">{{ topic ? 'Save' : 'Create' }}</button>
     </div>
 </form>

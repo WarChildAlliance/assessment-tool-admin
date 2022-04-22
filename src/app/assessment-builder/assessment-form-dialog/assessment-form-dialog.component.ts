@@ -21,6 +21,8 @@ export class AssessmentFormDialogComponent implements OnInit {
   public subjects = ['PRESEL', 'POSTSEL', 'MATH', 'LITERACY'];
   public formData: FormData = new FormData();
 
+  public iconOptions = ['flower_green.svg', 'flower_purple.svg', 'flower_cyan.svg'];
+
   public createNewAssessmentForm: FormGroup = new FormGroup({
     title: new FormControl('', [Validators.required]),
     grade: new FormControl(0, [Validators.required]),
@@ -51,15 +53,15 @@ export class AssessmentFormDialogComponent implements OnInit {
     }
   }
 
-  submitCreateNewAssessment(): void {
-    const data = this.icon ? this.formData : this.createNewAssessmentForm.value;
+  async submitCreateNewAssessment(): Promise<void> {
+    const data = await this.formGroupToFormData();
     if (this.edit) {
       this.assessmentService.editAssessment(this.assessment.id, data).subscribe(() => {
         this.alertService.success('Assessment was altered successfully');
       });
     } else {
       this.assessmentService.createAssessment(data).subscribe(res => {
-      this.alertService.success('Assessment was saved successfully');
+        this.alertService.success('Assessment was saved successfully');
     });
     }
     this.createNewAssessmentForm.reset();
@@ -71,9 +73,16 @@ export class AssessmentFormDialogComponent implements OnInit {
     });
   }
 
-  handleFileInput(event): void {
-    this.icon = event.target.files[0];
-    this.formData.append('icon', this.icon);
+  async formGroupToFormData(): Promise<FormData> {
+    // if user upload an icon
+    if (this.icon) {
+      this.formData.append('icon', this.icon);
+    }
+    // if user doesn’t upload an icon (on edit mode: set default icon if no icon has been uploaded before)
+    else if (!this.assessment?.icon) {
+      await this.setDefaultIcon();
+    }
+
     this.formData.append('title', this.createNewAssessmentForm.value.title);
     this.formData.append('grade', this.createNewAssessmentForm.value.grade);
     this.formData.append('subject', this.createNewAssessmentForm.value.subject);
@@ -81,7 +90,20 @@ export class AssessmentFormDialogComponent implements OnInit {
     this.formData.append('country', this.createNewAssessmentForm.value.country);
     this.formData.append('private', this.createNewAssessmentForm.value.private);
 
+    return this.formData;
+  }
+
+  handleFileInput(event): void {
+    this.icon = event.target.files[0];
     this.createNewAssessmentForm.patchValue({icon: this.icon});
   }
 
+   async setDefaultIcon(): Promise<void> {
+    const imageName = this.iconOptions[Math.floor(Math.random() * this.iconOptions.length)];
+    const imagePath = '../../../../assets/icons/' + imageName;
+    await fetch(imagePath)
+      .then((res) => res.arrayBuffer())
+      .then((buf) => new File([buf], imageName, {type: 'image/svg+xml'}))
+      .then((file) => this.formData.append('icon', file));
+   }
 }

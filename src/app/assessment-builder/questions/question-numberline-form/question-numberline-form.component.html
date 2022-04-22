@@ -65,9 +65,9 @@
     </div>
 
     <div>
-        <button class="submit-form-button" mat-flat-button color="primary" type="submit"
+        <button class="submit-form-button" mat-flat-button color="accent" type="submit"
             [disabled]="numberLineForm.invalid || !numberLineForm.dirty">
-            Save
+            {{ question ? 'Save' : 'Create' }}
         </button>
     </div>
 
