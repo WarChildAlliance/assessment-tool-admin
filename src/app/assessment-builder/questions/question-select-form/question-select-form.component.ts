@@ -58,7 +58,7 @@ export class QuestionSelectFormComponent implements OnInit {
     title: new FormControl(''),
     value: new FormControl('', [Validators.required]),
     order: new FormControl('', [Validators.required]),
-    display: new FormControl('GRID', [Validators.required]),
+    display: new FormControl('Grid', [Validators.required]),
     multiple: new FormControl(false),
     options: new FormArray([
       this.formBuilder.group({
@@ -116,7 +116,7 @@ export class QuestionSelectFormComponent implements OnInit {
           value: q.value,
           title: q.title,
           order: this.order,
-          display: q.display_type ? q.display_type : 'GRID',
+          display: q.display_type ? q.display_type : 'Grid',
           multiple: q.multiple,
           options,
         });
@@ -126,7 +126,7 @@ export class QuestionSelectFormComponent implements OnInit {
           value: q.value,
           title: q.title,
           order: q.order,
-          display: q.display_type ? q.display_type : 'GRID',
+          display: q.display_type ? q.display_type : 'Grid',
           multiple: q.multiple,
           options,
         });
@@ -136,8 +136,7 @@ export class QuestionSelectFormComponent implements OnInit {
         question_type: 'SELECT',
         value: '',
         title: '',
-        order: this.order,
-        display: 'GRID',
+        order: this.order, display: 'Grid',
         multiple: false,
         options: [{ title: '', valid: false, value: '' }],
       });
