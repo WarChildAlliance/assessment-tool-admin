@@ -2,3 +2,8 @@
     color: red;
     margin-top: -20px;
 }
+.form-primary {
+    &__flex-container {
+        margin: 40px 0px;
+    }
+}

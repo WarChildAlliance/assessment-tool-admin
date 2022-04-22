@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -25,13 +26,28 @@ export class AssessmentSummaryComponent implements OnInit {
     private dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute,
+    private assessmentService: AssessmentService
   ) {}
 
   ngOnInit(): void {}
 
+  getAssessmentDetails(assessmentId: string): void {
+    this.assessmentService.getAssessmentTopics(assessmentId).subscribe(() => {
+      this.assessmentService.getAssessmentDetails(assessmentId).subscribe(assessmentDetails => {
+        this.assessment = assessmentDetails;
+      });
+    });
+  }
+
   openCreateTopicDialog(assessmentId: string): void {
     this.assessmentId = assessmentId;
-    this.dialog.open(this.createTopicDialog);
+
+    const createTopicDialog = this.dialog.open(this.createTopicDialog);
+    createTopicDialog.afterClosed().subscribe((value) => {
+      if (value) {
+        this.getAssessmentDetails(this.assessmentId);
+      }
+    });
   }
 
   // deleteAssessment(assessmentId: string): void {
@@ -41,7 +57,12 @@ export class AssessmentSummaryComponent implements OnInit {
   editAssessment(assessment): void{
     this.edit = true;
     this.assessment = assessment;
-    this.dialog.open(this.createAssessmentDialog);
+    const createAssessmentDialog = this.dialog.open(this.createAssessmentDialog);
+    createAssessmentDialog.afterClosed().subscribe((value) => {
+      if (value) {
+        this.getAssessmentDetails(this.assessment.id);
+      }
+    });
   }
 
   goToTopicDetails(assessmentId, topicId): void {

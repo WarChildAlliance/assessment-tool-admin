@@ -46,43 +46,39 @@
     }
 
     mat-card{
-        position: relative;
         width: 20%;
         height: 100px;
         margin-right: 10px;
-        display: flex;
         cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-content: center;
+        text-align: center;
+
         img {
+            width: 28px;
+            height: auto;
             position: absolute;
             top: 10px;
-            left: 10px;
-            height: 15px;
-            width: auto;
+        }
+        .topic-title {
+            margin-top: 4px;
+            font-weight: 500;
+        }
+        p {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+            overflow: hidden;
+            font-weight: 400;
+            font-size: 13px;
+            margin-bottom: 1px;
         }
         .question_count {
-            position: absolute;
-            top: 8px;
-            right: 10px;
             font-weight: 300;
-            font-size: 13px;
-        }
-        .topic-general-information {
-            margin: auto;
-            text-align: center;
-
-            .topic-title {
-                margin-top: auto;
-                margin-bottom: auto;
-                font-weight: 500;
-            }
-            p {
-                display: -webkit-box;
-                -webkit-box-orient: vertical;
-                -webkit-line-clamp: 4;
-                overflow: hidden;
-                font-weight: 400;
-                font-size: 13px;
-            }
+            font-size: 12px;
+            color: rgb(86, 86, 86);
         }
     }
 

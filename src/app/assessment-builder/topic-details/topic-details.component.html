@@ -51,9 +51,9 @@
 <!--           <app-question-input-form [assessmentId]="assessmentId" [topicId]="topicId" [order]="order"
             *ngIf="questionType === 'INPUT'"></app-question-input-form> -->
             <app-question-select-form [assessmentId]="assessmentId" [topicId]="topicId" [order]="order"
-            *ngIf="questionType === 'SELECT'"></app-question-select-form>
+            *ngIf="questionType === 'SELECT'" (questionCreatedEvent)="getQuestionsList()"></app-question-select-form>
           <app-question-numberline-form [assessmentId]="assessmentId" [topicId]="topicId" [order]="order"
-            *ngIf="questionType === 'NUMBER_LINE'"></app-question-numberline-form>
+            *ngIf="questionType === 'NUMBER_LINE'" (questionCreatedEvent)="getQuestionsList()"></app-question-numberline-form>
         </div>
       </div>
     </mat-card>
@@ -88,11 +88,14 @@
 
 <ng-template #editQuestionDialog>
   <mat-dialog-content>
-    <app-question-input-form [assessmentId]="assessmentId" [topicId]="topicId" [order]="order" [question]="question" [toClone]="toClone"
+    <app-question-input-form [assessmentId]="assessmentId" [topicId]="topicId" [order]="order" 
+    [question]="question" [toClone]="toClone" (closeModalEvent)="onCloseModal()"
       *ngIf="question.question_type === 'INPUT'"></app-question-input-form>
-    <app-question-numberline-form [assessmentId]="assessmentId" [topicId]="topicId" [question]="question" [toClone]="toClone"
+    <app-question-numberline-form [assessmentId]="assessmentId" [topicId]="topicId" 
+    [question]="question" [toClone]="toClone" (closeModalEvent)="onCloseModal()"
       *ngIf="question.question_type === 'NUMBER_LINE'"></app-question-numberline-form>
-    <app-question-select-form [assessmentId]="assessmentId" [topicId]="topicId" [question]="question" [toClone]="toClone"
+    <app-question-select-form [assessmentId]="assessmentId" [topicId]="topicId" 
+    [question]="question" [toClone]="toClone" (closeModalEvent)="onCloseModal()"
       *ngIf="question.question_type === 'SELECT'"></app-question-select-form>
   </mat-dialog-content>
 </ng-template>

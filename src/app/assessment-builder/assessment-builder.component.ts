@@ -35,7 +35,6 @@ export class AssessmentBuilderComponent implements OnInit {
   });
 
   @ViewChild('createAssessmentDialog') createAssessmentDialog: TemplateRef<any>;
-  @ViewChild('createTopicDialog') createTopicDialog: TemplateRef<any>;
 
   constructor(
     private assessmentService: AssessmentService,
@@ -45,20 +44,24 @@ export class AssessmentBuilderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.assessmentService.getAssessmentsList().subscribe((assessmentsList) => {
-      this.currentAssessments = assessmentsList;
-    });
+    this.getAssessments();
     this.userService.getLanguages().subscribe( res => this.languages = res);
     this.userService.getCountries().subscribe( res => this.countries = res);
   }
 
-  openCreateAssessmentDialog(): void {
-    this.dialog.open(this.createAssessmentDialog);
+  getAssessments(): void {
+    this.assessmentService.getAssessmentsList().subscribe((assessmentsList) => {
+      this.currentAssessments = assessmentsList;
+    });
   }
 
-  openCreateTopicDialog(assessmentId: string): void {
-    this.assessmentId = assessmentId;
-    this.dialog.open(this.createTopicDialog);
+  openCreateAssessmentDialog(): void {
+    const createAssessmentDialog = this.dialog.open(this.createAssessmentDialog);
+    createAssessmentDialog.afterClosed().subscribe((value) => {
+      if (value) {
+        this.getAssessments();
+      }
+    });
   }
 
   submitCreateNewAssessment(): void {
