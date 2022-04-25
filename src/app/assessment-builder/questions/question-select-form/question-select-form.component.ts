@@ -110,27 +110,15 @@ export class QuestionSelectFormComponent implements OnInit {
       }
 
       const q = this.question;
-      if (this.toClone) {
-        this.selectForm.setValue({
-          question_type: 'SELECT',
-          value: q.value,
-          title: q.title,
-          order: this.order,
-          display: q.display_type ? q.display_type : 'Grid',
-          multiple: q.multiple,
-          options,
-        });
-      } else {
-        this.selectForm.setValue({
-          question_type: 'SELECT',
-          value: q.value,
-          title: q.title,
-          order: q.order,
-          display: q.display_type ? q.display_type : 'Grid',
-          multiple: q.multiple,
-          options,
-        });
-      }
+      this.selectForm.setValue({
+        question_type: 'SELECT',
+        value: q.value,
+        title: q.title,
+        order: this.toClone ? this.order : this.question.order,
+        display: q.display_type ? q.display_type : 'Grid',
+        multiple: q.multiple,
+        options,
+      });
     } else {
       this.selectForm.setValue({
         question_type: 'SELECT',
@@ -160,9 +148,6 @@ export class QuestionSelectFormComponent implements OnInit {
 
   onSave(): void {
     if (this.toClone) {
-      this.selectForm.setValue({
-        id: null,
-      });
       this.createQuestion();
       this.alertMessage = 'Question successfully cloned';
     } else if (this.question && !this.toClone) {
