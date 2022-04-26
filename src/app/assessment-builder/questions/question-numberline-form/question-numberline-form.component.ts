@@ -1,6 +1,5 @@
-import { Component, Input, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
-import { dateInputsHaveChanged } from '@angular/material/datepicker/datepicker-input-base';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 
@@ -19,8 +18,6 @@ export class QuestionNumberlineFormComponent implements OnInit {
 
   @Output() questionCreatedEvent = new EventEmitter<boolean>();
   @Output() closeModalEvent = new EventEmitter<boolean>();
-
-  @ViewChild('formDirective') private formDirective: NgForm;
 
   public imageAttachment = null;
   public audioAttachment = null;
@@ -161,7 +158,7 @@ export class QuestionNumberlineFormComponent implements OnInit {
   }
 
   resetForm(): void {
-    this.formDirective.resetForm();
+    this.numberLineForm.reset();
     this.numberLineForm.controls['order'.toString()].setValue(this.order + 1);
 
     this.imageAttachment = null;

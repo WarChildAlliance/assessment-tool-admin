@@ -12,7 +12,6 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
-  NgForm,
   Validators,
 } from '@angular/forms';
 import { AlertService } from 'src/app/core/services/alert.service';
@@ -34,7 +33,6 @@ export class QuestionSelectFormComponent implements OnInit {
   @Output() closeModalEvent = new EventEmitter<boolean>();
 
   @ViewChild('fileInput') el: ElementRef;
-  @ViewChild('formDirective') private formDirective: NgForm;
 
   public options = [];
   private optionsAtt = [];
@@ -412,10 +410,11 @@ export class QuestionSelectFormComponent implements OnInit {
   }
 
   resetForm(): void {
-    this.formDirective.resetForm();
+    this.selectForm.reset();
 
     this.options = [];
-    this.optionsAtt = [];
+    this.optionsAtt = [{ attachments: [] }];
+    this.optionsAttachmentEdit = [];
 
     this.imageAttachment = null;
     this.audioAttachment = null;
@@ -423,28 +422,13 @@ export class QuestionSelectFormComponent implements OnInit {
     this.changedAudio = false;
     this.changedImage = false;
     this.optionAttChange = false;
-
-    this.optionsAttachmentEdit = [];
-    this.saveOptions = false;
-
-    this.selectForm = new FormGroup({
-      question_type: new FormControl('SELECT'),
-      title: new FormControl(''),
-      value: new FormControl('', [Validators.required]),
-      order: new FormControl(this.order + 1, [Validators.required]),
-      display: new FormControl('Grid', [Validators.required]),
-      multiple: new FormControl(false),
-      options: new FormArray([
-        this.formBuilder.group({
-          title: new FormControl(''),
-          valid: new FormControl(false),
-          value: new FormControl('', [Validators.required]),
-        })
-      ])
-    });
-
-    this.optionsAtt = [{ attachments: [] }];
-
     this.resetQuestionAudio = true;
+    this.saveOptions = false;
+    this.selectForm.controls.order.setValue(this.order + 1, [Validators.required]);
+    this.selectForm.controls.display.setValue('Grid', [Validators.required]);
+
+    const optionsForm = this.selectForm.get('options') as FormArray;
+    optionsForm.clear();
+    this.addOptions();
   }
 }
