@@ -21,7 +21,12 @@ export class QuestionInputFormComponent implements OnInit {
 
   private imageAttachment = null;
   private audioAttachment = null;
+  // making sure that we dont store an new attachment on editQuestion, if attachment didnt change
+  public changedAudio = false;
+  public changedImage = false;
+
   public alertMessage =  '';
+  public resetQuestionAudio = false;
 
   public inputForm: FormGroup = new FormGroup({
     question_type: new FormControl('INPUT'),
@@ -74,6 +79,9 @@ export class QuestionInputFormComponent implements OnInit {
         } else {
           this.alertService.success(this.alertMessage);
           this.questionCreatedEvent.emit(true);
+          if (!this.toClone) {
+            this.resetForm();
+          }
         }
       });
   }
@@ -105,5 +113,18 @@ export class QuestionInputFormComponent implements OnInit {
     } else if (type === 'AUDIO') {
       this.audioAttachment = event.target.files[0];
     }
+  }
+
+  resetForm(): void {
+    this.inputForm.reset();
+    this.inputForm.controls['order'.toString()].setValue(this.order + 1);
+
+    this.imageAttachment = null;
+    this.audioAttachment = null;
+
+    this.changedAudio = false;
+    this.changedImage = false;
+
+    this.resetQuestionAudio = true;
   }
 }

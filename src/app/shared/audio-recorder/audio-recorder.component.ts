@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import * as RecordRTC from 'recordrtc';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Output, EventEmitter } from '@angular/core';
@@ -21,6 +21,12 @@ export class AudioRecorderComponent implements OnInit {
   error: string;
 
   @Output() audioRecordingEvent = new EventEmitter<string>();
+
+  @Input() set resetQuestionAudio(value: boolean) {
+    if (value) {
+      this.url = undefined;
+    }
+  }
 
   constructor(private domSanitizer: DomSanitizer) {}
 
