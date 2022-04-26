@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 
@@ -19,9 +19,16 @@ export class QuestionInputFormComponent implements OnInit {
   @Output() questionCreatedEvent = new EventEmitter<boolean>();
   @Output() closeModalEvent = new EventEmitter<boolean>();
 
+  @ViewChild('formDirective') private formDirective: NgForm;
+
   private imageAttachment = null;
   private audioAttachment = null;
+  // making sure that we dont store an new attachment on editQuestion, if attachment didnt change
+  public changedAudio = false;
+  public changedImage = false;
+
   public alertMessage =  '';
+  public resetQuestionAudio = false;
 
   public inputForm: FormGroup = new FormGroup({
     question_type: new FormControl('INPUT'),
@@ -74,6 +81,9 @@ export class QuestionInputFormComponent implements OnInit {
         } else {
           this.alertService.success(this.alertMessage);
           this.questionCreatedEvent.emit(true);
+          if (!this.toClone) {
+            this.resetForm();
+          }
         }
       });
   }
@@ -105,5 +115,18 @@ export class QuestionInputFormComponent implements OnInit {
     } else if (type === 'AUDIO') {
       this.audioAttachment = event.target.files[0];
     }
+  }
+
+  resetForm(): void {
+    this.formDirective.resetForm();
+    this.inputForm.controls['order'.toString()].setValue(this.order + 1);
+
+    this.imageAttachment = null;
+    this.audioAttachment = null;
+
+    this.changedAudio = false;
+    this.changedImage = false;
+
+    this.resetQuestionAudio = true;
   }
 }

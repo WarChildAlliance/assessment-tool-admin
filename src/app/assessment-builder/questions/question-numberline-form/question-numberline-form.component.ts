@@ -1,5 +1,5 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, Input, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { dateInputsHaveChanged } from '@angular/material/datepicker/datepicker-input-base';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
@@ -20,6 +20,8 @@ export class QuestionNumberlineFormComponent implements OnInit {
   @Output() questionCreatedEvent = new EventEmitter<boolean>();
   @Output() closeModalEvent = new EventEmitter<boolean>();
 
+  @ViewChild('formDirective') private formDirective: NgForm;
+
   public imageAttachment = null;
   public audioAttachment = null;
   // making sure that we dont store an new attachment on editQuestion, if attachment didnt change
@@ -27,7 +29,7 @@ export class QuestionNumberlineFormComponent implements OnInit {
   public changedImage = false;
 
   public alertMessage =  '';
-
+  public resetQuestionAudio = false;
 
   public numberLineForm: FormGroup = new FormGroup({
     question_type: new FormControl('NUMBER_LINE'),
@@ -101,6 +103,9 @@ export class QuestionNumberlineFormComponent implements OnInit {
         }
         this.alertService.success(this.alertMessage);
         this.questionCreatedEvent.emit(true);
+        if (!this.toClone) {
+          this.resetForm();
+        }
       });
   }
 
@@ -155,4 +160,16 @@ export class QuestionNumberlineFormComponent implements OnInit {
     return new File([theBlob], fileName, { lastModified: new Date().getTime(), type: theBlob.type });
   }
 
+  resetForm(): void {
+    this.formDirective.resetForm();
+    this.numberLineForm.controls['order'.toString()].setValue(this.order + 1);
+
+    this.imageAttachment = null;
+    this.audioAttachment = null;
+
+    this.changedAudio = false;
+    this.changedImage = false;
+
+    this.resetQuestionAudio = true;
+  }
 }
