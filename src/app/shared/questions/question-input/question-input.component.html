@@ -1,5 +1,7 @@
 <div class="question-header" *ngIf="evaluated">
-    <h2>Q{{ index }}: {{ question.title }}</h2>
+    <h2>Q{{ question.order }}: {{ question.title }}</h2>
+    <img *ngIf="imageAttachment" [src]="getSource(imageAttachment.file)" alt="">
+    <mat-icon class="play-audio" (click)="playAudio(audioAttachment.file)" *ngIf="audioAttachment">volume_up</mat-icon>
 </div>
 <div class="correct-answer" *ngIf="evaluated">
     {{ "correctAnswer" | translate }}: {{question.valid_answer}}

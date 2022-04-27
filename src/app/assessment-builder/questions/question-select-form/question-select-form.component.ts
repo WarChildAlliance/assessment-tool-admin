@@ -220,30 +220,10 @@ export class QuestionSelectFormComponent implements OnInit {
       )
       .subscribe((res) => {
         if (this.changedImage && this.imageAttachment) {
-          const image = this.question.attachments.find(
-            (i) => i.attachment_type === 'IMAGE'
-          );
-          this.assessmentService
-            .updateAttachments(
-              this.assessmentId,
-              this.imageAttachment,
-              'IMAGE',
-              image.id
-            )
-            .subscribe();
+          this.updateQuestionAttachments('IMAGE', res.id, this.imageAttachment);
         }
         if (this.changedAudio && this.audioAttachment) {
-          const audio = this.question.attachments.find(
-            (a) => a.attachment_type === 'AUDIO'
-          );
-          this.assessmentService
-            .updateAttachments(
-              this.assessmentId,
-              this.audioAttachment,
-              'AUDIO',
-              audio.id
-            )
-            .subscribe();
+          this.updateQuestionAttachments('AUDIO', res.id, this.audioAttachment);
         }
         if (this.optionAttChange && this.optionsAttachment) {
           this.updateOptionsAttachments(res);
@@ -252,7 +232,18 @@ export class QuestionSelectFormComponent implements OnInit {
           this.questionCreatedEvent.emit(true);
           this.closeModalEvent.emit(true);
         }
+        this.alertService.success(this.alertMessage);
+        this.questionCreatedEvent.emit(true);
       });
+  }
+
+  updateQuestionAttachments(type: string, id: any, attachment: any): void {
+    const file = this.question.attachments.find( a => a.attachment_type === type);
+    if (file) {
+      this.assessmentService.updateAttachments(this.assessmentId, attachment, type, file.id).subscribe();
+    } else {
+      this.saveAttachments(this.assessmentId, attachment, type, { name: 'question', value: id });
+    }
   }
 
   saveAttachments(assessmentId: string, attachment, type: string, obj): void {
@@ -400,6 +391,7 @@ export class QuestionSelectFormComponent implements OnInit {
   addRecordedAudio(event): void {
     const name = 'recording_' + new Date().toISOString() + '.wav';
     this.audioAttachment = this.blobToFile(event, name);
+    this.changedAudio = true;
   }
 
   public blobToFile = (theBlob: Blob, fileName: string): File => {
