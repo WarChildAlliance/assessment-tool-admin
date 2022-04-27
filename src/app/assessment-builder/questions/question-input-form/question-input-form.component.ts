@@ -183,5 +183,5 @@ export class QuestionInputFormComponent implements OnInit {
       lastModified: new Date().getTime(),
       type: theBlob.type,
     });
-  };
+  }
 }
