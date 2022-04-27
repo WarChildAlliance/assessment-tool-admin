@@ -16,6 +16,7 @@ export class QuestionInputFormComponent implements OnInit {
   @Input() toClone;
 
   @Output() questionCreatedEvent = new EventEmitter<boolean>();
+  @Output() closeModalEvent = new EventEmitter<boolean>();
 
   public imageAttachment = null;
   public audioAttachment = null;
@@ -24,6 +25,7 @@ export class QuestionInputFormComponent implements OnInit {
   public changedImage = false;
 
   public alertMessage = '';
+  public resetQuestionAudio = false;
 
   public inputForm: FormGroup = new FormGroup({
     question_type: new FormControl('INPUT'),
@@ -93,6 +95,15 @@ export class QuestionInputFormComponent implements OnInit {
             'AUDIO',
             { name: 'question', value: res.id }
           );
+          this.saveAttachments(this.assessmentId, this.imageAttachment, 'IMAGE', { name: 'question', value: res.id });
+        } else if (this.audioAttachment) {
+          this.saveAttachments(this.assessmentId, this.audioAttachment, 'AUDIO', { name: 'question', value: res.id });
+        } else {
+          this.alertService.success(this.alertMessage);
+          this.questionCreatedEvent.emit(true);
+          if (!this.toClone) {
+            this.resetForm();
+          }
         }
         this.alertService.success(this.alertMessage);
         this.questionCreatedEvent.emit(true);
@@ -116,6 +127,9 @@ export class QuestionInputFormComponent implements OnInit {
         }
         this.alertService.success(this.alertMessage);
         this.questionCreatedEvent.emit(true);
+        if (!this.toClone) {
+          this.resetForm();
+        }
       });
   }
 
@@ -183,5 +197,18 @@ export class QuestionInputFormComponent implements OnInit {
       lastModified: new Date().getTime(),
       type: theBlob.type,
     });
+  }
+
+  resetForm(): void {
+    this.inputForm.reset();
+    this.inputForm.controls['order'.toString()].setValue(this.order + 1);
+
+    this.imageAttachment = null;
+    this.audioAttachment = null;
+
+    this.changedAudio = false;
+    this.changedImage = false;
+
+    this.resetQuestionAudio = true;
   }
 }

@@ -79,13 +79,14 @@ export class TopicDetailsComponent implements OnInit {
     this.question = question;
     this.toClone = false;
     const editQuestionDialog = this.dialog.open(this.editQuestionDialog);
-    editQuestionDialog.afterClosed().subscribe((value) => {
-      if (value) {
+    editQuestionDialog.afterClosed().subscribe(() => {
         this.getQuestionsList();
-      }
     });
   }
 
+  onCloseModal(): void {
+    this.dialog.closeAll();
+  }
   cloneQuestion(question): void  {
     this.toClone = true;
     this.question = question;
@@ -100,5 +101,4 @@ export class TopicDetailsComponent implements OnInit {
   setQuestionType(questionType: string): void {
     this.questionType = questionType;
   }
-
 }
