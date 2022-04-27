@@ -1,4 +1,4 @@
-<mat-card class="assessment-container">
+<mat-card  [ngClass]="{'assessment-container': assessment.archived == false, 'assessment-archived-container': assessment.archived == true}">
     <div class="assessment-details">
         <div class="general-information">
             <img *ngIf="assessment.icon" [src]="getSource(assessment.icon)">
@@ -28,6 +28,7 @@
         </div>
         <div class="buttons">
             <button *ngIf="canEdit" mat-button color="accent" (click)="editAssessment(assessment)">Edit</button>
+            <button *ngIf="canEdit" mat-button color="accent" (click)="archiveAssessment(assessment.id, assessment.archived ? false : true)">{{assessment.archived ? 'Unarchive' : 'Archive'}}</button>
             <!--
             <button mat-button color="secondary">Clone</button>
             <button *ngIf="canEdit" mat-button color="secondary" (click)="deleteAssessment(assessment.id)">Delete</button>
@@ -41,11 +42,28 @@
                 Add a topic <mat-icon>add</mat-icon>
             </div>
         </mat-card>
-        <mat-card class="topic-card" (click)="goToTopicDetails(assessment.id, topic[0])" *ngFor="let topic of assessment.topics">
-            <img *ngIf="topic[4]" [src]="getMediaSource(topic[4])">
-            <span class="topic-title">{{ topic[1] }}</span>
-            <p class="small-description">{{ topic[2] }}</p>
-            <span class="question_count">({{ topic[3] }} questions)</span>
+        <mat-card class="topic-card" *ngFor="let topic of assessment.topics">
+            <img *ngIf="topic.icon" [src]="getMediaSource(topic.icon)">
+            <span class="topic-title">{{ topic.title }}</span>
+            <p class="small-description">{{ topic.description }}</p>
+            <span class="question_count">({{ topic.questionsCount }} questions)</span>
+
+            <div [ngSwitch]="topic.archived">
+                <div class="topic-buttons" *ngSwitchCase="false">
+                    <button mat-icon-button matTooltip="Archive Topic" (click)="archiveTopic(assessment.id, topic.id, true)"> 
+                        <mat-icon>archive</mat-icon>
+                    </button>
+                    <button mat-icon-button (click)="goToTopicDetails(assessment.id, topic.id)"> 
+                        Topic Details <mat-icon>navigate_next</mat-icon>
+                    </button>
+                </div>
+
+                <div *ngSwitchCase="true">
+                    <button mat-stroked-button (click)="archiveTopic(assessment.id, topic.id, false)"> 
+                        Unarchive Topic
+                    </button>
+                </div>
+            </div>
         </mat-card>
     </div>
 </mat-card>

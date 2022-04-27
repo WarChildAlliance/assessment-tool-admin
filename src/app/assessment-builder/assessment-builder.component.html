@@ -6,8 +6,8 @@
 </div>
 <div class="assessments-container">
     <ng-container *ngFor="let assessment of currentAssessments">
-        <ng-container *ngIf="assessment.can_edit">
-            <app-assessment-summary [assessment]="assessment" [canEdit]="true"></app-assessment-summary>
+        <ng-container *ngIf="assessment.can_edit && !assessment.archived">
+            <app-assessment-summary [assessment]="assessment" [canEdit]="true" (archivedAssessment)="getAssessments()"></app-assessment-summary>
         </ng-container>
     </ng-container>
 </div>
@@ -16,11 +16,20 @@
 <div class="assessments-container">
     <h1>Public assessment(s)</h1>
     <ng-container *ngFor="let assessment of currentAssessments">
-        <ng-container *ngIf="!assessment.can_edit">
+        <ng-container *ngIf="!assessment.can_edit && !assessment.archived">
             <app-assessment-summary [assessment]="assessment" [canEdit]="false"></app-assessment-summary>
         </ng-container>
     </ng-container>
 </div> 
+
+<div class="assessments-container">
+    <h1>Archived assessment(s)</h1>
+    <ng-container *ngFor="let assessment of currentAssessments">
+        <ng-container *ngIf="assessment.archived">
+            <app-assessment-summary [assessment]="assessment" [canEdit]="true" (archivedAssessment)="getAssessments()"></app-assessment-summary>
+        </ng-container>
+    </ng-container>
+</div>
 
 <ng-template #createAssessmentDialog>
     <app-assessment-form-dialog [edit]="edit"></app-assessment-form-dialog>

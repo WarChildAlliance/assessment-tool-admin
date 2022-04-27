@@ -31,6 +31,7 @@ export class AssessmentFormDialogComponent implements OnInit {
     country: new FormControl('', [Validators.required]),
     private: new FormControl(false, [Validators.required]),
     icon: new FormControl(null),
+    archived: new FormControl(false)
   });
 
   constructor(private assessmentService: AssessmentService,
@@ -49,6 +50,7 @@ export class AssessmentFormDialogComponent implements OnInit {
         country: this.assessment.country_code,
         private: this.assessment.private,
         icon: this.icon,
+        archived: this.assessment.archived
       });
     }
   }
@@ -89,6 +91,7 @@ export class AssessmentFormDialogComponent implements OnInit {
     this.formData.append('language', this.createNewAssessmentForm.value.language);
     this.formData.append('country', this.createNewAssessmentForm.value.country);
     this.formData.append('private', this.createNewAssessmentForm.value.private);
+    this.formData.append('archived', this.createNewAssessmentForm.value.archived);
 
     return this.formData;
   }

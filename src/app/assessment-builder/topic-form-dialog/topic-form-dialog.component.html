@@ -1,4 +1,4 @@
-<h2>Create a topic</h2>
+<h2>{{ edit ? 'Edit topic' : 'Create a topic' }}</h2>
 <form class="form-primary" [formGroup]="createNewTopicForm" (ngSubmit)="onSave()">
     <div class="form-primary__flex-container">
         <mat-form-field appearance="outline" color="accent">
@@ -30,6 +30,9 @@
         </mat-checkbox>
         <mat-checkbox formControlName="allow_skip">
             Allow skip
+        </mat-checkbox>
+        <mat-checkbox formControlName="archived">
+            Archived
         </mat-checkbox>
         <div>
             <h3>Icon *</h3>

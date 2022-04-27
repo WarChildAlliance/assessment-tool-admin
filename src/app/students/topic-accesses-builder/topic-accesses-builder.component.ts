@@ -41,14 +41,14 @@ export class TopicAccessesBuilderComponent implements OnInit {
 
   ngOnInit(): void {
     this.assessmentService.getAssessmentsList().subscribe((assessmentsList) => {
-      this.assessmentsList = assessmentsList;
+      this.assessmentsList = assessmentsList.filter(assessment => assessment.archived !== true);
     });
   }
 
   loadTopicsList(assessmentId: string): void {
     this.selectedAssessmentId = assessmentId;
     this.assessmentService.getAssessmentTopics(assessmentId).subscribe((newList) => {
-      this.topicsList = newList;
+      this.topicsList = newList.filter(topic => topic.archived !== true);
       this.generateForm();
     });
   }

@@ -21,6 +21,7 @@ import { QuestionNumberlineFormComponent } from './questions/question-numberline
 import { QuestionSelectFormComponent } from './questions/question-select-form/question-select-form.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { AudioRecorderComponent } from '../shared/audio-recorder/audio-recorder.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { AudioRecorderComponent } from '../shared/audio-recorder/audio-recorder.
     MatInputModule,
     MatSelectModule,
     SharedModule,
-    MatDividerModule
+    MatDividerModule,
+    MatTooltipModule
   ]
 })
 export class AssessmentBuilderModule { }

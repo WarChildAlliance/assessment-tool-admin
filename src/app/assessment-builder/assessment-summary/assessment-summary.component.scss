@@ -24,67 +24,176 @@
             justify-content: space-evenly;
         }
     }
+
+    .topics {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        .add-topic {
+            height: 10rem;
+            cursor: pointer;
+            text-align: center;
+            position: relative;
+            .add-topic-text {
+                display: flex;
+                align-items: center;
+                margin: 0;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+        }
+    
+        .topic-buttons {
+            display: flex;
+            justify-content: space-between;
+            .mat-icon-button{
+                width: auto;
+            }
+        }
+    
+        mat-card{
+            width: 20%;
+            margin-right: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-content: center;
+            text-align: center;
+    
+            img {
+                width: 28px;
+                height: auto;
+                position: absolute;
+                top: 10px;
+            }
+            .topic-title {
+                margin-top: 4px;
+                font-weight: 500;
+            }
+            p {
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 1;
+                overflow: hidden;
+                font-weight: 400;
+                font-size: 13px;
+                margin-bottom: 1px;
+            }
+            .question_count {
+                font-weight: 300;
+                font-size: 12px;
+                color: rgb(86, 86, 86);
+            }
+        }
+    
+        @media (max-width: 1024px) {
+            .small-description {
+                display: none!important;
+            }
+        }
+    }
 }
 
-.topics {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    .add-topic {
-        cursor: pointer;
-        text-align: center;
-        position: relative;
-        .add-topic-text {
-            display: flex;
-            align-items: center;
-            margin: 0;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-    }
 
-    mat-card{
-        width: 20%;
-        height: 100px;
-        margin-right: 10px;
-        cursor: pointer;
+.assessment-archived-container {
+    margin: 10px 0px;
+    background-color: #f2f2f2;
+    .assessment-details {
         display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-content: center;
-        text-align: center;
-
-        img {
-            width: 28px;
-            height: auto;
-            position: absolute;
-            top: 10px;
+        justify-content: space-between;
+        background-color: #f2f2f2;
+        .general-information {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            img {
+                height: 100%;
+                height: 50px;
+                width: auto;
+                margin-right: 10px;
+            }
+            span {
+                font-weight: 500;
+                font-size: 20px;
+            }
         }
-        .topic-title {
-            margin-top: 4px;
-            font-weight: 500;
-        }
-        p {
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 1;
-            overflow: hidden;
-            font-weight: 400;
-            font-size: 13px;
-            margin-bottom: 1px;
-        }
-        .question_count {
-            font-weight: 300;
-            font-size: 12px;
-            color: rgb(86, 86, 86);
+        .details {
+            display: flex;
+            width: 50%;
+            justify-content: space-evenly;
         }
     }
 
-    @media (max-width: 1024px) {
-        .small-description {
-            display: none!important;
+    .topics {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        .add-topic {
+            height: 10rem;
+            cursor: pointer;
+            text-align: center;
+            position: relative;
+            .add-topic-text {
+                display: flex;
+                align-items: center;
+                margin: 0;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+        }
+    
+        .topic-buttons {
+            display: flex;
+            justify-content: space-between;
+            .mat-icon-button{
+                width: auto;
+            }
+        }
+    
+        mat-card{
+            background-color: #f2f2f2;
+            width: 20%;
+            margin-right: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-content: center;
+            text-align: center;
+    
+            img {
+                width: 28px;
+                height: auto;
+                position: absolute;
+                top: 10px;
+            }
+            .topic-title {
+                margin-top: 4px;
+                font-weight: 500;
+            }
+            p {
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 1;
+                overflow: hidden;
+                font-weight: 400;
+                font-size: 13px;
+                margin-bottom: 1px;
+            }
+            .question_count {
+                font-weight: 300;
+                font-size: 12px;
+                color: rgb(86, 86, 86);
+            }
+        }
+    
+        @media (max-width: 1024px) {
+            .small-description {
+                display: none!important;
+            }
         }
     }
 }
