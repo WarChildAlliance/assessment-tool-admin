@@ -173,21 +173,11 @@ export class QuestionSelectFormComponent implements OnInit {
   editQuestion(): void {
     this.assessmentService.editQuestion(this.assessmentId.toString(), this.topicId.toString(),
       this.question.id, this.selectForm.value).subscribe(res => {
-        if (this.changedImage && this.imageAttachment) {
-          const image = this.question.attachments.find( i => i.attachment_type === 'IMAGE');
-          if (image) {
-            this.assessmentService.updateAttachments(this.assessmentId, this.imageAttachment, 'IMAGE', image.id).subscribe();
-          } else {
-            this.saveAttachments(this.assessmentId, this.imageAttachment, 'IMAGE', { name: 'question', value: res.id });
-          }
+        if (this.imageAttachment && this.changedImage) {
+          this.updateQuestionAttachments('IMAGE', res.id, this.imageAttachment);
         }
-        if (this.changedAudio && this.audioAttachment) {
-          const audio = this.question.attachments.find( a => a.attachment_type === 'AUDIO');
-          if (audio) {
-            this.assessmentService.updateAttachments(this.assessmentId, this.audioAttachment, 'AUDIO', audio.id).subscribe();
-          } else {
-            this.saveAttachments(this.assessmentId, this.audioAttachment, 'AUDIO', { name: 'question', value: res.id });
-          }
+        if (this.audioAttachment && this.changedAudio) {
+          this.updateQuestionAttachments('AUDIO', res.id, this.audioAttachment);
         }
         if (this.optionAttChange && this.optionsAttachment) {
           this.updateOptionsAttachments(res);
@@ -195,6 +185,15 @@ export class QuestionSelectFormComponent implements OnInit {
         this.alertService.success(this.alertMessage);
         this.questionCreatedEvent.emit(true);
       });
+  }
+
+  updateQuestionAttachments(type: string, id: any, attachment: any): void {
+    const file = this.question.attachments.find( a => a.attachment_type === type);
+    if (file) {
+      this.assessmentService.updateAttachments(this.assessmentId, attachment, type, file.id).subscribe();
+    } else {
+      this.saveAttachments(this.assessmentId, attachment, type, { name: 'question', value: id });
+    }
   }
 
   saveAttachments(assessmentId: string, attachment, type: string, obj): void {

@@ -107,24 +107,23 @@ export class QuestionNumberlineFormComponent implements OnInit {
     this.assessmentService.editQuestion(this.assessmentId.toString(), this.topicId.toString(),
       this.question.id, this.numberLineForm.value).subscribe(res => {
         if (this.imageAttachment && this.changedImage) {
-          const image = this.question.attachments.find( i => i.attachment_type === 'IMAGE');
-          if (image) {
-            this.assessmentService.updateAttachments(this.assessmentId, this.imageAttachment, 'IMAGE', image.id).subscribe();
-          } else {
-            this.saveAttachments(this.assessmentId, this.imageAttachment, 'IMAGE', { name: 'question', value: res.id });
-          }
+          this.updateQuestionAttachments('IMAGE', res.id, this.imageAttachment);
         }
         if (this.audioAttachment && this.changedAudio) {
-          const audio = this.question.attachments.find( a => a.attachment_type === 'AUDIO');
-          if (audio) {
-            this.assessmentService.updateAttachments(this.assessmentId, this.audioAttachment, 'AUDIO', audio.id).subscribe();
-          } else {
-            this.saveAttachments(this.assessmentId, this.audioAttachment, 'AUDIO', { name: 'question', value: res.id });
-          }
+          this.updateQuestionAttachments('AUDIO', res.id, this.audioAttachment);
         }
         this.alertService.success(this.alertMessage);
         this.questionCreatedEvent.emit(true);
       });
+  }
+
+  updateQuestionAttachments(type: string, id: any, attachment: any): void {
+    const file = this.question.attachments.find( a => a.attachment_type === type);
+    if (file) {
+      this.assessmentService.updateAttachments(this.assessmentId, attachment, type, file.id).subscribe();
+    } else {
+      this.saveAttachments(this.assessmentId, attachment, type, { name: 'question', value: id });
+    }
   }
 
   saveAttachments(assessmentId: string, attachment, type: string, obj): void {
