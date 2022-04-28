@@ -27,7 +27,9 @@
             </div>
         </div>
         <div class="buttons">
-            <button *ngIf="canEdit" mat-button color="accent" (click)="editAssessment(assessment)">Edit</button>
+            <app-custom-button *ngIf="canEdit" category="tertiary" variant="primary" icon="edit" (click)="editAssessment(assessment)">
+                Edit
+            </app-custom-button>
             <!--
             <button mat-button color="secondary">Clone</button>
             <button *ngIf="canEdit" mat-button color="secondary" (click)="deleteAssessment(assessment.id)">Delete</button>

@@ -1,6 +1,7 @@
 .topic-header {
     display: flex;
     padding-bottom: 5px;
+    position: relative;
 
     img {
         height: 40px;
@@ -10,6 +11,10 @@
     h1 {
         margin-top: auto;
         margin-bottom: auto;
+    }
+    app-custom-button {
+        position: absolute;
+        right: 0;
     }
 }
 .topic-infos {

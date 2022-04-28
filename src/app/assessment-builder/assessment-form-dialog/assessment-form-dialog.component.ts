@@ -54,6 +54,7 @@ export class AssessmentFormDialogComponent implements OnInit {
   }
 
   async submitCreateNewAssessment(): Promise<void> {
+    console.log('submit');
     const data = await this.formGroupToFormData();
     if (this.edit) {
       this.assessmentService.editAssessment(this.assessment.id, data).subscribe(() => {

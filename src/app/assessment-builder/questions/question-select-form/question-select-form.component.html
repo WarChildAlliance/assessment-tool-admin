@@ -1,4 +1,4 @@
-<form [formGroup]="selectForm" (ngSubmit)="onSave()">
+<form [formGroup]="selectForm">
     <div class="form-container">
         <div class="select-details-container">
             <h2>Question</h2>
@@ -34,13 +34,15 @@
         <div class="attachments-container">
             <h2>Attachments</h2>
             <p><b>Image attachment</b></p>
-            <button type="button" class="file_input" mat-flat-button color="primary" (click)="imageFileInput.click()">Choose
-                File</button>
+            <app-custom-button class="file_input" category="secondary" variant="neutral" (click)="imageFileInput.click()">
+                Choose File
+            </app-custom-button>
             <input hidden class="file_input" accept="image/*" (change)="handleFileInput($event, 'IMAGE')" #imageFileInput type="file">
             <p>{{imageAttachment ? imageAttachment.name : 'No file chosen'}}</p>
             <p><b>Audio attachment</b></p>
-            <button type="button" class="file_input" mat-flat-button color="primary" (click)="audioFileInput.click()">Choose
-                File</button>
+            <app-custom-button class="file_input" category="secondary" variant="neutral" (click)="audioFileInput.click()">
+                Choose File
+            </app-custom-button>
             <input hidden accept="audio/*" (change)="handleFileInput($event, 'AUDIO')" #audioFileInput type="file">
             <p>{{audioAttachment ? audioAttachment.name : 'No file chosen'}}</p>
             <app-audio-recorder [resetQuestionAudio]="resetQuestionAudio" (audioRecordingEvent)="addRecordedAudio($event)"></app-audio-recorder>
@@ -70,16 +72,18 @@
             <div class="attachments-container">
                 <div>
                     <p><b>Image attachment</b></p>
-                    <button type="button" class="file_input" mat-flat-button color="primary" (click)="imageFileInput.click()">Choose
-                        File</button>
+                    <app-custom-button class="file_input" category="secondary" variant="neutral" (click)="imageFileInput.click()">
+                        Choose File
+                    </app-custom-button>
                     <input hidden accept="image/*" (change)="handleFileInputOptions($event, 'IMAGE', i)" #imageFileInput type="file">
                     <p>{{imageAttachment ? imageAttachment.name : 'No file chosen'}}</p>
                 </div>
 
                 <div>
                     <p><b>Audio attachment</b></p>
-                    <button type="button" class="file_input" mat-flat-button color="primary" (click)="audioFileInput.click()">Choose
-                        File</button>
+                    <app-custom-button class="file_input" category="secondary" variant="neutral" (click)="audioFileInput.click()">
+                        Choose File
+                    </app-custom-button>
                     <input hidden accept="audio/*" (change)="handleFileInputOptions($event, 'AUDIO', i)" #audioFileInput type="file">
                     <p>{{audioAttachment ? audioAttachment.name : 'No file chosen'}}</p>
                     <app-audio-recorder (audioRecordingEvent)="addRecordedAudio($event)"></app-audio-recorder>
@@ -87,14 +91,13 @@
             </div>
         </div>
         <div>
-            <button (click)="addOptions()" type="button" style="margin-left: 20px;" class="file_input" mat-button>
-                <mat-icon>add</mat-icon>
+            <app-custom-button class="file_input" icon="add" category="secondary" variant="neutral" (click)="addOptions()">
                 Add Option
-            </button>
+            </app-custom-button>
         </div>
         
     </div>
-    <button class="question-form-button" color="accent" 
+    <button class="question-form-button" color="accent" (click)="onSave()"
      mat-flat-button type="submit" [disabled]="selectForm.invalid || !selectForm.dirty">
         {{ question ? 'Save' : 'Create' }}
     </button>

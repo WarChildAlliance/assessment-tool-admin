@@ -22,6 +22,7 @@ import { StudentsRoutingModule } from './students-routing.module';
 import { StudentsComponent } from './students.component';
 import { TopicAccessesBuilderComponent } from './topic-accesses-builder/topic-accesses-builder.component';
 import { CreateStudentDialogComponent } from './create-student-dialog/create-student-dialog.component';
+import { CustomButtonModule } from '../shared/button/button.module';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { CreateStudentDialogComponent } from './create-student-dialog/create-stu
     MatDatepickerModule,
     MatNativeDateModule,
     MatTabsModule,
-    MatExpansionModule
+    MatExpansionModule,
+    CustomButtonModule
   ]
 })
 export class StudentsModule { }
