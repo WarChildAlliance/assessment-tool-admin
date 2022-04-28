@@ -1,9 +1,9 @@
 <div class="main-board">
   <div class="main-board__top-container">
     <h1 *ngIf="currentAssessment">{{ currentAssessment.title }} ({{ topicsDataSource.data.length }})
-      <span>{{ "grade" | translate }} {{ currentAssessment.grade }}, {{currentAssessment.subject }},
+      <span>{{ "general.grade" | translate }} {{ currentAssessment.grade }}, {{currentAssessment.subject }},
         {{ currentAssessment.language_name }}</span>
-      <span *ngIf="selectedTopics.length"> ({{ selectedTopics.length }} selected)</span>
+      <span *ngIf="selectedTopics.length">{{ selectedTopics.length }} {{ "assessments.selected" | translate }}</span>
     </h1>
 
 <!--     <div class="main-board__top-container__actions">

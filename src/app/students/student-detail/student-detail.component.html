@@ -3,7 +3,7 @@
 
     <div class="main-board__top-container__actions">
       <app-custom-button icon="edit_outline" category="secondary" variant="primary" (click)="editCurrentStudent()">
-      {{ "editStudent" | translate }}
+        {{ "students.editStudent" | translate }}
       </app-custom-button>
 <!--       <button mat-flat-button color="primary" (click)="deleteCurrentStudent()" [disabled]="true">
         <mat-icon>delete_outline</mat-icon> Delete student
@@ -13,36 +13,36 @@
 
   <div class="main-board__details" *ngIf="student">
     <div class="main-board__details__element">
-      <span class="title">{{ "name" | translate }}</span>
+      <span class="title">{{ "general.name" | translate }}</span>
       <span class="value">{{ student.full_name }}</span>
     </div>
     <div class="main-board__details__element">
       <span class="title">
-        {{ "numberAssessments" | translate }}
+        {{ "students.studentDetail.numberAssessments" | translate }}
         </span>
       <span class="value">{{ student.assessments_count }}</span>
     </div>
     <div class="main-board__details__element">
       <span class="title">
-        {{ "totalCompletedTopics" | translate }}
+        {{ "general.totalCompletedTopics" | translate }}
       </span>
       <span class="value">{{ student.completed_topics_count }}</span>
     </div>
     <div class="main-board__details__element">
       <span class="title">
-        {{ "lastLogin" | translate }}
+        {{ "general.lastLogin" | translate }}
         </span>
       <span class="value">{{ student.last_session | date:'short' }}</span>
     </div>
     <div class="main-board__details__element">
       <span class="title">
-        {{ "language" | translate }}
+        {{ "general.language" | translate }}
         </span>
       <span class="value">{{ student.language_name }}</span>
     </div>
     <div class="main-board__details__element">
       <span class="title">
-        {{ "country" | translate }}
+        {{ "general.country" | translate }}
         </span>
       <span class="value">{{ student.country_name }}</span>
     </div>
@@ -50,16 +50,16 @@
 
   <div class="main-board__accordions-container">
     <h3>
-      {{ "studentsAssessments" | translate }}
+      {{ "students.studentDetail.studentAssessments" | translate }}
       </h3>
-    <p *ngIf="!studentAssessments">{{ "studentNotLinkedAssessment" | translate }}
+    <p *ngIf="!studentAssessments">{{ "students.studentDetail.studentNotLinkedAssessment" | translate }}
       </p>
     <mat-accordion multi>
       <mat-expansion-panel *ngFor="let assessment of studentAssessments">
         <mat-expansion-panel-header>
           <mat-panel-title>
-            <span class="assessment-title">{{ assessment.title }} </span><span class="linked-topics">({{ assessment.topic_access.length }} 
-              {{ "linkedTopics" | translate }})
+            <span class="assessment-title">{{ assessment.title }} </span><span class="linked-topics">({{ assessment.topic_access.length }}
+              {{ "students.studentDetail.linkedTopics" | translate }})
             </span>
           </mat-panel-title>
         </mat-expansion-panel-header>
@@ -68,15 +68,15 @@
             <p>{{ topic.topic }}</p>
           </div>
           <div class="main-board__accordions-container__topic__infos" *ngIf="topic.start_date">
-            <p>{{ "from" | translate }} {{ topic.start_date }}
-              {{ "to" | translate }} {{ topic.end_date }}</p>
+            <p>{{ "general.from" | translate }} {{ topic.start_date }}
+              {{ "general.to" | translate }} {{ topic.end_date }}</p>
           </div>
           <div class="main-board__accordions-container__topic__infos">
             <p *ngIf="topic.hasAccess">
-              {{ "activeAccess" | translate }}
+              {{ "students.studentDetail.activeAccess" | translate }}
              </p>
               <p *ngIf="!topic.hasAccess">
-                {{ "noActiveAccess" | translate }}
+                {{ "students.studentDetail.noActiveAccess" | translate }}
                  </p>
           </div>
         </div>
@@ -86,7 +86,7 @@
 
   <div class="main-board__tabs-container">
     <h3>
-      {{ "assessmentsOverview" | translate }}
+      {{ "students.studentDetail.assessmentsOverview" | translate }}
       </h3>
     <app-assessments-answers></app-assessments-answers>
   </div>

@@ -1,13 +1,13 @@
 <mat-card>
-  <mat-card-title>{{ "comparisonAverage" | translate }}</mat-card-title>
-  <mat-card-subtitle>{{ "firstTry" | translate }}</mat-card-subtitle>
+  <mat-card-title>{{ "dashboard.scoreByTopicChart.comparisonAverage" | translate }}</mat-card-title>
+  <mat-card-subtitle>{{ "dashboard.firstTry" | translate }}</mat-card-subtitle>
   <mat-card-content *ngIf="hasData">
     <div class="left-column">
       <app-select-assessment (assessmentSelection)="selectChartAssessment($event)" [selectTopic]="false"
         [multiple]="false" [displayNonEvaluated]="false"></app-select-assessment>
 
       <h3>
-        {{ "assessmentTitle" | translate }}
+        {{ "dashboard.scoreByTopicChart.assessmentTitle" | translate }}
       </h3>
       <mat-radio-group class="radio-group">
         <ng-container *ngFor="let student of studentsListChart">
@@ -25,5 +25,5 @@
       <canvas id="currentChart"></canvas>
     </div>
   </mat-card-content>
-  <p *ngIf="!hasData">{{ "noData" | translate }}</p>
+  <p *ngIf="!hasData">{{ "general.noData" | translate }}</p>
 </mat-card>

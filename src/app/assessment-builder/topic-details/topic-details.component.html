@@ -10,34 +10,34 @@
   <mat-card>
     <div class="topic-infos" *ngIf="topicDetails">
       <div class="detail">
-        <p>Description</p>
+        <p>{{ "assessmentBuilder.description" | translate }}</p>
         <p>{{ topicDetails.description}} </p>
       </div>
       <div class="detail">
-        <p>Evaluated</p>
+        <p>{{ "assessmentBuilder.evaluated" | translate }}</p>
         <p>{{ topicDetails.evaluated}} </p>
       </div>
       <div class="detail">
-        <p>Allow skip</p>
+        <p>{{ "assessmentBuilder.allowSkip" | translate }}</p>
         <p>{{ topicDetails.allow_skip}} </p>
       </div>
       <div class="detail">
-        <p>Max wrong answer</p>
+        <p>{{ "assessmentBuilder.maxWrongAnswers" | translate }}</p>
         <p>{{ topicDetails.max_wrong_answers}} </p>
       </div>
       <div class="detail">
-        <p>Praise</p>
+        <p>{{ "assessmentBuilder.praise" | translate }}</p>
         <p>{{ topicDetails.praise }} </p>
       </div>
       <div class="detail">
-        <p>Show feedback</p>
+        <p>{{ "assessmentBuilder.topicDetails.showFeedback" | translate }}</p>
         <p>{{ topicDetails.show_feedback }} </p>
       </div>
     </div>
   </mat-card>
   <div class="question">
     <mat-card *ngIf="topicDetails.can_edit">
-      <h2>Add {{ questionType === 'INPUT' ? 'an' : 'a'}} {{ questionType.toLowerCase() }} question</h2>
+      <h2>{{ "assessmentBuilder.topicDetails.addQuestion" | translate }}</h2>
       <div class="question-options" *ngIf="questionType && order">
         <div class="question-options-button">
           <app-custom-button *ngFor="let question of questionsArray" category="tertiary" variant="primary"
@@ -58,10 +58,10 @@
     </mat-card>
     <div class="question-details" *ngFor="let questionDetails of questionsList">
       <app-custom-button *ngIf="topicDetails.can_edit" category="tertiary" variant="neutral" (click)="onEditQuestionDialog(questionDetails)">
-        Edit
+        {{ "general.edit" | translate }}
       </app-custom-button>
       <app-custom-button *ngIf="topicDetails.can_edit" category="tertiary" variant="neutral" (click)="cloneQuestion(questionDetails)">
-        Clone
+        {{ "assessmentBuilder.topicDetails.clone" | translate }}
       </app-custom-button>
       <mat-card *ngIf="questionDetails && questionDetails.question_type === 'SELECT'">
         <app-question-select [question]="questionDetails" [index]="1" [evaluated]="true"></app-question-select>

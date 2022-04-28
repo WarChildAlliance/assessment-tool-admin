@@ -1,22 +1,22 @@
 <div class="main-board">
   <div class="main-board__top-container">
-    <h1>{{ "students" | translate }} ({{ studentsDataSource.data.length }})
+    <h1>{{ "general.students" | translate }} ({{ studentsDataSource.data.length }})
       <span *ngIf="selectedUsers.length"> ({{ selectedUsers.length }} selected)</span>
     </h1>
     <div class="main-board__top-container__actions">
       <app-custom-button icon="add_circle_outline" category="secondary" variant="primary" (click)="openCreateStudentDialog()">
-        {{ "addStudent" | translate }}
+        {{ "students.addStudent" | translate }}
       </app-custom-button>
       <app-custom-button icon="edit_outline" category="secondary" variant="primary" (click)="openEditStudentDialog()"
       [disabled]="!selectedUsers.length || selectedUsers.length > 1">
-      {{ "editStudent" | translate }}
+      {{ "students.editStudent" | translate }}
       </app-custom-button>
 <!--       <button mat-flat-button [disabled]="!selectedUsers.length" color="primary" (click)="deleteSelection()">
         <mat-icon>delete_outline</mat-icon><span>Delete student(s)</span>
       </button> -->
       <app-custom-button icon="event_available" category="secondary" variant="primary" (click)="openAssignTopicDialog()"
       [disabled]="!selectedUsers.length">
-      {{ "assignTopic" | translate }}
+      {{ "students.assignTopic" | translate }}
       </app-custom-button>
 <!--       <button mat-flat-button [disabled]="true" color="primary" (click)="downloadData()">
         <mat-icon>get_app</mat-icon><span>Export</span>

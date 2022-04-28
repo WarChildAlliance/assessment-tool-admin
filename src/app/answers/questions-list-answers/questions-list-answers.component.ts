@@ -3,10 +3,11 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
+import { TranslateService } from '@ngx-translate/core';
 import { TableColumn } from 'src/app/core/models/table-column.model';
 import { QuestionTableData } from 'src/app/core/models/question-table-data.model';
 import { AnswerService } from 'src/app/core/services/answer.service';
-import { MatDialog } from '@angular/material/dialog';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { StudentTableData } from 'src/app/core/models/student-table-data.model';
@@ -30,13 +31,13 @@ export class QuestionsListAnswersComponent implements OnInit {
   @ViewChild('questionPreviewDialog') questionPreviewDialog: TemplateRef<any>;
 
   public displayedColumns: TableColumn[] = [
-    { key: 'title', name: 'Question title' },
-    { key: 'question_type', name: 'Question type' },
-    { key: 'order', name: 'Order', sorting: 'asc' },
-    { key: 'average_duration', name: 'Average time to answer', type: 'duration' },
-    { key: 'correctly_answered_first_try', name: 'Correct on first try', type: 'boolean' },
-    { key: 'correctly_answered_last_try', name: 'Correct on last try', type: 'boolean' },
-    { key: 'remove_red_eye', name: 'Preview', type: 'action' },
+    { key: 'title', name: 'answers.questionsListAnswers.questionTitle' },
+    { key: 'question_type', name: 'general.questionType' },
+    { key: 'order', name: 'general.order', sorting: 'asc' },
+    { key: 'average_duration', name: 'answers.questionsListAnswers.averageTimeAnswer', type: 'duration' },
+    { key: 'correctly_answered_first_try', name: 'answers.questionsListAnswers.correctOnFirstTry', type: 'boolean' },
+    { key: 'correctly_answered_last_try', name: 'answers.questionsListAnswers.correctOnLastTry', type: 'boolean' },
+    { key: 'remove_red_eye', name: 'general.preview', type: 'action' },
   ];
 
   public searchableColumns = ['title', 'question_type'];
@@ -45,11 +46,16 @@ export class QuestionsListAnswersComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private translateService: TranslateService,
     private assessmentService: AssessmentService,
     private answerService: AnswerService,
     private matDialog: MatDialog,
     private userService: UserService
-  ) { }
+  ) {
+    this.displayedColumns.forEach(col => {
+      this.translateService.stream(col.name).subscribe(translated => col.name = translated);
+    });
+  }
 
   ngOnInit(): void {
     forkJoin({

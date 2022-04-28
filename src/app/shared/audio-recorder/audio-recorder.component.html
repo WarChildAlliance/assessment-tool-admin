@@ -1,9 +1,9 @@
 <div>
     <app-custom-button *ngIf="!recording" icon="mic" category="secondary" variant="success" (click)="initiateRecording()">
-        Start recording
+        {{ "shared.audioRecorder.stopRecording" | translate }}
     </app-custom-button>
     <app-custom-button *ngIf="recording" icon="stop" category="secondary" variant="danger" (click)="stopRecording()">
-        Stop recording
+        {{ "shared.audioRecorder.startRecording" | translate }}
     </app-custom-button>
     <div style="margin-bottom: 5px">
         <audio controls="" *ngIf="url">

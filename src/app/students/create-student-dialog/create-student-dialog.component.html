@@ -1,61 +1,61 @@
 <h2 mat-dialog-title>
-    {{ ( isStudentEdited ? 'editStudent' : 'createStudent' ) | translate }}
+    {{ ( isStudentEdited ? "students.editStudent" : "students.createStudentDialog.createStudent" ) | translate }}
     </h2>
 <form class="form-primary" [formGroup]="createNewStudentForm" (ngSubmit)="submitCreateNewStudent()">
     <div class="form-primary__flex-container">
         <div class="form-primary__flex-container__field-container">
             <mat-form-field appearance="outline" color="accent">
                 <mat-label>
-                    {{ "firstName" | translate }}
+                    {{ "students.createStudentDialog.firstName" | translate }}
                     </mat-label>
                 <input matInput type="text" formControlName="first_name">
             </mat-form-field>
             <small class="text-danger" *ngIf="formChanges && createNewStudentForm.get('first_name').hasError('required')">
-                This field is required
+                {{ "general.fieldRequired" | translate }}
             </small>
         </div>
         <div class="form-primary__flex-container__field-container">
             <mat-form-field appearance="outline" color="accent">
-                <mat-label>{{ "lastName" | translate }}
+                <mat-label>{{ "students.createStudentDialog.lastName" | translate }}
                     </mat-label>
                 <input matInput type="text" formControlName="last_name">
             </mat-form-field>
             <small class="text-danger" *ngIf="formChanges && createNewStudentForm.get('last_name').hasError('required')">
-                This field is required
+                {{ "general.fieldRequired" | translate }}
             </small>
         </div>
         <div class="form-primary__flex-container__field-container">
             <mat-form-field appearance="outline" color="accent">
-                <mat-label>{{ "country" | translate }}
+                <mat-label>{{ "general.country" | translate }}
                     </mat-label>
                 <mat-select formControlName="country">
                     <mat-option *ngFor="let country of countries" [value]="country.code">{{country.name_en}}</mat-option>
                 </mat-select>
             </mat-form-field>
             <small class="text-danger" *ngIf="formChanges && createNewStudentForm.get('country').hasError('required')">
-                This field is required
+                {{ "general.fieldRequired" | translate }}
             </small>
         </div>
         <div class="form-primary__flex-container__field-container">
             <mat-form-field appearance="outline" color="accent">
-                <mat-label>{{ "language" | translate }}
+                <mat-label>{{ "general.language" | translate }}
                 </mat-label>
                 <mat-select formControlName="language">
                     <mat-option *ngFor="let language of languages" [value]="language.code">{{language.name_en}}</mat-option>
                 </mat-select>
             </mat-form-field>
             <small class="text-danger" *ngIf="formChanges && createNewStudentForm.get('language').hasError('required')">
-                This field is required
+                {{ "general.fieldRequired" | translate }}
             </small>
         </div>
     </div>
     <div class="dialog-buttons">
         <button mat-button color="secondary" class="dialog-buttons__cancel" mat-dialog-close>
-            {{ "cancel" | translate }}
+            {{ "general.cancel" | translate }}
         </button>
         <button mat-flat-button color="accent" type="submit" class="dialog-buttons__submit"
          [mat-dialog-close]="createNewStudentForm.value" [disabled]="createNewStudentForm.invalid || !createNewStudentForm.dirty">
-            {{ ( isStudentEdited ? 'save' : 'submit' ) | translate }}
+            {{ ( isStudentEdited ? "general.save" : "general.submit" ) | translate }}
         </button>
     </div>
 </form>
