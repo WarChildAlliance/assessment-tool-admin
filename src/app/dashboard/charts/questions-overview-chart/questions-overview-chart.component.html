@@ -1,7 +1,7 @@
 <mat-card>
-  <mat-card-title>{{ "groupResults" | translate }}</mat-card-title>
+  <mat-card-title>{{ "dashboard.questionsOverview.groupResults" | translate }}</mat-card-title>
   <mat-card-subtitle>
-    {{ "firstTry" | translate }}
+    {{ "dashboard.firstTry" | translate }}
   </mat-card-subtitle>
 
   <mat-card-content *ngIf="hasData">
@@ -36,6 +36,6 @@
 
   </mat-card-content>
   <p *ngIf="!hasData">
-    {{ "noData" | translate }}
+    {{ "general.noData" | translate }}
   </p>
 </mat-card>

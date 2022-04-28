@@ -13,7 +13,7 @@ export class ScoreByTopicTableComponent implements OnInit {
 
   public studentsDataSource: MatTableDataSource<any> = new MatTableDataSource([]);
   public displayedColumns: any[] = [
-    { key: 'full_name', name: 'Student'}
+    { key: 'full_name', name: 'dashboard.scoreByTopicTable.student'}
   ];
 
   public newTableData = [];
@@ -25,7 +25,14 @@ export class ScoreByTopicTableComponent implements OnInit {
   public hasData = true;
 
 
-  constructor(private userService: UserService) { }
+  constructor(
+    private userService: UserService,
+    private translateService: TranslateService
+  ) {
+    this.displayedColumns.forEach(col => {
+      this.translateService.stream(col.name).subscribe(translated => col.name = translated);
+    });
+  }
 
   ngOnInit(): void {
   }

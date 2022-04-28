@@ -1,6 +1,7 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { Assessment } from '../core/models/assessment.model';
 import { AssessmentService } from '../core/services/assessment.service';
 import { MatTableDataSource } from '@angular/material/table';
@@ -19,14 +20,14 @@ import { forkJoin } from 'rxjs';
 export class AssessmentsComponent implements OnInit {
 
   public displayedColumns: TableColumn[] = [
-    { key: 'title', name: 'Title' },
-    { key: 'grade', name: 'Grade' },
-    { key: 'subject', name: 'Subject' },
-    { key: 'topics_count', name: 'Number of topics' },
-    { key: 'students_count', name: 'Number of student currently linked to this assessment' },
-    { key: 'language_name', name: 'Language' },
-    { key: 'country_name', name: 'Country' },
-    { key: 'private', name: 'Private', type: 'boolean' }
+    { key: 'title', name: 'general.title' },
+    { key: 'grade', name: 'general.grade' },
+    { key: 'subject', name: 'general.subject' },
+    { key: 'topics_count', name: 'assessments.topicsNumber' },
+    { key: 'students_count', name: 'assessments.studentsLinkedToAssessment' },
+    { key: 'language_name', name: 'general.language' },
+    { key: 'country_name', name: 'general.country' },
+    { key: 'private', name: 'general.private', type: 'boolean' }
   ];
 
   public assessmentsDataSource: MatTableDataSource<Assessment> = new MatTableDataSource([]);
@@ -51,8 +52,13 @@ export class AssessmentsComponent implements OnInit {
   constructor(
     private assessmentService: AssessmentService,
     private router: Router,
+    private translateService: TranslateService,
     private userService: UserService
-  ) { }
+  ) {
+    this.displayedColumns.forEach(col => {
+      this.translateService.stream(col.name).subscribe(translated => col.name = translated);
+    });
+  }
 
   ngOnInit(): void {
     forkJoin([this.userService.getCountries(), this.userService.getLanguages()]).subscribe(
@@ -60,17 +66,20 @@ export class AssessmentsComponent implements OnInit {
         this.filters = [
           {
             key: 'country',
-            name: 'Country',
+            name: 'general.country',
             type: 'select',
             options: [{ key: '', value: 'All' }].concat(countries.map(country => ({ key: country.code, value: country.name_en })))
           },
           {
             key: 'language',
-            name: 'Language',
+            name: 'general.language',
             type: 'select',
             options: [{ key: '', value: 'All' }].concat(languages.map(language => ({ key: language.code, value: language.name_en })))
           }
         ];
+        this.filters.forEach(filter => {
+          this.translateService.stream(filter.name).subscribe(translated => filter.name = translated);
+        });
       }
     );
 

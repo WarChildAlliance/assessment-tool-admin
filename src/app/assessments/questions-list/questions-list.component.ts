@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
 import { QuestionTableData } from 'src/app/core/models/question-table-data.model';
 import { TableColumn } from 'src/app/core/models/table-column.model';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
@@ -17,13 +18,13 @@ export class QuestionsListComponent implements OnInit {
   private topicId: string;
 
   public displayedColumns: TableColumn[] = [
-    { key: 'title', name: 'Title' },
-    { key: 'question_type', name: 'Question type' },
-    { key: 'order', name: 'Order', sorting: 'asc' },
-    { key: 'has_attachment', name: 'Attachment', type: 'boolean' },
-    { key: 'correct_answers_percentage_first', name: 'Total correct answers on students\' first try', type: 'percentage' },
-    { key: 'correct_answers_percentage_last', name: 'Total correct answers on students\' last try', type: 'percentage' },
-    { key: 'remove_red_eye', name: 'Preview', type: 'action' }
+    { key: 'title', name: 'general.title' },
+    { key: 'question_type', name: 'general.questionType' },
+    { key: 'order', name: 'general.order', sorting: 'asc' },
+    { key: 'has_attachment', name: 'assessments.questionsList.attachment', type: 'boolean' },
+    { key: 'correct_answers_percentage_first', name: 'assessments.questionsList.correctAnswersFirstTry', type: 'percentage' },
+    { key: 'correct_answers_percentage_last', name: 'assessments.questionsList.correctAnswersLastTry', type: 'percentage' },
+    { key: 'remove_red_eye', name: 'general.preview', type: 'action' }
   ];
 
   public questionsDataSource: MatTableDataSource<QuestionTableData> = new MatTableDataSource([]);
@@ -34,8 +35,13 @@ export class QuestionsListComponent implements OnInit {
   constructor(
     private assessmentService: AssessmentService,
     private route: ActivatedRoute,
+    private translateService: TranslateService,
     private router: Router
-  ) { }
+  ) {
+    this.displayedColumns.forEach(col => {
+      this.translateService.stream(col.name).subscribe(translated => col.name = translated);
+    });
+  }
 
   ngOnInit(): void {
     this.route.paramMap.pipe(

@@ -4,8 +4,8 @@
     <mat-icon class="play-audio" (click)="playAudio(audioAttachment.file)" *ngIf="audioAttachment">volume_up</mat-icon>
 </div>
 <div class="correct-answer" *ngIf="evaluated">
-    {{ "correctAnswer" | translate }}: {{question.valid_answer}}
+    {{ "shared.questions.correctAnswer" | translate }}: {{question.valid_answer}}
 </div>
 <div *ngIf="answer" class="student-answer">
-    {{ "studentAnswer" | translate }}: {{answer}}
+    {{ "shared.questions.studentAnswer" | translate }}: {{answer}}
 </div>

@@ -1,5 +1,5 @@
 <mat-toolbar class="header-toolbar" *ngIf="isAuthenticated">
-  
+
   <lib-mat-breadcrumb class="header-toolbar__breadcrumbs"></lib-mat-breadcrumb>
 
   <button mat-button class="header-toolbar__menu-button" aria-label="Access account settings"
@@ -11,12 +11,12 @@
     <button mat-menu-item (click)="logout()">
       <mat-icon matListIcon type="submit">logout</mat-icon>
       <span>
-        {{ "logout" | translate }}
+        {{ "general.logout" | translate }}
       </span>
     </button>
     <button mat-menu-item [matMenuTriggerFor]="langMenu" class="menu-button">
       <i class="uil uil-globe"></i>
-      {{ "language" | translate }}
+      {{ "general.language" | translate }}
     </button>
 
     <mat-menu #langMenu="matMenu">
@@ -36,19 +36,19 @@
     <mat-nav-list>
       <a mat-list-item routerLink="dashboard" routerLinkActive="list-item-active">
         <mat-icon matListIcon>space_dashboard</mat-icon>
-        {{ "dashboard" | translate }}
+        {{ "general.dashboard" | translate }}
       </a>
       <a mat-list-item routerLink="students" routerLinkActive="list-item-active">
         <mat-icon matListIcon>account_box</mat-icon>
-        {{ "students" | translate }}
+        {{ "general.students" | translate }}
       </a>
       <a mat-list-item routerLink="assessments" routerLinkActive="list-item-active">
         <mat-icon matListIcon>quiz</mat-icon>
-        {{ "assessments" | translate }}
+        {{ "general.assessments" | translate }}
       </a>
       <a mat-list-item routerLink="assessment-builder" routerLinkActive="list-item-active">
         <mat-icon matListIcon>space_dashboard</mat-icon>
-        {{ "assessmentBuilder" | translate }}
+        {{ "general.assessmentBuilder" | translate }}
       </a>
     </mat-nav-list>
   </mat-sidenav>

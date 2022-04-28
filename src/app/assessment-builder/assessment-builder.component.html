@@ -1,7 +1,7 @@
 <div class="assessments">
     <h1>Your assessment(s)</h1>
     <app-custom-button icon="add_circle_outline" category="secondary" variant="primary" (click)="openCreateAssessmentDialog()">
-        Add assessments
+        {{ "assessmentBuilder.addAssessments" | translate }}
     </app-custom-button>
 </div>
 <div class="assessments-container">
@@ -14,13 +14,13 @@
 
 
 <div class="assessments-container">
-    <h1>Public assessment(s)</h1>
+    <h1>{{ "assessmentBuilder.publicAssessments" | translate }} </h1>
     <ng-container *ngFor="let assessment of currentAssessments">
         <ng-container *ngIf="!assessment.can_edit">
             <app-assessment-summary [assessment]="assessment" [canEdit]="false"></app-assessment-summary>
         </ng-container>
     </ng-container>
-</div> 
+</div>
 
 <ng-template #createAssessmentDialog>
     <app-assessment-form-dialog [edit]="edit"></app-assessment-form-dialog>

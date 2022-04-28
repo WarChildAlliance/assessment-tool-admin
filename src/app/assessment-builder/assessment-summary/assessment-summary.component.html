@@ -6,29 +6,29 @@
         </div>
         <div class="details">
             <div class="infos">
-                <p>Grade</p>
+                <p>{{ "general.grade" | translate }} </p>
                 <p>{{ assessment.grade }}</p>
             </div>
             <div class="infos">
-                <p>Subject</p>
+                <p>{{ "general.subject" | translate }}</p>
                 <p>{{ assessment.subject }}</p>
             </div>
             <div class="infos">
-                <p>Language</p>
+                <p>{{ "general.language" | translate }}</p>
                 <p>{{ assessment.language_code }}</p>
             </div>
             <div class="infos">
-                <p>Country</p>
+                <p>{{ "general.country" | translate }}</p>
                 <p>{{ assessment.country_code }}</p>
             </div>
             <div class="infos">
-                <p>Private</p>
+                <p>{{ "general.private" | translate }}</p>
                 <p>{{ assessment.private }}</p>
             </div>
         </div>
         <div class="buttons">
             <app-custom-button *ngIf="canEdit" category="tertiary" variant="primary" icon="edit" (click)="editAssessment(assessment)">
-                Edit
+                {{ "general.edit" | translate }}
             </app-custom-button>
             <!--
             <button mat-button color="secondary">Clone</button>
@@ -40,7 +40,7 @@
     <div class="topics">
         <mat-card class="add-topic" (click)="openCreateTopicDialog(assessment.id)" *ngIf="canEdit">
             <div class="add-topic-text">
-                Add a topic <mat-icon>add</mat-icon>
+                {{ "assessmentBuilder.assessmentSummary.addTopic" | translate }}<mat-icon>add</mat-icon>
             </div>
         </mat-card>
         <mat-card class="topic-card" (click)="goToTopicDetails(assessment.id, topic.id)" *ngFor="let topic of assessment.topics">
