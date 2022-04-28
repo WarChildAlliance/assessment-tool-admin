@@ -4,24 +4,20 @@
       <span *ngIf="selectedUsers.length"> ({{ selectedUsers.length }} selected)</span>
     </h1>
     <div class="main-board__top-container__actions">
-      <button mat-flat-button color="accent" (click)="openCreateStudentDialog()">
-        <mat-icon>add_circle_outline</mat-icon><span>
-          {{ "addStudent" | translate }}
-        </span>
-      </button>
-      <button mat-flat-button [disabled]="!selectedUsers.length || selectedUsers.length > 1" color="accent"
-        (click)="openEditStudentDialog()">
-        <mat-icon>edit_outline</mat-icon><span>
-          {{ "editStudent" | translate }}
-        </span>
-      </button>
+      <app-custom-button icon="add_circle_outline" category="secondary" variant="primary" (click)="openCreateStudentDialog()">
+        {{ "addStudent" | translate }}
+      </app-custom-button>
+      <app-custom-button icon="edit_outline" category="secondary" variant="primary" (click)="openEditStudentDialog()"
+      [disabled]="!selectedUsers.length || selectedUsers.length > 1">
+      {{ "editStudent" | translate }}
+      </app-custom-button>
 <!--       <button mat-flat-button [disabled]="!selectedUsers.length" color="primary" (click)="deleteSelection()">
         <mat-icon>delete_outline</mat-icon><span>Delete student(s)</span>
       </button> -->
-      <button mat-flat-button [disabled]="!selectedUsers.length" color="accent" (click)="openAssignTopicDialog()">
-        <mat-icon>event_available</mat-icon><span>
-          {{ "assignTopic" | translate }}</span>
-      </button>
+      <app-custom-button icon="event_available" category="secondary" variant="primary" (click)="openAssignTopicDialog()"
+      [disabled]="!selectedUsers.length">
+      {{ "assignTopic" | translate }}
+      </app-custom-button>
 <!--       <button mat-flat-button [disabled]="true" color="primary" (click)="downloadData()">
         <mat-icon>get_app</mat-icon><span>Export</span>
       </button> -->

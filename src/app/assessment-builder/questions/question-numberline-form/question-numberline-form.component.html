@@ -1,5 +1,4 @@
-<form [formGroup]="numberLineForm" (ngSubmit)="onSave()">
-
+<form [formGroup]="numberLineForm">
     <mat-form-field appearance="outline" class="form-group" color="accent">
         <mat-label>Title</mat-label>
         <input type="text" matInput formControlName="title">
@@ -48,15 +47,17 @@
     <div class="attachments-container">
         <div style="margin-right: 20px;">
             <h3><b>Image attachment</b></h3>
-            <button type="button"  class="file_input" mat-flat-button color="primary" (click)="imageFileInput.click()">Choose
-                File</button>
+            <app-custom-button class="file_input" category="secondary" variant="neutral" (click)="imageFileInput.click()">
+                Choose File
+            </app-custom-button>
             <input hidden accept="image/*" (change)="handleFileInput($event, 'IMAGE')" #imageFileInput type="file">
             <p>{{imageAttachment ? imageAttachment.name : 'No file chosen'}}</p>
         </div>
         <div>
             <h3><b>Audio attachment</b></h3>
-            <button type="button" mat-flat-button  class="file_input" color="primary" (click)="audioFileInput.click()">Choose
-                File</button>
+            <app-custom-button class="file_input" category="secondary" variant="neutral" (click)="audioFileInput.click()">
+                Choose File
+            </app-custom-button>
             <input hidden accept="audio/*" (change)="handleFileInput($event, 'AUDIO')" #audioFileInput type="file">
             <p>{{audioAttachment ? audioAttachment.name : 'No file chosen'}}</p>
             <p style="text-align: center"><b>OR </b></p>
@@ -65,10 +66,9 @@
     </div>
 
     <div>
-        <button class="submit-form-button" mat-flat-button color="accent" type="submit"
+        <button class="submit-form-button" mat-flat-button color="accent" (click)="onSave()"
             [disabled]="numberLineForm.invalid || !numberLineForm.dirty">
             {{ question ? 'Save' : 'Create' }}
         </button>
     </div>
-
 </form>

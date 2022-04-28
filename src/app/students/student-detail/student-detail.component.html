@@ -2,9 +2,9 @@
   <div class="main-board__top-container">
 
     <div class="main-board__top-container__actions">
-      <button mat-flat-button color="accent" (click)="editCurrentStudent()">
-        <mat-icon>edit_outline</mat-icon><span>{{ "editStudent" | translate }}</span>
-      </button>
+      <app-custom-button icon="edit_outline" category="secondary" variant="primary" (click)="editCurrentStudent()">
+      {{ "editStudent" | translate }}
+      </app-custom-button>
 <!--       <button mat-flat-button color="primary" (click)="deleteCurrentStudent()" [disabled]="true">
         <mat-icon>delete_outline</mat-icon> Delete student
       </button> -->

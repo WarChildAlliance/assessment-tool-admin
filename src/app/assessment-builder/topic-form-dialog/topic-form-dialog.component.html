@@ -33,9 +33,9 @@
         </mat-checkbox>
         <div>
             <h3>Icon *</h3>
-            <button type="button" class="file_input" mat-flat-button color="primary" (click)="iconFileInput.click()">
+            <app-custom-button class="file_input" category="secondary" variant="neutral" (click)="iconFileInput.click()">
                 {{icon ? 'Change file' : 'Choose a File'}}
-            </button>
+            </app-custom-button>
             <input hidden (change)="handleFileInput($event)" #iconFileInput type="file">
             <p>{{ icon ? icon.name : 'No file chosen' }}</p>
         </div>

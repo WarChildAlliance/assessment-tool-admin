@@ -1,8 +1,8 @@
 <div class="assessments">
     <h1>Your assessment(s)</h1>
-    <button mat-flat-button color="accent" (click)="openCreateAssessmentDialog()">
-        <mat-icon>add_circle_outline</mat-icon><span>Add assessments</span>
-    </button>
+    <app-custom-button icon="add_circle_outline" category="secondary" variant="primary" (click)="openCreateAssessmentDialog()">
+        Add assessments
+    </app-custom-button>
 </div>
 <div class="assessments-container">
     <ng-container *ngFor="let assessment of currentAssessments">
