@@ -76,10 +76,10 @@ export class QuestionSelectFormComponent implements OnInit {
     private alertService: AlertService
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     const optionsForm = this.selectForm.get('options') as FormArray;
     if (this.question) {
-      this.setExistingAttachments();
+      await this.setExistingAttachments();
 
       const options = [];
       this.question.options.forEach((element) => {
@@ -371,20 +371,30 @@ export class QuestionSelectFormComponent implements OnInit {
     this.optionsAttachment = true;
   }
 
-  setExistingAttachments(): void {
+  async setExistingAttachments(): Promise<void> {
     const image = this.question.attachments.find(
       (i) => i.attachment_type === 'IMAGE'
     );
     const audio = this.question.attachments.find(
       (a) => a.attachment_type === 'AUDIO'
     );
-    this.imageAttachment = image;
-    this.audioAttachment = audio;
-    if (this.imageAttachment) {
-      this.imageAttachment.name = image ? image.file.split('/').at(-1) : null;
-    }
-    if (this.audioAttachment) {
-      this.audioAttachment.name = audio ? audio.file.split('/').at(-1) : null;
+
+    if (this.toClone) {
+      if (image) {
+        await this.objectToFile(image);
+      }
+      if (audio) {
+        await this.objectToFile(audio);
+      }
+    } else {
+      if (this.imageAttachment) {
+        this.imageAttachment = image;
+        this.imageAttachment.name = image ? image.file.split('/').at(-1) : null;
+      }
+      if (this.audioAttachment) {
+        this.audioAttachment = audio;
+        this.audioAttachment.name = audio ? audio.file.split('/').at(-1) : null;
+      }
     }
   }
 
@@ -422,5 +432,22 @@ export class QuestionSelectFormComponent implements OnInit {
     const optionsForm = this.selectForm.get('options') as FormArray;
     optionsForm.clear();
     this.addOptions();
+  }
+
+  async objectToFile(attachment): Promise<void> {
+    const fileType = attachment.attachment_type === 'IMAGE' ? 'image/png' : 'audio/wav';
+    const fileName = attachment.file.split('/').at(-1);
+
+    await fetch(attachment.file)
+      .then((res) => res.arrayBuffer())
+      .then((buf) =>  new File([buf], fileName, {type: fileType}))
+      .then((file) => {
+        if (attachment.attachment_type === 'IMAGE') {
+          this.imageAttachment = file;
+        }
+        else if (attachment.attachment_type === 'AUDIO') {
+          this.audioAttachment = file;
+        }
+    });
   }
 }
