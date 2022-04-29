@@ -1,49 +1,49 @@
-<h2>Create a topic</h2>
+<h2>{{ "assessmentBuilder.topicFormDialog.createTopic" | translate }}</h2>
 <form class="form-primary" [formGroup]="createNewTopicForm" (ngSubmit)="onSave()">
     <div class="form-primary__flex-container">
         <mat-form-field appearance="outline" color="accent">
-            <mat-label>Title</mat-label>
+            <mat-label>{{ "general.title" | translate }}</mat-label>
             <input matInput type="text" required formControlName="name">
         </mat-form-field>
         <mat-form-field appearance="outline" color="accent">
-            <mat-label>Description</mat-label>
+            <mat-label>{{ "assessmentBuilder.description" | translate }}</mat-label>
             <input matInput type="text" required formControlName="description">
         </mat-form-field>
         <mat-form-field appearance="outline" color="accent">
-            <mat-label>When to show feedbacks ?</mat-label>
+            <mat-label>{{ "assessmentBuilder.topicFormDialog.whenToShowFeedbacks" | translate }}</mat-label>
             <mat-select formControlName="show_feedback">
                 <mat-option *ngFor="let feedback of feedbacks" [value]="feedback.id">{{ feedback.name }}</mat-option>
             </mat-select>
         </mat-form-field>
         <mat-form-field appearance="outline" color="accent">
-            <mat-label>Praise</mat-label>
+            <mat-label>{{ "assessmentBuilder.praise" | translate }}</mat-label>
             <input matInput type="number" formControlName="praise">
         </mat-form-field>
         <mat-form-field appearance="outline" color="accent">
-            <mat-label>Max wrong answers</mat-label>
+            <mat-label>{{ "assessmentBuilder.maxWrongAnswers" | translate }}</mat-label>
             <input matInput type="number" formControlName="max_wrong_answers">
         </mat-form-field>
     </div>
     <div class="form-primary__flex-container">
         <mat-checkbox formControlName="evaluated">
-            Evaluated
+            {{ "assessmentBuilder.evaluated" | translate }}
         </mat-checkbox>
         <mat-checkbox formControlName="allow_skip">
-            Allow skip
+            {{ "assessmentBuilder.allowSkip" | translate }}
         </mat-checkbox>
         <div>
-            <h3>Icon *</h3>
-            <button type="button" class="file_input" mat-flat-button color="primary" (click)="iconFileInput.click()">
-                {{icon ? 'Change file' : 'Choose a File'}}
-            </button>
+            <h3>{{ "assessmentBuilder.icon" |  translate }} *</h3>
+            <app-custom-button class="file_input" category="secondary" variant="neutral" (click)="iconFileInput.click()">
+                {{icon ? ("assessmentBuilder.topicFormDialog.changeFile" | translate) : ("assessmentBuilder.chooseFile" | translate)}}
+            </app-custom-button>
             <input hidden (change)="handleFileInput($event)" #iconFileInput type="file">
-            <p>{{ icon ? icon.name : 'No file chosen' }}</p>
+            <p>{{ icon ? icon.name : ("assessmentBuilder.noFileChosen" | translate) }}</p>
         </div>
     </div>
     <mat-divider></mat-divider>
     <div class="dialog-buttons buttons-margin">
-        <button mat-button class="dialog-buttons__cancel" color="secondary" mat-dialog-close>Cancel</button>
+        <button mat-button class="dialog-buttons__cancel" color="secondary" mat-dialog-close>{{ "general.cancel" | translate }}</button>
         <button mat-flat-button class="dialog-buttons__submit" color="accent" type="submit"
-        [mat-dialog-close]="createNewTopicForm.value" [disabled]="createNewTopicForm.invalid || !createNewTopicForm.dirty">{{ topic ? 'Save' : 'Create' }}</button>
+        [mat-dialog-close]="createNewTopicForm.value" [disabled]="createNewTopicForm.invalid || !createNewTopicForm.dirty">{{ topic ? ("general.save" | translate) : ("general.create" | translate) }}</button>
     </div>
 </form>

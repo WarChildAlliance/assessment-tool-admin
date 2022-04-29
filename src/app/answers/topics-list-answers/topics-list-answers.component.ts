@@ -3,6 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
 import { AssessmentTableData } from 'src/app/core/models/assessment-table-data.model';
 import { StudentTableData } from 'src/app/core/models/student-table-data.model';
 import { TableColumn } from 'src/app/core/models/table-column.model';
@@ -25,12 +26,12 @@ export class TopicsListAnswersComponent implements OnInit {
   currentAssessment: AssessmentTableData;
 
   public displayedColumns: TableColumn[] = [
-    { key: 'name', name: 'Name' },
-    { key: 'questions_count', name: 'Number of questions' },
-    { key: 'student_tries_count', name: 'Number of tries' },
-    { key: 'correct_answers_percentage_first_try', name: 'Answered correctly on first try', type: 'percentage' },
-    { key: 'correct_answers_percentage_last_try', name: 'Answered correctly on last try', type: 'percentage' },
-    { key: 'last_submission', name: 'Last submission', type: 'date' },
+    { key: 'name', name: 'general.name' },
+    { key: 'questions_count', name: 'answers.questionsNumber' },
+    { key: 'student_tries_count', name: 'answers.topicListAnswers.triesNumber' },
+    { key: 'correct_answers_percentage_first_try', name: 'answers.topicListAnswers.answeredCorrectlyFirstTry', type: 'percentage' },
+    { key: 'correct_answers_percentage_last_try', name: 'answers.topicListAnswers.answeredCorrectlyLastTry', type: 'percentage' },
+    { key: 'last_submission', name: 'answers.topicListAnswers.lastSubmission', type: 'date' },
   ];
 
   public searchableColumns = ['name'];
@@ -38,9 +39,14 @@ export class TopicsListAnswersComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private translateService: TranslateService,
     private answerService: AnswerService,
     private userService: UserService
-  ) { }
+  ) {
+    this.displayedColumns.forEach(col => {
+      this.translateService.stream(col.name).subscribe(translated => col.name = translated);
+    });
+  }
 
   ngOnInit(): void {
     forkJoin({

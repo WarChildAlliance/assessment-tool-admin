@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { TableColumn } from 'src/app/core/models/table-column.model';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 
@@ -14,11 +15,11 @@ import { AssessmentService } from 'src/app/core/services/assessment.service';
 export class AssessmentDetailComponent implements OnInit {
 
   public displayedColumns: TableColumn[] = [
-    { key: 'name', name: 'Name' },
-    { key: 'students_count', name: 'Number of students with active access' },
-    { key: 'students_completed_count', name: 'Number of students with active access who completed it' },
-    { key: 'overall_students_completed_count', name: 'Total students who completed it' },
-    { key: 'questions_count', name: 'Number of questions' }
+    { key: 'name', name: 'general.name' },
+    { key: 'students_count', name: 'assessments.assessmentDetail.activeAccessStudents' },
+    { key: 'students_completed_count', name: 'assessments.assessmentDetail.activeAccessCompletedStudents' },
+    { key: 'overall_students_completed_count', name: 'assessments.assessmentDetail.studentsCompleted' },
+    { key: 'questions_count', name: 'general.questionsNumber' }
   ];
 
   public topicsDataSource: MatTableDataSource<any> = new MatTableDataSource([]);
@@ -36,7 +37,13 @@ export class AssessmentDetailComponent implements OnInit {
   constructor(
     private assessmentService: AssessmentService,
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router,
+    private translateService: TranslateService
+  ) {
+      this.displayedColumns.forEach(col => {
+        this.translateService.stream(col.name).subscribe(translated => col.name = translated);
+      });
+     }
 
   ngOnInit(): void {
 

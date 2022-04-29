@@ -1,8 +1,8 @@
 <div class="main-board">
   <div class="main-board__top-container">
-    <h1>{{ "questions" | translate }} ({{ questionsDataSource.data.length }})
+    <h1>{{ "assessments.questionsList.questions" | translate }} ({{ questionsDataSource.data.length }})
       <span *ngIf="selectedQuestions.length">({{
-        selectedQuestions.length }} {{ "selected" | translate }})</span>
+        selectedQuestions.length }} {{ "assessments.selected" | translate }})</span>
     </h1>
     <div class="main-board__top-container__actions">
 <!--       <button mat-flat-button color="primary" (click)="downloadData()" [disabled]="true">

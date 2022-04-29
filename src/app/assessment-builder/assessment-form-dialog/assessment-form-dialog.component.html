@@ -1,28 +1,28 @@
-<h2 mat-dialog-title>Create a new assessment</h2>
-<form class="form-primary" [formGroup]="createNewAssessmentForm" (ngSubmit)="submitCreateNewAssessment()">
+<h2 mat-dialog-title>{{ "assessmentBuilder.assessmentFormDialog.createNewAssessment" | translate }}</h2>
+<form class="form-primary" [formGroup]="createNewAssessmentForm">
     <div class="form-primary__flex-container">
         <mat-form-field appearance="outline" color="accent">
-            <mat-label>Title</mat-label>
+            <mat-label>{{ "general.title" | translate }}</mat-label>
             <input matInput type="text" formControlName="title">
         </mat-form-field>
         <mat-form-field appearance="outline" color="accent">
-            <mat-label>Grade</mat-label>
+            <mat-label>{{ "general.grade" | translate }}</mat-label>
             <input matInput type="text" formControlName="grade">
         </mat-form-field>
         <mat-form-field appearance="outline" color="accent">
-            <mat-label>Subject</mat-label>
+            <mat-label>{{ "general.subject" | translate }}</mat-label>
             <mat-select formControlName="subject">
                 <mat-option *ngFor="let subject of subjects" [value]="subject">{{ subject }}</mat-option>
             </mat-select>
         </mat-form-field>
         <mat-form-field appearance="outline" color="accent">
-            <mat-label>Language</mat-label>
+            <mat-label>{{ "general.language" | translate }}</mat-label>
             <mat-select formControlName="language">
                 <mat-option *ngFor="let language of languages" [value]="language.code">{{language.name_en}}</mat-option>
             </mat-select>
         </mat-form-field>
         <mat-form-field appearance="outline" color="accent">
-            <mat-label>Country</mat-label>
+            <mat-label>{{ "general.country" | translate }}</mat-label>
             <mat-select formControlName="country">
                 <mat-option *ngFor="let country of countries" [value]="country.code">{{country.name_en}}</mat-option>
             </mat-select>
@@ -31,20 +31,21 @@
     <div class="form-primary__flex-container">
         <div>
             <h3>Icon</h3>
-            <button type="button" class="file_input" mat-flat-button color="primary" (click)="imageFileInput.click()">
-                Choose File
-            </button>
+            <app-custom-button class="file_input" category="secondary" variant="neutral" (click)="imageFileInput.click()">
+                {{ "assessmentBuilder.chooseFile" | translate }}
+            </app-custom-button>
             <input hidden (change)="handleFileInput($event)" #imageFileInput type="file">
-            <p>{{icon ? icon.name : 'No file chosen'}}</p>
+            <p>{{icon ? icon.name : ("assessmentBuilder.noFileChosen" | translate) }}</p>
         </div>
         <mat-checkbox formControlName="private">
-            Private
-        </mat-checkbox> 
+            {{ "general.private" | translate }}
+        </mat-checkbox>
     </div>
     <mat-divider></mat-divider>
     <div class="dialog-buttons buttons-margin">
-        <button mat-button class="dialog-buttons__cancel" color="secondary" mat-dialog-close>Cancel</button>
+        <button mat-button class="dialog-buttons__cancel" color="secondary" mat-dialog-close>{{ "general.cancel" | translate }}</button>
         <button mat-flat-button class="dialog-buttons__submit" color="accent" type="submit" [mat-dialog-close]="createNewAssessmentForm.value"
-        [disabled]="createNewAssessmentForm.invalid || !createNewAssessmentForm.dirty">{{ edit ? 'Save' : 'Create' }}</button>
+        [disabled]="createNewAssessmentForm.invalid || !createNewAssessmentForm.dirty" (click)="submitCreateNewAssessment()">
+        {{ edit ? 'Save' : 'Create' }}</button>
     </div>
 </form>

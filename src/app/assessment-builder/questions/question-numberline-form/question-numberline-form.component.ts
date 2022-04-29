@@ -1,6 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { dateInputsHaveChanged } from '@angular/material/datepicker/datepicker-input-base';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 
@@ -27,7 +26,7 @@ export class QuestionNumberlineFormComponent implements OnInit {
   public changedImage = false;
 
   public alertMessage =  '';
-
+  public resetQuestionAudio = false;
 
   public numberLineForm: FormGroup = new FormGroup({
     question_type: new FormControl('NUMBER_LINE'),
@@ -100,6 +99,9 @@ export class QuestionNumberlineFormComponent implements OnInit {
         }
         this.alertService.success(this.alertMessage);
         this.questionCreatedEvent.emit(true);
+        if (!this.toClone) {
+          this.resetForm();
+        }
       });
   }
 
@@ -107,17 +109,24 @@ export class QuestionNumberlineFormComponent implements OnInit {
     this.assessmentService.editQuestion(this.assessmentId.toString(), this.topicId.toString(),
       this.question.id, this.numberLineForm.value).subscribe(res => {
         if (this.imageAttachment && this.changedImage) {
-          const image = this.question.attachments.find( i => i.attachment_type === 'IMAGE');
-          this.assessmentService.updateAttachments(this.assessmentId, this.imageAttachment, 'IMAGE', image.id).subscribe();
+          this.updateQuestionAttachments('IMAGE', res.id, this.imageAttachment);
         }
         if (this.audioAttachment && this.changedAudio) {
-          const audio = this.question.attachments.find( a => a.attachment_type === 'AUDIO');
-          this.assessmentService.updateAttachments(this.assessmentId, this.audioAttachment, 'AUDIO', audio.id).subscribe();
+          this.updateQuestionAttachments('AUDIO', res.id, this.audioAttachment);
         }
         this.alertService.success(this.alertMessage);
         this.questionCreatedEvent.emit(true);
         this.closeModalEvent.emit(true);
       });
+  }
+
+  updateQuestionAttachments(type: string, id: any, attachment: any): void {
+    const file = this.question.attachments.find( a => a.attachment_type === type);
+    if (file) {
+      this.assessmentService.updateAttachments(this.assessmentId, attachment, type, file.id).subscribe();
+    } else {
+      this.saveAttachments(this.assessmentId, attachment, type, { name: 'question', value: id });
+    }
   }
 
   saveAttachments(assessmentId: string, attachment, type: string, obj): void {
@@ -128,10 +137,10 @@ export class QuestionNumberlineFormComponent implements OnInit {
 
   handleFileInput(event, type): void {
     if (type === 'IMAGE'){
-      if (this.imageAttachment) { this.changedImage = true; }
+      this.changedImage = true;
       this.imageAttachment = event.target.files[0];
     } else if (type === 'AUDIO') {
-      if (this.audioAttachment) { this.changedAudio = true; }
+      this.changedAudio = true;
       this.audioAttachment = event.target.files[0];
     }
   }
@@ -139,19 +148,36 @@ export class QuestionNumberlineFormComponent implements OnInit {
   setExistingAttachments(): void{
     const image = this.question.attachments.find( i => i.attachment_type === 'IMAGE');
     const audio = this.question.attachments.find( a => a.attachment_type === 'AUDIO');
-    this.imageAttachment = image;
-    this.audioAttachment = audio;
-    this.imageAttachment.name = image ? image.file.split('/').at(-1) : null;
-    this.audioAttachment.name = audio ? audio.file.split('/').at(-1) : null;
+    if (image) {
+      this.imageAttachment = image;
+      this.imageAttachment.name = image ? image.file.split('/').at(-1) : null;
+    }
+    if (audio) {
+      this.audioAttachment = audio;
+      this.audioAttachment.name = audio ? audio.file.split('/').at(-1) : null;
+    }
   }
 
   addRecordedAudio(event): void {
     const name = 'recording_' + new Date().toISOString() + '.wav';
     this.audioAttachment = this.blobToFile(event, name);
+    this.changedAudio = true;
   }
 
   public blobToFile = (theBlob: Blob, fileName: string): File => {
     return new File([theBlob], fileName, { lastModified: new Date().getTime(), type: theBlob.type });
   }
 
+  resetForm(): void {
+    this.numberLineForm.reset();
+    this.numberLineForm.controls['order'.toString()].setValue(this.order + 1);
+
+    this.imageAttachment = null;
+    this.audioAttachment = null;
+
+    this.changedAudio = false;
+    this.changedImage = false;
+
+    this.resetQuestionAudio = true;
+  }
 }

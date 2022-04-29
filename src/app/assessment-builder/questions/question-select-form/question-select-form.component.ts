@@ -52,6 +52,7 @@ export class QuestionSelectFormComponent implements OnInit {
   public alertMessage = '';
 
   public saveOptions = false;
+  public resetQuestionAudio = false;
 
   public selectForm: FormGroup = new FormGroup({
     question_type: new FormControl('SELECT'),
@@ -188,6 +189,9 @@ export class QuestionSelectFormComponent implements OnInit {
         }
         this.alertService.success(this.alertMessage);
         this.questionCreatedEvent.emit(true);
+        if (!this.toClone) {
+          this.resetForm();
+        }
       });
   }
 
@@ -201,30 +205,10 @@ export class QuestionSelectFormComponent implements OnInit {
       )
       .subscribe((res) => {
         if (this.changedImage && this.imageAttachment) {
-          const image = this.question.attachments.find(
-            (i) => i.attachment_type === 'IMAGE'
-          );
-          this.assessmentService
-            .updateAttachments(
-              this.assessmentId,
-              this.imageAttachment,
-              'IMAGE',
-              image.id
-            )
-            .subscribe();
+          this.updateQuestionAttachments('IMAGE', res.id, this.imageAttachment);
         }
         if (this.changedAudio && this.audioAttachment) {
-          const audio = this.question.attachments.find(
-            (a) => a.attachment_type === 'AUDIO'
-          );
-          this.assessmentService
-            .updateAttachments(
-              this.assessmentId,
-              this.audioAttachment,
-              'AUDIO',
-              audio.id
-            )
-            .subscribe();
+          this.updateQuestionAttachments('AUDIO', res.id, this.audioAttachment);
         }
         if (this.optionAttChange && this.optionsAttachment) {
           this.updateOptionsAttachments(res);
@@ -233,7 +217,18 @@ export class QuestionSelectFormComponent implements OnInit {
           this.questionCreatedEvent.emit(true);
           this.closeModalEvent.emit(true);
         }
+        this.alertService.success(this.alertMessage);
+        this.questionCreatedEvent.emit(true);
       });
+  }
+
+  updateQuestionAttachments(type: string, id: any, attachment: any): void {
+    const file = this.question.attachments.find( a => a.attachment_type === type);
+    if (file) {
+      this.assessmentService.updateAttachments(this.assessmentId, attachment, type, file.id).subscribe();
+    } else {
+      this.saveAttachments(this.assessmentId, attachment, type, { name: 'question', value: id });
+    }
   }
 
   saveAttachments(assessmentId: string, attachment, type: string, obj): void {
@@ -381,6 +376,7 @@ export class QuestionSelectFormComponent implements OnInit {
   addRecordedAudio(event): void {
     const name = 'recording_' + new Date().toISOString() + '.wav';
     this.audioAttachment = this.blobToFile(event, name);
+    this.changedAudio = true;
   }
 
   public blobToFile = (theBlob: Blob, fileName: string): File => {
@@ -388,5 +384,28 @@ export class QuestionSelectFormComponent implements OnInit {
       lastModified: new Date().getTime(),
       type: theBlob.type,
     });
+  }
+
+  resetForm(): void {
+    this.selectForm.reset();
+
+    this.options = [];
+    this.optionsAtt = [{ attachments: [] }];
+    this.optionsAttachmentEdit = [];
+
+    this.imageAttachment = null;
+    this.audioAttachment = null;
+
+    this.changedAudio = false;
+    this.changedImage = false;
+    this.optionAttChange = false;
+    this.resetQuestionAudio = true;
+    this.saveOptions = false;
+    this.selectForm.controls.order.setValue(this.order + 1, [Validators.required]);
+    this.selectForm.controls.display.setValue('Grid', [Validators.required]);
+
+    const optionsForm = this.selectForm.get('options') as FormArray;
+    optionsForm.clear();
+    this.addOptions();
   }
 }

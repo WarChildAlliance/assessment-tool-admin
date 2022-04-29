@@ -1,33 +1,33 @@
 <div class="main-board__charts-container__select" *ngIf="!multiple && selectedAssessment">
   <mat-form-field appearance="outline" color="accent">
     <mat-label>
-      {{ "chooseAssessment" | translate }}
+      {{ "shared.selectAssessment.chooseAssessment" | translate }}
     </mat-label>
     <mat-select [(value)]="selectedAssessment">
       <ng-container *ngFor="let assessment of assessmentsList">
         <mat-option [value]="assessment" *ngIf="assessment.evaluated || displayNonEvaluated" (click)="selectAssessment(assessment)">{{ assessment.title }}</mat-option>
       </ng-container>
     </mat-select>
-  </mat-form-field>   
+  </mat-form-field>
 </div>
 
 <div class="main-board__charts-container__select" *ngIf="multiple && selectedAssessmentArr">
   <mat-form-field appearance="outline" color="accent">
     <mat-label>
-      {{ "addAssessment" | translate }}
-    </mat-label> 
+      {{ "shared.selectAssessment.addAssessment" | translate }}
+    </mat-label>
     <mat-select multiple [(value)]="selectedAssessmentArr">
       <ng-container *ngFor="let assessment of assessmentsList">
         <mat-option *ngIf="assessment.evaluated" [value]="assessment" (click)="selectAssessment(assessment)">{{ assessment.title }}</mat-option>
       </ng-container>
     </mat-select>
-  </mat-form-field>   
+  </mat-form-field>
 </div>
 
 <div class="main-board__charts-container__select" *ngIf="selectTopic">
   <mat-form-field appearance="outline" color="accent">
     <mat-label>
-      {{ "chooseTopic" | translate }}
+      {{ "shared.selectAssessment.chooseTopic" | translate }}
     </mat-label>
     <mat-select [(value)]="selectedTopic">
       <ng-container *ngFor="let topic of topicsList">
@@ -36,7 +36,7 @@
     </mat-select>
     <mat-hint>
       <mat-icon>info</mat-icon>
-      {{ "hintNoStudent" | translate }}
+      {{ "shared.selectAssessment.hintNoStudent" | translate }}
   </mat-hint>
   </mat-form-field>
 </div>

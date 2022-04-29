@@ -1,115 +1,208 @@
 {
-  "assessmentTool": "Assessment Tool",
-  "studentsOverview": "Students Overview",
-  "firstTry": "for the first try",
-  "chartLegend": "Chart Legend",
-  "studentNotLinked": "The student is not linked to this topic",
-  "noData": "No data to display",
-  "41correct": "Below 41% of correct answers",
-  "4171correct": "Between 41% and 70% of correct answers",
-  "70correct": "Over 70% of correct answers",
-  "95correct": "Over 95% of correct answers",
-  "studentNotStarted": "The student has not started this topic yet",
-  "comparisonAverage": "Comparison to average",
-  "assessmentTitle": "Assessment title",
-  "groupResults": "Group Results",
-  "chooseAssessment": "Choose an Assessment",
-  "individualResults": "Individual Results",
-  "stop": "stop",
-  "addAssessment": "Add an assessment",
-  "chooseTopic": "Choose a topic",
-  "hintNoStudent": "If a topic is grayed out, it means that  no student has started it yet.",
-  "correctAnswer": "Correct answer",
-  "studentAnswer": "Student answer",
-  "search": "Search...",
-  "logout": "Logout",
-  "dashboard": "Dashboard",
-  "students": "Students",
-  "assessments": "Assessments",
-  "assessmentBuilder": "Assessment Builder",
-  "addStudent": "Add Student",
-  "editStudent": "Edit Student",
-  "assignTopic": "Assign a topic",
-  "assessment": "Assessment",
-  "topicAvailability": "Assessment topic(s) availability",
-  "assign": "Assign",
-  "name": "name",
-  "numberAssessments": "Number of assessments",
-  "totalCompletedTopics": "Total completed topics",
-  "lastLogin": "Last login",
-  "language": "Language",
-  "country": "Country",
-  "studentsAssessment": "Student's assessments",
-  "studentNotLinkedAssessment": "This student currently is not linked to any assessment.",
-  "linkedTopics": "linked topic(s)",
-  "from": "from",
-  "to": "to",
-  "activeAccess": "Active access",
-  "noActiveAccess": "No active access",
-  "assessmentsOverview": "Assessments Overview",
-  "createStudent": "Create a new student",
-  "firstName": "First Name",
-  "lastName": "Last Name",
-  "submit": "Submit",
-  "save": "Save",
-  "cancel": "Cancel",
-  "questions": "Questions",
-  "selected": "selected",
-  "grade": "Grade",
-  "studentsName": "Student Name",
-  "totalLinkedTopics": "Number of linked topics",
-  "topicName": "Topic Name",
-  "numberQuestions": "Number of questions",
-  "AssessmentBuilder": {
+  "general": {
+    "adminDashboard": "AdminDashboard",
+    "assign": "Assign",
     "assessmentBuilder": "Assessment Builder",
-    "yourAssessments": "Your assessment(s)",
-    "publicAssessments": "Public assessment(s)",
-    "assessmentGrade": "Grade",
-    "assessmentSubject": "Subject",
-    "assessmentPrivate": "Private",
-    "true": "true",
-    "false": "false",
-    "buttonEdit": "Edit",
-    "buttonClone": "Clone",
-    "buttonDelete": "Delete",
-    "topicDescription": "description",
-    "toTopicDetails": "Go to topic details",
-    "topicEvaluated": "Evaluted",
-    "topicAllowSkip": "Allow skip",
-    "topicMaxWrongAnswer": "Max wrong answers",
-    "topicPraise": "praise",
-    "showFeedback": "Show feedback",
-    "selectQuestion": "(Multi-) Select",
-    "inputQuestion": "Input question",
-    "sortQuestion": "Sort question",
-    "numberLineQuestion": "Number line question",
-    "questionTitle": "Title",
-    "questionOrder": "Order",
-    "questionStartNumber": "Start number",
-    "questionEndNumber": "End number",
-    "questionStepSize": "Step size",
-    "questionExpectedValue": "Expected value",
-    "questionShowTicks": "Show ticks",
-    "questionShowValue": "Show value",
-    "buttonSave": "Save",
-    "identifier": "Identifier",
-    "questionDisplay": "Display",
-    "grid": "Grid",
-    "vertical": "Vertical",
-    "horizontal": "Horizontal",
-    "questionMultiple": "multiple",
-    "addImageAttachment": "Add an image attachment",
-    "addAudioAttachment": "Add an audio attachment",
-    "addOption": "Add an option",
-    "correctAnswer": "Correct answer",
-    "questionAnswer": "Answer",
-    "buttonCancel": "Cancel",
-    "createNewAssessment": "Create a new assessment",
-    "createNewTopic": "Create a new topic",
-    "addQuestion": "Add a question",
-    "addTopic": "Add a topic"
+    "assessments": "Assessments",
+    "cancel": "Cancel",
+    "country": "Country",
+    "create": "Create",
+    "dashboard": "Dashboard",
+    "edit": "Edit",
+    "fieldRequired": "This field is required",
+    "from": "from",
+    "grade": "Grade",
+    "language": "Language",
+    "lastLogin": "Last login",
+    "logout": "Logout",
+    "name": "Name",
+    "noData": "No data to display",
+    "order": "Order",
+    "preview": "Preview",
+    "private": "Private",
+    "questionsNumber": "Number of questions",
+    "questionType": "Question type",
+    "save": "Save",
+    "studentName": "Student Name",
+    "students": "Students",
+    "subject": "Subject",
+    "submit": "Submit",
+    "title": "Title",
+    "to": "to",
+    "totalCompletedTopics": "Total completed topics",
+    "workInProgress": "Work in progress... Available soon"
   },
-  "username": "Username",
-  "password": "Password",
-  "login": "Login"
+  "answers": {
+    "assessmentAnswers": {
+      "completedTopicsNumber": "Number of completed topics",
+      "linkedTopicsNumber": "Number of linked topics"
+    },
+    "questionsListAnswers": {
+      "averageTimeAnswer": "Average time to answer",
+      "correctOnFirstTry": "Correct on first try",
+      "correctOnLastTry": "Correct on last try",
+      "questionTitle": "Question title",
+      "topicName": "Topic Name"
+    },
+    "topicListAnswers": {
+      "accessibleTopics": "Accessible topics",
+      "answeredCorrectlyFirstTry": "Answered correctly on first try",
+      "answeredCorrectlyLastTry": "Answered correctly on last try",
+      "assessmentName": "Assessment Name",
+      "lastSubmission": "Last submission",
+      "triesNumber": "Number of tries"
+    }
+  },
+  "assessmentBuilder": {
+    "addAssessments": "Add assessments",
+    "allowSkip": "Allow skip",
+    "chooseFile": "Choose File",
+    "description": "Description",
+    "evaluated": "Evaluated",
+    "icon": "Icon",
+    "maxWrongAnswers": "Max wrong answers",
+    "noFileChosen": "No file chosen",
+    "praise": "Praise",
+    "publicAssessments": "Public assessment(s)",
+    "yourAssessments": "Your assessment(s)",
+    "assessmentFormDialog": {
+      "createNewAssessment": "Create a new assessment"
+    },
+    "assessmentSummary": {
+      "addTopic": "Add a topic"
+    },
+    "questions": {
+      "audioAttachment": "Audio attachment",
+      "imageAttachment": "Image attachment",
+      "numberline": {
+        "endNumber": "End number",
+        "expectedValue": "Expected value",
+        "or": "OR",
+        "showTicks": "Show ticks",
+        "showValue": "Show value",
+        "startNumber": "Start number",
+        "stepSize": "Step size",
+        "tickStep": "Tick step"
+      },
+      "select": {
+        "addOption": "Add option",
+        "attachments": "Attachments",
+        "display": "Display",
+        "isMultipleChoice": "Is multiple choice?",
+        "isCorrectAnswer": "Is correct answer?",
+        "question": "Question",
+        "value": "Value"
+      }
+    },
+    "topicDetails": {
+      "addQuestion": "Add a question",
+      "clone": "Clone",
+      "numberLineButton": "Number line",
+      "selectButton": "(Multi-) Select",
+      "showFeedback": "Show feedback"
+    },
+    "topicFormDialog": {
+      "changeFile": "Change File",
+      "createTopic": "Create a topic",
+      "whenToShowFeedbacks": "When to show feedbacks ?"
+    }
+  },
+  "assessments": {
+    "selected": "selected",
+    "studentsLinkedToAssessment": "Number of student currently linked to this assessment",
+    "topicsNumber": "Number of topics",
+    "assessmentDetail": {
+      "activeAccessStudents": "Number of students with active access",
+      "activeAccessCompletedStudents": "Number of students with active access who completed it",
+      "studentsCompleted": "Total students who completed it"
+    },
+    "questionsList": {
+      "attachment": "Attachment",
+      "correctAnswersFirstTry": "Total correct answers on students' first try",
+      "correctAnswersLastTry": "Total correct answers on students' last try",
+      "questions": "Questions"
+    }
+  },
+  "auth": {
+    "login": {
+      "login": "Login",
+      "password": "Password",
+      "username": "Username"
+    }
+  },
+  "dashboard": {
+    "firstTry": "for the first try",
+    "answersOverview": {
+      "individualResults": "Individual Results"
+    },
+    "questionsOverview": {
+      "groupResults": "Group Results"
+    },
+    "scoreByTopicChart": {
+      "assessmentTitle": "Assessment title",
+      "comparisonAverage": "Comparison to average"
+    },
+    "scoreByTopicTable": {
+      "chartLegend": "Chart Legend",
+      "student": "Student",
+      "studentNotLinked": "The student is not linked to this topic",
+      "studentNotStarted": "The student has not started this topic yet",
+      "studentsOverview": "Students Overview",
+      "41correct": "Below 41% of correct answers",
+      "4171correct": "Between 41% and 70% of correct answers",
+      "70correct": "Over 70% of correct answers",
+      "95correct": "Over 95% of correct answers"
+    }
+  },
+  "shared": {
+    "audioRecorder": {
+      "startRecording": "Start recording",
+      "stopRecording": "Stop recording"
+    },
+    "questions": {
+      "correctAnswer": "Correct answer",
+      "studentAnswer": "Student answer"
+    },
+    "selectAssessment": {
+      "addAssessment": "Add an assessment",
+      "chooseAssessment": "Choose an Assessment",
+      "chooseTopic": "Choose a topic",
+      "hintNoStudent": "If a topic is grayed out, it means that  no student has started it yet."
+    },
+    "table": {
+      "hintSearchColumn": "You can search on any column!",
+      "no": "No",
+      "search": "Search...",
+      "yes": "Yes"
+    }
+  },
+  "students": {
+    "activeAssessmentsNumber": "Number of active assessments",
+    "addStudent": "Add student",
+    "assignTopic": "Assign a topic",
+    "completedTopicsNumber": "Number of completed topics",
+    "editStudent": "Edit student",
+    "studentCode": "Student code",
+    "createStudentDialog": {
+      "createStudent": "Create a new student",
+      "firstName": "First name",
+      "lastName": "Last name"
+    },
+    "studentDetail": {
+      "activeAccess": "Active access",
+      "assessmentsOverview": "Assessments Overview",
+      "linkedTopics": "linked topic(s)",
+      "noActiveAccess": "No active access",
+      "numberAssessments": "Number of assessments",
+      "studentAssessments": "Student's assessments",
+      "studentNotLinkedAssessment": "This student is currently not linked to any assessment."
+    },
+    "topicAccessesBuilder": {
+      "applySameDatesAllTopics": "Apply the same dates to all the topics ?",
+      "assessment": "Assessment",
+      "endDate": "End date",
+      "startDate": "Start date",
+      "topicAvailability": "Assessment topic(s) availability"
+    }
+  }
 }

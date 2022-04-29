@@ -1,25 +1,25 @@
-<form [formGroup]="selectForm" (ngSubmit)="onSave()">
+<form [formGroup]="selectForm">
     <div class="form-container">
         <div class="select-details-container">
-            <h2>Question</h2>
+            <h2>{{ "assessmentBuilder.questions.select.question" | translate }}</h2>
 
             <mat-form-field appearance="outline" class="form-group" color="accent">
-                <mat-label for="title">Title</mat-label>
+                <mat-label for="title">{{ "general.title" | translate }}</mat-label>
                 <input matInput formControlName="title">
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form-group" color="accent">
-                <mat-label>Value</mat-label>
+                <mat-label>{{ "assessmentBuilder.questions.select.value" | translate }}</mat-label>
                 <input matInput formControlName="value">
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form-group" color="accent">
-                <mat-label for="order">Order</mat-label>
+                <mat-label for="order">{{ "general.order" | translate }}</mat-label>
                 <input matInput type="number" formControlName="order">
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form-group" color="accent">
-                <mat-label for="display">Display</mat-label>
+                <mat-label for="display">{{ "assessmentBuilder.questions.select.display" | translate }}</mat-label>
                 <mat-select formControlName="display">
                     <mat-option *ngFor="let type of ['Grid', 'Vertical', 'Horizontal']" [value]="type">{{type}}
                     </mat-option>
@@ -27,23 +27,25 @@
             </mat-form-field>
             <br>
             <mat-checkbox formControlName="multiple">
-                <mat-label for="multiple">Is multiple choice?</mat-label>
+                <mat-label for="multiple">{{ "assessmentBuilder.questions.select.isMultipleChoice" | translate }}</mat-label>
             </mat-checkbox>
         </div>
 
-        <div class="attachments-container">
-            <h2>Attachments</h2>
-            <p><b>Image attachment</b></p>
-            <button type="button" class="file_input" mat-flat-button color="primary" (click)="imageFileInput.click()">Choose
-                File</button>
+        <div class="attachments-container">                
+            <h2>{{ "assessmentBuilder.questions.select.attachments" | translate }}</h2>
+            <p><b>{{ "assessmentBuilder.questions.imageAttachment" | translate }}</b></p>
+            <app-custom-button class="file_input" category="secondary" variant="neutral" (click)="imageFileInput.click()">
+                {{ "assessmentBuilder.chooseFile" | translate }}
+            </app-custom-button>
             <input hidden class="file_input" accept="image/*" (change)="handleFileInput($event, 'IMAGE')" #imageFileInput type="file">
-            <p>{{imageAttachment ? imageAttachment.name : 'No file chosen'}}</p>
-            <p><b>Audio attachment</b></p>
-            <button type="button" class="file_input" mat-flat-button color="primary" (click)="audioFileInput.click()">Choose
-                File</button>
+            <p>{{ imageAttachment ? imageAttachment.name : ("assessmentBuilder.noFileChosen" | translate) }}</p>
+            <p><b>{{ "assessmentBuilder.questions.audioAttachment" | translate }}</b></p>
+            <app-custom-button class="file_input" category="secondary" variant="neutral" (click)="audioFileInput.click()">
+                {{ "assessmentBuilder.chooseFile" | translate }}
+            </app-custom-button>
             <input hidden accept="audio/*" (change)="handleFileInput($event, 'AUDIO')" #audioFileInput type="file">
-            <p>{{audioAttachment ? audioAttachment.name : 'No file chosen'}}</p>
-            <app-audio-recorder (audioRecordingEvent)="addRecordedAudio($event)"></app-audio-recorder>
+            <p>{{ audioAttachment ? audioAttachment.name : ("assessmentBuilder.noFileChosen" | translate) }}</p>
+            <app-audio-recorder [resetQuestionAudio]="resetQuestionAudio" (audioRecordingEvent)="addRecordedAudio($event)"></app-audio-recorder>
         </div>
     </div>
     <mat-divider></mat-divider>
@@ -54,48 +56,49 @@
             [formGroupName]="i">
             <div>
                 <mat-form-field appearance="outline" class="form-group" color="accent">
-                    <mat-label>Title</mat-label>
+                    <mat-label>{{ "general.title" | translate }}</mat-label>
                     <input matInput formControlName="title">
                 </mat-form-field>
             </div>
             <mat-form-field appearance="outline" class="form-group" color="accent">
-                <mat-label>Value</mat-label>
+                <mat-label>{{ "assessmentBuilder.questions.select.value" | translate }}</mat-label>
                 <input matInput formControlName="value">
             </mat-form-field>
             <br>
             <mat-checkbox formControlName="valid">
-                <mat-label>Is correct answer?</mat-label>
+                <mat-label>{{ "assessmentBuilder.questions.select.isCorrectAnswer" | translate }}</mat-label>
             </mat-checkbox>
 
             <div class="attachments-container">
                 <div>
-                    <p><b>Image attachment</b></p>
-                    <button type="button" class="file_input" mat-flat-button color="primary" (click)="imageFileInput.click()">Choose
-                        File</button>
+                    <p><b>{{ "assessmentBuilder.questions.imageAttachment" | translate }}</b></p>
+                    <app-custom-button class="file_input" category="secondary" variant="neutral" (click)="imageFileInput.click()">
+                        {{ "assessmentBuilder.chooseFile" | translate }}
+                    </app-custom-button>
                     <input hidden accept="image/*" (change)="handleFileInputOptions($event, 'IMAGE', i)" #imageFileInput type="file">
-                    <p>{{imageAttachment ? imageAttachment.name : 'No file chosen'}}</p>
+                    <p>{{imageAttachment ? imageAttachment.name : ("assessmentBuilder.noFileChosen" | translate) }}</p>
                 </div>
 
                 <div>
-                    <p><b>Audio attachment</b></p>
-                    <button type="button" class="file_input" mat-flat-button color="primary" (click)="audioFileInput.click()">Choose
-                        File</button>
+                    <p><b>{{ "assessmentBuilder.questions.audioAttachment" | translate }}</b></p>
+                    <app-custom-button class="file_input" category="secondary" variant="neutral" (click)="audioFileInput.click()">
+                        {{ "assessmentBuilder.chooseFile" | translate }}
+                    </app-custom-button>
                     <input hidden accept="audio/*" (change)="handleFileInputOptions($event, 'AUDIO', i)" #audioFileInput type="file">
-                    <p>{{audioAttachment ? audioAttachment.name : 'No file chosen'}}</p>
+                    <p>{{audioAttachment ? audioAttachment.name : ("assessmentBuilder.noFileChosen" | translate) }}</p>
                     <app-audio-recorder (audioRecordingEvent)="addRecordedAudio($event)"></app-audio-recorder>
                 </div>
             </div>
         </div>
         <div>
-            <button (click)="addOptions()" type="button" style="margin-left: 20px;" class="file_input" mat-button>
-                <mat-icon>add</mat-icon>
-                Add Option
-            </button>
+            <app-custom-button class="file_input" icon="add" category="secondary" variant="neutral" (click)="addOptions()">
+                {{ "assessmentBuilder.questions.select.addOption" | translate }}
+            </app-custom-button>
         </div>
-        
+
     </div>
-    <button class="question-form-button" color="accent" 
+    <button class="question-form-button" color="accent" (click)="onSave()"
      mat-flat-button type="submit" [disabled]="selectForm.invalid || !selectForm.dirty">
-        {{ question ? 'Save' : 'Create' }}
+        {{ question ? ("general.save" | translate) : ("general.create" | translate) }}
     </button>
 </form>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { TranslateService } from '@ngx-translate/core';
 import { UserRoles } from './core/models/user.model';
 import { AuthService } from './core/services/auth.service';
 import { LanguageService } from './core/services/language.service';
@@ -17,10 +19,16 @@ export class AppComponent implements OnInit {
   public languages: { name: string, code: string, direction: 'rtl' | 'ltr' }[] = this.languageService.getLanguages();
 
   constructor(
+    private titleService: Title,
+    private translateService: TranslateService,
     private authService: AuthService,
     private userService: UserService,
     private languageService: LanguageService
-    ) { }
+    ) {
+      this.translateService.stream('general.adminDashboard').subscribe((translated) => {
+        this.titleService.setTitle(translated);
+      });
+    }
 
   ngOnInit(): void {
     this.authService.currentAuthentication.subscribe( authenticated => {

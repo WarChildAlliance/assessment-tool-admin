@@ -1,7 +1,7 @@
 <div class="question-header">
     <h2>Q{{ question.order }}: {{ question.title }}</h2>
     <img *ngIf="imageAttachment" [src]="getSource(imageAttachment.file)" alt="">
-    <mat-icon (click)="playAudio(getSource(audioAttachment.file))" *ngIf="audioAttachment">volume_up</mat-icon>
+    <mat-icon class="play-audio" (click)="playAudio(getSource(audioAttachment.file))" *ngIf="audioAttachment">volume_up</mat-icon>
 </div>
 <div class="number-line">
     <span>{{ question.start }}</span>
@@ -17,8 +17,8 @@
     <span>{{ question.end }}</span>
 </div>
 <div class="correct-answer" *ngIf="evaluated">
-    {{ "correctAnswer" | translate }} {{question.expected_value}}
+    {{ "shared.questions.correctAnswer" | translate }} {{question.expected_value}}
 </div>
 <div *ngIf="answer" class="student-answer">
-    {{ "studentAnswer" | translate }} {{answer}}
+    {{ "shared.questions.studentAnswer" | translate }} {{answer}}
 </div>
