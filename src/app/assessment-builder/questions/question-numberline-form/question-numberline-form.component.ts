@@ -172,6 +172,9 @@ export class QuestionNumberlineFormComponent implements OnInit {
   resetForm(): void {
     this.numberLineForm.reset();
     this.numberLineForm.controls['order'.toString()].setValue(this.order + 1);
+    this.numberLineForm.controls.question_type.setValue('NUMBER_LINE');
+    this.numberLineForm.controls.show_ticks.setValue(false);
+    this.numberLineForm.controls.show_value.setValue(false);
 
     this.imageAttachment = null;
     this.audioAttachment = null;
@@ -179,6 +182,6 @@ export class QuestionNumberlineFormComponent implements OnInit {
     this.changedAudio = false;
     this.changedImage = false;
 
-    this.resetQuestionAudio = true;
+    this.resetQuestionAudio = !this.resetQuestionAudio;
   }
 }

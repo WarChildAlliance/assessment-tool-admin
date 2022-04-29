@@ -414,10 +414,12 @@ export class QuestionSelectFormComponent implements OnInit {
     this.changedAudio = false;
     this.changedImage = false;
     this.optionAttChange = false;
-    this.resetQuestionAudio = true;
+    this.resetQuestionAudio = !this.resetQuestionAudio;
     this.saveOptions = false;
     this.selectForm.controls.order.setValue(this.order + 1, [Validators.required]);
     this.selectForm.controls.display.setValue('Grid', [Validators.required]);
+    this.selectForm.controls.question_type.setValue('SELECT');
+    this.selectForm.controls.multiple.setValue(false);
 
     const optionsForm = this.selectForm.get('options') as FormArray;
     optionsForm.clear();
