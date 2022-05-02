@@ -20,6 +20,7 @@
     "order": "Order",
     "preview": "Preview",
     "private": "Private",
+    "archive": "Archived",
     "questionsNumber": "Number of questions",
     "questionType": "Question type",
     "save": "Save",
@@ -30,7 +31,8 @@
     "title": "Title",
     "to": "to",
     "totalCompletedTopics": "Total completed topics",
-    "workInProgress": "Work in progress... Available soon"
+    "workInProgress": "Work in progress... Available soon",
+    "questions": "questions"
   },
   "answers": {
     "assessmentAnswers": {
@@ -65,11 +67,15 @@
     "praise": "Praise",
     "publicAssessments": "Public assessment(s)",
     "yourAssessments": "Your assessment(s)",
+    "archivedAssessments": "Archived assessment(s)",
     "assessmentFormDialog": {
-      "createNewAssessment": "Create a new assessment"
+      "createNewAssessment": "Create a new assessment",
+      "editAssessment": "Edit assessment"
     },
     "assessmentSummary": {
-      "addTopic": "Add a topic"
+      "addTopic": "Add a topic",
+      "archive": "Archive",
+      "unarchive": "Unarchive"
     },
     "questions": {
       "audioAttachment": "Audio attachment",
@@ -104,6 +110,7 @@
     "topicFormDialog": {
       "changeFile": "Change File",
       "createTopic": "Create a topic",
+      "editTopic": "Edit topic",
       "whenToShowFeedbacks": "When to show feedbacks ?"
     }
   },

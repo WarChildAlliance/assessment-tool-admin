@@ -1,3 +1,4 @@
+<h2>{{ edit ? ("assessmentBuilder.topicFormDialog.editTopic" | translate) : ("assessmentBuilder.topicFormDialog.createTopic" | translate) }}</h2>
 <h2>{{ "assessmentBuilder.topicFormDialog.createTopic" | translate }}</h2>
 <form class="form-primary" [formGroup]="createNewTopicForm" (ngSubmit)="onSave()">
     <div class="form-primary__flex-container">
@@ -30,6 +31,9 @@
         </mat-checkbox>
         <mat-checkbox formControlName="allow_skip">
             {{ "assessmentBuilder.allowSkip" | translate }}
+        </mat-checkbox>
+        <mat-checkbox formControlName="archived">
+            Archived
         </mat-checkbox>
         <div>
             <h3>{{ "assessmentBuilder.icon" |  translate }} *</h3>
