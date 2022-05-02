@@ -1,36 +1,36 @@
 <mat-card>
-  <mat-card-title>{{ "studentsOverview" | translate }}</mat-card-title>
-  <mat-card-subtitle>{{ "firstTry" | translate }}</mat-card-subtitle>
+  <mat-card-title>{{ "dashboard.scoreByTopicTable.studentsOverview" | translate }}</mat-card-title>
+  <mat-card-subtitle>{{ "dashboard.firstTry" | translate }}</mat-card-subtitle>
   <mat-card-content *ngIf="hasData">
     <div class="left-column">
       <app-select-assessment (assessmentSelection)="selectTableAssessment($event)" [selectTopic]="false"
         [multiple]="true" [displayNonEvaluated]="false"></app-select-assessment>
 
-      <h3>{{ "chartLegend" | translate }}</h3>
+      <h3>{{ "dashboard.scoreByTopicTable.chartLegend" | translate }}</h3>
       <div class="main-board__charts-container__chart__legend">
         <p>
           <mat-icon [style.color]="'darkgrey'" matListIcon>close</mat-icon>
-          {{ "studentNotLinked" | translate }}
+          {{ "dashboard.scoreByTopicTable.studentNotLinked" | translate }}
         </p>
         <p>
           <mat-icon matListIcon [style.color]="'red'">circle</mat-icon>
-          {{ "41correct" | translate }}
+          {{ "dashboard.scoreByTopicTable.41correct" | translate }}
         </p>
         <p>
           <mat-icon matListIcon [style.color]="'orange'">circle</mat-icon>
-          {{ "4171correct" | translate }}
+          {{ "dashboard.scoreByTopicTable.4171correct" | translate }}
         </p>
         <p>
           <mat-icon matListIcon [style.color]="'limegreen'">circle</mat-icon>
-          {{ "70correct" | translate }}
+          {{ "dashboard.scoreByTopicTable.70correct" | translate }}
         </p>
         <p>
           <mat-icon matListIcon [style.color]="'green'">circle</mat-icon>
-          {{ "95correct" | translate }}
+          {{ "dashboard.scoreByTopicTable.95correct" | translate }}
         </p>
         <p>
           <mat-icon matListIcon>radio_button_unchecked</mat-icon>
-          {{ "studentNotStarted" | translate }}
+          {{ "dashboard.scoreByTopicTable.studentNotStarted" | translate }}
         </p>
       </div>
     </div>
@@ -40,6 +40,6 @@
     </div>
   </mat-card-content>
   <p *ngIf="!hasData">
-    {{ "noData" | translate }}
+    {{ "general.noData" | translate }}
   </p>
 </mat-card>

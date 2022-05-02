@@ -2,65 +2,67 @@
   <div class="topic-header">
     <img *ngIf="topicDetails?.icon" [src]="topicDetails.icon">
     <h1>{{ topicDetails.name }}</h1>
-    <button mat-button color="accent" *ngIf="topicDetails.can_edit" (click)="openEditTopicDialog(topicDetails)">Edit</button>
+    <app-custom-button *ngIf="topicDetails.can_edit" category="tertiary" variant="primary"
+     icon="edit" (click)="openEditTopicDialog(topicDetails)">
+      Edit
+    </app-custom-button>
   </div>
   <mat-card>
     <div class="topic-infos" *ngIf="topicDetails">
       <div class="detail">
-        <p>Description</p>
+        <p>{{ "assessmentBuilder.description" | translate }}</p>
         <p>{{ topicDetails.description}} </p>
       </div>
       <div class="detail">
-        <p>Evaluated</p>
+        <p>{{ "assessmentBuilder.evaluated" | translate }}</p>
         <p>{{ topicDetails.evaluated}} </p>
       </div>
       <div class="detail">
-        <p>Allow skip</p>
+        <p>{{ "assessmentBuilder.allowSkip" | translate }}</p>
         <p>{{ topicDetails.allow_skip}} </p>
       </div>
       <div class="detail">
-        <p>Max wrong answer</p>
+        <p>{{ "assessmentBuilder.maxWrongAnswers" | translate }}</p>
         <p>{{ topicDetails.max_wrong_answers}} </p>
       </div>
       <div class="detail">
-        <p>Praise</p>
+        <p>{{ "assessmentBuilder.praise" | translate }}</p>
         <p>{{ topicDetails.praise }} </p>
       </div>
       <div class="detail">
-        <p>Show feedback</p>
+        <p>{{ "assessmentBuilder.topicDetails.showFeedback" | translate }}</p>
         <p>{{ topicDetails.show_feedback }} </p>
       </div>
     </div>
   </mat-card>
   <div class="question">
     <mat-card *ngIf="topicDetails.can_edit">
-      <h2>Add a question</h2>
+      <h2>{{ "assessmentBuilder.topicDetails.addQuestion" | translate }}</h2>
       <div class="question-options" *ngIf="questionType && order">
         <div class="question-options-button">
-          <button mat-button mat-stroked-button color="{{questionType === 'SELECT' ? 'accent' : 'secondary'}}" (click)="setQuestionType('SELECT')">(Multi-)
-            Select</button>
-          <!--
-          <button mat-button mat-stroked-button
-            color="{{questionType === 'INPUT' ? 'accent' : 'secondary'}}" (click)="setQuestionType('INPUT')">Input</button>
-                  <button mat-button mat-stroked-button color="{{questionType === 'SORT' ? 'accent' : 'secondary'}}">Sort</button>
-                  -->
-          <button mat-button mat-stroked-button
-            color="{{questionType === 'NUMBER_LINE' ? 'accent' : 'secondary'}}" (click)="setQuestionType('NUMBER_LINE')">Number Line</button>
+          <app-custom-button *ngFor="let question of questionsArray" category="tertiary" variant="primary"
+            (click)="setQuestionType(question.type)" [variant]="questionType === question.type ? 'neutral' : 'default'">
+            {{ question.text }}
+          </app-custom-button>
         </div>
         <hr>
         <div class="question-form">
-<!--           <app-question-input-form [assessmentId]="assessmentId" [topicId]="topicId" [order]="order"
-            *ngIf="questionType === 'INPUT'"></app-question-input-form> -->
-            <app-question-select-form [assessmentId]="assessmentId" [topicId]="topicId" [order]="order"
+          <app-question-select-form [assessmentId]="assessmentId" [topicId]="topicId" [order]="order"
             *ngIf="questionType === 'SELECT'" (questionCreatedEvent)="getQuestionsList()"></app-question-select-form>
+          <app-question-input-form [assessmentId]="assessmentId" [topicId]="topicId" [order]="order"
+            *ngIf="questionType === 'INPUT'" (questionCreatedEvent)="getQuestionsList()"></app-question-input-form>
           <app-question-numberline-form [assessmentId]="assessmentId" [topicId]="topicId" [order]="order"
             *ngIf="questionType === 'NUMBER_LINE'" (questionCreatedEvent)="getQuestionsList()"></app-question-numberline-form>
         </div>
       </div>
     </mat-card>
     <div class="question-details" *ngFor="let questionDetails of questionsList">
-      <button mat-button mat-stroked-button  *ngIf="topicDetails.can_edit" (click)="onEditQuestionDialog(questionDetails)">Edit</button>
-      <button mat-button mat-stroked-button  *ngIf="topicDetails.can_edit" (click)="cloneQuestion(questionDetails)">Clone</button>
+      <app-custom-button *ngIf="topicDetails.can_edit" category="tertiary" variant="neutral" (click)="onEditQuestionDialog(questionDetails)">
+        {{ "general.edit" | translate }}
+      </app-custom-button>
+      <app-custom-button *ngIf="topicDetails.can_edit" category="tertiary" variant="neutral" (click)="cloneQuestion(questionDetails)">
+        {{ "assessmentBuilder.topicDetails.clone" | translate }}
+      </app-custom-button>
       <mat-card *ngIf="questionDetails && questionDetails.question_type === 'SELECT'">
         <app-question-select [question]="questionDetails" [index]="1" [evaluated]="true"></app-question-select>
       </mat-card>

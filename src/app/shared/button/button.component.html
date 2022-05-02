@@ -1,0 +1,21 @@
+<button
+  mat-button
+  [class.mat-flat-button]="category === 'secondary'"
+  [class.mat-stroked-button]="category === 'tertiary'"
+  [class.custom-button-block]="block"
+  [class.custom-button-small]="size === 'small'"
+  [class.custom-button-success]="variant === 'success'"
+  [class.custom-button-neutral]="variant === 'neutral'"
+  [color]="color"
+  [class.mat-icon-button]="isIcon"
+  [disabled]="disabled"
+  (click)="emittedEventSubject.next('click')"
+>
+  <app-custom-icon
+    *ngIf="icon"
+    [class.custom-button-icon]="!isIcon"
+    [icon]="icon"
+    [inline]="!isIcon"
+  ></app-custom-icon>
+  <ng-content></ng-content>
+</button>

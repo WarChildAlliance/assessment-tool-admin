@@ -1,111 +1,213 @@
 {
-  "assessmentTool": "أداة تقييم",
-  "studentsOverview": "نظرة عامة على الطلاب",
-  "firstTry": "أول محاولة",
-  "chartLegend": "دليل المصطلحات",
-  "studentNotLinked": "غيرمعتمد",
-  "noData": "لا توجد بيانات لعرضها",
-  "41correct": "< 41%: صحيح",
-  "4171correct": "من 41% - 70%: صحيح",
-  "70correct": "> 70%: صحيح",
-  "95correct": "> 95%: صحيح",
-  "studentNotStarted": "لم يبدأ",
-  "comparisonAverage": "مقارنة بالمتوسط",
-  "assessmentTitle": "تقييم",
-  "groupResults": "نتائج المجموعة",
-  "chooseAssessment": "اختر تقييماً",
-  "individualResults": "النتائج الفردية",
-  "stop": "قف",
-  "addAssessment": "أضف تقييماً",
-  "chooseTopic": "اختر موضوعاً",
-  "hintNoStudent": "إذا كان الموضوع باللون الرمادي، فلا يوجد أي طالب قد بدأه",
-  "correctAnswer": "إجابة صحيحة",
-  "studentAnswer": "إجابة الطالب",
-  "search": "بحث...",
-  "logout": "تسجيل خروج",
-  "dashboard": "لوحة القيادة",
-  "students": "طلاب",
-  "assessments": "التقييمات",
-  "assessmentBuilder": "منشئ التقييم",
-  "addStudent": "أضف طالباً",
-  "editStudent": "حرر طالباً",
-  "assignTopic": "قم بتعيين موضوع",
-  "assessment": "تقييم",
-  "topicAvailability": "مدى توفر موضوع (مواضيع) التقييم",
-  "assign": "تعيين",
-  "name": "اسم",
-  "numberAssessments": "عدد التقييمات",
-  "totalCompletedTopics": "إجمالي المواضيع المكتملة",
-  "lastLogin": "آخر تسجيل دخول",
-  "language": "اللغة",
-  "country": "الدولة",
-  "studentsAssessment": "تقييمات الطلاب",
-  "studentNotLinkedAssessment": "هذا الطالب حالياً غير مرتبط بأي تقييم",
-  "linkedTopics": "موضوع (مواضيع) مرتبطة",
-  "from": "من",
-  "to": "إلى",
-  "activeAccess": "وصول نشط",
-  "noActiveAccess": "لا يوجد وصول نشط",
-  "assessmentsOverview": "نظرة عامة على التقييمات",
-  "createStudent": "قم بإنشاء طالب جديد",
-  "firstName": "الاسم الأول",
-  "Last Name": "اسم العائلة",
-  "submit": "إرسال",
-  "cancel": "إلغاء",
-  "questions": "أسئلة",
-  "selected": "تم الاختيار",
-  "grade": "العلامة",
-  "studentsName": "اسم الطالب",
-  "totalLinkedTopics": "عدد المواضيع المعينة",
-  "topicName": "اسم الموضوع",
-  "numberQuestions": "عدد الأسئلة",
-  "AssessmentBuilder": {
-    "assessmentBuilder": "XXX",
-    "yourAssessments": "XXX",
-    "publicAssessments": "XXX",
-    "assessmentGrade": "XXX",
-    "assessmentSubject": "XXX",
-    "assessmentPrivate": "XXX",
-    "true": "XXX",
-    "false": "XXX",
-    "buttonEdit": "XXX",
-    "buttonClone": "XXX",
-    "buttonDelete": "XXX",
-    "topicDescription": "XXX",
-    "toTopicDetails": "XXX",
-    "topicEvaluated": "XXX",
-    "topicAllowSkip": "XXX",
-    "topicMaxWrongAnswer": "XXX",
-    "topicPraise": "XXX",
-    "showFeedback": "XXX",
-    "selectQuestion": "XXX",
-    "inputQuestion": "XXX",
-    "sortQuestion": "XXX",
-    "numberLineQuestion": "XXX",
-    "questionTitle": "XXX",
-    "questionOrder": "XXX",
-    "questionStartNumber": "XXX",
-    "questionEndNumber": "XXX",
-    "questionStepSize": "XXX",
-    "questionExpectedValue": "XXX",
-    "questionShowTicks": "XXX",
-    "questionShowValue": "XXX",
-    "buttonSave": "XXX",
-    "identifier": "XXX",
-    "questionDisplay": "XXX",
-    "grid": "XXX",
-    "vertical": "XXX",
-    "horizontal": "XXX",
-    "questionMultiple": "XXX",
-    "addImageAttachment": "XXX",
-    "addAudioAttachment": "XXX",
-    "addOption": "XXX",
-    "correctAnswer": "XXX",
-    "questionAnswer": "XXX",
-    "buttonCancel": "XXX",
-    "createNewAssessment": "XXX",
-    "createNewTopic": "XXX",
-    "addQuestion": "XXX",
-    "addTopic": "XXX"
+  "general": {
+    "adminDashboard": "لوحة تحكم المسؤول",
+    "assessmentBuilder": "منشئ التقييم",
+    "assessments": "التقييمات",
+    "assign": "تعيين",
+    "cancel": "إلغاء",
+    "country": "الدولة",
+    "create": "خلق",
+    "dashboard": "لوحة القيادة",
+    "edit": "تعديل",
+    "fieldRequired": "هذه الخانة مطلوبه",
+    "from": "من",
+    "grade": "العلامة",
+    "language": "اللغة",
+    "lastLogin": "آخر تسجيل دخول",
+    "logout": "تسجيل خروج",
+    "name": "اسم",
+    "noData": "لا توجد بيانات لعرضها",
+    "order": "طلب",
+    "preview": "معاينة",
+    "private": "نشر",
+    "archived": "Archived",
+    "questionType": "نوع السؤال",
+    "questionsNumber": "عدد الأسئلة",
+    "save": "يحفظ",
+    "studentName": "اسم الطالب",
+    "students": "طلاب",
+    "subject": "موضوعات",
+    "submit": "إرسال",
+    "title": "عنوان",
+    "to": "إلى",
+    "totalCompletedTopics": "إجمالي المواضيع المكتملة",
+    "workInProgress": "جاري العمل ... متاح قريبًا"
+  },
+  "answers": {
+    "assessmentAnswers": {
+      "completedTopicsNumber": "عدد المواضيع المكتملة",
+      "linkedTopicsNumber": "عدد الموضوعات المرتبطة"
+    },
+    "questionsListAnswers": {
+      "averageTimeAnswer": "متوسط الوقت للرد",
+      "correctOnFirstTry": "صحيح من المحاولة الأولى",
+      "correctOnLastTry": "صحيح في المحاولة الأخيرة",
+      "questionTitle": "عنوان السؤال",
+      "topicName": "اسم الموضوع"
+    },
+    "topicListAnswers": {
+      "accessibleTopics": "موضوعات يسهل الوصول إليها",
+      "answeredCorrectlyFirstTry": "أجاب بشكل صحيح في المحاولة الأولى",
+      "answeredCorrectlyLastTry": "تمت الإجابة بشكل صحيح في المحاولة الأخيرة",
+      "assessmentName": "اسم التقييم",
+      "lastSubmission": "آخر إرسال",
+      "triesNumber": "عدد المحاولات"
+    }
+  },
+  "assessmentBuilder": {
+    "addAssessments": "أضف التقييمات",
+    "allowSkip": "السماح بالتخطي",
+    "chooseFile": "اختر ملف",
+    "description": "وصف",
+    "evaluated": "مقيمة",
+    "icon": "أيقونة",
+    "maxWrongAnswers": "ماكس إجابات خاطئة",
+    "noFileChosen": "لم تقم باختيار ملف",
+    "praise": "مديح",
+    "publicAssessments": "التقييم (التقييمات) العامة",
+    "yourAssessments": "تقييمك (تقييماتك)",
+    "archivedAssessments": "",
+    "assessmentFormDialog": {
+      "createNewAssessment": "قم بإنشاء تقييم جديد"
+    },
+    "assessmentSummary": {
+      "addTopic": "أضف موضوعًا",
+      "archive": "",
+      "unarchive": ""
+    },
+    "questions": {
+      "audioAttachment": "مرفق صوتي",
+      "imageAttachment": "مرفق الصورة",
+      "numberline": {
+        "endNumber": "رقم النهاية",
+        "expectedValue": "القيمة المتوقعة",
+        "or": "أو",
+        "showTicks": "عرض القراد",
+        "showValue": "إظهار القيمة",
+        "startNumber": "رقم البداية",
+        "stepSize": "حجم الخطوة",
+        "tickStep": "ضع علامة في الخطوة"
+      },
+      "select": {
+        "addOption": "إضافة خيار",
+        "attachments": "المرفقات",
+        "display": "عرض",
+        "isCorrectAnswer": "هل الجواب الصحيح؟",
+        "isMultipleChoice": "هو الاختيار من متعدد؟",
+        "question": "سؤال",
+        "value": "قيمة"
+      }
+    },
+    "topicDetails": {
+      "addQuestion": "أضف سؤالاً",
+      "clone": "استنساخ",
+      "numberLineButton": "رقم الخط",
+      "selectButton": "(تحديد متعدد",
+      "showFeedback": "إظهار الملاحظات"
+    },
+    "topicFormDialog": {
+      "changeFile": "تغيير الملف",
+      "createTopic": "قم بإنشاء موضوع",
+      "editTopic": "editTopic",
+      "whenToShowFeedbacks": "متى تظهر التقيمات؟"
+    }
+  },
+  "assessments": {
+    "selected": "تم الاختيار",
+    "studentsLinkedToAssessment": "عدد الطلاب المرتبطين حاليًا بهذا التقييم",
+    "topicsNumber": "عدد المواضيع",
+    "assessmentDetail": {
+      "activeAccessCompletedStudents": "عدد الطلاب الذين لديهم وصول نشط والذين أكملوها",
+      "activeAccessStudents": "عدد الطلاب الذين لديهم وصول نشط",
+      "studentsCompleted": "مجموع الطلاب الذين أكملوها"
+    },
+    "questionsList": {
+      "attachment": "المرفق",
+      "correctAnswersFirstTry": "مجموع الإجابات الصحيحة في المحاولة الأولى للطلاب",
+      "correctAnswersLastTry": "مجموع الإجابات الصحيحة في المحاولة الأخيرة للطلاب",
+      "questions": "أسئلة"
+    }
+  },
+  "auth": {
+    "login": {
+      "login": "تسجيل الدخول",
+      "password": "كلمه السر",
+      "username": "اسم المستخدم"
+    }
+  },
+  "dashboard": {
+    "firstTry": "أول محاولة",
+    "answersOverview": {
+      "individualResults": "النتائج الفردية"
+    },
+    "questionsOverview": {
+      "groupResults": "نتائج المجموعة"
+    },
+    "scoreByTopicChart": {
+      "assessmentTitle": "تقييم",
+      "comparisonAverage": "مقارنة بالمتوسط"
+    },
+    "scoreByTopicTable": {
+      "4171correct": "من 41% - 70%: صحيح",
+      "41correct": "< 41%: صحيح",
+      "70correct": "> 70%: صحيح",
+      "95correct": "> 95%: صحيح",
+      "chartLegend": "دليل المصطلحات",
+      "student": "طالب علم",
+      "studentNotLinked": "غيرمعتمد",
+      "studentNotStarted": "لم يبدأ",
+      "studentsOverview": "نظرة عامة على الطلاب"
+    }
+  },
+  "shared": {
+    "audioRecorder": {
+      "startRecording": "ابدأ التسجيل",
+      "stopRecording": "إيقاف التسجيل"
+    },
+    "questions": {
+      "correctAnswer": "إجابة صحيحة",
+      "studentAnswer": "إجابة الطالب"
+    },
+    "selectAssessment": {
+      "addAssessment": "أضف تقييماً",
+      "chooseAssessment": "اختر تقييماً",
+      "chooseTopic": "اختر موضوعاً",
+      "hintNoStudent": "إذا كان الموضوع باللون الرمادي، فلا يوجد أي طالب قد بدأه"
+    },
+    "table": {
+      "hintSearchColumn": "يمكنك البحث في أي عمود!",
+      "no": "لا",
+      "search": "بحث...",
+      "yes": "نعم"
+    }
+  },
+  "students": {
+    "activeAssessmentsNumber": "عدد التقييمات النشطة",
+    "addStudent": "أضف طالباً",
+    "assignTopic": "قم بتعيين موضوع",
+    "completedTopicsNumber": "عدد المواضيع المكتملة",
+    "editStudent": "حرر طالباً",
+    "studentCode": "كود طالب",
+    "createStudentDialog": {
+      "createStudent": "قم بإنشاء طالب جديد",
+      "firstName": "الاسم الأول",
+      "lastName": "اسم العائلة"
+    },
+    "studentDetail": {
+      "activeAccess": "وصول نشط",
+      "assessmentsOverview": "نظرة عامة على التقييمات",
+      "linkedTopics": "موضوع (مواضيع) مرتبطة",
+      "noActiveAccess": "لا يوجد وصول نشط",
+      "numberAssessments": "عدد التقييمات",
+      "studentAssessments": "تقييمات الطلاب",
+      "studentNotLinkedAssessment": "هذا الطالب حالياً غير مرتبط بأي تقييم"
+    },
+    "topicAccessesBuilder": {
+      "applySameDatesAllTopics": "تطبيق نفس التواريخ على جميع المواضيع؟",
+      "assessment": "تقييم",
+      "endDate": "تاريخ الانتهاء",
+      "startDate": "تاريخ البدء",
+      "topicAvailability": "مدى توفر موضوع (مواضيع) التقييم"
+    }
   }
 }

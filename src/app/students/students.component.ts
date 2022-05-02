@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 import { Language } from 'src/app/core/models/language.model';
 import { User } from 'src/app/core/models/user.model';
 import { Country } from '../core/models/country.model';
@@ -20,13 +21,13 @@ import { UserService } from '../core/services/user.service';
 })
 export class StudentsComponent implements OnInit {
   public displayedColumns: TableColumn[] = [
-    { key: 'full_name', name: 'Student name' },
-    { key: 'username', name: 'Student code', type: 'copy' },
-    { key: 'assessments_count', name: 'Number of active assessments' },
-    { key: 'completed_topics_count', name: 'Number of completed topics' },
-    { key: 'last_session', name: 'Last login', type: 'date' },
-    { key: 'language_name', name: 'Language' },
-    { key: 'country_name', name: 'Country' },
+    { key: 'full_name', name: 'general.studentName' },
+    { key: 'username', name: 'students.studentCode', type: 'copy' },
+    { key: 'assessments_count', name: 'students.activeAssessmentsNumber' },
+    { key: 'completed_topics_count', name: 'students.completedTopicsNumber' },
+    { key: 'last_session', name: 'general.lastLogin', type: 'date' },
+    { key: 'language_name', name: 'general.language' },
+    { key: 'country_name', name: 'general.country' },
   ];
 
   public studentsDataSource: MatTableDataSource<StudentTableData> =
@@ -54,8 +55,13 @@ export class StudentsComponent implements OnInit {
     private userService: UserService,
     private alertService: AlertService,
     private router: Router,
-    private dialog: MatDialog
-  ) {}
+    private dialog: MatDialog,
+    private translateService: TranslateService
+  ) {
+    this.displayedColumns.forEach(col => {
+      this.translateService.stream(col.name).subscribe(translated => col.name = translated);
+    });
+  }
 
   ngOnInit(): void {
     forkJoin([
@@ -67,7 +73,7 @@ export class StudentsComponent implements OnInit {
       this.filters = [
         {
           key: 'country',
-          name: 'Country',
+          name: 'general.country',
           type: 'select',
           options: [{ key: '', value: 'All' }].concat(
             countries.map((country) => ({
@@ -78,7 +84,7 @@ export class StudentsComponent implements OnInit {
         },
         {
           key: 'language',
-          name: 'Language',
+          name: 'general.language',
           type: 'select',
           options: [{ key: '', value: 'All' }].concat(
             languages.map((language) => ({
@@ -88,6 +94,9 @@ export class StudentsComponent implements OnInit {
           ),
         },
       ];
+      this.filters.forEach(filter => {
+        this.translateService.stream(filter.name).subscribe(translated => filter.name = translated);
+      });
     });
     this.getStudentTableList(this.filtersData);
   }

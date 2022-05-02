@@ -1,6 +1,10 @@
 <div>
-    <button type="button" mat-flat-button  (click)="initiateRecording()" class="btn btn-primary" *ngIf="!recording" style="background-color: rgb(187, 226, 190)"> <mat-icon>mic</mat-icon> Start Recording </button>
-    <button type="button" mat-flat-button  (click)="stopRecording()" class="btn btn-danger" *ngIf="recording" style="background-color: rgb(228, 127, 127)"> <mat-icon>stop</mat-icon> Stop Recording </button>
+    <app-custom-button *ngIf="!recording" icon="mic" category="secondary" variant="success" (click)="initiateRecording()">
+        {{ "shared.audioRecorder.stopRecording" | translate }}
+    </app-custom-button>
+    <app-custom-button *ngIf="recording" icon="stop" category="secondary" variant="danger" (click)="stopRecording()">
+        {{ "shared.audioRecorder.startRecording" | translate }}
+    </app-custom-button>
     <div style="margin-bottom: 5px">
         <audio controls="" *ngIf="url">
             <source [src]="sanitize(url)" type="audio/wav">

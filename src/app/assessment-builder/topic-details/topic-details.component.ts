@@ -17,6 +17,21 @@ export class TopicDetailsComponent implements OnInit {
 
   public questionType: string;
 
+  public questionsArray: any[] = [
+    {
+    type: 'SELECT',
+    text: '(Multi-)Select'
+    },
+    {
+    type: 'INPUT',
+    text: 'Input'
+    },
+    {
+    type: 'NUMBER_LINE',
+    text: 'Number Line'
+    },
+];
+
   public order;
 
   public questionsList: any[];
