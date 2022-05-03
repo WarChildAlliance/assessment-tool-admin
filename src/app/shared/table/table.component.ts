@@ -131,7 +131,8 @@ export class TableComponent implements OnInit, OnChanges {
   }
 
   openElementDetails(id: number): void {
-    this.openDetailsEvent.emit(id.toString());
+    // TODO: not working
+    // this.openDetailsEvent.emit(id.toString());
   }
 
   copyAlert(): void {
