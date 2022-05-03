@@ -91,6 +91,7 @@
         "tickStep": "Tick step"
       },
       "select": {
+        "options": "Options",
         "addOption": "Add option",
         "attachments": "Attachments",
         "display": "Display",

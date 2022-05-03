@@ -89,6 +89,7 @@
         "tickStep": "ضع علامة في الخطوة"
       },
       "select": {
+        "options": "",
         "addOption": "إضافة خيار",
         "attachments": "المرفقات",
         "display": "عرض",
