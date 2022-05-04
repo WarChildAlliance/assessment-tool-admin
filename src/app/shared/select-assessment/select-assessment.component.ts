@@ -34,7 +34,7 @@ export class SelectAssessmentComponent implements OnInit {
 
   ngOnInit(): void {
     this.assessmentService.completeAssessmentsList.pipe(first()).subscribe(assessmentsList => {
-      this.assessmentsList = assessmentsList;
+      this.assessmentsList = assessmentsList.filter(assessment => assessment.archived !== true);
       this.selectedAssessment = this.assessmentsList.find(el => el.started);
       this.selectedAssessmentArr = this.assessmentsList.filter(el => el.started).slice(0, 1);
 

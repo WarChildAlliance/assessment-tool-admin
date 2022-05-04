@@ -8,12 +8,10 @@
     margin-right: 10px;
     flex: 1;
   }
-
   &__searchbox {
     flex: 2 0 auto;
   }
 }
-
 .mat-table {
   border-radius: 4px 4px 0 0;
   overflow: hidden;
@@ -23,17 +21,14 @@
   .mat-header-row {
     border-radius: 4px 4px 0 0;
   }
-
   tr>th:first-of-type,
   tr>td:first-of-type {
     padding-left: 16px;
   }
-
   .mat-cell,
   .mat-header-cell {
     padding: 0 8px;
   }
-
   .mat-row {
     transition: background-color 0.5s ease;
 
@@ -41,18 +36,22 @@
       cursor: pointer;
     }
   }
+  .circle-container {
+    cursor: default !important;
 
+    mat-icon {
+      user-select: none;
+    }
+  }
   @media (max-width: 1240px) {
     tbody {
       text-align: center;
     }
-
     .mat-sort-header-container {
       justify-content: center;
     }
   }
 }
-
 .mat-paginator {
   border-radius: 0 0 4px 4px;
 }

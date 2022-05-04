@@ -48,7 +48,7 @@ export class QuestionNumberlineFormComponent implements OnInit {
       this.numberLineForm.setValue({
         question_type: 'NUMBER_LINE',
         title: this.question.title,
-        order: this.question.order,
+        order: this.toClone ? this.order : this.question.order,
         start: this.question.start,
         end: this.question.end,
         step: this.question.step,
@@ -57,9 +57,7 @@ export class QuestionNumberlineFormComponent implements OnInit {
         show_ticks: this.question.show_ticks,
         show_value: this.question.show_value
       });
-
       await this.setExistingAttachments();
-
     } else {
       this.numberLineForm.setValue({
         question_type: 'NUMBER_LINE',

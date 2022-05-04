@@ -1,4 +1,4 @@
-<mat-card class="assessment-container">
+<mat-card  [class.-archived]="assessment.archived" class="assessment-container">
     <div class="assessment-details">
         <div class="general-information">
             <img *ngIf="assessment.icon" [src]="getSource(assessment.icon)">
@@ -30,10 +30,11 @@
             <app-custom-button *ngIf="canEdit" category="tertiary" variant="primary" icon="edit" (click)="editAssessment(assessment)">
                 {{ "general.edit" | translate }}
             </app-custom-button>
-            <!--
-            <button mat-button color="secondary">Clone</button>
-            <button *ngIf="canEdit" mat-button color="secondary" (click)="deleteAssessment(assessment.id)">Delete</button>
-            -->
+            <app-custom-button *ngIf="canEdit" category="tertiary" variant="primary" [icon]="assessment.archived ? 'unarchive' : 'archive'"
+             (click)="archiveAssessment(assessment.id, !assessment.archived)">
+                {{ assessment.archived ? ("assessmentBuilder.assessmentSummary.unarchive" | translate)
+                 : ("assessmentBuilder.assessmentSummary.archive" | translate) }}
+            </app-custom-button>
         </div>
     </div>
     <hr>
@@ -43,11 +44,27 @@
                 {{ "assessmentBuilder.assessmentSummary.addTopic" | translate }}<mat-icon>add</mat-icon>
             </div>
         </mat-card>
-        <mat-card class="topic-card" (click)="goToTopicDetails(assessment.id, topic.id)" *ngFor="let topic of assessment.topics">
+        <mat-card class="topic-card" *ngFor="let topic of assessment.topics">
             <img *ngIf="topic.icon" [src]="getMediaSource(topic.icon)">
             <span class="topic-title">{{ topic.title }}</span>
             <p class="small-description">{{ topic.description }}</p>
-            <span class="question_count">({{ topic.questionsCount }} questions)</span>
+            <span class="question_count">({{ topic.questionsCount }} {{ "general.questions" | translate }})</span>
+
+            <div [ngSwitch]="topic.archived">
+                <div class="topic-buttons" *ngSwitchCase="false">
+                    <app-custom-button matTooltip="Archive topic" [isIcon]="true"
+                     icon="archive" (click)="archiveTopic(assessment.id, topic.id, true)">
+                    </app-custom-button>
+                    <app-custom-button matTooltip="Topic details" [isIcon]="true"
+                     icon="pageview" (click)="goToTopicDetails(assessment.id, topic.id)">
+                    </app-custom-button>
+                </div>
+                <div *ngSwitchCase="true">
+                    <app-custom-button category="tertiary" variant="neutral" (click)="archiveTopic(assessment.id, topic.id, false)">
+                        {{ "assessmentBuilder.assessmentSummary.unarchive" | translate }}
+                    </app-custom-button>
+                </div>
+            </div>
         </mat-card>
     </div>
 </mat-card>

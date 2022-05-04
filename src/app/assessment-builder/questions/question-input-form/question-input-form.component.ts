@@ -44,8 +44,8 @@ export class QuestionInputFormComponent implements OnInit {
       this.inputForm.setValue({
         question_type: 'INPUT',
         title: this.question.title,
-        order: this.question.order,
-        valid_answer: this.question.valid_answer,
+        order: this.toClone ? this.order : this.question.order,
+        valid_answer: this.question.valid_answer
       });
 
       await this.setExistingAttachments();
