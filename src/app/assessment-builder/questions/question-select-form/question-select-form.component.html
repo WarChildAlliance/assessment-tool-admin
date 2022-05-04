@@ -50,52 +50,53 @@
     </div>
     <mat-divider></mat-divider>
 
-    <h2 style="margin-top: 20px;">Options</h2>
-    <div class="options-container" formArrayName="options">
-        <div class="option-form" *ngFor="let control of selectForm.controls.options['controls']; let i = index"
-            [formGroupName]="i">
-            <div>
+    <div class="options-header">
+        <h2 style="margin-top: 20px;"> {{ "assessmentBuilder.questions.select.options" | translate }}</h2>
+        <app-custom-button class="file_input" icon="add" category="secondary" variant="neutral" (click)="addOptions()">
+            {{ "assessmentBuilder.questions.select.addOption" | translate }}
+        </app-custom-button>
+    </div>
+    <div class="options-container">
+        <div class="option-forms-container" formArrayName="options">
+            <div class="option-form" *ngFor="let control of selectForm.controls.options['controls']; let i = index"
+                [formGroupName]="i">
+                <div>
+                    <mat-form-field appearance="outline" class="form-group" color="accent">
+                        <mat-label>{{ "general.title" | translate }}</mat-label>
+                        <input matInput formControlName="title">
+                    </mat-form-field>
+                </div>
                 <mat-form-field appearance="outline" class="form-group" color="accent">
-                    <mat-label>{{ "general.title" | translate }}</mat-label>
-                    <input matInput formControlName="title">
+                    <mat-label>{{ "assessmentBuilder.questions.select.value" | translate }}</mat-label>
+                    <input matInput formControlName="value">
                 </mat-form-field>
-            </div>
-            <mat-form-field appearance="outline" class="form-group" color="accent">
-                <mat-label>{{ "assessmentBuilder.questions.select.value" | translate }}</mat-label>
-                <input matInput formControlName="value">
-            </mat-form-field>
-            <br>
-            <mat-checkbox formControlName="valid">
-                <mat-label>{{ "assessmentBuilder.questions.select.isCorrectAnswer" | translate }}</mat-label>
-            </mat-checkbox>
+                <br>
+                <mat-checkbox formControlName="valid">
+                    <mat-label>{{ "assessmentBuilder.questions.select.isCorrectAnswer" | translate }}</mat-label>
+                </mat-checkbox>
 
-            <div class="attachments-container">
-                <div>
-                    <p><b>{{ "assessmentBuilder.questions.imageAttachment" | translate }}</b></p>
-                    <app-custom-button class="file_input" category="secondary" variant="neutral" (click)="imageFileInput.click()">
-                        {{ "assessmentBuilder.chooseFile" | translate }}
-                    </app-custom-button>
-                    <input hidden accept="image/*" (change)="handleFileInputOptions($event, 'IMAGE', i)" #imageFileInput type="file">
-                    <p>{{imageAttachment ? imageAttachment.name : ("assessmentBuilder.noFileChosen" | translate) }}</p>
-                </div>
+                <div class="attachments-container">
+                    <div>
+                        <p><b>{{ "assessmentBuilder.questions.imageAttachment" | translate }}</b></p>
+                        <app-custom-button class="file_input" category="secondary" variant="neutral" (click)="imageFileInput.click()">
+                            {{ "assessmentBuilder.chooseFile" | translate }}
+                        </app-custom-button>
+                        <input hidden accept="image/*" (change)="handleFileInputOptions($event, 'IMAGE', i)" #imageFileInput type="file">
+                        <p>{{imageAttachment ? imageAttachment.name : ("assessmentBuilder.noFileChosen" | translate) }}</p>
+                    </div>
 
-                <div>
-                    <p><b>{{ "assessmentBuilder.questions.audioAttachment" | translate }}</b></p>
-                    <app-custom-button class="file_input" category="secondary" variant="neutral" (click)="audioFileInput.click()">
-                        {{ "assessmentBuilder.chooseFile" | translate }}
-                    </app-custom-button>
-                    <input hidden accept="audio/*" (change)="handleFileInputOptions($event, 'AUDIO', i)" #audioFileInput type="file">
-                    <p>{{audioAttachment ? audioAttachment.name : ("assessmentBuilder.noFileChosen" | translate) }}</p>
-                    <app-audio-recorder (audioRecordingEvent)="addRecordedAudio($event)"></app-audio-recorder>
+                    <div>
+                        <p><b>{{ "assessmentBuilder.questions.audioAttachment" | translate }}</b></p>
+                        <app-custom-button class="file_input" category="secondary" variant="neutral" (click)="audioFileInput.click()">
+                            {{ "assessmentBuilder.chooseFile" | translate }}
+                        </app-custom-button>
+                        <input hidden accept="audio/*" (change)="handleFileInputOptions($event, 'AUDIO', i)" #audioFileInput type="file">
+                        <p>{{audioAttachment ? audioAttachment.name : ("assessmentBuilder.noFileChosen" | translate) }}</p>
+                        <app-audio-recorder (audioRecordingEvent)="addRecordedAudio($event)"></app-audio-recorder>
+                    </div>
                 </div>
             </div>
         </div>
-        <div>
-            <app-custom-button class="file_input" icon="add" category="secondary" variant="neutral" (click)="addOptions()">
-                {{ "assessmentBuilder.questions.select.addOption" | translate }}
-            </app-custom-button>
-        </div>
-
     </div>
     <button class="question-form-button" color="accent" (click)="onSave()"
      mat-flat-button type="submit" [disabled]="selectForm.invalid || !selectForm.dirty">

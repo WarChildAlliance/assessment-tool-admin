@@ -3,26 +3,36 @@
     width: 100%;
     justify-content: space-between;
 
-
     .select-details-container, .attachments-container {
         flex: 1;
-    } 
+    }
 }
-
 .question-form-button {
     margin-top: 20px;
     width: 50%;
     margin-left: 25%;
 }
-
 .file_input{
     background-color: rgb(233, 233, 233);
 }
-
-.options-container{
+.options-container {
     display: flex;
-}
+    overflow-x: none;
 
+    .option-forms-container{
+        display: flex;
+        overflow-x: auto;
+    }
+}
 .mat-form-field{
     margin-right: 20px;
+}
+
+.options-header {
+    position: relative;
+    app-custom-button {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
 }

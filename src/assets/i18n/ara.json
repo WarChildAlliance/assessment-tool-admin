@@ -20,6 +20,7 @@
     "order": "طلب",
     "preview": "معاينة",
     "private": "نشر",
+    "archived": "Archived",
     "questionType": "نوع السؤال",
     "questionsNumber": "عدد الأسئلة",
     "save": "يحفظ",
@@ -65,11 +66,14 @@
     "praise": "مديح",
     "publicAssessments": "التقييم (التقييمات) العامة",
     "yourAssessments": "تقييمك (تقييماتك)",
+    "archivedAssessments": "",
     "assessmentFormDialog": {
       "createNewAssessment": "قم بإنشاء تقييم جديد"
     },
     "assessmentSummary": {
-      "addTopic": "أضف موضوعًا"
+      "addTopic": "أضف موضوعًا",
+      "archive": "",
+      "unarchive": ""
     },
     "questions": {
       "audioAttachment": "مرفق صوتي",
@@ -85,6 +89,7 @@
         "tickStep": "ضع علامة في الخطوة"
       },
       "select": {
+        "options": "",
         "addOption": "إضافة خيار",
         "attachments": "المرفقات",
         "display": "عرض",
@@ -104,6 +109,7 @@
     "topicFormDialog": {
       "changeFile": "تغيير الملف",
       "createTopic": "قم بإنشاء موضوع",
+      "editTopic": "editTopic",
       "whenToShowFeedbacks": "متى تظهر التقيمات؟"
     }
   },

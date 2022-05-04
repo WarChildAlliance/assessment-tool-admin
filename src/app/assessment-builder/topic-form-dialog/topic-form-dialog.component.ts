@@ -32,6 +32,7 @@ export class TopicFormDialogComponent implements OnInit {
     praise: new FormControl(0, [Validators.required]),
     max_wrong_answers: new FormControl(0, [Validators.required]),
     icon: new FormControl(null),
+    archived: new FormControl(false)
   });
 
   constructor(private assessmentService: AssessmentService,
@@ -47,7 +48,8 @@ export class TopicFormDialogComponent implements OnInit {
         evaluated: this.topic.evaluated,
         praise: this.topic.praise,
         max_wrong_answers: this.topic.max_wrong_answers,
-        icon: this.icon
+        icon: this.icon,
+        archived: this.topic.archived
       });
     }
   }
@@ -89,6 +91,7 @@ export class TopicFormDialogComponent implements OnInit {
     this.formData.append('evaluated', this.createNewTopicForm.value.evaluated);
     this.formData.append('praise', this.createNewTopicForm.value.praise);
     this.formData.append('max_wrong_answers', this.createNewTopicForm.value.max_wrong_answers);
+    this.formData.append('archived', this.createNewTopicForm.value.archived);
 
     return this.formData;
   }

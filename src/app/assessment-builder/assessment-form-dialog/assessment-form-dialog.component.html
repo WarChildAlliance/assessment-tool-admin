@@ -1,5 +1,7 @@
-<h2 mat-dialog-title>{{ "assessmentBuilder.assessmentFormDialog.createNewAssessment" | translate }}</h2>
-<form class="form-primary" [formGroup]="createNewAssessmentForm">
+<h2 mat-dialog-title>
+    {{ edit ? ("assessmentBuilder.assessmentFormDialog.editAssessment" | translate)
+     : ("assessmentBuilder.assessmentFormDialog.createNewAssessment" | translate) }}</h2>
+<form class="form-primary" [formGroup]="createNewAssessmentForm" (ngSubmit)="submitCreateNewAssessment()">
     <div class="form-primary__flex-container">
         <mat-form-field appearance="outline" color="accent">
             <mat-label>{{ "general.title" | translate }}</mat-label>
@@ -39,13 +41,16 @@
         </div>
         <mat-checkbox formControlName="private">
             {{ "general.private" | translate }}
-        </mat-checkbox>
+        </mat-checkbox> 
+        <mat-checkbox formControlName="archived">
+            {{ "general.archive" | translate }}
+        </mat-checkbox> 
     </div>
     <mat-divider></mat-divider>
     <div class="dialog-buttons buttons-margin">
         <button mat-button class="dialog-buttons__cancel" color="secondary" mat-dialog-close>{{ "general.cancel" | translate }}</button>
         <button mat-flat-button class="dialog-buttons__submit" color="accent" type="submit" [mat-dialog-close]="createNewAssessmentForm.value"
         [disabled]="createNewAssessmentForm.invalid || !createNewAssessmentForm.dirty" (click)="submitCreateNewAssessment()">
-        {{ edit ? 'Save' : 'Create' }}</button>
+        {{ edit ? ("general.save" | translate) : ("general.create" | translate) }}</button>
     </div>
 </form>
