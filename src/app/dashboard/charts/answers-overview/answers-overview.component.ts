@@ -33,7 +33,7 @@ export class AnswersOverviewComponent implements OnInit {
   }
 
   onTopicSelection(assessmentTopicInfos: {assessmentId: string, topic: TopicDashboard}): void {
-    if (assessmentTopicInfos.topic) {
+    if (assessmentTopicInfos.topic.started) {
       this.topicId = assessmentTopicInfos.topic.id;
       this.evaluated = assessmentTopicInfos.topic.evaluated;
       this.userService.getStudentsListForATopic(this.topicId).subscribe(studentsList => {

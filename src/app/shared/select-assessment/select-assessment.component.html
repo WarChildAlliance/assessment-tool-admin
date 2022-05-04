@@ -31,7 +31,12 @@
     </mat-label>
     <mat-select [(value)]="selectedTopic">
       <ng-container *ngFor="let topic of topicsList">
-        <mat-option [value]="topic" (click)="selectATopic(topic)" [disabled]="!topic.started">{{ topic.name }}</mat-option>
+        <mat-option
+          [value]="topic"
+          (click)="selectATopic(topic)"
+          [disabled]="!topic.started">
+            {{ topic.name }}
+          </mat-option>
       </ng-container>
     </mat-select>
     <mat-hint>
