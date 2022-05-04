@@ -43,7 +43,7 @@ export class QuestionNumberlineFormComponent implements OnInit {
 
   constructor(private assessmentService: AssessmentService, private alertService: AlertService) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     if (this.question) {
       this.numberLineForm.setValue({
         question_type: 'NUMBER_LINE',
@@ -57,8 +57,7 @@ export class QuestionNumberlineFormComponent implements OnInit {
         show_ticks: this.question.show_ticks,
         show_value: this.question.show_value
       });
-
-      this.setExistingAttachments();
+      await this.setExistingAttachments();
     } else {
       this.numberLineForm.setValue({
         question_type: 'NUMBER_LINE',
@@ -145,16 +144,26 @@ export class QuestionNumberlineFormComponent implements OnInit {
     }
   }
 
-  setExistingAttachments(): void{
+  async setExistingAttachments(): Promise<void>{
     const image = this.question.attachments.find( i => i.attachment_type === 'IMAGE');
     const audio = this.question.attachments.find( a => a.attachment_type === 'AUDIO');
-    if (image) {
-      this.imageAttachment = image;
-      this.imageAttachment.name = image ? image.file.split('/').at(-1) : null;
-    }
-    if (audio) {
-      this.audioAttachment = audio;
-      this.audioAttachment.name = audio ? audio.file.split('/').at(-1) : null;
+
+    if (this.toClone) {
+      if (image) {
+        await this.objectToFile(image);
+      }
+      if (audio) {
+        await this.objectToFile(audio);
+      }
+    } else {
+      if (image) {
+        this.imageAttachment = image;
+        this.imageAttachment.name = image ? image.file.split('/').at(-1) : null;
+      }
+      if (audio) {
+        this.audioAttachment = audio;
+        this.audioAttachment.name = audio ? audio.file.split('/').at(-1) : null;
+      }
     }
   }
 
@@ -179,5 +188,22 @@ export class QuestionNumberlineFormComponent implements OnInit {
     this.changedImage = false;
 
     this.resetQuestionAudio = true;
+  }
+
+  async objectToFile(attachment): Promise<void> {
+    const fileType = attachment.attachment_type === 'IMAGE' ? 'image/png' : 'audio/wav';
+    const fileName = attachment.file.split('/').at(-1);
+
+    await fetch(attachment.file)
+      .then((res) => res.arrayBuffer())
+      .then((buf) =>  new File([buf], fileName, {type: fileType}))
+      .then((file) => {
+        if (attachment.attachment_type === 'IMAGE') {
+          this.imageAttachment = file;
+        }
+        else if (attachment.attachment_type === 'AUDIO') {
+          this.audioAttachment = file;
+        }
+    });
   }
 }
