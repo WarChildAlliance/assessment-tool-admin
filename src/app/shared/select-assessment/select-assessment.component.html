@@ -11,7 +11,7 @@
   </mat-form-field>
 </div>
 
-<div class="main-board__charts-container__select" *ngIf="multiple && selectedAssessmentArr">
+<div class="main-board__charts-container__select" *ngIf="multiple && selectedAssessmentArr.length > 0">
   <mat-form-field appearance="outline" color="accent">
     <mat-label>
       {{ "shared.selectAssessment.addAssessment" | translate }}
@@ -30,9 +30,13 @@
       {{ "shared.selectAssessment.chooseTopic" | translate }}
     </mat-label>
     <mat-select [(value)]="selectedTopic">
-      <ng-container *ngFor="let topic of topicsList">
-        <mat-option [value]="topic" (click)="selectATopic(topic)" [disabled]="!topic.started">{{ topic.name }}</mat-option>
-      </ng-container>
+      <mat-option>{{ "shared.selectAssessment.noTopics" | translate }}</mat-option>
+      <mat-option *ngFor="let topic of topicsList"
+        [value]="topic"
+        (click)="selectATopic(topic)"
+        [disabled]="!topic.started">
+          {{ topic.name }}
+      </mat-option>
     </mat-select>
     <mat-hint>
       <mat-icon>info</mat-icon>

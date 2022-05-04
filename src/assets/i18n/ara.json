@@ -173,6 +173,7 @@
       "addAssessment": "أضف تقييماً",
       "chooseAssessment": "اختر تقييماً",
       "chooseTopic": "اختر موضوعاً",
+      "noTopics": "",
       "hintNoStudent": "إذا كان الموضوع باللون الرمادي، فلا يوجد أي طالب قد بدأه"
     },
     "table": {
