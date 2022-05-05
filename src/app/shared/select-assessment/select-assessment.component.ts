@@ -39,12 +39,12 @@ export class SelectAssessmentComponent implements OnInit {
       this.selectedAssessmentArr = this.assessmentsList.filter(el => el.started).slice(0, 1);
 
       if (this.selectTopic) {
-        if(this.selectAssessment){
+        if (this.selectAssessment){
           this.assessmentId = this.selectedAssessment.id;
           this.getTopics(this.assessmentId);
         }
         else {
-          console.log("undefined id");
+          console.log('undefined id');
         }
       } else {
         this.assessmentSelection.emit(this.selectedAssessment);
