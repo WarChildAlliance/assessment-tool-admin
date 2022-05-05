@@ -1,7 +1,7 @@
 <h2 mat-dialog-title>
     {{ edit ? ("assessmentBuilder.assessmentFormDialog.editAssessment" | translate)
      : ("assessmentBuilder.assessmentFormDialog.createNewAssessment" | translate) }}</h2>
-<form class="form-primary" [formGroup]="createNewAssessmentForm" (ngSubmit)="submitCreateNewAssessment()">
+<form class="form-primary" [formGroup]="createNewAssessmentForm">
     <div class="form-primary__flex-container">
         <mat-form-field appearance="outline" color="accent">
             <mat-label>{{ "general.title" | translate }}</mat-label>
