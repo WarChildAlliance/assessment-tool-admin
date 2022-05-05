@@ -20,6 +20,7 @@
     "order": "Order",
     "preview": "Preview",
     "private": "Private",
+    "archive": "Archived",
     "questionsNumber": "Number of questions",
     "questionType": "Question type",
     "save": "Save",
@@ -30,7 +31,8 @@
     "title": "Title",
     "to": "to",
     "totalCompletedTopics": "Total completed topics",
-    "workInProgress": "Work in progress... Available soon"
+    "workInProgress": "Work in progress... Available soon",
+    "questions": "questions"
   },
   "answers": {
     "assessmentAnswers": {
@@ -65,11 +67,15 @@
     "praise": "Praise",
     "publicAssessments": "Public assessment(s)",
     "yourAssessments": "Your assessment(s)",
+    "archivedAssessments": "Archived assessment(s)",
     "assessmentFormDialog": {
-      "createNewAssessment": "Create a new assessment"
+      "createNewAssessment": "Create a new assessment",
+      "editAssessment": "Edit assessment"
     },
     "assessmentSummary": {
-      "addTopic": "Add a topic"
+      "addTopic": "Add a topic",
+      "archive": "Archive",
+      "unarchive": "Unarchive"
     },
     "questions": {
       "audioAttachment": "Audio attachment",
@@ -85,6 +91,7 @@
         "tickStep": "Tick step"
       },
       "select": {
+        "options": "Options",
         "addOption": "Add option",
         "attachments": "Attachments",
         "display": "Display",
@@ -104,6 +111,7 @@
     "topicFormDialog": {
       "changeFile": "Change File",
       "createTopic": "Create a topic",
+      "editTopic": "Edit topic",
       "whenToShowFeedbacks": "When to show feedbacks ?"
     }
   },
@@ -167,6 +175,7 @@
       "addAssessment": "Add an assessment",
       "chooseAssessment": "Choose an Assessment",
       "chooseTopic": "Choose a topic",
+      "noTopics": "No topic available",
       "hintNoStudent": "If a topic is grayed out, it means that  no student has started it yet."
     },
     "table": {

@@ -76,10 +76,10 @@ export class QuestionSelectFormComponent implements OnInit {
     private alertService: AlertService
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     const optionsForm = this.selectForm.get('options') as FormArray;
     if (this.question) {
-      this.setExistingAttachments();
+      await this.setExistingAttachments();
 
       const options = [];
       this.question.options.forEach((element) => {
@@ -356,20 +356,30 @@ export class QuestionSelectFormComponent implements OnInit {
     this.optionsAttachment = true;
   }
 
-  setExistingAttachments(): void {
+  async setExistingAttachments(): Promise<void> {
     const image = this.question.attachments.find(
       (i) => i.attachment_type === 'IMAGE'
     );
     const audio = this.question.attachments.find(
       (a) => a.attachment_type === 'AUDIO'
     );
-    this.imageAttachment = image;
-    this.audioAttachment = audio;
-    if (this.imageAttachment) {
-      this.imageAttachment.name = image ? image.file.split('/').at(-1) : null;
-    }
-    if (this.audioAttachment) {
-      this.audioAttachment.name = audio ? audio.file.split('/').at(-1) : null;
+
+    if (this.toClone) {
+      if (image) {
+        await this.objectToFile(image);
+      }
+      if (audio) {
+        await this.objectToFile(audio);
+      }
+    } else {
+      if (this.imageAttachment) {
+        this.imageAttachment = image;
+        this.imageAttachment.name = image ? image.file.split('/').at(-1) : null;
+      }
+      if (this.audioAttachment) {
+        this.audioAttachment = audio;
+        this.audioAttachment.name = audio ? audio.file.split('/').at(-1) : null;
+      }
     }
   }
 
@@ -399,10 +409,12 @@ export class QuestionSelectFormComponent implements OnInit {
     this.changedAudio = false;
     this.changedImage = false;
     this.optionAttChange = false;
-    this.resetQuestionAudio = true;
+    this.resetQuestionAudio = !this.resetQuestionAudio;
     this.saveOptions = false;
     this.selectForm.controls.order.setValue(this.order + 1, [Validators.required]);
     this.selectForm.controls.display.setValue('Grid', [Validators.required]);
+    this.selectForm.controls.question_type.setValue('SELECT');
+    this.selectForm.controls.multiple.setValue(false);
 
     const optionsForm = this.selectForm.get('options') as FormArray;
     optionsForm.clear();
@@ -412,5 +424,22 @@ export class QuestionSelectFormComponent implements OnInit {
   // TODO: later changes it in backend
   displayTypeFormat(str: string): string {
     return str.charAt(0).toUpperCase() + str.substring(1).toLowerCase();
+  }
+
+  async objectToFile(attachment): Promise<void> {
+    const fileType = attachment.attachment_type === 'IMAGE' ? 'image/png' : 'audio/wav';
+    const fileName = attachment.file.split('/').at(-1);
+
+    await fetch(attachment.file)
+      .then((res) => res.arrayBuffer())
+      .then((buf) =>  new File([buf], fileName, {type: fileType}))
+      .then((file) => {
+        if (attachment.attachment_type === 'IMAGE') {
+          this.imageAttachment = file;
+        }
+        else if (attachment.attachment_type === 'AUDIO') {
+          this.audioAttachment = file;
+        }
+    });
   }
 }
