@@ -58,14 +58,20 @@
       <mat-expansion-panel *ngFor="let assessment of studentAssessments">
         <mat-expansion-panel-header>
           <mat-panel-title>
-            <span class="assessment-title">{{ assessment.title }} </span><span class="linked-topics">({{ assessment.topic_access.length }}
-              {{ "students.studentDetail.linkedTopics" | translate }})
-            </span>
+            <div>
+              <span class="assessment-title">{{ assessment.title }} </span>
+              <span class="linked-topics">({{ assessment.topic_access.length }}
+                {{ "students.studentDetail.linkedTopics" | translate }})
+              </span>
+            </div>
+            <app-custom-button icon="event_available" category="tertiary" (click)="editTopicsAccesses(assessment)">
+              {{ 'students.studentDetail.editTopicAccess' | translate }}
+            </app-custom-button>
           </mat-panel-title>
         </mat-expansion-panel-header>
         <div class="main-board__accordions-container__topic" *ngFor="let topic of assessment.topic_access">
           <div class="main-board__accordions-container__topic__infos">
-            <p>{{ topic.topic }}</p>
+            <p>{{ topic.topic_name }}</p>
           </div>
           <div class="main-board__accordions-container__topic__infos" *ngIf="topic.start_date">
             <p>{{ "general.from" | translate }} {{ topic.start_date }}
@@ -95,3 +101,7 @@
     <app-create-student-dialog [newStudent]="student"></app-create-student-dialog>
   </ng-template>
 </div>
+
+<ng-template #editAssignTopicDialog>
+  <app-topic-access-edit [assessment]="[assessment]" [studentId]="student.id"></app-topic-access-edit>
+</ng-template>
