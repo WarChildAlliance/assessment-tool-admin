@@ -89,18 +89,23 @@ export class ScoreByTopicTableComponent implements OnInit {
   }
 
   getScoreByTopicsData(assessment, instentiateTable: boolean): void {
-    this.userService.getStudentTopicsChart(assessment.id).subscribe(scoreByTopic => {
+    if(assessment.id){
+      this.userService.getStudentTopicsChart(assessment.id).subscribe(scoreByTopic => {
 
-      if (scoreByTopic.length) {
-        if (instentiateTable) {
-          this.scoreByTopicTable = scoreByTopic;
+        if (scoreByTopic.length) {
+          if (instentiateTable) {
+            this.scoreByTopicTable = scoreByTopic;
+          }
+          this.displayedColumns = this.displayedColumns.concat(this.getTableColumns(scoreByTopic, assessment.title));
+          this.studentsDataSource = new MatTableDataSource(this.getTableData(scoreByTopic));
+        } else {
+          this.hasData = false;
         }
-        this.displayedColumns = this.displayedColumns.concat(this.getTableColumns(scoreByTopic, assessment.title));
-        this.studentsDataSource = new MatTableDataSource(this.getTableData(scoreByTopic));
-      } else {
-        this.hasData = false;
-      }
-    });
+      });
+    }
+    else{
+      console.log("undefined id");
+    }
   }
 
 }
