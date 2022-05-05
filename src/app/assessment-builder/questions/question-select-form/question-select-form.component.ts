@@ -116,7 +116,7 @@ export class QuestionSelectFormComponent implements OnInit {
         value: q.value,
         title: q.title,
         order: this.toClone ? this.order : this.question.order,
-        display: q.display_type ? q.display_type : 'Grid',
+        display: q.display_type ? this.displayTypeFormat(q.display_type) : 'Grid',
         multiple: q.multiple,
         options,
       });
@@ -419,6 +419,11 @@ export class QuestionSelectFormComponent implements OnInit {
     const optionsForm = this.selectForm.get('options') as FormArray;
     optionsForm.clear();
     this.addOptions();
+  }
+
+  // TODO: later changes it in backend
+  displayTypeFormat(str: string): string {
+    return str.charAt(0).toUpperCase() + str.substring(1).toLowerCase();
   }
 
   async objectToFile(attachment): Promise<void> {
