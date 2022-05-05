@@ -95,18 +95,12 @@ export class QuestionInputFormComponent implements OnInit {
             'AUDIO',
             { name: 'question', value: res.id }
           );
-          this.saveAttachments(this.assessmentId, this.imageAttachment, 'IMAGE', { name: 'question', value: res.id });
-        } else if (this.audioAttachment) {
-          this.saveAttachments(this.assessmentId, this.audioAttachment, 'AUDIO', { name: 'question', value: res.id });
-        } else {
-          this.alertService.success(this.alertMessage);
-          this.questionCreatedEvent.emit(true);
-          if (!this.toClone) {
-            this.resetForm();
-          }
         }
         this.alertService.success(this.alertMessage);
         this.questionCreatedEvent.emit(true);
+        if (!this.toClone) {
+          this.resetForm();
+        }
       });
   }
 
@@ -210,6 +204,7 @@ export class QuestionInputFormComponent implements OnInit {
   resetForm(): void {
     this.inputForm.reset();
     this.inputForm.controls['order'.toString()].setValue(this.order + 1);
+    this.inputForm.controls.question_type.setValue('INPUT');
 
     this.imageAttachment = null;
     this.audioAttachment = null;
@@ -217,7 +212,7 @@ export class QuestionInputFormComponent implements OnInit {
     this.changedAudio = false;
     this.changedImage = false;
 
-    this.resetQuestionAudio = true;
+    this.resetQuestionAudio = !this.resetQuestionAudio;
   }
 
   async objectToFile(attachment): Promise<void> {
