@@ -130,8 +130,7 @@ export class TableComponent implements OnInit, OnChanges {
     this.filtersChangedEvent.emit({ key, value });
   }
 
-  openElementDetails(id: number): void {
-    // TODO: not working on student's in dashboard
+  openElementDetails(id): void {
     this.openDetailsEvent.emit(id.toString());
   }
 
