@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Assessment } from 'src/app/core/models/assessment.model';
 import { BatchTopicAccesses } from 'src/app/core/models/batch-topic-accesses.model';
 import { Topic } from 'src/app/core/models/topic.models';
@@ -83,8 +83,8 @@ export class TopicAccessesBuilderComponent implements OnInit {
       const topicAccess = this.formBuilder.group({
         topic: new FormControl(topic),
         selected: new FormControl(true),
-        start_date: this.setDate ? this.startDate : new FormControl(null),
-        end_date: this.setDate ? this.endDate : new FormControl(null)
+        start_date: this.setDate ? this.startDate : new FormControl(null, Validators.required),
+        end_date: this.setDate ? this.endDate : new FormControl(null, Validators.required)
       });
       accessForm.push(topicAccess);
     });
@@ -104,16 +104,11 @@ export class TopicAccessesBuilderComponent implements OnInit {
 
     for (const element of this.assignTopicForm.value.access) {
       if (element.selected) {
-        if (element.start_date && element.end_date) {
-          accessesArray.push({
-            topic: element.topic.id,
-            start_date: this.dateFormatter(element.start_date),
-            end_date: this.dateFormatter(element.end_date)
-          });
-        } else {
-          this.alertService.error('You need to set a start date and an end date for each selected topic');
-          return;
-        }
+        accessesArray.push({
+          topic: element.topic.id,
+          start_date: this.dateFormatter(element.start_date),
+          end_date: this.dateFormatter(element.end_date)
+        });
       }
     }
 
@@ -134,6 +129,23 @@ export class TopicAccessesBuilderComponent implements OnInit {
 
   getControls(): AbstractControl[] {
     return (this.assignTopicForm.get('access') as FormArray).controls;
+  }
+
+  // Selected topics needs validations, unselected ones don't
+  selectTopic(topic, selected): void {
+    if (selected) {
+      topic.get('start_date').setValidators([Validators.required]);
+      topic.get('start_date').updateValueAndValidity();
+
+      topic.get('end_date').setValidators([Validators.required]);
+      topic.get('end_date').updateValueAndValidity();
+    } else {
+      topic.get('start_date').clearValidators();
+      topic.get('start_date').updateValueAndValidity();
+
+      topic.get('end_date').clearValidators();
+      topic.get('end_date').updateValueAndValidity();
+    }
   }
 
   // Move this function to utilities.service if it can be used anywhere else
