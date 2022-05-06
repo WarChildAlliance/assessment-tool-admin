@@ -39,8 +39,10 @@ export class SelectAssessmentComponent implements OnInit {
       this.selectedAssessmentArr = this.assessmentsList.filter(el => el.started).slice(0, 1);
 
       if (this.selectTopic) {
-        this.assessmentId = this.selectedAssessment.id;
-        this.getTopics(this.assessmentId);
+        if (this.selectedAssessment){
+          this.assessmentId = this.selectedAssessment.id;
+          this.getTopics(this.assessmentId);
+        }
       } else {
         this.assessmentSelection.emit(this.selectedAssessment);
       }

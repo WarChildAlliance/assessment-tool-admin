@@ -21,7 +21,7 @@
         </mat-radio-group>
       </div>
     </div>
-    <div class="answers-list">
+    <div class="answers-list" *ngIf="studentTopicAnswers">
       <ul>
         <li *ngFor="let answer of studentTopicAnswers; let i = index" (click)="displayAnswerDetails(answer)">Q{{ i + 1
           }}<span>
@@ -30,18 +30,18 @@
           </span></li>
       </ul>
     </div>
-    <div class="question-details">
-      <ng-container *ngIf="answerDetails && answerDetails.question.question_type === 'SELECT'">
+    <div class="question-details" *ngIf="answerDetails">
+      <ng-container *ngIf="answerDetails.question.question_type === 'SELECT'">
         <app-question-select [question]="answerDetails.question" [index]="index" [answer]="answerDetails"
           [evaluated]="evaluated"></app-question-select>
       </ng-container>
 
-      <ng-container *ngIf="answerDetails && answerDetails.question.question_type === 'INPUT'">
+      <ng-container *ngIf="answerDetails.question.question_type === 'INPUT'">
         <app-question-input [question]="answerDetails.question" [index]="index" [answer]="answerDetails.value"
           [evaluated]="evaluated"></app-question-input>
       </ng-container>
 
-      <ng-container *ngIf="answerDetails && answerDetails.question.question_type === 'SORT'">
+      <ng-container *ngIf="answerDetails.question.question_type === 'SORT'">
         <app-question-sort [question]="answerDetails.question" [index]="index" [answer]="answerDetails.value"
           [evaluated]="evaluated"></app-question-sort>
       </ng-container>
@@ -53,7 +53,7 @@
     </div>
 
   </mat-card-content>
-  <p *ngIf="!hasData">
+  <p *ngIf="!hasData" style="text-align: center;">
     {{ "general.noData" | translate }}
   </p>
 </mat-card>

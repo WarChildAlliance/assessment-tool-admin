@@ -61,8 +61,7 @@ export class ScoreByTopicChartComponent implements OnInit {
   }
 
   selectChartAssessment(assessment: AssessmentDashboard): void {
-
-    if (assessment.started) {
+    if (assessment && assessment.started) {
       this.topicsName = [];
       this.topicsAverage = [];
 
