@@ -23,9 +23,7 @@ export class AudioRecorderComponent implements OnInit {
   @Output() audioRecordingEvent = new EventEmitter<string>();
 
   @Input() set resetQuestionAudio(value: boolean) {
-    if (value) {
-      this.url = undefined;
-    }
+    this.url = undefined;
   }
 
   constructor(private domSanitizer: DomSanitizer) {}

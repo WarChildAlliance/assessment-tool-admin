@@ -73,7 +73,7 @@ export class QuestionsOverviewChartComponent implements OnInit {
   onTopicSelection(assessmentTopicInfos: {assessmentId: string, topic: TopicDashboard}): void {
     this.assessmentId = assessmentTopicInfos.assessmentId;
 
-    if (assessmentTopicInfos.topic) {
+    if (assessmentTopicInfos.topic.started) {
       this.barChart = new Chart('barChart', {
         type: 'horizontalBar',
         data: this.barChartData,

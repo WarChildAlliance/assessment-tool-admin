@@ -6,8 +6,12 @@
 
   <mat-card-content *ngIf="hasData">
     <div class="left-column">
-      <app-select-assessment (topicSelection)="onTopicSelection($event)" [selectTopic]="true" [multiple]="false"
-        [displayNonEvaluated]="false"></app-select-assessment>
+      <app-select-assessment 
+        (topicSelection)="onTopicSelection($event)"
+        [selectTopic]="true"
+        [multiple]="false"
+        [displayNonEvaluated]="false">
+      </app-select-assessment>
     </div>
 
     <div class="barChart">

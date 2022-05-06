@@ -1,6 +1,7 @@
 {
   "general": {
     "adminDashboard": "AdminDashboard",
+    "answer": "Answer",
     "assign": "Assign",
     "assessmentBuilder": "Assessment Builder",
     "assessments": "Assessments",
@@ -175,6 +176,7 @@
       "addAssessment": "Add an assessment",
       "chooseAssessment": "Choose an Assessment",
       "chooseTopic": "Choose a topic",
+      "noTopics": "No topic available",
       "hintNoStudent": "If a topic is grayed out, it means that  no student has started it yet."
     },
     "table": {
