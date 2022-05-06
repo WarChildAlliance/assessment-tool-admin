@@ -3,6 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { AssessmentDashboard } from 'src/app/core/models/assessment-dashboard.model';
 import { UserService } from 'src/app/core/services/user.service';
 import { TranslateService } from '@ngx-translate/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-score-by-topic-table',
@@ -24,10 +25,10 @@ export class ScoreByTopicTableComponent implements OnInit {
 
   public hasData = true;
 
-
   constructor(
     private userService: UserService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private router: Router
   ) {
     this.displayedColumns.forEach(col => {
       this.translateService.stream(col.name).subscribe(translated => col.name = translated);
@@ -107,4 +108,7 @@ export class ScoreByTopicTableComponent implements OnInit {
     }
   }
 
+  onOpenStudentDetails(id: string): void {
+    this.router.navigate([`/students/${id}`]);
+  }
 }
