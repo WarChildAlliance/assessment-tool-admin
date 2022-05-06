@@ -89,7 +89,7 @@ export class ScoreByTopicTableComponent implements OnInit {
   }
 
   getScoreByTopicsData(assessment, instentiateTable: boolean): void {
-    if (assessment.id){
+    if (assessment && assessment.id){
       this.userService.getStudentTopicsChart(assessment.id).subscribe(scoreByTopic => {
 
         if (scoreByTopic.length) {
@@ -102,9 +102,8 @@ export class ScoreByTopicTableComponent implements OnInit {
           this.hasData = false;
         }
       });
-    }
-    else{
-      console.log('undefined id');
+    } else {
+      this.hasData = false;
     }
   }
 
