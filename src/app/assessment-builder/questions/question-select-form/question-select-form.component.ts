@@ -316,6 +316,9 @@ export class QuestionSelectFormComponent implements OnInit {
   }
 
   handleFileInput(event, type): void {
+    if (this.editQuestion) {
+      this.selectForm.markAsDirty();
+    }
     if (type === 'IMAGE') {
       this.changedImage = true;
       this.imageAttachment = event.target.files[0];
@@ -326,6 +329,9 @@ export class QuestionSelectFormComponent implements OnInit {
   }
 
   handleFileInputOptions(event, type, i): void {
+    if (this.editQuestion) {
+      this.selectForm.markAsDirty();
+    }
     let overwritePrevious = false;
     let id = 0;
     if (type === 'IMAGE') {
@@ -384,6 +390,9 @@ export class QuestionSelectFormComponent implements OnInit {
   }
 
   addRecordedAudio(event): void {
+    if (this.editQuestion) {
+      this.selectForm.markAsDirty();
+    }
     const name = 'recording_' + new Date().toISOString() + '.wav';
     this.audioAttachment = this.blobToFile(event, name);
     this.changedAudio = true;
