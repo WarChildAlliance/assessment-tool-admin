@@ -1,6 +1,7 @@
 {
   "general": {
     "adminDashboard": "AdminDashboard",
+    "answer": "Answer",
     "assign": "Assign",
     "assessmentBuilder": "Assessment Builder",
     "assessments": "Assessments",
