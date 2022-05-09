@@ -15,8 +15,10 @@ import { MatDialog } from '@angular/material/dialog';
 export class StudentDetailComponent implements OnInit {
   public student: StudentTableData;
   public studentAssessments;
+  public assessment;
 
   @ViewChild('editStudentDialog') editStudentDialog: TemplateRef<any>;
+  @ViewChild('editAssignTopicDialog') editAssignTopicDialog: TemplateRef<any>;
 
   constructor(
     private userService: UserService,
@@ -27,23 +29,29 @@ export class StudentDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      this.userService
-        .getStudentDetails(params.student_id)
-        .subscribe((student) => {
-          this.student = student;
-          this.assessmentService
-            .getStudentAssessments(this.student.id)
-            .subscribe((assessments) => {
-              assessments.forEach((assessment) => {
-                assessment.topic_access.forEach((topic) => {
-                  topic.hasAccess = moment(
-                    formatDate(new Date(), 'yyyy-MM-dd', 'en')
-                  ).isBetween(topic.start_date, topic.end_date, null, '[]');
-                });
-              });
-              this.studentAssessments = assessments;
-            });
+      this.getStudentDetails(params.student_id);
+      this.getStudentAssessments(params.student_id);
+    });
+  }
+
+  getStudentDetails(studentId): void {
+    this.userService
+      .getStudentDetails(studentId.toString()).subscribe((student) => {
+        this.student = student;
+    });
+  }
+
+  getStudentAssessments(studentId): void {
+    this.assessmentService.getStudentAssessments(studentId).subscribe(
+      (assessments) => {
+        assessments.forEach((assessment) => {
+          assessment.topic_access.forEach((topic) => {
+            topic.hasAccess = moment(
+              formatDate(new Date(), 'yyyy-MM-dd', 'en')
+            ).isBetween(topic.start_date, topic.end_date, null, '[]');
+          });
         });
+        this.studentAssessments = assessments;
     });
   }
 
@@ -51,11 +59,18 @@ export class StudentDetailComponent implements OnInit {
     const editStudentDialog = this.dialog.open(this.editStudentDialog);
     editStudentDialog.afterClosed().subscribe((value) => {
       if (value) {
-        this.userService
-          .getStudentDetails(this.student.id.toString())
-          .subscribe((student) => {
-            this.student = student;
-          });
+        this.getStudentDetails(this.student.id);
+      }
+    });
+  }
+
+  editTopicsAccesses(assessment): void {
+    this.assessment = assessment;
+    const editAssignTopicDialog = this.dialog.open(this.editAssignTopicDialog);
+
+    editAssignTopicDialog.afterClosed().subscribe((value) => {
+      if (value) {
+        this.getStudentAssessments(this.student.id);
       }
     });
   }

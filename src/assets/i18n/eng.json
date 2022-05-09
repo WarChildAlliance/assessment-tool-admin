@@ -205,7 +205,8 @@
       "noActiveAccess": "No active access",
       "numberAssessments": "Number of assessments",
       "studentAssessments": "Student's assessments",
-      "studentNotLinkedAssessment": "This student is currently not linked to any assessment."
+      "studentNotLinkedAssessment": "This student is currently not linked to any assessment.",
+      "editTopicAccess": "Edit Topic Access"
     },
     "topicAccessesBuilder": {
       "applySameDatesAllTopics": "Apply the same dates to all the topics ?",
@@ -213,6 +214,16 @@
       "endDate": "End date",
       "startDate": "Start date",
       "topicAvailability": "Assessment topic(s) availability"
+    },
+    "topicAccessesEdit": {
+      "editTopicsAccess": "Edit assessment topic(s) access",
+      "removeTopicAccess": "Delete Topic Access",
+      "allTopicsAccessesDeleted": "All topics accesses of this assessment have been deleted",
+      "missingDates": "You need to set a start date and an end date for each topic",
+      "topicsUpdated": "The topic(s) accesses have been successfully updated!",
+      "errorOnEdit": "There was an error during the submission of the topic accesses update",
+      "accessEdited": "The topic access have been successfully deleted!",
+      "errorOnDeletion": "There was an error during the submission of the topic access deletion"
     }
   }
 }
