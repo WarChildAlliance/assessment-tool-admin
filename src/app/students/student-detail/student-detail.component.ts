@@ -6,7 +6,6 @@ import { StudentTableData } from 'src/app/core/models/student-table-data.model';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { MatDialog } from '@angular/material/dialog';
-import { CreateStudentDialogComponent } from '../create-student-dialog/create-student-dialog.component';
 
 @Component({
   selector: 'app-student-detail',
@@ -18,6 +17,7 @@ export class StudentDetailComponent implements OnInit {
   public studentAssessments;
   public assessment;
 
+  @ViewChild('editStudentDialog') editStudentDialog: TemplateRef<any>;
   @ViewChild('editAssignTopicDialog') editAssignTopicDialog: TemplateRef<any>;
 
   constructor(
@@ -56,12 +56,7 @@ export class StudentDetailComponent implements OnInit {
   }
 
   editCurrentStudent(): void {
-    const editStudentDialog = this.dialog.open(CreateStudentDialogComponent, {
-      data: {
-        newStudent: this.student
-      }
-    });
-
+    const editStudentDialog = this.dialog.open(this.editStudentDialog);
     editStudentDialog.afterClosed().subscribe((value) => {
       if (value) {
         this.getStudentDetails(this.student.id);

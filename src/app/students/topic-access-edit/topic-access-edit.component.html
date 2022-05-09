@@ -56,7 +56,7 @@
     <button mat-flat-button mat-dialog-close [mat-dialog-close]="deletedTopic" class="dialog-buttons__cancel" color="secondary">
         {{ "general.cancel" | translate }}
     </button>
-    <button mat-flat-button class="dialog-buttons__submit" [disabled]="!controls.length || !assignTopicForm.dirty || !assignTopicForm.valid" color="accent"
+    <button *ngIf="controls.length" mat-flat-button class="dialog-buttons__submit" [disabled]="!controls.length || !assignTopicForm.dirty || !assignTopicForm.valid" color="accent"
     (click)="submitCreateTopicAccesses()" [mat-dialog-close]="assignTopicForm.value">
         {{ "general.assign" | translate }}
     </button>
