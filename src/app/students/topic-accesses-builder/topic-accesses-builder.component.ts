@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Assessment } from 'src/app/core/models/assessment.model';
 import { BatchTopicAccesses } from 'src/app/core/models/batch-topic-accesses.model';
 import { Topic } from 'src/app/core/models/topic.models';
@@ -85,8 +85,8 @@ export class TopicAccessesBuilderComponent implements OnInit {
       const topicAccess = this.formBuilder.group({
         topic: new FormControl(topic),
         selected: new FormControl(true),
-        start_date: this.setDate ? this.startDate : new FormControl(null),
-        end_date: this.setDate ? this.endDate : new FormControl(null)
+        start_date: this.setDate ? this.startDate : new FormControl(null, Validators.required),
+        end_date: this.setDate ? this.endDate : new FormControl(null, Validators.required)
       });
       accessForm.push(topicAccess);
     });
@@ -138,4 +138,20 @@ export class TopicAccessesBuilderComponent implements OnInit {
     return (this.assignTopicForm.get('access') as FormArray).controls;
   }
 
+  // Selected topics needs validations, unselected ones don't
+  selectTopic(topic, selected): void {
+    if (selected) {
+      topic.get('start_date').setValidators([Validators.required]);
+      topic.get('start_date').updateValueAndValidity();
+
+      topic.get('end_date').setValidators([Validators.required]);
+      topic.get('end_date').updateValueAndValidity();
+    } else {
+      topic.get('start_date').clearValidators();
+      topic.get('start_date').updateValueAndValidity();
+
+      topic.get('end_date').clearValidators();
+      topic.get('end_date').updateValueAndValidity();
+    }
+  }
 }
