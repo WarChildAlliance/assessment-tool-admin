@@ -13,6 +13,7 @@ import { TableColumn } from '../core/models/table-column.model';
 import { TableFilter } from '../core/models/table-filter.model';
 import { AlertService } from '../core/services/alert.service';
 import { UserService } from '../core/services/user.service';
+import { CreateStudentDialogComponent } from './create-student-dialog/create-student-dialog.component';
 
 @Component({
   selector: 'app-students',
@@ -41,7 +42,6 @@ export class StudentsComponent implements OnInit {
   public filters: TableFilter[];
   private filtersData = { country: '', language: '', ordering: '-id' };
 
-  @ViewChild('createStudentDialog') createStudentDialog: TemplateRef<any>;
   @ViewChild('assignTopicDialog') assignTopicDialog: TemplateRef<any>;
 
   public createNewStudentForm: FormGroup = new FormGroup({
@@ -142,7 +142,7 @@ export class StudentsComponent implements OnInit {
   }
 
   openCreateStudentDialog(): void {
-    const createStudentDialog = this.dialog.open(this.createStudentDialog);
+    const createStudentDialog = this.dialog.open(CreateStudentDialogComponent);
     createStudentDialog.afterClosed().subscribe((value) => {
       if (value) {
         this.getStudentTableList(this.filtersData);
@@ -152,7 +152,11 @@ export class StudentsComponent implements OnInit {
 
   openEditStudentDialog(): void {
     this.studentToEdit = this.selectedUsers[0];
-    const editStudentDialog = this.dialog.open(this.createStudentDialog);
+    const editStudentDialog = this.dialog.open(CreateStudentDialogComponent, {
+      data: {
+        newStudent: this.studentToEdit
+      }
+    });
     editStudentDialog.afterClosed().subscribe((value) => {
       if (value) {
         this.getStudentTableList(this.filtersData);
