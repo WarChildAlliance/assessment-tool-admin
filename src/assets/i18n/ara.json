@@ -203,7 +203,8 @@
       "noActiveAccess": "لا يوجد وصول نشط",
       "numberAssessments": "عدد التقييمات",
       "studentAssessments": "تقييمات الطلاب",
-      "studentNotLinkedAssessment": "هذا الطالب حالياً غير مرتبط بأي تقييم"
+      "studentNotLinkedAssessment": "هذا الطالب حالياً غير مرتبط بأي تقييم",
+      "editTopicAccess": "تحرير الوصول إلى الموضوع"
     },
     "topicAccessesBuilder": {
       "applySameDatesAllTopics": "تطبيق نفس التواريخ على جميع المواضيع؟",
@@ -212,6 +213,16 @@
       "startDate": "تاريخ البدء",
       "topicAvailability": "مدى توفر موضوع (مواضيع) التقييم",
       "notifier": "تحتاج إلى تحديد تاريخ بدء وتاريخ انتهاء لكل موضوع محدد"
+    },
+    "topicAccessesEdit": {
+      "editTopicsAccess": "تحرير الوصول إلى موضوع (مواضيع) التقييم",
+      "removeTopicAccess": "حذف الوصول إلى الموضوع",
+      "allTopicsAccessesDeleted": "تم حذف كافة المواضيع التي يتم الوصول إليها من هذا التقييم",
+      "missingDates": "",
+      "topicsUpdated": "",
+      "errorOnEdit": "",
+      "accessEdited": "",
+      "errorOnDeletion": ""
     }
   }
 }

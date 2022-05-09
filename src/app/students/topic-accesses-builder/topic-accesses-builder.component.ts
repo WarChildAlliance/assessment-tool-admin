@@ -6,6 +6,7 @@ import { Topic } from 'src/app/core/models/topic.models';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { UserService } from 'src/app/core/services/user.service';
+import { UtilitiesService } from 'src/app/core/services/utilities.service';
 
 @Component({
   selector: 'app-topic-accesses-builder',
@@ -35,7 +36,8 @@ export class TopicAccessesBuilderComponent implements OnInit {
   constructor(private assessmentService: AssessmentService,
               private userService: UserService,
               private formBuilder: FormBuilder,
-              private alertService: AlertService
+              private alertService: AlertService,
+              private utilitiesService: UtilitiesService
   ) {
   }
 
@@ -104,11 +106,16 @@ export class TopicAccessesBuilderComponent implements OnInit {
 
     for (const element of this.assignTopicForm.value.access) {
       if (element.selected) {
-        accessesArray.push({
-          topic: element.topic.id,
-          start_date: this.dateFormatter(element.start_date),
-          end_date: this.dateFormatter(element.end_date)
-        });
+        if (element.start_date && element.end_date) {
+          accessesArray.push({
+            topic: element.topic.id,
+            start_date: this.utilitiesService.dateFormatter(element.start_date),
+            end_date: this.utilitiesService.dateFormatter(element.end_date)
+          });
+        } else {
+          this.alertService.error('You need to set a start date and an end date for each selected topic');
+          return;
+        }
       }
     }
 
@@ -146,17 +153,5 @@ export class TopicAccessesBuilderComponent implements OnInit {
       topic.get('end_date').clearValidators();
       topic.get('end_date').updateValueAndValidity();
     }
-  }
-
-  // Move this function to utilities.service if it can be used anywhere else
-  dateFormatter(date: Date): string {
-    let month = (date.getMonth() + 1).toString();
-    let day = date.getDate().toString();
-    const year = date.getFullYear().toString();
-
-    if (month.length < 2) { month = '0' + month; }
-    if (day.length < 2) { day = '0' + day; }
-
-    return [year, month, day].join('-');
   }
 }

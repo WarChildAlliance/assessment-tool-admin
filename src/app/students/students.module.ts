@@ -23,13 +23,16 @@ import { StudentsComponent } from './students.component';
 import { TopicAccessesBuilderComponent } from './topic-accesses-builder/topic-accesses-builder.component';
 import { CreateStudentDialogComponent } from './create-student-dialog/create-student-dialog.component';
 import { CustomButtonModule } from '../shared/button/button.module';
+import { TopicAccessEditComponent } from './topic-access-edit/topic-access-edit.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
     StudentsComponent,
     StudentDetailComponent,
     TopicAccessesBuilderComponent,
-    CreateStudentDialogComponent
+    CreateStudentDialogComponent,
+    TopicAccessEditComponent
   ],
   imports: [
     CommonModule,
@@ -52,7 +55,8 @@ import { CustomButtonModule } from '../shared/button/button.module';
     MatNativeDateModule,
     MatTabsModule,
     MatExpansionModule,
-    CustomButtonModule
-  ]
+    CustomButtonModule,
+    MatTooltipModule
+  ],
 })
 export class StudentsModule { }

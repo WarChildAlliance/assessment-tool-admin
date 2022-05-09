@@ -53,6 +53,10 @@ export class UserService {
       `${environment.API_URL}/assessments/${assessmentId}/accesses/bulk_create/`, batchTopicAccesses);
   }
 
+  removeTopicAccess(assessmentId: string, topicAccessId: string): Observable<any> {
+    return this.http.delete<any>(`${environment.API_URL}/assessments/${assessmentId}/accesses/${topicAccessId}/`);
+  }
+
   getLanguages(): Observable<Language[]> {
     return this.http.get<Language[]>(`${environment.API_URL}/users/languages`);
   }

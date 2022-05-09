@@ -36,7 +36,7 @@
     </div>
     <div class="main-board__charts-container__chart">
       <app-table [tableData]="studentsDataSource" [displayedColumns]="displayedColumns" [isSelectable]="false"
-        [hideSearchBar]="true"></app-table>
+        [hideSearchBar]="true" (openDetailsEvent)="onOpenStudentDetails($event)"></app-table>
     </div>
   </mat-card-content>
   <p *ngIf="!hasData" style="text-align: center;">
