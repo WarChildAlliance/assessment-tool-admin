@@ -11,7 +11,7 @@
         </span>
     
         <ng-container formArrayName="access">
-            <div class="topic-accesses-builder__list__set-dates" *ngIf="getControls().length">
+            <div class="topic-accesses-builder__list__set-dates" *ngIf="controls.length">
                 <mat-form-field color="accent" appearance="outline">
                     <mat-date-range-input [rangePicker]="setUpDateForAll" [min]="minDate">
                         <input (dateInput)="onDate('start_date', $event.value)" matStartDate [placeholder]="'students.topicAccessesBuilder.startDate' | translate">
@@ -26,7 +26,7 @@
                     </mat-checkbox>
                 </div>
             </div>
-            <div *ngFor="let control of getControls(); let i=index;" [formGroupName]="i"
+            <div *ngFor="let control of controls; let i=index;" [formGroupName]="i"
                 class="topic-accesses-builder__list-row -topic-access">
     
                 <span>
@@ -43,8 +43,8 @@
                         <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
                     </mat-form-field>
     
-                    <app-custom-button matTooltip="{{ 'students.topicAccessesEdit.deleteTopicAccess' | translate }}" [isIcon]="true"
-                        icon="delete" (click)="delete(control)">
+                    <app-custom-button matTooltip="{{ 'students.topicAccessesEdit.removeTopicAccess' | translate }}" [isIcon]="true"
+                        icon="remove_circle_outline" (click)="delete(control)">
                     </app-custom-button>
                 </div>
             </div>
@@ -56,7 +56,7 @@
     <button mat-flat-button mat-dialog-close [mat-dialog-close]="deletedTopic" class="dialog-buttons__cancel" color="secondary">
         {{ "general.cancel" | translate }}
     </button>
-    <button mat-flat-button class="dialog-buttons__submit" [disabled]="!getControls().length" color="accent"
+    <button mat-flat-button class="dialog-buttons__submit" [disabled]="!controls.length || !assignTopicForm.dirty || !assignTopicForm.valid" color="accent"
     (click)="submitCreateTopicAccesses()" [mat-dialog-close]="assignTopicForm.value">
         {{ "general.assign" | translate }}
     </button>

@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { BatchTopicAccesses } from 'src/app/core/models/batch-topic-accesses.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { UtilitiesService } from 'src/app/core/services/utilities.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-topic-access-edit',
@@ -28,11 +29,16 @@ export class TopicAccessEditComponent implements OnInit {
     access: new FormArray([]),
   });
 
+  get controls(): AbstractControl[] {
+    return (this.assignTopicForm.get('access') as FormArray).controls;
+  }
+
   constructor(
     private formBuilder: FormBuilder,
     private utilitiesService: UtilitiesService,
     private alertService: AlertService,
-    private userService: UserService
+    private userService: UserService,
+    private translateService: TranslateService
   ) { }
 
   ngOnInit(): void {
@@ -58,8 +64,8 @@ export class TopicAccessEditComponent implements OnInit {
 
       const topicAccess = this.formBuilder.group({
         topic: new FormControl(topic),
-        start_date: this.setDate ? this.startDate : new FormControl(startDate),
-        end_date: this.setDate ? this.endDate : new FormControl(endDate)
+        start_date: this.setDate ? this.startDate : new FormControl(startDate, Validators.required),
+        end_date: this.setDate ? this.endDate : new FormControl(endDate, Validators.required)
       });
 
       accessForm.push(topicAccess);
@@ -67,16 +73,12 @@ export class TopicAccessEditComponent implements OnInit {
     });
   }
 
-  getControls(): AbstractControl[] {
-    return (this.assignTopicForm.get('access') as FormArray).controls;
-  }
-
-  onDate(date, event): void {
-    if (date === 'start_date') {
-      this.startDate = event;
+  onDate(type, date): void {
+    if (type === 'start_date') {
+      this.startDate = date;
     }
-    if (date === 'end_date') {
-      this.endDate = event;
+    if (type === 'end_date') {
+      this.endDate = date;
     }
   }
 
@@ -95,11 +97,7 @@ export class TopicAccessEditComponent implements OnInit {
   submitCreateTopicAccesses(): void {
     const studentsArray: number[] = [this.studentId];
 
-    const accessesArray = new Array<{
-      topic: number,
-      start_date: string,
-      end_date: string
-    }>();
+    const accessesArray: any[] = [];
 
     for (const element of this.assignTopicForm.value.access) {
       if (element.start_date && element.end_date) {
@@ -109,7 +107,7 @@ export class TopicAccessEditComponent implements OnInit {
           end_date: this.utilitiesService.dateFormatter(element.end_date)
         });
       } else {
-        this.alertService.error('You need to set a start date and an end date for each topic');
+        this.alertService.error(this.translateService.instant('students.topicAccessesEdit.missingDates'));
         return;
       }
     }
@@ -121,10 +119,10 @@ export class TopicAccessEditComponent implements OnInit {
 
     this.userService.assignTopicsAccesses(batchTopicAccessesData, this.assessmentId).subscribe(
       result => {
-        this.alertService.success('The topic(s) accesses have been successfully updated!');
+        this.alertService.success(this.translateService.instant('students.topicAccessesEdit.topicsUpdated'));
       },
       error => {
-        this.alertService.error('There was an error during the submission of the topic accesses update');
+        this.alertService.error(this.translateService.instant('students.topicAccessesEdit.errorOnEdit'));
       }
     );
   }
@@ -132,9 +130,9 @@ export class TopicAccessEditComponent implements OnInit {
   delete(topic): void {
     const topicAccessId = topic.get('topic').value.topic_access_id;
 
-    this.userService.deleteTopicAccess(this.assessmentId, topicAccessId).subscribe(
+    this.userService.removeTopicAccess(this.assessmentId, topicAccessId).subscribe(
       result => {
-        this.alertService.success('The topic access have been successfully deleted!');
+        this.alertService.success(this.translateService.instant('students.topicAccessesEdit.accessEdited'));
 
         (this.assignTopicForm.controls.access as FormArray).removeAt(
           this.assignTopicForm.value.access.findIndex(elem => elem.topic === topic.controls.topic.value)
@@ -143,7 +141,7 @@ export class TopicAccessEditComponent implements OnInit {
         this.deletedTopic = true;
       },
       error => {
-        this.alertService.error('There was an error during the submission of the topic access deletion');
+        this.alertService.error(this.translateService.instant('students.topicAccessesEdit.errorOnDeletion'));
       }
     );
   }

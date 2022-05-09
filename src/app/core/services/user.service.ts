@@ -53,7 +53,7 @@ export class UserService {
       `${environment.API_URL}/assessments/${assessmentId}/accesses/bulk_create/`, batchTopicAccesses);
   }
 
-  deleteTopicAccess(assessmentId: string, topicAccessId: string): Observable<any> {
+  removeTopicAccess(assessmentId: string, topicAccessId: string): Observable<any> {
     return this.http.delete<any>(`${environment.API_URL}/assessments/${assessmentId}/accesses/${topicAccessId}/`);
   }
 

@@ -214,8 +214,13 @@
     },
     "topicAccessesEdit": {
       "editTopicsAccess": "تحرير الوصول إلى موضوع (مواضيع) التقييم",
-      "deleteTopicAccess": "حذف الوصول إلى الموضوع",
-      "allTopicsAccessesDeleted": "تم حذف كافة المواضيع التي يتم الوصول إليها من هذا التقييم"
+      "removeTopicAccess": "حذف الوصول إلى الموضوع",
+      "allTopicsAccessesDeleted": "تم حذف كافة المواضيع التي يتم الوصول إليها من هذا التقييم",
+      "missingDates": "",
+      "topicsUpdated": "",
+      "errorOnEdit": "",
+      "accessEdited": "",
+      "errorOnDeletion": ""
     }
   }
 }

@@ -216,8 +216,13 @@
     },
     "topicAccessesEdit": {
       "editTopicsAccess": "Edit assessment topic(s) access",
-      "deleteTopicAccess": "Delete Topic Access",
-      "allTopicsAccessesDeleted": "All topics accesses of this assessment have been deleted"
+      "removeTopicAccess": "Delete Topic Access",
+      "allTopicsAccessesDeleted": "All topics accesses of this assessment have been deleted",
+      "missingDates": "You need to set a start date and an end date for each topic",
+      "topicsUpdated": "The topic(s) accesses have been successfully updated!",
+      "errorOnEdit": "There was an error during the submission of the topic accesses update",
+      "accessEdited": "The topic access have been successfully deleted!",
+      "errorOnDeletion": "There was an error during the submission of the topic access deletion"
     }
   }
 }
