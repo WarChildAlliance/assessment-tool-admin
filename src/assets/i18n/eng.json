@@ -213,7 +213,8 @@
       "assessment": "Assessment",
       "endDate": "End date",
       "startDate": "Start date",
-      "topicAvailability": "Assessment topic(s) availability"
+      "topicAvailability": "Assessment topic(s) availability",
+      "notifier": "You need to set a start date and an end date for each selected topic."
     },
     "topicAccessesEdit": {
       "editTopicsAccess": "Edit assessment topic(s) access",

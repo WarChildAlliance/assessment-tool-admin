@@ -48,7 +48,7 @@
                     <div *ngFor="let control of getControls(); let i=index;" [formGroupName]="i"
                         class="topic-accesses-builder__list-row -topic-access">
 
-                        <mat-checkbox formControlName="selected">
+                        <mat-checkbox formControlName="selected" (change)="selectTopic(control, $event.checked)">
                             {{ control.get('topic').value.name }}
                         </mat-checkbox>
 
@@ -61,6 +61,7 @@
                             <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
                         </mat-form-field>
                     </div>
+                    <span class="notifier" *ngIf="this.assignTopicForm.invalid">{{ 'students.topicAccessesBuilder.notifier' | translate }}</span>
                 </ng-container>
             </div>
         </div>
@@ -70,8 +71,8 @@
     <button mat-flat-button mat-dialog-close class="dialog-buttons__cancel" color="secondary">
         {{ "general.cancel" | translate }}
     </button>
-    <button mat-flat-button class="dialog-buttons__submit" [disabled]="!getControls().length" color="accent"
-    (click)="submitCreateTopicAccesses()">
+    <button mat-flat-button class="dialog-buttons__submit" [disabled]="!getControls().length || this.assignTopicForm.invalid" color="accent"
+    (click)="submitCreateTopicAccesses()" mat-dialog-close>
         {{ "general.assign" | translate }}
     </button>
 </div>
