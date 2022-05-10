@@ -6,6 +6,7 @@ import {
   ViewChild,
   Output,
   EventEmitter,
+  Inject,
 } from '@angular/core';
 import {
   FormArray,
@@ -16,6 +17,15 @@ import {
 } from '@angular/forms';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+interface DialogData {
+  topicId?: any;
+  order?: any;
+  question?: any;
+  toClone?: boolean;
+  assessmentId?: any;
+}
 
 @Component({
   selector: 'app-question-select-form',
@@ -23,11 +33,12 @@ import { AssessmentService } from 'src/app/core/services/assessment.service';
   styleUrls: ['./question-select-form.component.scss'],
 })
 export class QuestionSelectFormComponent implements OnInit {
-  @Input() assessmentId;
-  @Input() topicId;
-  @Input() order;
-  @Input() question;
-  @Input() toClone;
+
+  public assessmentId;
+  public topicId;
+  public order;
+  public question;
+  public toClone: boolean;
 
   @Output() questionCreatedEvent = new EventEmitter<boolean>();
   @Output() closeModalEvent = new EventEmitter<boolean>();
@@ -71,12 +82,18 @@ export class QuestionSelectFormComponent implements OnInit {
   });
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private formBuilder: FormBuilder,
     private assessmentService: AssessmentService,
     private alertService: AlertService
   ) {}
 
   async ngOnInit(): Promise<void> {
+    if (this.data?.assessmentId) { this.assessmentId = this.data.assessmentId; }
+    if (this.data?.topicId) { this.topicId = this.data.topicId; }
+    if (this.data?.order) { this.order = this.data.order; }
+    if (this.data?.question) { this.question = this.data.question; }
+    if (this.data?.toClone) { this.toClone = this.data.toClone; }
     const optionsForm = this.selectForm.get('options') as FormArray;
     if (this.question) {
       await this.setExistingAttachments();
@@ -120,6 +137,9 @@ export class QuestionSelectFormComponent implements OnInit {
         multiple: q.multiple,
         options,
       });
+      if (this.toClone) {
+        this.selectForm.markAsDirty();
+      }
     } else {
       this.selectForm.setValue({
         question_type: 'SELECT',

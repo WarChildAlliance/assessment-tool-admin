@@ -23,7 +23,7 @@ import { StudentsComponent } from './students.component';
 import { TopicAccessesBuilderComponent } from './topic-accesses-builder/topic-accesses-builder.component';
 import { CreateStudentDialogComponent } from './create-student-dialog/create-student-dialog.component';
 import { CustomButtonModule } from '../shared/button/button.module';
-import { TopicAccessEditComponent } from './topic-access-edit/topic-access-edit.component';
+import { TopicAccessModalComponent } from './topic-access-modal/topic-access-modal.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
@@ -32,7 +32,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     StudentDetailComponent,
     TopicAccessesBuilderComponent,
     CreateStudentDialogComponent,
-    TopicAccessEditComponent
+    TopicAccessModalComponent
   ],
   imports: [
     CommonModule,

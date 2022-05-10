@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
@@ -13,6 +13,8 @@ import { TableColumn } from '../core/models/table-column.model';
 import { TableFilter } from '../core/models/table-filter.model';
 import { AlertService } from '../core/services/alert.service';
 import { UserService } from '../core/services/user.service';
+import { CreateStudentDialogComponent } from './create-student-dialog/create-student-dialog.component';
+import { TopicAccessesBuilderComponent } from './topic-accesses-builder/topic-accesses-builder.component';
 
 @Component({
   selector: 'app-students',
@@ -40,9 +42,6 @@ export class StudentsComponent implements OnInit {
 
   public filters: TableFilter[];
   private filtersData = { country: '', language: '', ordering: '-id' };
-
-  @ViewChild('createStudentDialog') createStudentDialog: TemplateRef<any>;
-  @ViewChild('assignTopicDialog') assignTopicDialog: TemplateRef<any>;
 
   public createNewStudentForm: FormGroup = new FormGroup({
     first_name: new FormControl('', [Validators.required]),
@@ -133,7 +132,11 @@ export class StudentsComponent implements OnInit {
           student.language_code === this.selectedUsers[0].language_code
       )
     ) {
-      this.dialog.open(this.assignTopicDialog);
+      this.dialog.open(TopicAccessesBuilderComponent, {
+        data: {
+          studentsList: this.selectedUsers
+        }
+      });
     } else {
       this.alertService.error(
         'You can only give access to a topic to students with the same country and language.'
@@ -142,7 +145,7 @@ export class StudentsComponent implements OnInit {
   }
 
   openCreateStudentDialog(): void {
-    const createStudentDialog = this.dialog.open(this.createStudentDialog);
+    const createStudentDialog = this.dialog.open(CreateStudentDialogComponent);
     createStudentDialog.afterClosed().subscribe((value) => {
       if (value) {
         this.getStudentTableList(this.filtersData);
@@ -152,7 +155,11 @@ export class StudentsComponent implements OnInit {
 
   openEditStudentDialog(): void {
     this.studentToEdit = this.selectedUsers[0];
-    const editStudentDialog = this.dialog.open(this.createStudentDialog);
+    const editStudentDialog = this.dialog.open(CreateStudentDialogComponent, {
+      data: {
+        newStudent: this.studentToEdit
+      }
+    });
     editStudentDialog.afterClosed().subscribe((value) => {
       if (value) {
         this.getStudentTableList(this.filtersData);

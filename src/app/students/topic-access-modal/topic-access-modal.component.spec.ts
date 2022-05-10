@@ -1,20 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TopicAccessModalComponent } from './topic-access-modal.component';
 
-import { TopicAccessEditComponent } from './topic-access-edit.component';
-
-describe('TopicAccessEditComponent', () => {
-  let component: TopicAccessEditComponent;
-  let fixture: ComponentFixture<TopicAccessEditComponent>;
+describe('TopicAccessModalComponent', () => {
+  let component: TopicAccessModalComponent;
+  let fixture: ComponentFixture<TopicAccessModalComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TopicAccessEditComponent ]
+      declarations: [ TopicAccessModalComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TopicAccessEditComponent);
+    fixture = TestBed.createComponent(TopicAccessModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

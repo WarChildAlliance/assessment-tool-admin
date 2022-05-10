@@ -1,7 +1,14 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+interface DialogData {
+  edit?: boolean;
+  topic?: any;
+  assessmentId?: any;
+}
 
 @Component({
   selector: 'app-topic-form-dialog',
@@ -10,9 +17,9 @@ import { AssessmentService } from 'src/app/core/services/assessment.service';
 })
 export class TopicFormDialogComponent implements OnInit {
 
-  @Input() assessmentId;
-  @Input() topic;
-  @Input() edit: boolean;
+  public assessmentId: any;
+  public topic: any;
+  public edit: boolean;
   public formData: FormData = new FormData();
 
   public imageAttachment = null;
@@ -35,10 +42,16 @@ export class TopicFormDialogComponent implements OnInit {
     archived: new FormControl(false)
   });
 
-  constructor(private assessmentService: AssessmentService,
-              private alertService: AlertService) { }
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private assessmentService: AssessmentService,
+    private alertService: AlertService
+    ) {}
 
   ngOnInit(): void {
+    if (this.data?.assessmentId) { this.assessmentId = this.data?.assessmentId; }
+    if (this.data?.topic) { this.topic = this.data?.topic; }
+    if (this.data?.edit) { this.edit = this.data?.edit; }
     if (this.topic) {
       this.createNewTopicForm.setValue({
         name: this.topic.name,

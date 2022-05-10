@@ -22,17 +22,14 @@
     justify-content: space-between;
 }
 
-.question-options {
-    width: 100%;
-    .question-options-button {
-        margin-bottom: 10px;
-    }
-
-    .question-form {
-        margin-top: 20px;
-        width: 100%;
+.question-options-button {
+    display: flex;
+    justify-content: center;
+    app-custom-button {
+        margin: 0px 5px;
     }
 }
+
 mat-card {
     margin-bottom: 10px;
 }

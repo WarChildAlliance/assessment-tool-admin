@@ -1,9 +1,10 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { MatDialog } from '@angular/material/dialog';
 import { UserService } from 'src/app/core/services/user.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from 'src/app/core/services/alert.service';
+import { AssessmentFormDialogComponent } from './assessment-form-dialog/assessment-form-dialog.component';
 
 @Component({
   selector: 'app-assessment-builder',
@@ -34,8 +35,6 @@ export class AssessmentBuilderComponent implements OnInit {
     private: new FormControl(false, [Validators.required])
   });
 
-  @ViewChild('createAssessmentDialog') createAssessmentDialog: TemplateRef<any>;
-
   constructor(
     private assessmentService: AssessmentService,
     private userService: UserService,
@@ -56,7 +55,11 @@ export class AssessmentBuilderComponent implements OnInit {
   }
 
   openCreateAssessmentDialog(): void {
-    const createAssessmentDialog = this.dialog.open(this.createAssessmentDialog);
+    const createAssessmentDialog = this.dialog.open(AssessmentFormDialogComponent, {
+      data: {
+        edit: this.edit
+      }
+    });
     createAssessmentDialog.afterClosed().subscribe((value) => {
       if (value) {
         this.getAssessments();
