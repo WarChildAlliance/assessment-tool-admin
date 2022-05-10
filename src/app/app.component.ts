@@ -36,12 +36,14 @@ export class AppComponent implements OnInit {
         this.userService.getSelf().subscribe(res => {
           if (res.role !== UserRoles.Supervisor) { this.authService.logout(); }
           this.selfName = res.first_name + ' ' + res.last_name;
-          const language = {
-            name: res.language.name_en,
-            code: res.language.code.toLowerCase(),
-            direction: res.language.direction
-          };
-          this.languageService.setLanguage(language);
+          if (res.language) {
+            const language = {
+              name: res.language.name_en,
+              code: res.language.code.toLowerCase(),
+              direction: res.language.direction
+            };
+            this.languageService.setLanguage(language);
+          }
         });
       }
     });
