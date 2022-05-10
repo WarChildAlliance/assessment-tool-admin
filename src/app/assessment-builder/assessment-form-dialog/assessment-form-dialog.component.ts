@@ -1,9 +1,14 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { UserService } from 'src/app/core/services/user.service';
 
+interface DialogData {
+  edit?: boolean;
+  assessment?: any;
+}
 @Component({
   selector: 'app-assessment-form-dialog',
   templateUrl: './assessment-form-dialog.component.html',
@@ -11,8 +16,8 @@ import { UserService } from 'src/app/core/services/user.service';
 })
 export class AssessmentFormDialogComponent implements OnInit {
 
-  @Input() edit: boolean;
-  @Input() assessment;
+  public edit: boolean;
+  public assessment: any;
 
   public icon = null;
 
@@ -34,11 +39,16 @@ export class AssessmentFormDialogComponent implements OnInit {
     archived: new FormControl(false)
   });
 
-  constructor(private assessmentService: AssessmentService,
-              private userService: UserService,
-              private alertService: AlertService) { }
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private assessmentService: AssessmentService,
+    private userService: UserService,
+    private alertService: AlertService
+    ) {}
 
   ngOnInit(): void {
+    if (this.data?.assessment) { this.assessment = this.data.assessment; }
+    if (this.data?.edit) { this.edit = this.data.edit; }
     this.userService.getLanguages().subscribe(res => this.languages = res);
     this.userService.getCountries().subscribe(res => this.countries = res);
     if (this.edit) {

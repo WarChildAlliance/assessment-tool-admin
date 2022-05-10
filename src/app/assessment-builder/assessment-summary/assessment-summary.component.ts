@@ -1,9 +1,11 @@
-import { Component, Input, OnInit, Output, TemplateRef, ViewChild, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { environment } from 'src/environments/environment';
+import { AssessmentFormDialogComponent } from '../assessment-form-dialog/assessment-form-dialog.component';
+import { TopicFormDialogComponent } from '../topic-form-dialog/topic-form-dialog.component';
 
 @Component({
   selector: 'app-assessment-summary',
@@ -21,9 +23,6 @@ export class AssessmentSummaryComponent implements OnInit {
 
   public edit: boolean;
   public smallScreen: boolean;
-
-  @ViewChild('createAssessmentDialog') createAssessmentDialog: TemplateRef<any>;
-  @ViewChild('createTopicDialog') createTopicDialog: TemplateRef<any>;
 
   constructor(
     private dialog: MatDialog,
@@ -49,7 +48,12 @@ export class AssessmentSummaryComponent implements OnInit {
   openCreateTopicDialog(assessmentId: string): void {
     this.assessmentId = assessmentId;
 
-    const createTopicDialog = this.dialog.open(this.createTopicDialog);
+    const createTopicDialog = this.dialog.open(TopicFormDialogComponent, {
+      data: {
+        assessmentId: this.assessmentId
+      }
+    });
+
     createTopicDialog.afterClosed().subscribe((value) => {
       if (value) {
         this.getAssessmentDetails(this.assessmentId);
@@ -84,7 +88,14 @@ export class AssessmentSummaryComponent implements OnInit {
   editAssessment(assessment): void{
     this.edit = true;
     this.assessment = assessment;
-    const createAssessmentDialog = this.dialog.open(this.createAssessmentDialog);
+
+    const createAssessmentDialog = this.dialog.open(AssessmentFormDialogComponent, {
+      data: {
+        edit: this.edit,
+        assessment: this.assessment
+      }
+    });
+
     createAssessmentDialog.afterClosed().subscribe((value) => {
       if (value) {
         if (value.archived !== assessment.archived) {

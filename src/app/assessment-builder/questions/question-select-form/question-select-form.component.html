@@ -92,14 +92,20 @@
                         </app-custom-button>
                         <input hidden accept="audio/*" (change)="handleFileInputOptions($event, 'AUDIO', i)" #audioFileInput type="file">
                         <p>{{audioAttachment ? audioAttachment.name : ("assessmentBuilder.noFileChosen" | translate) }}</p>
+                        <p style="text-align: center"><b>{{ "assessmentBuilder.questions.numberline.or" | translate }} </b></p>
                         <app-audio-recorder (audioRecordingEvent)="addRecordedAudio($event)"></app-audio-recorder>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <button class="question-form-button" color="accent" (click)="onSave()"
-     mat-flat-button type="submit" [disabled]="selectForm.invalid || !selectForm.dirty">
-        {{ question ? ("general.save" | translate) : ("general.create" | translate) }}
-    </button>
+
+    <div class="dialog-buttons">
+        <button mat-flat-button mat-dialog-close class="dialog-buttons__cancel" color="secondary">
+            {{ "general.cancel" | translate }}
+        </button>
+        <button mat-flat-button [mat-dialog-close]="true" color="accent" [disabled]="selectForm.invalid || !selectForm.dirty" (click)="onSave()">
+            {{ question ? toClone ? ("general.clone" | translate) : ("general.save" | translate) : ("general.create" | translate) }}
+        </button>
+    </div>
 </form>

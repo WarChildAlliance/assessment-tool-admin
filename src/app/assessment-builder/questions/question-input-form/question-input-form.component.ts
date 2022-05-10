@@ -1,7 +1,16 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+interface DialogData {
+  topicId?: any;
+  order?: any;
+  question?: any;
+  toClone?: any;
+  assessmentId?: any;
+}
 
 @Component({
   selector: 'app-question-input-form',
@@ -9,11 +18,12 @@ import { AssessmentService } from 'src/app/core/services/assessment.service';
   styleUrls: ['./question-input-form.component.scss'],
 })
 export class QuestionInputFormComponent implements OnInit {
-  @Input() assessmentId;
-  @Input() topicId;
-  @Input() order;
-  @Input() question;
-  @Input() toClone;
+
+  public assessmentId;
+  public topicId;
+  public order;
+  public question;
+  public toClone;
 
   @Output() questionCreatedEvent = new EventEmitter<boolean>();
   @Output() closeModalEvent = new EventEmitter<boolean>();
@@ -35,11 +45,17 @@ export class QuestionInputFormComponent implements OnInit {
   });
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private assessmentService: AssessmentService,
     private alertService: AlertService
   ) {}
 
   async ngOnInit(): Promise<void> {
+    if (this.data?.assessmentId) { this.assessmentId = this.data.assessmentId; }
+    if (this.data?.topicId) { this.topicId = this.data.topicId; }
+    if (this.data?.order) { this.order = this.data.order; }
+    if (this.data?.question) { this.question = this.data.question; }
+    if (this.data?.toClone) { this.toClone = this.data.toClone; }
     if (this.question) {
       this.inputForm.setValue({
         question_type: 'INPUT',
@@ -47,8 +63,10 @@ export class QuestionInputFormComponent implements OnInit {
         order: this.toClone ? this.order : this.question.order,
         valid_answer: this.question.valid_answer
       });
-
       await this.setExistingAttachments();
+      if (this.toClone) {
+        this.inputForm.markAsDirty();
+      }
     } else {
       this.inputForm.setValue({
         question_type: 'INPUT',

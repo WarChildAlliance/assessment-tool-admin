@@ -68,13 +68,3 @@
         </mat-card>
     </div>
 </mat-card>
-
-<ng-template #createAssessmentDialog>
-    <app-assessment-form-dialog [assessment]="assessment" [edit]="edit"></app-assessment-form-dialog>
-</ng-template>
-
-<ng-template #createTopicDialog>
-    <mat-dialog-content>
-        <app-topic-form-dialog [assessmentId]="assessmentId"></app-topic-form-dialog>
-    </mat-dialog-content>
-</ng-template>
