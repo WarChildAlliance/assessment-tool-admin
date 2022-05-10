@@ -8,20 +8,24 @@
     <span>{{ selfName }}</span>
   </button>
   <mat-menu #accountMenu="matMenu" xPosition="before">
+    <button mat-menu-item [matMenuTriggerFor]="langMenu" class="menu-button">
+      <i class="uil uil-globe"></i>
+      {{ "general.language" | translate }}
+    </button>
+    
     <button mat-menu-item (click)="logout()">
       <mat-icon matListIcon type="submit">logout</mat-icon>
       <span>
         {{ "general.logout" | translate }}
       </span>
     </button>
-    <button mat-menu-item [matMenuTriggerFor]="langMenu" class="menu-button">
-      <i class="uil uil-globe"></i>
-      {{ "general.language" | translate }}
-    </button>
 
     <mat-menu #langMenu="matMenu">
       <ng-container *ngFor="let lang of languages">
         <button mat-menu-item (click)="changeLanguage(lang)" [ngClass]="{'selected': languageCode === lang.code}">
+          <!-- To get more instant country flags: https://flagcdn.com/  -->
+          <img *ngIf="lang.code === 'ara'" src="https://flagcdn.com/w20/jo.png">
+          <img *ngIf="lang.code === 'eng'" src="https://flagcdn.com/w20/us.png">
           {{ lang.name }}
         </button>
       </ng-container>
