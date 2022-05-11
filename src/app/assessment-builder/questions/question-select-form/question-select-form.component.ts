@@ -15,6 +15,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Subject } from 'rxjs';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -63,7 +64,7 @@ export class QuestionSelectFormComponent implements OnInit {
   public alertMessage = '';
 
   public saveOptions = false;
-  public resetQuestionAudio = false;
+  public attachmentsResetSubject$ = new Subject<void>();
 
   public selectForm: FormGroup = new FormGroup({
     question_type: new FormControl('SELECT'),
@@ -335,23 +336,20 @@ export class QuestionSelectFormComponent implements OnInit {
     });
   }
 
-  handleFileInput(event, type): void {
-    if (this.editQuestion) {
-      this.selectForm.markAsDirty();
-    }
-    if (type === 'IMAGE') {
-      this.changedImage = true;
-      this.imageAttachment = event.target.files[0];
-    } else if (type === 'AUDIO') {
-      this.changedAudio = true;
-      this.audioAttachment = event.target.files[0];
-    }
+  onNewImageAttachment(event: File): void {
+    if (this.editQuestion) { this.selectForm.markAsDirty(); }
+    this.changedImage = true;
+    this.imageAttachment = event;
   }
 
-  handleFileInputOptions(event, type, i): void {
-    if (this.editQuestion) {
-      this.selectForm.markAsDirty();
-    }
+  onNewAudioAttachment(event: File): void {
+    if (this.editQuestion) { this.selectForm.markAsDirty(); }
+    this.changedAudio = true;
+    this.audioAttachment = event;
+  }
+
+  handleFileInputOptions(event: File, type, i): void {
+    if (this.editQuestion) { this.selectForm.markAsDirty(); }
     let overwritePrevious = false;
     let id = 0;
     if (type === 'IMAGE') {
@@ -361,7 +359,6 @@ export class QuestionSelectFormComponent implements OnInit {
             (a) => a.attachment_type === 'IMAGE'
           )?.id
         : i;
-      this.imageAttachment = event.target.files[0];
     }
     if (type === 'AUDIO') {
       overwritePrevious = this.optionsAttachmentEdit[i]?.audio ? true : false;
@@ -370,11 +367,10 @@ export class QuestionSelectFormComponent implements OnInit {
             (a) => a.attachment_type === 'AUDIO'
           )?.id
         : i;
-      this.audioAttachment = event.target.files[0];
     }
     this.optionsAtt[i].attachments.push({
       attachment_type: type,
-      file: event.target.files[0],
+      file: event,
       overwritePrevious,
       id,
     });
@@ -398,35 +394,26 @@ export class QuestionSelectFormComponent implements OnInit {
         await this.objectToFile(audio);
       }
     } else {
-      if (this.imageAttachment) {
+      if (image) {
         this.imageAttachment = image;
         this.imageAttachment.name = image ? image.file.split('/').at(-1) : null;
       }
-      if (this.audioAttachment) {
+      if (audio) {
         this.audioAttachment = audio;
         this.audioAttachment.name = audio ? audio.file.split('/').at(-1) : null;
       }
     }
   }
 
-  addRecordedAudio(event): void {
-    if (this.editQuestion) {
-      this.selectForm.markAsDirty();
-    }
-    const name = 'recording_' + new Date().toISOString() + '.wav';
-    this.audioAttachment = this.blobToFile(event, name);
-    this.changedAudio = true;
-  }
-
-  public blobToFile = (theBlob: Blob, fileName: string): File => {
-    return new File([theBlob], fileName, {
-      lastModified: new Date().getTime(),
-      type: theBlob.type,
-    });
-  }
-
   resetForm(): void {
-    this.selectForm.reset();
+    this.selectForm.setValue({
+      question_type: 'SELECT',
+      value: '',
+      title: '',
+      order: this.order, display: 'Grid',
+      multiple: false,
+      options: [{ title: '', valid: false, value: '' }],
+    });
 
     this.options = [];
     this.optionsAtt = [{ attachments: [] }];
@@ -438,12 +425,13 @@ export class QuestionSelectFormComponent implements OnInit {
     this.changedAudio = false;
     this.changedImage = false;
     this.optionAttChange = false;
-    this.resetQuestionAudio = !this.resetQuestionAudio;
     this.saveOptions = false;
     this.selectForm.controls.order.setValue(this.order + 1, [Validators.required]);
     this.selectForm.controls.display.setValue('Grid', [Validators.required]);
     this.selectForm.controls.question_type.setValue('SELECT');
     this.selectForm.controls.multiple.setValue(false);
+
+    this.attachmentsResetSubject$.next();
 
     const optionsForm = this.selectForm.get('options') as FormArray;
     optionsForm.clear();

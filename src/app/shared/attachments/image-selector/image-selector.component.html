@@ -1,0 +1,6 @@
+<h3><b>{{ "assessmentBuilder.questions.imageAttachment" | translate }}</b></h3>
+<input hidden accept="image/*" (change)="handleFileInput($event)" #imageFileInput type="file">
+<app-custom-button class="file_input" category="secondary" variant="neutral" (click)="imageFileInput.click()">
+    {{ "assessmentBuilder.chooseFile" | translate }}
+</app-custom-button>
+<p class="file-name">{{ imageAttachment ? imageAttachment.name : ("assessmentBuilder.noFileChosen" | translate) }}</p>

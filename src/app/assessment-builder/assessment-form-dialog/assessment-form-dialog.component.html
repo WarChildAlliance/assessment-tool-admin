@@ -33,11 +33,9 @@
     <div class="form-primary__flex-container">
         <div>
             <h3>Icon</h3>
-            <app-custom-button class="file_input" category="secondary" variant="neutral" (click)="imageFileInput.click()">
-                {{ "assessmentBuilder.chooseFile" | translate }}
-            </app-custom-button>
-            <input hidden (change)="handleFileInput($event)" #imageFileInput type="file">
-            <p>{{icon ? icon.name : ("assessmentBuilder.noFileChosen" | translate) }}</p>
+            <app-image-selector
+                (newImageEvent)="handleFileInput($event)"
+            ></app-image-selector>
         </div>
         <mat-checkbox formControlName="private">
             {{ "general.private" | translate }}
