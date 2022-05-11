@@ -23,8 +23,8 @@ export class TopicAccessesBuilderComponent implements OnInit {
   topicsList: Topic[] = [];
   selectedAssessmentId: string;
 
-  public startDate = null;
-  public endDate = null;
+  public startDate;
+  public endDate;
 
   private setDate: boolean;
 
