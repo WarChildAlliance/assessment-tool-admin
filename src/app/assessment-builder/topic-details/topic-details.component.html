@@ -46,7 +46,7 @@
       </div>
     </mat-card>
     <div class="question-details" *ngFor="let questionDetails of questionsList">
-      <app-custom-button *ngIf="topicDetails.can_edit" category="tertiary" variant="neutral" (click)="openQuestionDialog(questionDetails)">
+      <app-custom-button *ngIf="topicDetails.can_edit && !questionDetails.answered" category="tertiary" variant="neutral" (click)="openQuestionDialog(questionDetails)">
         {{ "general.edit" | translate }}
       </app-custom-button>
       <app-custom-button *ngIf="topicDetails.can_edit" category="tertiary" variant="neutral" (click)="openQuestionDialog(questionDetails, true)">
