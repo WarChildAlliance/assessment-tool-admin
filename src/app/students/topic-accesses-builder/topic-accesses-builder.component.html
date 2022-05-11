@@ -40,7 +40,7 @@
                             <mat-date-range-picker #setUpDateForAll></mat-date-range-picker>
                         </mat-form-field>
                         <div class="apply-all">
-                            <mat-checkbox (change)="setAll($event.checked)">
+                            <mat-checkbox (change)="setAll($event.checked)" [disabled]="!startDate || !endDate">
                                 {{ "students.topicAccessesBuilder.applySameDatesAllTopics" | translate }}
                             </mat-checkbox>
                         </div>
