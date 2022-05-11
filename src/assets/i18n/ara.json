@@ -22,7 +22,6 @@
     "order": "طلب",
     "preview": "معاينة",
     "private": "نشر",
-    "archived": "Archived",
     "questionType": "نوع السؤال",
     "questionsNumber": "عدد الأسئلة",
     "save": "يحفظ",
@@ -33,7 +32,11 @@
     "title": "عنوان",
     "to": "إلى",
     "totalCompletedTopics": "إجمالي المواضيع المكتملة",
-    "workInProgress": "جاري العمل ... متاح قريبًا"
+    "workInProgress": "جاري العمل ... متاح قريبًا",
+    "answer": "إجابه",
+    "archive": "مؤرشف",
+    "archived": "مؤرشف",
+    "questions": "أسئلة"
   },
   "answers": {
     "assessmentAnswers": {
@@ -68,22 +71,23 @@
     "praise": "مديح",
     "publicAssessments": "التقييم (التقييمات) العامة",
     "yourAssessments": "تقييمك (تقييماتك)",
-    "archivedAssessments": "",
+    "archivedAssessments": "التقييم (التقييمات) المؤرشف",
     "assessmentFormDialog": {
-      "createNewAssessment": "قم بإنشاء تقييم جديد"
+      "createNewAssessment": "قم بإنشاء تقييم جديد",
+      "editAssessment": "تحرير التقييم"
     },
     "assessmentSummary": {
       "addTopic": "أضف موضوعًا",
-      "archive": "",
-      "unarchive": ""
+      "archive": "أرشيف",
+      "unarchive": "أخرج من الأرشيف"
     },
     "questions": {
       "audioAttachment": "مرفق صوتي",
       "imageAttachment": "مرفق الصورة",
+      "or": "أو",
       "numberline": {
         "endNumber": "رقم النهاية",
         "expectedValue": "القيمة المتوقعة",
-        "or": "أو",
         "showTicks": "عرض القراد",
         "showValue": "إظهار القيمة",
         "startNumber": "رقم البداية",

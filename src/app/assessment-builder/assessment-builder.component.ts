@@ -66,25 +66,4 @@ export class AssessmentBuilderComponent implements OnInit {
       }
     });
   }
-
-  submitCreateNewAssessment(): void {
-    if (this.edit) {
-      this.assessmentService.editAssessment(this.assessmentId, this.createNewAssessmentForm.value).subscribe(() => {
-        this.alertService.success('Assessment was altered successfully');
-      } );
-    } else {
-      this.assessmentService.createAssessment(this.createNewAssessmentForm.value).subscribe(() => {
-        this.alertService.success('Assessment was saved successfully');
-      });
-    }
-    this.createNewAssessmentForm.reset();
-  }
-
-  handleFileInput(event): void {
-    this.icon = event.target.files[0];
-    this.createNewAssessmentForm.patchValue({
-      icon: this.icon
-    });
-  }
-
 }

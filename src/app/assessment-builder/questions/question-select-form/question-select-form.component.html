@@ -31,21 +31,19 @@
             </mat-checkbox>
         </div>
 
-        <div class="attachments-container">                
+        <div class="attachments-container">
             <h2>{{ "assessmentBuilder.questions.select.attachments" | translate }}</h2>
-            <p><b>{{ "assessmentBuilder.questions.imageAttachment" | translate }}</b></p>
-            <app-custom-button class="file_input" category="secondary" variant="neutral" (click)="imageFileInput.click()">
-                {{ "assessmentBuilder.chooseFile" | translate }}
-            </app-custom-button>
-            <input hidden class="file_input" accept="image/*" (change)="handleFileInput($event, 'IMAGE')" #imageFileInput type="file">
-            <p>{{ imageAttachment ? imageAttachment.name : ("assessmentBuilder.noFileChosen" | translate) }}</p>
-            <p><b>{{ "assessmentBuilder.questions.audioAttachment" | translate }}</b></p>
-            <app-custom-button class="file_input" category="secondary" variant="neutral" (click)="audioFileInput.click()">
-                {{ "assessmentBuilder.chooseFile" | translate }}
-            </app-custom-button>
-            <input hidden accept="audio/*" (change)="handleFileInput($event, 'AUDIO')" #audioFileInput type="file">
-            <p>{{ audioAttachment ? audioAttachment.name : ("assessmentBuilder.noFileChosen" | translate) }}</p>
-            <app-audio-recorder [resetQuestionAudio]="resetQuestionAudio" (audioRecordingEvent)="addRecordedAudio($event)"></app-audio-recorder>
+            <app-image-selector
+                [reset$]="attachmentsResetSubject$.asObservable()"
+                (newImageEvent)="onNewImageAttachment($event)"
+                [imageAttachment]="imageAttachment"
+            ></app-image-selector>
+            <app-audio-selector
+                [recorderEnabled]="true"
+                [reset$]="attachmentsResetSubject$.asObservable()"
+                (newAudioEvent)="onNewAudioAttachment($event)"
+                [audioAttachment]="audioAttachment"
+            ></app-audio-selector>
         </div>
     </div>
     <mat-divider></mat-divider>
@@ -76,25 +74,15 @@
                 </mat-checkbox>
 
                 <div class="attachments-container">
-                    <div>
-                        <p><b>{{ "assessmentBuilder.questions.imageAttachment" | translate }}</b></p>
-                        <app-custom-button class="file_input" category="secondary" variant="neutral" (click)="imageFileInput.click()">
-                            {{ "assessmentBuilder.chooseFile" | translate }}
-                        </app-custom-button>
-                        <input hidden accept="image/*" (change)="handleFileInputOptions($event, 'IMAGE', i)" #imageFileInput type="file">
-                        <p>{{imageAttachment ? imageAttachment.name : ("assessmentBuilder.noFileChosen" | translate) }}</p>
-                    </div>
-
-                    <div>
-                        <p><b>{{ "assessmentBuilder.questions.audioAttachment" | translate }}</b></p>
-                        <app-custom-button class="file_input" category="secondary" variant="neutral" (click)="audioFileInput.click()">
-                            {{ "assessmentBuilder.chooseFile" | translate }}
-                        </app-custom-button>
-                        <input hidden accept="audio/*" (change)="handleFileInputOptions($event, 'AUDIO', i)" #audioFileInput type="file">
-                        <p>{{audioAttachment ? audioAttachment.name : ("assessmentBuilder.noFileChosen" | translate) }}</p>
-                        <p style="text-align: center"><b>{{ "assessmentBuilder.questions.numberline.or" | translate }} </b></p>
-                        <app-audio-recorder (audioRecordingEvent)="addRecordedAudio($event)"></app-audio-recorder>
-                    </div>
+                    <app-image-selector
+                        [reset$]="attachmentsResetSubject$.asObservable()"
+                        (newImageEvent)="handleFileInputOptions($event, 'IMAGE', i)"
+                    ></app-image-selector>
+                    <app-audio-selector
+                        [recorderEnabled]="true"
+                        [reset$]="attachmentsResetSubject$.asObservable()"
+                        (newAudioEvent)="handleFileInputOptions($event, 'AUDIO', i)"
+                    ></app-audio-selector>
                 </div>
             </div>
         </div>

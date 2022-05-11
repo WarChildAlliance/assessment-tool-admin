@@ -106,8 +106,8 @@ export class AssessmentFormDialogComponent implements OnInit {
     return this.formData;
   }
 
-  handleFileInput(event): void {
-    this.icon = event.target.files[0];
+  handleFileInput(event: File): void {
+    this.icon = event;
     this.createNewAssessmentForm.patchValue({icon: this.icon});
   }
 

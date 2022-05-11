@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subject } from 'rxjs';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -35,7 +36,7 @@ export class QuestionInputFormComponent implements OnInit {
   public changedImage = false;
 
   public alertMessage = '';
-  public resetQuestionAudio = false;
+  public attachmentsResetSubject$ = new Subject<void>();
 
   public inputForm: FormGroup = new FormGroup({
     question_type: new FormControl('INPUT'),
@@ -169,14 +170,14 @@ export class QuestionInputFormComponent implements OnInit {
       });
   }
 
-  handleFileInput(event, type): void {
-    if (type === 'IMAGE') {
-      this.changedImage = true;
-      this.imageAttachment = event.target.files[0];
-    } else if (type === 'AUDIO') {
-      this.changedAudio = true;
-      this.audioAttachment = event.target.files[0];
-    }
+  onNewImageAttachment(event: File): void {
+    this.changedImage = true;
+    this.imageAttachment = event;
+  }
+
+  onNewAudioAttachment(event: File): void {
+    this.changedAudio = true;
+    this.audioAttachment = event;
   }
 
   async setExistingAttachments(): Promise<void> {
@@ -206,21 +207,8 @@ export class QuestionInputFormComponent implements OnInit {
     }
   }
 
-  addRecordedAudio(event): void {
-    const name = 'recording_' + new Date().toISOString() + '.wav';
-    this.audioAttachment = this.blobToFile(event, name);
-    this.changedAudio = true;
-  }
-
-  public blobToFile = (theBlob: Blob, fileName: string): File => {
-    return new File([theBlob], fileName, {
-      lastModified: new Date().getTime(),
-      type: theBlob.type,
-    });
-  }
-
   resetForm(): void {
-    this.inputForm.reset();
+    this.attachmentsResetSubject$.next();
     this.inputForm.controls['order'.toString()].setValue(this.order + 1);
     this.inputForm.controls.question_type.setValue('INPUT');
 
@@ -229,8 +217,6 @@ export class QuestionInputFormComponent implements OnInit {
 
     this.changedAudio = false;
     this.changedImage = false;
-
-    this.resetQuestionAudio = !this.resetQuestionAudio;
   }
 
   async objectToFile(attachment): Promise<void> {

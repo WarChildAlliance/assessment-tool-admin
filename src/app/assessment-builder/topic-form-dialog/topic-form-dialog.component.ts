@@ -110,7 +110,7 @@ export class TopicFormDialogComponent implements OnInit {
   }
 
   handleFileInput(event): void {
-    this.icon = event.target.files[0];
+    this.icon = event;
     this.createNewTopicForm.patchValue({icon: this.icon});
   }
 

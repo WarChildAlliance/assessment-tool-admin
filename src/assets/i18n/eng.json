@@ -2,6 +2,7 @@
   "general": {
     "adminDashboard": "AdminDashboard",
     "answer": "Answer",
+    "archived": "Archived",
     "assign": "Assign",
     "assessmentBuilder": "Assessment Builder",
     "assessments": "Assessments",
@@ -82,10 +83,10 @@
     "questions": {
       "audioAttachment": "Audio attachment",
       "imageAttachment": "Image attachment",
+      "or": "OR",
       "numberline": {
         "endNumber": "End number",
         "expectedValue": "Expected value",
-        "or": "OR",
         "showTicks": "Show ticks",
         "showValue": "Show value",
         "startNumber": "Start number",
