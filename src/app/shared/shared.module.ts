@@ -50,7 +50,8 @@ import { QuestionNumberlineComponent } from './questions/question-numberline/que
     ClipboardModule,
     TranslateModule,
   ],
-  exports: [TableComponent,
+  exports: [
+    TableComponent,
     QuestionSelectComponent,
     SelectAssessmentComponent,
     QuestionInputComponent,
