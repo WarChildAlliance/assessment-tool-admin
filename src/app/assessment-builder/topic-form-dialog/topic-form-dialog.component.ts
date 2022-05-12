@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -44,6 +45,7 @@ export class TopicFormDialogComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private translateService: TranslateService,
     private assessmentService: AssessmentService,
     private alertService: AlertService
     ) {}
@@ -71,18 +73,18 @@ export class TopicFormDialogComponent implements OnInit {
     const data = await this.formGroupToFormData();
     if (this.edit) {
       this.assessmentService.editTopic(this.assessmentId.toString(), this.topic.id, data).subscribe(res => {
-        this.alertService.success('Topic was altered successfully');
+        this.alertService.success(this.translateService.instant('assessmentBuilder.topicEditSuccess'));
       });
     } else {
       this.assessmentService.createTopic(this.assessmentId.toString(), data).subscribe(res => {
-        this.alertService.success('Topic was created successfully');
+        this.alertService.success(this.translateService.instant('assessmentBuilder.topicCreateSuccess'));
       });
     }
   }
 
   saveAttachments(assessmentId: string, attachment, type: string, obj): void {
     this.assessmentService.addAttachments(assessmentId, attachment, type, obj).subscribe(() => {
-      this.alertService.success('Topic was saved successfully');
+      this.alertService.success(this.translateService.instant('assessmentBuilder.topicSaveSuccess'));
     });
   }
 
