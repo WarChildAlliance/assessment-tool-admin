@@ -20,7 +20,7 @@ import { TopicFormDialogComponent } from '../topic-form-dialog/topic-form-dialog
 })
 export class AssessmentSummaryComponent implements OnInit {
 
-  @Input() assessment;
+  @Input() assessment: any;
   @Input() canEdit: boolean;
 
   @Output() archivedAssessment = new EventEmitter<boolean>();
@@ -44,7 +44,21 @@ export class AssessmentSummaryComponent implements OnInit {
     this.orderTopics();
   }
 
-  getAssessmentDetails(assessmentId: string): void {
+  private orderTopics(): void {
+    // To order and display unarchived topic cards first
+    this.assessment.topics.sort((a, b) => {
+      if (a.archived > b.archived) {
+        return 1;
+      }
+      if (a.archived < b.archived) {
+        return -1;
+      }
+
+      return 0;
+    });
+  }
+
+  private getAssessmentDetails(assessmentId: string): void {
     this.assessmentService.getAssessmentTopics(assessmentId).subscribe(() => {
       this.assessmentService.getAssessmentDetails(assessmentId).subscribe(assessmentDetails => {
         this.assessment = assessmentDetails;
@@ -124,19 +138,5 @@ export class AssessmentSummaryComponent implements OnInit {
 
   getMediaSource(path: string): string {
     return `${environment.API_URL}/media/${path}`;
-  }
-
-  orderTopics(): void {
-    // To order and display unarchived topic cards first
-    this.assessment.topics.sort((a, b) => {
-      if (a.archived > b.archived) {
-        return 1;
-      }
-      if (a.archived < b.archived) {
-        return -1;
-      }
-
-      return 0;
-    });
   }
 }

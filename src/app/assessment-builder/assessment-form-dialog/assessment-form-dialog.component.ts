@@ -4,6 +4,8 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { UserService } from 'src/app/core/services/user.service';
+import { Language } from 'src/app/core/models/language.model';
+import { Country } from 'src/app/core/models/country.model';
 
 interface DialogData {
   edit?: boolean;
@@ -19,10 +21,10 @@ export class AssessmentFormDialogComponent implements OnInit {
   public edit: boolean;
   public assessment: any;
 
-  public icon = null;
+  public icon: File = null;
 
-  public languages;
-  public countries;
+  public languages: Language[];
+  public countries: Country[];
   public subjects = ['PRESEL', 'POSTSEL', 'MATH', 'LITERACY'];
   public formData: FormData = new FormData();
 
@@ -49,8 +51,8 @@ export class AssessmentFormDialogComponent implements OnInit {
   ngOnInit(): void {
     if (this.data?.assessment) { this.assessment = this.data.assessment; }
     if (this.data?.edit) { this.edit = this.data.edit; }
-    this.userService.getLanguages().subscribe(res => this.languages = res);
-    this.userService.getCountries().subscribe(res => this.countries = res);
+    this.userService.getLanguages().subscribe((res: Language[]) => this.languages = res);
+    this.userService.getCountries().subscribe((res: Country[]) => this.countries = res);
     if (this.edit) {
       this.createNewAssessmentForm.setValue({
         title: this.assessment.title,
@@ -79,11 +81,11 @@ export class AssessmentFormDialogComponent implements OnInit {
     this.createNewAssessmentForm.reset();
   }
 
-  saveAttachments(assessmentId: string, attachment, type: string, obj): void {
-    this.assessmentService.addAttachments(assessmentId, attachment, type, obj).subscribe((res) => {
-      this.alertService.success('Assessment was saved successfully');
-    });
-  }
+  // saveAttachments(assessmentId: string, attachment, type: string, obj): void {
+  //   this.assessmentService.addAttachments(assessmentId, attachment, type, obj).subscribe((res) => {
+  //     this.alertService.success('Assessment was saved successfully');
+  //   });
+  // }
 
   async formGroupToFormData(): Promise<FormData> {
     // if user upload an icon

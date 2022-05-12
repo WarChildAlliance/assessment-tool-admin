@@ -18,7 +18,7 @@ export class TopicDetailsComponent implements OnInit {
   public assessmentId: string;
   public topicId: string;
 
-  public topic;
+  public topic: any;
 
   public questionsArray: any[] = [
     {
@@ -41,7 +41,7 @@ export class TopicDetailsComponent implements OnInit {
   public order: number;
 
   public questionsList: any[];
-  public topicDetails;
+  public topicDetails: any;
 
   constructor(
     private dialog: MatDialog,
@@ -59,7 +59,7 @@ export class TopicDetailsComponent implements OnInit {
     });
   }
 
-  getQuestionsList(): void {
+  private getQuestionsList(): void {
     this.assessmentService.getQuestionsList(this.assessmentId, this.topicId).subscribe(questionList => {
       if (questionList.length) {
         this.questionsList = questionList;
@@ -70,7 +70,7 @@ export class TopicDetailsComponent implements OnInit {
     });
   }
 
-  getTopicDetails(): void {
+  private getTopicDetails(): void {
     this.assessmentService.getTopicDetails(this.assessmentId, this.topicId).subscribe(topicDetails => {
       this.topicDetails = topicDetails;
     });

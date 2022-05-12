@@ -5,6 +5,8 @@ import { UserService } from 'src/app/core/services/user.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentFormDialogComponent } from './assessment-form-dialog/assessment-form-dialog.component';
+import { Language } from 'src/app/core/models/language.model';
+import { Country } from 'src/app/core/models/country.model';
 
 @Component({
   selector: 'app-assessment-builder',
@@ -15,11 +17,11 @@ export class AssessmentBuilderComponent implements OnInit {
 
   public currentAssessments: any[] = [];
 
-  public languages;
-  public countries;
+  public languages: Language[];
+  public countries: Country[];
   public subjects = ['PRESEL', 'POSTSEL', 'MATH', 'LITERACY'];
 
-  public icon = null;
+  public icon: File = null;
 
   public edit = false;
 

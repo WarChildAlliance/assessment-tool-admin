@@ -6,11 +6,11 @@ import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 interface DialogData {
-  topicId?: any;
+  topicId?: string;
   order?: any;
   question?: any;
-  toClone?: any;
-  assessmentId?: any;
+  toClone?: boolean;
+  assessmentId?: string;
 }
 
 @Component({
@@ -20,11 +20,11 @@ interface DialogData {
 })
 export class QuestionInputFormComponent implements OnInit {
 
-  public assessmentId;
-  public topicId;
-  public order;
-  public question;
-  public toClone;
+  public assessmentId: string;
+  public topicId: string;
+  public order: any;
+  public question: any;
+  public toClone: boolean;
 
   @Output() questionCreatedEvent = new EventEmitter<boolean>();
   @Output() closeModalEvent = new EventEmitter<boolean>();
@@ -78,20 +78,7 @@ export class QuestionInputFormComponent implements OnInit {
     }
   }
 
-  onSave(): void {
-    if (this.question && !this.toClone) {
-      this.alertMessage = 'Question successfully updated';
-      this.editQuestion();
-    } else if (this.toClone) {
-      this.alertMessage = 'Question successfully cloned';
-      this.createInputQuestion();
-    } else {
-      this.alertMessage = 'Question successfully created';
-      this.createInputQuestion();
-    }
-  }
-
-  createInputQuestion(): void {
+  private createInputQuestion(): void {
     this.assessmentService
       .createQuestion(
         this.inputForm.value,
@@ -123,7 +110,7 @@ export class QuestionInputFormComponent implements OnInit {
       });
   }
 
-  editQuestion(): void {
+  private editQuestion(): void {
     this.assessmentService
       .editQuestion(
         this.assessmentId.toString(),
@@ -146,7 +133,7 @@ export class QuestionInputFormComponent implements OnInit {
       });
   }
 
-  updateQuestionAttachments(type: string, id: any, attachment: any): void {
+  private updateQuestionAttachments(type: string, id: any, attachment: any): void {
     const file = this.question.attachments.find(
       (a) => a.attachment_type === type
     );
@@ -162,7 +149,7 @@ export class QuestionInputFormComponent implements OnInit {
     }
   }
 
-  saveAttachments(assessmentId: string, attachment, type: string, obj): void {
+  private saveAttachments(assessmentId: string, attachment, type: string, obj): void {
     this.assessmentService
       .addAttachments(assessmentId, attachment, type, obj)
       .subscribe(() => {
@@ -170,17 +157,7 @@ export class QuestionInputFormComponent implements OnInit {
       });
   }
 
-  onNewImageAttachment(event: File): void {
-    this.changedImage = true;
-    this.imageAttachment = event;
-  }
-
-  onNewAudioAttachment(event: File): void {
-    this.changedAudio = true;
-    this.audioAttachment = event;
-  }
-
-  async setExistingAttachments(): Promise<void> {
+  private async setExistingAttachments(): Promise<void> {
     const image = this.question.attachments.find(
       (i) => i.attachment_type === 'IMAGE'
     );
@@ -207,7 +184,7 @@ export class QuestionInputFormComponent implements OnInit {
     }
   }
 
-  resetForm(): void {
+  private resetForm(): void {
     this.attachmentsResetSubject$.next();
     this.inputForm.controls['order'.toString()].setValue(this.order + 1);
     this.inputForm.controls.question_type.setValue('INPUT');
@@ -219,7 +196,7 @@ export class QuestionInputFormComponent implements OnInit {
     this.changedImage = false;
   }
 
-  async objectToFile(attachment): Promise<void> {
+  private async objectToFile(attachment): Promise<void> {
     const fileType = attachment.attachment_type === 'IMAGE' ? 'image/png' : 'audio/wav';
     const fileName = attachment.file.split('/').at(-1);
 
@@ -234,5 +211,28 @@ export class QuestionInputFormComponent implements OnInit {
           this.audioAttachment = file;
         }
     });
+  }
+
+  onSave(): void {
+    if (this.question && !this.toClone) {
+      this.alertMessage = 'Question successfully updated';
+      this.editQuestion();
+    } else if (this.toClone) {
+      this.alertMessage = 'Question successfully cloned';
+      this.createInputQuestion();
+    } else {
+      this.alertMessage = 'Question successfully created';
+      this.createInputQuestion();
+    }
+  }
+
+  onNewImageAttachment(event: File): void {
+    this.changedImage = true;
+    this.imageAttachment = event;
+  }
+
+  onNewAudioAttachment(event: File): void {
+    this.changedAudio = true;
+    this.audioAttachment = event;
   }
 }

@@ -6,11 +6,11 @@ import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 interface DialogData {
-  topicId?: any;
+  topicId?: string;
   order?: any;
   question?: any;
-  toClone?: any;
-  assessmentId?: any;
+  toClone?: boolean;
+  assessmentId?: string;
 }
 
 @Component({
@@ -20,11 +20,11 @@ interface DialogData {
 })
 export class QuestionNumberlineFormComponent implements OnInit {
 
-  public assessmentId;
-  public topicId;
-  public order;
-  public question;
-  public toClone;
+  public assessmentId: string;
+  public topicId: string;
+  public order: any;
+  public question: any;
+  public toClone: boolean;
 
   @Output() questionCreatedEvent = new EventEmitter<boolean>();
   @Output() closeModalEvent = new EventEmitter<boolean>();
@@ -96,20 +96,7 @@ export class QuestionNumberlineFormComponent implements OnInit {
     }
   }
 
-  onSave(): void {
-    if (this.question && !this.toClone) {
-      this.alertMessage = 'Question successfully updated';
-      this.editQuestion();
-    } else if (this.toClone){
-      this.alertMessage = 'Question successfully cloned';
-      this.createNumberLineQuestion();
-    } else {
-      this.alertMessage = 'Question successfully created';
-      this.createNumberLineQuestion();
-    }
-  }
-
-  createNumberLineQuestion(): void {
+  private createNumberLineQuestion(): void {
     this.assessmentService.createQuestion(this.numberLineForm.value, this.topicId.toString(),
       this.assessmentId.toString()).subscribe((res) => {
         if (this.imageAttachment) {
@@ -126,7 +113,7 @@ export class QuestionNumberlineFormComponent implements OnInit {
       });
   }
 
-  editQuestion(): void {
+  private editQuestion(): void {
     this.assessmentService.editQuestion(this.assessmentId.toString(), this.topicId.toString(),
       this.question.id, this.numberLineForm.value).subscribe(res => {
         if (this.imageAttachment && this.changedImage) {
@@ -141,7 +128,7 @@ export class QuestionNumberlineFormComponent implements OnInit {
       });
   }
 
-  updateQuestionAttachments(type: string, id: any, attachment: any): void {
+  private updateQuestionAttachments(type: string, id: any, attachment: any): void {
     const file = this.question.attachments.find( a => a.attachment_type === type);
     if (file) {
       this.assessmentService.updateAttachments(this.assessmentId, attachment, type, file.id).subscribe();
@@ -150,23 +137,13 @@ export class QuestionNumberlineFormComponent implements OnInit {
     }
   }
 
-  saveAttachments(assessmentId: string, attachment, type: string, obj): void {
+  private saveAttachments(assessmentId: string, attachment, type: string, obj): void {
     this.assessmentService.addAttachments(assessmentId, attachment, type, obj).subscribe(() => {
       this.alertService.success(this.alertMessage);
     });
   }
 
-  onNewImageAttachment(event: File): void {
-    this.changedImage = true;
-    this.imageAttachment = event;
-  }
-
-  onNewAudioAttachment(event: File): void {
-    this.changedAudio = true;
-    this.audioAttachment = event;
-  }
-
-  async setExistingAttachments(): Promise<void>{
+  private async setExistingAttachments(): Promise<void>{
     const image = this.question.attachments.find( i => i.attachment_type === 'IMAGE');
     const audio = this.question.attachments.find( a => a.attachment_type === 'AUDIO');
 
@@ -189,7 +166,7 @@ export class QuestionNumberlineFormComponent implements OnInit {
     }
   }
 
-  resetForm(): void {
+  private resetForm(): void {
     this.numberLineForm.controls['order'.toString()].setValue(this.order + 1);
     this.numberLineForm.controls.question_type.setValue('NUMBER_LINE');
     this.numberLineForm.controls.show_ticks.setValue(false);
@@ -204,7 +181,7 @@ export class QuestionNumberlineFormComponent implements OnInit {
     this.attachmentsResetSubject$.next();
   }
 
-  async objectToFile(attachment): Promise<void> {
+  private async objectToFile(attachment): Promise<void> {
     const fileType = attachment.attachment_type === 'IMAGE' ? 'image/png' : 'audio/wav';
     const fileName = attachment.file.split('/').at(-1);
 
@@ -219,5 +196,28 @@ export class QuestionNumberlineFormComponent implements OnInit {
           this.audioAttachment = file;
         }
     });
+  }
+
+  onNewImageAttachment(event: File): void {
+    this.changedImage = true;
+    this.imageAttachment = event;
+  }
+
+  onNewAudioAttachment(event: File): void {
+    this.changedAudio = true;
+    this.audioAttachment = event;
+  }
+
+  onSave(): void {
+    if (this.question && !this.toClone) {
+      this.alertMessage = 'Question successfully updated';
+      this.editQuestion();
+    } else if (this.toClone){
+      this.alertMessage = 'Question successfully cloned';
+      this.createNumberLineQuestion();
+    } else {
+      this.alertMessage = 'Question successfully created';
+      this.createNumberLineQuestion();
+    }
   }
 }
