@@ -10,13 +10,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+import { MatCardModule } from '@angular/material/card';
 import { SharedModule } from '../shared/shared.module';
 import { AssessmentDetailComponent } from './assessment-detail/assessment-detail.component';
 import { AssessmentsRoutingModule } from './assessments-routing.module';
 import { AssessmentsComponent } from './assessments.component';
 import { QuestionDetailComponent } from './question-detail/question-detail.component';
 import { QuestionsListComponent } from './questions-list/questions-list.component';
-import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [

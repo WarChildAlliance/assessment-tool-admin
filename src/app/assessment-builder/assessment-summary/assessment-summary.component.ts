@@ -1,4 +1,10 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from 'src/app/core/services/alert.service';
@@ -23,6 +29,8 @@ export class AssessmentSummaryComponent implements OnInit {
 
   public edit: boolean;
   public smallScreen: boolean;
+  public leftScrollEnabled = false;
+  public rightScrollEnabled = true;
 
   constructor(
     private dialog: MatDialog,
