@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
@@ -46,6 +47,7 @@ export class QuestionInputFormComponent implements OnInit {
   });
 
   constructor(
+    private translateService: TranslateService,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private assessmentService: AssessmentService,
     private alertService: AlertService
@@ -80,13 +82,13 @@ export class QuestionInputFormComponent implements OnInit {
 
   onSave(): void {
     if (this.question && !this.toClone) {
-      this.alertMessage = 'Question successfully updated';
+      this.alertMessage = this.translateService.instant('assessmentBuilder.questions.questionUpdateSuccess');
       this.editQuestion();
     } else if (this.toClone) {
-      this.alertMessage = 'Question successfully cloned';
+      this.alertMessage = this.translateService.instant('assessmentBuilder.questions.questionCloneSuccess');
       this.createInputQuestion();
     } else {
-      this.alertMessage = 'Question successfully created';
+      this.alertMessage = this.translateService.instant('assessmentBuilder.questions.questionCreateSuccess');
       this.createInputQuestion();
     }
   }

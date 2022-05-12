@@ -139,7 +139,7 @@ export class StudentsComponent implements OnInit {
       });
     } else {
       this.alertService.error(
-        'You can only give access to a topic to students with the same country and language.'
+        this.translateService.instant('students.incompatibleLanguageError')
       );
     }
   }
