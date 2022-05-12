@@ -17,13 +17,12 @@ import { UserService } from 'src/app/core/services/user.service';
   styleUrls: ['./topics-list-answers.component.scss']
 })
 export class TopicsListAnswersComponent implements OnInit {
+  private currentStudentId: string;
+  private assessmentId: string;
 
-  topicsAnswersDataSource: MatTableDataSource<TopicTableData> = new MatTableDataSource([]);
-  currentStudentId: string;
-  assessmentId: string;
-
-  currentStudent: StudentTableData;
-  currentAssessment: AssessmentTableData;
+  public topicsAnswersDataSource: MatTableDataSource<TopicTableData> = new MatTableDataSource([]);
+  public currentStudent: StudentTableData;
+  public currentAssessment: AssessmentTableData;
 
   public displayedColumns: TableColumn[] = [
     { key: 'name', name: 'general.name' },

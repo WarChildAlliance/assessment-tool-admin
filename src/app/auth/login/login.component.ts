@@ -9,10 +9,11 @@ import { AuthService } from 'src/app/core/services/auth.service';
 })
 export class LoginComponent implements OnInit {
 
-  loginForm = new FormGroup({
+  public loginForm = new FormGroup({
     username: new FormControl(null, [Validators.required]),
     password: new FormControl(null, [Validators.required])
   });
+
   @ViewChild('passwordElement') passwordElement: ElementRef<HTMLInputElement>;
 
   constructor(

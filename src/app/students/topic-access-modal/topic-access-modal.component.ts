@@ -30,7 +30,7 @@ export class TopicAccessModalComponent implements OnInit {
   private setDate: boolean;
   public deletedTopic = false;
 
-  assignTopicForm: FormGroup = new FormGroup({
+  public assignTopicForm: FormGroup = new FormGroup({
     access: new FormArray([]),
   });
 

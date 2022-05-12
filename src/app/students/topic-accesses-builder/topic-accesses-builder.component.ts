@@ -21,20 +21,17 @@ interface DialogData {
 
 export class TopicAccessesBuilderComponent implements OnInit {
 
-  minDate: Date = new Date();
+  private topicsList: Topic[] = [];
+  private selectedAssessmentId: string;
+  private setDate: boolean;
 
+  public minDate: Date = new Date();
   public studentsList: any[];
-
-  assessmentsList: Assessment[] = [];
-  topicsList: Topic[] = [];
-  selectedAssessmentId: string;
-
+  public assessmentsList: Assessment[] = [];
   public startDate;
   public endDate;
 
-  private setDate: boolean;
-
-  assignTopicForm: FormGroup = new FormGroup({
+  public assignTopicForm: FormGroup = new FormGroup({
     access: new FormArray([]),
   });
 

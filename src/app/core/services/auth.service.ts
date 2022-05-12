@@ -10,10 +10,10 @@ import { CookieService } from './cookie.service';
   providedIn: 'root'
 })
 export class AuthService {
-  isAuthenticated = false;
-
   private authenticatedSource = new BehaviorSubject(false);
-  currentAuthentication = this.authenticatedSource.asObservable();
+
+  public isAuthenticated = false;
+  public currentAuthentication = this.authenticatedSource.asObservable();
 
 
   constructor(

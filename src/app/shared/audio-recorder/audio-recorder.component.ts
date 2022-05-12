@@ -12,14 +12,12 @@ import { Observable } from 'rxjs';
 
 export class AudioRecorderComponent implements OnInit {
 
-  title = 'micRecorder';
+  // private title = 'micRecorder';
+  private record: RecordRTC.StereoAudioRecorder;
 
-  record;
-
-  recording = false;
-
-  url: string;
-  error: string;
+  public recording = false;
+  public url: string;
+  public error: string;
 
   @Output() audioRecordingEvent = new EventEmitter<string>();
 

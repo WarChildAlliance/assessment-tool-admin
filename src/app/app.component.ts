@@ -13,7 +13,7 @@ import { UserService } from './core/services/user.service';
 })
 export class AppComponent implements OnInit {
 
-  selfName = '';
+  public selfName = '';
 
   public languageCode: string = this.languageService.getLanguageCode();
   public languages: { name: string, code: string, direction: 'rtl' | 'ltr' }[] = this.languageService.getLanguages();

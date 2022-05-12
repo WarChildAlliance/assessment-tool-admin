@@ -15,9 +15,9 @@ import { AnswerService } from 'src/app/core/services/answer.service';
 })
 export class AssessmentsAnswersComponent implements OnInit {
 
-  assessmentsAnswersDataSource: MatTableDataSource<AssessmentTableData> = new MatTableDataSource([]);
-  currentStudentId: string;
+  private currentStudentId: string;
 
+  public assessmentsAnswersDataSource: MatTableDataSource<AssessmentTableData> = new MatTableDataSource([]);
   public displayedColumns: TableColumn[] = [
     { key: 'title', name: 'general.title' },
     { key: 'subject', name: 'general.subject' },
@@ -29,7 +29,7 @@ export class AssessmentsAnswersComponent implements OnInit {
     }
   ];
 
-  public searchableColumns = ['title', 'subject'];
+  // public searchableColumns = ['title', 'subject'];
 
   constructor(
     private router: Router,

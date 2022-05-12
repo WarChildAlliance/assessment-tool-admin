@@ -17,7 +17,7 @@ import { UtilitiesService } from './utilities.service';
 })
 export class UserService {
 
-  newUser: User;
+  // newUser: User;
 
   constructor(
     private http: HttpClient,

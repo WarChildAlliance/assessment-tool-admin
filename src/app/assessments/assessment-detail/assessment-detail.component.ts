@@ -28,7 +28,7 @@ export class AssessmentDetailComponent implements OnInit {
 
   public selectedTopics: any[] = [];
 
-  currentAssessment: any;
+  public currentAssessment: any;
 
   public createNewTopicForm: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required])

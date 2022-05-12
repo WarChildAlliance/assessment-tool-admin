@@ -19,14 +19,13 @@ import { TopicTableData } from 'src/app/core/models/topic-table-data.model';
   styleUrls: ['./questions-list-answers.component.scss']
 })
 export class QuestionsListAnswersComponent implements OnInit {
+  private currentStudentId: string;
+  private assessmentId: string;
+  private topicId: string;
 
-  questionsAnswersDataSource: MatTableDataSource<QuestionTableData> = new MatTableDataSource([]);
-  currentStudentId: string;
-  assessmentId: string;
-  topicId: string;
-
-  currentStudent: StudentTableData;
-  currentTopic: TopicTableData;
+  public questionsAnswersDataSource: MatTableDataSource<QuestionTableData> = new MatTableDataSource([]);
+  public currentStudent: StudentTableData;
+  public currentTopic: TopicTableData;
 
   @ViewChild('questionPreviewDialog') questionPreviewDialog: TemplateRef<any>;
 

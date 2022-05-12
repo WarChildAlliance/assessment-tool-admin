@@ -11,6 +11,9 @@ import { AssessmentService } from 'src/app/core/services/assessment.service';
 })
 export class SelectAssessmentComponent implements OnInit {
 
+  private assessmentId: string;
+  private firstTopicRequest = true;
+
   public assessmentsList: AssessmentDashboard[];
   public topicsList: TopicDashboard[];
 
@@ -18,10 +21,6 @@ export class SelectAssessmentComponent implements OnInit {
   public selectedAssessmentArr: AssessmentDashboard[];
   public selected: AssessmentDashboard[] = [];
   public selectedTopic: TopicDashboard;
-
-  private assessmentId: string;
-
-  private firstTopicRequest = true;
 
   @Input() selectTopic: boolean;
   @Input() multiple: boolean;

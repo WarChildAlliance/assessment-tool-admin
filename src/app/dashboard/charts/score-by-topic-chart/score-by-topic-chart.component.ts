@@ -14,13 +14,12 @@ export class ScoreByTopicChartComponent implements OnInit {
 
   public studentsListChart: ChartDataSets[];
   private lineChart: Chart;
+  private topicsName = [];
+  private topicsAverage = [];
 
   public selectedStudent: ChartDataSets;
 
   public hasData = true;
-
-  topicsName = [];
-  topicsAverage = [];
 
   public lineChartOptions: ChartOptions = {
     responsive: true,

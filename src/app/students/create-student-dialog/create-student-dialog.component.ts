@@ -25,8 +25,8 @@ export class CreateStudentDialogComponent implements OnInit {
 
   public formChanges = false;
 
-  countries: Country[];
-  languages: Language[];
+  public countries: Country[];
+  public languages: Language[];
 
   public createNewStudentForm: FormGroup = new FormGroup({
     first_name: new FormControl('', [Validators.required, Validators.pattern('^[A-Za-zÀ-ÖØ-öø-ÿ\u0621-\u064A]+(-[A-Za-zÀ-ÖØ-öø-ÿ\u0621-\u064A]+)?$')]),
