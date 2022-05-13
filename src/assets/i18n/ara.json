@@ -86,6 +86,7 @@
       "questionCloneSuccess": "تم استنساخ السؤال بنجاح",
       "questionCreateSuccess": "تم إنشاء السؤال بنجاح",
       "questionUpdateSuccess": "تم تحديث السؤال بنجاح",
+      "blocked": "",
       "or": "أو",
       "numberline": {
         "endNumber": "رقم النهاية",
