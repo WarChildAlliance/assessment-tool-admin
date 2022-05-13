@@ -23,6 +23,9 @@ import { MatDividerModule } from '@angular/material/divider';
 import { AudioRecorderComponent } from '../shared/audio-recorder/audio-recorder.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { CustomButtonModule } from '../shared/button/button.module';
+import { HorizontalScrollArrowsComponent } from '../shared/horizontal-scroll-arrows/horizontal-scroll-arrows.component';
+import { ImageSelectorComponent } from '../shared/attachments/image-selector/image-selector.component';
+import { AudioSelectorComponent } from '../shared/attachments/audio-selector/audio-selector.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +37,10 @@ import { CustomButtonModule } from '../shared/button/button.module';
     QuestionInputFormComponent,
     QuestionNumberlineFormComponent,
     QuestionSelectFormComponent,
-    AudioRecorderComponent
+    AudioRecorderComponent,
+    HorizontalScrollArrowsComponent,
+    ImageSelectorComponent,
+    AudioSelectorComponent
   ],
   imports: [
     CommonModule,

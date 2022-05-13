@@ -27,7 +27,7 @@ export class TopicsListAnswersComponent implements OnInit {
 
   public displayedColumns: TableColumn[] = [
     { key: 'name', name: 'general.name' },
-    { key: 'questions_count', name: 'answers.questionsNumber' },
+    { key: 'questions_count', name: 'general.questionsNumber' },
     { key: 'student_tries_count', name: 'answers.topicListAnswers.triesNumber' },
     { key: 'correct_answers_percentage_first_try', name: 'answers.topicListAnswers.answeredCorrectlyFirstTry', type: 'percentage' },
     { key: 'correct_answers_percentage_last_try', name: 'answers.topicListAnswers.answeredCorrectlyLastTry', type: 'percentage' },

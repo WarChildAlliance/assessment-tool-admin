@@ -38,43 +38,39 @@
         </div>
     </div>
     <hr>
-    <div class="topics">
-        <mat-card class="add-topic" (click)="openCreateTopicDialog(assessment.id)" *ngIf="canEdit">
-            <div class="add-topic-text">
-                {{ "assessmentBuilder.assessmentSummary.addTopic" | translate }}<mat-icon>add</mat-icon>
-            </div>
-        </mat-card>
-        <mat-card class="topic-card" *ngFor="let topic of assessment.topics">
-            <img *ngIf="topic.icon" [src]="getMediaSource(topic.icon)">
-            <span class="topic-title">{{ topic.title }}</span>
-            <p class="small-description">{{ topic.description }}</p>
-            <span class="question_count">({{ topic.questionsCount }} {{ "general.questions" | translate }})</span>
+    <div class="topics-container">
+        <div #topicsList class="topics">
+            <mat-card class="add-topic" (click)="openCreateTopicDialog(assessment.id)" *ngIf="canEdit">
+                <div class="add-topic-text">
+                    {{ "assessmentBuilder.assessmentSummary.addTopic" | translate }}<mat-icon>add</mat-icon>
+                </div>
+            </mat-card>
+            <mat-card class="topic-card" *ngFor="let topic of assessment.topics">
+                <img *ngIf="topic.icon" [src]="getMediaSource(topic.icon)">
+                <span class="topic-title">{{ topic.title }}</span>
+                <p class="small-description">{{ topic.description }}</p>
+                <span class="question_count">({{ topic.questionsCount }} {{ "general.questions" | translate }})</span>
 
-            <div [ngSwitch]="topic.archived">
-                <div class="topic-buttons" *ngSwitchCase="false">
-                    <app-custom-button matTooltip="Archive topic" [isIcon]="true"
-                     icon="archive" (click)="archiveTopic(assessment.id, topic.id, true)">
-                    </app-custom-button>
-                    <app-custom-button matTooltip="Topic details" [isIcon]="true"
-                     icon="pageview" (click)="goToTopicDetails(assessment.id, topic.id)">
-                    </app-custom-button>
+                <div [ngSwitch]="topic.archived">
+                    <div class="topic-buttons" *ngSwitchCase="false">
+                        <app-custom-button matTooltip="Archive topic" [isIcon]="true"
+                        icon="archive" (click)="archiveTopic(assessment.id, topic.id, true)">
+                        </app-custom-button>
+                        <app-custom-button matTooltip="Topic details" [isIcon]="true"
+                        icon="pageview" (click)="goToTopicDetails(assessment.id, topic.id)">
+                        </app-custom-button>
+                    </div>
+                    <div *ngSwitchCase="true">
+                        <app-custom-button category="tertiary" variant="neutral" (click)="archiveTopic(assessment.id, topic.id, false)">
+                            {{ "assessmentBuilder.assessmentSummary.unarchive" | translate }}
+                        </app-custom-button>
+                    </div>
                 </div>
-                <div *ngSwitchCase="true">
-                    <app-custom-button category="tertiary" variant="neutral" (click)="archiveTopic(assessment.id, topic.id, false)">
-                        {{ "assessmentBuilder.assessmentSummary.unarchive" | translate }}
-                    </app-custom-button>
-                </div>
-            </div>
-        </mat-card>
+            </mat-card>
+        </div>
+        <app-horizontal-scroll-arrows
+            [scrollableElement]="topicsList"
+            [pxScrollAmount]="600">
+        </app-horizontal-scroll-arrows>
     </div>
 </mat-card>
-
-<ng-template #createAssessmentDialog>
-    <app-assessment-form-dialog [assessment]="assessment" [edit]="edit"></app-assessment-form-dialog>
-</ng-template>
-
-<ng-template #createTopicDialog>
-    <mat-dialog-content>
-        <app-topic-form-dialog [assessmentId]="assessmentId"></app-topic-form-dialog>
-    </mat-dialog-content>
-</ng-template>

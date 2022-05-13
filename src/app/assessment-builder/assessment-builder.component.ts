@@ -1,9 +1,9 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { AssessmentService } from 'src/app/core/services/assessment.service';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { UserService } from 'src/app/core/services/user.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AlertService } from 'src/app/core/services/alert.service';
+import { AssessmentService } from 'src/app/core/services/assessment.service';
+import { UserService } from 'src/app/core/services/user.service';
+import { AssessmentFormDialogComponent } from './assessment-form-dialog/assessment-form-dialog.component';
 
 @Component({
   selector: 'app-assessment-builder',
@@ -34,13 +34,10 @@ export class AssessmentBuilderComponent implements OnInit {
     private: new FormControl(false, [Validators.required])
   });
 
-  @ViewChild('createAssessmentDialog') createAssessmentDialog: TemplateRef<any>;
-
   constructor(
     private assessmentService: AssessmentService,
     private userService: UserService,
-    private dialog: MatDialog,
-    private alertService: AlertService
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -56,32 +53,15 @@ export class AssessmentBuilderComponent implements OnInit {
   }
 
   openCreateAssessmentDialog(): void {
-    const createAssessmentDialog = this.dialog.open(this.createAssessmentDialog);
+    const createAssessmentDialog = this.dialog.open(AssessmentFormDialogComponent, {
+      data: {
+        edit: this.edit
+      }
+    });
     createAssessmentDialog.afterClosed().subscribe((value) => {
       if (value) {
         this.getAssessments();
       }
     });
   }
-
-  submitCreateNewAssessment(): void {
-    if (this.edit) {
-      this.assessmentService.editAssessment(this.assessmentId, this.createNewAssessmentForm.value).subscribe(() => {
-        this.alertService.success('Assessment was altered successfully');
-      } );
-    } else {
-      this.assessmentService.createAssessment(this.createNewAssessmentForm.value).subscribe(() => {
-        this.alertService.success('Assessment was saved successfully');
-      });
-    }
-    this.createNewAssessmentForm.reset();
-  }
-
-  handleFileInput(event): void {
-    this.icon = event.target.files[0];
-    this.createNewAssessmentForm.patchValue({
-      icon: this.icon
-    });
-  }
-
 }

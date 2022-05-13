@@ -1,21 +1,26 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { BatchTopicAccesses } from 'src/app/core/models/batch-topic-accesses.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { UtilitiesService } from 'src/app/core/services/utilities.service';
 import { TranslateService } from '@ngx-translate/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
+interface DialogData {
+  assessment?: any;
+  studentId?: any;
+}
 @Component({
-  selector: 'app-topic-access-edit',
-  templateUrl: './topic-access-edit.component.html',
-  styleUrls: ['./topic-access-edit.component.scss']
+  selector: 'app-topic-access-modal',
+  templateUrl: './topic-access-modal.component.html',
+  styleUrls: ['./topic-access-modal.component.scss']
 })
-export class TopicAccessEditComponent implements OnInit {
+export class TopicAccessModalComponent implements OnInit {
   minDate: Date = new Date();
 
-  @Input() assessment: any;
-  @Input() studentId: any;
+  public assessment: any;
+  public studentId: any;
 
   private startDate;
   private endDate;
@@ -34,6 +39,7 @@ export class TopicAccessEditComponent implements OnInit {
   }
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private formBuilder: FormBuilder,
     private utilitiesService: UtilitiesService,
     private alertService: AlertService,
@@ -42,6 +48,8 @@ export class TopicAccessEditComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    if (this.data?.assessment) { this.assessment = this.data.assessment; }
+    if (this.data?.studentId) { this.studentId = this.data.studentId; }
     if (this.assessment) {
       this.generateForm();
     }

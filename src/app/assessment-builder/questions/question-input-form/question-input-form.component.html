@@ -14,25 +14,28 @@
 
         <div class="attachments-container">
             <div style="margin-right: 20px;">
-                <h3><b>{{ "assessmentBuilder.questions.imageAttachment" | translate }}</b></h3>
-                <app-custom-button class="file_input" category="secondary" variant="neutral" (click)="imageFileInput.click()">
-                    {{ "assessmentBuilder.chooseFile" | translate }}
-                </app-custom-button>
-                <input hidden accept="image/*" (change)="handleFileInput($event, 'IMAGE')" #imageFileInput type="file">
-                <p>{{imageAttachment ? imageAttachment.name : 'No file chosen'}}</p>
+                <app-image-selector
+                    [reset$]="attachmentsResetSubject$.asObservable()"
+                    (newImageEvent)="onNewImageAttachment($event)"
+                    [imageAttachment]="imageAttachment"
+                ></app-image-selector>
             </div>
             <div>
-                <h3><b>{{ "assessmentBuilder.questions.audioAttachment" | translate }}</b></h3>
-                <app-custom-button class="file_input" category="secondary" variant="neutral" (click)="audioFileInput.click()">
-                    {{ "assessmentBuilder.chooseFile" | translate }}
-                </app-custom-button>
-                <input hidden accept="audio/*" (change)="handleFileInput($event, 'AUDIO')" #audioFileInput type="file">
-                <p>{{audioAttachment ? audioAttachment.name : 'No file chosen'}}</p>
-                <p style="text-align: center"><b>OR </b></p>
-                <app-audio-recorder [resetQuestionAudio]="resetQuestionAudio" (audioRecordingEvent)="addRecordedAudio($event)"></app-audio-recorder>
+                <app-audio-selector
+                    [recorderEnabled]="true"
+                    [reset$]="attachmentsResetSubject$.asObservable()"
+                    (newAudioEvent)="onNewAudioAttachment($event)"
+                    [audioAttachment]="audioAttachment"
+                ></app-audio-selector>
             </div>
         </div>
-        <button mat-flat-button color="accent" [disabled]="inputForm.invalid || !inputForm.dirty" (click)="onSave()">
-            {{ question ? 'Save' : 'Create' }}
-        </button>
+       
+        <div class="dialog-buttons">
+            <button mat-flat-button mat-dialog-close class="dialog-buttons__cancel" color="secondary">
+                {{ "general.cancel" | translate }}
+            </button>
+            <button mat-flat-button [mat-dialog-close]="true" color="accent" [disabled]="inputForm.invalid || !inputForm.dirty" (click)="onSave()">
+                {{ question ? toClone ? ("general.clone" | translate) : ("general.save" | translate) : ("general.create" | translate) }}
+            </button>
+        </div>
 </form>

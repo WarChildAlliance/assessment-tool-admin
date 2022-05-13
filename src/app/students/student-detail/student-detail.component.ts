@@ -1,11 +1,13 @@
 import { formatDate } from '@angular/common';
 import * as moment from 'moment';
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { StudentTableData } from 'src/app/core/models/student-table-data.model';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { MatDialog } from '@angular/material/dialog';
+import { CreateStudentDialogComponent } from '../create-student-dialog/create-student-dialog.component';
+import { TopicAccessModalComponent } from '../topic-access-modal/topic-access-modal.component';
 
 @Component({
   selector: 'app-student-detail',
@@ -16,9 +18,6 @@ export class StudentDetailComponent implements OnInit {
   public student: StudentTableData;
   public studentAssessments;
   public assessment;
-
-  @ViewChild('editStudentDialog') editStudentDialog: TemplateRef<any>;
-  @ViewChild('editAssignTopicDialog') editAssignTopicDialog: TemplateRef<any>;
 
   constructor(
     private userService: UserService,
@@ -56,7 +55,12 @@ export class StudentDetailComponent implements OnInit {
   }
 
   editCurrentStudent(): void {
-    const editStudentDialog = this.dialog.open(this.editStudentDialog);
+    const editStudentDialog = this.dialog.open(CreateStudentDialogComponent, {
+      data: {
+        newStudent: this.student
+      }
+    });
+
     editStudentDialog.afterClosed().subscribe((value) => {
       if (value) {
         this.getStudentDetails(this.student.id);
@@ -66,7 +70,12 @@ export class StudentDetailComponent implements OnInit {
 
   editTopicsAccesses(assessment): void {
     this.assessment = assessment;
-    const editAssignTopicDialog = this.dialog.open(this.editAssignTopicDialog);
+    const editAssignTopicDialog = this.dialog.open(TopicAccessModalComponent, {
+      data: {
+        assessment: [this.assessment],
+        studentId: this.student.id
+      }
+    });
 
     editAssignTopicDialog.afterClosed().subscribe((value) => {
       if (value) {

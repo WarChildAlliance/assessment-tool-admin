@@ -1,0 +1,6 @@
+<div *ngIf="elementXOverflowEnabled(scrollableElement)">
+  <app-custom-button *ngIf="leftScrollEnabled" [isIcon]="true" icon="navigate_before" class="scroll-button -left" (click)="scrollPrevious()">
+  </app-custom-button>
+  <app-custom-button *ngIf="rightScrollEnabled" [isIcon]="true" icon="navigate_next" class="scroll-button -right" (click)="scrollNext()">
+  </app-custom-button>
+</div>
