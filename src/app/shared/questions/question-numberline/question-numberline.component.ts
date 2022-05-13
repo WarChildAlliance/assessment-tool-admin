@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
   templateUrl: './question-numberline.component.html',
   styleUrls: ['./question-numberline.component.scss']
 })
-export class QuestionNumberlineComponent implements OnChanges {
+export class QuestionNumberlineComponent implements OnInit, OnChanges {
 
   @Input() question: any;
   @Input() answer: any;
@@ -17,6 +17,9 @@ export class QuestionNumberlineComponent implements OnChanges {
   public audioAttachment = null;
 
   constructor() { }
+
+  ngOnInit(): void {
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.setAttachments();
