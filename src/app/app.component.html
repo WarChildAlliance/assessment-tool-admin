@@ -1,5 +1,4 @@
 <mat-toolbar class="header-toolbar" *ngIf="isAuthenticated">
-
   <lib-mat-breadcrumb class="header-toolbar__breadcrumbs"></lib-mat-breadcrumb>
 
   <button mat-button class="header-toolbar__menu-button" aria-label="Access account settings"
@@ -22,16 +21,14 @@
 
     <mat-menu #langMenu="matMenu">
       <ng-container *ngFor="let lang of languages">
-        <button mat-menu-item (click)="changeLanguage(lang)" [ngClass]="{'selected': languageCode === lang.code}">
+        <app-custom-button mat-menu-item (click)="changeLanguage(lang)" [ngClass]="{'selected': languageCode === lang.code}">
           <!-- To get more instant country flags: https://flagcdn.com/  -->
-          <img *ngIf="lang.code === 'ara'" src="https://flagcdn.com/w20/jo.png">
-          <img *ngIf="lang.code === 'eng'" src="https://flagcdn.com/w20/us.png">
+          <img style="width: 25px;" [src]="lang.flag">
           {{ lang.name }}
-        </button>
+        </app-custom-button>
       </ng-container>
     </mat-menu>
   </mat-menu>
-
 </mat-toolbar>
 
 
