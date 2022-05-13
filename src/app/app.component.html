@@ -1,5 +1,4 @@
 <mat-toolbar class="header-toolbar" *ngIf="isAuthenticated">
-
   <lib-mat-breadcrumb class="header-toolbar__breadcrumbs"></lib-mat-breadcrumb>
 
   <button mat-button class="header-toolbar__menu-button" aria-label="Access account settings"
@@ -8,26 +7,28 @@
     <span>{{ selfName }}</span>
   </button>
   <mat-menu #accountMenu="matMenu" xPosition="before">
+    <button mat-menu-item [matMenuTriggerFor]="langMenu" class="menu-button">
+      <i class="uil uil-globe"></i>
+      {{ "general.language" | translate }}
+    </button>
+    
     <button mat-menu-item (click)="logout()">
       <mat-icon matListIcon type="submit">logout</mat-icon>
       <span>
         {{ "general.logout" | translate }}
       </span>
     </button>
-    <button mat-menu-item [matMenuTriggerFor]="langMenu" class="menu-button">
-      <i class="uil uil-globe"></i>
-      {{ "general.language" | translate }}
-    </button>
 
     <mat-menu #langMenu="matMenu">
       <ng-container *ngFor="let lang of languages">
-        <button mat-menu-item (click)="changeLanguage(lang)" [ngClass]="{'selected': languageCode === lang.code}">
+        <app-custom-button mat-menu-item (click)="changeLanguage(lang)" [ngClass]="{'selected': languageCode === lang.code}">
+          <!-- To get more instant country flags: https://flagcdn.com/  -->
+          <img style="width: 25px;" [src]="lang.flag">
           {{ lang.name }}
-        </button>
+        </app-custom-button>
       </ng-container>
     </mat-menu>
   </mat-menu>
-
 </mat-toolbar>
 
 
