@@ -69,7 +69,7 @@ export class QuestionsOverviewChartComponent implements OnInit {
     });
   }
 
-  onTopicSelection(assessmentTopicInfos: {assessmentId: string, topic: TopicDashboard}): void {
+  public onTopicSelection(assessmentTopicInfos: {assessmentId: string, topic: TopicDashboard}): void {
     this.assessmentId = assessmentTopicInfos.assessmentId;
 
     if (assessmentTopicInfos.topic.started) {

@@ -80,7 +80,7 @@ export class TableComponent implements OnInit, OnChanges {
   }
 
   // Return an array exclusively composed of the keys of the columns we want displayed
-  getDisplayedColumnsKeys(): string[] {
+  public getDisplayedColumnsKeys(): string[] {
     const displayedColumnsKeys = this.displayedColumns.map(column => column.key);
     if (this.isSelectable) {
       displayedColumnsKeys.unshift('select');
@@ -90,7 +90,7 @@ export class TableComponent implements OnInit, OnChanges {
 
   // Returns the appropriate indicator color for a percentage
   // TODO This part should be improved by using class names instead
-  getIndicatorColor(percentage: number): string {
+  public getIndicatorColor(percentage: number): string {
     if (!percentage && percentage !== 0) {
       return 'inherit';
     }
@@ -106,11 +106,11 @@ export class TableComponent implements OnInit, OnChanges {
     return 'green';
   }
 
-  isAllSelected(): boolean {
+  public isAllSelected(): boolean {
     return this.selection.selected.length === this.tableData.data.length;
   }
 
-  masterToggle(): void {
+  public masterToggle(): void {
     if (this.isAllFilteredSelected()) {
       this.selection.clear();
     } else {
@@ -121,26 +121,26 @@ export class TableComponent implements OnInit, OnChanges {
     }
   }
 
-  applyFilter(event: Event): void {
+  public applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.tableData.filter = filterValue.trim().toLowerCase();
   }
 
-  applySelectFilters(key: string | number, value: any): void {
+  public applySelectFilters(key: string | number, value: any): void {
     this.filtersChangedEvent.emit({ key, value });
   }
 
-  openElementDetails(id): void {
+  public openElementDetails(id): void {
     this.openDetailsEvent.emit(id.toString());
   }
 
-  copyAlert(): void {
+  public copyAlert(): void {
     this.alertService.success('Successfully copied!');
   }
 
   // Emit an event asking for a custom action to trigger on parent element
   // The element object is the row on wich the user triggered the action.
-  customAction(element: any): void {
+  public customAction(element: any): void {
     this.customActionEvent.emit(element);
   }
 }

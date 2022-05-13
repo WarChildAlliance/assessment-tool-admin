@@ -109,22 +109,22 @@ export class StudentsComponent implements OnInit {
       });
   }
 
-  onFiltersChange(data: { key: string | number; value: any }): void {
+  public onFiltersChange(data: { key: string | number; value: any }): void {
     this.filtersData[data.key] = data.value;
 
     this.getStudentTableList(this.filtersData);
   }
 
   // This eventReceiver triggers a thousand times when user does "select all". We should find a way to improve this. (debouncer ?)
-  onSelectionChange(newSelection: User[]): void {
+  public onSelectionChange(newSelection: User[]): void {
     this.selectedUsers = newSelection;
   }
 
-  onOpenDetails(id: string): void {
+  public onOpenDetails(id: string): void {
     this.router.navigate([`/students/${id}`]);
   }
 
-  openAssignTopicDialog(): void {
+  public openAssignTopicDialog(): void {
     // Check if all students share the same language and country
     if (
       this.selectedUsers.every(
@@ -145,7 +145,7 @@ export class StudentsComponent implements OnInit {
     }
   }
 
-  openCreateStudentDialog(): void {
+  public openCreateStudentDialog(): void {
     const createStudentDialog = this.dialog.open(CreateStudentDialogComponent);
     createStudentDialog.afterClosed().subscribe((value) => {
       if (value) {
@@ -154,7 +154,7 @@ export class StudentsComponent implements OnInit {
     });
   }
 
-  openEditStudentDialog(): void {
+  public openEditStudentDialog(): void {
     this.studentToEdit = this.selectedUsers[0];
     const editStudentDialog = this.dialog.open(CreateStudentDialogComponent, {
       data: {
@@ -169,11 +169,11 @@ export class StudentsComponent implements OnInit {
     });
   }
 
-  deleteSelection(): void {
+  public deleteSelection(): void {
     console.log('DEL', this.selectedUsers);
   }
 
-  downloadData(): void {
+  public downloadData(): void {
     console.log('Work In Progress');
   }
 }

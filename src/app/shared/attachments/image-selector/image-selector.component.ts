@@ -22,7 +22,7 @@ export class ImageSelectorComponent implements OnInit {
     }
   }
 
-  handleFileInput(event): void {
+  public handleFileInput(event): void {
     this.imageAttachment = event.target.files[0];
     this.newImageEvent.emit(this.imageAttachment);
   }

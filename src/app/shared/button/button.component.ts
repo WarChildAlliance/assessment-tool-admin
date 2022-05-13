@@ -1,5 +1,6 @@
 import {
   Component,
+  OnInit,
   HostBinding,
   Input,
 } from '@angular/core';
@@ -13,7 +14,7 @@ import { ButtonVariant } from './button-variant.enum';
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss'],
 })
-export class CustomButtonComponent {
+export class CustomButtonComponent implements OnInit {
   @Input() category: ButtonCategory | string = ButtonCategory.PRIMARY;
 
   @Input() size: ButtonSize | string = ButtonSize.MEDIUM;
@@ -32,7 +33,7 @@ export class CustomButtonComponent {
 
   public emittedEventSubject: Subject<string> = new Subject();
 
-  get color(): string {
+  public get color(): string {
     switch (this.variant) {
       case ButtonVariant.PRIMARY: {
         return 'accent';
@@ -47,4 +48,6 @@ export class CustomButtonComponent {
   }
 
   constructor() {}
+
+  ngOnInit(): void {}
 }

@@ -48,13 +48,13 @@ export class AssessmentBuilderComponent implements OnInit {
     this.userService.getCountries().subscribe( res => this.countries = res);
   }
 
-  getAssessments(): void {
+  public getAssessments(): void {
     this.assessmentService.getAssessmentsList().subscribe((assessmentsList) => {
       this.currentAssessments = assessmentsList;
     });
   }
 
-  openCreateAssessmentDialog(): void {
+  public openCreateAssessmentDialog(): void {
     const createAssessmentDialog = this.dialog.open(AssessmentFormDialogComponent, {
       data: {
         edit: this.edit

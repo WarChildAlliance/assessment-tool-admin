@@ -60,7 +60,7 @@ export class SelectAssessmentComponent implements OnInit {
     });
   }
 
-  selectAssessment(assessment: AssessmentDashboard): void {
+  public selectAssessment(assessment: AssessmentDashboard): void {
     this.selectedAssessment = assessment;
     if (this.selectTopic){
       this.assessmentId = assessment.id;
@@ -70,7 +70,7 @@ export class SelectAssessmentComponent implements OnInit {
     }
   }
 
-  selectATopic(topic: TopicDashboard): void {
+  public selectATopic(topic: TopicDashboard): void {
     this.selectedTopic = topic;
     this.topicSelection.emit({assessmentId: this.assessmentId, topic});
   }

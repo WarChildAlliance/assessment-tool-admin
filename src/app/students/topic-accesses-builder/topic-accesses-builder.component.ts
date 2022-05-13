@@ -70,7 +70,7 @@ export class TopicAccessesBuilderComponent implements OnInit {
     });
   }
 
-  loadTopicsList(assessmentId: string): void {
+  public loadTopicsList(assessmentId: string): void {
     this.selectedAssessmentId = assessmentId;
     this.assessmentService.getAssessmentTopics(assessmentId).subscribe((newList) => {
       this.topicsList = newList.filter(topic => topic.archived !== true);
@@ -78,7 +78,7 @@ export class TopicAccessesBuilderComponent implements OnInit {
     });
   }
 
-  onDate(type, date): void {
+  public onDate(type, date): void {
     if (type === 'start_date') {
       this.startDate = date;
     }
@@ -87,7 +87,7 @@ export class TopicAccessesBuilderComponent implements OnInit {
     }
   }
 
-  setAll(event): void {
+  public setAll(event): void {
     this.setDate = event;
     const accessForm = this.assignTopicForm.get('access') as FormArray;
     accessForm.controls.forEach((access, i) => {
@@ -100,7 +100,7 @@ export class TopicAccessesBuilderComponent implements OnInit {
     });
   }
 
-  submitCreateTopicAccesses(): void {
+  public submitCreateTopicAccesses(): void {
     const studentsArray: number[] = [];
     this.studentsList.forEach(student => {
       studentsArray.push(student.id);
@@ -143,7 +143,7 @@ export class TopicAccessesBuilderComponent implements OnInit {
   }
 
   // Selected topics needs validations, unselected ones don't
-  selectTopic(topic, selected): void {
+  public selectTopic(topic, selected): void {
     if (selected) {
       topic.get('start_date').setValidators([Validators.required]);
       topic.get('start_date').updateValueAndValidity();

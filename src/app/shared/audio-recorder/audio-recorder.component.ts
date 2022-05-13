@@ -51,11 +51,11 @@ export class AudioRecorderComponent implements OnInit {
     this.error = 'Can not play audio in your browser';
   }
 
-  sanitize(url: string): SafeUrl {
+  public sanitize(url: string): SafeUrl {
     return this.domSanitizer.bypassSecurityTrustUrl(url);
   }
 
-  initiateRecording(): void {
+  public initiateRecording(): void {
     this.recording = true;
     const mediaConstraints = {
       video: false,
@@ -64,7 +64,7 @@ export class AudioRecorderComponent implements OnInit {
     navigator.mediaDevices.getUserMedia(mediaConstraints).then(this.successCallback.bind(this), this.errorCallback.bind(this));
   }
 
-  stopRecording(): void {
+  public stopRecording(): void {
     this.recording = false;
     this.record.stop(this.processRecording.bind(this));
   }

@@ -80,14 +80,14 @@ export class QuestionsListAnswersComponent implements OnInit {
     });
   }
 
-  onOpenDetails(questionId: string): void {
+  public onOpenDetails(questionId: string): void {
     /*
     this.router.navigate([`students/${this.currentStudentId}/assessments/
       ${this.assessmentId}/topics/${this.topicId}/questions/${questionId}`]);
     */
   }
 
-  onCustomAction(element: any): void {
+  public onCustomAction(element: any): void {
     this.assessmentService.getQuestionDetails(this.assessmentId, this.topicId, element.id).subscribe(details => {
       this.questionDetails = details;
       this.matDialog.open(this.questionPreviewDialog);

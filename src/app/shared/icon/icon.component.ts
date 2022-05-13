@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { IconVariant } from './icon-variant.enum';
 
 @Component({
@@ -6,7 +6,7 @@ import { IconVariant } from './icon-variant.enum';
   templateUrl: './icon.component.html',
   styleUrls: ['./icon.component.scss'],
 })
-export class CustomIconComponent {
+export class CustomIconComponent implements OnInit {
   @Input() icon = '';
 
   @Input() inline = false;
@@ -15,11 +15,11 @@ export class CustomIconComponent {
 
   @Input() size = 24;
 
-  get fontSize(): string {
+  public get fontSize(): string {
     return this.size + 'px';
   }
 
-  get color(): string {
+  public get color(): string {
     switch (this.variant) {
       case IconVariant.PRIMARY: {
         return 'primary';
@@ -34,4 +34,6 @@ export class CustomIconComponent {
   }
 
   constructor() {}
+
+  ngOnInit(): void {}
 }

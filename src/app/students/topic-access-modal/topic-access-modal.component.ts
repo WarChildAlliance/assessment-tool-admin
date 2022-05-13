@@ -79,7 +79,7 @@ export class TopicAccessModalComponent implements OnInit {
     });
   }
 
-  onDate(type, date): void {
+  public onDate(type, date): void {
     if (type === 'start_date') {
       this.startDate = date;
     }
@@ -88,7 +88,7 @@ export class TopicAccessModalComponent implements OnInit {
     }
   }
 
-  setAll(event): void {
+  public setAll(event): void {
     this.setDate = event;
     const accessForm = this.assignTopicForm.get('access') as FormArray;
     accessForm.controls.forEach((access, i) => {
@@ -100,7 +100,7 @@ export class TopicAccessModalComponent implements OnInit {
     });
   }
 
-  submitCreateTopicAccesses(): void {
+  public submitCreateTopicAccesses(): void {
     const studentsArray: number[] = [this.studentId];
 
     const accessesArray: any[] = [];
@@ -133,7 +133,7 @@ export class TopicAccessModalComponent implements OnInit {
     );
   }
 
-  delete(topic): void {
+  public delete(topic): void {
     const topicAccessId = topic.get('topic').value.topic_access_id;
 
     this.userService.removeTopicAccess(this.assessmentId, topicAccessId).subscribe(

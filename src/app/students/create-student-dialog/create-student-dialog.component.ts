@@ -64,7 +64,7 @@ export class CreateStudentDialogComponent implements OnInit {
     this.createNewStudentForm.valueChanges.subscribe(() => { this.formChanges = true; });
   }
 
-  submitCreateNewStudent(): void {
+  public submitCreateNewStudent(): void {
     const studentToCreate = {
       first_name: this.createNewStudentForm.value.first_name,
       last_name: this.createNewStudentForm.value.last_name,

@@ -394,7 +394,7 @@ export class QuestionSelectFormComponent implements OnInit {
     });
   }
 
-  addOptions(): void {
+  public addOptions(): void {
     this.optionsAtt.push({ attachments: [] });
     const formGroup: FormGroup = this.formBuilder.group({
       title: this.formBuilder.control(null),
@@ -405,7 +405,7 @@ export class QuestionSelectFormComponent implements OnInit {
     this.saveOptions = true;
   }
 
-  onSave(): void {
+  public onSave(): void {
     if (this.toClone) {
       this.createQuestion();
       this.alertMessage = 'Question successfully cloned';
@@ -418,19 +418,19 @@ export class QuestionSelectFormComponent implements OnInit {
     }
   }
 
-  onNewImageAttachment(event: File): void {
+  public onNewImageAttachment(event: File): void {
     if (this.editQuestion) { this.selectForm.markAsDirty(); }
     this.changedImage = true;
     this.imageAttachment = event;
   }
 
-  onNewAudioAttachment(event: File): void {
+  public onNewAudioAttachment(event: File): void {
     if (this.editQuestion) { this.selectForm.markAsDirty(); }
     this.changedAudio = true;
     this.audioAttachment = event;
   }
 
-  handleFileInputOptions(event: File, type, i): void {
+  public handleFileInputOptions(event: File, type, i): void {
     if (this.editQuestion) { this.selectForm.markAsDirty(); }
     let overwritePrevious = false;
     let id = 0;

@@ -76,7 +76,7 @@ export class TopicDetailsComponent implements OnInit {
     });
   }
 
-  openEditTopicDialog(topic): void {
+  public openEditTopicDialog(topic): void {
     this.topic = topic;
     const createTopicDialog = this.dialog.open(TopicFormDialogComponent, {
       data: {
@@ -92,7 +92,7 @@ export class TopicDetailsComponent implements OnInit {
     });
   }
 
-  openQuestionDialog(question?: any, clone?: boolean, type?: string): void {
+  public openQuestionDialog(question?: any, clone?: boolean, type?: string): void {
     const questionType = question ? question.question_type : type;
     // Use question array to open the dialog corresponding to the question type, using the component attribute
     const questionDialog = this.dialog.open(this.questionsArray.find(x => (questionType === x.type)).component, {

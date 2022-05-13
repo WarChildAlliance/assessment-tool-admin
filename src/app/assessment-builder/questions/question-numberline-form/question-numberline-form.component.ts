@@ -198,17 +198,17 @@ export class QuestionNumberlineFormComponent implements OnInit {
     });
   }
 
-  onNewImageAttachment(event: File): void {
+  public onNewImageAttachment(event: File): void {
     this.changedImage = true;
     this.imageAttachment = event;
   }
 
-  onNewAudioAttachment(event: File): void {
+  public onNewAudioAttachment(event: File): void {
     this.changedAudio = true;
     this.audioAttachment = event;
   }
 
-  onSave(): void {
+  public onSave(): void {
     if (this.question && !this.toClone) {
       this.alertMessage = 'Question successfully updated';
       this.editQuestion();

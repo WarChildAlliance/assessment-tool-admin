@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import * as Chart from 'chart.js';
 import { ChartData, ChartDataSets, ChartOptions } from 'chart.js';
 import { AssessmentDashboard } from 'src/app/core/models/assessment-dashboard.model';
@@ -10,7 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './score-by-topic-chart.component.html',
   styleUrls: ['./score-by-topic-chart.component.scss']
 })
-export class ScoreByTopicChartComponent {
+export class ScoreByTopicChartComponent implements OnInit {
 
   private lineChart: Chart;
   private topicsName = [];
@@ -48,6 +48,9 @@ export class ScoreByTopicChartComponent {
     private userService: UserService,
     public translate: TranslateService
   ) { }
+
+  ngOnInit(): void {
+  }
 
   private getChartLineData(studentsList: {full_name: string, topics: {}[]}[], topicNames: string[], topicsAverage: number[]): void{
     this.studentsListChart = [];
@@ -87,7 +90,7 @@ export class ScoreByTopicChartComponent {
     this.selectStudent(this.selectedStudent);
   }
 
-  selectStudent(student): void{
+  public selectStudent(student): void{
     if (this.lineChart.data.datasets.length > 1) {
       this.lineChart.data.datasets.splice(-1, 1);
     }
@@ -95,7 +98,7 @@ export class ScoreByTopicChartComponent {
     this.lineChart.update();
   }
 
-  selectChartAssessment(assessment: AssessmentDashboard): void {
+  public selectChartAssessment(assessment: AssessmentDashboard): void {
     if (assessment && assessment.started) {
       this.topicsName = [];
       this.topicsAverage = [];

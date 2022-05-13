@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { AssessmentDashboard } from 'src/app/core/models/assessment-dashboard.model';
 import { UserService } from 'src/app/core/services/user.service';
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   templateUrl: './score-by-topic-table.component.html',
   styleUrls: ['./score-by-topic-table.component.scss']
 })
-export class ScoreByTopicTableComponent {
+export class ScoreByTopicTableComponent implements OnInit {
 
   public studentsDataSource: MatTableDataSource<any> = new MatTableDataSource([]);
   public displayedColumns: any[] = [
@@ -33,6 +33,9 @@ export class ScoreByTopicTableComponent {
     this.displayedColumns.forEach(col => {
       this.translateService.stream(col.name).subscribe(translated => col.name = translated);
     });
+  }
+
+  ngOnInit(): void {
   }
 
   private getTableColumns(studentsList, assessmentTitle): any[]{
@@ -80,7 +83,7 @@ export class ScoreByTopicTableComponent {
     }
   }
 
-  selectTableAssessment(assessment: AssessmentDashboard): void {
+  public selectTableAssessment(assessment: AssessmentDashboard): void {
     if (!this.scoreByTopicTable.length) {
       this.getScoreByTopicsData(assessment, true);
     } else {
@@ -105,7 +108,7 @@ export class ScoreByTopicTableComponent {
     }
   }
 
-  onOpenStudentDetails(id: string): void {
+  public onOpenStudentDetails(id: string): void {
     this.router.navigate([`/students/${id}`]);
   }
 }

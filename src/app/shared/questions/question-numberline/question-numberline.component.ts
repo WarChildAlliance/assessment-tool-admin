@@ -27,12 +27,12 @@ export class QuestionNumberlineComponent implements OnChanges {
     this.audioAttachment = this.question.attachments.find( a => a.attachment_type === 'AUDIO');
   }
 
-  getSource(path: string): string {
+  public getSource(path: string): string {
     // TODO find out why we get two different paths here!
     return (path.slice(0, 5) === 'http:') ? path : environment.API_URL + path;
   }
 
-  playAudio(file): void {
+  public playAudio(file): void {
     const audio = new Audio(file);
     audio.load();
     audio.play();

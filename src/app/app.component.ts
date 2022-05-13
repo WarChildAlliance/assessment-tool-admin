@@ -47,15 +47,15 @@ export class AppComponent implements OnInit {
     });
   }
 
-  get isAuthenticated(): boolean {
+  public get isAuthenticated(): boolean {
     return this.authService.isAuthenticated;
   }
 
-  logout(): void {
+  public logout(): void {
     this.authService.logout();
   }
 
-  changeLanguage(language: { name: string, code: string, direction: 'rtl' | 'ltr' }): void {
+  public changeLanguage(language: { name: string, code: string, direction: 'rtl' | 'ltr' }): void {
     this.languageCode = language.code;
     this.languageService.setLanguage(language);
   }

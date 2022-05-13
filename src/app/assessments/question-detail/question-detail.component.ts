@@ -36,19 +36,19 @@ export class QuestionDetailComponent implements OnInit {
   }
 
   // This eventReceiver triggers a thousand times when user does "select all". We should find a way to improve this. (debouncer ?)
-  onSelectionChange(newSelection: any[]): void {
+  public onSelectionChange(newSelection: any[]): void {
     this.selectedQuestions = newSelection;
   }
 
-  onOpenDetails(id: string): void {
+  public onOpenDetails(id: string): void {
     this.router.navigate([`/assessments/${this.assessmentId}/topics/${this.topicId}/questions/${id}`]);
   }
 
-  deleteSelection(): void {
+  public deleteSelection(): void {
     console.log('DEL', this.selectedQuestions);
   }
 
-  downloadData(): void {
+  public downloadData(): void {
     console.log('Work In Progress');
   }
 }

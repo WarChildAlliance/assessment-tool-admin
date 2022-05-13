@@ -67,7 +67,7 @@ export class AssessmentSummaryComponent implements OnInit {
     });
   }
 
-  openCreateTopicDialog(assessmentId: string): void {
+  public openCreateTopicDialog(assessmentId: string): void {
     this.assessmentId = assessmentId;
 
     const createTopicDialog = this.dialog.open(TopicFormDialogComponent, {
@@ -87,7 +87,7 @@ export class AssessmentSummaryComponent implements OnInit {
   //   console.log('id', assessmentId)
   // }
 
-  archiveTopic(assessmentId, topicId, archived): void {
+  public archiveTopic(assessmentId, topicId, archived): void {
     const formData: FormData = new FormData();
     formData.append('archived', archived);
 
@@ -97,7 +97,7 @@ export class AssessmentSummaryComponent implements OnInit {
     });
   }
 
-  archiveAssessment(assessmentId, archived): void {
+  public archiveAssessment(assessmentId, archived): void {
     const formData: FormData = new FormData();
     formData.append('archived', archived);
 
@@ -107,7 +107,7 @@ export class AssessmentSummaryComponent implements OnInit {
     });
   }
 
-  editAssessment(assessment): void{
+  public editAssessment(assessment): void{
     this.edit = true;
     this.assessment = assessment;
 
@@ -128,15 +128,15 @@ export class AssessmentSummaryComponent implements OnInit {
     });
   }
 
-  goToTopicDetails(assessmentId, topicId): void {
+  public goToTopicDetails(assessmentId, topicId): void {
     this.router.navigate([`${assessmentId}/topic/${topicId}`], { relativeTo: this.route });
   }
 
-  getSource(path: string): string {
+  public getSource(path: string): string {
     return `${environment.API_URL}${path}`;
   }
 
-  getMediaSource(path: string): string {
+  public getMediaSource(path: string): string {
     return `${environment.API_URL}/media/${path}`;
   }
 }

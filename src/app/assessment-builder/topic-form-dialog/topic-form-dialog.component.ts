@@ -67,12 +67,6 @@ export class TopicFormDialogComponent implements OnInit {
     }
   }
 
-  // saveAttachments(assessmentId: string, attachment, type: string, obj): void {
-  //   this.assessmentService.addAttachments(assessmentId, attachment, type, obj).subscribe(() => {
-  //     this.alertService.success('Topic was saved successfully');
-  //   });
-  // }
-
   private async formGroupToFormData(): Promise<FormData> {
     // if user upload an icon
     if (this.icon) {
@@ -104,7 +98,13 @@ export class TopicFormDialogComponent implements OnInit {
       .then((file) => this.formData.append('icon', file));
   }
 
-  async onSave(): Promise<void> {
+  public saveAttachments(assessmentId: string, attachment, type: string, obj): void {
+    this.assessmentService.addAttachments(assessmentId, attachment, type, obj).subscribe(() => {
+      this.alertService.success('Topic was saved successfully');
+    });
+  }
+
+  public async onSave(): Promise<void> {
     const data = await this.formGroupToFormData();
     if (this.edit) {
       this.assessmentService.editTopic(this.assessmentId.toString(), this.topic.id, data).subscribe(res => {
@@ -117,7 +117,7 @@ export class TopicFormDialogComponent implements OnInit {
     }
   }
 
-  handleFileInput(event): void {
+  public handleFileInput(event): void {
     this.icon = event;
     this.createNewTopicForm.patchValue({icon: this.icon});
   }

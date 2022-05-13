@@ -33,12 +33,12 @@ export class AudioSelectorComponent implements OnInit {
     });
   }
 
-  handleFileInput(event): void {
+  public handleFileInput(event): void {
     this.audioAttachment = event.target.files[0];
     this.newAudioEvent.emit(this.audioAttachment);
   }
 
-  addRecordedAudio(event): void {
+  public addRecordedAudio(event): void {
     const name = 'recording_' + new Date().toISOString() + '.wav';
     this.audioAttachment = this.blobToFile(event, name);
     this.newAudioEvent.emit(this.audioAttachment);

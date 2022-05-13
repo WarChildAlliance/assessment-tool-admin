@@ -67,7 +67,7 @@ export class AssessmentFormDialogComponent implements OnInit {
     }
   }
 
-  async submitCreateNewAssessment(): Promise<void> {
+  public async submitCreateNewAssessment(): Promise<void> {
     const data = await this.formGroupToFormData();
     if (this.edit) {
       this.assessmentService.editAssessment(this.assessment.id, data).subscribe(() => {
@@ -81,13 +81,13 @@ export class AssessmentFormDialogComponent implements OnInit {
     this.createNewAssessmentForm.reset();
   }
 
-  // saveAttachments(assessmentId: string, attachment, type: string, obj): void {
-  //   this.assessmentService.addAttachments(assessmentId, attachment, type, obj).subscribe((res) => {
-  //     this.alertService.success('Assessment was saved successfully');
-  //   });
-  // }
+  saveAttachments(assessmentId: string, attachment, type: string, obj): void {
+    this.assessmentService.addAttachments(assessmentId, attachment, type, obj).subscribe((res) => {
+      this.alertService.success('Assessment was saved successfully');
+    });
+  }
 
-  async formGroupToFormData(): Promise<FormData> {
+  public async formGroupToFormData(): Promise<FormData> {
     // if user upload an icon
     if (this.icon) {
       this.formData.append('icon', this.icon);
@@ -108,17 +108,17 @@ export class AssessmentFormDialogComponent implements OnInit {
     return this.formData;
   }
 
-  handleFileInput(event: File): void {
+  public handleFileInput(event: File): void {
     this.icon = event;
     this.createNewAssessmentForm.patchValue({icon: this.icon});
   }
 
-   async setDefaultIcon(): Promise<void> {
+  public async setDefaultIcon(): Promise<void> {
     const imageName = this.iconOptions[Math.floor(Math.random() * this.iconOptions.length)];
     const imagePath = '../../../../assets/icons/' + imageName;
     await fetch(imagePath)
       .then((res) => res.arrayBuffer())
       .then((buf) => new File([buf], imageName, {type: 'image/svg+xml'}))
       .then((file) => this.formData.append('icon', file));
-   }
+  }
 }

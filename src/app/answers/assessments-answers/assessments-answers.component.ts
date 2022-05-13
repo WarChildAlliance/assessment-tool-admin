@@ -29,7 +29,7 @@ export class AssessmentsAnswersComponent implements OnInit {
     }
   ];
 
-  // public searchableColumns = ['title', 'subject'];
+  public searchableColumns = ['title', 'subject'];
 
   constructor(
     private router: Router,
@@ -54,7 +54,7 @@ export class AssessmentsAnswersComponent implements OnInit {
     );
   }
 
-  onOpenDetails(assessmentId: string): void {
+  public onOpenDetails(assessmentId: string): void {
     this.router.navigate(
       [`students/${this.currentStudentId}/assessments/${assessmentId}/topics`]
     );

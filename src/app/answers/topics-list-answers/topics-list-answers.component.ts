@@ -69,7 +69,7 @@ export class TopicsListAnswersComponent implements OnInit {
     });
   }
 
-  onOpenDetails(topicId: string): void {
+  public onOpenDetails(topicId: string): void {
     this.router.navigate(
       [`students/${this.currentStudentId}/assessments/${this.assessmentId}/topics/${topicId}/questions`]
     );

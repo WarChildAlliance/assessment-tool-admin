@@ -54,7 +54,7 @@ export class StudentDetailComponent implements OnInit {
     });
   }
 
-  editCurrentStudent(): void {
+  public editCurrentStudent(): void {
     const editStudentDialog = this.dialog.open(CreateStudentDialogComponent, {
       data: {
         newStudent: this.student
@@ -68,7 +68,7 @@ export class StudentDetailComponent implements OnInit {
     });
   }
 
-  editTopicsAccesses(assessment): void {
+  public editTopicsAccesses(assessment): void {
     this.assessment = assessment;
     const editAssignTopicDialog = this.dialog.open(TopicAccessModalComponent, {
       data: {
@@ -84,7 +84,7 @@ export class StudentDetailComponent implements OnInit {
     });
   }
 
-  deleteCurrentStudent(): void {
+  public deleteCurrentStudent(): void {
     console.log('DELETE CURRENT USER');
   }
 }
