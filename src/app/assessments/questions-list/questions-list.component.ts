@@ -36,7 +36,6 @@ export class QuestionsListComponent implements OnInit {
     private assessmentService: AssessmentService,
     private route: ActivatedRoute,
     private translateService: TranslateService,
-    private router: Router
   ) {
     this.displayedColumns.forEach(col => {
       this.translateService.stream(col.name).subscribe(translated => col.name = translated);

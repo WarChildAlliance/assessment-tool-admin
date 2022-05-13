@@ -16,8 +16,8 @@ import { TopicAccessModalComponent } from '../topic-access-modal/topic-access-mo
 })
 export class StudentDetailComponent implements OnInit {
   public student: StudentTableData;
-  public studentAssessments;
-  public assessment;
+  public studentAssessments: any[];
+  public assessment: any;
 
   constructor(
     private userService: UserService,
@@ -33,14 +33,14 @@ export class StudentDetailComponent implements OnInit {
     });
   }
 
-  getStudentDetails(studentId): void {
+  private getStudentDetails(studentId): void {
     this.userService
       .getStudentDetails(studentId.toString()).subscribe((student) => {
         this.student = student;
     });
   }
 
-  getStudentAssessments(studentId): void {
+  private getStudentAssessments(studentId): void {
     this.assessmentService.getStudentAssessments(studentId).subscribe(
       (assessments) => {
         assessments.forEach((assessment) => {

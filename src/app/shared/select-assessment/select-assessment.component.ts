@@ -48,6 +48,18 @@ export class SelectAssessmentComponent implements OnInit {
     });
   }
 
+  private getTopics(assessmentId: string): void{
+    this.assessmentService.getTopicsListForDashboard(assessmentId).subscribe(topics => {
+      this.topicsList = topics;
+
+      if (this.firstTopicRequest) {
+        this.selectedTopic = this.topicsList.find(el => el.started);
+        this.topicSelection.emit({assessmentId: this.assessmentId, topic: this.selectedTopic});
+        this.firstTopicRequest = false;
+      }
+    });
+  }
+
   selectAssessment(assessment: AssessmentDashboard): void {
     this.selectedAssessment = assessment;
     if (this.selectTopic){
@@ -62,17 +74,4 @@ export class SelectAssessmentComponent implements OnInit {
     this.selectedTopic = topic;
     this.topicSelection.emit({assessmentId: this.assessmentId, topic});
   }
-
-  getTopics(assessmentId: string): void{
-    this.assessmentService.getTopicsListForDashboard(assessmentId).subscribe(topics => {
-      this.topicsList = topics;
-
-      if (this.firstTopicRequest) {
-        this.selectedTopic = this.topicsList.find(el => el.started);
-        this.topicSelection.emit({assessmentId: this.assessmentId, topic: this.selectedTopic});
-        this.firstTopicRequest = false;
-      }
-    });
-  }
-
 }

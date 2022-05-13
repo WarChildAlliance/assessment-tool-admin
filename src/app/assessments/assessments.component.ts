@@ -31,8 +31,6 @@ export class AssessmentsComponent implements OnInit {
   ];
 
   public assessmentsDataSource: MatTableDataSource<Assessment> = new MatTableDataSource([]);
-
-
   public filters: TableFilter[];
   private filtersData = { country: '', language: '' };
 

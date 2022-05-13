@@ -9,10 +9,10 @@ import { environment } from 'src/environments/environment';
 })
 export class QuestionSelectComponent implements OnInit {
 
-  @Input() question;
-  @Input() answer;
-  @Input() evaluated;
-  @Input() index;
+  @Input() question: any;
+  @Input() answer: any;
+  @Input() evaluated: boolean;
+  @Input() index: number;
 
   public imageAttachment = null;
   public audioAttachment = null;
@@ -32,7 +32,6 @@ export class QuestionSelectComponent implements OnInit {
       return  option.valid ? 'valid' : '';
     }
     return option.valid ? 'valid' : 'invalid';
-
   }
 
   hasImageAttached(option): boolean {

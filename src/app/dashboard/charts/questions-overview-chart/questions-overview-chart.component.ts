@@ -25,7 +25,7 @@ export class QuestionsOverviewChartComponent implements OnInit {
   private assessmentId: string;
   private topicId: string;
 
-  public questionDetails;
+  public questionDetails: any;
 
   public index: number;
 
@@ -36,8 +36,7 @@ export class QuestionsOverviewChartComponent implements OnInit {
   ngOnInit(): void {
   }
 
-
-  getBarChartData(questionData): void {
+  private getBarChartData(questionData): void {
     this.questionData = [];
     const data = [];
     const incorrectAnswers = [];
@@ -63,7 +62,7 @@ export class QuestionsOverviewChartComponent implements OnInit {
     this.getQuestionDetails(0);
   }
 
-  getQuestionDetails(index): any {
+  private getQuestionDetails(index): any {
     this.index = index + 1;
     this.assessmentService.getQuestionDetails(this.assessmentId, this.topicId, this.questionData[index].id).subscribe(details => {
       this.questionDetails = details;

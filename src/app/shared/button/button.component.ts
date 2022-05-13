@@ -2,7 +2,6 @@ import {
   Component,
   HostBinding,
   Input,
-  OnInit
 } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ButtonCategory } from './button-category.enum';
@@ -14,7 +13,7 @@ import { ButtonVariant } from './button-variant.enum';
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss'],
 })
-export class CustomButtonComponent implements OnInit {
+export class CustomButtonComponent {
   @Input() category: ButtonCategory | string = ButtonCategory.PRIMARY;
 
   @Input() size: ButtonSize | string = ButtonSize.MEDIUM;
@@ -48,6 +47,4 @@ export class CustomButtonComponent implements OnInit {
   }
 
   constructor() {}
-
-  ngOnInit(): void {}
 }

@@ -19,9 +19,9 @@ export class AudioRecorderComponent implements OnInit {
   public url: string;
   public error: string;
 
-  @Output() audioRecordingEvent = new EventEmitter<string>();
-
   @Input() reset$: Observable<void>;
+
+  @Output() audioRecordingEvent = new EventEmitter<string>();
 
   constructor(private domSanitizer: DomSanitizer) {}
 
@@ -29,6 +29,26 @@ export class AudioRecorderComponent implements OnInit {
     this.reset$.subscribe((_) => {
       this.url = undefined;
     });
+  }
+
+  private successCallback(stream): void {
+    const options = {
+      mimeType: 'audio/wav',
+      numberOfAudioChannels: 1,
+      sampleRate: 48000,
+    };
+    const StereoAudioRecorder = RecordRTC.StereoAudioRecorder;
+    this.record = new StereoAudioRecorder(stream, options);
+    this.record.record();
+  }
+
+  private processRecording(blob): void {
+    this.url = URL.createObjectURL(blob);
+    this.audioRecordingEvent.emit(blob);
+  }
+
+  private errorCallback(error): void {
+    this.error = 'Can not play audio in your browser';
   }
 
   sanitize(url: string): SafeUrl {
@@ -44,30 +64,9 @@ export class AudioRecorderComponent implements OnInit {
     navigator.mediaDevices.getUserMedia(mediaConstraints).then(this.successCallback.bind(this), this.errorCallback.bind(this));
   }
 
-  successCallback(stream): void {
-    const options = {
-      mimeType: 'audio/wav',
-      numberOfAudioChannels: 1,
-      sampleRate: 48000,
-    };
-    const StereoAudioRecorder = RecordRTC.StereoAudioRecorder;
-    this.record = new StereoAudioRecorder(stream, options);
-    this.record.record();
-  }
-
   stopRecording(): void {
     this.recording = false;
     this.record.stop(this.processRecording.bind(this));
   }
-
-  processRecording(blob): void {
-    this.url = URL.createObjectURL(blob);
-    this.audioRecordingEvent.emit(blob);
-  }
-
-  errorCallback(error): void {
-    this.error = 'Can not play audio in your browser';
-  }
-
 }
 

@@ -28,8 +28,8 @@ export class TopicAccessesBuilderComponent implements OnInit {
   public minDate: Date = new Date();
   public studentsList: any[];
   public assessmentsList: Assessment[] = [];
-  public startDate;
-  public endDate;
+  public startDate: Date;
+  public endDate: Date;
 
   public assignTopicForm: FormGroup = new FormGroup({
     access: new FormArray([]),
@@ -52,6 +52,21 @@ export class TopicAccessesBuilderComponent implements OnInit {
     if (this.data?.studentsList) { this.studentsList = this.data.studentsList; }
     this.assessmentService.getAssessmentsList().subscribe((assessmentsList) => {
       this.assessmentsList = assessmentsList.filter(assessment => assessment.archived !== true);
+    });
+  }
+
+  private generateForm(): void {
+    const accessForm = this.assignTopicForm.get('access') as FormArray;
+    accessForm.clear();
+
+    this.topicsList.forEach((topic: Topic, i: number) => {
+      const topicAccess = this.formBuilder.group({
+        topic: new FormControl(topic),
+        selected: new FormControl(true),
+        start_date: this.setDate ? this.startDate : new FormControl(null, Validators.required),
+        end_date: this.setDate ? this.endDate : new FormControl(null, Validators.required)
+      });
+      accessForm.push(topicAccess);
     });
   }
 
@@ -82,21 +97,6 @@ export class TopicAccessesBuilderComponent implements OnInit {
         start_date: event || i === 0 ? this.startDate : null,
         end_date: event || i === 0 ? this.endDate : null
       });
-    });
-  }
-
-  generateForm(): void {
-    const accessForm = this.assignTopicForm.get('access') as FormArray;
-    accessForm.clear();
-
-    this.topicsList.forEach((topic: Topic, i: number) => {
-      const topicAccess = this.formBuilder.group({
-        topic: new FormControl(topic),
-        selected: new FormControl(true),
-        start_date: this.setDate ? this.startDate : new FormControl(null, Validators.required),
-        end_date: this.setDate ? this.endDate : new FormControl(null, Validators.required)
-      });
-      accessForm.push(topicAccess);
     });
   }
 

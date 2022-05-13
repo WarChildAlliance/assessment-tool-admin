@@ -22,6 +22,8 @@ import { TopicAccessesBuilderComponent } from './topic-accesses-builder/topic-ac
   styleUrls: ['./students.component.scss'],
 })
 export class StudentsComponent implements OnInit {
+  private filtersData = { country: '', language: '', ordering: '-id' };
+
   public displayedColumns: TableColumn[] = [
     { key: 'full_name', name: 'general.studentName' },
     { key: 'username', name: 'students.studentCode', type: 'copy' },
@@ -41,7 +43,6 @@ export class StudentsComponent implements OnInit {
   public languages: Language[] = [];
 
   public filters: TableFilter[];
-  private filtersData = { country: '', language: '', ordering: '-id' };
 
   public createNewStudentForm: FormGroup = new FormGroup({
     first_name: new FormControl('', [Validators.required]),

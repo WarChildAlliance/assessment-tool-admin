@@ -25,7 +25,7 @@ export class AuthService {
     this.authenticatedSource.next(this.cookieService.has('auth-token'));
   }
 
-  login(username: string, password: string): void {
+  public login(username: string, password: string): void {
     this.http.post<Token>(`${environment.API_URL}/users/token-auth/`, { username, password }).subscribe(
       res => {
         this.isAuthenticated = true;
@@ -36,14 +36,14 @@ export class AuthService {
     );
   }
 
-  logout(): void {
+  public logout(): void {
     this.isAuthenticated = false;
     this.cookieService.delete('auth-token');
     this.router.navigate(['/auth']);
     this.authenticatedSource.next(false);
   }
 
-  getToken(): string {
+  public getToken(): string {
     return this.cookieService.get('auth-token');
   }
 

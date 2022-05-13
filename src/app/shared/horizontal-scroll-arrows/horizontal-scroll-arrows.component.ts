@@ -22,7 +22,7 @@ export class HorizontalScrollArrowsComponent implements OnInit {
     });
   }
 
-  handleEdgeReached(): void {
+  private handleEdgeReached(): void {
     if (this.scrollableElement.scrollLeft === 0) {
       this.leftScrollEnabled = false;
     } else if (this.scrollableElement.scrollLeft === this.scrollableElement.scrollWidth - this.scrollableElement.clientWidth) {

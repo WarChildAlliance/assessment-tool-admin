@@ -11,8 +11,8 @@ import { AssessmentService } from 'src/app/core/services/assessment.service';
 })
 export class QuestionDetailComponent implements OnInit {
 
-  private assessmentId = this.route.snapshot.paramMap.get('assessment_id');
-  private topicId = this.route.snapshot.paramMap.get('topic_id');
+  private assessmentId: string = this.route.snapshot.paramMap.get('assessment_id');
+  private topicId: string = this.route.snapshot.paramMap.get('topic_id');
 
   public displayedColumns: TableColumn[] = [
     { key: 'title', name: 'Title' },

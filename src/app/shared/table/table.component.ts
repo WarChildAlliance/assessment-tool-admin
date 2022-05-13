@@ -53,6 +53,32 @@ export class TableComponent implements OnInit, OnChanges {
     this.tableData.paginator = this.paginator;
   }
 
+  // Verify if all the filtered results are selected
+  private isAllFilteredSelected(): boolean {
+    const result = this.tableData.filteredData.every(element => {
+      return this.selection.selected.includes(element);
+    });
+    return result;
+  }
+
+  // Sort the table on one of its elements at initialization
+  private loadInitialSorting(): void {
+    // Look for an element that should be used as initial sorting reference in the table data
+    // Only one element can be used as such
+    const initialSortTarget = this.displayedColumns.find((element) => element.sorting);
+
+    if (initialSortTarget) {
+      // Find the corresponding MatSortable element
+      const initialSortElement = this.tableData.sort.sortables.get(initialSortTarget.key);
+
+      // Attribute the sorting order according to the specified parameter
+      initialSortElement.start = initialSortTarget.sorting;
+
+      // Do an initial sorting matching these conditions
+      this.tableData.sort.sort(initialSortElement);
+    }
+  }
+
   // Return an array exclusively composed of the keys of the columns we want displayed
   getDisplayedColumnsKeys(): string[] {
     const displayedColumnsKeys = this.displayedColumns.map(column => column.key);
@@ -84,14 +110,6 @@ export class TableComponent implements OnInit, OnChanges {
     return this.selection.selected.length === this.tableData.data.length;
   }
 
-  // Verify if all the filtered results are selected
-  isAllFilteredSelected(): boolean {
-    const result = this.tableData.filteredData.every(element => {
-      return this.selection.selected.includes(element);
-    });
-    return result;
-  }
-
   masterToggle(): void {
     if (this.isAllFilteredSelected()) {
       this.selection.clear();
@@ -100,24 +118,6 @@ export class TableComponent implements OnInit, OnChanges {
         element => {
           this.selection.select(element);
         });
-    }
-  }
-
-  // Sort the table on one of its elements at initialization
-  private loadInitialSorting(): void {
-    // Look for an element that should be used as initial sorting reference in the table data
-    // Only one element can be used as such
-    const initialSortTarget = this.displayedColumns.find((element) => element.sorting);
-
-    if (initialSortTarget) {
-      // Find the corresponding MatSortable element
-      const initialSortElement = this.tableData.sort.sortables.get(initialSortTarget.key);
-
-      // Attribute the sorting order according to the specified parameter
-      initialSortElement.start = initialSortTarget.sorting;
-
-      // Do an initial sorting matching these conditions
-      this.tableData.sort.sort(initialSortElement);
     }
   }
 

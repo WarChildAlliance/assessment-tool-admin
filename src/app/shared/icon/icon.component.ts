@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { IconVariant } from './icon-variant.enum';
 
 @Component({
@@ -6,7 +6,7 @@ import { IconVariant } from './icon-variant.enum';
   templateUrl: './icon.component.html',
   styleUrls: ['./icon.component.scss'],
 })
-export class CustomIconComponent implements OnInit {
+export class CustomIconComponent {
   @Input() icon = '';
 
   @Input() inline = false;
@@ -34,6 +34,4 @@ export class CustomIconComponent implements OnInit {
   }
 
   constructor() {}
-
-  ngOnInit(): void {}
 }

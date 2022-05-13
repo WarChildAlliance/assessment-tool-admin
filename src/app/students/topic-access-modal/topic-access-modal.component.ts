@@ -17,17 +17,15 @@ interface DialogData {
   styleUrls: ['./topic-access-modal.component.scss']
 })
 export class TopicAccessModalComponent implements OnInit {
-  minDate: Date = new Date();
+  private startDate: Date;
+  private endDate: Date;
+  private setDate: boolean;
 
+  public minDate: Date = new Date();
   public assessment: any;
   public studentId: any;
-
-  private startDate;
-  private endDate;
-  public assessmentTitle;
-  public assessmentId;
-
-  private setDate: boolean;
+  public assessmentTitle: string;
+  public assessmentId: string;
   public deletedTopic = false;
 
   public assignTopicForm: FormGroup = new FormGroup({
@@ -55,7 +53,7 @@ export class TopicAccessModalComponent implements OnInit {
     }
   }
 
-  generateForm(): void {
+  private generateForm(): void {
     const accessForm = this.assignTopicForm.get('access') as FormArray;
 
     this.assessment.forEach((elem) => {

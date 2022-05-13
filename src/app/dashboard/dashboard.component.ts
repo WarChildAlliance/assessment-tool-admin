@@ -14,11 +14,9 @@ export class DashboardComponent implements OnInit {
   constructor(private assessmentService: AssessmentService) { }
 
   ngOnInit(): void {
-
     this.assessmentService.getAssessmentsListforDashboard().subscribe((assessmentsList) => {
       this.assessmentService.updateAssessmentsList(assessmentsList);
     });
-
   }
 
 }

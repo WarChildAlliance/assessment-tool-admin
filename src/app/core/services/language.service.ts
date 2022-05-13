@@ -33,19 +33,19 @@ export class LanguageService {
     this.translateService.use(savedLanguage);
   }
 
-  getLanguageCode(): string {
+  public getLanguageCode(): string {
     return this.translateService.currentLang;
   }
 
-  getLanguage(): { name: string, code: string, direction: 'rtl' | 'ltr' } {
+  public getLanguage(): { name: string, code: string, direction: 'rtl' | 'ltr' } {
     return this.language;
   }
 
-  getLanguages(): { name: string, code: string, direction: 'rtl' | 'ltr' }[] {
+  public getLanguages(): { name: string, code: string, direction: 'rtl' | 'ltr' }[] {
     return this.languages;
   }
 
-  setLanguage(language: { name: string, code: string, direction: 'rtl' | 'ltr' }): void {
+  public setLanguage(language: { name: string, code: string, direction: 'rtl' | 'ltr' }): void {
     this.language = language;
     localStorage.setItem('la-language', language.code.toLowerCase());
     this.translateService.use(language.code);
@@ -53,7 +53,7 @@ export class LanguageService {
     // moment.locale(language.code);
   }
 
-  getDirection(): BehaviorSubject<'rtl' | 'ltr'> {
+  public getDirection(): BehaviorSubject<'rtl' | 'ltr'> {
     this.setDirection();
     return this.direction;
   }

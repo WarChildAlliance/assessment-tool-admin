@@ -9,10 +9,10 @@ import { Observable, Subject } from 'rxjs';
 export class AudioSelectorComponent implements OnInit {
   @Input() recorderEnabled: boolean;
   @Input() reset$: Observable<void> = null;
+  @Input() audioAttachment: File;
 
   @Output() newAudioEvent = new EventEmitter<File>();
 
-  @Input() audioAttachment;
   public recorderResetSubject$ = new Subject<void>();
 
   constructor() { }
