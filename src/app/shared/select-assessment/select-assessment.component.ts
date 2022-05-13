@@ -42,6 +42,8 @@ export class SelectAssessmentComponent implements OnInit {
         if (this.selectedAssessment){
           this.assessmentId = this.selectedAssessment.id;
           this.getTopics(this.assessmentId);
+        } else {
+          this.topicSelection.emit(null);
         }
       } else {
         this.assessmentSelection.emit(this.selectedAssessment);
@@ -64,7 +66,7 @@ export class SelectAssessmentComponent implements OnInit {
     this.topicSelection.emit({assessmentId: this.assessmentId, topic});
   }
 
-  getTopics(assessmentId: string): void{
+  getTopics(assessmentId: string): void {
     this.assessmentService.getTopicsListForDashboard(assessmentId).subscribe(topics => {
       this.topicsList = topics;
 

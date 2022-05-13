@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
@@ -41,6 +42,7 @@ export class AssessmentFormDialogComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private translateService: TranslateService,
     private assessmentService: AssessmentService,
     private userService: UserService,
     private alertService: AlertService
@@ -69,11 +71,11 @@ export class AssessmentFormDialogComponent implements OnInit {
     const data = await this.formGroupToFormData();
     if (this.edit) {
       this.assessmentService.editAssessment(this.assessment.id, data).subscribe(() => {
-        this.alertService.success('Assessment was altered successfully');
+        this.alertService.success(this.translateService.instant('assessmentBuilder.assessmentEditSuccess'));
       });
     } else {
       this.assessmentService.createAssessment(data).subscribe(res => {
-        this.alertService.success('Assessment was saved successfully');
+        this.alertService.success(this.translateService.instant('assessmentBuilder.assessmentSaveSuccess'));
     });
     }
     this.createNewAssessmentForm.reset();
@@ -81,7 +83,7 @@ export class AssessmentFormDialogComponent implements OnInit {
 
   saveAttachments(assessmentId: string, attachment, type: string, obj): void {
     this.assessmentService.addAttachments(assessmentId, attachment, type, obj).subscribe((res) => {
-      this.alertService.success('Assessment was saved successfully');
+      this.alertService.success(this.translateService.instant('assessmentBuilder.assessmentSaveSuccess'));
     });
   }
 
@@ -106,8 +108,8 @@ export class AssessmentFormDialogComponent implements OnInit {
     return this.formData;
   }
 
-  handleFileInput(event): void {
-    this.icon = event.target.files[0];
+  handleFileInput(event: File): void {
+    this.icon = event;
     this.createNewAssessmentForm.patchValue({icon: this.icon});
   }
 

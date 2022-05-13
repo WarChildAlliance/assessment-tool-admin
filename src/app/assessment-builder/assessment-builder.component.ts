@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { MatDialog } from '@angular/material/dialog';
-import { UserService } from 'src/app/core/services/user.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AlertService } from 'src/app/core/services/alert.service';
+import { AssessmentService } from 'src/app/core/services/assessment.service';
+import { UserService } from 'src/app/core/services/user.service';
 import { AssessmentFormDialogComponent } from './assessment-form-dialog/assessment-form-dialog.component';
 
 @Component({
@@ -38,8 +37,7 @@ export class AssessmentBuilderComponent implements OnInit {
   constructor(
     private assessmentService: AssessmentService,
     private userService: UserService,
-    private dialog: MatDialog,
-    private alertService: AlertService
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -66,25 +64,4 @@ export class AssessmentBuilderComponent implements OnInit {
       }
     });
   }
-
-  submitCreateNewAssessment(): void {
-    if (this.edit) {
-      this.assessmentService.editAssessment(this.assessmentId, this.createNewAssessmentForm.value).subscribe(() => {
-        this.alertService.success('Assessment was altered successfully');
-      } );
-    } else {
-      this.assessmentService.createAssessment(this.createNewAssessmentForm.value).subscribe(() => {
-        this.alertService.success('Assessment was saved successfully');
-      });
-    }
-    this.createNewAssessmentForm.reset();
-  }
-
-  handleFileInput(event): void {
-    this.icon = event.target.files[0];
-    this.createNewAssessmentForm.patchValue({
-      icon: this.icon
-    });
-  }
-
 }

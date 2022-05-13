@@ -46,22 +46,19 @@
 
     <div class="attachments-container">
         <div style="margin-right: 20px;">
-            <h3><b>{{ "assessmentBuilder.questions.imageAttachment" | translate }}</b></h3>
-            <app-custom-button class="file_input" category="secondary" variant="neutral" (click)="imageFileInput.click()">
-                {{ "assessmentBuilder.chooseFile" | translate }}
-            </app-custom-button>
-            <input hidden accept="image/*" (change)="handleFileInput($event, 'IMAGE')" #imageFileInput type="file">
-            <p>{{imageAttachment ? imageAttachment.name : ("assessmentBuilder.noFileChosen" | translate) }}</p>
+            <app-image-selector
+                [reset$]="attachmentsResetSubject$.asObservable()"
+                (newImageEvent)="onNewImageAttachment($event)"
+                [imageAttachment]="imageAttachment"
+            ></app-image-selector>
         </div>
         <div>
-            <h3><b>{{ "assessmentBuilder.questions.audioAttachment" | translate }}</b></h3>
-            <app-custom-button class="file_input" category="secondary" variant="neutral" (click)="audioFileInput.click()">
-                {{ "assessmentBuilder.chooseFile" | translate }}
-            </app-custom-button>
-            <input hidden accept="audio/*" (change)="handleFileInput($event, 'AUDIO')" #audioFileInput type="file">
-            <p>{{audioAttachment ? audioAttachment.name : ("assessmentBuilder.noFileChosen" | translate) }}</p>
-            <p style="text-align: center"><b>{{ "assessmentBuilder.questions.numberline.or" | translate }} </b></p>
-            <app-audio-recorder [resetQuestionAudio]="resetQuestionAudio" (audioRecordingEvent)="addRecordedAudio($event)"></app-audio-recorder>
+            <app-audio-selector
+                [recorderEnabled]="true"
+                [reset$]="attachmentsResetSubject$.asObservable()"
+                (newAudioEvent)="onNewAudioAttachment($event)"
+                [audioAttachment]="audioAttachment"
+            ></app-audio-selector>
         </div>
     </div>
 

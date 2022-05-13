@@ -1,7 +1,9 @@
 {
   "general": {
     "adminDashboard": "لوحة تحكم المسؤول",
-    "answer": "",
+    "answer": "إجابه",
+    "archive": "مؤرشف",
+    "archived": "Archived",
     "assessmentBuilder": "منشئ التقييم",
     "assessments": "التقييمات",
     "assign": "تعيين",
@@ -22,7 +24,6 @@
     "order": "طلب",
     "preview": "معاينة",
     "private": "نشر",
-    "archived": "Archived",
     "questionType": "نوع السؤال",
     "questionsNumber": "عدد الأسئلة",
     "save": "يحفظ",
@@ -33,7 +34,8 @@
     "title": "عنوان",
     "to": "إلى",
     "totalCompletedTopics": "إجمالي المواضيع المكتملة",
-    "workInProgress": "جاري العمل ... متاح قريبًا"
+    "workInProgress": "جاري العمل ... متاح قريبًا",
+    "questions": "أسئلة"
   },
   "answers": {
     "assessmentAnswers": {
@@ -68,22 +70,26 @@
     "praise": "مديح",
     "publicAssessments": "التقييم (التقييمات) العامة",
     "yourAssessments": "تقييمك (تقييماتك)",
-    "archivedAssessments": "",
+    "archivedAssessments": "التقييم (التقييمات) المؤرشف",
     "assessmentFormDialog": {
-      "createNewAssessment": "قم بإنشاء تقييم جديد"
+      "createNewAssessment": "قم بإنشاء تقييم جديد",
+      "editAssessment": "تحرير التقييم"
     },
     "assessmentSummary": {
       "addTopic": "أضف موضوعًا",
-      "archive": "",
-      "unarchive": ""
+      "archive": "أرشيف",
+      "unarchive": "أخرج من الأرشيف"
     },
     "questions": {
       "audioAttachment": "مرفق صوتي",
       "imageAttachment": "مرفق الصورة",
+      "questionCloneSuccess": "تم استنساخ السؤال بنجاح",
+      "questionCreateSuccess": "تم إنشاء السؤال بنجاح",
+      "questionUpdateSuccess": "تم تحديث السؤال بنجاح",
+      "or": "أو",
       "numberline": {
         "endNumber": "رقم النهاية",
         "expectedValue": "القيمة المتوقعة",
-        "or": "أو",
         "showTicks": "عرض القراد",
         "showValue": "إظهار القيمة",
         "startNumber": "رقم البداية",
@@ -91,7 +97,7 @@
         "tickStep": "ضع علامة في الخطوة"
       },
       "select": {
-        "options": "",
+        "options": "خيارات",
         "addOption": "إضافة خيار",
         "attachments": "المرفقات",
         "display": "عرض",
@@ -99,7 +105,7 @@
         "isMultipleChoice": "هو الاختيار من متعدد؟",
         "question": "سؤال",
         "value": "قيمة"
-      }
+      },
     },
     "topicDetails": {
       "addQuestion": "أضف سؤالاً",
@@ -113,7 +119,12 @@
       "createTopic": "قم بإنشاء موضوع",
       "editTopic": "editTopic",
       "whenToShowFeedbacks": "متى تظهر التقيمات؟"
-    }
+    },
+    "assessmentEditSuccess": "تم تعديل التقييم بنجاح",
+    "assessmentSaveSuccess": "تم حفظ التقييم بنجاح",
+    "topicCreateSuccess": "تم إنشاء الموضوع بنجاح",
+    "topicEditSuccess": "تم تغيير الموضوع بنجاح",
+    "topicSaveSuccess": "تم حفظ الموضوع بنجاح"
   },
   "assessments": {
     "selected": "تم الاختيار",
@@ -175,14 +186,15 @@
       "addAssessment": "أضف تقييماً",
       "chooseAssessment": "اختر تقييماً",
       "chooseTopic": "اختر موضوعاً",
-      "noTopics": "",
+      "noTopics": "لا يوجد موضوع متاح",
       "hintNoStudent": "إذا كان الموضوع باللون الرمادي، فلا يوجد أي طالب قد بدأه"
     },
     "table": {
       "hintSearchColumn": "يمكنك البحث في أي عمود!",
       "no": "لا",
       "search": "بحث...",
-      "yes": "نعم"
+      "yes": "نعم",
+      "copySuccess": "تم النسخ بنجاح!"
     }
   },
   "students": {
@@ -195,7 +207,9 @@
     "createStudentDialog": {
       "createStudent": "قم بإنشاء طالب جديد",
       "firstName": "الاسم الأول",
-      "lastName": "اسم العائلة"
+      "lastName": "اسم العائلة",
+      "studentCreateSuccess": "تم بنجاح إنشاء الطالب {{name}} بالمعرف {{اسم المستخدم}}",
+      "studentEditSuccess": "تم تحرير معلومات {{name}} بنجاح"
     },
     "studentDetail": {
       "activeAccess": "وصول نشط",
@@ -213,17 +227,20 @@
       "endDate": "تاريخ الانتهاء",
       "startDate": "تاريخ البدء",
       "topicAvailability": "مدى توفر موضوع (مواضيع) التقييم",
-      "notifier": "تحتاج إلى تحديد تاريخ بدء وتاريخ انتهاء لكل موضوع محدد"
+      "notifier": "تحتاج إلى تحديد تاريخ بدء وتاريخ انتهاء لكل موضوع محدد",
+      "accessesSet": "تم تعيين الوصول إلى الموضوع الجديد بنجاح!",
+      "errorOnSubmit": "حدث خطأ أثناء تقديم وصول الموضوع"
     },
     "topicAccessesEdit": {
       "editTopicsAccess": "تحرير الوصول إلى موضوع (مواضيع) التقييم",
       "removeTopicAccess": "حذف الوصول إلى الموضوع",
       "allTopicsAccessesDeleted": "تم حذف كافة المواضيع التي يتم الوصول إليها من هذا التقييم",
-      "missingDates": "",
-      "topicsUpdated": "",
-      "errorOnEdit": "",
-      "accessEdited": "",
-      "errorOnDeletion": ""
-    }
+      "missingDates": "تحتاج إلى تحديد تاريخ بدء وتاريخ انتهاء لكل موضوع",
+      "topicsUpdated": "تم تحديث المواضيع التي تم الوصول إليها بنجاح!",
+      "errorOnEdit": "حدث خطأ أثناء تقديم موضوع الوصول إلى التحديث",
+      "accessEdited": "تم حذف الوصول إلى الموضوع بنجاح!",
+      "errorOnDeletion": "حدث خطأ أثناء إرسال حذف الوصول للموضوع"
+    },
+    "incompatibleLanguageError": "يمكنك فقط منح حق الوصول إلى موضوع ما للطلاب من نفس البلد واللغة."
   }
 }

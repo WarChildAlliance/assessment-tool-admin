@@ -2,6 +2,7 @@
   "general": {
     "adminDashboard": "AdminDashboard",
     "answer": "Answer",
+    "archived": "Archived",
     "assign": "Assign",
     "assessmentBuilder": "Assessment Builder",
     "assessments": "Assessments",
@@ -60,6 +61,9 @@
   "assessmentBuilder": {
     "addAssessments": "Add assessments",
     "allowSkip": "Allow skip",
+    "archivedAssessments": "Archived assessment(s)",
+    "assessmentEditSuccess": "Assessment was altered successfully",
+    "assessmentSaveSuccess": "Assessment was saved successfully",
     "chooseFile": "Choose File",
     "description": "Description",
     "evaluated": "Evaluated",
@@ -68,8 +72,10 @@
     "noFileChosen": "No file chosen",
     "praise": "Praise",
     "publicAssessments": "Public assessment(s)",
+    "topicCreateSuccess": "Topic was created successfully",
+    "topicEditSuccess": "Topic was altered successfully",
+    "topicSaveSuccess": "Topic was saved successfully",
     "yourAssessments": "Your assessment(s)",
-    "archivedAssessments": "Archived assessment(s)",
     "assessmentFormDialog": {
       "createNewAssessment": "Create a new assessment",
       "editAssessment": "Edit assessment"
@@ -82,10 +88,13 @@
     "questions": {
       "audioAttachment": "Audio attachment",
       "imageAttachment": "Image attachment",
+      "questionCloneSuccess": "Question successfully cloned",
+      "questionCreateSuccess": "Question successfully created",
+      "questionUpdateSuccess": "Question successfully updated",
+      "or": "OR",
       "numberline": {
         "endNumber": "End number",
         "expectedValue": "Expected value",
-        "or": "OR",
         "showTicks": "Show ticks",
         "showValue": "Show value",
         "startNumber": "Start number",
@@ -181,6 +190,7 @@
       "hintNoStudent": "If a topic is grayed out, it means that  no student has started it yet."
     },
     "table": {
+      "copySuccess": "Successfully copied!",
       "hintSearchColumn": "You can search on any column!",
       "no": "No",
       "search": "Search...",
@@ -193,11 +203,14 @@
     "assignTopic": "Assign a topic",
     "completedTopicsNumber": "Number of completed topics",
     "editStudent": "Edit student",
+    "incompatibleLanguageError": "You can only give access to a topic to students with the same country and language.",
     "studentCode": "Student code",
     "createStudentDialog": {
       "createStudent": "Create a new student",
       "firstName": "First name",
-      "lastName": "Last name"
+      "lastName": "Last name",
+      "studentEditSuccess": "{{name}}'s information have been edited successfully ",
+      "studentCreateSuccess": "Student {{name}} with ID {{username}} was successfully created"
     },
     "studentDetail": {
       "activeAccess": "Active access",
@@ -210,9 +223,11 @@
       "editTopicAccess": "Edit Topic Access"
     },
     "topicAccessesBuilder": {
+      "accessesSet": "The new topic accesses have been successfully set !",
       "applySameDatesAllTopics": "Apply the same dates to all the topics ?",
       "assessment": "Assessment",
       "endDate": "End date",
+      "errorOnSubmit": "There was an error during the submission of the topic accesses",
       "startDate": "Start date",
       "topicAvailability": "Assessment topic(s) availability",
       "notifier": "You need to set a start date and an end date for each selected topic."

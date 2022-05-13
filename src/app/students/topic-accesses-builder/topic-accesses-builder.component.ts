@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { Assessment } from 'src/app/core/models/assessment.model';
 import { BatchTopicAccesses } from 'src/app/core/models/batch-topic-accesses.model';
 import { Topic } from 'src/app/core/models/topic.models';
@@ -29,8 +30,8 @@ export class TopicAccessesBuilderComponent implements OnInit {
   topicsList: Topic[] = [];
   selectedAssessmentId: string;
 
-  private startDate;
-  private endDate;
+  public startDate;
+  public endDate;
 
   private setDate: boolean;
 
@@ -48,7 +49,8 @@ export class TopicAccessesBuilderComponent implements OnInit {
     private userService: UserService,
     private formBuilder: FormBuilder,
     private alertService: AlertService,
-    private utilitiesService: UtilitiesService
+    private utilitiesService: UtilitiesService,
+    private translateService: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -124,7 +126,7 @@ export class TopicAccessesBuilderComponent implements OnInit {
             end_date: this.utilitiesService.dateFormatter(element.end_date)
           });
         } else {
-          this.alertService.error('You need to set a start date and an end date for each selected topic');
+          this.alertService.error(this.translateService.instant('students.topicAccessesBuilder.notifier'));
           return;
         }
       }
@@ -137,10 +139,10 @@ export class TopicAccessesBuilderComponent implements OnInit {
 
     this.userService.assignTopicsAccesses(batchTopicAccessesData, this.selectedAssessmentId).subscribe(
       result => {
-        this.alertService.success('The new topic accesses have been successfully set !');
+        this.alertService.success(this.translateService.instant('students.topicAccessesBuilder.accessesSet'));
       },
       error => {
-        this.alertService.error('There was an error during the submission of the topic accesses');
+        this.alertService.error(this.translateService.instant('students.topicAccessesBuilder.errorOnSubmit'));
       }
     );
   }
