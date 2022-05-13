@@ -46,9 +46,12 @@
       </div>
     </mat-card>
     <div class="question-details" *ngFor="let questionDetails of questionsList">
-      <app-custom-button *ngIf="topicDetails.can_edit" category="tertiary" variant="neutral" (click)="openQuestionDialog(questionDetails)">
-        {{ "general.edit" | translate }}
-      </app-custom-button>
+      <span matTooltip="{{ 'assessmentBuilder.questions.blocked' | translate }}" [matTooltipDisabled]="!questionDetails.answered" matTooltipPosition="above">
+        <app-custom-button *ngIf="topicDetails.can_edit" [disabled]="questionDetails.answered" category="tertiary" variant="neutral"
+          (click)="openQuestionDialog(questionDetails)">
+          {{ "general.edit" | translate }}
+        </app-custom-button>
+      </span>
       <app-custom-button *ngIf="topicDetails.can_edit" category="tertiary" variant="neutral" (click)="openQuestionDialog(questionDetails, true)">
         {{ "assessmentBuilder.topicDetails.clone" | translate }}
       </app-custom-button>

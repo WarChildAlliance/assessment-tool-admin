@@ -91,6 +91,7 @@
       "questionCloneSuccess": "Question successfully cloned",
       "questionCreateSuccess": "Question successfully created",
       "questionUpdateSuccess": "Question successfully updated",
+      "blocked": "The question already has answer and cannot be edited",
       "or": "OR",
       "numberline": {
         "endNumber": "End number",
