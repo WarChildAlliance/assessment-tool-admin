@@ -27,12 +27,4 @@
   <app-table [tableData]="studentsDataSource" [filtersData]="filters" [displayedColumns]="displayedColumns"
     [isSelectable]="true" (selectionChangedEvent)="onSelectionChange($event)"
     (filtersChangedEvent)="onFiltersChange($event)" (openDetailsEvent)="onOpenDetails($event)"></app-table>
-
-  <ng-template #createStudentDialog>
-    <app-create-student-dialog [newStudent]="studentToEdit"></app-create-student-dialog>
-  </ng-template>
-
-  <ng-template #assignTopicDialog>
-    <app-topic-accesses-builder [studentsList]="selectedUsers"></app-topic-accesses-builder>
-  </ng-template>
 </div>

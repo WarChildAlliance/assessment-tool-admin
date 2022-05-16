@@ -1,11 +1,13 @@
 import { formatDate } from '@angular/common';
 import * as moment from 'moment';
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { StudentTableData } from 'src/app/core/models/student-table-data.model';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { MatDialog } from '@angular/material/dialog';
+import { CreateStudentDialogComponent } from '../create-student-dialog/create-student-dialog.component';
+import { TopicAccessModalComponent } from '../topic-access-modal/topic-access-modal.component';
 
 @Component({
   selector: 'app-student-detail',
@@ -15,8 +17,7 @@ import { MatDialog } from '@angular/material/dialog';
 export class StudentDetailComponent implements OnInit {
   public student: StudentTableData;
   public studentAssessments;
-
-  @ViewChild('editStudentDialog') editStudentDialog: TemplateRef<any>;
+  public assessment;
 
   constructor(
     private userService: UserService,
@@ -27,35 +28,58 @@ export class StudentDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      this.userService
-        .getStudentDetails(params.student_id)
-        .subscribe((student) => {
-          this.student = student;
-          this.assessmentService
-            .getStudentAssessments(this.student.id)
-            .subscribe((assessments) => {
-              assessments.forEach((assessment) => {
-                assessment.topic_access.forEach((topic) => {
-                  topic.hasAccess = moment(
-                    formatDate(new Date(), 'yyyy-MM-dd', 'en')
-                  ).isBetween(topic.start_date, topic.end_date, null, '[]');
-                });
-              });
-              this.studentAssessments = assessments;
-            });
+      this.getStudentDetails(params.student_id);
+      this.getStudentAssessments(params.student_id);
+    });
+  }
+
+  getStudentDetails(studentId): void {
+    this.userService
+      .getStudentDetails(studentId.toString()).subscribe((student) => {
+        this.student = student;
+    });
+  }
+
+  getStudentAssessments(studentId): void {
+    this.assessmentService.getStudentAssessments(studentId).subscribe(
+      (assessments) => {
+        assessments.forEach((assessment) => {
+          assessment.topic_access.forEach((topic) => {
+            topic.hasAccess = moment(
+              formatDate(new Date(), 'yyyy-MM-dd', 'en')
+            ).isBetween(topic.start_date, topic.end_date, null, '[]');
+          });
         });
+        this.studentAssessments = assessments;
     });
   }
 
   editCurrentStudent(): void {
-    const editStudentDialog = this.dialog.open(this.editStudentDialog);
+    const editStudentDialog = this.dialog.open(CreateStudentDialogComponent, {
+      data: {
+        newStudent: this.student
+      }
+    });
+
     editStudentDialog.afterClosed().subscribe((value) => {
       if (value) {
-        this.userService
-          .getStudentDetails(this.student.id.toString())
-          .subscribe((student) => {
-            this.student = student;
-          });
+        this.getStudentDetails(this.student.id);
+      }
+    });
+  }
+
+  editTopicsAccesses(assessment): void {
+    this.assessment = assessment;
+    const editAssignTopicDialog = this.dialog.open(TopicAccessModalComponent, {
+      data: {
+        assessment: [this.assessment],
+        studentId: this.student.id
+      }
+    });
+
+    editAssignTopicDialog.afterClosed().subscribe((value) => {
+      if (value) {
+        this.getStudentAssessments(this.student.id);
       }
     });
   }

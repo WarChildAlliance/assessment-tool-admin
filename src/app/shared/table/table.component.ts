@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } 
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
+import { TranslateService } from '@ngx-translate/core';
 import { TableColumn } from 'src/app/core/models/table-column.model';
 import { TableFilter } from 'src/app/core/models/table-filter.model';
 import { AlertService } from 'src/app/core/services/alert.service';
@@ -32,7 +33,10 @@ export class TableComponent implements OnInit, OnChanges {
   @Output() openDetailsEvent = new EventEmitter<string>();
   @Output() customActionEvent = new EventEmitter<any>();
 
-  constructor(private alertService: AlertService) { }
+  constructor(
+    private translateService: TranslateService,
+    private alertService: AlertService
+  ) {}
 
   ngOnInit(): void {
     this.selection.changed.subscribe(() => {
@@ -130,13 +134,12 @@ export class TableComponent implements OnInit, OnChanges {
     this.filtersChangedEvent.emit({ key, value });
   }
 
-  openElementDetails(id: number): void {
-    // TODO: not working
-    // this.openDetailsEvent.emit(id.toString());
+  openElementDetails(id): void {
+    this.openDetailsEvent.emit(id.toString());
   }
 
   copyAlert(): void {
-    this.alertService.success('Successfully copied!');
+    this.alertService.success(this.translateService.instant('shared.table.copySuccess'));
   }
 
   // Emit an event asking for a custom action to trigger on parent element

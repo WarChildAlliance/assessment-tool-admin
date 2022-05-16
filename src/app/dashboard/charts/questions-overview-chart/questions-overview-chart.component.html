@@ -6,28 +6,32 @@
 
   <mat-card-content *ngIf="hasData">
     <div class="left-column">
-      <app-select-assessment (topicSelection)="onTopicSelection($event)" [selectTopic]="true" [multiple]="false"
-        [displayNonEvaluated]="false"></app-select-assessment>
+      <app-select-assessment 
+        (topicSelection)="onTopicSelection($event)"
+        [selectTopic]="true"
+        [multiple]="false"
+        [displayNonEvaluated]="false">
+      </app-select-assessment>
     </div>
 
     <div class="barChart">
       <canvas id="barChart"></canvas>
     </div>
 
-    <div class="question-details">
-      <ng-container *ngIf="questionDetails && questionDetails.question_type === 'SELECT'">
+    <div class="question-details" *ngIf="questionDetails">
+      <ng-container *ngIf="questionDetails.question_type === 'SELECT'">
         <app-question-select [question]="questionDetails" [index]="index" [evaluated]="true"></app-question-select>
       </ng-container>
 
-      <ng-container *ngIf="questionDetails && questionDetails.question_type === 'INPUT'">
+      <ng-container *ngIf="questionDetails.question_type === 'INPUT'">
         <app-question-input [question]="questionDetails" [index]="index" [evaluated]="true"></app-question-input>
       </ng-container>
 
-      <ng-container *ngIf="questionDetails && questionDetails.question_type === 'SORT'">
+      <ng-container *ngIf="questionDetails.question_type === 'SORT'">
         <app-question-sort [question]="questionDetails" [index]="index" [evaluated]="true"></app-question-sort>
       </ng-container>
 
-      <ng-container *ngIf="questionDetails && questionDetails.question_type === 'NUMBER_LINE'">
+      <ng-container *ngIf="questionDetails.question_type === 'NUMBER_LINE'">
         <app-question-numberline [question]="questionDetails" [index]="index" [evaluated]="true">
         </app-question-numberline>
       </ng-container>
@@ -35,7 +39,7 @@
 
 
   </mat-card-content>
-  <p *ngIf="!hasData">
+  <p *ngIf="!hasData" style="text-align: center;">
     {{ "general.noData" | translate }}
   </p>
 </mat-card>

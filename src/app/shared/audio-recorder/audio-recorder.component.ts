@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import * as RecordRTC from 'recordrtc';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Output, EventEmitter } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-audio-recorder',
@@ -22,15 +23,15 @@ export class AudioRecorderComponent implements OnInit {
 
   @Output() audioRecordingEvent = new EventEmitter<string>();
 
-  @Input() set resetQuestionAudio(value: boolean) {
-    if (value) {
-      this.url = undefined;
-    }
-  }
+  @Input() reset$: Observable<void>;
 
   constructor(private domSanitizer: DomSanitizer) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.reset$.subscribe((_) => {
+      this.url = undefined;
+    });
+  }
 
   sanitize(url: string): SafeUrl {
     return this.domSanitizer.bypassSecurityTrustUrl(url);

@@ -29,11 +29,10 @@ export class AnswersOverviewComponent implements OnInit {
 
   constructor(private userService: UserService) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   onTopicSelection(assessmentTopicInfos: {assessmentId: string, topic: TopicDashboard}): void {
-    if (assessmentTopicInfos.topic) {
+    if (assessmentTopicInfos && assessmentTopicInfos.topic.started) {
       this.topicId = assessmentTopicInfos.topic.id;
       this.evaluated = assessmentTopicInfos.topic.evaluated;
       this.userService.getStudentsListForATopic(this.topicId).subscribe(studentsList => {

@@ -6,6 +6,7 @@ import {
   ViewChild,
   Output,
   EventEmitter,
+  Inject,
 } from '@angular/core';
 import {
   FormArray,
@@ -14,8 +15,19 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
+import { Subject } from 'rxjs';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+interface DialogData {
+  topicId?: any;
+  order?: any;
+  question?: any;
+  toClone?: boolean;
+  assessmentId?: any;
+}
 
 @Component({
   selector: 'app-question-select-form',
@@ -23,11 +35,12 @@ import { AssessmentService } from 'src/app/core/services/assessment.service';
   styleUrls: ['./question-select-form.component.scss'],
 })
 export class QuestionSelectFormComponent implements OnInit {
-  @Input() assessmentId;
-  @Input() topicId;
-  @Input() order;
-  @Input() question;
-  @Input() toClone;
+
+  public assessmentId;
+  public topicId;
+  public order;
+  public question;
+  public toClone: boolean;
 
   @Output() questionCreatedEvent = new EventEmitter<boolean>();
   @Output() closeModalEvent = new EventEmitter<boolean>();
@@ -52,7 +65,7 @@ export class QuestionSelectFormComponent implements OnInit {
   public alertMessage = '';
 
   public saveOptions = false;
-  public resetQuestionAudio = false;
+  public attachmentsResetSubject$ = new Subject<void>();
 
   public selectForm: FormGroup = new FormGroup({
     question_type: new FormControl('SELECT'),
@@ -71,15 +84,22 @@ export class QuestionSelectFormComponent implements OnInit {
   });
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private formBuilder: FormBuilder,
+    private translateService: TranslateService,
     private assessmentService: AssessmentService,
     private alertService: AlertService
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    if (this.data?.assessmentId) { this.assessmentId = this.data.assessmentId; }
+    if (this.data?.topicId) { this.topicId = this.data.topicId; }
+    if (this.data?.order) { this.order = this.data.order; }
+    if (this.data?.question) { this.question = this.data.question; }
+    if (this.data?.toClone) { this.toClone = this.data.toClone; }
     const optionsForm = this.selectForm.get('options') as FormArray;
     if (this.question) {
-      this.setExistingAttachments();
+      await this.setExistingAttachments();
 
       const options = [];
       this.question.options.forEach((element) => {
@@ -116,10 +136,13 @@ export class QuestionSelectFormComponent implements OnInit {
         value: q.value,
         title: q.title,
         order: this.toClone ? this.order : this.question.order,
-        display: q.display_type ? q.display_type : 'Grid',
+        display: q.display_type ? this.displayTypeFormat(q.display_type) : 'Grid',
         multiple: q.multiple,
         options,
       });
+      if (this.toClone) {
+        this.selectForm.markAsDirty();
+      }
     } else {
       this.selectForm.setValue({
         question_type: 'SELECT',
@@ -150,13 +173,13 @@ export class QuestionSelectFormComponent implements OnInit {
   onSave(): void {
     if (this.toClone) {
       this.createQuestion();
-      this.alertMessage = 'Question successfully cloned';
+      this.alertMessage = this.translateService.instant('assessmentBuilder.questions.questionCloneSuccess');
     } else if (this.question && !this.toClone) {
       this.editQuestion();
-      this.alertMessage = 'Question successfully updated';
+      this.alertMessage = this.translateService.instant('assessmentBuilder.questions.questionUpdateSuccess');
     } else {
       this.createQuestion();
-      this.alertMessage = 'Question successfully created';
+      this.alertMessage = this.translateService.instant('assessmentBuilder.questions.questionCreateSuccess');
     }
   }
 
@@ -315,17 +338,20 @@ export class QuestionSelectFormComponent implements OnInit {
     });
   }
 
-  handleFileInput(event, type): void {
-    if (type === 'IMAGE') {
-      this.changedImage = true;
-      this.imageAttachment = event.target.files[0];
-    } else if (type === 'AUDIO') {
-      this.changedAudio = true;
-      this.audioAttachment = event.target.files[0];
-    }
+  onNewImageAttachment(event: File): void {
+    if (this.editQuestion) { this.selectForm.markAsDirty(); }
+    this.changedImage = true;
+    this.imageAttachment = event;
   }
 
-  handleFileInputOptions(event, type, i): void {
+  onNewAudioAttachment(event: File): void {
+    if (this.editQuestion) { this.selectForm.markAsDirty(); }
+    this.changedAudio = true;
+    this.audioAttachment = event;
+  }
+
+  handleFileInputOptions(event: File, type, i): void {
+    if (this.editQuestion) { this.selectForm.markAsDirty(); }
     let overwritePrevious = false;
     let id = 0;
     if (type === 'IMAGE') {
@@ -335,7 +361,6 @@ export class QuestionSelectFormComponent implements OnInit {
             (a) => a.attachment_type === 'IMAGE'
           )?.id
         : i;
-      this.imageAttachment = event.target.files[0];
     }
     if (type === 'AUDIO') {
       overwritePrevious = this.optionsAttachmentEdit[i]?.audio ? true : false;
@@ -344,11 +369,10 @@ export class QuestionSelectFormComponent implements OnInit {
             (a) => a.attachment_type === 'AUDIO'
           )?.id
         : i;
-      this.audioAttachment = event.target.files[0];
     }
     this.optionsAtt[i].attachments.push({
       attachment_type: type,
-      file: event.target.files[0],
+      file: event,
       overwritePrevious,
       id,
     });
@@ -356,38 +380,42 @@ export class QuestionSelectFormComponent implements OnInit {
     this.optionsAttachment = true;
   }
 
-  setExistingAttachments(): void {
+  async setExistingAttachments(): Promise<void> {
     const image = this.question.attachments.find(
       (i) => i.attachment_type === 'IMAGE'
     );
     const audio = this.question.attachments.find(
       (a) => a.attachment_type === 'AUDIO'
     );
-    this.imageAttachment = image;
-    this.audioAttachment = audio;
-    if (this.imageAttachment) {
-      this.imageAttachment.name = image ? image.file.split('/').at(-1) : null;
-    }
-    if (this.audioAttachment) {
-      this.audioAttachment.name = audio ? audio.file.split('/').at(-1) : null;
-    }
-  }
 
-  addRecordedAudio(event): void {
-    const name = 'recording_' + new Date().toISOString() + '.wav';
-    this.audioAttachment = this.blobToFile(event, name);
-    this.changedAudio = true;
-  }
-
-  public blobToFile = (theBlob: Blob, fileName: string): File => {
-    return new File([theBlob], fileName, {
-      lastModified: new Date().getTime(),
-      type: theBlob.type,
-    });
+    if (this.toClone) {
+      if (image) {
+        await this.objectToFile(image);
+      }
+      if (audio) {
+        await this.objectToFile(audio);
+      }
+    } else {
+      if (image) {
+        this.imageAttachment = image;
+        this.imageAttachment.name = image ? image.file.split('/').at(-1) : null;
+      }
+      if (audio) {
+        this.audioAttachment = audio;
+        this.audioAttachment.name = audio ? audio.file.split('/').at(-1) : null;
+      }
+    }
   }
 
   resetForm(): void {
-    this.selectForm.reset();
+    this.selectForm.setValue({
+      question_type: 'SELECT',
+      value: '',
+      title: '',
+      order: this.order, display: 'Grid',
+      multiple: false,
+      options: [{ title: '', valid: false, value: '' }],
+    });
 
     this.options = [];
     this.optionsAtt = [{ attachments: [] }];
@@ -399,13 +427,38 @@ export class QuestionSelectFormComponent implements OnInit {
     this.changedAudio = false;
     this.changedImage = false;
     this.optionAttChange = false;
-    this.resetQuestionAudio = true;
     this.saveOptions = false;
     this.selectForm.controls.order.setValue(this.order + 1, [Validators.required]);
     this.selectForm.controls.display.setValue('Grid', [Validators.required]);
+    this.selectForm.controls.question_type.setValue('SELECT');
+    this.selectForm.controls.multiple.setValue(false);
+
+    this.attachmentsResetSubject$.next();
 
     const optionsForm = this.selectForm.get('options') as FormArray;
     optionsForm.clear();
     this.addOptions();
+  }
+
+  // TODO: later changes it in backend
+  displayTypeFormat(str: string): string {
+    return str.charAt(0).toUpperCase() + str.substring(1).toLowerCase();
+  }
+
+  async objectToFile(attachment): Promise<void> {
+    const fileType = attachment.attachment_type === 'IMAGE' ? 'image/png' : 'audio/wav';
+    const fileName = attachment.file.split('/').at(-1);
+
+    await fetch(attachment.file)
+      .then((res) => res.arrayBuffer())
+      .then((buf) =>  new File([buf], fileName, {type: fileType}))
+      .then((file) => {
+        if (attachment.attachment_type === 'IMAGE') {
+          this.imageAttachment = file;
+        }
+        else if (attachment.attachment_type === 'AUDIO') {
+          this.audioAttachment = file;
+        }
+    });
   }
 }

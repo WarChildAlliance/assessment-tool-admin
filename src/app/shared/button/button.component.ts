@@ -26,8 +26,7 @@ export class CustomButtonComponent implements OnInit {
   @Input() block = false;
 
   @HostBinding('class.disabled')
-  @Input()
-  disabled = false;
+  @Input() disabled = false;
 
   @Input() icon = '';
 

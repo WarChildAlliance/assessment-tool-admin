@@ -1,7 +1,18 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
+import { Subject } from 'rxjs';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+interface DialogData {
+  topicId?: any;
+  order?: any;
+  question?: any;
+  toClone?: any;
+  assessmentId?: any;
+}
 
 @Component({
   selector: 'app-question-input-form',
@@ -9,11 +20,12 @@ import { AssessmentService } from 'src/app/core/services/assessment.service';
   styleUrls: ['./question-input-form.component.scss'],
 })
 export class QuestionInputFormComponent implements OnInit {
-  @Input() assessmentId;
-  @Input() topicId;
-  @Input() order;
-  @Input() question;
-  @Input() toClone;
+
+  public assessmentId;
+  public topicId;
+  public order;
+  public question;
+  public toClone;
 
   @Output() questionCreatedEvent = new EventEmitter<boolean>();
   @Output() closeModalEvent = new EventEmitter<boolean>();
@@ -25,7 +37,7 @@ export class QuestionInputFormComponent implements OnInit {
   public changedImage = false;
 
   public alertMessage = '';
-  public resetQuestionAudio = false;
+  public attachmentsResetSubject$ = new Subject<void>();
 
   public inputForm: FormGroup = new FormGroup({
     question_type: new FormControl('INPUT'),
@@ -35,11 +47,18 @@ export class QuestionInputFormComponent implements OnInit {
   });
 
   constructor(
+    private translateService: TranslateService,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private assessmentService: AssessmentService,
     private alertService: AlertService
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    if (this.data?.assessmentId) { this.assessmentId = this.data.assessmentId; }
+    if (this.data?.topicId) { this.topicId = this.data.topicId; }
+    if (this.data?.order) { this.order = this.data.order; }
+    if (this.data?.question) { this.question = this.data.question; }
+    if (this.data?.toClone) { this.toClone = this.data.toClone; }
     if (this.question) {
       this.inputForm.setValue({
         question_type: 'INPUT',
@@ -47,8 +66,10 @@ export class QuestionInputFormComponent implements OnInit {
         order: this.toClone ? this.order : this.question.order,
         valid_answer: this.question.valid_answer
       });
-
-      this.setExistingAttachments();
+      await this.setExistingAttachments();
+      if (this.toClone) {
+        this.inputForm.markAsDirty();
+      }
     } else {
       this.inputForm.setValue({
         question_type: 'INPUT',
@@ -61,13 +82,13 @@ export class QuestionInputFormComponent implements OnInit {
 
   onSave(): void {
     if (this.question && !this.toClone) {
-      this.alertMessage = 'Question successfully updated';
+      this.alertMessage = this.translateService.instant('assessmentBuilder.questions.questionUpdateSuccess');
       this.editQuestion();
     } else if (this.toClone) {
-      this.alertMessage = 'Question successfully cloned';
+      this.alertMessage = this.translateService.instant('assessmentBuilder.questions.questionCloneSuccess');
       this.createInputQuestion();
     } else {
-      this.alertMessage = 'Question successfully created';
+      this.alertMessage = this.translateService.instant('assessmentBuilder.questions.questionCreateSuccess');
       this.createInputQuestion();
     }
   }
@@ -95,18 +116,12 @@ export class QuestionInputFormComponent implements OnInit {
             'AUDIO',
             { name: 'question', value: res.id }
           );
-          this.saveAttachments(this.assessmentId, this.imageAttachment, 'IMAGE', { name: 'question', value: res.id });
-        } else if (this.audioAttachment) {
-          this.saveAttachments(this.assessmentId, this.audioAttachment, 'AUDIO', { name: 'question', value: res.id });
-        } else {
-          this.alertService.success(this.alertMessage);
-          this.questionCreatedEvent.emit(true);
-          if (!this.toClone) {
-            this.resetForm();
-          }
         }
         this.alertService.success(this.alertMessage);
         this.questionCreatedEvent.emit(true);
+        if (!this.toClone) {
+          this.resetForm();
+        }
       });
   }
 
@@ -157,17 +172,17 @@ export class QuestionInputFormComponent implements OnInit {
       });
   }
 
-  handleFileInput(event, type): void {
-    if (type === 'IMAGE') {
-      this.changedImage = true;
-      this.imageAttachment = event.target.files[0];
-    } else if (type === 'AUDIO') {
-      this.changedAudio = true;
-      this.audioAttachment = event.target.files[0];
-    }
+  onNewImageAttachment(event: File): void {
+    this.changedImage = true;
+    this.imageAttachment = event;
   }
 
-  setExistingAttachments(): void {
+  onNewAudioAttachment(event: File): void {
+    this.changedAudio = true;
+    this.audioAttachment = event;
+  }
+
+  async setExistingAttachments(): Promise<void> {
     const image = this.question.attachments.find(
       (i) => i.attachment_type === 'IMAGE'
     );
@@ -175,40 +190,51 @@ export class QuestionInputFormComponent implements OnInit {
       (a) => a.attachment_type === 'AUDIO'
     );
 
-    if (image) {
-      this.imageAttachment = image;
-      this.imageAttachment.name = image ? image.file.split('/').at(-1) : null;
+    if (this.toClone) {
+      if (image) {
+        await this.objectToFile(image);
+      }
+      if (audio) {
+        await this.objectToFile(audio);
+      }
+    } else {
+      if (image) {
+        this.imageAttachment = image;
+        this.imageAttachment.name = image ? image.file.split('/').at(-1) : null;
+      }
+      if (audio) {
+        this.audioAttachment = audio;
+        this.audioAttachment.name = audio ? audio.file.split('/').at(-1) : null;
+      }
     }
-
-    if (audio) {
-      this.audioAttachment = audio;
-      this.audioAttachment.name = audio ? audio.file.split('/').at(-1) : null;
-    }
-  }
-
-  addRecordedAudio(event): void {
-    const name = 'recording_' + new Date().toISOString() + '.wav';
-    this.audioAttachment = this.blobToFile(event, name);
-    this.changedAudio = true;
-  }
-
-  public blobToFile = (theBlob: Blob, fileName: string): File => {
-    return new File([theBlob], fileName, {
-      lastModified: new Date().getTime(),
-      type: theBlob.type,
-    });
   }
 
   resetForm(): void {
-    this.inputForm.reset();
+    this.attachmentsResetSubject$.next();
     this.inputForm.controls['order'.toString()].setValue(this.order + 1);
+    this.inputForm.controls.question_type.setValue('INPUT');
 
     this.imageAttachment = null;
     this.audioAttachment = null;
 
     this.changedAudio = false;
     this.changedImage = false;
+  }
 
-    this.resetQuestionAudio = true;
+  async objectToFile(attachment): Promise<void> {
+    const fileType = attachment.attachment_type === 'IMAGE' ? 'image/png' : 'audio/wav';
+    const fileName = attachment.file.split('/').at(-1);
+
+    await fetch(attachment.file)
+      .then((res) => res.arrayBuffer())
+      .then((buf) =>  new File([buf], fileName, {type: fileType}))
+      .then((file) => {
+        if (attachment.attachment_type === 'IMAGE') {
+          this.imageAttachment = file;
+        }
+        else if (attachment.attachment_type === 'AUDIO') {
+          this.audioAttachment = file;
+        }
+    });
   }
 }

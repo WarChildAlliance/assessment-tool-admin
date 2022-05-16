@@ -1,7 +1,15 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+interface DialogData {
+  edit?: boolean;
+  topic?: any;
+  assessmentId?: any;
+}
 
 @Component({
   selector: 'app-topic-form-dialog',
@@ -10,9 +18,9 @@ import { AssessmentService } from 'src/app/core/services/assessment.service';
 })
 export class TopicFormDialogComponent implements OnInit {
 
-  @Input() assessmentId;
-  @Input() topic;
-  @Input() edit: boolean;
+  public assessmentId: any;
+  public topic: any;
+  public edit: boolean;
   public formData: FormData = new FormData();
 
   public imageAttachment = null;
@@ -35,10 +43,17 @@ export class TopicFormDialogComponent implements OnInit {
     archived: new FormControl(false)
   });
 
-  constructor(private assessmentService: AssessmentService,
-              private alertService: AlertService) { }
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private translateService: TranslateService,
+    private assessmentService: AssessmentService,
+    private alertService: AlertService
+    ) {}
 
   ngOnInit(): void {
+    if (this.data?.assessmentId) { this.assessmentId = this.data?.assessmentId; }
+    if (this.data?.topic) { this.topic = this.data?.topic; }
+    if (this.data?.edit) { this.edit = this.data?.edit; }
     if (this.topic) {
       this.createNewTopicForm.setValue({
         name: this.topic.name,
@@ -58,18 +73,18 @@ export class TopicFormDialogComponent implements OnInit {
     const data = await this.formGroupToFormData();
     if (this.edit) {
       this.assessmentService.editTopic(this.assessmentId.toString(), this.topic.id, data).subscribe(res => {
-        this.alertService.success('Topic was altered successfully');
+        this.alertService.success(this.translateService.instant('assessmentBuilder.topicEditSuccess'));
       });
     } else {
       this.assessmentService.createTopic(this.assessmentId.toString(), data).subscribe(res => {
-        this.alertService.success('Topic was created successfully');
+        this.alertService.success(this.translateService.instant('assessmentBuilder.topicCreateSuccess'));
       });
     }
   }
 
   saveAttachments(assessmentId: string, attachment, type: string, obj): void {
     this.assessmentService.addAttachments(assessmentId, attachment, type, obj).subscribe(() => {
-      this.alertService.success('Topic was saved successfully');
+      this.alertService.success(this.translateService.instant('assessmentBuilder.topicSaveSuccess'));
     });
   }
 
@@ -97,7 +112,7 @@ export class TopicFormDialogComponent implements OnInit {
   }
 
   handleFileInput(event): void {
-    this.icon = event.target.files[0];
+    this.icon = event;
     this.createNewTopicForm.patchValue({icon: this.icon});
   }
 

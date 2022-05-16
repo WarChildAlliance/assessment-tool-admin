@@ -1,10 +1,11 @@
 <div class="question-list-container" *ngIf="topicDetails">
   <div class="topic-header">
+    <app-previous-button path="/assessment-builder"></app-previous-button>
     <img *ngIf="topicDetails?.icon" [src]="topicDetails.icon">
     <h1>{{ topicDetails.name }}</h1>
     <app-custom-button *ngIf="topicDetails.can_edit" category="tertiary" variant="primary"
      icon="edit" (click)="openEditTopicDialog(topicDetails)">
-      Edit
+     {{ "general.edit" | translate }}
     </app-custom-button>
   </div>
   <mat-card>
@@ -38,29 +39,21 @@
   <div class="question">
     <mat-card *ngIf="topicDetails.can_edit">
       <h2>{{ "assessmentBuilder.topicDetails.addQuestion" | translate }}</h2>
-      <div class="question-options" *ngIf="questionType && order">
-        <div class="question-options-button">
-          <app-custom-button *ngFor="let question of questionsArray" category="tertiary" variant="primary"
-            (click)="setQuestionType(question.type)" [variant]="questionType === question.type ? 'neutral' : 'default'">
-            {{ question.text }}
-          </app-custom-button>
-        </div>
-        <hr>
-        <div class="question-form">
-          <app-question-select-form [assessmentId]="assessmentId" [topicId]="topicId" [order]="order"
-            *ngIf="questionType === 'SELECT'" (questionCreatedEvent)="getQuestionsList()"></app-question-select-form>
-          <app-question-input-form [assessmentId]="assessmentId" [topicId]="topicId" [order]="order"
-            *ngIf="questionType === 'INPUT'" (questionCreatedEvent)="getQuestionsList()"></app-question-input-form>
-          <app-question-numberline-form [assessmentId]="assessmentId" [topicId]="topicId" [order]="order"
-            *ngIf="questionType === 'NUMBER_LINE'" (questionCreatedEvent)="getQuestionsList()"></app-question-numberline-form>
-        </div>
+      <div class="question-options-button">
+        <app-custom-button *ngFor="let question of questionsArray" category="tertiary" variant="primary"
+          (click)="openQuestionDialog(null, false, question.type)" variant="default">
+          {{ question.text }}
+        </app-custom-button>
       </div>
     </mat-card>
     <div class="question-details" *ngFor="let questionDetails of questionsList">
-      <app-custom-button *ngIf="topicDetails.can_edit" category="tertiary" variant="neutral" (click)="onEditQuestionDialog(questionDetails)">
-        {{ "general.edit" | translate }}
-      </app-custom-button>
-      <app-custom-button *ngIf="topicDetails.can_edit" category="tertiary" variant="neutral" (click)="cloneQuestion(questionDetails)">
+      <span matTooltip="{{ 'assessmentBuilder.questions.blocked' | translate }}" [matTooltipDisabled]="!questionDetails.answered" matTooltipPosition="above">
+        <app-custom-button *ngIf="topicDetails.can_edit" [disabled]="questionDetails.answered" category="tertiary" variant="neutral"
+          (click)="openQuestionDialog(questionDetails)">
+          {{ "general.edit" | translate }}
+        </app-custom-button>
+      </span>
+      <app-custom-button *ngIf="topicDetails.can_edit" category="tertiary" variant="neutral" (click)="openQuestionDialog(questionDetails, true)">
         {{ "assessmentBuilder.topicDetails.clone" | translate }}
       </app-custom-button>
       <mat-card *ngIf="questionDetails && questionDetails.question_type === 'SELECT'">
@@ -82,23 +75,3 @@
     </div>
   </div>
 </div>
-
-<ng-template #createTopicDialog>
-  <mat-dialog-content>
-    <app-topic-form-dialog [assessmentId]="assessmentId" [topic]="topic" [edit]="true"></app-topic-form-dialog>
-  </mat-dialog-content>
-</ng-template>
-
-<ng-template #editQuestionDialog>
-  <mat-dialog-content>
-    <app-question-input-form [assessmentId]="assessmentId" [topicId]="topicId" [order]="order" 
-    [question]="question" [toClone]="toClone" (closeModalEvent)="onCloseModal()"
-      *ngIf="question.question_type === 'INPUT'"></app-question-input-form>
-    <app-question-numberline-form [assessmentId]="assessmentId" [topicId]="topicId" [order]="order"
-    [question]="question" [toClone]="toClone" (closeModalEvent)="onCloseModal()"
-      *ngIf="question.question_type === 'NUMBER_LINE'"></app-question-numberline-form>
-    <app-question-select-form [assessmentId]="assessmentId" [topicId]="topicId" [order]="order"
-    [question]="question" [toClone]="toClone" (closeModalEvent)="onCloseModal()"
-      *ngIf="question.question_type === 'SELECT'"></app-question-select-form>
-  </mat-dialog-content>
-</ng-template>

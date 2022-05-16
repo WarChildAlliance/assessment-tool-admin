@@ -1,11 +1,18 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Component, Inject, OnInit } from '@angular/core';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { Assessment } from 'src/app/core/models/assessment.model';
 import { BatchTopicAccesses } from 'src/app/core/models/batch-topic-accesses.model';
 import { Topic } from 'src/app/core/models/topic.models';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { UserService } from 'src/app/core/services/user.service';
+import { UtilitiesService } from 'src/app/core/services/utilities.service';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+interface DialogData {
+  studentsList?: any[];
+}
 
 @Component({
   selector: 'app-topic-accesses-builder',
@@ -17,14 +24,14 @@ export class TopicAccessesBuilderComponent implements OnInit {
 
   minDate: Date = new Date();
 
-  @Input() studentsList: any[];
+  public studentsList: any[];
 
   assessmentsList: Assessment[] = [];
   topicsList: Topic[] = [];
   selectedAssessmentId: string;
 
-  private startDate;
-  private endDate;
+  public startDate;
+  public endDate;
 
   private setDate: boolean;
 
@@ -32,14 +39,22 @@ export class TopicAccessesBuilderComponent implements OnInit {
     access: new FormArray([]),
   });
 
-  constructor(private assessmentService: AssessmentService,
-              private userService: UserService,
-              private formBuilder: FormBuilder,
-              private alertService: AlertService
-  ) {
+  get controls(): AbstractControl[] {
+    return (this.assignTopicForm.get('access') as FormArray).controls;
   }
 
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private assessmentService: AssessmentService,
+    private userService: UserService,
+    private formBuilder: FormBuilder,
+    private alertService: AlertService,
+    private utilitiesService: UtilitiesService,
+    private translateService: TranslateService
+  ) {}
+
   ngOnInit(): void {
+    if (this.data?.studentsList) { this.studentsList = this.data.studentsList; }
     this.assessmentService.getAssessmentsList().subscribe((assessmentsList) => {
       this.assessmentsList = assessmentsList.filter(assessment => assessment.archived !== true);
     });
@@ -53,12 +68,12 @@ export class TopicAccessesBuilderComponent implements OnInit {
     });
   }
 
-  onDate(date, event): void {
-    if (date === 'start_date') {
-      this.startDate = event;
+  onDate(type, date): void {
+    if (type === 'start_date') {
+      this.startDate = date;
     }
-    if (date === 'end_date') {
-      this.endDate = event;
+    if (type === 'end_date') {
+      this.endDate = date;
     }
   }
 
@@ -83,8 +98,8 @@ export class TopicAccessesBuilderComponent implements OnInit {
       const topicAccess = this.formBuilder.group({
         topic: new FormControl(topic),
         selected: new FormControl(true),
-        start_date: this.setDate ? this.startDate : new FormControl(null),
-        end_date: this.setDate ? this.endDate : new FormControl(null)
+        start_date: this.setDate ? this.startDate : new FormControl(null, Validators.required),
+        end_date: this.setDate ? this.endDate : new FormControl(null, Validators.required)
       });
       accessForm.push(topicAccess);
     });
@@ -107,11 +122,11 @@ export class TopicAccessesBuilderComponent implements OnInit {
         if (element.start_date && element.end_date) {
           accessesArray.push({
             topic: element.topic.id,
-            start_date: this.dateFormatter(element.start_date),
-            end_date: this.dateFormatter(element.end_date)
+            start_date: this.utilitiesService.dateFormatter(element.start_date),
+            end_date: this.utilitiesService.dateFormatter(element.end_date)
           });
         } else {
-          this.alertService.error('You need to set a start date and an end date for each selected topic');
+          this.alertService.error(this.translateService.instant('students.topicAccessesBuilder.notifier'));
           return;
         }
       }
@@ -124,27 +139,28 @@ export class TopicAccessesBuilderComponent implements OnInit {
 
     this.userService.assignTopicsAccesses(batchTopicAccessesData, this.selectedAssessmentId).subscribe(
       result => {
-        this.alertService.success('The new topic accesses have been successfully set !');
+        this.alertService.success(this.translateService.instant('students.topicAccessesBuilder.accessesSet'));
       },
       error => {
-        this.alertService.error('There was an error during the submission of the topic accesses');
+        this.alertService.error(this.translateService.instant('students.topicAccessesBuilder.errorOnSubmit'));
       }
     );
   }
 
-  getControls(): AbstractControl[] {
-    return (this.assignTopicForm.get('access') as FormArray).controls;
-  }
+  // Selected topics needs validations, unselected ones don't
+  selectTopic(topic, selected): void {
+    if (selected) {
+      topic.get('start_date').setValidators([Validators.required]);
+      topic.get('start_date').updateValueAndValidity();
 
-  // Move this function to utilities.service if it can be used anywhere else
-  dateFormatter(date: Date): string {
-    let month = (date.getMonth() + 1).toString();
-    let day = date.getDate().toString();
-    const year = date.getFullYear().toString();
+      topic.get('end_date').setValidators([Validators.required]);
+      topic.get('end_date').updateValueAndValidity();
+    } else {
+      topic.get('start_date').clearValidators();
+      topic.get('start_date').updateValueAndValidity();
 
-    if (month.length < 2) { month = '0' + month; }
-    if (day.length < 2) { day = '0' + day; }
-
-    return [year, month, day].join('-');
+      topic.get('end_date').clearValidators();
+      topic.get('end_date').updateValueAndValidity();
+    }
   }
 }

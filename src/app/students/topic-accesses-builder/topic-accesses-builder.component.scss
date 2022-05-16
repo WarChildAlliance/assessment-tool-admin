@@ -26,7 +26,7 @@
     justify-content: space-evenly;
     padding: 30px;
     height: 420px;
-    overflow-y: scroll;
+    overflow-y: auto;
     min-width: 60vw;
 
     &__list {
@@ -115,4 +115,8 @@
             }
         }
     }
+}
+
+.notifier {
+    color: red;
 }

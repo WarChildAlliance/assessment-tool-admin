@@ -1,12 +1,17 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { forkJoin } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 import { Country } from 'src/app/core/models/country.model';
 import { Language } from 'src/app/core/models/language.model';
 import { User } from 'src/app/core/models/user.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { UserService } from 'src/app/core/services/user.service';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
+interface DialogData {
+  newStudent?: any;
+}
 @Component({
   selector: 'app-create-student-dialog',
   templateUrl: './create-student-dialog.component.html',
@@ -14,7 +19,7 @@ import { UserService } from 'src/app/core/services/user.service';
 })
 export class CreateStudentDialogComponent implements OnInit {
 
-  @Input() newStudent: any;
+  public newStudent: any;
 
   // Defines if a student is edited or if a new one is created
   public isStudentEdited = false;
@@ -32,12 +37,14 @@ export class CreateStudentDialogComponent implements OnInit {
   });
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private translateService: TranslateService,
     private userService: UserService,
     private alertService: AlertService
   ) { }
 
   ngOnInit(): void {
-
+    if (this.data?.newStudent) { this.newStudent = this.data.newStudent; }
     if (!!this.newStudent) {
       this.isStudentEdited = true;
 
@@ -70,11 +77,21 @@ export class CreateStudentDialogComponent implements OnInit {
 
     if (this.isStudentEdited) {
       this.userService.editStudent(this.newStudent.id, studentToCreate).subscribe((student: User) => {
-        this.alertService.success(`${student.first_name + ' ' + student.last_name}'s information have been edited successfully `);
+        this.alertService.success(
+          this.translateService.instant(
+            'students.createStudentDialog.studentEditSuccess',
+            {name: student.first_name + ' ' + student.last_name}
+          )
+        );
       });
     } else {
       this.userService.createNewStudent(studentToCreate).subscribe((student: User) => {
-        this.alertService.success(`Student ${student.first_name + ' ' + student.last_name} with ID ${student.username} was successfully created`);
+        this.alertService.success(
+          this.translateService.instant(
+            'students.createStudentDialog.studentCreateSuccess',
+            {name: student.first_name + ' ' + student.last_name, username: student.username}
+          )
+        );
       });
     }
 

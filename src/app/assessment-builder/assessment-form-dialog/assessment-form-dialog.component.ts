@@ -1,9 +1,15 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { UserService } from 'src/app/core/services/user.service';
 
+interface DialogData {
+  edit?: boolean;
+  assessment?: any;
+}
 @Component({
   selector: 'app-assessment-form-dialog',
   templateUrl: './assessment-form-dialog.component.html',
@@ -11,8 +17,8 @@ import { UserService } from 'src/app/core/services/user.service';
 })
 export class AssessmentFormDialogComponent implements OnInit {
 
-  @Input() edit: boolean;
-  @Input() assessment;
+  public edit: boolean;
+  public assessment: any;
 
   public icon = null;
 
@@ -34,11 +40,17 @@ export class AssessmentFormDialogComponent implements OnInit {
     archived: new FormControl(false)
   });
 
-  constructor(private assessmentService: AssessmentService,
-              private userService: UserService,
-              private alertService: AlertService) { }
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private translateService: TranslateService,
+    private assessmentService: AssessmentService,
+    private userService: UserService,
+    private alertService: AlertService
+    ) {}
 
   ngOnInit(): void {
+    if (this.data?.assessment) { this.assessment = this.data.assessment; }
+    if (this.data?.edit) { this.edit = this.data.edit; }
     this.userService.getLanguages().subscribe(res => this.languages = res);
     this.userService.getCountries().subscribe(res => this.countries = res);
     if (this.edit) {
@@ -56,15 +68,14 @@ export class AssessmentFormDialogComponent implements OnInit {
   }
 
   async submitCreateNewAssessment(): Promise<void> {
-    console.log('submit');
     const data = await this.formGroupToFormData();
     if (this.edit) {
       this.assessmentService.editAssessment(this.assessment.id, data).subscribe(() => {
-        this.alertService.success('Assessment was altered successfully');
+        this.alertService.success(this.translateService.instant('assessmentBuilder.assessmentEditSuccess'));
       });
     } else {
       this.assessmentService.createAssessment(data).subscribe(res => {
-        this.alertService.success('Assessment was saved successfully');
+        this.alertService.success(this.translateService.instant('assessmentBuilder.assessmentSaveSuccess'));
     });
     }
     this.createNewAssessmentForm.reset();
@@ -72,7 +83,7 @@ export class AssessmentFormDialogComponent implements OnInit {
 
   saveAttachments(assessmentId: string, attachment, type: string, obj): void {
     this.assessmentService.addAttachments(assessmentId, attachment, type, obj).subscribe((res) => {
-      this.alertService.success('Assessment was saved successfully');
+      this.alertService.success(this.translateService.instant('assessmentBuilder.assessmentSaveSuccess'));
     });
   }
 
@@ -97,8 +108,8 @@ export class AssessmentFormDialogComponent implements OnInit {
     return this.formData;
   }
 
-  handleFileInput(event): void {
-    this.icon = event.target.files[0];
+  handleFileInput(event: File): void {
+    this.icon = event;
     this.createNewAssessmentForm.patchValue({icon: this.icon});
   }
 
