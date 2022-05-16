@@ -17,6 +17,7 @@ import { AssessmentsRoutingModule } from './assessments-routing.module';
 import { AssessmentsComponent } from './assessments.component';
 import { QuestionDetailComponent } from './question-detail/question-detail.component';
 import { QuestionsListComponent } from './questions-list/questions-list.component';
+import { PreviousButtonModule } from '../shared/previous-button/previous-button.module';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { QuestionsListComponent } from './questions-list/questions-list.componen
     MatIconModule,
     SharedModule,
     MatCardModule,
+    PreviousButtonModule
   ]
 })
 export class AssessmentsModule { }
