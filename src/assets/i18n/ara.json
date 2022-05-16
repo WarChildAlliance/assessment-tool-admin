@@ -106,7 +106,7 @@
         "isMultipleChoice": "هو الاختيار من متعدد؟",
         "question": "سؤال",
         "value": "قيمة"
-      },
+      }
     },
     "topicDetails": {
       "addQuestion": "أضف سؤالاً",
