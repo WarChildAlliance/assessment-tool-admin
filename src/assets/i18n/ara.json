@@ -235,6 +235,7 @@
     "topicAccessesEdit": {
       "editTopicsAccess": "تحرير الوصول إلى موضوع (مواضيع) التقييم",
       "removeTopicAccess": "حذف الوصول إلى الموضوع",
+      "removeTopicAccessPrompt": "'<b>{{topicTitle}}</b>' ?",
       "allTopicsAccessesDeleted": "تم حذف كافة المواضيع التي يتم الوصول إليها من هذا التقييم",
       "missingDates": "تحتاج إلى تحديد تاريخ بدء وتاريخ انتهاء لكل موضوع",
       "topicsUpdated": "تم تحديث المواضيع التي تم الوصول إليها بنجاح!",

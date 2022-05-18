@@ -6,6 +6,9 @@ import { UserRoles } from './core/models/user.model';
 import { AuthService } from './core/services/auth.service';
 import { LanguageService } from './core/services/language.service';
 import { UserService } from './core/services/user.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmModalComponent } from 'src/app/shared/confirm-modal/confirm-modal.component';
+
 
 @Component({
   selector: 'app-root',
@@ -22,6 +25,7 @@ export class AppComponent implements OnInit {
   constructor(
     private titleService: Title,
     private translateService: TranslateService,
+    private dialog: MatDialog,
     private authService: AuthService,
     private userService: UserService,
     private languageService: LanguageService
@@ -56,7 +60,19 @@ export class AppComponent implements OnInit {
   }
 
   logout(): void {
-    this.authService.logout();
+    const confirmDialog = this.dialog.open(ConfirmModalComponent, {
+      data: {
+        title: this.translateService.instant('general.logout'),
+        content: this.translateService.instant('general.logoutPrompt'),
+        contentType: 'text',
+        confirmColor: 'warn'
+      }
+    });
+    confirmDialog.afterClosed().subscribe((res) => {
+      if (res) {
+        this.authService.logout();
+      }
+    });
   }
 
   changeLanguage(language: Language): void {
