@@ -37,7 +37,22 @@
     "to": "to",
     "totalCompletedTopics": "Total completed topics",
     "workInProgress": "Work in progress... Available soon",
-    "questions": "questions"
+    "questions": "questions",
+    "grades": {
+      "0": "Kindergarten",
+      "1": "1st",
+      "2": "2nd",
+      "3": "3rd",
+      "4": "4th",
+      "5": "5th",
+      "6": "6th",
+      "7": "7th",
+      "8": "8th",
+      "9": "9th",
+      "10": "10th",
+      "11": "11th",
+      "12": "12th"
+    }
   },
   "answers": {
     "assessmentAnswers": {
@@ -80,7 +95,8 @@
     "yourAssessments": "Your assessment(s)",
     "assessmentFormDialog": {
       "createNewAssessment": "Create a new assessment",
-      "editAssessment": "Edit assessment"
+      "editAssessment": "Edit assessment",
+      "gradeTooltip": "Intended school level"
     },
     "assessmentSummary": {
       "addTopic": "Add a topic",
@@ -126,6 +142,7 @@
       "changeFile": "Change File",
       "createTopic": "Create a topic",
       "editTopic": "Edit topic",
+      "praiseTooltip": "Praise occurencies",
       "whenToShowFeedbacks": "When to show feedbacks ?"
     }
   },

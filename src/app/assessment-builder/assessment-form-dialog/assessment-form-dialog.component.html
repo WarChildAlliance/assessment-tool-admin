@@ -9,7 +9,11 @@
         </mat-form-field>
         <mat-form-field appearance="outline" color="accent">
             <mat-label>{{ "general.grade" | translate }}</mat-label>
-            <input matInput type="text" formControlName="grade">
+            <mat-select formControlName="grade" [matTooltip]="'assessmentBuilder.assessmentFormDialog.gradeTooltip' | translate">
+                <mat-option *ngFor="let grade of grades; let i = index" [value]="i">
+                    {{ grade | translate }}
+                </mat-option>
+            </mat-select>
         </mat-form-field>
         <mat-form-field appearance="outline" color="accent">
             <mat-label>{{ "general.subject" | translate }}</mat-label>

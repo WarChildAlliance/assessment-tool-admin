@@ -17,7 +17,7 @@
         </mat-form-field>
         <mat-form-field appearance="outline" color="accent">
             <mat-label>{{ "assessmentBuilder.praise" | translate }}</mat-label>
-            <input matInput type="number" formControlName="praise">
+            <input matInput formControlName="praise" type="number" min="0" step="1" [matTooltip]="'assessmentBuilder.topicFormDialog.praiseTooltip' | translate">
         </mat-form-field>
         <mat-form-field appearance="outline" color="accent">
             <mat-label>{{ "assessmentBuilder.maxWrongAnswers" | translate }}</mat-label>
