@@ -24,6 +24,22 @@ export class AssessmentFormDialogComponent implements OnInit {
 
   public icon: File = null;
 
+  public grades = [
+    'general.grades.0',
+    'general.grades.1',
+    'general.grades.2',
+    'general.grades.3',
+    'general.grades.4',
+    'general.grades.5',
+    'general.grades.6',
+    'general.grades.7',
+    'general.grades.8',
+    'general.grades.9',
+    'general.grades.10',
+    'general.grades.11',
+    'general.grades.12'
+  ];
+
   public languages: Language[];
   public countries: Country[];
   public subjects = ['PRESEL', 'POSTSEL', 'MATH', 'LITERACY'];
