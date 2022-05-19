@@ -4,6 +4,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { AssessmentFormDialogComponent } from './assessment-form-dialog/assessment-form-dialog.component';
+import { Language } from 'src/app/core/models/language.model';
+import { Country } from 'src/app/core/models/country.model';
 
 @Component({
   selector: 'app-assessment-builder',
@@ -14,11 +16,11 @@ export class AssessmentBuilderComponent implements OnInit {
 
   public currentAssessments: any[] = [];
 
-  public languages;
-  public countries;
+  public languages: Language[];
+  public countries: Country[];
   public subjects = ['PRESEL', 'POSTSEL', 'MATH', 'LITERACY'];
 
-  public icon = null;
+  public icon: File = null;
 
   public edit = false;
 
@@ -37,7 +39,7 @@ export class AssessmentBuilderComponent implements OnInit {
   constructor(
     private assessmentService: AssessmentService,
     private userService: UserService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -46,13 +48,13 @@ export class AssessmentBuilderComponent implements OnInit {
     this.userService.getCountries().subscribe( res => this.countries = res);
   }
 
-  getAssessments(): void {
+  public getAssessments(): void {
     this.assessmentService.getAssessmentsList().subscribe((assessmentsList) => {
       this.currentAssessments = assessmentsList;
     });
   }
 
-  openCreateAssessmentDialog(): void {
+  public openCreateAssessmentDialog(): void {
     const createAssessmentDialog = this.dialog.open(AssessmentFormDialogComponent, {
       data: {
         edit: this.edit

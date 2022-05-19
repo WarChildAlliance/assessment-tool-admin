@@ -12,18 +12,16 @@ import { Observable } from 'rxjs';
 
 export class AudioRecorderComponent implements OnInit {
 
-  title = 'micRecorder';
+  private title = 'micRecorder';
+  private record: RecordRTC.StereoAudioRecorder;
 
-  record;
-
-  recording = false;
-
-  url: string;
-  error: string;
-
-  @Output() audioRecordingEvent = new EventEmitter<string>();
+  public recording = false;
+  public url: string;
+  public error: string;
 
   @Input() reset$: Observable<void>;
+
+  @Output() audioRecordingEvent = new EventEmitter<string>();
 
   constructor(private domSanitizer: DomSanitizer) {}
 
@@ -33,20 +31,7 @@ export class AudioRecorderComponent implements OnInit {
     });
   }
 
-  sanitize(url: string): SafeUrl {
-    return this.domSanitizer.bypassSecurityTrustUrl(url);
-  }
-
-  initiateRecording(): void {
-    this.recording = true;
-    const mediaConstraints = {
-      video: false,
-      audio: true
-    };
-    navigator.mediaDevices.getUserMedia(mediaConstraints).then(this.successCallback.bind(this), this.errorCallback.bind(this));
-  }
-
-  successCallback(stream): void {
+  private successCallback(stream): void {
     const options = {
       mimeType: 'audio/wav',
       numberOfAudioChannels: 1,
@@ -57,19 +42,31 @@ export class AudioRecorderComponent implements OnInit {
     this.record.record();
   }
 
-  stopRecording(): void {
-    this.recording = false;
-    this.record.stop(this.processRecording.bind(this));
-  }
-
-  processRecording(blob): void {
+  private processRecording(blob): void {
     this.url = URL.createObjectURL(blob);
     this.audioRecordingEvent.emit(blob);
   }
 
-  errorCallback(error): void {
+  private errorCallback(error): void {
     this.error = 'Can not play audio in your browser';
   }
 
+  public sanitize(url: string): SafeUrl {
+    return this.domSanitizer.bypassSecurityTrustUrl(url);
+  }
+
+  public initiateRecording(): void {
+    this.recording = true;
+    const mediaConstraints = {
+      video: false,
+      audio: true
+    };
+    navigator.mediaDevices.getUserMedia(mediaConstraints).then(this.successCallback.bind(this), this.errorCallback.bind(this));
+  }
+
+  public stopRecording(): void {
+    this.recording = false;
+    this.record.stop(this.processRecording.bind(this));
+  }
 }
 

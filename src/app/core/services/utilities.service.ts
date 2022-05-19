@@ -7,7 +7,7 @@ export class UtilitiesService {
 
   constructor() { }
 
-  urlBuilder(url: string, filteringParams: object): string {
+  public urlBuilder(url: string, filteringParams: object): string {
 
     // This loop removes empty properties from the object
     for (const param of Object.keys(filteringParams)) {
@@ -31,7 +31,7 @@ export class UtilitiesService {
     return url;
   }
 
-  dateFormatter(date: Date): string {
+  public dateFormatter(date: Date): string {
     let month = (date.getMonth() + 1).toString();
     let day = date.getDate().toString();
     const year = date.getFullYear().toString();

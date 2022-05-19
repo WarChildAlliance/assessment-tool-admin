@@ -19,20 +19,18 @@ interface DialogData {
   styleUrls: ['./topic-access-modal.component.scss']
 })
 export class TopicAccessModalComponent implements OnInit {
-  minDate: Date = new Date();
+  private startDate: Date;
+  private endDate: Date;
+  private setDate: boolean;
 
+  public minDate: Date = new Date();
   public assessment: any;
   public studentId: any;
-
-  private startDate;
-  private endDate;
-  public assessmentTitle;
-  public assessmentId;
-
-  private setDate: boolean;
+  public assessmentTitle: string;
+  public assessmentId: string;
   public deletedTopic = false;
 
-  assignTopicForm: FormGroup = new FormGroup({
+  public assignTopicForm: FormGroup = new FormGroup({
     access: new FormArray([]),
   });
 
@@ -58,7 +56,7 @@ export class TopicAccessModalComponent implements OnInit {
     }
   }
 
-  generateForm(): void {
+  private generateForm(): void {
     const accessForm = this.assignTopicForm.get('access') as FormArray;
 
     this.assessment.forEach((elem) => {
@@ -84,7 +82,7 @@ export class TopicAccessModalComponent implements OnInit {
     });
   }
 
-  onDate(type, date): void {
+  public onDate(type, date): void {
     if (type === 'start_date') {
       this.startDate = date;
     }
@@ -93,7 +91,7 @@ export class TopicAccessModalComponent implements OnInit {
     }
   }
 
-  setAll(event): void {
+  public setAll(event): void {
     this.setDate = event;
     const accessForm = this.assignTopicForm.get('access') as FormArray;
     accessForm.controls.forEach((access, i) => {
@@ -105,7 +103,7 @@ export class TopicAccessModalComponent implements OnInit {
     });
   }
 
-  submitCreateTopicAccesses(): void {
+  public submitCreateTopicAccesses(): void {
     const studentsArray: number[] = [this.studentId];
 
     const accessesArray: any[] = [];
@@ -138,7 +136,7 @@ export class TopicAccessModalComponent implements OnInit {
     );
   }
 
-  private delete(topic): void {
+  public delete(topic): void {
     const topicAccessId = topic.get('topic').value.topic_access_id;
 
     this.userService.removeTopicAccess(this.assessmentId, topicAccessId).subscribe(

@@ -57,54 +57,12 @@ export class TableComponent implements OnInit, OnChanges {
     this.tableData.paginator = this.paginator;
   }
 
-  // Return an array exclusively composed of the keys of the columns we want displayed
-  getDisplayedColumnsKeys(): string[] {
-    const displayedColumnsKeys = this.displayedColumns.map(column => column.key);
-    if (this.isSelectable) {
-      displayedColumnsKeys.unshift('select');
-    }
-    return displayedColumnsKeys;
-  }
-
-  // Returns the appropriate indicator color for a percentage
-  // TODO This part should be improved by using class names instead
-  getIndicatorColor(percentage: number): string {
-    if (!percentage && percentage !== 0) {
-      return 'inherit';
-    }
-    if (percentage < 41) {
-      return 'red';
-    }
-    if (percentage < 70) {
-      return 'orange';
-    }
-    if (percentage < 95) {
-      return 'limegreen';
-    }
-    return 'green';
-  }
-
-  isAllSelected(): boolean {
-    return this.selection.selected.length === this.tableData.data.length;
-  }
-
   // Verify if all the filtered results are selected
-  isAllFilteredSelected(): boolean {
+  private isAllFilteredSelected(): boolean {
     const result = this.tableData.filteredData.every(element => {
       return this.selection.selected.includes(element);
     });
     return result;
-  }
-
-  masterToggle(): void {
-    if (this.isAllFilteredSelected()) {
-      this.selection.clear();
-    } else {
-      this.tableData.filteredData.forEach(
-        element => {
-          this.selection.select(element);
-        });
-    }
   }
 
   // Sort the table on one of its elements at initialization
@@ -125,26 +83,68 @@ export class TableComponent implements OnInit, OnChanges {
     }
   }
 
-  applyFilter(event: Event): void {
+  // Return an array exclusively composed of the keys of the columns we want displayed
+  public getDisplayedColumnsKeys(): string[] {
+    const displayedColumnsKeys = this.displayedColumns.map(column => column.key);
+    if (this.isSelectable) {
+      displayedColumnsKeys.unshift('select');
+    }
+    return displayedColumnsKeys;
+  }
+
+  // Returns the appropriate indicator color for a percentage
+  // TODO This part should be improved by using class names instead
+  public getIndicatorColor(percentage: number): string {
+    if (!percentage && percentage !== 0) {
+      return 'inherit';
+    }
+    if (percentage < 41) {
+      return 'red';
+    }
+    if (percentage < 70) {
+      return 'orange';
+    }
+    if (percentage < 95) {
+      return 'limegreen';
+    }
+    return 'green';
+  }
+
+  public isAllSelected(): boolean {
+    return this.selection.selected.length === this.tableData.data.length;
+  }
+
+  public masterToggle(): void {
+    if (this.isAllFilteredSelected()) {
+      this.selection.clear();
+    } else {
+      this.tableData.filteredData.forEach(
+        element => {
+          this.selection.select(element);
+        });
+    }
+  }
+
+  public applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.tableData.filter = filterValue.trim().toLowerCase();
   }
 
-  applySelectFilters(key: string | number, value: any): void {
+  public applySelectFilters(key: string | number, value: any): void {
     this.filtersChangedEvent.emit({ key, value });
   }
 
-  openElementDetails(id): void {
+  public openElementDetails(id): void {
     this.openDetailsEvent.emit(id.toString());
   }
 
-  copyAlert(): void {
+  public copyAlert(): void {
     this.alertService.success(this.translateService.instant('shared.table.copySuccess'));
   }
 
   // Emit an event asking for a custom action to trigger on parent element
   // The element object is the row on wich the user triggered the action.
-  customAction(element: any): void {
+  public customAction(element: any): void {
     this.customActionEvent.emit(element);
   }
 }

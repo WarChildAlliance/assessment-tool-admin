@@ -26,8 +26,8 @@ export class CreateStudentDialogComponent implements OnInit {
 
   public formChanges = false;
 
-  countries: Country[];
-  languages: Language[];
+  public countries: Country[];
+  public languages: Language[];
 
   public createNewStudentForm: FormGroup = new FormGroup({
     first_name: new FormControl('', [Validators.required, Validators.pattern('^[A-Za-zÀ-ÖØ-öø-ÿ\u0621-\u064A]+(-[A-Za-zÀ-ÖØ-öø-ÿ\u0621-\u064A]+)?$')]),
@@ -66,7 +66,7 @@ export class CreateStudentDialogComponent implements OnInit {
     this.createNewStudentForm.valueChanges.subscribe(() => { this.formChanges = true; });
   }
 
-  submitCreateNewStudent(): void {
+  public submitCreateNewStudent(): void {
     const studentToCreate = {
       first_name: this.createNewStudentForm.value.first_name,
       last_name: this.createNewStudentForm.value.last_name,

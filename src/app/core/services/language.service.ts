@@ -37,19 +37,19 @@ export class LanguageService {
     this.translateService.use(savedLanguage);
   }
 
-  getLanguageCode(): string {
+  public getLanguageCode(): string {
     return this.translateService.currentLang;
   }
 
-  getLanguage(): Language {
+  public getLanguage(): Language {
     return this.language;
   }
 
-  getLanguages(): Language[] {
+  public getLanguages(): Language[] {
     return this.languages;
   }
 
-  setLanguage(language: Language): void {
+  public setLanguage(language: Language): void {
     this.language = language;
     localStorage.setItem('la-language', language.code.toLowerCase());
     this.translateService.use(language.code);
@@ -57,7 +57,7 @@ export class LanguageService {
     // moment.locale(language.code);
   }
 
-  getDirection(): BehaviorSubject<'rtl' | 'ltr'> {
+  public getDirection(): BehaviorSubject<'rtl' | 'ltr'> {
     this.setDirection();
     return this.direction;
   }
