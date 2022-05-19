@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { MatDialog } from '@angular/material/dialog';
-import { UserService } from 'src/app/core/services/user.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AssessmentService } from 'src/app/core/services/assessment.service';
+import { UserService } from 'src/app/core/services/user.service';
 import { AssessmentFormDialogComponent } from './assessment-form-dialog/assessment-form-dialog.component';
-import { AlertService } from 'src/app/core/services/alert.service';
 import { Language } from 'src/app/core/models/language.model';
 import { Country } from 'src/app/core/models/country.model';
 
@@ -40,7 +39,6 @@ export class AssessmentBuilderComponent implements OnInit {
   constructor(
     private assessmentService: AssessmentService,
     private userService: UserService,
-    private alertService: AlertService,
     private dialog: MatDialog,
   ) { }
 

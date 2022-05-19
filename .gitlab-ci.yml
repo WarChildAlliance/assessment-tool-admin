@@ -1,23 +1,66 @@
 image: node:16
+
 stages:
+  - install
   - test
+  - build
   - deploy
+
+# Install all dependencies and cache them.
+install_dependencies:
+  stage: install
+  only:
+    - master
+    - stage
+  script:
+    - npm i
+  cache:
+    key:
+      files:
+        - package-lock.json
+    paths:
+      - node_modules
+
+# Check code standards.
 lint:
   stage: test
   only:
     - master
-  before_script:
-    - npm i
+    - stage
   script: npm run lint
-build:
-  stage: test
+  cache:
+    key:
+      files:
+        - package-lock.json
+    paths:
+      - node_modules
+    policy: pull
+
+# Build project for Sandbox deployment + store artifacts.
+build_test:
+  stage: build
   only:
-    - master
-  before_script:
-    - npm i
+    - stage
+  artifacts:
+    name: build_stage
+    expire_in: 1 hour
+    when: on_success
+    paths:
+      - dist/
   script: npm run build -- --prod
-deploy_dev:
+  cache:
+    key:
+      files:
+        - package-lock.json
+    paths:
+      - node_modules
+    policy: pull
+
+# Deploy on Sandbox environment.
+deploy_sandbox:
   stage: deploy
+  only:
+    - stage
   before_script:
     - apt-get update -qq && apt-get install -y -qq sshpass rsync
     - 'which ssh-agent || (apt-get install -y -qq openssh-client)'
@@ -31,5 +74,35 @@ deploy_dev:
   script:
     - npm run build -- --prod
     - rsync -e "ssh -o StrictHostKeyChecking=no -o PubkeyAuthentication=yes" -avzr --delete dist/admin-dashboard/* reliefapps@92.243.25.191:/var/www/html/assessment-tool/admin-dashboard
+
+# Build project for Azure deployment + store artifacts.
+build_prod:
+  stage: build
   only:
     - master
+  artifacts:
+    name: build_stage
+    expire_in: 1 hour
+    when: on_success
+    paths:
+      - dist/
+  script: npm run build:azure
+  cache:
+    key:
+      files:
+        - package-lock.json
+    paths:
+      - node_modules
+    policy: pull
+
+# Deploy on azure environment.
+deploy_azure:
+  stage: deploy
+  image: mcr.microsoft.com/azure-cli
+  only:
+    - master
+  before_script:
+    - az config set extension.use_dynamic_install=yes_without_prompt
+  script:
+    - az storage remove -c '$web' --recursive --account-name loassessmenttooladmin --account-key $ACCOUNT_KEY
+    - az storage azcopy blob upload -c '$web' -s 'dist/admin-dashboard/*' --recursive --account-name loassessmenttooladmin --account-key $ACCOUNT_KEY

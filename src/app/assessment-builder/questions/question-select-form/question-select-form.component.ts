@@ -15,6 +15,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
@@ -85,6 +86,7 @@ export class QuestionSelectFormComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private formBuilder: FormBuilder,
+    private translateService: TranslateService,
     private assessmentService: AssessmentService,
     private alertService: AlertService
   ) {}

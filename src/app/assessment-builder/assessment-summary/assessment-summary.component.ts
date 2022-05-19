@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { environment } from 'src/environments/environment';
@@ -36,6 +37,7 @@ export class AssessmentSummaryComponent implements OnInit {
     private dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute,
+    private translateService: TranslateService,
     private assessmentService: AssessmentService,
     private alertService: AlertService
   ) {}
@@ -92,7 +94,7 @@ export class AssessmentSummaryComponent implements OnInit {
     formData.append('archived', archived);
 
     this.assessmentService.editTopic(assessmentId.toString(), topicId, formData).subscribe(() => {
-      this.alertService.success('Topic was altered successfully');
+      this.alertService.success(this.translateService.instant('assessmentBuilder.topicEditSuccess'));
       this.getAssessmentDetails(assessmentId);
     });
   }
@@ -102,7 +104,7 @@ export class AssessmentSummaryComponent implements OnInit {
     formData.append('archived', archived);
 
     this.assessmentService.editAssessment(assessmentId, formData).subscribe(res => {
-      this.alertService.success('Assessment was altered successfully');
+      this.alertService.success(this.translateService.instant('assessmentBuilder.assessmentEditSuccess'));
       this.archivedAssessment.emit(true);
     });
   }

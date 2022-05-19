@@ -25,6 +25,7 @@ import { CreateStudentDialogComponent } from './create-student-dialog/create-stu
 import { CustomButtonModule } from '../shared/button/button.module';
 import { TopicAccessModalComponent } from './topic-access-modal/topic-access-modal.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { PreviousButtonModule } from '../shared/previous-button/previous-button.module';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatTabsModule,
     MatExpansionModule,
     CustomButtonModule,
-    MatTooltipModule
+    MatTooltipModule,
+    PreviousButtonModule
   ],
 })
 export class StudentsModule { }

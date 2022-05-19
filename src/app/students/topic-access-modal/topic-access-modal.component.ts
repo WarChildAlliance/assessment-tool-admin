@@ -5,7 +5,9 @@ import { AlertService } from 'src/app/core/services/alert.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { UtilitiesService } from 'src/app/core/services/utilities.service';
 import { TranslateService } from '@ngx-translate/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { ConfirmModalComponent } from 'src/app/shared/confirm-modal/confirm-modal.component';
+
 
 interface DialogData {
   assessment?: any;
@@ -42,7 +44,8 @@ export class TopicAccessModalComponent implements OnInit {
     private utilitiesService: UtilitiesService,
     private alertService: AlertService,
     private userService: UserService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -150,5 +153,22 @@ export class TopicAccessModalComponent implements OnInit {
         this.alertService.error(this.translateService.instant('students.topicAccessesEdit.errorOnDeletion'));
       }
     );
+  }
+
+  promptDelete(topic): void {
+    const topicTitle = topic.get('topic').value.topic_name;
+    const confirmDialog = this.dialog.open(ConfirmModalComponent, {
+      data: {
+        title: this.translateService.instant('students.topicAccessesEdit.removeTopicAccess'),
+        content: this.translateService.instant('students.topicAccessesEdit.removeTopicAccessPrompt', { topicTitle }),
+        contentType: 'innerHTML',
+        confirmColor: 'warn'
+      }
+    });
+    confirmDialog.afterClosed().subscribe((res) => {
+      if (res) {
+        this.delete(topic);
+      }
+    });
   }
 }

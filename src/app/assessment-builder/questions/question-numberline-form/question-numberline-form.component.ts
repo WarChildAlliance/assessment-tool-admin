@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
@@ -53,9 +54,10 @@ export class QuestionNumberlineFormComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private translateService: TranslateService,
     private assessmentService: AssessmentService,
     private alertService: AlertService
-    ) {}
+  ) {}
 
   async ngOnInit(): Promise<void> {
     if (this.data?.assessmentId) { this.assessmentId = this.data.assessmentId; }

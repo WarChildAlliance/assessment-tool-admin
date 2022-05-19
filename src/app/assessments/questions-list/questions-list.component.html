@@ -1,5 +1,6 @@
 <div class="main-board">
   <div class="main-board__top-container">
+    <app-previous-button [path]="backPath"></app-previous-button>
     <h1>{{ "assessments.questionsList.questions" | translate }} ({{ questionsDataSource.data.length }})
       <span *ngIf="selectedQuestions.length">({{
         selectedQuestions.length }} {{ "assessments.selected" | translate }})</span>

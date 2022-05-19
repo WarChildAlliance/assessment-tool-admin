@@ -41,6 +41,8 @@ export class SelectAssessmentComponent implements OnInit {
         if (this.selectedAssessment){
           this.assessmentId = this.selectedAssessment.id;
           this.getTopics(this.assessmentId);
+        } else {
+          this.topicSelection.emit(null);
         }
       } else {
         this.assessmentSelection.emit(this.selectedAssessment);

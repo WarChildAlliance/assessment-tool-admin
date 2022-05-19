@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
+import { Language } from './core/models/language.model';
 import { UserRoles } from './core/models/user.model';
 import { AuthService } from './core/services/auth.service';
 import { LanguageService } from './core/services/language.service';
 import { UserService } from './core/services/user.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmModalComponent } from 'src/app/shared/confirm-modal/confirm-modal.component';
+
 
 @Component({
   selector: 'app-root',
@@ -16,11 +20,12 @@ export class AppComponent implements OnInit {
   public selfName = '';
 
   public languageCode: string = this.languageService.getLanguageCode();
-  public languages: { name: string, code: string, direction: 'rtl' | 'ltr' }[] = this.languageService.getLanguages();
+  public languages: Language[] = this.languageService.getLanguages();
 
   constructor(
     private titleService: Title,
     private translateService: TranslateService,
+    private dialog: MatDialog,
     private authService: AuthService,
     private userService: UserService,
     private languageService: LanguageService
@@ -35,13 +40,16 @@ export class AppComponent implements OnInit {
       if (authenticated) {
         this.userService.getSelf().subscribe(res => {
           if (res.role !== UserRoles.Supervisor) { this.authService.logout(); }
-          this.selfName = res.first_name + ' ' + res.last_name;
-          const language = {
-            name: res.language.name_en,
-            code: res.language.code.toLowerCase(),
-            direction: res.language.direction
-          };
-          this.languageService.setLanguage(language);
+          this.selfName = res.first_name && res.last_name ? res.first_name + ' ' + res.last_name : res.username;
+          if (res.language) {
+            const language = {
+              name: res.language.name_en,
+              code: res.language.code.toLowerCase(),
+              direction: res.language.direction,
+              flag: res.language.flag
+            };
+            this.languageService.setLanguage(language);
+          }
         });
       }
     });
@@ -52,10 +60,22 @@ export class AppComponent implements OnInit {
   }
 
   public logout(): void {
-    this.authService.logout();
+    const confirmDialog = this.dialog.open(ConfirmModalComponent, {
+      data: {
+        title: this.translateService.instant('general.logout'),
+        content: this.translateService.instant('general.logoutPrompt'),
+        contentType: 'text',
+        confirmColor: 'warn'
+      }
+    });
+    confirmDialog.afterClosed().subscribe((res) => {
+      if (res) {
+        this.authService.logout();
+      }
+    });
   }
 
-  public changeLanguage(language: { name: string, code: string, direction: 'rtl' | 'ltr' }): void {
+  public changeLanguage(language: Language): void {
     this.languageCode = language.code;
     this.languageService.setLanguage(language);
   }

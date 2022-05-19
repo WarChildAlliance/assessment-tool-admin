@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs';
+import { Language } from '../models/language.model';
+
 // import * as moment from 'moment';
 // import 'moment/locale/ar';
 // import 'moment/locale/es';
@@ -10,17 +12,19 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class LanguageService {
   private direction = new BehaviorSubject<'rtl' | 'ltr'>(null);
-  private language: { name: string, code: string, direction: 'rtl' | 'ltr' };
-  private languages: { name: string, code: string, direction: 'rtl' | 'ltr' }[] = [
+  private language: Language;
+  private languages: Language[] = [
     {
       name: 'العربية',
       code: 'ara',
-      direction: 'rtl'
+      direction: 'rtl',
+      flag: '../assets/images/jo.svg'
     },
     {
       name: 'English',
       code: 'eng',
-      direction: 'ltr'
+      direction: 'ltr',
+      flag: '../assets/images/gb.svg'
     }
   ];
   constructor(
@@ -37,15 +41,15 @@ export class LanguageService {
     return this.translateService.currentLang;
   }
 
-  public getLanguage(): { name: string, code: string, direction: 'rtl' | 'ltr' } {
+  public getLanguage(): Language {
     return this.language;
   }
 
-  public getLanguages(): { name: string, code: string, direction: 'rtl' | 'ltr' }[] {
+  public getLanguages(): Language[] {
     return this.languages;
   }
 
-  public setLanguage(language: { name: string, code: string, direction: 'rtl' | 'ltr' }): void {
+  public setLanguage(language: Language): void {
     this.language = language;
     localStorage.setItem('la-language', language.code.toLowerCase());
     this.translateService.use(language.code);

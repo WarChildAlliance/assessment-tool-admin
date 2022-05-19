@@ -22,6 +22,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatBreadcrumbModule } from 'mat-breadcrumb';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpLoaderFactory } from './core/factories/http-loader-translate.factory';
+import { ConfirmModalModule } from './shared/confirm-modal/confirm-modal.module';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { HttpLoaderFactory } from './core/factories/http-loader-translate.factor
         deps: [HttpClient],
       }
     }),
+    ConfirmModalModule
   ],
   providers: [
     httpInterceptorProviders,

@@ -26,6 +26,7 @@ import { CustomButtonModule } from '../shared/button/button.module';
 import { HorizontalScrollArrowsComponent } from '../shared/horizontal-scroll-arrows/horizontal-scroll-arrows.component';
 import { ImageSelectorComponent } from '../shared/attachments/image-selector/image-selector.component';
 import { AudioSelectorComponent } from '../shared/attachments/audio-selector/audio-selector.component';
+import { PreviousButtonModule } from '../shared/previous-button/previous-button.module';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { AudioSelectorComponent } from '../shared/attachments/audio-selector/aud
     SharedModule,
     MatDividerModule,
     MatTooltipModule,
-    CustomButtonModule
+    CustomButtonModule,
+    PreviousButtonModule
   ]
 })
 export class AssessmentBuilderModule { }

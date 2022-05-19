@@ -31,6 +31,7 @@ export class QuestionsListComponent implements OnInit {
   public selectedQuestions: any[] = [];
   public questionDetails: any;
   public questionPreview = false;
+  public backPath = '';
 
   constructor(
     private assessmentService: AssessmentService,
@@ -44,6 +45,8 @@ export class QuestionsListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const idUrl = this.route.snapshot.paramMap.get('topic_id') || '';
+    this.backPath = this.router.url.replace(`topics/${idUrl}`, '');
     this.route.paramMap.pipe(
       switchMap((params) => {
         this.assessmentId = params.get('assessment_id');
