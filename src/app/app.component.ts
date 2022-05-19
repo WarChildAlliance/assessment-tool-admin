@@ -17,7 +17,7 @@ import { ConfirmModalComponent } from 'src/app/shared/confirm-modal/confirm-moda
 })
 export class AppComponent implements OnInit {
 
-  selfName = '';
+  public selfName = '';
 
   public languageCode: string = this.languageService.getLanguageCode();
   public languages: Language[] = this.languageService.getLanguages();
@@ -55,11 +55,11 @@ export class AppComponent implements OnInit {
     });
   }
 
-  get isAuthenticated(): boolean {
+  public get isAuthenticated(): boolean {
     return this.authService.isAuthenticated;
   }
 
-  logout(): void {
+  public logout(): void {
     const confirmDialog = this.dialog.open(ConfirmModalComponent, {
       data: {
         title: this.translateService.instant('general.logout'),
@@ -75,7 +75,7 @@ export class AppComponent implements OnInit {
     });
   }
 
-  changeLanguage(language: Language): void {
+  public changeLanguage(language: Language): void {
     this.languageCode = language.code;
     this.languageService.setLanguage(language);
   }

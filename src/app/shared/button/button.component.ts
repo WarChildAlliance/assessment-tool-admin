@@ -1,8 +1,8 @@
 import {
   Component,
+  OnInit,
   HostBinding,
   Input,
-  OnInit
 } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ButtonCategory } from './button-category.enum';
@@ -32,7 +32,7 @@ export class CustomButtonComponent implements OnInit {
 
   public emittedEventSubject: Subject<string> = new Subject();
 
-  get color(): string {
+  public get color(): string {
     switch (this.variant) {
       case ButtonVariant.PRIMARY: {
         return 'accent';

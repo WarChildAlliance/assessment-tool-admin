@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -28,7 +27,7 @@ export class AssessmentDetailComponent implements OnInit {
 
   public selectedTopics: any[] = [];
 
-  currentAssessment: any;
+  public currentAssessment: any;
 
   public createNewTopicForm: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required])
@@ -43,10 +42,9 @@ export class AssessmentDetailComponent implements OnInit {
       this.displayedColumns.forEach(col => {
         this.translateService.stream(col.name).subscribe(translated => col.name = translated);
       });
-     }
+    }
 
   ngOnInit(): void {
-
     this.route.params.subscribe(params => {
       const assessmentId = params.id;
 
@@ -61,15 +59,15 @@ export class AssessmentDetailComponent implements OnInit {
   }
 
   // This eventReceiver triggers a thousand times when user does "select all". We should find a way to improve this. (debouncer ?)
-  onSelectionChange(newSelection: any[]): void {
+  public onSelectionChange(newSelection: any[]): void {
     this.selectedTopics = newSelection;
   }
 
-  onOpenDetails(id: string): void {
+  public onOpenDetails(id: string): void {
     this.router.navigate([`/assessments/${this.currentAssessment.id}/topics/${id}`]);
   }
 
-  downloadData(): void {
+  public downloadData(): void {
     console.log('Work In Progress');
   }
 }

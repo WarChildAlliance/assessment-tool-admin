@@ -17,13 +17,12 @@ import { UserService } from 'src/app/core/services/user.service';
   styleUrls: ['./topics-list-answers.component.scss']
 })
 export class TopicsListAnswersComponent implements OnInit {
+  private currentStudentId: string;
+  private assessmentId: string;
 
-  topicsAnswersDataSource: MatTableDataSource<TopicTableData> = new MatTableDataSource([]);
-  currentStudentId: string;
-  assessmentId: string;
-
-  currentStudent: StudentTableData;
-  currentAssessment: AssessmentTableData;
+  public topicsAnswersDataSource: MatTableDataSource<TopicTableData> = new MatTableDataSource([]);
+  public currentStudent: StudentTableData;
+  public currentAssessment: AssessmentTableData;
 
   public displayedColumns: TableColumn[] = [
     { key: 'name', name: 'general.name' },
@@ -70,7 +69,7 @@ export class TopicsListAnswersComponent implements OnInit {
     });
   }
 
-  onOpenDetails(topicId: string): void {
+  public onOpenDetails(topicId: string): void {
     this.router.navigate(
       [`students/${this.currentStudentId}/assessments/${this.assessmentId}/topics/${topicId}/questions`]
     );

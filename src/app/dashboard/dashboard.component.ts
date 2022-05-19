@@ -11,15 +11,12 @@ export class DashboardComponent implements OnInit {
   public studentsListTable = [];
   public assessmentList: AssessmentDashboard[];
 
-
   constructor(private assessmentService: AssessmentService) { }
 
   ngOnInit(): void {
-
     this.assessmentService.getAssessmentsListforDashboard().subscribe((assessmentsList) => {
       this.assessmentService.updateAssessmentsList(assessmentsList);
     });
-
   }
 
 }

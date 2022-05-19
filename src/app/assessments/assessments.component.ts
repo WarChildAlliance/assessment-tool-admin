@@ -31,8 +31,6 @@ export class AssessmentsComponent implements OnInit {
   ];
 
   public assessmentsDataSource: MatTableDataSource<Assessment> = new MatTableDataSource([]);
-
-
   public filters: TableFilter[];
   private filtersData = { country: '', language: '' };
 
@@ -88,7 +86,7 @@ export class AssessmentsComponent implements OnInit {
     });
   }
 
-  onFiltersChange(data: { key: string | number, value: any }): void {
+  public onFiltersChange(data: { key: string | number, value: any }): void {
     this.filtersData[data.key] = data.value;
 
     this.assessmentService.getAssessmentsList(this.filtersData).subscribe((assessmentsList) => {
@@ -96,19 +94,19 @@ export class AssessmentsComponent implements OnInit {
     });
   }
 
-  onOpenDetails(id: string): void {
+  public onOpenDetails(id: string): void {
     this.router.navigate([`/assessments/${id}`]);
   }
 
-  togglePrivate(event: { checked: boolean; }): void {
+  public togglePrivate(event: { checked: boolean; }): void {
     this.isAssessmentPrivate = event.checked;
   }
 
-  deleteSelection(): void {
+  public deleteSelection(): void {
     console.log('DEL');
   }
 
-  downloadData(): void {
+  public downloadData(): void {
     console.log('Work In Progress');
   }
 }
