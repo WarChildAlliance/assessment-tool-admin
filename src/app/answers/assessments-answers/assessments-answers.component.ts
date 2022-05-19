@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { combineLatest, forkJoin } from 'rxjs';
+import { combineLatest } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { AssessmentTableData } from 'src/app/core/models/assessment-table-data.model';

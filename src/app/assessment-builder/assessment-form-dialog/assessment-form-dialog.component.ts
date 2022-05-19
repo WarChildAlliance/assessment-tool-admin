@@ -83,7 +83,7 @@ export class AssessmentFormDialogComponent implements OnInit {
     this.createNewAssessmentForm.reset();
   }
 
-  saveAttachments(assessmentId: string, attachment, type: string, obj): void {
+  public saveAttachments(assessmentId: string, attachment, type: string, obj): void {
     this.assessmentService.addAttachments(assessmentId, attachment, type, obj).subscribe((res) => {
       this.alertService.success(this.translateService.instant('assessmentBuilder.assessmentSaveSuccess'));
     });
