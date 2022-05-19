@@ -66,8 +66,8 @@ export class UserService {
     return this.http.get<Country[]>(`${environment.API_URL}/users/countries`);
   }
 
-  getGroups(): Observable<Group> {
-    return this.http.get<Group>(`${environment.API_URL}/users/groups`);
+  getGroups(): Observable<Group[]> {
+    return this.http.get<Group[]>(`${environment.API_URL}/users/groups`);
   }
 
   getGroupById(groupId: string): Observable<Group> {

@@ -9,6 +9,7 @@ import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { UtilitiesService } from 'src/app/core/services/utilities.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Group } from 'src/app/core/models/group.model';
 
 interface DialogData {
   studentsList?: any[];
@@ -28,6 +29,7 @@ export class TopicAccessesBuilderComponent implements OnInit {
 
   assessmentsList: Assessment[] = [];
   topicsList: Topic[] = [];
+  groupsList: Group[] = [];
   selectedAssessmentId: string;
 
   public startDate;
@@ -39,8 +41,28 @@ export class TopicAccessesBuilderComponent implements OnInit {
     access: new FormArray([]),
   });
 
-  get controls(): AbstractControl[] {
+  assignGroupForm: FormGroup = new FormGroup({
+    groups: new FormArray([])
+  });
+
+  get topicControls(): AbstractControl[] {
     return (this.assignTopicForm.get('access') as FormArray).controls;
+  }
+
+  get groupControls(): AbstractControl[] {
+    return (this.assignGroupForm.get('groups') as FormArray).controls;
+  }
+
+  get disabledAssign(): boolean {
+    let studentsSelected = false;
+
+    if (!this.studentsList.length) {
+      studentsSelected = this.assignGroupForm.value.groups.filter(element => element.selected === true).length;
+    } else {
+      studentsSelected = true;
+    }
+
+    return (!this.topicControls.length || this.assignTopicForm.invalid) || !studentsSelected;
   }
 
   constructor(
@@ -58,13 +80,22 @@ export class TopicAccessesBuilderComponent implements OnInit {
     this.assessmentService.getAssessmentsList().subscribe((assessmentsList) => {
       this.assessmentsList = assessmentsList.filter(assessment => assessment.archived !== true);
     });
+
+    this.loadGroupsList();
   }
 
   loadTopicsList(assessmentId: string): void {
     this.selectedAssessmentId = assessmentId;
     this.assessmentService.getAssessmentTopics(assessmentId).subscribe((newList) => {
       this.topicsList = newList.filter(topic => topic.archived !== true);
-      this.generateForm();
+      this.generateTopicsForm();
+    });
+  }
+
+  loadGroupsList(): void {
+    this.userService.getGroups().subscribe((groups) => {
+      this.groupsList = groups.filter(group => group.students.length);
+      this.generateGroupsForm();
     });
   }
 
@@ -90,7 +121,7 @@ export class TopicAccessesBuilderComponent implements OnInit {
     });
   }
 
-  generateForm(): void {
+  generateTopicsForm(): void {
     const accessForm = this.assignTopicForm.get('access') as FormArray;
     accessForm.clear();
 
@@ -105,11 +136,33 @@ export class TopicAccessesBuilderComponent implements OnInit {
     });
   }
 
-  submitCreateTopicAccesses(): void {
-    const studentsArray: number[] = [];
-    this.studentsList.forEach(student => {
-      studentsArray.push(student.id);
+  generateGroupsForm(): void {
+    const groupForm = this.assignGroupForm.get('groups') as FormArray;
+    groupForm.clear();
+
+    this.groupsList.forEach((group: Group, i: number) => {
+      const groupAccess = this.formBuilder.group({
+        group: new FormControl(group),
+        selected: new FormControl(false),
+        name: new FormControl(group.name),
+      });
+      groupForm.push(groupAccess);
     });
+  }
+
+  submitCreateTopicAccesses(): void {
+    let studentsArray: number[] = [];
+    if (this.studentsList.length) {
+      this.studentsList.forEach(student => {
+        studentsArray.push(student.id);
+      });
+    }
+
+    for (const element of this.assignGroupForm.value.groups) {
+      if (element.selected) {
+        studentsArray = studentsArray.concat(element.group.students);
+      }
+    }
 
     const accessesArray = new Array<{
       topic: number,

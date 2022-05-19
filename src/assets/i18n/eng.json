@@ -16,6 +16,8 @@
     "fieldRequired": "This field is required",
     "from": "from",
     "grade": "Grade",
+    "group": "Group",
+    "groups": "Groups",
     "language": "Language",
     "lastLogin": "Last login",
     "logout": "Logout",
@@ -233,7 +235,9 @@
       "errorOnSubmit": "There was an error during the submission of the topic accesses",
       "startDate": "Start date",
       "topicAvailability": "Assessment topic(s) availability",
-      "notifier": "You need to set a start date and an end date for each selected topic."
+      "notifier": "You need to select student(s) or group(s) and set a start date and an end date for each selected topic.",
+      "noGroups": "You don't have groups with students.",
+      "groupsInfo": "Only groups with enrolled students are displayed"
     },
     "topicAccessesEdit": {
       "editTopicsAccess": "Edit assessment topic(s) access",
