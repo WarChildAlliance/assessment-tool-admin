@@ -24,7 +24,7 @@
   </mat-form-field>
 </div>
 
-<div class="main-board__charts-container__select" *ngIf="selectTopic">
+<div class="main-board__charts-container__select" *ngIf="topicSelectionEnabled">
   <mat-form-field appearance="outline" color="accent">
     <mat-label>
       {{ "shared.selectAssessment.chooseTopic" | translate }}
@@ -33,7 +33,7 @@
       <mat-option>{{ "shared.selectAssessment.noTopics" | translate }}</mat-option>
       <mat-option *ngFor="let topic of topicsList"
         [value]="topic"
-        (click)="selectATopic(topic)"
+        (click)="selectTopic(topic)"
         [disabled]="!topic.started">
           {{ topic.name }}
       </mat-option>

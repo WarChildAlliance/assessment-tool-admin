@@ -111,6 +111,7 @@
     "questions": {
       "audioAttachment": "Audio attachment",
       "imageAttachment": "Image attachment",
+      "errorAudio": "Can not play audio in your browser",
       "questionCloneSuccess": "Question successfully cloned",
       "questionCreateSuccess": "Question successfully created",
       "questionUpdateSuccess": "Question successfully updated",

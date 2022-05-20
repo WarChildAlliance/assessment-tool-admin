@@ -19,17 +19,17 @@ interface DialogData {
 })
 export class CreateStudentDialogComponent implements OnInit {
 
-  public newStudent: any;
+  public student: any;
 
   // Defines if a student is edited or if a new one is created
   public isStudentEdited = false;
 
-  public formChanges = false;
+  public hasFormChanged = false;
 
   public countries: Country[];
   public languages: Language[];
 
-  public createNewStudentForm: FormGroup = new FormGroup({
+  public studentForm: FormGroup = new FormGroup({
     first_name: new FormControl('', [Validators.required, Validators.pattern('^[A-Za-zÀ-ÖØ-öø-ÿ\u0621-\u064A]+(-[A-Za-zÀ-ÖØ-öø-ÿ\u0621-\u064A]+)?$')]),
     last_name: new FormControl('', [Validators.required, Validators.pattern('^[A-Za-zÀ-ÖØ-öø-ÿ\u0621-\u064A]+(-[A-Za-zÀ-ÖØ-öø-ÿ\u0621-\u064A]+)?$')]),
     country: new FormControl('', [Validators.required]),
@@ -44,15 +44,15 @@ export class CreateStudentDialogComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (this.data?.newStudent) { this.newStudent = this.data.newStudent; }
-    if (!!this.newStudent) {
+    if (this.data?.newStudent) { this.student = this.data.newStudent; }
+    if (!!this.student) {
       this.isStudentEdited = true;
 
-      this.createNewStudentForm.setValue({
-        first_name: this.newStudent.first_name,
-        last_name: this.newStudent.last_name,
-        country: this.newStudent.country_code,
-        language: this.newStudent.language_code,
+      this.studentForm.setValue({
+        first_name: this.student.first_name,
+        last_name: this.student.last_name,
+        country: this.student.country_code,
+        language: this.student.language_code,
       });
     }
 
@@ -63,20 +63,20 @@ export class CreateStudentDialogComponent implements OnInit {
       }
     );
 
-    this.createNewStudentForm.valueChanges.subscribe(() => { this.formChanges = true; });
+    this.studentForm.valueChanges.subscribe(() => { this.hasFormChanged = true; });
   }
 
-  public submitCreateNewStudent(): void {
-    const studentToCreate = {
-      first_name: this.createNewStudentForm.value.first_name,
-      last_name: this.createNewStudentForm.value.last_name,
+  public submitStudent(): void {
+    const studentToSave = {
+      first_name: this.studentForm.value.first_name,
+      last_name: this.studentForm.value.last_name,
       role: 'STUDENT',
-      language: this.createNewStudentForm.value.language,
-      country: this.createNewStudentForm.value.country
+      language: this.studentForm.value.language,
+      country: this.studentForm.value.country
     };
 
     if (this.isStudentEdited) {
-      this.userService.editStudent(this.newStudent.id, studentToCreate).subscribe((student: User) => {
+      this.userService.editStudent(this.student.id, studentToSave).subscribe((student: User) => {
         this.alertService.success(
           this.translateService.instant(
             'students.createStudentDialog.studentEditSuccess',
@@ -85,7 +85,7 @@ export class CreateStudentDialogComponent implements OnInit {
         );
       });
     } else {
-      this.userService.createNewStudent(studentToCreate).subscribe((student: User) => {
+      this.userService.createNewStudent(studentToSave).subscribe((student: User) => {
         this.alertService.success(
           this.translateService.instant(
             'students.createStudentDialog.studentCreateSuccess',
@@ -95,6 +95,6 @@ export class CreateStudentDialogComponent implements OnInit {
       });
     }
 
-    this.createNewStudentForm.reset();
+    this.studentForm.reset();
   }
 }

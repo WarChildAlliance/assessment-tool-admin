@@ -30,8 +30,8 @@ export class QuestionsListComponent implements OnInit {
   public questionsDataSource: MatTableDataSource<QuestionTableData> = new MatTableDataSource([]);
   public selectedQuestions: any[] = [];
   public questionDetails: any;
-  public questionPreview = false;
-  public backPath = '';
+  public showQuestionPreview = false;
+  public previousPageUrl = '';
 
   constructor(
     private assessmentService: AssessmentService,
@@ -46,7 +46,7 @@ export class QuestionsListComponent implements OnInit {
 
   ngOnInit(): void {
     const idUrl = this.route.snapshot.paramMap.get('topic_id') || '';
-    this.backPath = this.router.url.replace(`topics/${idUrl}`, '');
+    this.previousPageUrl = this.router.url.replace(`topics/${idUrl}`, '');
     this.route.paramMap.pipe(
       switchMap((params) => {
         this.assessmentId = params.get('assessment_id');
@@ -75,7 +75,7 @@ export class QuestionsListComponent implements OnInit {
   public onCustomAction(element: any): void {
     this.assessmentService.getQuestionDetails(this.assessmentId, this.topicId, element.id).subscribe(details => {
       this.questionDetails = details;
-      this.questionPreview = true;
+      this.showQuestionPreview = true;
     });
   }
 }

@@ -21,7 +21,7 @@ interface DialogData {
 export class TopicAccessModalComponent implements OnInit {
   private startDate: Date;
   private endDate: Date;
-  private setDate: boolean;
+  private applyToAllTopics: boolean;
 
   public minDate: Date = new Date();
   public assessment: any;
@@ -73,8 +73,8 @@ export class TopicAccessModalComponent implements OnInit {
 
       const topicAccess = this.formBuilder.group({
         topic: new FormControl(topic),
-        start_date: this.setDate ? this.startDate : new FormControl(startDate, Validators.required),
-        end_date: this.setDate ? this.endDate : new FormControl(endDate, Validators.required)
+        start_date: this.applyToAllTopics ? this.startDate : new FormControl(startDate, Validators.required),
+        end_date: this.applyToAllTopics ? this.endDate : new FormControl(endDate, Validators.required)
       });
 
       accessForm.push(topicAccess);
@@ -82,7 +82,7 @@ export class TopicAccessModalComponent implements OnInit {
     });
   }
 
-  public onDate(type, date): void {
+  public onDateInput(type, date): void {
     if (type === 'start_date') {
       this.startDate = date;
     }
@@ -91,14 +91,14 @@ export class TopicAccessModalComponent implements OnInit {
     }
   }
 
-  public setAll(event): void {
-    this.setDate = event;
+  public onApplyToAllTopics(value: boolean): void {
+    this.applyToAllTopics = value;
     const accessForm = this.assignTopicForm.get('access') as FormArray;
     accessForm.controls.forEach((access, i) => {
       access.setValue({
         topic: access.value.topic,
-        start_date: event || i === 0 ? this.startDate : null,
-        end_date: event || i === 0 ? this.endDate : null
+        start_date: value || i === 0 ? this.startDate : null,
+        end_date: value || i === 0 ? this.endDate : null
       });
     });
   }
@@ -136,7 +136,7 @@ export class TopicAccessModalComponent implements OnInit {
     );
   }
 
-  public delete(topic): void {
+  private deleteTopicAccess(topic): void {
     const topicAccessId = topic.get('topic').value.topic_access_id;
 
     this.userService.removeTopicAccess(this.assessmentId, topicAccessId).subscribe(
@@ -155,7 +155,7 @@ export class TopicAccessModalComponent implements OnInit {
     );
   }
 
-  promptDelete(topic): void {
+  public removeTopicAccess(topic): void {
     const topicTitle = topic.get('topic').value.topic_name;
     const confirmDialog = this.dialog.open(ConfirmModalComponent, {
       data: {
@@ -167,7 +167,7 @@ export class TopicAccessModalComponent implements OnInit {
     });
     confirmDialog.afterClosed().subscribe((res) => {
       if (res) {
-        this.delete(topic);
+        this.deleteTopicAccess(topic);
       }
     });
   }

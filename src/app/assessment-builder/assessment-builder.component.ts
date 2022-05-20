@@ -60,7 +60,7 @@ export class AssessmentBuilderComponent implements OnInit {
     });
   }
 
-  public openCreateAssessmentDialog(): void {
+  public openAssessmentFormDialog(): void {
     const createAssessmentDialog = this.dialog.open(AssessmentFormDialogComponent, {
       data: {
         edit: this.edit

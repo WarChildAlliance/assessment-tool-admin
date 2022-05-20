@@ -39,7 +39,7 @@
                 [imageAttachment]="imageAttachment"
             ></app-image-selector>
             <app-audio-selector
-                [recorderEnabled]="true"
+                [isRecorderEnabled]="true"
                 [reset$]="attachmentsResetSubject$.asObservable()"
                 (newAudioEvent)="onNewAudioAttachment($event)"
                 [audioAttachment]="audioAttachment"
@@ -79,7 +79,7 @@
                         (newImageEvent)="handleFileInputOptions($event, 'IMAGE', i)"
                     ></app-image-selector>
                     <app-audio-selector
-                        [recorderEnabled]="true"
+                        [isRecorderEnabled]="true"
                         [reset$]="attachmentsResetSubject$.asObservable()"
                         (newAudioEvent)="handleFileInputOptions($event, 'AUDIO', i)"
                     ></app-audio-selector>
@@ -92,7 +92,7 @@
         <button mat-flat-button mat-dialog-close class="dialog-buttons__cancel" color="secondary">
             {{ "general.cancel" | translate }}
         </button>
-        <button mat-flat-button [mat-dialog-close]="true" color="accent" [disabled]="selectForm.invalid || !selectForm.dirty" (click)="onSave()">
+        <button mat-flat-button [mat-dialog-close]="true" color="accent" [disabled]="selectForm.invalid || !selectForm.dirty" (click)="onSubmit()">
             {{ question ? toClone ? ("general.clone" | translate) : ("general.save" | translate) : ("general.create" | translate) }}
         </button>
     </div>
