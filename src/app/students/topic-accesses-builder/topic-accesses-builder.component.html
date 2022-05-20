@@ -81,11 +81,10 @@
 </div>
 <div class="dialog-buttons">
     <span class="notifier" *ngIf="disabledAssign"> {{ 'students.topicAccessesBuilder.notifier' | translate }} </span>
-    
-    <button category="secondary" variant="neutral" mat-dialog-close>
+    <button mat-flat-button mat-dialog-close class="dialog-buttons__cancel" color="secondary">
         {{ "general.cancel" | translate }}
     </button>
-    <button category="secondary" variant="primary" [disabled]="disabledAssign"
+    <button mat-flat-button class="dialog-buttons__submit" [disabled]="!topicControls.length || this.assignTopicForm.invalid" color="accent"
     (click)="submitCreateTopicAccesses()" mat-dialog-close>
         {{ "general.assign" | translate }}
     </button>
