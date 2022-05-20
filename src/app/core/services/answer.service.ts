@@ -13,23 +13,23 @@ export class AnswerService {
 
   constructor(private http: HttpClient) { }
 
-  getAssessmentsAnswers(studentId: string): Observable<AssessmentTableData[]> {
+  public getAssessmentsAnswers(studentId: string): Observable<AssessmentTableData[]> {
     return this.http.get<any[]>(`${environment.API_URL}/visualization/student_answers/${studentId}/assessments/`);
   }
 
-  getAssessmentsAnswersDetails(studentId: string, assessmentId: string): Observable<AssessmentTableData> {
+  public getAssessmentsAnswersDetails(studentId: string, assessmentId: string): Observable<AssessmentTableData> {
     return this.http.get<any>(`${environment.API_URL}/visualization/student_answers/${studentId}/assessments/${assessmentId}`);
   }
 
-  getTopicsAnswers(studentId: string, assessmentId: string): Observable<TopicTableData[]> {
+  public getTopicsAnswers(studentId: string, assessmentId: string): Observable<TopicTableData[]> {
     return this.http.get<any[]>(`${environment.API_URL}/visualization/student_answers/${studentId}/assessments/${assessmentId}/topics`);
   }
 
-  getTopicsAnswersDetails(studentId: string, assessmentId: string, topicId: string): Observable<TopicTableData> {
+  public getTopicsAnswersDetails(studentId: string, assessmentId: string, topicId: string): Observable<TopicTableData> {
     return this.http.get<any>(`${environment.API_URL}/visualization/student_answers/${studentId}/assessments/${assessmentId}/topics/${topicId}`);
   }
 
-  getQuestionsAnwsers(studentId: string, assessmentId: string, topicId: string): Observable<QuestionTableData[]> {
+  public getQuestionsAnwsers(studentId: string, assessmentId: string, topicId: string): Observable<QuestionTableData[]> {
     return this.http.get<any[]>(`${environment.API_URL}/visualization/student_answers/${studentId}/assessments/${assessmentId}/topics/${topicId}/questions`);
   }
 }

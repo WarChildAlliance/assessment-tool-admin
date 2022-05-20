@@ -31,7 +31,7 @@ export class AnswersOverviewComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onTopicSelection(assessmentTopicInfos: {assessmentId: string, topic: TopicDashboard}): void {
+  public onTopicSelection(assessmentTopicInfos: {assessmentId: string, topic: TopicDashboard}): void {
     if (assessmentTopicInfos && assessmentTopicInfos.topic.started) {
       this.topicId = assessmentTopicInfos.topic.id;
       this.evaluated = assessmentTopicInfos.topic.evaluated;
@@ -45,7 +45,7 @@ export class AnswersOverviewComponent implements OnInit {
     }
   }
 
-  selectStudent(student: TopicAccessStudents): void {
+  public selectStudent(student: TopicAccessStudents): void {
     this.selectedStudent = student;
     if (student.topic_first_try) {
       this.assessmentTopicAnswer = student.topic_first_try.id;
@@ -56,7 +56,7 @@ export class AnswersOverviewComponent implements OnInit {
     }
   }
 
-  isAnswerValid(validity: boolean): string {
+  public isAnswerValid(validity: boolean): string {
     if (validity) {
       return '#7EBF9A';
     } else {
@@ -64,10 +64,9 @@ export class AnswersOverviewComponent implements OnInit {
     }
   }
 
-  displayAnswerDetails(answer: TopicAnswer): void {
+  public displayAnswerDetails(answer: TopicAnswer): void {
     this.userService.getAnswerDetails(this.topicId, this.assessmentTopicAnswer, answer.id).subscribe(answerDetails => {
       this.answerDetails = answerDetails;
     });
   }
-
 }

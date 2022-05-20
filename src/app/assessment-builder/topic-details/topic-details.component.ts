@@ -18,7 +18,7 @@ export class TopicDetailsComponent implements OnInit {
   public assessmentId: string;
   public topicId: string;
 
-  public topic;
+  public topic: any;
 
   public questionsArray: any[] = [
     {
@@ -41,7 +41,7 @@ export class TopicDetailsComponent implements OnInit {
   public order: number;
 
   public questionsList: any[];
-  public topicDetails;
+  public topicDetails: any;
 
   constructor(
     private dialog: MatDialog,
@@ -59,7 +59,7 @@ export class TopicDetailsComponent implements OnInit {
     });
   }
 
-  getQuestionsList(): void {
+  private getQuestionsList(): void {
     this.assessmentService.getQuestionsList(this.assessmentId, this.topicId).subscribe(questionList => {
       if (questionList.length) {
         this.questionsList = questionList;
@@ -70,13 +70,13 @@ export class TopicDetailsComponent implements OnInit {
     });
   }
 
-  getTopicDetails(): void {
+  private getTopicDetails(): void {
     this.assessmentService.getTopicDetails(this.assessmentId, this.topicId).subscribe(topicDetails => {
       this.topicDetails = topicDetails;
     });
   }
 
-  openEditTopicDialog(topic): void {
+  public openEditTopicDialog(topic): void {
     this.topic = topic;
     const createTopicDialog = this.dialog.open(TopicFormDialogComponent, {
       data: {
@@ -92,7 +92,7 @@ export class TopicDetailsComponent implements OnInit {
     });
   }
 
-  openQuestionDialog(question?: any, clone?: boolean, type?: string): void {
+  public openQuestionDialog(question?: any, clone?: boolean, type?: string): void {
     const questionType = question ? question.question_type : type;
     // Use question array to open the dialog corresponding to the question type, using the component attribute
     const questionDialog = this.dialog.open(this.questionsArray.find(x => (questionType === x.type)).component, {

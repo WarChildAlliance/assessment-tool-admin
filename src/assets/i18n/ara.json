@@ -37,7 +37,22 @@
     "to": "إلى",
     "totalCompletedTopics": "إجمالي المواضيع المكتملة",
     "workInProgress": "جاري العمل ... متاح قريبًا",
-    "questions": "أسئلة"
+    "questions": "أسئلة",
+    "grades": {
+      "0": "0",
+      "1": "1",
+      "2": "2",
+      "3": "3",
+      "4": "4",
+      "5": "5",
+      "6": "6",
+      "7": "7",
+      "8": "8",
+      "9": "9",
+      "10": "10",
+      "11": "11",
+      "12": "12"
+    }
   },
   "answers": {
     "assessmentAnswers": {
@@ -75,7 +90,8 @@
     "archivedAssessments": "التقييم (التقييمات) المؤرشف",
     "assessmentFormDialog": {
       "createNewAssessment": "قم بإنشاء تقييم جديد",
-      "editAssessment": "تحرير التقييم"
+      "editAssessment": "تحرير التقييم",
+      "gradeTooltip": "المستوى المدرسي المقصود"
     },
     "assessmentSummary": {
       "addTopic": "أضف موضوعًا",
@@ -121,7 +137,8 @@
       "changeFile": "تغيير الملف",
       "createTopic": "قم بإنشاء موضوع",
       "editTopic": "editTopic",
-      "whenToShowFeedbacks": "متى تظهر التقيمات؟"
+      "whenToShowFeedbacks": "متى تظهر التقيمات؟",
+      "praiseTooltip": "حالات الحمد"
     },
     "assessmentEditSuccess": "تم تعديل التقييم بنجاح",
     "assessmentSaveSuccess": "تم حفظ التقييم بنجاح",

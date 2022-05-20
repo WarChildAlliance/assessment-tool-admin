@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { combineLatest, forkJoin } from 'rxjs';
+import { combineLatest } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { AssessmentTableData } from 'src/app/core/models/assessment-table-data.model';
@@ -15,9 +15,9 @@ import { AnswerService } from 'src/app/core/services/answer.service';
 })
 export class AssessmentsAnswersComponent implements OnInit {
 
-  assessmentsAnswersDataSource: MatTableDataSource<AssessmentTableData> = new MatTableDataSource([]);
-  currentStudentId: string;
+  private currentStudentId: string;
 
+  public assessmentsAnswersDataSource: MatTableDataSource<AssessmentTableData> = new MatTableDataSource([]);
   public displayedColumns: TableColumn[] = [
     { key: 'title', name: 'general.title' },
     { key: 'subject', name: 'general.subject' },
@@ -54,7 +54,7 @@ export class AssessmentsAnswersComponent implements OnInit {
     );
   }
 
-  onOpenDetails(assessmentId: string): void {
+  public onOpenDetails(assessmentId: string): void {
     this.router.navigate(
       [`students/${this.currentStudentId}/assessments/${assessmentId}/topics`]
     );

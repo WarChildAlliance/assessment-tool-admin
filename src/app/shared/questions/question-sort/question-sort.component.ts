@@ -7,10 +7,10 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class QuestionSortComponent implements OnInit {
 
-  @Input() question;
-  @Input() answer;
-  @Input() evaluated;
-  @Input() index;
+  @Input() question: any;
+  @Input() answer: any;
+  @Input() evaluated: boolean;
+  @Input() index: number;
 
   constructor() { }
 

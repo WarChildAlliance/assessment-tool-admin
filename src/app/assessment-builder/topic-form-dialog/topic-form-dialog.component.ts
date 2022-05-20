@@ -18,14 +18,14 @@ interface DialogData {
 })
 export class TopicFormDialogComponent implements OnInit {
 
-  public assessmentId: any;
+  public assessmentId: string;
   public topic: any;
   public edit: boolean;
   public formData: FormData = new FormData();
 
-  public imageAttachment = null;
-  public audioAttachment = null;
-  public icon = null;
+  public imageAttachment: File = null;
+  public audioAttachment: File = null;
+  public icon: File = null;
 
   public iconOptions = ['flower_green.svg', 'flower_purple.svg', 'flower_cyan.svg'];
 
@@ -69,27 +69,7 @@ export class TopicFormDialogComponent implements OnInit {
     }
   }
 
-  async onSave(): Promise<void> {
-    const data = await this.formGroupToFormData();
-    if (this.edit) {
-      this.assessmentService.editTopic(this.assessmentId.toString(), this.topic.id, data).subscribe(res => {
-        this.alertService.success(this.translateService.instant('assessmentBuilder.topicEditSuccess'));
-      });
-    } else {
-      this.assessmentService.createTopic(this.assessmentId.toString(), data).subscribe(res => {
-        this.alertService.success(this.translateService.instant('assessmentBuilder.topicCreateSuccess'));
-      });
-    }
-  }
-
-  saveAttachments(assessmentId: string, attachment, type: string, obj): void {
-    this.assessmentService.addAttachments(assessmentId, attachment, type, obj).subscribe(() => {
-      this.alertService.success(this.translateService.instant('assessmentBuilder.topicSaveSuccess'));
-    });
-  }
-
-
-  async formGroupToFormData(): Promise<FormData> {
+  private async formGroupToFormData(): Promise<FormData> {
     // if user upload an icon
     if (this.icon) {
       this.formData.append('icon', this.icon);
@@ -111,17 +91,36 @@ export class TopicFormDialogComponent implements OnInit {
     return this.formData;
   }
 
-  handleFileInput(event): void {
-    this.icon = event;
-    this.createNewTopicForm.patchValue({icon: this.icon});
-  }
-
-   async setDefaultIcon(): Promise<void> {
+  private async setDefaultIcon(): Promise<void> {
     const imageName = this.iconOptions[Math.floor(Math.random() * this.iconOptions.length)];
     const imagePath = '../../../../assets/icons/' + imageName;
     await fetch(imagePath)
       .then((res) => res.arrayBuffer())
       .then((buf) =>  new File([buf], imageName, {type: 'image/svg+xml'}))
       .then((file) => this.formData.append('icon', file));
-   }
+  }
+
+  public saveAttachments(assessmentId: string, attachment, type: string, obj): void {
+    this.assessmentService.addAttachments(assessmentId, attachment, type, obj).subscribe(() => {
+      this.alertService.success('Topic was saved successfully');
+    });
+  }
+
+  public async onSave(): Promise<void> {
+    const data = await this.formGroupToFormData();
+    if (this.edit) {
+      this.assessmentService.editTopic(this.assessmentId.toString(), this.topic.id, data).subscribe(res => {
+        this.alertService.success('Topic was altered successfully');
+      });
+    } else {
+      this.assessmentService.createTopic(this.assessmentId.toString(), data).subscribe(res => {
+        this.alertService.success('Topic was created successfully');
+      });
+    }
+  }
+
+  public handleFileInput(event): void {
+    this.icon = event;
+    this.createNewTopicForm.patchValue({icon: this.icon});
+  }
 }

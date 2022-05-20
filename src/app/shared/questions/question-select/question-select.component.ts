@@ -9,10 +9,10 @@ import { environment } from 'src/environments/environment';
 })
 export class QuestionSelectComponent implements OnInit {
 
-  @Input() question;
-  @Input() answer;
-  @Input() evaluated;
-  @Input() index;
+  @Input() question: any;
+  @Input() answer: any;
+  @Input() evaluated: boolean;
+  @Input() index: number;
 
   public imageAttachment = null;
   public audioAttachment = null;
@@ -24,7 +24,7 @@ export class QuestionSelectComponent implements OnInit {
     this.audioAttachment = this.question.attachments.find( a => a.attachment_type === 'AUDIO');
   }
 
-  getAnswerBackground(option: any): string {
+  public getAnswerBackground(option: any): string {
     if (this.answer) {
       if (option.id === this.answer.selected_options[0]) {
         return 'student';
@@ -32,18 +32,17 @@ export class QuestionSelectComponent implements OnInit {
       return  option.valid ? 'valid' : '';
     }
     return option.valid ? 'valid' : 'invalid';
-
   }
 
-  hasImageAttached(option): boolean {
+  public hasImageAttached(option): boolean {
     return option.attachments.some((attachment) => attachment.attachment_type === 'IMAGE');
   }
 
-  getSource(path: string): string {
+  public getSource(path: string): string {
     return (path.slice(0, 5) === 'http:') ? path : environment.API_URL + path;
   }
 
-  playAudio(file): void {
+  public playAudio(file): void {
     const audio = new Audio(file);
     audio.load();
     audio.play();

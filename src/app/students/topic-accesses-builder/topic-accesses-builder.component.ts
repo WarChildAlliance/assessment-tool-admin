@@ -23,21 +23,18 @@ interface DialogData {
 
 export class TopicAccessesBuilderComponent implements OnInit {
 
-  minDate: Date = new Date();
-
-  public studentsList: any[];
-
-  assessmentsList: Assessment[] = [];
-  topicsList: Topic[] = [];
-  groupsList: Group[] = [];
-  selectedAssessmentId: string;
-
-  public startDate;
-  public endDate;
-
+  private topicsList: Topic[] = [];
+  public groupsList: Group[] = [];
+  private selectedAssessmentId: string;
   private setDate: boolean;
 
-  assignTopicForm: FormGroup = new FormGroup({
+  public minDate: Date = new Date();
+  public studentsList: any[];
+  public assessmentsList: Assessment[] = [];
+  public startDate: Date;
+  public endDate: Date;
+
+  public assignTopicForm: FormGroup = new FormGroup({
     access: new FormArray([]),
   });
 
@@ -84,44 +81,7 @@ export class TopicAccessesBuilderComponent implements OnInit {
     this.loadGroupsList();
   }
 
-  loadTopicsList(assessmentId: string): void {
-    this.selectedAssessmentId = assessmentId;
-    this.assessmentService.getAssessmentTopics(assessmentId).subscribe((newList) => {
-      this.topicsList = newList.filter(topic => topic.archived !== true);
-      this.generateTopicsForm();
-    });
-  }
-
-  loadGroupsList(): void {
-    this.userService.getGroups().subscribe((groups) => {
-      this.groupsList = groups.filter(group => group.students.length);
-      this.generateGroupsForm();
-    });
-  }
-
-  onDate(type, date): void {
-    if (type === 'start_date') {
-      this.startDate = date;
-    }
-    if (type === 'end_date') {
-      this.endDate = date;
-    }
-  }
-
-  setAll(event): void {
-    this.setDate = event;
-    const accessForm = this.assignTopicForm.get('access') as FormArray;
-    accessForm.controls.forEach((access, i) => {
-      access.setValue({
-        topic: access.value.topic,
-        selected: access.value.selected,
-        start_date: event || i === 0 ? this.startDate : null,
-        end_date: event || i === 0 ? this.endDate : null
-      });
-    });
-  }
-
-  generateTopicsForm(): void {
+  private generateForm(): void {
     const accessForm = this.assignTopicForm.get('access') as FormArray;
     accessForm.clear();
 
@@ -136,7 +96,59 @@ export class TopicAccessesBuilderComponent implements OnInit {
     });
   }
 
-  generateGroupsForm(): void {
+  public loadTopicsList(assessmentId: string): void {
+    this.selectedAssessmentId = assessmentId;
+    this.assessmentService.getAssessmentTopics(assessmentId).subscribe((newList) => {
+      this.topicsList = newList.filter(topic => topic.archived !== true);
+      this.generateTopicsForm();
+    });
+  }
+
+  loadGroupsList(): void {
+    this.userService.getGroups().subscribe((groups) => {
+      this.groupsList = groups.filter(group => group.students.length);
+      this.generateGroupsForm();
+    });
+  }
+
+  public onDate(type, date): void {
+    if (type === 'start_date') {
+      this.startDate = date;
+    }
+    if (type === 'end_date') {
+      this.endDate = date;
+    }
+  }
+
+  public setAll(event): void {
+    this.setDate = event;
+    const accessForm = this.assignTopicForm.get('access') as FormArray;
+    accessForm.controls.forEach((access, i) => {
+      access.setValue({
+        topic: access.value.topic,
+        selected: access.value.selected,
+        start_date: event || i === 0 ? this.startDate : null,
+        end_date: event || i === 0 ? this.endDate : null
+      });
+    });
+  }
+
+  public generateTopicsForm(): void {
+    const accessForm = this.assignTopicForm.get('access') as FormArray;
+    accessForm.clear();
+
+    this.topicsList.forEach((topic: Topic, i: number) => {
+      const topicAccess = this.formBuilder.group({
+        topic: new FormControl(topic),
+        selected: new FormControl(true),
+        start_date: this.setDate ? this.startDate : new FormControl(null, Validators.required),
+        end_date: this.setDate ? this.endDate : new FormControl(null, Validators.required)
+      });
+      accessForm.push(topicAccess);
+    });
+  }
+
+  public generateGroupsForm(): void {
     const groupForm = this.assignGroupForm.get('groups') as FormArray;
     groupForm.clear();
 
@@ -150,7 +162,7 @@ export class TopicAccessesBuilderComponent implements OnInit {
     });
   }
 
-  submitCreateTopicAccesses(): void {
+  public submitCreateTopicAccesses(): void {
     let studentsArray: number[] = [];
     if (this.studentsList.length) {
       this.studentsList.forEach(student => {
@@ -201,7 +213,7 @@ export class TopicAccessesBuilderComponent implements OnInit {
   }
 
   // Selected topics needs validations, unselected ones don't
-  selectTopic(topic, selected): void {
+  public selectTopic(topic, selected): void {
     if (selected) {
       topic.get('start_date').setValidators([Validators.required]);
       topic.get('start_date').updateValueAndValidity();

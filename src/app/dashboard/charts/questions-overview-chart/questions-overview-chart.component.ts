@@ -3,8 +3,6 @@ import * as Chart from 'chart.js';
 import { ChartData } from 'chart.js';
 import { TopicDashboard } from 'src/app/core/models/topic-dashboard.model';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
-import { TranslateService } from '@ngx-translate/core';
-
 
 @Component({
   selector: 'app-questions-overview-chart',
@@ -25,7 +23,7 @@ export class QuestionsOverviewChartComponent implements OnInit {
   private assessmentId: string;
   private topicId: string;
 
-  public questionDetails;
+  public questionDetails: any;
 
   public index: number;
 
@@ -36,8 +34,7 @@ export class QuestionsOverviewChartComponent implements OnInit {
   ngOnInit(): void {
   }
 
-
-  getBarChartData(questionData): void {
+  private getBarChartData(questionData): void {
     this.questionData = [];
     const data = [];
     const incorrectAnswers = [];
@@ -63,14 +60,14 @@ export class QuestionsOverviewChartComponent implements OnInit {
     this.getQuestionDetails(0);
   }
 
-  getQuestionDetails(index): any {
+  private getQuestionDetails(index): any {
     this.index = index + 1;
     this.assessmentService.getQuestionDetails(this.assessmentId, this.topicId, this.questionData[index].id).subscribe(details => {
       this.questionDetails = details;
     });
   }
 
-  onTopicSelection(assessmentTopicInfos: {assessmentId: string, topic: TopicDashboard}): void {
+  public onTopicSelection(assessmentTopicInfos: {assessmentId: string, topic: TopicDashboard}): void {
     this.assessmentId = assessmentTopicInfos?.assessmentId;
 
     if (assessmentTopicInfos?.topic.started) {

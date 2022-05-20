@@ -15,11 +15,11 @@ export class CustomIconComponent implements OnInit {
 
   @Input() size = 24;
 
-  get fontSize(): string {
+  public get fontSize(): string {
     return this.size + 'px';
   }
 
-  get color(): string {
+  public get color(): string {
     switch (this.variant) {
       case IconVariant.PRIMARY: {
         return 'primary';

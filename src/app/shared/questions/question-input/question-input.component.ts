@@ -8,10 +8,10 @@ import { environment } from 'src/environments/environment';
 })
 export class QuestionInputComponent implements OnInit {
 
-  @Input() question;
-  @Input() answer;
-  @Input() evaluated;
-  @Input() index;
+  @Input() question: any;
+  @Input() answer: any;
+  @Input() evaluated: boolean;
+  @Input() index: number;
 
   public imageAttachment = null;
   public audioAttachment = null;
@@ -22,16 +22,16 @@ export class QuestionInputComponent implements OnInit {
     this.setAttachments();
   }
 
-  setAttachments(): void{
+  private setAttachments(): void{
     this.imageAttachment = this.question.attachments.find( i => i.attachment_type === 'IMAGE');
     this.audioAttachment = this.question.attachments.find( a => a.attachment_type === 'AUDIO');
   }
 
-  getSource(path: string): string {
+  public getSource(path: string): string {
     return (path.slice(0, 5) === 'http:') ? path : environment.API_URL + path;
   }
 
-  playAudio(file): void {
+  public playAudio(file): void {
     const audio = new Audio(file);
     audio.load();
     audio.play();

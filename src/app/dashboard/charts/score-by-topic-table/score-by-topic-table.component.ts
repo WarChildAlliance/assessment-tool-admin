@@ -38,7 +38,52 @@ export class ScoreByTopicTableComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  selectTableAssessment(assessment: AssessmentDashboard): void {
+  private getTableColumns(studentsList, assessmentTitle): any[]{
+    const tableColumns = [];
+    studentsList[0].topics.forEach(el => {
+      const tableColumn = {key: '', name: '', type: '', assmnt: ''};
+      const colName = Object.keys(el)[0].toLocaleLowerCase();
+      tableColumn.key = colName;
+      tableColumn.name = Object.keys(el)[0];
+      tableColumn.type = 'circle';
+      tableColumn.assmnt = assessmentTitle;
+      tableColumns.push(tableColumn);
+    });
+    return tableColumns;
+  }
+
+  private getTableData(newAssessmentData): any[]{
+    this.newTableData = [];
+    newAssessmentData.forEach(assessmentData => {
+      const studentObj = this.scoreByTopicTable.find(val => val.full_name === assessmentData.full_name);
+      assessmentData.topics.forEach(topic => {
+        studentObj[Object.keys(topic)[0].toLocaleLowerCase()] = Object.values(topic)[0];
+      });
+      this.newTableData.push(studentObj);
+    });
+    return this.newTableData;
+  }
+
+  private getScoreByTopicsData(assessment, instentiateTable: boolean): void {
+    if (assessment && assessment.id){
+      this.userService.getStudentTopicsChart(assessment.id).subscribe(scoreByTopic => {
+
+        if (scoreByTopic.length) {
+          if (instentiateTable) {
+            this.scoreByTopicTable = scoreByTopic;
+          }
+          this.displayedColumns = this.displayedColumns.concat(this.getTableColumns(scoreByTopic, assessment.title));
+          this.studentsDataSource = new MatTableDataSource(this.getTableData(scoreByTopic));
+        } else {
+          this.hasData = false;
+        }
+      });
+    } else {
+      this.hasData = false;
+    }
+  }
+
+  public selectTableAssessment(assessment: AssessmentDashboard): void {
     if (!this.scoreByTopicTable.length) {
       this.getScoreByTopicsData(assessment, true);
     } else {
@@ -63,52 +108,7 @@ export class ScoreByTopicTableComponent implements OnInit {
     }
   }
 
-  getTableColumns(studentsList, assessmentTitle): any[]{
-    const tableColumns = [];
-    studentsList[0].topics.forEach(el => {
-      const tableColumn = {key: '', name: '', type: '', assmnt: ''};
-      const colName = Object.keys(el)[0].toLocaleLowerCase();
-      tableColumn.key = colName;
-      tableColumn.name = Object.keys(el)[0];
-      tableColumn.type = 'circle';
-      tableColumn.assmnt = assessmentTitle;
-      tableColumns.push(tableColumn);
-    });
-    return tableColumns;
-  }
-
-  getTableData(newAssessmentData): any[]{
-    this.newTableData = [];
-    newAssessmentData.forEach(assessmentData => {
-      const studentObj = this.scoreByTopicTable.find(val => val.full_name === assessmentData.full_name);
-      assessmentData.topics.forEach(topic => {
-        studentObj[Object.keys(topic)[0].toLocaleLowerCase()] = Object.values(topic)[0];
-      });
-      this.newTableData.push(studentObj);
-    });
-    return this.newTableData;
-  }
-
-  getScoreByTopicsData(assessment, instentiateTable: boolean): void {
-    if (assessment && assessment.id){
-      this.userService.getStudentTopicsChart(assessment.id).subscribe(scoreByTopic => {
-
-        if (scoreByTopic.length) {
-          if (instentiateTable) {
-            this.scoreByTopicTable = scoreByTopic;
-          }
-          this.displayedColumns = this.displayedColumns.concat(this.getTableColumns(scoreByTopic, assessment.title));
-          this.studentsDataSource = new MatTableDataSource(this.getTableData(scoreByTopic));
-        } else {
-          this.hasData = false;
-        }
-      });
-    } else {
-      this.hasData = false;
-    }
-  }
-
-  onOpenStudentDetails(id: string): void {
+  public onOpenStudentDetails(id: string): void {
     this.router.navigate([`/students/${id}`]);
   }
 }

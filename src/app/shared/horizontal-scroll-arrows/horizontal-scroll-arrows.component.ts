@@ -22,7 +22,7 @@ export class HorizontalScrollArrowsComponent implements OnInit {
     });
   }
 
-  handleEdgeReached(): void {
+  private handleEdgeReached(): void {
     if (this.scrollableElement.scrollLeft === 0) {
       this.leftScrollEnabled = false;
     } else if (this.scrollableElement.scrollLeft === this.scrollableElement.scrollWidth - this.scrollableElement.clientWidth) {
@@ -30,11 +30,11 @@ export class HorizontalScrollArrowsComponent implements OnInit {
     }
   }
 
-  elementXOverflowEnabled(element): boolean {
+  public elementXOverflowEnabled(element): boolean {
     return element.offsetWidth < element.scrollWidth;
   }
 
-  scrollPrevious(): void {
+  public scrollPrevious(): void {
     this.scrollableElement.scrollBy({
       top: 0,
       left: -this.pxScrollAmount,
@@ -43,7 +43,7 @@ export class HorizontalScrollArrowsComponent implements OnInit {
     this.rightScrollEnabled = true;
   }
 
-  scrollNext(): void {
+  public scrollNext(): void {
     this.scrollableElement.scrollBy({
       top: 0,
       left: this.pxScrollAmount,
