@@ -8,8 +8,8 @@
     </div>
   </div>
 
-  <app-table [tableData]="assessmentsDataSource" [filtersData]="filters" [displayedColumns]="displayedColumns"
-    [isSelectable]="false" (openDetailsEvent)="onOpenDetails($event)" (filtersChangedEvent)="onFiltersChange($event)">
+  <app-table [tableData]="assessmentsDataSource" [filtersData]="tableFilters" [displayedColumns]="displayedColumns"
+    [isSelectable]="false" (openDetailsEvent)="onOpenDetails($event)" (filtersChangedEvent)="onTableFiltersChange($event)">
   </app-table>
 
 </div>

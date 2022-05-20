@@ -407,7 +407,7 @@ export class QuestionSelectFormComponent implements OnInit {
     this.saveOptions = true;
   }
 
-  public onSave(): void {
+  public onSubmit(): void {
     if (this.toClone) {
       this.createQuestion();
       this.alertMessage = 'Question successfully cloned';

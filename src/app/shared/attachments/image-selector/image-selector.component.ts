@@ -12,6 +12,7 @@ export class ImageSelectorComponent implements OnInit {
 
   @Output() newImageEvent = new EventEmitter<File>();
 
+
   constructor() {}
 
   ngOnInit(): void {

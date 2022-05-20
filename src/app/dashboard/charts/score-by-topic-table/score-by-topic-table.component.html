@@ -3,7 +3,7 @@
   <mat-card-subtitle>{{ "dashboard.firstTry" | translate }}</mat-card-subtitle>
   <mat-card-content *ngIf="hasData">
     <div class="left-column">
-      <app-select-assessment (assessmentSelection)="selectTableAssessment($event)" [selectTopic]="false"
+      <app-select-assessment (assessmentSelection)="selectTableAssessment($event)" [topicSelectionEnabled]="false"
         [multiple]="true" [displayNonEvaluated]="false"></app-select-assessment>
 
       <h3>{{ "dashboard.scoreByTopicTable.chartLegend" | translate }}</h3>

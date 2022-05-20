@@ -104,6 +104,7 @@
     "questions": {
       "audioAttachment": "مرفق صوتي",
       "imageAttachment": "مرفق الصورة",
+      "errorAudio": "",
       "questionCloneSuccess": "تم استنساخ السؤال بنجاح",
       "questionCreateSuccess": "تم إنشاء السؤال بنجاح",
       "questionUpdateSuccess": "تم تحديث السؤال بنجاح",

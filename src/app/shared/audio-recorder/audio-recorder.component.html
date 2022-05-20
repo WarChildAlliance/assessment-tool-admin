@@ -1,13 +1,13 @@
 <div>
-    <app-custom-button *ngIf="!recording" icon="mic" category="secondary" variant="success" (click)="initiateRecording()">
+    <app-custom-button *ngIf="!isRecording" icon="mic" category="secondary" variant="success" (click)="initiateRecording()">
         {{ "shared.audioRecorder.startRecording" | translate }}
     </app-custom-button>
-    <app-custom-button *ngIf="recording" icon="stop" category="secondary" variant="danger" (click)="stopRecording()">
+    <app-custom-button *ngIf="isRecording" icon="stop" category="secondary" variant="danger" (click)="stopRecording()">
         {{ "shared.audioRecorder.stopRecording" | translate }}
     </app-custom-button>
     <div style="margin-bottom: 5px">
-        <audio controls="" *ngIf="url">
-            <source [src]="sanitize(url)" type="audio/wav">
+        <audio controls="" *ngIf="recordingUrl">
+            <source [src]="sanitizeUrl(recordingUrl)" type="audio/wav">
         </audio>
     </div>
 </div>
