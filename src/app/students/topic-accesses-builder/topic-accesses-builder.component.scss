@@ -40,10 +40,11 @@
         }
 
         & > .header {
-            display: block;
+            display: flex;
             margin-bottom: 32px;
             font-size: 16px;
             font-weight: 500;
+            justify-content: space-evenly;
         }
 
         &__set-dates {
@@ -119,4 +120,8 @@
 
 .notifier {
     color: red;
+}
+
+.dialog-buttons {
+    align-items: center;
 }
