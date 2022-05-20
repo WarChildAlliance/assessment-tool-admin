@@ -9,6 +9,7 @@ import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { UtilitiesService } from 'src/app/core/services/utilities.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Group } from 'src/app/core/models/group.model';
 
 interface DialogData {
   studentsList?: any[];
@@ -23,6 +24,7 @@ interface DialogData {
 export class TopicAccessesBuilderComponent implements OnInit {
 
   private topicsList: Topic[] = [];
+  public groupsList: Group[] = [];
   private selectedAssessmentId: string;
   private setDate: boolean;
 
@@ -36,8 +38,28 @@ export class TopicAccessesBuilderComponent implements OnInit {
     access: new FormArray([]),
   });
 
-  get controls(): AbstractControl[] {
+  assignGroupForm: FormGroup = new FormGroup({
+    groups: new FormArray([])
+  });
+
+  get topicControls(): AbstractControl[] {
     return (this.assignTopicForm.get('access') as FormArray).controls;
+  }
+
+  get groupControls(): AbstractControl[] {
+    return (this.assignGroupForm.get('groups') as FormArray).controls;
+  }
+
+  get disabledAssign(): boolean {
+    let studentsSelected = false;
+
+    if (!this.studentsList.length) {
+      studentsSelected = this.assignGroupForm.value.groups.filter(element => element.selected === true).length;
+    } else {
+      studentsSelected = true;
+    }
+
+    return (!this.topicControls.length || this.assignTopicForm.invalid) || !studentsSelected;
   }
 
   constructor(
@@ -55,6 +77,8 @@ export class TopicAccessesBuilderComponent implements OnInit {
     this.assessmentService.getAssessmentsList().subscribe((assessmentsList) => {
       this.assessmentsList = assessmentsList.filter(assessment => assessment.archived !== true);
     });
+
+    this.loadGroupsList();
   }
 
   private generateForm(): void {
@@ -76,7 +100,14 @@ export class TopicAccessesBuilderComponent implements OnInit {
     this.selectedAssessmentId = assessmentId;
     this.assessmentService.getAssessmentTopics(assessmentId).subscribe((newList) => {
       this.topicsList = newList.filter(topic => topic.archived !== true);
-      this.generateForm();
+      this.generateTopicsForm();
+    });
+  }
+
+  loadGroupsList(): void {
+    this.userService.getGroups().subscribe((groups) => {
+      this.groupsList = groups.filter(group => group.students.length);
+      this.generateGroupsForm();
     });
   }
 
@@ -102,11 +133,49 @@ export class TopicAccessesBuilderComponent implements OnInit {
     });
   }
 
-  public submitCreateTopicAccesses(): void {
-    const studentsArray: number[] = [];
-    this.studentsList.forEach(student => {
-      studentsArray.push(student.id);
+  public generateTopicsForm(): void {
+    const accessForm = this.assignTopicForm.get('access') as FormArray;
+    accessForm.clear();
+
+    this.topicsList.forEach((topic: Topic, i: number) => {
+      const topicAccess = this.formBuilder.group({
+        topic: new FormControl(topic),
+        selected: new FormControl(true),
+        start_date: this.setDate ? this.startDate : new FormControl(null, Validators.required),
+        end_date: this.setDate ? this.endDate : new FormControl(null, Validators.required)
+      });
+      accessForm.push(topicAccess);
     });
+  }
+
+  public generateGroupsForm(): void {
+    const groupForm = this.assignGroupForm.get('groups') as FormArray;
+    console.log("groupForm = ", groupForm);
+    groupForm.clear();
+
+    this.groupsList.forEach((group: Group, i: number) => {
+      const groupAccess = this.formBuilder.group({
+        group: new FormControl(group),
+        selected: new FormControl(false),
+        name: new FormControl(group.name),
+      });
+      groupForm.push(groupAccess);
+    });
+  }
+
+  public submitCreateTopicAccesses(): void {
+    let studentsArray: number[] = [];
+    if (this.studentsList.length) {
+      this.studentsList.forEach(student => {
+        studentsArray.push(student.id);
+      });
+    }
+
+    for (const element of this.assignGroupForm.value.groups) {
+      if (element.selected) {
+        studentsArray = studentsArray.concat(element.group.students);
+      }
+    }
 
     const accessesArray = new Array<{
       topic: number,

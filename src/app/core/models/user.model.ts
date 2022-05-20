@@ -1,5 +1,6 @@
 import { Country } from './country.model';
 import { Language } from './language.model';
+import { Group } from './group.model';
 
 export interface User {
   id: number;
@@ -12,6 +13,7 @@ export interface User {
   language?: Language;
   country?: Country;
   created_by?: number;
+  group?: Group;
 }
 
 export enum UserRoles {
