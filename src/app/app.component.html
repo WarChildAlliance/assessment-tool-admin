@@ -47,9 +47,18 @@
         <mat-icon matListIcon>quiz</mat-icon>
         {{ "general.assessments" | translate }}
       </a>
-      <a mat-list-item routerLink="assessment-builder" routerLinkActive="list-item-active">
+      <mat-list-item disabled>
         <mat-icon matListIcon>space_dashboard</mat-icon>
         {{ "general.assessmentBuilder" | translate }}
+      </mat-list-item>
+      <a mat-list-item routerLink="assessment-builder/your-assessments" routerLinkActive="list-item-active">
+        {{ "general.yourAssessments" | translate }}
+      </a>
+      <a mat-list-item routerLink="assessment-builder/public-assessments" routerLinkActive="list-item-active">
+        {{ "general.publicAssessments" | translate }}
+      </a>
+      <a mat-list-item routerLink="assessment-builder/archived-assessments" routerLinkActive="list-item-active">
+        {{ "general.archivedAssessments" | translate }}
       </a>
     </mat-nav-list>
   </mat-sidenav>

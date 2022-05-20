@@ -43,7 +43,7 @@ const routes: Routes = [
     },
   },
   {
-    path: 'assessment-builder',
+    path: 'assessment-builder/:type',
     loadChildren: () => import('./assessment-builder/assessment-builder.module')
       .then(m => m.AssessmentBuilderModule),
     canLoad: [AuthGuard],

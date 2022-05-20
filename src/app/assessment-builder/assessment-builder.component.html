@@ -1,32 +1,38 @@
-<div class="assessments">
-    <h1>{{ "assessmentBuilder.yourAssessments" | translate }}</h1>
-    <app-custom-button icon="add_circle_outline" category="secondary" variant="primary" (click)="openCreateAssessmentDialog()">
-        {{ "assessmentBuilder.addAssessments" | translate }}
-    </app-custom-button>
-</div>
-<div class="assessments-container">
-    <ng-container *ngFor="let assessment of currentAssessments">
-        <ng-container *ngIf="assessment.can_edit && !assessment.archived">
-            <app-assessment-summary [assessment]="assessment" [canEdit]="true" (archivedAssessment)="getAssessments()"></app-assessment-summary>
+<div *ngIf="type === 'your-assessments'">
+    <div class="assessments">
+        <h1>{{ "assessmentBuilder.yourAssessments" | translate }}</h1>
+        <app-custom-button icon="add_circle_outline" category="secondary" variant="primary" (click)="openCreateAssessmentDialog()">
+            {{ "assessmentBuilder.addAssessments" | translate }}
+        </app-custom-button>
+    </div>
+    
+    <div class="assessments-container">
+        <ng-container *ngFor="let assessment of currentAssessments">
+            <ng-container *ngIf="assessment.can_edit && !assessment.archived">
+                <app-assessment-summary [assessment]="assessment" [canEdit]="true" (archivedAssessment)="getAssessments()"></app-assessment-summary>
+            </ng-container>
         </ng-container>
-    </ng-container>
-</div>
-
-
-<div class="assessments-container">
-    <h1>{{ "assessmentBuilder.publicAssessments" | translate }} </h1>
-    <ng-container *ngFor="let assessment of currentAssessments">
-        <ng-container *ngIf="!assessment.can_edit && !assessment.archived">
-            <app-assessment-summary [assessment]="assessment" [canEdit]="false"></app-assessment-summary>
-        </ng-container>
-    </ng-container>
+    </div>
 </div>
 
-<div class="assessments-container">
-    <h1>{{ "assessmentBuilder.archivedAssessments" | translate }}</h1>
-    <ng-container *ngFor="let assessment of currentAssessments">
-        <ng-container *ngIf="assessment.archived">
-            <app-assessment-summary [assessment]="assessment" [canEdit]="true" (archivedAssessment)="getAssessments()"></app-assessment-summary>
+<div *ngIf="type === 'public-assessments'">
+    <div class="assessments-container">
+        <h1>{{ "assessmentBuilder.publicAssessments" | translate }} </h1>
+        <ng-container *ngFor="let assessment of currentAssessments">
+            <ng-container *ngIf="!assessment.can_edit && !assessment.archived">
+                <app-assessment-summary [assessment]="assessment" [canEdit]="false"></app-assessment-summary>
+            </ng-container>
         </ng-container>
-    </ng-container>
+    </div>
+</div>
+
+<div *ngIf="type === 'archived-assessments'">
+    <div class="assessments-container">
+        <h1>{{ "assessmentBuilder.archivedAssessments" | translate }}</h1>
+        <ng-container *ngFor="let assessment of currentAssessments">
+            <ng-container *ngIf="assessment.archived">
+                <app-assessment-summary [assessment]="assessment" [canEdit]="true" (archivedAssessment)="getAssessments()"></app-assessment-summary>
+            </ng-container>
+        </ng-container>
+    </div>
 </div>
