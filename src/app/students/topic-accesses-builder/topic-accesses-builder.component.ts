@@ -150,6 +150,7 @@ export class TopicAccessesBuilderComponent implements OnInit {
 
   public generateGroupsForm(): void {
     const groupForm = this.assignGroupForm.get('groups') as FormArray;
+    console.log("groupForm = ", groupForm);
     groupForm.clear();
 
     this.groupsList.forEach((group: Group, i: number) => {
