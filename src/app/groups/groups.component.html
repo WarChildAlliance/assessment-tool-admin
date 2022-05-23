@@ -1,0 +1,14 @@
+<div class="main-board">
+  <div class="main-board__top-container">
+    <h1> {{ "general.groups" | translate }} ({{ groupsDataSource.data.length }}) </h1>
+    
+    <div class="main-board__top-container__actions">
+      <app-custom-button icon="group_add" category="secondary" variant="primary" (click)="openCreateGroupDialog()">
+        {{ "groups.addGroup" | translate }}
+      </app-custom-button>
+    </div>
+  </div>
+
+  <app-table [tableData]="groupsDataSource" [displayedColumns]="displayedColumns"
+    [isSelectable]="false" (openDetailsEvent)="onOpenDetails($event)"></app-table>
+</div>

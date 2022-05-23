@@ -267,5 +267,18 @@
       "accessEdited": "The topic access have been successfully deleted!",
       "errorOnDeletion": "There was an error during the submission of the topic access deletion"
     }
+  },
+  "groups": {
+    "editGroup": "Edit group",
+    "createGroup": "Create a new group",
+    "addGroup": "Add Group",
+    "numberStudents": "Number of students",
+    "requiredField": "Required field",
+    "groupName": "Group name",
+    "supervisor": "Supervisor",
+    "groupStudents": "Students of the group",
+    "groupEdited": "Group edited successfully",
+    "errorMessage": "Something went wrong: ",
+    "groupCreated": "Group created successfully"
   }
 }

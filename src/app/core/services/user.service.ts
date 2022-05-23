@@ -81,7 +81,11 @@ export class UserService {
     return this.http.post<Group>(`${environment.API_URL}/users/groups/`, group);
   }
 
-  public getStudentTopicsChart(assessmentId: string): 
+  public editGroup(groupId: string, group: { name: string, supervisor: string }): Observable<Group> {
+    return this.http.put<Group>(`${environment.API_URL}/users/groups/${groupId}/`, group);
+  }
+
+  public getStudentTopicsChart(assessmentId: string):
   Observable<{full_name: string, topics: {}[], student_access: boolean, group: {}[]}[]> {
     return this.http.get<{full_name: string, topics: {}[], student_access: boolean, group: {}[]}[]>(
       `${environment.API_URL}/visualization/charts/score_by_topic/${assessmentId}/`
