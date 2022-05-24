@@ -11,6 +11,10 @@ body { margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif; 
 }
 
+.mat-drawer-inner-container::-webkit-scrollbar {
+    overflow: hidden;
+}
+
 $assessment-tool-palette: (
     green : rgb(187, 226, 190),
     grey : rgb(194, 194, 194),
