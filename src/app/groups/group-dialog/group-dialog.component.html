@@ -1,5 +1,5 @@
 <h2 mat-dialog-title>
-    {{ ( toEdit ? "groups.editGroup" : "groups.createGroup" ) | translate }}
+    {{ ( data?.group ? "groups.editGroup" : "groups.createGroup" ) | translate }}
 </h2>
 
 <form class="form-primary" [formGroup]="groupForm">
@@ -32,7 +32,7 @@
         <button mat-flat-button color="accent" type="submit" class="dialog-buttons__submit"
          [mat-dialog-close]="groupForm.value" (click)="onSubmit()"
          [disabled]="groupForm.invalid || !groupForm.dirty">
-            {{ ( toEdit ? "general.save" : "general.submit" ) | translate }}
+            {{ ( data?.group ? "general.save" : "general.submit" ) | translate }}
         </button>
     </div>
 </form>

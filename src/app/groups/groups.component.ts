@@ -5,8 +5,8 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { TableColumn } from '../core/models/table-column.model';
 import { UserService } from '../core/services/user.service';
-import { GroupDialogComponent } from './group-dialog/group-dialog.component';
 import { GroupTableData } from '../core/models/group-table-data.model';
+import { GroupDialogComponent } from './group-dialog/group-dialog.component';
 
 @Component({
   selector: 'app-groups',
@@ -50,7 +50,7 @@ export class GroupsComponent implements OnInit {
     });
   }
 
-  public openCreateGroupDialog(): void {
+  public onCreate(): void {
     const createGroupDialog = this.dialog.open(GroupDialogComponent);
     createGroupDialog.afterClosed().subscribe((value) => {
       if (value) {

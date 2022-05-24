@@ -66,7 +66,7 @@ export class GroupDetailComponent implements OnInit {
     });
   }
 
-  public openEditGroupDialog(): void {
+  public onEdit(): void {
     const editGroupDialog = this.dialog.open(GroupDialogComponent, {
       data: {
         group: this.group

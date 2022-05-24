@@ -3,7 +3,7 @@
     <h1> {{ "general.groups" | translate }} ({{ groupsDataSource.data.length }}) </h1>
     
     <div class="main-board__top-container__actions">
-      <app-custom-button icon="group_add" category="secondary" variant="primary" (click)="openCreateGroupDialog()">
+      <app-custom-button icon="group_add" category="secondary" variant="primary" (click)="onCreate()">
         {{ "groups.addGroup" | translate }}
       </app-custom-button>
     </div>

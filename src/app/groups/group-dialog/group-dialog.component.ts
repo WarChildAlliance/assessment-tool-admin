@@ -18,7 +18,6 @@ interface DialogData {
 
 export class GroupDialogComponent implements OnInit {
   public group: Group;
-  public toEdit = false;
   public supervisorName: string;
 
   public groupForm: FormGroup = new FormGroup({
@@ -37,7 +36,6 @@ export class GroupDialogComponent implements OnInit {
     this.getSupervisor();
 
     if (this.data?.group) {
-      this.toEdit = true;
       this.group = this.data.group;
 
       this.groupForm.patchValue({name: this.group.name});
@@ -52,43 +50,17 @@ export class GroupDialogComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    if (this.toEdit) {
-      this.editGroup();
-    } else {
-      this.createNewGroup();
-    }
-  }
-
-  private createNewGroup(): void {
-    const newGroup = {
+    const groupToSave = {
       name: this.groupForm.value.name,
       supervisor: this.groupForm.value.supervisor
     };
 
-    this.userService.createNewGroup(newGroup).subscribe(
+    const groupService = this.data?.group ? this.userService.editGroup(this.group.id.toString(), groupToSave)
+     : this.userService.createNewGroup(groupToSave);
+    groupService.subscribe(
       (group: Group) => {
         this.alertService.success(
-          this.translateService.instant('groups.groupCreated')
-        );
-      },
-      error => {
-        this.alertService.error(
-          this.translateService.instant('groups.errorMessage'), error.message
-        );
-      }
-    );
-  }
-
-  private editGroup(): void {
-    const newGroup = {
-      name: this.groupForm.value.name,
-      supervisor: this.groupForm.value.supervisor
-    };
-
-    this.userService.editGroup(this.group.id.toString(), newGroup).subscribe(
-      (group: Group) => {
-        this.alertService.success(
-          this.translateService.instant('groups.groupEdited')
+          this.translateService.instant(this.data?.group ? 'groups.groupEdited' : 'groups.groupCreated')
         );
       },
       error => {
