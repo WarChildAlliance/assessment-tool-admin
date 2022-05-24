@@ -269,5 +269,18 @@
       "errorOnDeletion": "حدث خطأ أثناء إرسال حذف الوصول للموضوع"
     },
     "incompatibleLanguageError": "يمكنك فقط منح حق الوصول إلى موضوع ما للطلاب من نفس البلد واللغة."
+  },
+  "groups": {
+    "editGroup": "تحرير المجموعة",
+    "createGroup": "أنشئ مجموعة جديدة",
+    "addGroup": "أضف مجموعة",
+    "numberStudents": "عدد الطلاب",
+    "requiredField": "يتطلب حقلا",
+    "groupName": "أسم المجموعة",
+    "supervisor": "مشرف",
+    "groupStudents": "طلاب المجموعة",
+    "groupEdited": "تم تحرير المجموعة بنجاح",
+    "errorMessage": "هناك خطأ ما:",
+    "groupCreated": "تم إنشاء المجموعة بنجاح"
   }
 }

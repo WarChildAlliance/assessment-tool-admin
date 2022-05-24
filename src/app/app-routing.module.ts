@@ -32,6 +32,17 @@ const routes: Routes = [
     },
   },
   {
+    path: 'groups',
+    loadChildren: () => import('./groups/groups.module')
+      .then(m => m.GroupsModule),
+    canLoad: [AuthGuard],
+    data: {
+      breadcrumb: [
+        { label: 'Groups overview', url: '' }
+      ]
+    },
+  },
+  {
     path: 'assessments',
     loadChildren: () => import('./assessments/assessments.module')
       .then(m => m.AssessmentsModule),
