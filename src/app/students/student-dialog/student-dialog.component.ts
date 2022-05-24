@@ -10,19 +10,18 @@ import { UserService } from 'src/app/core/services/user.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 interface DialogData {
-  newStudent?: any;
+  student?: any;
 }
 @Component({
-  selector: 'app-create-student-dialog',
-  templateUrl: './create-student-dialog.component.html',
-  styleUrls: ['./create-student-dialog.component.scss']
+  selector: 'app-student-dialog',
+  templateUrl: './student-dialog.component.html',
+  styleUrls: ['./student-dialog.component.scss']
 })
-export class CreateStudentDialogComponent implements OnInit {
+export class StudentDialogComponent implements OnInit {
 
   public student: any;
 
   // Defines if a student is edited or if a new one is created
-  public isStudentEdited = false;
 
   public hasFormChanged = false;
 
@@ -44,10 +43,8 @@ export class CreateStudentDialogComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (this.data?.newStudent) { this.student = this.data.newStudent; }
+    if (this.data?.student) { this.student = this.data.student; }
     if (!!this.student) {
-      this.isStudentEdited = true;
-
       this.studentForm.setValue({
         first_name: this.student.first_name,
         last_name: this.student.last_name,
@@ -75,7 +72,7 @@ export class CreateStudentDialogComponent implements OnInit {
       country: this.studentForm.value.country
     };
 
-    if (this.isStudentEdited) {
+    if (!!this.student) {
       this.userService.editStudent(this.student.id, studentToSave).subscribe((student: User) => {
         this.alertService.success(
           this.translateService.instant(

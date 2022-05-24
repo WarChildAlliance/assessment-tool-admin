@@ -13,8 +13,9 @@ import { TableColumn } from '../core/models/table-column.model';
 import { TableFilter } from '../core/models/table-filter.model';
 import { AlertService } from '../core/services/alert.service';
 import { UserService } from '../core/services/user.service';
-import { CreateStudentDialogComponent } from './create-student-dialog/create-student-dialog.component';
 import { TopicAccessesBuilderComponent } from './topic-accesses-builder/topic-accesses-builder.component';
+import { Group } from '../core/models/group.model';
+import { StudentDialogComponent } from './student-dialog/student-dialog.component';
 
 @Component({
   selector: 'app-students',
@@ -22,7 +23,7 @@ import { TopicAccessesBuilderComponent } from './topic-accesses-builder/topic-ac
   styleUrls: ['./students.component.scss'],
 })
 export class StudentsComponent implements OnInit {
-  private filtersData = { country: '', language: '', ordering: '-id' };
+  private filtersData = { country: '', language: '', group: '', ordering: '-id' };
 
   public displayedColumns: TableColumn[] = [
     { key: 'full_name', name: 'general.studentName' },
@@ -42,6 +43,7 @@ export class StudentsComponent implements OnInit {
 
   public countries: Country[] = [];
   public languages: Language[] = [];
+  public groups: Group[] = [];
 
   public filters: TableFilter[];
 
@@ -68,9 +70,12 @@ export class StudentsComponent implements OnInit {
     forkJoin([
       this.userService.getCountries(),
       this.userService.getLanguages(),
-    ]).subscribe(([countries, languages]: [Country[], Language[]]) => {
+      this.userService.getGroups()
+    ]).subscribe(([countries, languages, groups]: [Country[], Language[], Group[]]) => {
       this.countries = countries;
       this.languages = languages;
+      this.groups = groups;
+
       this.filters = [
         {
           key: 'country',
@@ -91,6 +96,17 @@ export class StudentsComponent implements OnInit {
             languages.map((language) => ({
               key: language.code,
               value: language.name_en,
+            }))
+          ),
+        },
+        {
+          key: 'group',
+          name: 'general.group',
+          type: 'select',
+          options: [{ key: '', value: 'All' }].concat(
+            groups.map((group) => ({
+              key: group.id.toString(),
+              value: group.name,
             }))
           ),
         },
@@ -147,7 +163,7 @@ export class StudentsComponent implements OnInit {
   }
 
   public openCreateStudentDialog(): void {
-    const createStudentDialog = this.dialog.open(CreateStudentDialogComponent);
+    const createStudentDialog = this.dialog.open(StudentDialogComponent);
     createStudentDialog.afterClosed().subscribe((value) => {
       if (value) {
         this.getStudentTableList(this.filtersData);
@@ -157,9 +173,9 @@ export class StudentsComponent implements OnInit {
 
   public openEditStudentDialog(): void {
     this.studentToEdit = this.selectedUsers[0];
-    const editStudentDialog = this.dialog.open(CreateStudentDialogComponent, {
+    const editStudentDialog = this.dialog.open(StudentDialogComponent, {
       data: {
-        newStudent: this.studentToEdit
+        student: this.studentToEdit
       }
     });
     editStudentDialog.afterClosed().subscribe((value) => {

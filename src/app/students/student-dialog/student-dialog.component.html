@@ -1,5 +1,5 @@
 <h2 mat-dialog-title>
-    {{ ( isStudentEdited ? "students.editStudent" : "students.createStudentDialog.createStudent" ) | translate }}
+    {{ ( !!student ? "students.editStudent" : "students.createStudentDialog.createStudent" ) | translate }}
     </h2>
 <form class="form-primary" [formGroup]="studentForm">
     <div class="form-primary__flex-container">
@@ -56,7 +56,7 @@
         <button mat-flat-button color="accent" type="submit" class="dialog-buttons__submit"
          [mat-dialog-close]="studentForm.value" (click)="submitStudent()"
          [disabled]="studentForm.invalid || !studentForm.dirty">
-            {{ ( isStudentEdited ? "general.save" : "general.submit" ) | translate }}
+            {{ ( !!student ? "general.save" : "general.submit" ) | translate }}
         </button>
     </div>
 </form>
