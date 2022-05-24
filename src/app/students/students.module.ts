@@ -21,7 +21,7 @@ import { StudentDetailComponent } from './student-detail/student-detail.componen
 import { StudentsRoutingModule } from './students-routing.module';
 import { StudentsComponent } from './students.component';
 import { TopicAccessesBuilderComponent } from './topic-accesses-builder/topic-accesses-builder.component';
-import { CreateStudentDialogComponent } from './create-student-dialog/create-student-dialog.component';
+import { StudentDialogComponent } from './student-dialog/student-dialog.component';
 import { CustomButtonModule } from '../shared/button/button.module';
 import { TopicAccessModalComponent } from './topic-access-modal/topic-access-modal.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -32,7 +32,7 @@ import { PreviousButtonModule } from '../shared/previous-button/previous-button.
     StudentsComponent,
     StudentDetailComponent,
     TopicAccessesBuilderComponent,
-    CreateStudentDialogComponent,
+    StudentDialogComponent,
     TopicAccessModalComponent
   ],
   imports: [

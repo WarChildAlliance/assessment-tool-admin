@@ -6,7 +6,7 @@ import { StudentTableData } from 'src/app/core/models/student-table-data.model';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { MatDialog } from '@angular/material/dialog';
-import { CreateStudentDialogComponent } from '../create-student-dialog/create-student-dialog.component';
+import { StudentDialogComponent } from '../student-dialog/student-dialog.component';
 import { TopicAccessModalComponent } from '../topic-access-modal/topic-access-modal.component';
 
 @Component({
@@ -55,9 +55,9 @@ export class StudentDetailComponent implements OnInit {
   }
 
   public editCurrentStudent(): void {
-    const editStudentDialog = this.dialog.open(CreateStudentDialogComponent, {
+    const editStudentDialog = this.dialog.open(StudentDialogComponent, {
       data: {
-        newStudent: this.student
+        student: this.student
       }
     });
 
