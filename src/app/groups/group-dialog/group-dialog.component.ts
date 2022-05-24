@@ -11,12 +11,12 @@ interface DialogData {
 }
 
 @Component({
-  selector: 'app-create-group-dialog',
-  templateUrl: './create-group-dialog.component.html',
-  styleUrls: ['./create-group-dialog.component.scss']
+  selector: 'app-group-dialog',
+  templateUrl: './group-dialog.component.html',
+  styleUrls: ['./group-dialog.component.scss']
 })
 
-export class CreateGroupDialogComponent implements OnInit {
+export class GroupDialogComponent implements OnInit {
   public group: Group;
   public toEdit = false;
   public supervisorName: string;

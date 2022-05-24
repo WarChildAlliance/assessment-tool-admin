@@ -16,13 +16,13 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { PreviousButtonModule } from '../shared/previous-button/previous-button.module';
 import { GroupsComponent } from './groups.component';
 import { GroupsRoutingModule } from './groups-routing.module';
-import { CreateGroupDialogComponent } from './create-group-dialog/create-group-dialog.component';
 import { GroupDetailComponent } from './group-detail/group-detail.component';
+import { GroupDialogComponent } from './group-dialog/group-dialog.component';
 
 @NgModule({
   declarations: [
     GroupsComponent,
-    CreateGroupDialogComponent,
+    GroupDialogComponent,
     GroupDetailComponent
   ],
   imports: [

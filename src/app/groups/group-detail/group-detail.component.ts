@@ -7,7 +7,7 @@ import { Group } from 'src/app/core/models/group.model';
 import { StudentTableData } from 'src/app/core/models/student-table-data.model';
 import { TableColumn } from 'src/app/core/models/table-column.model';
 import { UserService } from 'src/app/core/services/user.service';
-import { CreateGroupDialogComponent } from '../create-group-dialog/create-group-dialog.component';
+import { GroupDialogComponent } from '../group-dialog/group-dialog.component';
 
 @Component({
   selector: 'app-group-detail',
@@ -67,7 +67,7 @@ export class GroupDetailComponent implements OnInit {
   }
 
   public openEditGroupDialog(): void {
-    const editGroupDialog = this.dialog.open(CreateGroupDialogComponent, {
+    const editGroupDialog = this.dialog.open(GroupDialogComponent, {
       data: {
         group: this.group
       }
