@@ -24,7 +24,7 @@ export class QuestionSelectComponent implements OnInit {
     this.audioAttachment = this.question.attachments.find( a => a.attachment_type === 'AUDIO');
   }
 
-  public getAnswerBackground(option: any): string {
+  public getAnswerBackgroundStyle(option: any): string {
     if (this.answer) {
       if (option.id === this.answer.selected_options[0]) {
         return 'student';

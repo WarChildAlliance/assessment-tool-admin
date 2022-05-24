@@ -23,6 +23,7 @@ import { MatBreadcrumbModule } from 'mat-breadcrumb';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpLoaderFactory } from './core/factories/http-loader-translate.factory';
 import { ConfirmModalModule } from './shared/confirm-modal/confirm-modal.module';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { ConfirmModalModule } from './shared/confirm-modal/confirm-modal.module'
     MatSnackBarModule,
     MatToolbarModule,
     MatFormFieldModule,
+    MatDividerModule,
     MatSelectModule,
     MatSortModule,
     MatMenuModule,

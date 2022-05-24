@@ -106,7 +106,7 @@ export class TopicFormDialogComponent implements OnInit {
     });
   }
 
-  public async onSave(): Promise<void> {
+  public async onSubmit(): Promise<void> {
     const data = await this.formGroupToFormData();
     if (this.edit) {
       this.assessmentService.editTopic(this.assessmentId.toString(), this.topic.id, data).subscribe(res => {

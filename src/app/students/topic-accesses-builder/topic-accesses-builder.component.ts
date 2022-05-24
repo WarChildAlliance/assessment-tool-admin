@@ -26,7 +26,7 @@ export class TopicAccessesBuilderComponent implements OnInit {
   private topicsList: Topic[] = [];
   public groupsList: Group[] = [];
   private selectedAssessmentId: string;
-  private setDate: boolean;
+  private applyToAllTopics: boolean;
 
   public minDate: Date = new Date();
   public studentsList: any[];
@@ -89,8 +89,8 @@ export class TopicAccessesBuilderComponent implements OnInit {
       const topicAccess = this.formBuilder.group({
         topic: new FormControl(topic),
         selected: new FormControl(true),
-        start_date: this.setDate ? this.startDate : new FormControl(null, Validators.required),
-        end_date: this.setDate ? this.endDate : new FormControl(null, Validators.required)
+        start_date: this.applyToAllTopics ? this.startDate : new FormControl(null, Validators.required),
+        end_date: this.applyToAllTopics ? this.endDate : new FormControl(null, Validators.required)
       });
       accessForm.push(topicAccess);
     });
@@ -111,7 +111,7 @@ export class TopicAccessesBuilderComponent implements OnInit {
     });
   }
 
-  public onDate(type, date): void {
+  public onDateInput(type, date): void {
     if (type === 'start_date') {
       this.startDate = date;
     }
@@ -120,15 +120,15 @@ export class TopicAccessesBuilderComponent implements OnInit {
     }
   }
 
-  public setAll(event): void {
-    this.setDate = event;
+  public onApplyToAllTopics(value: boolean): void {
+    this.applyToAllTopics = value;
     const accessForm = this.assignTopicForm.get('access') as FormArray;
     accessForm.controls.forEach((access, i) => {
       access.setValue({
         topic: access.value.topic,
         selected: access.value.selected,
-        start_date: event || i === 0 ? this.startDate : null,
-        end_date: event || i === 0 ? this.endDate : null
+        start_date: value || i === 0 ? this.startDate : null,
+        end_date: value || i === 0 ? this.endDate : null
       });
     });
   }
@@ -141,8 +141,8 @@ export class TopicAccessesBuilderComponent implements OnInit {
       const topicAccess = this.formBuilder.group({
         topic: new FormControl(topic),
         selected: new FormControl(true),
-        start_date: this.setDate ? this.startDate : new FormControl(null, Validators.required),
-        end_date: this.setDate ? this.endDate : new FormControl(null, Validators.required)
+        start_date: this.applyToAllTopics ? this.startDate : new FormControl(null, Validators.required),
+        end_date: this.applyToAllTopics ? this.endDate : new FormControl(null, Validators.required)
       });
       accessForm.push(topicAccess);
     });

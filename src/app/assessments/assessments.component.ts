@@ -19,6 +19,8 @@ import { forkJoin } from 'rxjs';
 })
 export class AssessmentsComponent implements OnInit {
 
+  private tableFiltersData = { country: '', language: '' };
+
   public displayedColumns: TableColumn[] = [
     { key: 'title', name: 'general.title' },
     { key: 'grade', name: 'general.grade' },
@@ -31,9 +33,7 @@ export class AssessmentsComponent implements OnInit {
   ];
 
   public assessmentsDataSource: MatTableDataSource<Assessment> = new MatTableDataSource([]);
-  public filters: TableFilter[];
-  private filtersData = { country: '', language: '' };
-
+  public tableFilters: TableFilter[];
   public isAssessmentPrivate = false;
 
   @ViewChild('createAssessmentDialog') createAssessmentDialog: TemplateRef<any>;
@@ -61,7 +61,7 @@ export class AssessmentsComponent implements OnInit {
   ngOnInit(): void {
     forkJoin([this.userService.getCountries(), this.userService.getLanguages()]).subscribe(
       ([countries, languages]: [Country[], Language[]]) => {
-        this.filters = [
+        this.tableFilters = [
           {
             key: 'country',
             name: 'general.country',
@@ -75,7 +75,7 @@ export class AssessmentsComponent implements OnInit {
             options: [{ key: '', value: 'All' }].concat(languages.map(language => ({ key: language.code, value: language.name_en })))
           }
         ];
-        this.filters.forEach(filter => {
+        this.tableFilters.forEach(filter => {
           this.translateService.stream(filter.name).subscribe(translated => filter.name = translated);
         });
       }
@@ -86,10 +86,10 @@ export class AssessmentsComponent implements OnInit {
     });
   }
 
-  public onFiltersChange(data: { key: string | number, value: any }): void {
-    this.filtersData[data.key] = data.value;
+  public onTableFiltersChange(data: { key: string | number, value: any }): void {
+    this.tableFiltersData[data.key] = data.value;
 
-    this.assessmentService.getAssessmentsList(this.filtersData).subscribe((assessmentsList) => {
+    this.assessmentService.getAssessmentsList(this.tableFiltersData).subscribe((assessmentsList) => {
       this.assessmentsDataSource = new MatTableDataSource(assessmentsList);
     });
   }
