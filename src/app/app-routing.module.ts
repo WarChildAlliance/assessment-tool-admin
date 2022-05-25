@@ -16,7 +16,7 @@ const routes: Routes = [
     canLoad: [AuthGuard],
     data: {
       breadcrumb: [
-        { label: 'Dashboard', url: '' }
+        { label: 'general.dashboard', url: '' }
       ]
     },
   },
@@ -27,7 +27,7 @@ const routes: Routes = [
     canLoad: [AuthGuard],
     data: {
       breadcrumb: [
-        { label: 'Students overview', url: '' }
+        { label: 'general.studentsOverview', url: '' }
       ]
     },
   },
@@ -38,7 +38,7 @@ const routes: Routes = [
     canLoad: [AuthGuard],
     data: {
       breadcrumb: [
-        { label: 'Groups overview', url: '' }
+        { label: 'general.groupsOverview', url: '' }
       ]
     },
   },
@@ -49,7 +49,7 @@ const routes: Routes = [
     canLoad: [AuthGuard],
     data: {
       breadcrumb: [
-        { label: 'Assessments overview', url: '' }
+        { label: 'general.assessmentsOverview', url: '' }
       ]
     },
   },
@@ -60,7 +60,7 @@ const routes: Routes = [
     canLoad: [AuthGuard],
     data: {
       breadcrumb: [
-        { label: 'Assessment Builder', url: '' }
+        { label: 'general.assessmentBuilder', url: '' }
       ]
     },
   },

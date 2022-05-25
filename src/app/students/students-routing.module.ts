@@ -16,8 +16,8 @@ const routes: Routes = [
     component: StudentDetailComponent,
     data: {
       breadcrumb: [
-        { label: 'Students overview', url: '/students' },
-        { label: 'Student details', url: '' }
+        { label: 'general.studentsOverview', url: '/students' },
+        { label: 'students.studentDetails', url: '' }
       ]
     },
   },
@@ -26,9 +26,9 @@ const routes: Routes = [
     component: TopicsListAnswersComponent,
     data: {
       breadcrumb: [
-        { label: 'Students overview', url: '/students' },
-        { label: 'Student details', url: '/students/:student_id' },
-        { label: 'Topics', url: '' }
+        { label: 'general.studentsOverview', url: '/students' },
+        { label: 'students.studentDetails', url: '/students/:student_id' },
+        { label: 'general.topics', url: '' }
       ]
     },
   },
@@ -37,10 +37,10 @@ const routes: Routes = [
     component: QuestionsListAnswersComponent,
     data: {
       breadcrumb: [
-        { label: 'Students overview', url: '/students' },
-        { label: 'Student details', url: '/students/:student_id' },
-        { label: 'Topics', url: '/students/:student_id/assessments/:assessment_id/topics' },
-        { label: 'Questions', url: '' }
+        { label: 'general.studentsOverview', url: '/students' },
+        { label: 'students.studentDetails', url: '/students/:student_id' },
+        { label: 'general.topics', url: '/students/:student_id/assessments/:assessment_id/topics' },
+        { label: 'general.questions', url: '' }
       ]
     },
   },
@@ -49,11 +49,11 @@ const routes: Routes = [
     component: QuestionDetailAnswersComponent,
     data: {
       breadcrumb: [
-        { label: 'Students overview', url: '/students' },
-        { label: 'Student details', url: '/students/:student_id' },
-        { label: 'Topics', url: '/students/:student_id/assessments/:assessment_id/topics' },
-        { label: 'Questions', url: '/students/:student_id/assessments/:assessment_id/topics/:topic_id/questions' },
-        { label: 'Question details', url: '' }
+        { label: 'general.studentsOverview', url: '/students' },
+        { label: 'students.studentDetails', url: '/students/:student_id' },
+        { label: 'general.topics', url: '/students/:student_id/assessments/:assessment_id/topics' },
+        { label: 'general.questions', url: '/students/:student_id/assessments/:assessment_id/topics/:topic_id/questions' },
+        { label: 'general.questionDetails', url: '' }
       ]
     },
   },

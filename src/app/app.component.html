@@ -1,5 +1,5 @@
 <mat-toolbar class="header-toolbar" *ngIf="isAuthenticated">
-  <lib-mat-breadcrumb class="header-toolbar__breadcrumbs"></lib-mat-breadcrumb>
+  <app-custom-breadcrumb></app-custom-breadcrumb>
 
   <button mat-button class="header-toolbar__menu-button" aria-label="Access account settings"
     [matMenuTriggerFor]="accountMenu">

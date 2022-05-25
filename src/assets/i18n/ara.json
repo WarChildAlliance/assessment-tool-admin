@@ -6,9 +6,10 @@
     "archived": "Archived",
     "assessmentBuilder": "منشئ التقييم",
     "yourAssessments": "تقييمك (تقييماتك)",
-    "publicAssessments":  "التقييم (التقييمات) العامة",
+    "publicAssessments": "التقييم (التقييمات) العامة",
     "archivedAssessments": "التقييم (التقييمات) المؤرشف",
     "assessments": "التقييمات",
+    "assessmentsOverview": "نظرة عامة على التقييمات",
     "assign": "تعيين",
     "cancel": "إلغاء",
     "country": "الدولة",
@@ -20,6 +21,7 @@
     "from": "من",
     "grade": "العلامة",
     "group": "مجموعة",
+    "groupsOverview": "",
     "groups": "مجموعات",
     "language": "اللغة",
     "lastLogin": "آخر تسجيل دخول",
@@ -29,10 +31,14 @@
     "order": "طلب",
     "preview": "معاينة",
     "private": "نشر",
-    "questionType": "نوع السؤال",
+    "question": "سؤال",
+    "questions": "أسئلة",
+    "questionDetails": "تفاصيل السؤال",
     "questionsNumber": "عدد الأسئلة",
+    "questionType": "نوع السؤال",
     "save": "يحفظ",
     "studentName": "اسم الطالب",
+    "studentsOverview": "نظرة عامة على الطلاب",
     "students": "طلاب",
     "subject": "موضوعات",
     "submit": "إرسال",
@@ -40,7 +46,7 @@
     "to": "إلى",
     "totalCompletedTopics": "إجمالي المواضيع المكتملة",
     "workInProgress": "جاري العمل ... متاح قريبًا",
-    "questions": "أسئلة",
+    "topics": "المواضيع",
     "grades": {
       "0": "0",
       "1": "1",
@@ -193,8 +199,7 @@
       "chartLegend": "دليل المصطلحات",
       "student": "طالب علم",
       "studentNotLinked": "غيرمعتمد",
-      "studentNotStarted": "لم يبدأ",
-      "studentsOverview": "نظرة عامة على الطلاب"
+      "studentNotStarted": "لم يبدأ"
     }
   },
   "shared": {
@@ -237,7 +242,6 @@
     },
     "studentDetail": {
       "activeAccess": "وصول نشط",
-      "assessmentsOverview": "نظرة عامة على التقييمات",
       "linkedTopics": "موضوع (مواضيع) مرتبطة",
       "noActiveAccess": "لا يوجد وصول نشط",
       "numberAssessments": "عدد التقييمات",
@@ -268,7 +272,8 @@
       "accessEdited": "تم حذف الوصول إلى الموضوع بنجاح!",
       "errorOnDeletion": "حدث خطأ أثناء إرسال حذف الوصول للموضوع"
     },
-    "incompatibleLanguageError": "يمكنك فقط منح حق الوصول إلى موضوع ما للطلاب من نفس البلد واللغة."
+    "incompatibleLanguageError": "يمكنك فقط منح حق الوصول إلى موضوع ما للطلاب من نفس البلد واللغة.",
+    "studentDetails": "تفاصيل الطالب"
   },
   "groups": {
     "editGroup": "تحرير المجموعة",
