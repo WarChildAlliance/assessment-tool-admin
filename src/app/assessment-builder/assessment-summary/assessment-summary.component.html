@@ -27,7 +27,7 @@
             </div>
         </div>
         <div class="buttons">
-            <app-custom-button *ngIf="canEdit" category="tertiary" variant="primary" icon="edit" (click)="editAssessment(assessment)">
+            <app-custom-button *ngIf="canEdit && !assessment.archived" category="tertiary" variant="primary" icon="edit" (click)="editAssessment(assessment)">
                 {{ "general.edit" | translate }}
             </app-custom-button>
             <app-custom-button *ngIf="canEdit" category="tertiary" variant="primary" [icon]="assessment.archived ? 'unarchive' : 'archive'"
