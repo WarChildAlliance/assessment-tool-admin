@@ -24,3 +24,13 @@
     height: calc(100% - 48px); // Minus the padding
   }
 }
+
+.submenu {
+  overflow: hidden;
+  transition: 300ms ease-in-out;
+  height: 0;
+}
+
+.submenu.expanded {
+  height: 20em;
+}
