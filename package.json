@@ -25,7 +25,6 @@
     "@ngx-translate/core": "^13.0.0",
     "@ngx-translate/http-loader": "^6.0.0",
     "chart.js": "^2.9.3",
-    "mat-breadcrumb": "^1.0.1",
     "moment": "^2.29.1",
     "ng2-charts": "^2.4.2",
     "recorderjs": "^1.0.1",
