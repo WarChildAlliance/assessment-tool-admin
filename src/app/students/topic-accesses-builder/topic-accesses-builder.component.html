@@ -84,7 +84,7 @@
     <button mat-flat-button mat-dialog-close class="dialog-buttons__cancel" color="secondary">
         {{ "general.cancel" | translate }}
     </button>
-    <button mat-flat-button class="dialog-buttons__submit" [disabled]="!topicControls.length || this.assignTopicForm.invalid" color="accent"
+    <button mat-flat-button class="dialog-buttons__submit" [disabled]="!topicControls.length || assignTopicForm.invalid || disabledAssign" color="accent"
     (click)="submitCreateTopicAccesses()" mat-dialog-close>
         {{ "general.assign" | translate }}
     </button>
