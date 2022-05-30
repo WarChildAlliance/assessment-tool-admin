@@ -17,6 +17,7 @@
     "create": "Create",
     "dashboard": "Dashboard",
     "edit": "Edit",
+    "selected": "selected",
     "fieldRequired": "This field is required",
     "from": "from",
     "grade": "Grade",

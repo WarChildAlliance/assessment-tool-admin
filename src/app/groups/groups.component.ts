@@ -14,6 +14,7 @@ import { GroupDialogComponent } from './group-dialog/group-dialog.component';
   styleUrls: ['./groups.component.scss']
 })
 export class GroupsComponent implements OnInit {
+  public selectedGroups = [];
 
   public displayedColumns: TableColumn[] = [
     { key: 'name', name: 'groups.groupName' },
@@ -50,12 +51,34 @@ export class GroupsComponent implements OnInit {
     });
   }
 
+  public onSelectionChange(newSelection: any[]): void {
+    this.selectedGroups = newSelection;
+  }
+
   public onCreate(): void {
     const createGroupDialog = this.dialog.open(GroupDialogComponent);
     createGroupDialog.afterClosed().subscribe((value) => {
       if (value) {
         this.getGroups();
       }
+    });
+  }
+
+  public onEdit(): void {
+    const groupId = this.selectedGroups[0].id;
+
+    this.userService.getGroupById(groupId).subscribe(group => {
+      const editGroupDialog = this.dialog.open(GroupDialogComponent, {
+        data: {
+          group
+        }
+      });
+
+      editGroupDialog.afterClosed().subscribe((value) => {
+        if (value) {
+          this.getGroups();
+        }
+      });
     });
   }
 

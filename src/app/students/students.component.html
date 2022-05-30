@@ -1,7 +1,7 @@
 <div class="main-board">
   <div class="main-board__top-container">
     <h1>{{ "general.students" | translate }} ({{ studentsDataSource.data.length }})
-      <span *ngIf="selectedUsers.length"> ({{ selectedUsers.length }} selected)</span>
+      <span *ngIf="selectedUsers.length"> ({{ selectedUsers.length }} {{ "general.selected" | translate }})</span>
     </h1>
     <div class="main-board__top-container__actions">
       <app-custom-button icon="add_circle_outline" category="secondary" variant="primary" (click)="openCreateStudentDialog()">

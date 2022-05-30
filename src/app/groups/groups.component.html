@@ -1,14 +1,22 @@
 <div class="main-board">
   <div class="main-board__top-container">
-    <h1> {{ "general.groups" | translate }} ({{ groupsDataSource.data.length }}) </h1>
+    <h1> 
+      {{ "general.groups" | translate }} ({{ groupsDataSource.data.length }}) 
+      <span *ngIf="selectedGroups.length"> ({{ selectedGroups.length }} {{ "general.selected" | translate }})</span>
+    </h1>
     
     <div class="main-board__top-container__actions">
       <app-custom-button icon="group_add" category="secondary" variant="primary" (click)="onCreate()">
         {{ "groups.addGroup" | translate }}
       </app-custom-button>
+      <app-custom-button icon="edit_outline" category="secondary" variant="primary" (click)="onEdit()"
+        [disabled]="!selectedGroups.length || selectedGroups.length > 1">
+        {{ "groups.editGroup" | translate }}
+      </app-custom-button>
     </div>
   </div>
 
   <app-table [tableData]="groupsDataSource" [displayedColumns]="displayedColumns"
-    [isSelectable]="false" (openDetailsEvent)="onOpenDetails($event)"></app-table>
+    (selectionChangedEvent)="onSelectionChange($event)" [isSelectable]="true"
+    (openDetailsEvent)="onOpenDetails($event)"></app-table>
 </div>
