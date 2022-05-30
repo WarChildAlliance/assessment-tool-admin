@@ -237,6 +237,7 @@
       "createStudent": "قم بإنشاء طالب جديد",
       "firstName": "الاسم الأول",
       "lastName": "اسم العائلة",
+      "noGroups": "",
       "studentCreateSuccess": "تم بنجاح إنشاء الطالب {{name}} بالمعرف {{اسم المستخدم}}",
       "studentEditSuccess": "تم تحرير معلومات {{name}} بنجاح"
     },

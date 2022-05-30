@@ -52,14 +52,12 @@ export class TopicAccessesBuilderComponent implements OnInit {
 
   get disabledAssign(): boolean {
     let studentsSelected = false;
-
-    if (!this.studentsList.length) {
-      studentsSelected = this.assignGroupForm.value.groups.filter(element => element.selected === true).length;
+    if (this.data.studentsList && !this.data.studentsList.length) {
+      studentsSelected = this.assignGroupForm.value.groups.filter(element => element.selected === true).length ? true : false;
     } else {
       studentsSelected = true;
     }
-
-    return (!this.topicControls.length || this.assignTopicForm.invalid) || !studentsSelected;
+    return !studentsSelected;
   }
 
   constructor(
@@ -79,21 +77,6 @@ export class TopicAccessesBuilderComponent implements OnInit {
     });
 
     this.loadGroupsList();
-  }
-
-  private generateForm(): void {
-    const accessForm = this.assignTopicForm.get('access') as FormArray;
-    accessForm.clear();
-
-    this.topicsList.forEach((topic: Topic, i: number) => {
-      const topicAccess = this.formBuilder.group({
-        topic: new FormControl(topic),
-        selected: new FormControl(true),
-        start_date: this.applyToAllTopics ? this.startDate : new FormControl(null, Validators.required),
-        end_date: this.applyToAllTopics ? this.endDate : new FormControl(null, Validators.required)
-      });
-      accessForm.push(topicAccess);
-    });
   }
 
   public loadTopicsList(assessmentId: string): void {

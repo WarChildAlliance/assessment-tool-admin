@@ -15,6 +15,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatDividerModule } from '@angular/material/divider';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AnswersModule } from '../answers/answers.module';
 import { StudentDetailComponent } from './student-detail/student-detail.component';
@@ -26,6 +27,7 @@ import { CustomButtonModule } from '../shared/button/button.module';
 import { TopicAccessModalComponent } from './topic-access-modal/topic-access-modal.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { PreviousButtonModule } from '../shared/previous-button/previous-button.module';
+import { GroupDialogModule } from '../groups/group-dialog/group-dialog.module';
 
 @NgModule({
   declarations: [
@@ -50,6 +52,7 @@ import { PreviousButtonModule } from '../shared/previous-button/previous-button.
     MatCheckboxModule,
     MatIconModule,
     MatSortModule,
+    MatDividerModule,
     SharedModule,
     MatRadioModule,
     MatDatepickerModule,
@@ -58,7 +61,8 @@ import { PreviousButtonModule } from '../shared/previous-button/previous-button.
     MatExpansionModule,
     CustomButtonModule,
     MatTooltipModule,
-    PreviousButtonModule
+    PreviousButtonModule,
+    GroupDialogModule
   ],
 })
 export class StudentsModule { }

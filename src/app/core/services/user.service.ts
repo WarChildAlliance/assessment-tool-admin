@@ -40,14 +40,14 @@ export class UserService {
   }
 
   public createNewStudent(
-    user: { first_name: string, last_name: string, role: string, language: string, country: string }
+    user: { first_name: string, last_name: string, role: string, language: string, country: string, group: string }
   ): Observable<User> {
     return this.http.post<User>(`${environment.API_URL}/users/`, user);
   }
 
   public editStudent(
     id: string,
-    user: { first_name: string, last_name: string, role: string, language: string, country: string }
+    user: { first_name: string, last_name: string, role: string, language: string, country: string, group: string }
   ): Observable<User> {
     return this.http.put<User>(`${environment.API_URL}/users/${id}/`, user);
   }

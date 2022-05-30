@@ -240,6 +240,7 @@
       "createStudent": "Create a new student",
       "firstName": "First name",
       "lastName": "Last name",
+      "noGroups": "No groups available",
       "studentEditSuccess": "{{name}}'s information have been edited successfully ",
       "studentCreateSuccess": "Student {{name}} with ID {{username}} was successfully created"
     },
