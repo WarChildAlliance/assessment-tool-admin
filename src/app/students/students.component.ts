@@ -8,13 +8,13 @@ import { TranslateService } from '@ngx-translate/core';
 import { Language } from 'src/app/core/models/language.model';
 import { User } from 'src/app/core/models/user.model';
 import { Country } from '../core/models/country.model';
+import { Group } from '../core/models/group.model';
 import { StudentTableData } from '../core/models/student-table-data.model';
 import { TableColumn } from '../core/models/table-column.model';
 import { TableFilter } from '../core/models/table-filter.model';
 import { AlertService } from '../core/services/alert.service';
 import { UserService } from '../core/services/user.service';
 import { TopicAccessesBuilderComponent } from './topic-accesses-builder/topic-accesses-builder.component';
-import { Group } from '../core/models/group.model';
 import { StudentDialogComponent } from './student-dialog/student-dialog.component';
 
 @Component({
@@ -173,6 +173,10 @@ export class StudentsComponent implements OnInit {
 
   public openEditStudentDialog(): void {
     this.studentToEdit = this.selectedUsers[0];
+    this.studentToEdit.group = this.groups.find(
+      el => el.name === String(this.studentToEdit.group)
+    )?.id.toString();
+
     const editStudentDialog = this.dialog.open(StudentDialogComponent, {
       data: {
         student: this.studentToEdit

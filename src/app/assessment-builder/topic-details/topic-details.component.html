@@ -3,7 +3,7 @@
     <app-previous-button path="/assessment-builder"></app-previous-button>
     <img *ngIf="topicDetails?.icon" [src]="topicDetails.icon">
     <h1>{{ topicDetails.name }}</h1>
-    <app-custom-button *ngIf="topicDetails.can_edit" category="tertiary" variant="primary"
+    <app-custom-button *ngIf="topicDetails.can_edit && !topicDetails.archived" category="tertiary" variant="primary"
      icon="edit" (click)="openEditTopicDialog(topicDetails)">
      {{ "general.edit" | translate }}
     </app-custom-button>

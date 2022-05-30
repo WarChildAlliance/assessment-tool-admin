@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>
     {{ ( !!student ? "students.editStudent" : "students.createStudentDialog.createStudent" ) | translate }}
-    </h2>
+</h2>
 <form class="form-primary" [formGroup]="studentForm">
     <div class="form-primary__flex-container">
         <div class="form-primary__flex-container__field-container">
@@ -47,6 +47,20 @@
             <small class="text-danger" *ngIf="hasFormChanged && studentForm.get('language').hasError('required')">
                 {{ "general.fieldRequired" | translate }}
             </small>
+        </div>
+        <div class="form-primary__flex-container__field-container">
+            <mat-form-field appearance="outline" color="accent">
+                <mat-label>{{ ( groups.length ? "general.group" : "general.noData" ) | translate }}</mat-label>
+                <mat-select formControlName="group">
+                    <mat-option>-</mat-option>
+                    <mat-option *ngFor="let group of groups" [value]="group.id.toString()">
+                        {{ group.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <app-custom-button category="secondary" variant="neutral" icon="add" (click)="openGroupDialog()">
+                {{ "groups.addGroup" | translate }}
+            </app-custom-button>
         </div>
     </div>
     <div class="dialog-buttons">
