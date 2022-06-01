@@ -1,63 +1,65 @@
-<div class="dialog-container">
-    <h1>{{assessmentTitle}}</h1>
+<mat-dialog-content style="max-height: 80vh">
+    <div class="dialog-container">
+        <h1>{{assessmentTitle}}</h1>
 
-    <div [formGroup]="assignTopicForm" class="topic-accesses-builder__list">
-        <span class="header" *ngIf="assignTopicForm.value.access.length"> 
-            {{ 'students.topicAccessesEdit.editTopicsAccess' | translate }} 
-        </span> 
+        <div [formGroup]="assignTopicForm" class="topic-accesses-builder__list">
+            <span class="header" *ngIf="assignTopicForm.value.access.length">
+                {{ 'students.topicAccessesEdit.editTopicsAccess' | translate }}
+            </span>
 
-        <span *ngIf="!assignTopicForm.value.access.length">
-            {{ 'students.topicAccessesEdit.allTopicsAccessesDeleted' | translate }}
-        </span>
-    
-        <ng-container formArrayName="access">
-            <div class="topic-accesses-builder__list__set-dates" *ngIf="controls.length">
-                <mat-form-field color="accent" appearance="outline">
-                    <mat-date-range-input [rangePicker]="setUpDateForAll" [min]="minDate">
-                        <input (dateInput)="onDate('start_date', $event.value)" matStartDate [placeholder]="'students.topicAccessesBuilder.startDate' | translate">
-                        <input (dateInput)="onDate('end_date', $event.value)" matEndDate [placeholder]="'students.topicAccessesBuilder.endDate' | translate">
-                    </mat-date-range-input>
-                    <mat-datepicker-toggle matSuffix [for]="setUpDateForAll"></mat-datepicker-toggle>
-                    <mat-date-range-picker #setUpDateForAll></mat-date-range-picker>
-                </mat-form-field>
-                <div class="apply-all">
-                    <mat-checkbox (change)="setAll($event.checked)">
-                        {{ "students.topicAccessesBuilder.applySameDatesAllTopics" | translate }}
-                    </mat-checkbox>
-                </div>
-            </div>
-            <div *ngFor="let control of controls; let i=index;" [formGroupName]="i"
-                class="topic-accesses-builder__list-row -topic-access">
-    
-                <span>
-                    {{ control.get('topic').value.topic_name }}
-                </span>
+            <span *ngIf="!assignTopicForm.value.access.length">
+                {{ 'students.topicAccessesEdit.allTopicsAccessesDeleted' | translate }}
+            </span>
 
-                <div>
+            <ng-container formArrayName="access">
+                <div class="topic-accesses-builder__list__set-dates" *ngIf="controls.length">
                     <mat-form-field color="accent" appearance="outline">
-                        <mat-date-range-input [rangePicker]="campaignOnePicker" [min]="minDate">
-                            <input matStartDate formControlName="start_date" [placeholder]="'students.topicAccessesBuilder.startDate' | translate">
-                            <input matEndDate formControlName="end_date" [placeholder]="'students.topicAccessesBuilder.endDate' | translate">
+                        <mat-date-range-input [rangePicker]="setUpDateForAll" [min]="minDate">
+                            <input (dateInput)="onDateInput('start_date', $event.value)" matStartDate [placeholder]="'students.topicAccessesBuilder.startDate' | translate">
+                            <input (dateInput)="onDateInput('end_date', $event.value)" matEndDate [placeholder]="'students.topicAccessesBuilder.endDate' | translate">
                         </mat-date-range-input>
-                        <mat-datepicker-toggle matSuffix [for]="campaignOnePicker"></mat-datepicker-toggle>
-                        <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
+                        <mat-datepicker-toggle matSuffix [for]="setUpDateForAll"></mat-datepicker-toggle>
+                        <mat-date-range-picker #setUpDateForAll></mat-date-range-picker>
                     </mat-form-field>
-    
-                    <app-custom-button matTooltip="{{ 'students.topicAccessesEdit.removeTopicAccess' | translate }}" [isIcon]="true"
-                        icon="remove_circle_outline" (click)="promptDelete(control)">
-                    </app-custom-button>
+                    <div class="apply-all">
+                        <mat-checkbox (change)="onApplyToAllTopics($event.checked)">
+                            {{ "students.topicAccessesBuilder.applySameDatesAllTopics" | translate }}
+                        </mat-checkbox>
+                    </div>
                 </div>
-            </div>
-        </ng-container>
-    </div>
-</div>
+                <div *ngFor="let control of controls; let i=index;" [formGroupName]="i"
+                    class="topic-accesses-builder__list-row -topic-access">
 
-<div class="dialog-buttons">
-    <button mat-flat-button mat-dialog-close [mat-dialog-close]="deletedTopic" class="dialog-buttons__cancel" color="secondary">
-        {{ "general.cancel" | translate }}
-    </button>
-    <button *ngIf="controls.length" mat-flat-button class="dialog-buttons__submit" [disabled]="!controls.length || !assignTopicForm.dirty || !assignTopicForm.valid" color="accent"
-    (click)="submitCreateTopicAccesses()" [mat-dialog-close]="assignTopicForm.value">
-        {{ "general.assign" | translate }}
-    </button>
-</div>
+                    <span>
+                        {{ control.get('topic').value.topic_name }}
+                    </span>
+
+                    <div>
+                        <mat-form-field color="accent" appearance="outline">
+                            <mat-date-range-input [rangePicker]="campaignOnePicker" [min]="minDate">
+                                <input matStartDate formControlName="start_date" [placeholder]="'students.topicAccessesBuilder.startDate' | translate">
+                                <input matEndDate formControlName="end_date" [placeholder]="'students.topicAccessesBuilder.endDate' | translate">
+                            </mat-date-range-input>
+                            <mat-datepicker-toggle matSuffix [for]="campaignOnePicker"></mat-datepicker-toggle>
+                            <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
+                        </mat-form-field>
+
+                        <app-custom-button matTooltip="{{ 'students.topicAccessesEdit.removeTopicAccess' | translate }}" [isIcon]="true"
+                            icon="remove_circle_outline" (click)="removeTopicAccess(control)">
+                        </app-custom-button>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+
+    <div class="dialog-buttons">
+        <button mat-flat-button mat-dialog-close [mat-dialog-close]="deletedTopic" class="dialog-buttons__cancel" color="secondary">
+            {{ "general.cancel" | translate }}
+        </button>
+        <button *ngIf="controls.length" mat-flat-button class="dialog-buttons__submit" [disabled]="!controls.length || !assignTopicForm.dirty || !assignTopicForm.valid" color="accent"
+        (click)="submitCreateTopicAccesses()" [mat-dialog-close]="assignTopicForm.value">
+            {{ "general.assign" | translate }}
+        </button>
+    </div>
+</mat-dialog-content>

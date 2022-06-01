@@ -5,7 +5,11 @@
     "archive": "مؤرشف",
     "archived": "Archived",
     "assessmentBuilder": "منشئ التقييم",
+    "yourAssessments": "تقييمك (تقييماتك)",
+    "publicAssessments": "التقييم (التقييمات) العامة",
+    "archivedAssessments": "التقييم (التقييمات) المؤرشف",
     "assessments": "التقييمات",
+    "assessmentsOverview": "نظرة عامة على التقييمات",
     "assign": "تعيين",
     "cancel": "إلغاء",
     "country": "الدولة",
@@ -13,9 +17,13 @@
     "create": "خلق",
     "dashboard": "لوحة القيادة",
     "edit": "تعديل",
+    "selected": "تم الاختيار",
     "fieldRequired": "هذه الخانة مطلوبه",
     "from": "من",
     "grade": "العلامة",
+    "group": "مجموعة",
+    "groupsOverview": "",
+    "groups": "مجموعات",
     "language": "اللغة",
     "lastLogin": "آخر تسجيل دخول",
     "logout": "تسجيل خروج",
@@ -24,10 +32,14 @@
     "order": "طلب",
     "preview": "معاينة",
     "private": "نشر",
-    "questionType": "نوع السؤال",
+    "question": "سؤال",
+    "questions": "أسئلة",
+    "questionDetails": "تفاصيل السؤال",
     "questionsNumber": "عدد الأسئلة",
+    "questionType": "نوع السؤال",
     "save": "يحفظ",
     "studentName": "اسم الطالب",
+    "studentsOverview": "نظرة عامة على الطلاب",
     "students": "طلاب",
     "subject": "موضوعات",
     "submit": "إرسال",
@@ -35,7 +47,22 @@
     "to": "إلى",
     "totalCompletedTopics": "إجمالي المواضيع المكتملة",
     "workInProgress": "جاري العمل ... متاح قريبًا",
-    "questions": "أسئلة"
+    "topics": "المواضيع",
+    "grades": {
+      "0": "0",
+      "1": "1",
+      "2": "2",
+      "3": "3",
+      "4": "4",
+      "5": "5",
+      "6": "6",
+      "7": "7",
+      "8": "8",
+      "9": "9",
+      "10": "10",
+      "11": "11",
+      "12": "12"
+    }
   },
   "answers": {
     "assessmentAnswers": {
@@ -73,7 +100,8 @@
     "archivedAssessments": "التقييم (التقييمات) المؤرشف",
     "assessmentFormDialog": {
       "createNewAssessment": "قم بإنشاء تقييم جديد",
-      "editAssessment": "تحرير التقييم"
+      "editAssessment": "تحرير التقييم",
+      "gradeTooltip": "المستوى المدرسي المقصود"
     },
     "assessmentSummary": {
       "addTopic": "أضف موضوعًا",
@@ -83,6 +111,7 @@
     "questions": {
       "audioAttachment": "مرفق صوتي",
       "imageAttachment": "مرفق الصورة",
+      "errorAudio": "",
       "questionCloneSuccess": "تم استنساخ السؤال بنجاح",
       "questionCreateSuccess": "تم إنشاء السؤال بنجاح",
       "questionUpdateSuccess": "تم تحديث السؤال بنجاح",
@@ -119,7 +148,8 @@
       "changeFile": "تغيير الملف",
       "createTopic": "قم بإنشاء موضوع",
       "editTopic": "editTopic",
-      "whenToShowFeedbacks": "متى تظهر التقيمات؟"
+      "whenToShowFeedbacks": "متى تظهر التقيمات؟",
+      "praiseTooltip": "حالات الحمد"
     },
     "assessmentEditSuccess": "تم تعديل التقييم بنجاح",
     "assessmentSaveSuccess": "تم حفظ التقييم بنجاح",
@@ -170,8 +200,7 @@
       "chartLegend": "دليل المصطلحات",
       "student": "طالب علم",
       "studentNotLinked": "غيرمعتمد",
-      "studentNotStarted": "لم يبدأ",
-      "studentsOverview": "نظرة عامة على الطلاب"
+      "studentNotStarted": "لم يبدأ"
     }
   },
   "shared": {
@@ -209,12 +238,12 @@
       "createStudent": "قم بإنشاء طالب جديد",
       "firstName": "الاسم الأول",
       "lastName": "اسم العائلة",
+      "noGroups": "",
       "studentCreateSuccess": "تم بنجاح إنشاء الطالب {{name}} بالمعرف {{اسم المستخدم}}",
       "studentEditSuccess": "تم تحرير معلومات {{name}} بنجاح"
     },
     "studentDetail": {
       "activeAccess": "وصول نشط",
-      "assessmentsOverview": "نظرة عامة على التقييمات",
       "linkedTopics": "موضوع (مواضيع) مرتبطة",
       "noActiveAccess": "لا يوجد وصول نشط",
       "numberAssessments": "عدد التقييمات",
@@ -228,9 +257,11 @@
       "endDate": "تاريخ الانتهاء",
       "startDate": "تاريخ البدء",
       "topicAvailability": "مدى توفر موضوع (مواضيع) التقييم",
-      "notifier": "تحتاج إلى تحديد تاريخ بدء وتاريخ انتهاء لكل موضوع محدد",
+      "notifier": "تحتاج إلى تحديد الطالب (الطلاب) أو المجموعة (المجموعات) وتعيين تاريخ البدء وتاريخ الانتهاء لكل موضوع محدد",
       "accessesSet": "تم تعيين الوصول إلى الموضوع الجديد بنجاح!",
-      "errorOnSubmit": "حدث خطأ أثناء تقديم وصول الموضوع"
+      "errorOnSubmit": "حدث خطأ أثناء تقديم وصول الموضوع",
+      "noGroups": "ليس لديك مجموعات مع الطلاب.",
+      "groupsInfo": "يتم عرض المجموعات ذات الطلاب المسجلين فقط"
     },
     "topicAccessesEdit": {
       "editTopicsAccess": "تحرير الوصول إلى موضوع (مواضيع) التقييم",
@@ -243,6 +274,20 @@
       "accessEdited": "تم حذف الوصول إلى الموضوع بنجاح!",
       "errorOnDeletion": "حدث خطأ أثناء إرسال حذف الوصول للموضوع"
     },
-    "incompatibleLanguageError": "يمكنك فقط منح حق الوصول إلى موضوع ما للطلاب من نفس البلد واللغة."
+    "incompatibleLanguageError": "يمكنك فقط منح حق الوصول إلى موضوع ما للطلاب من نفس البلد واللغة.",
+    "studentDetails": "تفاصيل الطالب"
+  },
+  "groups": {
+    "editGroup": "تحرير المجموعة",
+    "createGroup": "أنشئ مجموعة جديدة",
+    "addGroup": "أضف مجموعة",
+    "numberStudents": "عدد الطلاب",
+    "requiredField": "يتطلب حقلا",
+    "groupName": "أسم المجموعة",
+    "supervisor": "مشرف",
+    "groupStudents": "طلاب المجموعة",
+    "groupEdited": "تم تحرير المجموعة بنجاح",
+    "errorMessage": "هناك خطأ ما:",
+    "groupCreated": "تم إنشاء المجموعة بنجاح"
   }
 }

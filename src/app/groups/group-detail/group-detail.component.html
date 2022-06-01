@@ -1,0 +1,17 @@
+<div class="main-board">
+  <div class="main-board__top-container back-button">
+    <app-previous-button path="groups"></app-previous-button>
+    <h1> {{ groupName }} </h1>
+    <div class="main-board__top-container__actions">
+        <app-custom-button icon="edit_outline" category="secondary" variant="primary" (click)="onEdit()">
+          {{ "groups.editGroup" | translate }}
+        </app-custom-button>
+    </div>
+  </div>
+
+  <div class="main-board__tabs-container">
+      <h3> {{ "groups.groupStudents" | translate }} </h3>
+      <app-table [tableData]="studentsDataSource" [displayedColumns]="displayedColumns"
+        [isSelectable]="false" (openDetailsEvent)="onOpenDetails($event)"></app-table>
+  </div>
+</div>

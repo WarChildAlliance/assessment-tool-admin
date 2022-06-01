@@ -1,7 +1,7 @@
 <div class="main-board">
   <div class="main-board__top-container">
     <h1>{{ "general.students" | translate }} ({{ studentsDataSource.data.length }})
-      <span *ngIf="selectedUsers.length"> ({{ selectedUsers.length }} selected)</span>
+      <span *ngIf="selectedUsers.length"> ({{ selectedUsers.length }} {{ "general.selected" | translate }})</span>
     </h1>
     <div class="main-board__top-container__actions">
       <app-custom-button icon="add_circle_outline" category="secondary" variant="primary" (click)="openCreateStudentDialog()">
@@ -14,8 +14,7 @@
 <!--       <button mat-flat-button [disabled]="!selectedUsers.length" color="primary" (click)="deleteSelection()">
         <mat-icon>delete_outline</mat-icon><span>Delete student(s)</span>
       </button> -->
-      <app-custom-button icon="event_available" category="secondary" variant="primary" (click)="openAssignTopicDialog()"
-      [disabled]="!selectedUsers.length">
+      <app-custom-button icon="event_available" category="secondary" variant="primary" (click)="openAssignTopicDialog()">
       {{ "students.assignTopic" | translate }}
       </app-custom-button>
 <!--       <button mat-flat-button [disabled]="true" color="primary" (click)="downloadData()">

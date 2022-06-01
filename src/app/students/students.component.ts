@@ -8,13 +8,14 @@ import { TranslateService } from '@ngx-translate/core';
 import { Language } from 'src/app/core/models/language.model';
 import { User } from 'src/app/core/models/user.model';
 import { Country } from '../core/models/country.model';
+import { Group } from '../core/models/group.model';
 import { StudentTableData } from '../core/models/student-table-data.model';
 import { TableColumn } from '../core/models/table-column.model';
 import { TableFilter } from '../core/models/table-filter.model';
 import { AlertService } from '../core/services/alert.service';
 import { UserService } from '../core/services/user.service';
-import { CreateStudentDialogComponent } from './create-student-dialog/create-student-dialog.component';
 import { TopicAccessesBuilderComponent } from './topic-accesses-builder/topic-accesses-builder.component';
+import { StudentDialogComponent } from './student-dialog/student-dialog.component';
 
 @Component({
   selector: 'app-students',
@@ -22,11 +23,12 @@ import { TopicAccessesBuilderComponent } from './topic-accesses-builder/topic-ac
   styleUrls: ['./students.component.scss'],
 })
 export class StudentsComponent implements OnInit {
-  private filtersData = { country: '', language: '', ordering: '-id' };
+  private filtersData = { country: '', language: '', group: '', ordering: '-id' };
 
   public displayedColumns: TableColumn[] = [
     { key: 'full_name', name: 'general.studentName' },
     { key: 'username', name: 'students.studentCode', type: 'copy' },
+    { key: 'group', name: 'general.group' },
     { key: 'assessments_count', name: 'students.activeAssessmentsNumber' },
     { key: 'completed_topics_count', name: 'students.completedTopicsNumber' },
     { key: 'last_session', name: 'general.lastLogin', type: 'date' },
@@ -41,6 +43,7 @@ export class StudentsComponent implements OnInit {
 
   public countries: Country[] = [];
   public languages: Language[] = [];
+  public groups: Group[] = [];
 
   public filters: TableFilter[];
 
@@ -67,9 +70,12 @@ export class StudentsComponent implements OnInit {
     forkJoin([
       this.userService.getCountries(),
       this.userService.getLanguages(),
-    ]).subscribe(([countries, languages]: [Country[], Language[]]) => {
+      this.userService.getGroups()
+    ]).subscribe(([countries, languages, groups]: [Country[], Language[], Group[]]) => {
       this.countries = countries;
       this.languages = languages;
+      this.groups = groups;
+
       this.filters = [
         {
           key: 'country',
@@ -90,6 +96,17 @@ export class StudentsComponent implements OnInit {
             languages.map((language) => ({
               key: language.code,
               value: language.name_en,
+            }))
+          ),
+        },
+        {
+          key: 'group',
+          name: 'general.group',
+          type: 'select',
+          options: [{ key: '', value: 'All' }].concat(
+            groups.map((group) => ({
+              key: group.id.toString(),
+              value: group.name,
             }))
           ),
         },
@@ -146,7 +163,7 @@ export class StudentsComponent implements OnInit {
   }
 
   public openCreateStudentDialog(): void {
-    const createStudentDialog = this.dialog.open(CreateStudentDialogComponent);
+    const createStudentDialog = this.dialog.open(StudentDialogComponent);
     createStudentDialog.afterClosed().subscribe((value) => {
       if (value) {
         this.getStudentTableList(this.filtersData);
@@ -156,9 +173,13 @@ export class StudentsComponent implements OnInit {
 
   public openEditStudentDialog(): void {
     this.studentToEdit = this.selectedUsers[0];
-    const editStudentDialog = this.dialog.open(CreateStudentDialogComponent, {
+    this.studentToEdit.group = this.groups.find(
+      el => el.name === String(this.studentToEdit.group)
+    )?.id.toString();
+
+    const editStudentDialog = this.dialog.open(StudentDialogComponent, {
       data: {
-        newStudent: this.studentToEdit
+        student: this.studentToEdit
       }
     });
     editStudentDialog.afterClosed().subscribe((value) => {

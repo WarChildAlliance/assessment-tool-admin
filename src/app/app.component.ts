@@ -18,6 +18,7 @@ import { ConfirmModalComponent } from 'src/app/shared/confirm-modal/confirm-moda
 export class AppComponent implements OnInit {
 
   public selfName = '';
+  public showSubmenu = false;
 
   public languageCode: string = this.languageService.getLanguageCode();
   public languages: Language[] = this.languageService.getLanguages();

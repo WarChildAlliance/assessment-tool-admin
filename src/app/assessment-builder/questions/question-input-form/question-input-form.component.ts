@@ -215,7 +215,7 @@ export class QuestionInputFormComponent implements OnInit {
     });
   }
 
-  public onSave(): void {
+  public onSubmit(): void {
     if (this.question && !this.toClone) {
       this.alertMessage = 'Question successfully updated';
       this.editQuestion();

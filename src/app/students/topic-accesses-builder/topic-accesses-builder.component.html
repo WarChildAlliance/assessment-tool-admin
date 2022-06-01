@@ -5,15 +5,28 @@
             <mat-icon>close</mat-icon>
         </div>
         <div class="topic-accesses-builder">
-            <div class="topic-accesses-builder__list -students">
+            <div class="topic-accesses-builder__list -students" *ngIf="studentsList.length">
                 <span class="header">{{ "general.students" | translate }}</span>
-
                 <div class="topic-accesses-builder__list-row" *ngFor="let student of studentsList">
                     <mat-icon color="accent">person</mat-icon>
-                    <span>
-                        {{ student.full_name }}
-                    </span>
+                    <span>{{ student.full_name }}</span>
                 </div>
+            </div>
+
+            <div [formGroup]="assignGroupForm" class="topic-accesses-builder__list">
+                <span class="header">
+                    {{ "general.groups" | translate }}  
+                    <mat-icon *ngIf="groupsList.length" matTooltip="{{ 'students.topicAccessesBuilder.groupsInfo' | translate }}">info_outline</mat-icon>
+                </span>
+                <span class="notifier" *ngIf="!groupsList.length"> {{ 'students.topicAccessesBuilder.noGroups' | translate }} </span>
+                <ng-container formArrayName="groups">
+                    <div *ngFor="let control of groupControls; let i=index;" [formGroupName]="i"
+                        class="topic-accesses-builder__list-row -topic-access">
+                        <mat-checkbox formControlName="selected">
+                            {{ control.get('group').value.name }}
+                        </mat-checkbox>
+                    </div>
+                </ng-container>
             </div>
 
             <div class="topic-accesses-builder__list">
@@ -30,22 +43,22 @@
                 </span>
 
                 <ng-container formArrayName="access">
-                    <div class="topic-accesses-builder__list__set-dates" *ngIf="controls.length">
+                    <div class="topic-accesses-builder__list__set-dates" *ngIf="topicControls.length">
                         <mat-form-field color="accent" appearance="outline">
                             <mat-date-range-input [rangePicker]="setUpDateForAll" [min]="minDate">
-                                <input (dateInput)="onDate('start_date', $event.value)" matStartDate [placeholder]="'students.topicAccessesBuilder.startDate' | translate">
-                                <input (dateInput)="onDate('end_date', $event.value)" matEndDate [placeholder]="'students.topicAccessesBuilder.endDate' | translate">
+                                <input (dateInput)="onDateInput('start_date', $event.value)" matStartDate [placeholder]="'students.topicAccessesBuilder.startDate' | translate">
+                                <input (dateInput)="onDateInput('end_date', $event.value)" matEndDate [placeholder]="'students.topicAccessesBuilder.endDate' | translate">
                             </mat-date-range-input>
                             <mat-datepicker-toggle matSuffix [for]="setUpDateForAll"></mat-datepicker-toggle>
                             <mat-date-range-picker #setUpDateForAll></mat-date-range-picker>
                         </mat-form-field>
                         <div class="apply-all">
-                            <mat-checkbox (change)="setAll($event.checked)" [disabled]="!startDate || !endDate">
+                            <mat-checkbox (change)="onApplyToAllTopics($event.checked)" [disabled]="!startDate || !endDate">
                                 {{ "students.topicAccessesBuilder.applySameDatesAllTopics" | translate }}
                             </mat-checkbox>
                         </div>
                     </div>
-                    <div *ngFor="let control of controls; let i=index;" [formGroupName]="i"
+                    <div *ngFor="let control of topicControls; let i=index;" [formGroupName]="i"
                         class="topic-accesses-builder__list-row -topic-access">
 
                         <mat-checkbox formControlName="selected" (change)="selectTopic(control, $event.checked)">
@@ -61,17 +74,17 @@
                             <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
                         </mat-form-field>
                     </div>
-                    <span class="notifier" *ngIf="this.assignTopicForm.invalid">{{ 'students.topicAccessesBuilder.notifier' | translate }}</span>
                 </ng-container>
             </div>
         </div>
     </div>
 </div>
 <div class="dialog-buttons">
+    <span class="notifier" *ngIf="disabledAssign"> {{ 'students.topicAccessesBuilder.notifier' | translate }} </span>
     <button mat-flat-button mat-dialog-close class="dialog-buttons__cancel" color="secondary">
         {{ "general.cancel" | translate }}
     </button>
-    <button mat-flat-button class="dialog-buttons__submit" [disabled]="!controls.length || this.assignTopicForm.invalid" color="accent"
+    <button mat-flat-button class="dialog-buttons__submit" [disabled]="!topicControls.length || assignTopicForm.invalid || disabledAssign" color="accent"
     (click)="submitCreateTopicAccesses()" mat-dialog-close>
         {{ "general.assign" | translate }}
     </button>

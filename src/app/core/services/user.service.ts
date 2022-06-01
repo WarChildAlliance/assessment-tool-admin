@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { AnswerDetails } from '../models/answer-details.model';
 import { BatchTopicAccesses } from '../models/batch-topic-accesses.model';
 import { Country } from '../models/country.model';
+import { Group } from '../models/group.model';
 import { Language } from '../models/language.model';
 import { StudentTableData } from '../models/student-table-data.model';
 import { TopicAccessStudents } from '../models/topic-access-students.model';
@@ -39,14 +40,14 @@ export class UserService {
   }
 
   public createNewStudent(
-    user: { first_name: string, last_name: string, role: string, language: string, country: string }
+    user: { first_name: string, last_name: string, role: string, language: string, country: string, group: string }
   ): Observable<User> {
     return this.http.post<User>(`${environment.API_URL}/users/`, user);
   }
 
   public editStudent(
     id: string,
-    user: { first_name: string, last_name: string, role: string, language: string, country: string }
+    user: { first_name: string, last_name: string, role: string, language: string, country: string, group: string }
   ): Observable<User> {
     return this.http.put<User>(`${environment.API_URL}/users/${id}/`, user);
   }
@@ -68,10 +69,35 @@ export class UserService {
     return this.http.get<Country[]>(`${environment.API_URL}/users/countries`);
   }
 
-  public getStudentTopicsChart(assessmentId: string): Observable<{full_name: string, topics: {}[], student_access: boolean}[]> {
-    return this.http.get<{full_name: string, topics: {}[], student_access: boolean}[]>(
+  public getGroups(): Observable<Group[]> {
+    return this.http.get<Group[]>(`${environment.API_URL}/users/groups`);
+  }
+
+  public getGroupById(groupId: string): Observable<Group> {
+    return this.http.get<Group>(`${environment.API_URL}/users/groups/${groupId}/`);
+  }
+
+  public createNewGroup(group: { name: string, supervisor: string }): Observable<Group> {
+    return this.http.post<Group>(`${environment.API_URL}/users/groups/`, group);
+  }
+
+  public editGroup(groupId: string, group: { name: string, supervisor: string }): Observable<Group> {
+    return this.http.put<Group>(`${environment.API_URL}/users/groups/${groupId}/`, group);
+  }
+
+  public getStudentTopicsChart(assessmentId: string):
+  Observable<{full_name: string, topics: {}[], student_access: boolean, group: {}[]}[]> {
+    return this.http.get<{full_name: string, topics: {}[], student_access: boolean, group: {}[]}[]>(
       `${environment.API_URL}/visualization/charts/score_by_topic/${assessmentId}/`
       );
+  }
+
+  public getGroupStudentsTopicsChart(assessmentId: string, groupId: string): Observable<
+    { full_name: string, topics: {}[], student_access: boolean, group: {}[] }[] >
+  {
+    return this.http.get<{full_name: string, topics: {}[], student_access: boolean, group: {}[]}[]>(
+      `${environment.API_URL}/visualization/charts/score_by_topic/${assessmentId}/group/${groupId}/`
+    );
   }
 
   public getStudentsListForATopic(topicId: string): Observable<TopicAccessStudents[]> {
