@@ -69,16 +69,16 @@ export class AssessmentSummaryComponent implements OnInit {
     });
   }
 
-  public openCreateTopicDialog(assessmentId: string): void {
+  public openTopicFormDialog(assessmentId: string): void {
     this.assessmentId = assessmentId;
 
-    const createTopicDialog = this.dialog.open(TopicFormDialogComponent, {
+    const topicFormDialog = this.dialog.open(TopicFormDialogComponent, {
       data: {
         assessmentId: this.assessmentId
       }
     });
 
-    createTopicDialog.afterClosed().subscribe((value) => {
+    topicFormDialog.afterClosed().subscribe((value) => {
       if (value) {
         this.getAssessmentDetails(this.assessmentId);
       }
@@ -109,7 +109,7 @@ export class AssessmentSummaryComponent implements OnInit {
     });
   }
 
-  public editAssessment(assessment): void{
+  public editAssessment(assessment): void {
     this.edit = true;
     this.assessment = assessment;
 

@@ -16,7 +16,7 @@ const routes: Routes = [
     canLoad: [AuthGuard],
     data: {
       breadcrumb: [
-        { label: 'Dashboard', url: '' }
+        { label: 'general.dashboard', url: '' }
       ]
     },
   },
@@ -27,7 +27,18 @@ const routes: Routes = [
     canLoad: [AuthGuard],
     data: {
       breadcrumb: [
-        { label: 'Students overview', url: '' }
+        { label: 'general.studentsOverview', url: '' }
+      ]
+    },
+  },
+  {
+    path: 'groups',
+    loadChildren: () => import('./groups/groups.module')
+      .then(m => m.GroupsModule),
+    canLoad: [AuthGuard],
+    data: {
+      breadcrumb: [
+        { label: 'general.groupsOverview', url: '' }
       ]
     },
   },
@@ -38,18 +49,18 @@ const routes: Routes = [
     canLoad: [AuthGuard],
     data: {
       breadcrumb: [
-        { label: 'Assessments overview', url: '' }
+        { label: 'general.assessmentsOverview', url: '' }
       ]
     },
   },
   {
-    path: 'assessment-builder',
+    path: 'assessment-builder/:type',
     loadChildren: () => import('./assessment-builder/assessment-builder.module')
       .then(m => m.AssessmentBuilderModule),
     canLoad: [AuthGuard],
     data: {
       breadcrumb: [
-        { label: 'Assessment Builder', url: '' }
+        { label: 'general.assessmentBuilder', url: '' }
       ]
     },
   },

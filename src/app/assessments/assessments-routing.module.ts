@@ -15,8 +15,8 @@ const routes: Routes = [
     component: AssessmentDetailComponent,
     data: {
       breadcrumb: [
-        { label: 'Assessments overview', url: '/assessments' },
-        { label: 'Topics', url: '' }
+        { label: 'general.assessmentsOverview', url: '/assessments' },
+        { label: 'general.topics', url: '' }
       ]
     },
   },
@@ -25,9 +25,9 @@ const routes: Routes = [
     component: QuestionsListComponent,
     data: {
       breadcrumb: [
-        { label: 'Assessments overview', url: '/assessments' },
-        { label: 'Topics', url: '/assessments/:assessment_id' },
-        { label: 'Questions', url: '' }
+        { label: 'general.assessmentsOverview', url: '/assessments' },
+        { label: 'general.topics', url: '/assessments/:assessment_id' },
+        { label: 'general.questions', url: '' }
       ]
     },
   },
@@ -36,10 +36,10 @@ const routes: Routes = [
     component: QuestionDetailComponent,
     data: {
       breadcrumb: [
-        { label: 'Assessments overview', url: '/assessments' },
-        { label: 'Topics', url: '/assessments/:assessment_id' },
-        { label: 'Questions', url: '/assessments/:assessment_id/topics/:topic_id' },
-        { label: 'Question details', url: '' }
+        { label: 'general.assessmentsOverview', url: '/assessments' },
+        { label: 'general.topics', url: '/assessments/:assessment_id' },
+        { label: 'general.questions', url: '/assessments/:assessment_id/topics/:topic_id' },
+        { label: 'general.questionDetails', url: '' }
       ]
     },
   },

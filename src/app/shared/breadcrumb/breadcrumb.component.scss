@@ -1,0 +1,21 @@
+.breadcrumb {
+  height: 30px;
+  background-color: #eee;
+
+  &__list{
+    padding-bottom: 10px;
+    font-size: 18px;
+
+    &__item {
+      color: #0275d8;
+    }
+
+    &__last-item {
+      color: #000;
+    }
+  }
+
+  &__spacer {
+    margin-left: -20px;
+  }
+}

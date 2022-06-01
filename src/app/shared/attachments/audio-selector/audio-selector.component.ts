@@ -7,9 +7,9 @@ import { Observable, Subject } from 'rxjs';
   styleUrls: ['./audio-selector.component.scss']
 })
 export class AudioSelectorComponent implements OnInit {
-  @Input() recorderEnabled: boolean;
+  @Input() isRecorderEnabled: boolean;
   @Input() reset$: Observable<void> = null;
-  @Input() audioAttachment: File;
+  @Input() audioAttachment;
 
   @Output() newAudioEvent = new EventEmitter<File>();
 
@@ -38,7 +38,7 @@ export class AudioSelectorComponent implements OnInit {
     this.newAudioEvent.emit(this.audioAttachment);
   }
 
-  public addRecordedAudio(event): void {
+  public onNewAudioRecordingEvent(event): void {
     const name = 'recording_' + new Date().toISOString() + '.wav';
     this.audioAttachment = this.blobToFile(event, name);
     this.newAudioEvent.emit(this.audioAttachment);

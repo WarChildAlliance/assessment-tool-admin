@@ -7,7 +7,7 @@
         <div class="details">
             <div class="infos">
                 <p>{{ "general.grade" | translate }} </p>
-                <p>{{ assessment.grade }}</p>
+                <p>{{ ("general.grades." + assessment.grade) | translate }}</p>
             </div>
             <div class="infos">
                 <p>{{ "general.subject" | translate }}</p>
@@ -27,7 +27,7 @@
             </div>
         </div>
         <div class="buttons">
-            <app-custom-button *ngIf="canEdit" category="tertiary" variant="primary" icon="edit" (click)="editAssessment(assessment)">
+            <app-custom-button *ngIf="canEdit && !assessment.archived" category="tertiary" variant="primary" icon="edit" (click)="editAssessment(assessment)">
                 {{ "general.edit" | translate }}
             </app-custom-button>
             <app-custom-button *ngIf="canEdit" category="tertiary" variant="primary" [icon]="assessment.archived ? 'unarchive' : 'archive'"
@@ -40,7 +40,7 @@
     <hr>
     <div class="topics-container">
         <div #topicsList class="topics">
-            <mat-card class="add-topic" (click)="openCreateTopicDialog(assessment.id)" *ngIf="canEdit">
+            <mat-card class="add-topic" (click)="openTopicFormDialog(assessment.id)" *ngIf="canEdit">
                 <div class="add-topic-text">
                     {{ "assessmentBuilder.assessmentSummary.addTopic" | translate }}<mat-icon>add</mat-icon>
                 </div>

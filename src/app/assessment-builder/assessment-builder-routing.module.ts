@@ -13,8 +13,8 @@ const routes: Routes = [
     component: TopicDetailsComponent,
     data: {
       breadcrumb: [
-        { label: 'Assessments builder', url: '/assessment-builder' },
-        { label: 'Question', url: '' }
+        { label: 'general.assessmentBuilder', url: '/assessment-builder' },
+        { label: 'general.question', url: '' }
       ]
     },
   }

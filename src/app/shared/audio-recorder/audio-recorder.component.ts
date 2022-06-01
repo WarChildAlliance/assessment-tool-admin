@@ -3,6 +3,7 @@ import * as RecordRTC from 'recordrtc';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-audio-recorder',
@@ -13,60 +14,66 @@ import { Observable } from 'rxjs';
 export class AudioRecorderComponent implements OnInit {
 
   private title = 'micRecorder';
-  private record: RecordRTC.StereoAudioRecorder;
+  private recorder: RecordRTC.StereoAudioRecorder;
 
-  public recording = false;
-  public url: string;
-  public error: string;
+  public isRecording = false;
+  public recordingUrl: string;
+  public errorMessage: string;
 
   @Input() reset$: Observable<void>;
 
-  @Output() audioRecordingEvent = new EventEmitter<string>();
+  @Output() newAudioRecordingEvent = new EventEmitter<string>();
 
-  constructor(private domSanitizer: DomSanitizer) {}
+  constructor(
+    private domSanitizer: DomSanitizer,
+    private translateService: TranslateService
+    ) {}
 
   ngOnInit(): void {
     this.reset$.subscribe((_) => {
-      this.url = undefined;
+      this.recordingUrl = undefined;
     });
   }
 
-  private successCallback(stream): void {
+  private processRecording(blob): void {
+    this.recordingUrl = URL.createObjectURL(blob);
+    this.newAudioRecordingEvent.emit(blob);
+  }
+
+  private recordingSuccessCallback(stream): void {
     const options = {
       mimeType: 'audio/wav',
       numberOfAudioChannels: 1,
       sampleRate: 48000,
     };
     const StereoAudioRecorder = RecordRTC.StereoAudioRecorder;
-    this.record = new StereoAudioRecorder(stream, options);
-    this.record.record();
+    this.recorder = new StereoAudioRecorder(stream, options);
+    this.recorder.record();
   }
 
-  private processRecording(blob): void {
-    this.url = URL.createObjectURL(blob);
-    this.audioRecordingEvent.emit(blob);
+  private recordingErrorCallback(error): void {
+    this.errorMessage = this.translateService.instant('assessmentBuilder.questions.errorAudio');
   }
 
-  private errorCallback(error): void {
-    this.error = 'Can not play audio in your browser';
-  }
-
-  public sanitize(url: string): SafeUrl {
+  public sanitizeUrl(url: string): SafeUrl {
     return this.domSanitizer.bypassSecurityTrustUrl(url);
   }
 
   public initiateRecording(): void {
-    this.recording = true;
+    this.isRecording = true;
     const mediaConstraints = {
       video: false,
       audio: true
     };
-    navigator.mediaDevices.getUserMedia(mediaConstraints).then(this.successCallback.bind(this), this.errorCallback.bind(this));
+    navigator.mediaDevices.getUserMedia(mediaConstraints).then(
+      this.recordingSuccessCallback.bind(this),
+      this.recordingErrorCallback.bind(this)
+    );
   }
 
   public stopRecording(): void {
-    this.recording = false;
-    this.record.stop(this.processRecording.bind(this));
+    this.isRecording = false;
+    this.recorder.stop(this.processRecording.bind(this));
   }
 }
 

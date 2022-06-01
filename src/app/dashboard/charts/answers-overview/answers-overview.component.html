@@ -4,7 +4,7 @@
 
   <mat-card-content *ngIf="hasData">
     <div class="left-column">
-      <app-select-assessment (topicSelection)="onTopicSelection($event)" [selectTopic]="true" [multiple]="false"
+      <app-select-assessment (topicSelection)="onTopicSelection($event)" [topicSelectionEnabled]="true" [multiple]="false"
         [displayNonEvaluated]="true"></app-select-assessment>
 
       <div class="main-board__charts-container__options">

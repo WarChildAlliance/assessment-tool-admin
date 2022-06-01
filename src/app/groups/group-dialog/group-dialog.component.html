@@ -1,0 +1,38 @@
+<h2 mat-dialog-title>
+    {{ ( data?.group ? "groups.editGroup" : "groups.createGroup" ) | translate }}
+</h2>
+
+<form class="form-primary" [formGroup]="groupForm">
+    <div class="form-primary__flex-container">
+        <div class="form-primary__flex-container__field-container">
+            <mat-form-field appearance="outline" color="accent">
+                <mat-label>
+                    {{ "groups.groupName" | translate }}
+                </mat-label>
+                <input matInput type="text" formControlName="name">
+                <mat-error>
+                    {{ "groups.requiredField" | translate }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="form-primary__flex-container__field-container">
+            <mat-form-field appearance="outline" color="accent">
+                <mat-label>
+                    {{ "groups.supervisor" | translate }}
+                </mat-label>
+                <input matInput readonly="readonly" value="{{supervisorName}}">
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="dialog-buttons">
+        <button mat-button color="secondary" class="dialog-buttons__cancel" mat-dialog-close>
+            {{ "general.cancel" | translate }}
+        </button>
+        <button mat-flat-button color="accent" type="submit" class="dialog-buttons__submit"
+         [mat-dialog-close]="groupForm.value" (click)="onSubmit()"
+         [disabled]="groupForm.invalid || !groupForm.dirty">
+            {{ ( data?.group ? "general.save" : "general.submit" ) | translate }}
+        </button>
+    </div>
+</form>

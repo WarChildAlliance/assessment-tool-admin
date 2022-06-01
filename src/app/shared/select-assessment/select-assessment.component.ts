@@ -22,7 +22,7 @@ export class SelectAssessmentComponent implements OnInit {
   public selected: AssessmentDashboard[] = [];
   public selectedTopic: TopicDashboard;
 
-  @Input() selectTopic: boolean;
+  @Input() topicSelectionEnabled: boolean;
   @Input() multiple: boolean;
   @Input() displayNonEvaluated: boolean;
 
@@ -37,7 +37,7 @@ export class SelectAssessmentComponent implements OnInit {
       this.selectedAssessment = this.assessmentsList.find(el => el.started);
       this.selectedAssessmentArr = this.assessmentsList.filter(el => el.started).slice(0, 1);
 
-      if (this.selectTopic) {
+      if (this.topicSelectionEnabled) {
         if (this.selectedAssessment){
           this.assessmentId = this.selectedAssessment.id;
           this.getTopics(this.assessmentId);
@@ -64,7 +64,7 @@ export class SelectAssessmentComponent implements OnInit {
 
   public selectAssessment(assessment: AssessmentDashboard): void {
     this.selectedAssessment = assessment;
-    if (this.selectTopic){
+    if (this.topicSelectionEnabled) {
       this.assessmentId = assessment.id;
       this.getTopics(assessment.id);
     } else {
@@ -72,7 +72,7 @@ export class SelectAssessmentComponent implements OnInit {
     }
   }
 
-  public selectATopic(topic: TopicDashboard): void {
+  public selectTopic(topic: TopicDashboard): void {
     this.selectedTopic = topic;
     this.topicSelection.emit({assessmentId: this.assessmentId, topic});
   }
