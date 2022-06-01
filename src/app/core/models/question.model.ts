@@ -32,6 +32,15 @@ export interface QuestionSort extends Question {
   options: SortOption[];
 }
 
+export interface QuestionDragAndDrop extends Question {
+  drop_areas: AreaOption[];
+}
+
+export interface AreaOption {
+  coordinates: number[];
+  name: string;
+}
+
 export interface SelectOption {
   id: number;
   value: string;
@@ -50,7 +59,8 @@ enum QuestionTypeEnum {
   Input = 'INPUT',
   Select = 'SELECT',
   Sort = 'SORT',
-  NumberLine = 'NUMBER_LINE'
+  NumberLine = 'NUMBER_LINE',
+  DragAndDrop = 'DRAG_AND_DROP',
 }
 
 export interface Hint {

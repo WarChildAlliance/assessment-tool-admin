@@ -1,0 +1,20 @@
+canvas{
+    background-color: red;
+  }
+
+.image-selector{
+  display: flex;
+  justify-content: space-around;
+  align-items: end;
+}
+
+.coordinates-buttons {
+  display: flex;
+  justify-content: center;
+  column-gap: 16px;
+}
+
+.points {
+  display: flex;
+  justify-content: space-around;
+}

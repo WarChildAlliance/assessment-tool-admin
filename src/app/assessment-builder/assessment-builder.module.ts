@@ -27,6 +27,7 @@ import { HorizontalScrollArrowsComponent } from '../shared/horizontal-scroll-arr
 import { ImageSelectorComponent } from '../shared/attachments/image-selector/image-selector.component';
 import { AudioSelectorComponent } from '../shared/attachments/audio-selector/audio-selector.component';
 import { PreviousButtonModule } from '../shared/previous-button/previous-button.module';
+import { DragAndDropComponent } from './topic-details/drag-and-drop/drag-and-drop.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { PreviousButtonModule } from '../shared/previous-button/previous-button.
     AudioRecorderComponent,
     HorizontalScrollArrowsComponent,
     ImageSelectorComponent,
-    AudioSelectorComponent
+    AudioSelectorComponent,
+    DragAndDropComponent
   ],
   imports: [
     CommonModule,
