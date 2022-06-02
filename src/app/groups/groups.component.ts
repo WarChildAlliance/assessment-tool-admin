@@ -7,6 +7,8 @@ import { TableColumn } from '../core/models/table-column.model';
 import { UserService } from '../core/services/user.service';
 import { GroupTableData } from '../core/models/group-table-data.model';
 import { GroupDialogComponent } from './group-dialog/group-dialog.component';
+import { AlertService } from '../core/services/alert.service';
+import { ConfirmModalComponent } from '../shared/confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-groups',
@@ -28,7 +30,8 @@ export class GroupsComponent implements OnInit {
     private userService: UserService,
     private router: Router,
     private dialog: MatDialog,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private alertService: AlertService
   ) {
     this.displayedColumns.forEach(col => {
       this.translateService.stream(col.name).subscribe(translated => col.name = translated);
@@ -86,5 +89,30 @@ export class GroupsComponent implements OnInit {
     this.router.navigate(
       [`/groups/${groupId}`]
     );
+  }
+
+  public onDelete(): void {
+    const groupId = this.selectedGroups[0].id;
+    const groupName = this.selectedGroups[0].name;
+
+    const confirmDialog = this.dialog.open(ConfirmModalComponent, {
+      data: {
+        title: 'Delete group',
+        // content: "Do you really want to delete the group '<b>{{groupName}}</b>'?
+        // All students will be withdrawn from the group and left without one.",
+        content: '',
+        contentType: 'innerHTML',
+        confirmColor: 'warn'
+      }
+    });
+
+    confirmDialog.afterClosed().subscribe((res) => {
+      if (res) {
+        this.userService.deleteGroup(groupId).subscribe(() => {
+          this.alertService.success('Group deleted successfully!');
+          this.getGroups();
+        });
+      }
+    });
   }
 }

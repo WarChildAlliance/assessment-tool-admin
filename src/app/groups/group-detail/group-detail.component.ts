@@ -6,7 +6,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { Group } from 'src/app/core/models/group.model';
 import { StudentTableData } from 'src/app/core/models/student-table-data.model';
 import { TableColumn } from 'src/app/core/models/table-column.model';
+import { AlertService } from 'src/app/core/services/alert.service';
 import { UserService } from 'src/app/core/services/user.service';
+import { ConfirmModalComponent } from 'src/app/shared/confirm-modal/confirm-modal.component';
 import { GroupDialogComponent } from '../group-dialog/group-dialog.component';
 
 @Component({
@@ -34,7 +36,8 @@ export class GroupDetailComponent implements OnInit {
     private userService: UserService,
     private dialog: MatDialog,
     private router: Router,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private alertService: AlertService
   ) {
     this.displayedColumns.forEach(col => {
       this.translateService.stream(col.name).subscribe(translated => col.name = translated);
@@ -76,6 +79,30 @@ export class GroupDetailComponent implements OnInit {
     editGroupDialog.afterClosed().subscribe((value) => {
       if (value) {
         this.getGroupDetails(this.group.id.toString());
+      }
+    });
+  }
+
+  public onDelete(): void {
+    const groupName = this.group.name;
+
+    const confirmDialog = this.dialog.open(ConfirmModalComponent, {
+      data: {
+        title: 'Delete group',
+        // content: "Do you really want to delete the group '<b>{{groupName}}</b>'?
+        // All students will be withdrawn from the group and left without one.",
+        content: '',
+        contentType: 'innerHTML',
+        confirmColor: 'warn'
+      }
+    });
+
+    confirmDialog.afterClosed().subscribe((res) => {
+      if (res) {
+        this.userService.deleteGroup(this.group.id.toString()).subscribe(() => {
+          this.router.navigate([`/groups/`]);
+          this.alertService.success('Group deleted successfully!');
+        });
       }
     });
   }

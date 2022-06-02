@@ -52,6 +52,10 @@ export class UserService {
     return this.http.put<User>(`${environment.API_URL}/users/${id}/`, user);
   }
 
+  public deleteStudent(id: string): Observable<any> {
+    return this.http.delete<any>(`${environment.API_URL}/users/${id}/`);
+  }
+
   public assignTopicsAccesses(batchTopicAccesses: BatchTopicAccesses, assessmentId: string): Observable<BatchTopicAccesses> {
     return this.http.post<BatchTopicAccesses>(
       `${environment.API_URL}/assessments/${assessmentId}/accesses/bulk_create/`, batchTopicAccesses);
@@ -83,6 +87,10 @@ export class UserService {
 
   public editGroup(groupId: string, group: { name: string, supervisor: string }): Observable<Group> {
     return this.http.put<Group>(`${environment.API_URL}/users/groups/${groupId}/`, group);
+  }
+
+  public deleteGroup(id: string): Observable<any> {
+    return this.http.delete<any>(`${environment.API_URL}/users/groups/${id}/`);
   }
 
   public getStudentTopicsChart(assessmentId: string):

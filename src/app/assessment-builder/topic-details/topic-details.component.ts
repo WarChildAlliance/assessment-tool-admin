@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
+import { ConfirmModalComponent } from 'src/app/shared/confirm-modal/confirm-modal.component';
 import { QuestionInputFormComponent } from '../questions/question-input-form/question-input-form.component';
 import { QuestionNumberlineFormComponent } from '../questions/question-numberline-form/question-numberline-form.component';
 import { QuestionSelectFormComponent } from '../questions/question-select-form/question-select-form.component';
@@ -46,7 +49,9 @@ export class TopicDetailsComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private assessmentService: AssessmentService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private alertService: AlertService,
+    private translateService: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -107,6 +112,32 @@ export class TopicDetailsComponent implements OnInit {
     questionDialog.afterClosed().subscribe((value) => {
       if (value) {
         this.getQuestionsList();
+      }
+    });
+  }
+
+  // get deleteTopic from assessnebt-summary
+  public deleteTopic(): void {
+    console.log('delete topic: ', this.topicId, this.topicDetails.name);
+  }
+
+  public deleteQuestion(questionId: string, questionTitle: string): void {
+    const confirmDialog = this.dialog.open(ConfirmModalComponent, {
+      data: {
+        title: 'Delete question',
+        // content: "Do you really want to delete the question '<b>{{questionTitle}}</b>' ?",
+        content: '',
+        contentType: 'innerHTML',
+        confirmColor: 'warn'
+      }
+    });
+
+    confirmDialog.afterClosed().subscribe((res) => {
+      if (res) {
+        this.assessmentService.deleteQuestion(this.assessmentId, this.topicId, questionId).subscribe(() => {
+          this.alertService.success('Question deleted successfully!');
+          this.getQuestionsList();
+        });
       }
     });
   }

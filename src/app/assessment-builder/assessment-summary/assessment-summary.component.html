@@ -35,6 +35,9 @@
                 {{ assessment.archived ? ("assessmentBuilder.assessmentSummary.unarchive" | translate)
                  : ("assessmentBuilder.assessmentSummary.archive" | translate) }}
             </app-custom-button>
+            <app-custom-button *ngIf="canEdit" category="tertiary" variant="primary" icon="delete" (click)="deleteAssessment(assessment.id, assessment.title)">
+                Delete
+            </app-custom-button>
         </div>
     </div>
     <hr>
@@ -56,6 +59,11 @@
                         <app-custom-button matTooltip="Archive topic" [isIcon]="true"
                         icon="archive" (click)="archiveTopic(assessment.id, topic.id, true)">
                         </app-custom-button>
+
+                        <app-custom-button matTooltip="Delete topic" [isIcon]="true"
+                        icon="delete" (click)="deleteTopic(assessment.id, topic.id, topic.title)">
+                        </app-custom-button>
+                        
                         <app-custom-button matTooltip="Topic details" [isIcon]="true"
                         icon="pageview" (click)="goToTopicDetails(assessment.id, topic.id)">
                         </app-custom-button>

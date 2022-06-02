@@ -8,7 +8,7 @@
             <h1>{{ "assessmentBuilder.yourAssessments" | translate }}</h1>
             <ng-container *ngFor="let assessment of currentAssessments">
                 <ng-container *ngIf="assessment.can_edit && !assessment.archived">
-                    <app-assessment-summary [assessment]="assessment" [canEdit]="true" (archivedAssessment)="getAssessments()"></app-assessment-summary>
+                    <app-assessment-summary [assessment]="assessment" [canEdit]="true" (reloadAssessments)="getAssessments()"></app-assessment-summary>
                 </ng-container>
             </ng-container>
         </div>
@@ -30,7 +30,7 @@
             <h1>{{ "assessmentBuilder.archivedAssessments" | translate }}</h1>
             <ng-container *ngFor="let assessment of currentAssessments">
                 <ng-container *ngIf="assessment.archived">
-                    <app-assessment-summary [assessment]="assessment" [canEdit]="true" (archivedAssessment)="getAssessments()"></app-assessment-summary>
+                    <app-assessment-summary [assessment]="assessment" [canEdit]="assessment.can_edit" (reloadAssessments)="getAssessments()"></app-assessment-summary>
                 </ng-container>
             </ng-container>
         </div>

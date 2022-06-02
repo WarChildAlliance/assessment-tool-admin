@@ -38,11 +38,11 @@ export class AssessmentService {
   }
 
   public deleteTopic(assessmentId: string, topicId: string): Observable<any> {
-    return this.http.delete<any>(`${environment.API_URL}/assessments/${assessmentId}/topics/${topicId}`);
+    return this.http.delete<any>(`${environment.API_URL}/assessments/${assessmentId}/topics/${topicId}/`);
   }
 
   public deleteQuestion(assessmentId: string, topicId: string, questionId: string): Observable<any> {
-    return this.http.delete<any>(`${environment.API_URL}/assessments/${assessmentId}/topics/${topicId}/questions/${questionId}`);
+    return this.http.delete<any>(`${environment.API_URL}/assessments/${assessmentId}/topics/${topicId}/questions/${questionId}/`);
   }
 
   public getAssessmentTopics(id: string): Observable<any[]> {

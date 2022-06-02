@@ -8,10 +8,15 @@
     <div class="main-board__top-container__actions">
       <app-custom-button icon="group_add" category="secondary" variant="primary" (click)="onCreate()">
         {{ "groups.addGroup" | translate }}
+        <!-- edit translation: Add group no Add Group -->
       </app-custom-button>
       <app-custom-button icon="edit_outline" category="secondary" variant="primary" (click)="onEdit()"
         [disabled]="!selectedGroups.length || selectedGroups.length > 1">
         {{ "groups.editGroup" | translate }}
+      </app-custom-button>
+      <app-custom-button icon="delete" category="secondary" variant="primary" (click)="onDelete()"
+        [disabled]="!selectedGroups.length || selectedGroups.length > 1">
+        Delete group
       </app-custom-button>
     </div>
   </div>
