@@ -44,11 +44,6 @@
           (click)="openQuestionDialog(null, false, question.type)" variant="default">
           {{ question.text }}
         </app-custom-button>
-
-        <app-custom-button category="tertiary" variant="primary"
-          (click)="openDragAndDrop()" variant="default">
-          Drag and Drop
-        </app-custom-button>
       </div>
     </mat-card>
     <div class="question-details" *ngFor="let questionDetails of questionsList">

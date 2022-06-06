@@ -1,0 +1,67 @@
+.container {
+    overflow: auto;
+    max-height: 85vh;
+
+    .image-selector {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-direction: column;
+
+        .img-overlay-wrap {
+            position: relative;
+            z-index: 1;
+            display: inline-block;
+        }
+
+        .img-overlay-wrap svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2;
+        }
+
+        .image-form {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            width: 100%;
+
+            .notifier {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+
+                span {
+                    color: red;
+                }
+            }
+        }
+    }
+
+    .areas-list {
+        display: flex;
+        align-items: center;
+    }
+}
+
+#draw #rectanglesList {
+    fill: blue;
+    stroke: white;
+    stroke-width: 1;
+    fill-opacity: 0.5;
+    stroke-opacity: 0.9;
+}
+
+#draw #rectangle {
+    fill: white;
+    stroke: blue;
+    stroke-width: 1;
+    stroke-dasharray: 5, 5;
+    stroke-opacity: 0.9;
+    fill-opacity: 0.2;
+}
+
+.dialog-buttons {
+    margin-top: 0.5em;
+}

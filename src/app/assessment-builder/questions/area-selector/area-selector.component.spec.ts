@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DragAndDropComponent } from './drag-and-drop.component';
+import { AreaSelectorComponent } from './area-selector.component';
 
-describe('DragAndDropComponent', () => {
-  let component: DragAndDropComponent;
-  let fixture: ComponentFixture<DragAndDropComponent>;
+describe('AreaSelectorComponent', () => {
+  let component: AreaSelectorComponent;
+  let fixture: ComponentFixture<AreaSelectorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DragAndDropComponent ]
+      declarations: [ AreaSelectorComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DragAndDropComponent);
+    fixture = TestBed.createComponent(AreaSelectorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

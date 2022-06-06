@@ -27,7 +27,8 @@ import { HorizontalScrollArrowsComponent } from '../shared/horizontal-scroll-arr
 import { ImageSelectorComponent } from '../shared/attachments/image-selector/image-selector.component';
 import { AudioSelectorComponent } from '../shared/attachments/audio-selector/audio-selector.component';
 import { PreviousButtonModule } from '../shared/previous-button/previous-button.module';
-import { DragAndDropComponent } from './topic-details/drag-and-drop/drag-and-drop.component';
+import { QuestionDragAndDropFormComponent } from './questions/question-drag-and-drop-form/question-drag-and-drop-form.component';
+import { AreaSelectorComponent } from './questions/area-selector/area-selector.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { DragAndDropComponent } from './topic-details/drag-and-drop/drag-and-dro
     HorizontalScrollArrowsComponent,
     ImageSelectorComponent,
     AudioSelectorComponent,
-    DragAndDropComponent
+    QuestionDragAndDropFormComponent,
+    AreaSelectorComponent
   ],
   imports: [
     CommonModule,

@@ -37,7 +37,12 @@ export interface QuestionDragAndDrop extends Question {
 }
 
 export interface AreaOption {
-  coordinates: number[];
+  coordinates: {
+    x: number,
+    y: number,
+    width: number,
+    height: number
+  };
   name: string;
 }
 

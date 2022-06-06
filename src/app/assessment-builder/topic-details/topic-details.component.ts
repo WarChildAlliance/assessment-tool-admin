@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
+import { QuestionDragAndDropFormComponent } from '../questions/question-drag-and-drop-form/question-drag-and-drop-form.component';
 import { QuestionInputFormComponent } from '../questions/question-input-form/question-input-form.component';
 import { QuestionNumberlineFormComponent } from '../questions/question-numberline-form/question-numberline-form.component';
 import { QuestionSelectFormComponent } from '../questions/question-select-form/question-select-form.component';
 import { TopicFormDialogComponent } from '../topic-form-dialog/topic-form-dialog.component';
-import { DragAndDropComponent } from './drag-and-drop/drag-and-drop.component';
 
 @Component({
   selector: 'app-topic-details',
@@ -36,6 +36,11 @@ export class TopicDetailsComponent implements OnInit {
     type: 'NUMBER_LINE',
     text: 'Number Line',
     component: QuestionNumberlineFormComponent
+    },
+    {
+      type: 'DRAG_AND_DROP',
+      text: 'Drag and Drop',
+      component: QuestionDragAndDropFormComponent
     },
 ];
 
@@ -89,19 +94,6 @@ export class TopicDetailsComponent implements OnInit {
     createTopicDialog.afterClosed().subscribe((value) => {
       if (value) {
         this.getTopicDetails();
-      }
-    });
-  }
-
-  public openDragAndDrop(): void {
-    const dragAndDropComponent = this.dialog.open(DragAndDropComponent, {
-      width: '60%',
-      height: '90%',
-    });
-
-    dragAndDropComponent.afterClosed().subscribe(value => {
-      if (value) {
-        console.log(value);
       }
     });
   }
