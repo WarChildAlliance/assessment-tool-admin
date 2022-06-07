@@ -36,7 +36,8 @@ export class StudentDialogComponent implements OnInit {
     last_name: new FormControl('', [Validators.required, Validators.pattern('^[A-Za-zÀ-ÖØ-öø-ÿ\u0621-\u064A]+(-[A-Za-zÀ-ÖØ-öø-ÿ\u0621-\u064A]+)?$')]),
     country: new FormControl('', [Validators.required]),
     language: new FormControl('', [Validators.required]),
-    group: new FormControl('')
+    group: new FormControl(''),
+    active: new FormControl(true)
   });
 
   constructor(
@@ -55,7 +56,8 @@ export class StudentDialogComponent implements OnInit {
         last_name: this.student.last_name,
         country: this.student.country_code,
         language: this.student.language_code,
-        group: this.student.group ?? ''
+        group: this.student.group ?? '',
+        active: this.student.is_active
       });
     }
 
@@ -91,7 +93,8 @@ export class StudentDialogComponent implements OnInit {
       role: 'STUDENT',
       language: this.studentForm.value.language,
       country: this.studentForm.value.country,
-      group: this.studentForm.value.group
+      group: this.studentForm.value.group,
+      is_active: this.studentForm.value.active
     };
 
     if (!!this.student) {

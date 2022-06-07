@@ -46,6 +46,14 @@
         </span>
       <span class="value">{{ student.country_name }}</span>
     </div>
+    <div class="main-board__details__element">
+      <span class="title">
+        {{ "students.active" | translate }}
+      </span>
+      <span class="value">
+        {{ student.is_active ? ("general.yes" | translate) : ("general.no" | translate) }}
+      </span>
+    </div>
   </div>
 
   <div class="main-board__accordions-container">
