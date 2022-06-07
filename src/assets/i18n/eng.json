@@ -50,6 +50,8 @@
     "topics": "Topics",
     "totalCompletedTopics": "Total completed topics",
     "workInProgress": "Work in progress... Available soon",
+    "no": "No",
+    "yes": "Yes",
     "grades": {
       "0": "Kindergarten",
       "1": "1st",
@@ -223,12 +225,11 @@
     "table": {
       "copySuccess": "Successfully copied!",
       "hintSearchColumn": "You can search on any column!",
-      "no": "No",
-      "search": "Search...",
-      "yes": "Yes"
+      "search": "Search..."
     }
   },
   "students": {
+    "active": "Active",
     "activeAssessmentsNumber": "Number of active assessments",
     "addStudent": "Add student",
     "assignTopic": "Assign a topic",
