@@ -29,7 +29,7 @@
     <p *ngIf="areasOptions.length"><strong>Areas:</strong></p>
     <span *ngFor="let area of areasOptions; let i = index">
         <span class="areas-list">
-            <app-custom-button matTooltip="Delete area" [isIcon]="true" icon="delete" (click)="removeArea(i)">
+            <app-custom-button matTooltip="Delete area" [isIcon]="true" icon="remove_circle_outline" (click)="removeArea(i)">
             </app-custom-button>
 
             {{i+1}}: {{area.name}}

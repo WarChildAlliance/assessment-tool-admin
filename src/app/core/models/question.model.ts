@@ -34,6 +34,8 @@ export interface QuestionSort extends Question {
 
 export interface QuestionDragAndDrop extends Question {
   drop_areas: AreaOption[];
+  drag_items: [];
+  background_image: any;
 }
 
 export interface AreaOption {
