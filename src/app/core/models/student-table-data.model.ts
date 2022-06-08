@@ -11,4 +11,5 @@ export interface StudentTableData {
     country_name: string;
     country_code: string;
     last_session: Date;
+    is_active: boolean;
 }

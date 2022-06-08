@@ -48,6 +48,8 @@
     "totalCompletedTopics": "إجمالي المواضيع المكتملة",
     "workInProgress": "جاري العمل ... متاح قريبًا",
     "topics": "المواضيع",
+    "no": "لا",
+    "yes": "نعم",
     "grades": {
       "0": "0",
       "1": "1",
@@ -221,13 +223,12 @@
     },
     "table": {
       "hintSearchColumn": "يمكنك البحث في أي عمود!",
-      "no": "لا",
       "search": "بحث...",
-      "yes": "نعم",
       "copySuccess": "تم النسخ بنجاح!"
     }
   },
   "students": {
+    "active": "نشيط",
     "activeAssessmentsNumber": "عدد التقييمات النشطة",
     "addStudent": "أضف طالباً",
     "assignTopic": "قم بتعيين موضوع",

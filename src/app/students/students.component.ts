@@ -34,6 +34,7 @@ export class StudentsComponent implements OnInit {
     { key: 'last_session', name: 'general.lastLogin', type: 'date' },
     { key: 'language_name', name: 'general.language' },
     { key: 'country_name', name: 'general.country' },
+    { key: 'is_active', name: 'students.active', type: 'boolean' }
   ];
 
   public studentsDataSource: MatTableDataSource<StudentTableData> =
