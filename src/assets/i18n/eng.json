@@ -290,6 +290,8 @@
     "groupStudents": "Students of the group",
     "groupEdited": "Group edited successfully",
     "errorMessage": "Something went wrong: ",
-    "groupCreated": "Group created successfully"
+    "groupCreated": "Group created successfully",
+    "chooseGroup": "Choose group",
+    "filterByGroup": "Filter by group"
   }
 }

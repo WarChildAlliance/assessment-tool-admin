@@ -5,7 +5,10 @@
     <div class="left-column">
       <app-select-assessment (assessmentSelection)="selectChartAssessment($event)" [topicSelectionEnabled]="false"
         [multiple]="false" [displayNonEvaluated]="false"></app-select-assessment>
-
+      <app-select-group
+        (groupsSelection)="onGroupsSelection($event)"
+        [multiple]="true"
+      ></app-select-group>
       <h3>
         {{ "dashboard.scoreByTopicChart.assessmentTitle" | translate }}
       </h3>
@@ -21,9 +24,10 @@
       </mat-radio-group>
     </div>
 
-    <div class="main-board__charts-container__chart">
+    <div class="main-board__charts-container__chart" [hidden]="!selectionHasData">
       <canvas id="currentChart"></canvas>
     </div>
+    <p *ngIf="!selectionHasData" class="selection-no-data">{{ "general.noData" | translate }}</p>
   </mat-card-content>
   <p *ngIf="!hasData" style="text-align: center;">{{ "general.noData" | translate }}</p>
 </mat-card>

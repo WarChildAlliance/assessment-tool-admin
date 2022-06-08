@@ -31,15 +31,24 @@ export class AnswersOverviewComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  public getStudentListForTopic(groupID?: number[]): void {
+    const filteringParams = groupID?.length ? { groups: groupID } : null;
+
+    this.userService.getStudentsListForATopic(this.topicId, filteringParams)
+    .subscribe(studentsList => {
+      this.studentsList = studentsList;
+      this.selectedStudent = this.studentsList.find(s => s.topic_first_try !== null);
+      if (this.selectedStudent) {
+        this.selectStudent(this.selectedStudent);
+      }
+    });
+  }
+
   public onTopicSelection(assessmentTopicInfos: {assessmentId: string, topic: TopicDashboard}): void {
     if (assessmentTopicInfos && assessmentTopicInfos.topic.started) {
       this.topicId = assessmentTopicInfos.topic.id;
       this.evaluated = assessmentTopicInfos.topic.evaluated;
-      this.userService.getStudentsListForATopic(this.topicId).subscribe(studentsList => {
-        this.studentsList = studentsList;
-        this.selectedStudent = this.studentsList.find(s => s.topic_first_try !== null);
-        this.selectStudent(this.selectedStudent);
-      });
+      this.getStudentListForTopic();
     } else {
       this.hasData = false;
     }
