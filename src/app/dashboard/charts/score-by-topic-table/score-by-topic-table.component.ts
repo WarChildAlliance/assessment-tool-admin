@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { AssessmentDashboard } from 'src/app/core/models/assessment-dashboard.model';
 import { UserService } from 'src/app/core/services/user.service';
+import { Group } from 'src/app/core/models/group.model';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 
@@ -11,6 +12,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./score-by-topic-table.component.scss']
 })
 export class ScoreByTopicTableComponent implements OnInit {
+  private selectedAssessments: AssessmentDashboard[] = [];
 
   public studentsDataSource: MatTableDataSource<any> = new MatTableDataSource([]);
   public displayedColumns: any[] = [
@@ -64,10 +66,21 @@ export class ScoreByTopicTableComponent implements OnInit {
     return this.newTableData;
   }
 
-  private getScoreByTopicsData(assessment, instentiateTable: boolean): void {
+  private getScoreByTopicsData(assessment, instentiateTable: boolean, selectedGroupsIds: number[] = []): void {
     if (assessment && assessment.id){
       this.userService.getStudentTopicsChart(assessment.id).subscribe(scoreByTopic => {
+        if (selectedGroupsIds.length) {
+          scoreByTopic = scoreByTopic.filter(el => {
+            const groups = el.group as Group[];
+            let hasSelectedGroup = false;
 
+            groups.map(group => {
+              hasSelectedGroup = selectedGroupsIds.includes(group.id);
+            });
+
+            return hasSelectedGroup;
+          });
+        }
         if (scoreByTopic.length) {
           if (instentiateTable) {
             this.scoreByTopicTable = scoreByTopic;
@@ -85,12 +98,15 @@ export class ScoreByTopicTableComponent implements OnInit {
 
   public selectTableAssessment(assessment: AssessmentDashboard): void {
     if (!this.scoreByTopicTable.length) {
+      this.selectedAssessments.push(assessment);
       this.getScoreByTopicsData(assessment, true);
     } else {
-      const mathcingCol = this.displayedColumns.find(val => val.assmnt === assessment.title);
-      if (!mathcingCol) {
+      const matchingCol = this.displayedColumns.find(val => val.assmnt === assessment.title);
+      if (!matchingCol) {
+        this.selectedAssessments.push(assessment);
         this.getScoreByTopicsData(assessment, false);
       } else {
+        this.selectedAssessments.splice(this.selectedAssessments.indexOf(assessment), 1);
         this.displayedColumns = this.displayedColumns.filter(col => col.assmnt !== assessment.title);
         this.newTableData.forEach(data => {
           for (const key in data) {
@@ -110,5 +126,12 @@ export class ScoreByTopicTableComponent implements OnInit {
 
   public onOpenStudentDetails(id: string): void {
     this.router.navigate([`/students/${id}`]);
+  }
+
+  public onGroupsSelection(groupIds: number[]): void {
+    for (const assessment of this.selectedAssessments) {
+      this.displayedColumns = this.displayedColumns.filter(col => col.assmnt !== assessment.title);
+      this.getScoreByTopicsData(assessment, false, groupIds);
+    }
   }
 }

@@ -289,6 +289,8 @@
     "groupStudents": "طلاب المجموعة",
     "groupEdited": "تم تحرير المجموعة بنجاح",
     "errorMessage": "هناك خطأ ما:",
-    "groupCreated": "تم إنشاء المجموعة بنجاح"
+    "groupCreated": "تم إنشاء المجموعة بنجاح",
+    "chooseGroup": "اختر مجموعة",
+    "filterByGroup": "تصفية حسب المجموعة"
   }
 }

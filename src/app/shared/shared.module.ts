@@ -22,7 +22,6 @@ import { QuestionInputComponent } from './questions/question-input/question-inpu
 import { QuestionSortComponent } from './questions/question-sort/question-sort.component';
 import { QuestionNumberlineComponent } from './questions/question-numberline/question-numberline.component';
 
-
 @NgModule({
   declarations: [
     TableComponent,
@@ -30,7 +29,7 @@ import { QuestionNumberlineComponent } from './questions/question-numberline/que
     QuestionSelectComponent,
     QuestionInputComponent,
     QuestionSortComponent,
-    QuestionNumberlineComponent
+    QuestionNumberlineComponent,
   ],
   imports: [
     CommonModule,
