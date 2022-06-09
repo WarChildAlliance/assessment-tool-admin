@@ -9,6 +9,7 @@ import { GroupTableData } from '../core/models/group-table-data.model';
 import { GroupDialogComponent } from './group-dialog/group-dialog.component';
 import { AlertService } from '../core/services/alert.service';
 import { ConfirmModalComponent } from '../shared/confirm-modal/confirm-modal.component';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-groups',
@@ -92,15 +93,10 @@ export class GroupsComponent implements OnInit {
   }
 
   public onDelete(): void {
-    const groupId = this.selectedGroups[0].id;
-    const groupName = this.selectedGroups[0].name;
-
     const confirmDialog = this.dialog.open(ConfirmModalComponent, {
       data: {
-        title: 'Delete group',
-        // content: "Do you really want to delete the group '<b>{{groupName}}</b>'?
-        // All students will be withdrawn from the group and left without one.",
-        content: '',
+        title: this.translateService.instant('groups.deleteGroup'),
+        content: this.translateService.instant('groups.deleteGroupPrompt'),
         contentType: 'innerHTML',
         confirmColor: 'warn'
       }
@@ -108,8 +104,15 @@ export class GroupsComponent implements OnInit {
 
     confirmDialog.afterClosed().subscribe((res) => {
       if (res) {
-        this.userService.deleteGroup(groupId).subscribe(() => {
-          this.alertService.success('Group deleted successfully!');
+        const toDelete = [];
+        this.selectedGroups.forEach(group => {
+          toDelete.push(
+            this.userService.deleteGroup(group.id.toString())
+          );
+        });
+
+        forkJoin(toDelete).subscribe(() => {
+          this.alertService.success(this.translateService.instant('groups.deleteGroupSuccess'));
           this.getGroups();
         });
       }

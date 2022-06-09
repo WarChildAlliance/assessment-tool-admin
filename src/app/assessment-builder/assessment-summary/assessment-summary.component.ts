@@ -89,9 +89,8 @@ export class AssessmentSummaryComponent implements OnInit {
   public deleteAssessment(assessmentId: string, assessmentTitle: string): void {
     const confirmDialog = this.dialog.open(ConfirmModalComponent, {
       data: {
-        title: 'Delete assessment',
-        // content: "Do you really want to delete the assessment '<b>{{assessmentTitle}}</b>' ?",
-        content: '',
+        title: this.translateService.instant('assessmentBuilder.assessmentSummary.deleteAssessment'),
+        content: this.translateService.instant('assessmentBuilder.assessmentSummary.deleteAssessmentPrompt', { assessmentTitle }),
         contentType: 'innerHTML',
         confirmColor: 'warn'
       }
@@ -100,7 +99,7 @@ export class AssessmentSummaryComponent implements OnInit {
     confirmDialog.afterClosed().subscribe((res) => {
       if (res) {
         this.assessmentService.deleteAssessment(assessmentId).subscribe(() => {
-          this.alertService.success('Assessment deleted successfully!');
+          this.alertService.success(this.translateService.instant('assessmentBuilder.assessmentSummary.deleteAssessmentSuccess'));
           this.reloadAssessments.emit(true);
         });
       }
@@ -110,11 +109,8 @@ export class AssessmentSummaryComponent implements OnInit {
   public deleteTopic(assessmentId: string, topicId: string, topicTitle: string): void {
     const confirmDialog = this.dialog.open(ConfirmModalComponent, {
       data: {
-        // title: this.translateService.instant('students.topicAccessesEdit.removeTopicAccess'),
-        title: 'Delete topic',
-        // content: this.translateService.instant('students.topicAccessesEdit.removeTopicAccessPrompt', { topicTitle }),
-        // content: "Do you really want to delete the topic '<b>{{topicTitle}}</b>' ?",
-        content: '',
+        title: this.translateService.instant('assessmentBuilder.assessmentSummary.deleteTopic'),
+        content: this.translateService.instant('assessmentBuilder.assessmentSummary.deleteTopicPrompt', { topicTitle }),
         contentType: 'innerHTML',
         confirmColor: 'warn'
       }
@@ -123,7 +119,7 @@ export class AssessmentSummaryComponent implements OnInit {
     confirmDialog.afterClosed().subscribe((res) => {
       if (res) {
         this.assessmentService.deleteTopic(assessmentId, topicId).subscribe(() => {
-          this.alertService.success('Topic deleted successfully!');
+          this.alertService.success(this.translateService.instant('assessmentBuilder.assessmentSummary.topicDetailSuccess'));
           this.getAssessmentDetails(assessmentId);
         });
       }

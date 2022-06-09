@@ -16,6 +16,7 @@ import { AlertService } from '../core/services/alert.service';
 import { UserService } from '../core/services/user.service';
 import { TopicAccessesBuilderComponent } from './topic-accesses-builder/topic-accesses-builder.component';
 import { StudentDialogComponent } from './student-dialog/student-dialog.component';
+import { ConfirmModalComponent } from 'src/app/shared/confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-students',
@@ -142,6 +143,57 @@ export class StudentsComponent implements OnInit {
     this.router.navigate([`/students/${id}`]);
   }
 
+  private inactiveOneYear(inactiveDate: string): boolean {
+    const today = new Date();
+    const inactiveSince = new Date(inactiveDate);
+
+    const y1 = inactiveSince.getFullYear();
+    const y2 = today.getFullYear();
+
+    const d1 = new Date(inactiveSince).setFullYear(2000);
+    const d2 = new Date(today).setFullYear(2000);
+
+    return (y2 - y1 > 1 || (y2 - y1 === 1 && d2 > d1));
+  }
+
+  public deleteStudent(): void {
+    // Check if all students are inactive over one year
+    const studentsToDeleteInactive = this.selectedUsers.every(
+      (student) =>
+        student.is_active === false &&
+        this.inactiveOneYear(student.active_status_updated_on)
+    );
+
+    if (studentsToDeleteInactive) {
+      const confirmDialog = this.dialog.open(ConfirmModalComponent, {
+        data: {
+          title: this.translateService.instant('students.deleteStudent'),
+          content: this.translateService.instant('students.deleteStudentPrompt'),
+          contentType: 'innerHTML',
+          confirmColor: 'warn'
+        }
+      });
+
+      confirmDialog.afterClosed().subscribe(res => {
+        if (res) {
+          const toDelete = [];
+          this.selectedUsers.forEach(student => {
+            toDelete.push(
+              this.userService.deleteStudent(student.id.toString())
+            );
+          });
+
+          forkJoin(toDelete).subscribe(() => {
+            this.alertService.success(this.translateService.instant('students.studentDeleteSuccess'));
+            this.getStudentTableList(this.filtersData);
+          });
+        }
+      });
+    } else {
+      this.alertService.error(this.translateService.instant('students.statusError'));
+    }
+  }
+
   public openAssignTopicDialog(): void {
     // Check if all students share the same language and country
     if (
@@ -189,10 +241,6 @@ export class StudentsComponent implements OnInit {
       }
       this.studentToEdit = null;
     });
-  }
-
-  public deleteSelection(): void {
-    console.log('DEL', this.selectedUsers);
   }
 
   public downloadData(): void {

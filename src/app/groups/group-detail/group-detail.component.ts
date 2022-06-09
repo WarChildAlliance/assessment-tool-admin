@@ -88,10 +88,8 @@ export class GroupDetailComponent implements OnInit {
 
     const confirmDialog = this.dialog.open(ConfirmModalComponent, {
       data: {
-        title: 'Delete group',
-        // content: "Do you really want to delete the group '<b>{{groupName}}</b>'?
-        // All students will be withdrawn from the group and left without one.",
-        content: '',
+        title: this.translateService.instant('groups.deleteGroup'),
+        content: this.translateService.instant('groups.deleteGroupPrompt', {groupName}),
         contentType: 'innerHTML',
         confirmColor: 'warn'
       }
@@ -100,8 +98,10 @@ export class GroupDetailComponent implements OnInit {
     confirmDialog.afterClosed().subscribe((res) => {
       if (res) {
         this.userService.deleteGroup(this.group.id.toString()).subscribe(() => {
+          this.alertService.success(
+            this.translateService.instant('groups.deleteGroupSuccess')
+          );
           this.router.navigate([`/groups/`]);
-          this.alertService.success('Group deleted successfully!');
         });
       }
     });

@@ -11,9 +11,10 @@
       [disabled]="!selectedUsers.length || selectedUsers.length > 1">
       {{ "students.editStudent" | translate }}
       </app-custom-button>
-<!--       <button mat-flat-button [disabled]="!selectedUsers.length" color="primary" (click)="deleteSelection()">
-        <mat-icon>delete_outline</mat-icon><span>Delete student(s)</span>
-      </button> -->
+      <app-custom-button icon="delete" category="secondary" variant="primary" (click)="deleteStudent()"
+      [disabled]="!selectedUsers.length">
+      {{ "students.deleteStudent" | translate }}
+      </app-custom-button>
       <app-custom-button icon="event_available" category="secondary" variant="primary" (click)="openAssignTopicDialog()">
       {{ "students.assignTopic" | translate }}
       </app-custom-button>

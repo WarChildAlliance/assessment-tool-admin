@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
@@ -50,6 +50,7 @@ export class TopicDetailsComponent implements OnInit {
     private dialog: MatDialog,
     private assessmentService: AssessmentService,
     private route: ActivatedRoute,
+    private router: Router,
     private alertService: AlertService,
     private translateService: TranslateService
   ) {}
@@ -116,17 +117,33 @@ export class TopicDetailsComponent implements OnInit {
     });
   }
 
-  // get deleteTopic from assessnebt-summary
   public deleteTopic(): void {
-    console.log('delete topic: ', this.topicId, this.topicDetails.name);
+    const confirmDialog = this.dialog.open(ConfirmModalComponent, {
+      data: {
+        title: this.translateService.instant('assessmentBuilder.assessmentSummary.deleteTopic'),
+        content: this.translateService.instant(
+          'assessmentBuilder.assessmentSummary.deleteTopicPrompt', { topicTitle: this.topicDetails.name }
+        ),
+        contentType: 'innerHTML',
+        confirmColor: 'warn'
+      }
+    });
+
+    confirmDialog.afterClosed().subscribe((res) => {
+      if (res) {
+        this.assessmentService.deleteTopic(this.assessmentId, this.topicId).subscribe(() => {
+          this.alertService.success(this.translateService.instant('assessmentBuilder.assessmentSummary.topicDetailSuccess'));
+          this.router.navigate(['/assessment-builder/your-assessments']);
+        });
+      }
+    });
   }
 
   public deleteQuestion(questionId: string, questionTitle: string): void {
     const confirmDialog = this.dialog.open(ConfirmModalComponent, {
       data: {
-        title: 'Delete question',
-        // content: "Do you really want to delete the question '<b>{{questionTitle}}</b>' ?",
-        content: '',
+        title: this.translateService.instant('assessmentBuilder.topicDetails.deleteQuestion'),
+        content: this.translateService.instant('assessmentBuilder.topicDetails.deleteQuestionPrompt', {questionTitle}),
         contentType: 'innerHTML',
         confirmColor: 'warn'
       }
@@ -135,7 +152,9 @@ export class TopicDetailsComponent implements OnInit {
     confirmDialog.afterClosed().subscribe((res) => {
       if (res) {
         this.assessmentService.deleteQuestion(this.assessmentId, this.topicId, questionId).subscribe(() => {
-          this.alertService.success('Question deleted successfully!');
+          this.alertService.success(
+            this.translateService.instant('assessmentBuilder.topicDetails.deleteQuestionSuccess')
+          );
           this.getQuestionsList();
         });
       }

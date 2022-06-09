@@ -5,9 +5,12 @@
       <app-custom-button icon="edit_outline" category="secondary" variant="primary" (click)="editCurrentStudent()">
         {{ "students.editStudent" | translate }}
       </app-custom-button>
-<!--       <button mat-flat-button color="primary" (click)="deleteCurrentStudent()" [disabled]="true">
-        <mat-icon>delete_outline</mat-icon> Delete student
-      </button> -->
+      <span  *ngIf="student" matTooltip="{{ 'students.statusError' | translate }}" [matTooltipDisabled]="deletable" matTooltipPosition="above">
+        <app-custom-button icon="delete" category="secondary" variant="primary" (click)="deleteCurrentStudent()"
+        [disabled]="!deletable">
+          {{ "students.deleteStudent" | translate }}
+        </app-custom-button>
+      </span>
     </div>
   </div>
 

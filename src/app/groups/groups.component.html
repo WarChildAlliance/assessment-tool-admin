@@ -15,8 +15,8 @@
         {{ "groups.editGroup" | translate }}
       </app-custom-button>
       <app-custom-button icon="delete" category="secondary" variant="primary" (click)="onDelete()"
-        [disabled]="!selectedGroups.length || selectedGroups.length > 1">
-        Delete group
+        [disabled]="!selectedGroups.length">
+        {{ "groups.deleteGroup" | translate }}
       </app-custom-button>
     </div>
   </div>
