@@ -62,6 +62,7 @@ export class StudentDetailComponent implements OnInit {
     });
   }
 
+  //TODO: make it in the back-end for performance
   private inactiveOneYear(): boolean {
     const today = new Date();
     const inactiveSince = new Date(this.student.active_status_updated_on);
@@ -74,7 +75,7 @@ export class StudentDetailComponent implements OnInit {
     return (y2 - y1 > 1 || (y2 - y1 === 1 && d2 > d1));
   }
 
-  public editCurrentStudent(): void {
+  public onEdit(): void {
     const editStudentDialog = this.dialog.open(StudentDialogComponent, {
       data: {
         student: this.student
@@ -104,7 +105,7 @@ export class StudentDetailComponent implements OnInit {
     });
   }
 
-  public deleteCurrentStudent(): void {
+  public onDelete(): void {
     const confirmDialog = this.dialog.open(ConfirmModalComponent, {
       data: {
         title: this.translateService.instant('students.deleteStudent'),

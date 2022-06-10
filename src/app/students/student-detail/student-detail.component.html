@@ -2,11 +2,11 @@
   <div class="main-board__top-container back-button">
     <app-previous-button path="students"></app-previous-button>
     <div class="main-board__top-container__actions">
-      <app-custom-button icon="edit_outline" category="secondary" variant="primary" (click)="editCurrentStudent()">
+      <app-custom-button icon="edit_outline" category="secondary" variant="primary" (click)="onEdit()">
         {{ "students.editStudent" | translate }}
       </app-custom-button>
       <span  *ngIf="student" matTooltip="{{ 'students.statusError' | translate }}" [matTooltipDisabled]="deletable" matTooltipPosition="above">
-        <app-custom-button icon="delete" category="secondary" variant="primary" (click)="deleteCurrentStudent()"
+        <app-custom-button icon="delete" category="secondary" variant="primary" (click)="onDelete()"
         [disabled]="!deletable">
           {{ "students.deleteStudent" | translate }}
         </app-custom-button>
