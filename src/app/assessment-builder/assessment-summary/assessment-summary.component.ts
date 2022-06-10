@@ -10,6 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
+import { ConfirmModalComponent } from 'src/app/shared/confirm-modal/confirm-modal.component';
 import { environment } from 'src/environments/environment';
 import { AssessmentFormDialogComponent } from '../assessment-form-dialog/assessment-form-dialog.component';
 import { TopicFormDialogComponent } from '../topic-form-dialog/topic-form-dialog.component';
@@ -24,7 +25,7 @@ export class AssessmentSummaryComponent implements OnInit {
   @Input() assessment: any;
   @Input() canEdit: boolean;
 
-  @Output() archivedAssessment = new EventEmitter<boolean>();
+  @Output() reloadAssessments = new EventEmitter<boolean>();
 
   public assessmentId: string;
 
@@ -85,9 +86,45 @@ export class AssessmentSummaryComponent implements OnInit {
     });
   }
 
-  // deleteAssessment(assessmentId: string): void {
-  //   console.log('id', assessmentId)
-  // }
+  public deleteAssessment(assessmentId: string, assessmentTitle: string): void {
+    const confirmDialog = this.dialog.open(ConfirmModalComponent, {
+      data: {
+        title: this.translateService.instant('assessmentBuilder.assessmentSummary.deleteAssessment'),
+        content: this.translateService.instant('assessmentBuilder.assessmentSummary.deleteAssessmentPrompt', { assessmentTitle }),
+        contentType: 'innerHTML',
+        confirmColor: 'warn'
+      }
+    });
+
+    confirmDialog.afterClosed().subscribe((res) => {
+      if (res) {
+        this.assessmentService.deleteAssessment(assessmentId).subscribe(() => {
+          this.alertService.success(this.translateService.instant('assessmentBuilder.assessmentSummary.deleteAssessmentSuccess'));
+          this.reloadAssessments.emit(true);
+        });
+      }
+    });
+  }
+
+  public deleteTopic(assessmentId: string, topicId: string, topicTitle: string): void {
+    const confirmDialog = this.dialog.open(ConfirmModalComponent, {
+      data: {
+        title: this.translateService.instant('assessmentBuilder.assessmentSummary.deleteTopic'),
+        content: this.translateService.instant('assessmentBuilder.assessmentSummary.deleteTopicPrompt', { topicTitle }),
+        contentType: 'innerHTML',
+        confirmColor: 'warn'
+      }
+    });
+
+    confirmDialog.afterClosed().subscribe((res) => {
+      if (res) {
+        this.assessmentService.deleteTopic(assessmentId, topicId).subscribe(() => {
+          this.alertService.success(this.translateService.instant('assessmentBuilder.assessmentSummary.topicDetailSuccess'));
+          this.getAssessmentDetails(assessmentId);
+        });
+      }
+    });
+  }
 
   public archiveTopic(assessmentId, topicId, archived): void {
     const formData: FormData = new FormData();
@@ -105,7 +142,7 @@ export class AssessmentSummaryComponent implements OnInit {
 
     this.assessmentService.editAssessment(assessmentId, formData).subscribe(res => {
       this.alertService.success(this.translateService.instant('assessmentBuilder.assessmentEditSuccess'));
-      this.archivedAssessment.emit(true);
+      this.reloadAssessments.emit(true);
     });
   }
 
@@ -123,7 +160,7 @@ export class AssessmentSummaryComponent implements OnInit {
     createAssessmentDialog.afterClosed().subscribe((value) => {
       if (value) {
         if (value.archived !== assessment.archived) {
-          this.archivedAssessment.emit(true);
+          this.reloadAssessments.emit(true);
         }
         this.getAssessmentDetails(this.assessment.id);
       }

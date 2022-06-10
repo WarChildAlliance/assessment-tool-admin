@@ -2,6 +2,7 @@
     display: flex;
     padding-bottom: 5px;
     position: relative;
+    justify-content: space-between;
 
     img {
         height: 40px;
@@ -13,8 +14,10 @@
         margin-bottom: auto;
     }
     app-custom-button {
-        position: absolute;
-        right: 0;
+        justify-content: flex-end;
+    }
+    div {
+        display: flex;
     }
 }
 .topic-infos {

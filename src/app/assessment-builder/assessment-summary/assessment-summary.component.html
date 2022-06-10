@@ -35,6 +35,9 @@
                 {{ assessment.archived ? ("assessmentBuilder.assessmentSummary.unarchive" | translate)
                  : ("assessmentBuilder.assessmentSummary.archive" | translate) }}
             </app-custom-button>
+            <app-custom-button *ngIf="canEdit" category="tertiary" variant="primary" icon="delete" (click)="deleteAssessment(assessment.id, assessment.title)">
+                {{ "general.delete" | translate }}
+            </app-custom-button>
         </div>
     </div>
     <hr>
@@ -53,10 +56,15 @@
 
                 <div [ngSwitch]="topic.archived">
                     <div class="topic-buttons" *ngSwitchCase="false">
-                        <app-custom-button matTooltip="Archive topic" [isIcon]="true"
+                        <app-custom-button matTooltip="{{ 'assessmentBuilder.assessmentSummary.archiveTopic' | translate }}" [isIcon]="true"
                         icon="archive" (click)="archiveTopic(assessment.id, topic.id, true)">
                         </app-custom-button>
-                        <app-custom-button matTooltip="Topic details" [isIcon]="true"
+
+                        <app-custom-button *ngIf="canEdit" matTooltip="{{ 'assessmentBuilder.assessmentSummary.deleteTopic' | translate }}"
+                        [isIcon]="true" icon="delete" (click)="deleteTopic(assessment.id, topic.id, topic.title)">
+                        </app-custom-button>
+                        
+                        <app-custom-button matTooltip="{{ 'assessmentBuilder.assessmentSummary.topicDetails' | translate }}" [isIcon]="true"
                         icon="pageview" (click)="goToTopicDetails(assessment.id, topic.id)">
                         </app-custom-button>
                     </div>
