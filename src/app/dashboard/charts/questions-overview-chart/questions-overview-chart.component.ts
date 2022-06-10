@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as Chart from 'chart.js';
 import { ChartData } from 'chart.js';
+import { filter } from 'rxjs/operators';
 import { TopicDashboard } from 'src/app/core/models/topic-dashboard.model';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 
@@ -28,13 +29,26 @@ export class QuestionsOverviewChartComponent implements OnInit {
   public index: number;
 
   public hasData = true;
+  public selectionHasData = true;
 
   constructor(private assessmentService: AssessmentService) { }
 
   ngOnInit(): void {
   }
 
+  public getQuestionsOverview(groupID?: number[]): void {
+    const filteringParams = groupID?.length ? { groups: groupID } : null;
+    this.assessmentService.getQuestionsOverview(this.assessmentId, this.topicId, filteringParams)
+    .subscribe(data => {
+      this.getBarChartData(data);
+    });
+  }
+
   private getBarChartData(questionData): void {
+    if (questionData?.length === 0) {
+      this.selectionHasData = false;
+      return;
+    }
     this.questionData = [];
     const data = [];
     const incorrectAnswers = [];
@@ -57,6 +71,7 @@ export class QuestionsOverviewChartComponent implements OnInit {
     });
 
     this.barChart.update();
+    this.selectionHasData = true;
     this.getQuestionDetails(0);
   }
 
@@ -97,13 +112,9 @@ export class QuestionsOverviewChartComponent implements OnInit {
         },
       });
       this.topicId = assessmentTopicInfos.topic.id;
-      this.assessmentService.getQuestionsOverview(assessmentTopicInfos.assessmentId, this.topicId).subscribe(data => {
-        this.getBarChartData(data);
-        this.getQuestionDetails(0);
-      });
+      this.getQuestionsOverview();
     } else {
       this.hasData = false;
     }
   }
-
 }

@@ -6,38 +6,45 @@
 
   <mat-card-content *ngIf="hasData">
     <div class="left-column">
-      <app-select-assessment 
+      <app-select-assessment
         (topicSelection)="onTopicSelection($event)"
         [topicSelectionEnabled]="true"
         [multiple]="false"
         [displayNonEvaluated]="false">
       </app-select-assessment>
+      <app-select-group style="margin-top: 15px"
+        (groupsSelection)="getQuestionsOverview($event)"
+        [multiple]="true"
+      ></app-select-group>
     </div>
 
-    <div class="barChart">
+    <div class="barChart" [hidden]="!selectionHasData">
       <canvas id="barChart"></canvas>
     </div>
 
-    <div class="question-details" *ngIf="questionDetails">
-      <ng-container *ngIf="questionDetails.question_type === 'SELECT'">
-        <app-question-select [question]="questionDetails" [index]="index" [evaluated]="true"></app-question-select>
-      </ng-container>
+    <ng-container *ngIf="selectionHasData; else selectionNoData">
+      <div class="question-details" *ngIf="questionDetails">
+        <ng-container *ngIf="questionDetails.question_type === 'SELECT'">
+          <app-question-select [question]="questionDetails" [index]="index" [evaluated]="true"></app-question-select>
+        </ng-container>
 
-      <ng-container *ngIf="questionDetails.question_type === 'INPUT'">
-        <app-question-input [question]="questionDetails" [index]="index" [evaluated]="true"></app-question-input>
-      </ng-container>
+        <ng-container *ngIf="questionDetails.question_type === 'INPUT'">
+          <app-question-input [question]="questionDetails" [index]="index" [evaluated]="true"></app-question-input>
+        </ng-container>
 
-      <ng-container *ngIf="questionDetails.question_type === 'SORT'">
-        <app-question-sort [question]="questionDetails" [index]="index" [evaluated]="true"></app-question-sort>
-      </ng-container>
+        <ng-container *ngIf="questionDetails.question_type === 'SORT'">
+          <app-question-sort [question]="questionDetails" [index]="index" [evaluated]="true"></app-question-sort>
+        </ng-container>
 
-      <ng-container *ngIf="questionDetails.question_type === 'NUMBER_LINE'">
-        <app-question-numberline [question]="questionDetails" [index]="index" [evaluated]="true">
-        </app-question-numberline>
-      </ng-container>
-    </div>
-
-
+        <ng-container *ngIf="questionDetails.question_type === 'NUMBER_LINE'">
+          <app-question-numberline [question]="questionDetails" [index]="index" [evaluated]="true">
+          </app-question-numberline>
+        </ng-container>
+      </div>
+    </ng-container>
+    <ng-template #selectionNoData>
+      <p class="selection-no-data">{{ "general.noData" | translate }}</p>
+    </ng-template>
   </mat-card-content>
   <p *ngIf="!hasData" style="text-align: center;">
     {{ "general.noData" | translate }}

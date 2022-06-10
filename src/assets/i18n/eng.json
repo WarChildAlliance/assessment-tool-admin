@@ -309,6 +309,8 @@
     "groupCreated": "Group created successfully",
     "deleteGroup": "Delete group(s)",
     "deleteGroupSuccess": "Group(s) deleted successfully",
-    "deleteGroupPrompt": "Do you really want to delete the group(s)? All students will be withdrawn from the group and left without one."
+    "deleteGroupPrompt": "Do you really want to delete the group(s)? All students will be withdrawn from the group and left without one.",
+    "chooseGroup": "Choose group",
+    "filterByGroup": "Filter by group"
   }
 }

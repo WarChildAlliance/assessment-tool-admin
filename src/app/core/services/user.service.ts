@@ -95,7 +95,7 @@ export class UserService {
 
   public getStudentTopicsChart(assessmentId: string):
   Observable<{full_name: string, topics: {}[], student_access: boolean, group: {}[]}[]> {
-    return this.http.get<{full_name: string, topics: {}[], student_access: boolean, group: {}[]}[]>(
+    return this.http.get<{full_name: string, topics: {}[], student_access: boolean, group: Group[]}[]>(
       `${environment.API_URL}/visualization/charts/score_by_topic/${assessmentId}/`
       );
   }
@@ -108,8 +108,10 @@ export class UserService {
     );
   }
 
-  public getStudentsListForATopic(topicId: string): Observable<TopicAccessStudents[]> {
-    return this.http.get<TopicAccessStudents[]>(`${environment.API_URL}/visualization/charts/topic/${topicId}/students/`);
+  public getStudentsListForATopic(topicId: string, filteringParams?: object): Observable<TopicAccessStudents[]> {
+    const initialUrl = `${environment.API_URL}/visualization/charts/topic/${topicId}/students/`;
+    const finalUrl = filteringParams ? this.utilitiesService.urlBuilder(initialUrl, filteringParams) : initialUrl;
+    return this.http.get<TopicAccessStudents[]>(finalUrl);
   }
 
   public getStudentTopicAnswers(topicId: string, assessmentTopicAnswer: string): Observable<TopicAnswer[]> {

@@ -81,8 +81,10 @@ export class AssessmentService {
     return this.http.get<any[]>(`${environment.API_URL}/visualization/students_assessments/${studentId}/`);
   }
 
-  public getQuestionsOverview(assessmentId: string, topicId: string): Observable<any[]> {
-    return this.http.get<any[]>(`${environment.API_URL}/visualization/charts/assessments/${assessmentId}/topics/${topicId}/questions/`);
+  public getQuestionsOverview(assessmentId: string, topicId: string, filteringParams?: object): Observable<any[]> {
+    const initialUrl = `${environment.API_URL}/visualization/charts/assessments/${assessmentId}/topics/${topicId}/questions/`;
+    const finalUrl = filteringParams ? this.utilitiesService.urlBuilder(initialUrl, filteringParams) : initialUrl;
+    return this.http.get<any[]>(finalUrl);
   }
 
   public getQuestionDetails(assessmentId, topicId, questionId): Observable<any[]> {
