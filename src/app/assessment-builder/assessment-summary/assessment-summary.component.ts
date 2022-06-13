@@ -106,7 +106,9 @@ export class AssessmentSummaryComponent implements OnInit {
     });
   }
 
-  public deleteTopic(assessmentId: string, topicId: string, topicTitle: string): void {
+  public deleteTopic(event: MouseEvent, assessmentId: string, topicId: string, topicTitle: string): void {
+    event.stopPropagation();
+
     const confirmDialog = this.dialog.open(ConfirmModalComponent, {
       data: {
         title: this.translateService.instant('assessmentBuilder.assessmentSummary.deleteTopic'),
@@ -126,7 +128,9 @@ export class AssessmentSummaryComponent implements OnInit {
     });
   }
 
-  public archiveTopic(assessmentId, topicId, archived): void {
+  public archiveTopic(event: MouseEvent, assessmentId, topicId, archived): void {
+    event.stopPropagation();
+
     const formData: FormData = new FormData();
     formData.append('archived', archived);
 

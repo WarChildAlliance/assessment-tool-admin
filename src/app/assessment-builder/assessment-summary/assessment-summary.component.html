@@ -48,7 +48,7 @@
                     {{ "assessmentBuilder.assessmentSummary.addTopic" | translate }}<mat-icon>add</mat-icon>
                 </div>
             </mat-card>
-            <mat-card class="topic-card" *ngFor="let topic of assessment.topics">
+            <mat-card class="topic-card" *ngFor="let topic of assessment.topics" (click)="goToTopicDetails(assessment.id, topic.id)">
                 <img *ngIf="topic.icon" [src]="getMediaSource(topic.icon)">
                 <span class="topic-title">{{ topic.title }}</span>
                 <p class="small-description">{{ topic.description }}</p>
@@ -57,19 +57,15 @@
                 <div [ngSwitch]="topic.archived">
                     <div class="topic-buttons" *ngSwitchCase="false">
                         <app-custom-button matTooltip="{{ 'assessmentBuilder.assessmentSummary.archiveTopic' | translate }}" [isIcon]="true"
-                        icon="archive" (click)="archiveTopic(assessment.id, topic.id, true)">
+                        icon="archive" (click)="archiveTopic($event, assessment.id, topic.id, true)">
                         </app-custom-button>
 
                         <app-custom-button *ngIf="canEdit" matTooltip="{{ 'assessmentBuilder.assessmentSummary.deleteTopic' | translate }}"
-                        [isIcon]="true" icon="delete" (click)="deleteTopic(assessment.id, topic.id, topic.title)">
-                        </app-custom-button>
-                        
-                        <app-custom-button matTooltip="{{ 'assessmentBuilder.assessmentSummary.topicDetails' | translate }}" [isIcon]="true"
-                        icon="pageview" (click)="goToTopicDetails(assessment.id, topic.id)">
+                        [isIcon]="true" icon="delete" (click)="deleteTopic($event, assessment.id, topic.id, topic.title)">
                         </app-custom-button>
                     </div>
                     <div *ngSwitchCase="true">
-                        <app-custom-button category="tertiary" variant="neutral" (click)="archiveTopic(assessment.id, topic.id, false)">
+                        <app-custom-button category="tertiary" variant="neutral" (click)="archiveTopic($event, assessment.id, topic.id, false)">
                             {{ "assessmentBuilder.assessmentSummary.unarchive" | translate }}
                         </app-custom-button>
                     </div>

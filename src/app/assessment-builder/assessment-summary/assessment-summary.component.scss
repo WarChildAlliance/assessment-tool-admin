@@ -63,7 +63,6 @@
                     width: auto;
                 }
             }
-
             mat-card{
                 scroll-snap-align: start;
                 width: 20%;
@@ -74,6 +73,7 @@
                 justify-content: space-between;
                 align-content: center;
                 text-align: center;
+                cursor: pointer;
 
                 img {
                     width: 28px;
