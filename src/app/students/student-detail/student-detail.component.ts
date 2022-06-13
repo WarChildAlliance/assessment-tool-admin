@@ -62,7 +62,7 @@ export class StudentDetailComponent implements OnInit {
     });
   }
 
-  //TODO: make it in the back-end for performance
+  // TODO: make it in the back-end for performance
   private inactiveOneYear(): boolean {
     const today = new Date();
     const inactiveSince = new Date(this.student.active_status_updated_on);
