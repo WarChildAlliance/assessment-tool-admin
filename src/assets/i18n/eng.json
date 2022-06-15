@@ -17,6 +17,7 @@
     "create": "Create",
     "dashboard": "Dashboard",
     "edit": "Edit",
+    "delete": "Delete",
     "selected": "selected",
     "fieldRequired": "This field is required",
     "from": "from",
@@ -50,6 +51,8 @@
     "topics": "Topics",
     "totalCompletedTopics": "Total completed topics",
     "workInProgress": "Work in progress... Available soon",
+    "no": "No",
+    "yes": "Yes",
     "grades": {
       "0": "Kindergarten",
       "1": "1st",
@@ -113,7 +116,15 @@
     "assessmentSummary": {
       "addTopic": "Add a topic",
       "archive": "Archive",
-      "unarchive": "Unarchive"
+      "unarchive": "Unarchive",
+      "archiveTopic": "Archive topic",
+      "topicDetails": "Topic details",
+      "deleteTopic": "Delete topic",
+      "deleteAssessment": "Delete assessment",
+      "deleteAssessmentSuccess": "Assessment deleted successfully",
+      "deleteAssessmentPrompt": "Do you really want to delete the assessment <b>{{assessmentTitle}}</b> ?",
+      "topicDetailSuccess": "Topic deleted successfully!",
+      "deleteTopicPrompt": "Do you really want to delete the topic <b>{{topicTitle}}</b> ?"
     },
     "questions": {
       "audioAttachment": "Audio attachment",
@@ -148,7 +159,10 @@
       "clone": "Clone",
       "numberLineButton": "Number line",
       "selectButton": "(Multi-) Select",
-      "showFeedback": "Show feedback"
+      "showFeedback": "Show feedback",
+      "deleteQuestion": "Delete question",
+      "deleteQuestionSuccess": "Question deleted successfully",
+      "deleteQuestionPrompt" : "Do you really want to delete the question <b>{{questionTitle}}</b> ?"
     },
     "topicFormDialog": {
       "changeFile": "Change File",
@@ -223,20 +237,23 @@
     "table": {
       "copySuccess": "Successfully copied!",
       "hintSearchColumn": "You can search on any column!",
-      "no": "No",
-      "search": "Search...",
-      "yes": "Yes"
+      "search": "Search..."
     }
   },
   "students": {
+    "active": "Active",
     "activeAssessmentsNumber": "Number of active assessments",
     "addStudent": "Add student",
     "assignTopic": "Assign a topic",
     "completedTopicsNumber": "Number of completed topics",
     "editStudent": "Edit student",
+    "deleteStudent": "Delete student(s)",
+    "deleteStudentPrompt": "Do you really want to delete the student(s)?",
     "incompatibleLanguageError": "You can only give access to a topic to students with the same country and language.",
     "studentCode": "Student code",
     "studentDetails": "Student details",
+    "statusError": "Students can only be deleted after one year of inactivity",
+    "studentDeleteSuccess": "Students have been deleted successfully",
     "createStudentDialog": {
       "createStudent": "Create a new student",
       "firstName": "First name",
@@ -281,7 +298,7 @@
   "groups": {
     "editGroup": "Edit group",
     "createGroup": "Create a new group",
-    "addGroup": "Add Group",
+    "addGroup": "Add group",
     "numberStudents": "Number of students",
     "requiredField": "Required field",
     "groupName": "Group name",
@@ -289,6 +306,11 @@
     "groupStudents": "Students of the group",
     "groupEdited": "Group edited successfully",
     "errorMessage": "Something went wrong: ",
-    "groupCreated": "Group created successfully"
+    "groupCreated": "Group created successfully",
+    "deleteGroup": "Delete group(s)",
+    "deleteGroupSuccess": "Group(s) deleted successfully",
+    "deleteGroupPrompt": "Do you really want to delete the group(s)? All students will be withdrawn from the group and left without one.",
+    "chooseGroup": "Choose group",
+    "filterByGroup": "Filter by group"
   }
 }

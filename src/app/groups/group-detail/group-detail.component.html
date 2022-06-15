@@ -6,8 +6,11 @@
         <app-custom-button icon="edit_outline" category="secondary" variant="primary" (click)="onEdit()">
           {{ "groups.editGroup" | translate }}
         </app-custom-button>
+        <app-custom-button icon="delete" category="secondary" variant="primary" (click)="onDelete()">
+          {{ "groups.deleteGroup" | translate }}
+        </app-custom-button>
     </div>
-  </div>
+  </div>  
 
   <div class="main-board__tabs-container">
       <h3> {{ "groups.groupStudents" | translate }} </h3>

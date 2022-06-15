@@ -38,11 +38,11 @@ export class AssessmentService {
   }
 
   public deleteTopic(assessmentId: string, topicId: string): Observable<any> {
-    return this.http.delete<any>(`${environment.API_URL}/assessments/${assessmentId}/topics/${topicId}`);
+    return this.http.delete<any>(`${environment.API_URL}/assessments/${assessmentId}/topics/${topicId}/`);
   }
 
   public deleteQuestion(assessmentId: string, topicId: string, questionId: string): Observable<any> {
-    return this.http.delete<any>(`${environment.API_URL}/assessments/${assessmentId}/topics/${topicId}/questions/${questionId}`);
+    return this.http.delete<any>(`${environment.API_URL}/assessments/${assessmentId}/topics/${topicId}/questions/${questionId}/`);
   }
 
   public getAssessmentTopics(id: string): Observable<any[]> {
@@ -81,8 +81,10 @@ export class AssessmentService {
     return this.http.get<any[]>(`${environment.API_URL}/visualization/students_assessments/${studentId}/`);
   }
 
-  public getQuestionsOverview(assessmentId: string, topicId: string): Observable<any[]> {
-    return this.http.get<any[]>(`${environment.API_URL}/visualization/charts/assessments/${assessmentId}/topics/${topicId}/questions/`);
+  public getQuestionsOverview(assessmentId: string, topicId: string, filteringParams?: object): Observable<any[]> {
+    const initialUrl = `${environment.API_URL}/visualization/charts/assessments/${assessmentId}/topics/${topicId}/questions/`;
+    const finalUrl = filteringParams ? this.utilitiesService.urlBuilder(initialUrl, filteringParams) : initialUrl;
+    return this.http.get<any[]>(finalUrl);
   }
 
   public getQuestionDetails(assessmentId, topicId, questionId): Observable<any[]> {

@@ -50,7 +50,7 @@
         </div>
         <div class="form-primary__flex-container__field-container">
             <mat-form-field appearance="outline" color="accent">
-                <mat-label>{{ ( groups.length ? "general.group" : "general.noData" ) | translate }}</mat-label>
+                <mat-label>{{ ( groups?.length ? "general.group" : "general.noData" ) | translate }}</mat-label>
                 <mat-select formControlName="group">
                     <mat-option>-</mat-option>
                     <mat-option *ngFor="let group of groups" [value]="group.id.toString()">
@@ -61,6 +61,11 @@
             <app-custom-button category="secondary" variant="neutral" icon="add" (click)="openGroupDialog()">
                 {{ "groups.addGroup" | translate }}
             </app-custom-button>
+        </div>
+        <div class="form-primary__flex-container__field-container">
+            <mat-checkbox formControlName="active">
+                {{ "students.active" | translate}}
+            </mat-checkbox>
         </div>
     </div>
     <div class="dialog-buttons">

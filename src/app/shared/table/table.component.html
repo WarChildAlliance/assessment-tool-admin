@@ -75,7 +75,7 @@
     </ng-container>
 
     <ng-container *ngSwitchCase="'boolean'">
-      <td mat-cell *matCellDef="let element">{{ element[column.key] ? ("shared.table.yes" | translate) :("shared.table.no" | translate) }}</td>
+      <td mat-cell *matCellDef="let element">{{ element[column.key] ? ("general.yes" | translate) :("general.no" | translate) }}</td>
     </ng-container>
 
     <ng-container *ngSwitchDefault>

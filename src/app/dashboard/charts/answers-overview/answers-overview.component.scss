@@ -4,13 +4,12 @@ mat-card-title {
     padding: 10px 0px;
     color: rgb(66, 64, 64);
 }
-
 mat-card-subtitle {
     font-size: 1rem;
     text-align: center;
 }
-
 mat-card-content {
+    position: relative;
     display:flex;
     justify-content: space-between;
     align-items: center;
@@ -26,7 +25,6 @@ mat-card-content {
             list-style-type: none;
         }
     }
-   
     .answers-list {
         padding-right:20%;
 
@@ -39,7 +37,6 @@ mat-card-content {
         }
 
     }
-
     .question-details {
        text-align: center;
        border: 1px solid lightgray;
@@ -48,5 +45,11 @@ mat-card-content {
        flex-direction: column;
        width: 30%;
        padding: 0.5rem;
+    }
+    .selection-no-data {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
 }

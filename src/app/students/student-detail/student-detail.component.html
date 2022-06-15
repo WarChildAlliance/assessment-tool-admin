@@ -2,12 +2,15 @@
   <div class="main-board__top-container back-button">
     <app-previous-button path="students"></app-previous-button>
     <div class="main-board__top-container__actions">
-      <app-custom-button icon="edit_outline" category="secondary" variant="primary" (click)="editCurrentStudent()">
+      <app-custom-button icon="edit_outline" category="secondary" variant="primary" (click)="onEdit()">
         {{ "students.editStudent" | translate }}
       </app-custom-button>
-<!--       <button mat-flat-button color="primary" (click)="deleteCurrentStudent()" [disabled]="true">
-        <mat-icon>delete_outline</mat-icon> Delete student
-      </button> -->
+      <span  *ngIf="student" matTooltip="{{ 'students.statusError' | translate }}" [matTooltipDisabled]="deletable" matTooltipPosition="above">
+        <app-custom-button icon="delete" category="secondary" variant="primary" (click)="onDelete()"
+        [disabled]="!deletable">
+          {{ "students.deleteStudent" | translate }}
+        </app-custom-button>
+      </span>
     </div>
   </div>
 
@@ -45,6 +48,14 @@
         {{ "general.country" | translate }}
         </span>
       <span class="value">{{ student.country_name }}</span>
+    </div>
+    <div class="main-board__details__element">
+      <span class="title">
+        {{ "students.active" | translate }}
+      </span>
+      <span class="value">
+        {{ student.is_active ? ("general.yes" | translate) : ("general.no" | translate) }}
+      </span>
     </div>
   </div>
 

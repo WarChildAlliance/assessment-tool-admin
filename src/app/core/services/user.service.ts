@@ -52,6 +52,10 @@ export class UserService {
     return this.http.put<User>(`${environment.API_URL}/users/${id}/`, user);
   }
 
+  public deleteStudent(id: string): Observable<any> {
+    return this.http.delete<any>(`${environment.API_URL}/users/${id}/`);
+  }
+
   public assignTopicsAccesses(batchTopicAccesses: BatchTopicAccesses, assessmentId: string): Observable<BatchTopicAccesses> {
     return this.http.post<BatchTopicAccesses>(
       `${environment.API_URL}/assessments/${assessmentId}/accesses/bulk_create/`, batchTopicAccesses);
@@ -85,9 +89,13 @@ export class UserService {
     return this.http.put<Group>(`${environment.API_URL}/users/groups/${groupId}/`, group);
   }
 
+  public deleteGroup(id: string): Observable<any> {
+    return this.http.delete<any>(`${environment.API_URL}/users/groups/${id}/`);
+  }
+
   public getStudentTopicsChart(assessmentId: string):
   Observable<{full_name: string, topics: {}[], student_access: boolean, group: {}[]}[]> {
-    return this.http.get<{full_name: string, topics: {}[], student_access: boolean, group: {}[]}[]>(
+    return this.http.get<{full_name: string, topics: {}[], student_access: boolean, group: Group[]}[]>(
       `${environment.API_URL}/visualization/charts/score_by_topic/${assessmentId}/`
       );
   }
@@ -100,8 +108,10 @@ export class UserService {
     );
   }
 
-  public getStudentsListForATopic(topicId: string): Observable<TopicAccessStudents[]> {
-    return this.http.get<TopicAccessStudents[]>(`${environment.API_URL}/visualization/charts/topic/${topicId}/students/`);
+  public getStudentsListForATopic(topicId: string, filteringParams?: object): Observable<TopicAccessStudents[]> {
+    const initialUrl = `${environment.API_URL}/visualization/charts/topic/${topicId}/students/`;
+    const finalUrl = filteringParams ? this.utilitiesService.urlBuilder(initialUrl, filteringParams) : initialUrl;
+    return this.http.get<TopicAccessStudents[]>(finalUrl);
   }
 
   public getStudentTopicAnswers(topicId: string, assessmentTopicAnswer: string): Observable<TopicAnswer[]> {
