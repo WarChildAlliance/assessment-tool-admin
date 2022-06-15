@@ -33,18 +33,16 @@ export interface QuestionSort extends Question {
 }
 
 export interface QuestionDragAndDrop extends Question {
-  drop_areas: AreaOption[];
-  drag_items: [];
-  background_image: any;
+  areas: AreaOption[];
+  drag_options: [];
+  background_image: [];
 }
 
 export interface AreaOption {
-  coordinates: {
-    x: number,
-    y: number,
-    width: number,
-    height: number
-  };
+  x: number;
+  y: number;
+  width: number;
+  height: number;
   name: string;
 }
 

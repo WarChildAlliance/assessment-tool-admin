@@ -140,6 +140,24 @@
         "isMultipleChoice": "Is multiple choice?",
         "isCorrectAnswer": "Is correct answer?",
         "value": "Value"
+      },
+      "dragAndDrop": {
+        "editAreasButton": "Edit background image and the drop areas",
+        "createAreasButton": "Select background image and drop areas",
+        "areas": "Areas:",
+        "questionAttachments": "Question Attachments",
+        "imageAreasNotifier": "Please define the background image and the drop areas to proceed",
+        "dragItemsNotifier": "Select draggable items",
+        "setDragItemsNotifier": "Please set the draggable items and click the button above when finished",
+        "dragItemsMatTooltip": "Select the area(s) where the draggable item is valid and load the image. For draggable items without a valid area: just load the image without selecting anything.",
+        "deleteItem": "Delete item",
+        "draggableWithoutArea": "Draggable items without valid area:"
+      },
+      "areaSelector": {
+        "imageNotifier": "To define the areas you need to upload an background image.",
+        "nameNotifier": "You need to set the area name first.",
+        "areaName": "Area name:",
+        "deleteArea": "Delete area"
       }
     },
     "topicDetails": {

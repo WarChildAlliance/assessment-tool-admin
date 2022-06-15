@@ -10,12 +10,11 @@
 
         <div class="image-form">
             <div class="notifier">
-                <span *ngIf="coordinatesForm.controls.image.invalid">To define the areas you need to upload an
-                    background image.</span>
-                <span *ngIf="coordinatesForm.controls.name.invalid">You need to set the area name first.</span>
+                <span *ngIf="coordinatesForm.controls.image.invalid"> {{ "assessmentBuilder.questions.areaSelector.imageNotifier" | translate }} </span>
+                <span *ngIf="coordinatesForm.controls.name.invalid"> {{ "assessmentBuilder.questions.areaSelector.nameNotifier" | translate }} </span>
                 <form class="form-primary" name="form" [formGroup]="coordinatesForm">
                     <mat-form-field appearance="outline" color="accent">
-                        <mat-label>Area name:</mat-label>
+                        <mat-label> {{ "assessmentBuilder.questions.areaSelector.areaName" | translate }} </mat-label>
                         <input matInput type="text" formControlName="name">
                     </mat-form-field>
                 </form>
@@ -26,11 +25,11 @@
         </div>
     </div>
 
-    <p *ngIf="areasOptions.length"><strong>Areas:</strong></p>
+    <p *ngIf="areasOptions.length"><strong> {{ "assessmentBuilder.questions.dragAndDrop.areas" | translate }} </strong></p>
     <span *ngFor="let area of areasOptions; let i = index">
         <span class="areas-list">
-            <app-custom-button matTooltip="Delete area" [isIcon]="true" icon="remove_circle_outline" (click)="removeArea(i)">
-            </app-custom-button>
+            <app-custom-button matTooltip="{{ 'assessmentBuilder.questions.areaSelector.deleteArea' | translate }}" [isIcon]="true" 
+            icon="remove_circle_outline" (click)="removeArea(i)"></app-custom-button>
 
             {{i+1}}: {{area.name}}
         </span>
@@ -42,8 +41,8 @@
         {{ "general.cancel" | translate }}
     </button>
     <button mat-flat-button class="dialog-buttons__submit" color="accent" type="submit"
-        [mat-dialog-close]="[areasOptions, this.coordinatesForm.controls.image.value]"
-        [disabled]="areasOptions.length == 0" (click)="onSubmmit()">
-        save
+        [mat-dialog-close]="[areasOptions, coordinatesForm.controls.image.value]"
+        [disabled]="areasOptions.length == 0">
+        {{ "general.save" | translate }}
     </button>
 </div>

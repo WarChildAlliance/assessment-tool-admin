@@ -1,8 +1,14 @@
-import { Component, ElementRef, AfterViewInit, ViewChild, Renderer2, NgZone } from '@angular/core';
+import { Component, ElementRef, AfterViewInit, ViewChild, Renderer2, NgZone, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { AreaOption } from 'src/app/core/models/question.model';
 import { Subject } from 'rxjs';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+interface DialogData {
+  areas?: [];
+  image_background?: File;
+}
 
 @Component({
   selector: 'app-area-selector',
@@ -41,9 +47,18 @@ export class AreaSelectorComponent implements AfterViewInit {
   });
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private renderer: Renderer2,
     private ngZone: NgZone
-  ) { }
+  ) {
+    if (this.data?.areas && this.data?.image_background) {
+      this.imageAttachment = this.data?.image_background;
+      this.coordinatesForm.controls.image.setValue(this.data?.image_background);
+      this.onNewImageAttachment(this.imageAttachment);
+
+      this.areasOptions = this.data?.areas;
+    }
+  }
 
   ngAfterViewInit(): void {
     this.svgStyle = this.rectangleElement.nativeElement.style;
@@ -51,6 +66,10 @@ export class AreaSelectorComponent implements AfterViewInit {
 
     const drawElRef = this.drawElement.nativeElement;
     const dialogRef = this.areaSelectorDialogElement.nativeElement;
+
+    if (this.data?.areas && this.data?.image_background) {
+      this.reDraw();
+    }
 
     this.coordinatesForm.controls.name.statusChanges.subscribe(statusName => {
       if (statusName === 'VALID') {
@@ -127,15 +146,38 @@ export class AreaSelectorComponent implements AfterViewInit {
     return svgElement;
   }
 
+  private drawName(svgElement, x: number, y: number, areaNumber: number): any {
+    svgElement.setAttribute('x', (x).toString());
+    svgElement.setAttribute('y', (y + 20).toString());
+    svgElement.innerHTML = areaNumber;
+    svgElement.style.fill = 'white';
+    svgElement.style.stroke = 'blue';
+    svgElement.style.fontSize = '20';
+
+    return svgElement;
+  }
+
   private reDraw(): void {
     this.rectanglesListElement.nativeElement.innerHTML = '';
+    let areaNumber = 1;
+    const rectanglesListRef = this.rectanglesListElement.nativeElement as HTMLElement;
 
     this.areasOptions.forEach(area => {
-      (this.rectanglesListElement.nativeElement as HTMLElement).appendChild(this.drawRect(
-        document.createElementNS('http://www.w3.org/2000/svg', 'rect'), area.coordinates.x,
-        area.coordinates.y, area.coordinates.width, area.coordinates.height
-      )
+      rectanglesListRef.appendChild(
+        this.drawRect(
+          document.createElementNS('http://www.w3.org/2000/svg', 'rect'),
+          area.x, area.y, area.width, area.height
+        )
       );
+
+      rectanglesListRef.appendChild(
+        this.drawName(
+          document.createElementNS('http://www.w3.org/2000/svg', 'text'),
+          area.x, area.y, areaNumber
+        )
+      );
+
+      areaNumber++;
     });
   }
 
@@ -161,12 +203,10 @@ export class AreaSelectorComponent implements AfterViewInit {
 
   private addArea(): void {
     const newAreaOption = {
-      coordinates: {
-        x: this.coordinatesForm.controls.x.value,
-        y: this.coordinatesForm.controls.y.value,
-        width: this.coordinatesForm.controls.width.value,
-        height: this.coordinatesForm.controls.height.value
-      },
+      x: this.coordinatesForm.controls.x.value,
+      y: this.coordinatesForm.controls.y.value,
+      width: this.coordinatesForm.controls.width.value,
+      height: this.coordinatesForm.controls.height.value,
       name: this.coordinatesForm.controls.name.value
     };
     this.areasOptions.push(newAreaOption);
@@ -174,9 +214,5 @@ export class AreaSelectorComponent implements AfterViewInit {
     this.coordinatesForm.reset({
       image: this.coordinatesForm.controls.image.value
     });
-  }
-
-  public onSubmmit(): void {
-    console.log('submmit data');
   }
 }

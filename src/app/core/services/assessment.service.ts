@@ -115,11 +115,14 @@ export class AssessmentService {
     return this.http.get<any[]>(`${environment.API_URL}/assessments/${assessmentId}/attachments/`);
   }
 
-  public addAttachments(assessmentId: string, fileIn, attachmentType, destination): Observable<any[]> {
+  public addAttachments(assessmentId: string, fileIn, attachmentType, destination, backgroundImage?: boolean): Observable<any[]> {
     const formData: FormData = new FormData();
     formData.append('file', fileIn);
     formData.append('attachment_type', attachmentType);
     formData.append(destination.name, destination.value);
+    if (backgroundImage) {
+      formData.append('background_image', destination.background_image);
+    }
     return this.http.post<any[]>(`${environment.API_URL}/assessments/${assessmentId}/attachments/`, formData);
   }
 
@@ -134,4 +137,13 @@ export class AssessmentService {
     return this.http.get<any[]>(`${environment.API_URL}/export/answers/`);
   }
 
+  public addDraggableOption(assessmentId: string, topicId: string, questionId: string, data): Observable<any> {
+    return this.http.post<any>(
+      `${environment.API_URL}/assessments/${assessmentId}/topics/${topicId}/questions/${questionId}/draggable/`, data
+    );
+  }
+
+  public getDraggableOptions(assessmentId: string, topicId: string, questionId: string): Observable<any> {
+    return this.http.get<any>(`${environment.API_URL}/assessments/${assessmentId}/topics/${topicId}/questions/${questionId}/draggable/`);
+  }
 }
