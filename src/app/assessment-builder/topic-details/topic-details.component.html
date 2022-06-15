@@ -1,7 +1,7 @@
 <div class="question-list-container" *ngIf="topicDetails">
   <div class="topic-header">
     <div>
-      <app-previous-button path="/assessment-builder/{{ assessmentType }}"></app-previous-button>
+      <app-previous-button path="/assessment-builder"></app-previous-button>
       <img *ngIf="topicDetails?.icon" [src]="topicDetails.icon">
       <h1>{{ topicDetails.name }}</h1>
     </div>
