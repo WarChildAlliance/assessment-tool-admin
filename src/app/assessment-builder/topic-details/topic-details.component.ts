@@ -21,6 +21,8 @@ export class TopicDetailsComponent implements OnInit {
   public assessmentId: string;
   public topicId: string;
 
+  public assessmentType: string;
+
   public topic: any;
 
   public questionsArray: any[] = [
@@ -59,6 +61,7 @@ export class TopicDetailsComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.assessmentId = params.assessment_id;
       this.topicId = params.topic_id;
+      this.assessmentType = params.type;
 
       this.getQuestionsList();
       this.getTopicDetails();
