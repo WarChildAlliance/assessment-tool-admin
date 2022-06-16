@@ -9,7 +9,7 @@
         </div>
 
         <div class="image-form">
-            <div class="notifier">
+            <div class="notifier" *ngIf="imageAttachment">
                 <span *ngIf="coordinatesForm.controls.image.invalid"> {{ "assessmentBuilder.questions.areaSelector.imageNotifier" | translate }} </span>
                 <span *ngIf="coordinatesForm.controls.name.invalid"> {{ "assessmentBuilder.questions.areaSelector.nameNotifier" | translate }} </span>
                 <form class="form-primary" name="form" [formGroup]="coordinatesForm">

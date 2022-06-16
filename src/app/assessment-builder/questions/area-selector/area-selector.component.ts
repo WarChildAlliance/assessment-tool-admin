@@ -201,7 +201,7 @@ export class AreaSelectorComponent implements AfterViewInit {
     this.reDraw();
   }
 
-  private addArea(): void {
+  public addArea(): void {
     const newAreaOption = {
       x: this.coordinatesForm.controls.x.value,
       y: this.coordinatesForm.controls.y.value,

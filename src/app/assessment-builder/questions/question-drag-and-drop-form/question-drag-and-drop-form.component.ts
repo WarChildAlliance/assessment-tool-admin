@@ -45,8 +45,8 @@ export class QuestionDragAndDropFormComponent implements OnInit {
   private changedBackgroundImage = false;
 
   private dragItemNumber = 0;
-  public dragItemsArea = [];
-  public dragItems = [];
+  public dragItemsArea: any[] = [];
+  public dragItems: any[] = [];
 
   public confirmDraggable = false;
   public setDragItems = false;

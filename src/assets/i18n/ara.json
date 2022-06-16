@@ -93,6 +93,7 @@
     "addAssessments": "أضف التقييمات",
     "allowSkip": "السماح بالتخطي",
     "chooseFile": "اختر ملف",
+    "changeFile": "",
     "description": "وصف",
     "evaluated": "مقيمة",
     "icon": "أيقونة",
@@ -163,7 +164,7 @@
       "areaSelector": {
         "imageNotifier": "لتحديد المناطق التي تحتاج إلى تحميل صورة الخلفية.",
         "nameNotifier": "تحتاج إلى تعيين اسم المنطقة أولاً.",
-        "areaName": "اسم المنطقة:",
+        "areaName": "اسم المنطقة",
         "deleteArea": "حذف المنطقة"
       }
     },

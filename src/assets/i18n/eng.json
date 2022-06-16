@@ -97,6 +97,7 @@
     "assessmentEditSuccess": "Assessment was altered successfully",
     "assessmentSaveSuccess": "Assessment was saved successfully",
     "chooseFile": "Choose File",
+    "changeFile": "Change File",
     "description": "Description",
     "evaluated": "Evaluated",
     "icon": "Icon",
@@ -168,7 +169,7 @@
       "areaSelector": {
         "imageNotifier": "To define the areas you need to upload an background image.",
         "nameNotifier": "You need to set the area name first.",
-        "areaName": "Area name:",
+        "areaName": "Area name",
         "deleteArea": "Delete area"
       }
     },
