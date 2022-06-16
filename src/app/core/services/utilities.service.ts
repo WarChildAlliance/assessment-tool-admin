@@ -7,6 +7,16 @@ export class UtilitiesService {
 
   constructor() { }
 
+  // this method unwraps an array into a query string
+  private arrayToQueryString(key: string, arr: any[]): string {
+    let queryString = '';
+    for (let i = 0; i < arr.length; i++) {
+      queryString += (i === 0) ?
+        `${key}[]=${arr[i]}` : `&${key}[]=${arr[i]}`;
+    }
+    return queryString;
+  }
+
   public urlBuilder(url: string, filteringParams: object): string {
 
     // This loop removes empty properties from the object
@@ -23,7 +33,11 @@ export class UtilitiesService {
 
       if (!iterable[i - 1]) { url += '?'; }
 
-      url += iterable[i] + '=' + filteringParams[iterable[i]];
+      if (Array.isArray(filteringParams[iterable[i]])) {
+        url += this.arrayToQueryString(iterable[i], filteringParams[iterable[i]]);
+      } else {
+        url += iterable[i] + '=' + filteringParams[iterable[i]];
+      }
 
       if (iterable[i + 1]) { url += '&'; }
     }

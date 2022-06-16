@@ -12,16 +12,19 @@
     "assessmentsOverview": "نظرة عامة على التقييمات",
     "assign": "تعيين",
     "cancel": "إلغاء",
+    "confirm": "يتأكد",
     "country": "الدولة",
     "clone": "استنساخ",
     "create": "خلق",
     "dashboard": "لوحة القيادة",
     "edit": "تعديل",
+    "delete": "Delete",
+    "selected": "تم الاختيار",
     "fieldRequired": "هذه الخانة مطلوبه",
     "from": "من",
     "grade": "العلامة",
     "group": "مجموعة",
-    "groupsOverview": "",
+    "groupsOverview": "نظرة عامة على المجموعات",
     "groups": "مجموعات",
     "language": "اللغة",
     "lastLogin": "آخر تسجيل دخول",
@@ -47,6 +50,8 @@
     "totalCompletedTopics": "إجمالي المواضيع المكتملة",
     "workInProgress": "جاري العمل ... متاح قريبًا",
     "topics": "المواضيع",
+    "no": "لا",
+    "yes": "نعم",
     "grades": {
       "0": "0",
       "1": "1",
@@ -105,7 +110,15 @@
     "assessmentSummary": {
       "addTopic": "أضف موضوعًا",
       "archive": "أرشيف",
-      "unarchive": "أخرج من الأرشيف"
+      "unarchive": "أخرج من الأرشيف",
+      "archiveTopic": "موضوع الأرشيف",
+      "deleteTopic": "حذف الموضوع",
+      "topicDetails": "تفاصيل الموضوع",
+      "deleteAssessment": "حذف التقييم",
+      "deleteAssessmentSuccess": "تم حذف التقييم بنجاح",
+      "deleteAssessmentPrompt": "هل تريد حقا حذف التقييم؟",
+      "topicDetailSuccess": "تم حذف الموضوع بنجاح",
+      "deleteTopicPrompt": "هل تريد حقا حذف الموضوع؟"
     },
     "questions": {
       "audioAttachment": "مرفق صوتي",
@@ -159,7 +172,10 @@
       "clone": "استنساخ",
       "numberLineButton": "رقم الخط",
       "selectButton": "(تحديد متعدد",
-      "showFeedback": "إظهار الملاحظات"
+      "showFeedback": "إظهار الملاحظات",
+      "deleteQuestion": "حذف السؤال",
+      "deleteQuestionSuccess": "تم حذف السؤال بنجاح",
+      "deleteQuestionPrompt" : "هل تريد حقا حذف السؤال؟"
     },
     "topicFormDialog": {
       "changeFile": "تغيير الملف",
@@ -238,23 +254,27 @@
     },
     "table": {
       "hintSearchColumn": "يمكنك البحث في أي عمود!",
-      "no": "لا",
       "search": "بحث...",
-      "yes": "نعم",
       "copySuccess": "تم النسخ بنجاح!"
     }
   },
   "students": {
+    "active": "نشيط",
     "activeAssessmentsNumber": "عدد التقييمات النشطة",
     "addStudent": "أضف طالباً",
     "assignTopic": "قم بتعيين موضوع",
     "completedTopicsNumber": "عدد المواضيع المكتملة",
     "editStudent": "حرر طالباً",
+    "deleteStudent": "احذف الطلاب",
+    "deleteStudentPrompt": "هل تريد حقًا حذف الطالب (الطلاب)؟",
     "studentCode": "كود طالب",
+    "statusError": "لا يمكن حذف الطلاب إلا بعد عام واحد من عدم النشاط",
+    "studentDeleteSuccess": "تم حذف الطلاب بنجاح",
     "createStudentDialog": {
       "createStudent": "قم بإنشاء طالب جديد",
       "firstName": "الاسم الأول",
       "lastName": "اسم العائلة",
+      "noGroups": "",
       "studentCreateSuccess": "تم بنجاح إنشاء الطالب {{name}} بالمعرف {{اسم المستخدم}}",
       "studentEditSuccess": "تم تحرير معلومات {{name}} بنجاح"
     },
@@ -304,6 +324,11 @@
     "groupStudents": "طلاب المجموعة",
     "groupEdited": "تم تحرير المجموعة بنجاح",
     "errorMessage": "هناك خطأ ما:",
-    "groupCreated": "تم إنشاء المجموعة بنجاح"
+    "groupCreated": "تم إنشاء المجموعة بنجاح",
+    "deleteGroup": "حذف المجموعة (المجموعات)",
+    "deleteGroupSuccess": "تم حذف المجموعة (المجموعات) بنجاح",
+    "deleteGroupPrompt": "هل تريد حقًا حذف المجموعة (المجموعات)؟ سيتم سحب جميع الطلاب من المجموعة وتركهم بدون واحد.",
+    "chooseGroup": "اختر مجموعة",
+    "filterByGroup": "تصفية حسب المجموعة"
   }
 }

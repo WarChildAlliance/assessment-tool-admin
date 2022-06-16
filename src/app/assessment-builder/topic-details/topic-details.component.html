@@ -1,12 +1,19 @@
 <div class="question-list-container" *ngIf="topicDetails">
   <div class="topic-header">
-    <app-previous-button path="/assessment-builder"></app-previous-button>
-    <img *ngIf="topicDetails?.icon" [src]="topicDetails.icon">
-    <h1>{{ topicDetails.name }}</h1>
-    <app-custom-button *ngIf="topicDetails.can_edit && !topicDetails.archived" category="tertiary" variant="primary"
-     icon="edit" (click)="openEditTopicDialog(topicDetails)">
-     {{ "general.edit" | translate }}
-    </app-custom-button>
+    <div>
+      <app-previous-button path="/assessment-builder/{{ assessmentType }}"></app-previous-button>
+      <img *ngIf="topicDetails?.icon" [src]="topicDetails.icon">
+      <h1>{{ topicDetails.name }}</h1>
+    </div>
+    <div>
+      <app-custom-button *ngIf="topicDetails.can_edit && !topicDetails.archived" category="tertiary" variant="primary"
+       icon="edit" (click)="openEditTopicDialog(topicDetails)">
+       {{ "general.edit" | translate }}
+      </app-custom-button>
+      <app-custom-button *ngIf="topicDetails.can_edit" category="tertiary" variant="primary" icon="delete" (click)="deleteTopic()">
+        {{ "general.delete" | translate }}
+      </app-custom-button>
+    </div>
   </div>
   <mat-card>
     <div class="topic-infos" *ngIf="topicDetails">
@@ -53,6 +60,9 @@
           {{ "general.edit" | translate }}
         </app-custom-button>
       </span>
+      <app-custom-button *ngIf="topicDetails.can_edit" category="tertiary" variant="neutral" (click)="deleteQuestion(questionDetails.id, questionDetails.title)">
+        {{ "general.delete" | translate }}
+      </app-custom-button>
       <app-custom-button *ngIf="topicDetails.can_edit" category="tertiary" variant="neutral" (click)="openQuestionDialog(questionDetails, true)">
         {{ "assessmentBuilder.topicDetails.clone" | translate }}
       </app-custom-button>
