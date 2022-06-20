@@ -191,6 +191,15 @@ export class QuestionDragAndDropFormComponent implements OnInit {
         'IMAGE', { name: 'question', value: questionCreated.id, background_image: true }, true
       );
 
+      if (this.changedImage) {
+        this.saveAttachments(this.assessmentId.toString(), this.imageAttachment, 'IMAGE',
+        { name: 'question', value: questionCreated.id }, false);
+      }
+      if (this.changedAudio) {
+        this.saveAttachments(this.assessmentId.toString(), this.audioAttachment, 'AUDIO',
+        { name: 'question', value: questionCreated.id }, false);
+      }
+
       // Created Areas ids: will be used to create the draggable options
       const createdAreas = [];
       questionCreated.drop_areas.forEach(area => {
@@ -246,13 +255,14 @@ export class QuestionDragAndDropFormComponent implements OnInit {
       data.value
     ).subscribe(question => {
       if (this.changedBackgroundImage) {
-        this.updateQuestionAttachments('IMAGE', question.id, this.dragAndDropForm.controls.background_image.value, true);
+        this.updateQuestionAttachments('IMAGE', { name: 'question', value: question.id },
+        this.dragAndDropForm.controls.background_image.value, true);
       }
       if (this.changedImage) {
-        this.updateQuestionAttachments('IMAGE', question.id, this.imageAttachment, false);
+        this.updateQuestionAttachments('IMAGE', { name: 'question', value: question.id }, this.imageAttachment, false);
       }
       if (this.changedAudio) {
-        this.updateQuestionAttachments('AUDIO', question.id, this.audioAttachment, false);
+        this.updateQuestionAttachments('AUDIO', { name: 'question', value: question.id }, this.audioAttachment, false);
       }
 
       // Areas ids: will be used to the draggable options
@@ -306,12 +316,12 @@ export class QuestionDragAndDropFormComponent implements OnInit {
       });
   }
 
-  private updateQuestionAttachments(type: string, id: any, attachment: any, backgroundImage?: boolean): void {
-    const file = this.question.attachments.find(a => a.attachment_type === type);
+  private updateQuestionAttachments(type: string, obj: any, attachment: any, backgroundImage: boolean): void {
+    const file = this.question.attachments.find(a => a.attachment_type === type && a.background_image === backgroundImage);
     if (file) {
       this.assessmentService.updateAttachments(this.assessmentId, attachment, type, file.id).subscribe();
     } else {
-      this.saveAttachments(this.assessmentId, attachment, type, { name: 'question', value: id }, backgroundImage);
+      this.saveAttachments(this.assessmentId, attachment, type, obj, backgroundImage);
     }
   }
 
