@@ -5,6 +5,7 @@ import {
   Input,
 } from '@angular/core';
 import { Subject } from 'rxjs';
+import { SpinnerVariant } from '../spinner/spinner-variant.enum';
 import { ButtonCategory } from './button-category.enum';
 import { ButtonSize } from './button-size.enum';
 import { ButtonVariant } from './button-variant.enum';
@@ -28,6 +29,8 @@ export class CustomButtonComponent implements OnInit {
   @HostBinding('class.disabled')
   @Input() disabled = false;
 
+  @Input() loading = false;
+
   @Input() icon = '';
 
   public emittedEventSubject: Subject<string> = new Subject();
@@ -46,6 +49,26 @@ export class CustomButtonComponent implements OnInit {
     }
   }
 
+  get spinnerVariant(): string {
+    switch (this.category) {
+      case ButtonCategory.PRIMARY: {
+        return this.variant;
+      }
+      case ButtonCategory.TERTIARY: {
+        return this.variant;
+      }
+      default: {
+        switch (this.variant) {
+          case ButtonVariant.DEFAULT: {
+            return SpinnerVariant.PRIMARY;
+          }
+          default: {
+            return SpinnerVariant.LIGHT;
+          }
+        }
+      }
+    }
+  }
   constructor() {}
 
   ngOnInit(): void {}
