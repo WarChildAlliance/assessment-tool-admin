@@ -11,6 +11,9 @@ import { AssessmentService } from 'src/app/core/services/assessment.service';
 })
 export class SelectAssessmentComponent implements OnInit {
 
+  private assessmentId: string;
+  private firstTopicRequest = true;
+
   public assessmentsList: AssessmentDashboard[];
   public topicsList: TopicDashboard[];
 
@@ -19,11 +22,7 @@ export class SelectAssessmentComponent implements OnInit {
   public selected: AssessmentDashboard[] = [];
   public selectedTopic: TopicDashboard;
 
-  private assessmentId: string;
-
-  private firstTopicRequest = true;
-
-  @Input() selectTopic: boolean;
+  @Input() topicSelectionEnabled: boolean;
   @Input() multiple: boolean;
   @Input() displayNonEvaluated: boolean;
 
@@ -38,7 +37,7 @@ export class SelectAssessmentComponent implements OnInit {
       this.selectedAssessment = this.assessmentsList.find(el => el.started);
       this.selectedAssessmentArr = this.assessmentsList.filter(el => el.started).slice(0, 1);
 
-      if (this.selectTopic) {
+      if (this.topicSelectionEnabled) {
         if (this.selectedAssessment){
           this.assessmentId = this.selectedAssessment.id;
           this.getTopics(this.assessmentId);
@@ -51,22 +50,7 @@ export class SelectAssessmentComponent implements OnInit {
     });
   }
 
-  selectAssessment(assessment: AssessmentDashboard): void {
-    this.selectedAssessment = assessment;
-    if (this.selectTopic){
-      this.assessmentId = assessment.id;
-      this.getTopics(assessment.id);
-    } else {
-      this.assessmentSelection.emit(assessment);
-    }
-  }
-
-  selectATopic(topic: TopicDashboard): void {
-    this.selectedTopic = topic;
-    this.topicSelection.emit({assessmentId: this.assessmentId, topic});
-  }
-
-  getTopics(assessmentId: string): void {
+  private getTopics(assessmentId: string): void{
     this.assessmentService.getTopicsListForDashboard(assessmentId).subscribe(topics => {
       this.topicsList = topics;
 
@@ -78,4 +62,18 @@ export class SelectAssessmentComponent implements OnInit {
     });
   }
 
+  public selectAssessment(assessment: AssessmentDashboard): void {
+    this.selectedAssessment = assessment;
+    if (this.topicSelectionEnabled) {
+      this.assessmentId = assessment.id;
+      this.getTopics(assessment.id);
+    } else {
+      this.assessmentSelection.emit(assessment);
+    }
+  }
+
+  public selectTopic(topic: TopicDashboard): void {
+    this.selectedTopic = topic;
+    this.topicSelection.emit({assessmentId: this.assessmentId, topic});
+  }
 }

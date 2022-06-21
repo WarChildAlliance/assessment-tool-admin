@@ -4,6 +4,7 @@ import { ChartData, ChartDataSets, ChartOptions } from 'chart.js';
 import { AssessmentDashboard } from 'src/app/core/models/assessment-dashboard.model';
 import { UserService } from 'src/app/core/services/user.service';
 import { TranslateService } from '@ngx-translate/core';
+import { Group } from 'src/app/core/models/group.model';
 
 @Component({
   selector: 'app-score-by-topic-chart',
@@ -12,15 +13,18 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class ScoreByTopicChartComponent implements OnInit {
 
-  public studentsListChart: ChartDataSets[];
   private lineChart: Chart;
+  private topicsName = [];
+  private topicsAverage = [];
+  private assessment: AssessmentDashboard;
+  private selectedGroupIds: number[] = [];
+
+  public studentsListChart: ChartDataSets[];
 
   public selectedStudent: ChartDataSets;
 
   public hasData = true;
-
-  topicsName = [];
-  topicsAverage = [];
+  public selectionHasData = true;
 
   public lineChartOptions: ChartOptions = {
     responsive: true,
@@ -52,40 +56,11 @@ export class ScoreByTopicChartComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  selectStudent(student): void{
-    if (this.lineChart.data.datasets.length > 1) {
-      this.lineChart.data.datasets.splice(-1, 1);
+  private getChartLineData(studentsList: {full_name: string, topics: {}[]}[], topicNames: string[], topicsAverage: number[]): void{
+    if (studentsList?.length === 0) {
+      this.selectionHasData = false;
+      return;
     }
-    this.lineChart.data.datasets.push(student);
-    this.lineChart.update();
-  }
-
-  selectChartAssessment(assessment: AssessmentDashboard): void {
-    if (assessment && assessment.started) {
-      this.topicsName = [];
-      this.topicsAverage = [];
-
-      this.lineChart = new Chart('currentChart', {
-        type: 'line',
-        data: this.lineChartData,
-        options: this.lineChartOptions,
-      });
-
-      assessment.topics.forEach(topic => {
-          this.topicsName.push(topic.name);
-          this.topicsAverage.push(topic.average);
-      });
-
-      this.userService.getStudentTopicsChart(assessment.id).subscribe(scoreByTopic => {
-        const filteredScoreByTopic = scoreByTopic.filter(el => el.student_access);
-        this.getChartLineData(filteredScoreByTopic, this.topicsName, this.topicsAverage);
-      });
-    } else {
-      this.hasData = false;
-    }
-  }
-
-  getChartLineData(studentsList: {full_name: string, topics: {}[]}[], topicNames: string[], topicsAverage: number[]): void{
     this.studentsListChart = [];
     this.lineChart.data.datasets = [];
     this.lineChart.data.labels = topicNames;
@@ -123,4 +98,56 @@ export class ScoreByTopicChartComponent implements OnInit {
     this.selectStudent(this.selectedStudent);
   }
 
+  private getStudentTopicsChart(assessmentId: string, groupIds: number[]): void {
+    this.userService.getStudentTopicsChart(assessmentId).subscribe(scoreByTopic => {
+      const filteredScoreByTopic = scoreByTopic.filter(el => {
+        const groups = el.group as Group[];
+        let hasSelectedGroup = groupIds?.length === 0;
+
+        for (let i = 0; !hasSelectedGroup && i < groups.length; ++i) {
+          if (groupIds?.includes(groups[i].id)) {
+            hasSelectedGroup = true;
+          }
+        }
+        return el.student_access && hasSelectedGroup;
+      });
+      this.getChartLineData(filteredScoreByTopic, this.topicsName, this.topicsAverage);
+    });
+  }
+
+  public selectStudent(student): void{
+    if (this.lineChart.data.datasets.length > 1) {
+      this.lineChart.data.datasets.splice(-1, 1);
+    }
+    this.lineChart.data.datasets.push(student);
+    this.lineChart.update();
+    this.selectionHasData = true;
+  }
+
+  public selectChartAssessment(assessment: AssessmentDashboard): void {
+    if (assessment && assessment.started) {
+      this.assessment = assessment;
+      this.topicsName = [];
+      this.topicsAverage = [];
+
+      this.lineChart = new Chart('currentChart', {
+        type: 'line',
+        data: this.lineChartData,
+        options: this.lineChartOptions,
+      });
+
+      assessment.topics.forEach(topic => {
+          this.topicsName.push(topic.name);
+          this.topicsAverage.push(topic.average);
+      });
+      this.getStudentTopicsChart(assessment.id, this.selectedGroupIds);
+    } else {
+      this.hasData = false;
+    }
+  }
+
+  public onGroupsSelection(groupsIds: number[]): void {
+    this.selectedGroupIds = groupsIds;
+    this.getStudentTopicsChart(this.assessment.id, this.selectedGroupIds);
+  }
 }

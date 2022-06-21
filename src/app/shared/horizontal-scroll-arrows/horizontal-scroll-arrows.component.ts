@@ -9,8 +9,8 @@ export class HorizontalScrollArrowsComponent implements OnInit {
   @Input() scrollableElement: HTMLElement;
   @Input() pxScrollAmount: number;
 
-  public leftScrollEnabled = true;
-  public rightScrollEnabled = true;
+  public isLeftScrollButtonEnabled = true;
+  public isRightScrollButtonEnabled = true;
 
   constructor() { }
 
@@ -22,33 +22,33 @@ export class HorizontalScrollArrowsComponent implements OnInit {
     });
   }
 
-  handleEdgeReached(): void {
+  private handleEdgeReached(): void {
     if (this.scrollableElement.scrollLeft === 0) {
-      this.leftScrollEnabled = false;
+      this.isLeftScrollButtonEnabled = false;
     } else if (this.scrollableElement.scrollLeft === this.scrollableElement.scrollWidth - this.scrollableElement.clientWidth) {
-      this.rightScrollEnabled = false;
+      this.isRightScrollButtonEnabled = false;
     }
   }
 
-  elementXOverflowEnabled(element): boolean {
+  public elementXOverflowEnabled(element): boolean {
     return element.offsetWidth < element.scrollWidth;
   }
 
-  scrollPrevious(): void {
+  public scrollLeft(): void {
     this.scrollableElement.scrollBy({
       top: 0,
       left: -this.pxScrollAmount,
       behavior: 'smooth'
     });
-    this.rightScrollEnabled = true;
+    this.isRightScrollButtonEnabled = true;
   }
 
-  scrollNext(): void {
+  public scrollRight(): void {
     this.scrollableElement.scrollBy({
       top: 0,
       left: this.pxScrollAmount,
       behavior: 'smooth'
     });
-    this.leftScrollEnabled = true;
+    this.isLeftScrollButtonEnabled = true;
   }
 }

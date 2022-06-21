@@ -7,7 +7,17 @@ export class UtilitiesService {
 
   constructor() { }
 
-  urlBuilder(url: string, filteringParams: object): string {
+  // this method unwraps an array into a query string
+  private arrayToQueryString(key: string, arr: any[]): string {
+    let queryString = '';
+    for (let i = 0; i < arr.length; i++) {
+      queryString += (i === 0) ?
+        `${key}[]=${arr[i]}` : `&${key}[]=${arr[i]}`;
+    }
+    return queryString;
+  }
+
+  public urlBuilder(url: string, filteringParams: object): string {
 
     // This loop removes empty properties from the object
     for (const param of Object.keys(filteringParams)) {
@@ -23,7 +33,11 @@ export class UtilitiesService {
 
       if (!iterable[i - 1]) { url += '?'; }
 
-      url += iterable[i] + '=' + filteringParams[iterable[i]];
+      if (Array.isArray(filteringParams[iterable[i]])) {
+        url += this.arrayToQueryString(iterable[i], filteringParams[iterable[i]]);
+      } else {
+        url += iterable[i] + '=' + filteringParams[iterable[i]];
+      }
 
       if (iterable[i + 1]) { url += '&'; }
     }
@@ -31,7 +45,7 @@ export class UtilitiesService {
     return url;
   }
 
-  dateFormatter(date: Date): string {
+  public dateFormatter(date: Date): string {
     let month = (date.getMonth() + 1).toString();
     let day = date.getDate().toString();
     const year = date.getFullYear().toString();

@@ -14,8 +14,8 @@ import { AssessmentService } from 'src/app/core/services/assessment.service';
 })
 export class QuestionsListComponent implements OnInit {
 
-  private assessmentId: string;
-  private topicId: string;
+  public assessmentId: string;
+  public topicId: string;
 
   public displayedColumns: TableColumn[] = [
     { key: 'title', name: 'general.title' },
@@ -30,8 +30,8 @@ export class QuestionsListComponent implements OnInit {
   public questionsDataSource: MatTableDataSource<QuestionTableData> = new MatTableDataSource([]);
   public selectedQuestions: any[] = [];
   public questionDetails: any;
-  public questionPreview = false;
-  public backPath = '';
+  public showQuestionPreview = false;
+  public previousPageUrl = '';
 
   constructor(
     private assessmentService: AssessmentService,
@@ -46,7 +46,7 @@ export class QuestionsListComponent implements OnInit {
 
   ngOnInit(): void {
     const idUrl = this.route.snapshot.paramMap.get('topic_id') || '';
-    this.backPath = this.router.url.replace(`topics/${idUrl}`, '');
+    this.previousPageUrl = this.router.url.replace(`topics/${idUrl}`, '');
     this.route.paramMap.pipe(
       switchMap((params) => {
         this.assessmentId = params.get('assessment_id');
@@ -60,22 +60,22 @@ export class QuestionsListComponent implements OnInit {
   }
 
   // This eventReceiver triggers a thousand times when user does "select all". We should find a way to improve this. (debouncer ?)
-  onSelectionChange(newSelection: any[]): void {
+  public onSelectionChange(newSelection: any[]): void {
     this.selectedQuestions = newSelection;
   }
 
-  onOpenDetails(id: string): void {
+  public onOpenDetails(id: string): void {
     // this.router.navigate([`/assessments/${this.assessmentId}/topics/${this.topicId}/questions/${id}`]);
   }
 
-  downloadData(): void {
+  public downloadData(): void {
     console.log('Work In Progress');
   }
 
-  onCustomAction(element: any): void {
+  public onCustomAction(element: any): void {
     this.assessmentService.getQuestionDetails(this.assessmentId, this.topicId, element.id).subscribe(details => {
       this.questionDetails = details;
-      this.questionPreview = true;
+      this.showQuestionPreview = true;
     });
   }
 }

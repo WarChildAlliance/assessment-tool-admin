@@ -5,37 +5,69 @@
     "archived": "Archived",
     "assign": "Assign",
     "assessmentBuilder": "Assessment Builder",
+    "assessmentsOverview": "Assessments Overview",
+    "yourAssessments": "Your assessments",
+    "publicAssessments": "Public assessments",
+    "archivedAssessments": "Archived assessments",
     "assessments": "Assessments",
     "cancel": "Cancel",
+    "confirm": "Confirm",
     "country": "Country",
     "clone": "Clone",
     "create": "Create",
     "dashboard": "Dashboard",
     "edit": "Edit",
+    "delete": "Delete",
+    "selected": "selected",
     "fieldRequired": "This field is required",
     "from": "from",
     "grade": "Grade",
+    "group": "Group",
+    "groups": "Groups",
+    "groupsOverview": "Groups overview",
     "language": "Language",
     "lastLogin": "Last login",
     "logout": "Logout",
+    "logoutPrompt": "Do you really want to logout?",
     "name": "Name",
     "noData": "No data to display",
     "order": "Order",
     "preview": "Preview",
     "private": "Private",
     "archive": "Archived",
+    "question": "Question",
+    "questions": "Questions",
+    "questionDetails": "Question details",
     "questionsNumber": "Number of questions",
     "questionType": "Question type",
     "save": "Save",
     "studentName": "Student Name",
     "students": "Students",
+    "studentsOverview": "Students Overview",
     "subject": "Subject",
     "submit": "Submit",
     "title": "Title",
     "to": "to",
+    "topics": "Topics",
     "totalCompletedTopics": "Total completed topics",
     "workInProgress": "Work in progress... Available soon",
-    "questions": "questions"
+    "no": "No",
+    "yes": "Yes",
+    "grades": {
+      "0": "Kindergarten",
+      "1": "1st",
+      "2": "2nd",
+      "3": "3rd",
+      "4": "4th",
+      "5": "5th",
+      "6": "6th",
+      "7": "7th",
+      "8": "8th",
+      "9": "9th",
+      "10": "10th",
+      "11": "11th",
+      "12": "12th"
+    }
   },
   "answers": {
     "assessmentAnswers": {
@@ -65,6 +97,7 @@
     "assessmentEditSuccess": "Assessment was altered successfully",
     "assessmentSaveSuccess": "Assessment was saved successfully",
     "chooseFile": "Choose File",
+    "changeFile": "Change File",
     "description": "Description",
     "evaluated": "Evaluated",
     "icon": "Icon",
@@ -78,16 +111,26 @@
     "yourAssessments": "Your assessment(s)",
     "assessmentFormDialog": {
       "createNewAssessment": "Create a new assessment",
-      "editAssessment": "Edit assessment"
+      "editAssessment": "Edit assessment",
+      "gradeTooltip": "Intended school level"
     },
     "assessmentSummary": {
       "addTopic": "Add a topic",
       "archive": "Archive",
-      "unarchive": "Unarchive"
+      "unarchive": "Unarchive",
+      "archiveTopic": "Archive topic",
+      "topicDetails": "Topic details",
+      "deleteTopic": "Delete topic",
+      "deleteAssessment": "Delete assessment",
+      "deleteAssessmentSuccess": "Assessment deleted successfully",
+      "deleteAssessmentPrompt": "Do you really want to delete the assessment <b>{{assessmentTitle}}</b> ?",
+      "topicDetailSuccess": "Topic deleted successfully!",
+      "deleteTopicPrompt": "Do you really want to delete the topic <b>{{topicTitle}}</b> ?"
     },
     "questions": {
       "audioAttachment": "Audio attachment",
       "imageAttachment": "Image attachment",
+      "errorAudio": "Can not play audio in your browser",
       "questionCloneSuccess": "Question successfully cloned",
       "questionCreateSuccess": "Question successfully created",
       "questionUpdateSuccess": "Question successfully updated",
@@ -109,8 +152,26 @@
         "display": "Display",
         "isMultipleChoice": "Is multiple choice?",
         "isCorrectAnswer": "Is correct answer?",
-        "question": "Question",
         "value": "Value"
+      },
+      "dragAndDrop": {
+        "editAreasButton": "Edit background image and the drop areas",
+        "createAreasButton": "Select background image and drop areas",
+        "areas": "Areas:",
+        "questionAttachments": "Question attachments",
+        "imageAreasNotifier": "Please define the background image and the drop areas to proceed",
+        "dragItemsNotifier": "Validate items",
+        "dragItemsMatTooltip": "Select the area(s) where the draggable item is valid and load the image. For draggable items without a valid area: just load the image without selecting anything.",
+        "deleteItem": "Delete item",
+        "draggableWithoutArea": "Draggable items without valid area:",
+        "noCorrectDragOption": "No correct drag option for this area",
+        "noCorrectArea": "Draggable items without correct area:"
+      },
+      "areaSelector": {
+        "imageNotifier": "To define the areas you need to upload an background image.",
+        "nameNotifier": "You need to set the area name first.",
+        "areaName": "Area name",
+        "deleteArea": "Delete area"
       }
     },
     "topicDetails": {
@@ -118,12 +179,16 @@
       "clone": "Clone",
       "numberLineButton": "Number line",
       "selectButton": "(Multi-) Select",
-      "showFeedback": "Show feedback"
+      "showFeedback": "Show feedback",
+      "deleteQuestion": "Delete question",
+      "deleteQuestionSuccess": "Question deleted successfully",
+      "deleteQuestionPrompt" : "Do you really want to delete the question <b>{{questionTitle}}</b> ?"
     },
     "topicFormDialog": {
       "changeFile": "Change File",
       "createTopic": "Create a topic",
       "editTopic": "Edit topic",
+      "praiseTooltip": "Praise occurencies",
       "whenToShowFeedbacks": "When to show feedbacks ?"
     }
   },
@@ -167,7 +232,6 @@
       "student": "Student",
       "studentNotLinked": "The student is not linked to this topic",
       "studentNotStarted": "The student has not started this topic yet",
-      "studentsOverview": "Students Overview",
       "41correct": "Below 41% of correct answers",
       "4171correct": "Between 41% and 70% of correct answers",
       "70correct": "Over 70% of correct answers",
@@ -193,29 +257,33 @@
     "table": {
       "copySuccess": "Successfully copied!",
       "hintSearchColumn": "You can search on any column!",
-      "no": "No",
-      "search": "Search...",
-      "yes": "Yes"
+      "search": "Search..."
     }
   },
   "students": {
+    "active": "Active",
     "activeAssessmentsNumber": "Number of active assessments",
     "addStudent": "Add student",
     "assignTopic": "Assign a topic",
     "completedTopicsNumber": "Number of completed topics",
     "editStudent": "Edit student",
+    "deleteStudent": "Delete student(s)",
+    "deleteStudentPrompt": "Do you really want to delete the student(s)?",
     "incompatibleLanguageError": "You can only give access to a topic to students with the same country and language.",
     "studentCode": "Student code",
+    "studentDetails": "Student details",
+    "statusError": "Students can only be deleted after one year of inactivity",
+    "studentDeleteSuccess": "Students have been deleted successfully",
     "createStudentDialog": {
       "createStudent": "Create a new student",
       "firstName": "First name",
       "lastName": "Last name",
+      "noGroups": "No groups available",
       "studentEditSuccess": "{{name}}'s information have been edited successfully ",
       "studentCreateSuccess": "Student {{name}} with ID {{username}} was successfully created"
     },
     "studentDetail": {
       "activeAccess": "Active access",
-      "assessmentsOverview": "Assessments Overview",
       "linkedTopics": "linked topic(s)",
       "noActiveAccess": "No active access",
       "numberAssessments": "Number of assessments",
@@ -231,11 +299,14 @@
       "errorOnSubmit": "There was an error during the submission of the topic accesses",
       "startDate": "Start date",
       "topicAvailability": "Assessment topic(s) availability",
-      "notifier": "You need to set a start date and an end date for each selected topic."
+      "notifier": "You need to select student(s) or group(s) and set a start date and an end date for each selected topic.",
+      "noGroups": "You don't have groups with students.",
+      "groupsInfo": "Only groups with enrolled students are displayed"
     },
     "topicAccessesEdit": {
       "editTopicsAccess": "Edit assessment topic(s) access",
-      "removeTopicAccess": "Delete Topic Access",
+      "removeTopicAccess": "Remove topic access",
+      "removeTopicAccessPrompt": "Do you really want to remove access to the topic '<b>{{topicTitle}}</b>' ?",
       "allTopicsAccessesDeleted": "All topics accesses of this assessment have been deleted",
       "missingDates": "You need to set a start date and an end date for each topic",
       "topicsUpdated": "The topic(s) accesses have been successfully updated!",
@@ -243,5 +314,23 @@
       "accessEdited": "The topic access have been successfully deleted!",
       "errorOnDeletion": "There was an error during the submission of the topic access deletion"
     }
+  },
+  "groups": {
+    "editGroup": "Edit group",
+    "createGroup": "Create a new group",
+    "addGroup": "Add group",
+    "numberStudents": "Number of students",
+    "requiredField": "Required field",
+    "groupName": "Group name",
+    "supervisor": "Supervisor",
+    "groupStudents": "Students of the group",
+    "groupEdited": "Group edited successfully",
+    "errorMessage": "Something went wrong: ",
+    "groupCreated": "Group created successfully",
+    "deleteGroup": "Delete group(s)",
+    "deleteGroupSuccess": "Group(s) deleted successfully",
+    "deleteGroupPrompt": "Do you really want to delete the group(s)? All students will be withdrawn from the group and left without one.",
+    "chooseGroup": "Choose group",
+    "filterByGroup": "Filter by group"
   }
 }

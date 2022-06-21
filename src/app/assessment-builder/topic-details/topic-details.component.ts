@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
+import { QuestionDragAndDropFormComponent } from '../questions/question-drag-and-drop-form/question-drag-and-drop-form.component';
+import { ConfirmModalComponent } from 'src/app/shared/confirm-modal/confirm-modal.component';
 import { QuestionInputFormComponent } from '../questions/question-input-form/question-input-form.component';
 import { QuestionNumberlineFormComponent } from '../questions/question-numberline-form/question-numberline-form.component';
 import { QuestionSelectFormComponent } from '../questions/question-select-form/question-select-form.component';
@@ -17,8 +21,8 @@ export class TopicDetailsComponent implements OnInit {
 
   public assessmentId: string;
   public topicId: string;
-
-  public topic;
+  public assessmentType: string;
+  public topic: any;
 
   public questionsArray: any[] = [
     {
@@ -36,30 +40,38 @@ export class TopicDetailsComponent implements OnInit {
     text: 'Number Line',
     component: QuestionNumberlineFormComponent
     },
+    {
+      type: 'DRAG_AND_DROP',
+      text: 'Drag and Drop',
+      component: QuestionDragAndDropFormComponent
+    },
 ];
 
   public order: number;
 
   public questionsList: any[];
-  public topicDetails;
+  public topicDetails: any;
 
   constructor(
     private dialog: MatDialog,
     private assessmentService: AssessmentService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router,
+    private alertService: AlertService,
+    private translateService: TranslateService
   ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.assessmentId = params.assessment_id;
       this.topicId = params.topic_id;
-
+      this.assessmentType = params.type;
       this.getQuestionsList();
       this.getTopicDetails();
     });
   }
 
-  getQuestionsList(): void {
+  private getQuestionsList(): void {
     this.assessmentService.getQuestionsList(this.assessmentId, this.topicId).subscribe(questionList => {
       if (questionList.length) {
         this.questionsList = questionList;
@@ -70,13 +82,13 @@ export class TopicDetailsComponent implements OnInit {
     });
   }
 
-  getTopicDetails(): void {
+  private getTopicDetails(): void {
     this.assessmentService.getTopicDetails(this.assessmentId, this.topicId).subscribe(topicDetails => {
       this.topicDetails = topicDetails;
     });
   }
 
-  openEditTopicDialog(topic): void {
+  public openEditTopicDialog(topic): void {
     this.topic = topic;
     const createTopicDialog = this.dialog.open(TopicFormDialogComponent, {
       data: {
@@ -92,7 +104,7 @@ export class TopicDetailsComponent implements OnInit {
     });
   }
 
-  openQuestionDialog(question?: any, clone?: boolean, type?: string): void {
+  public openQuestionDialog(question?: any, clone?: boolean, type?: string): void {
     const questionType = question ? question.question_type : type;
     // Use question array to open the dialog corresponding to the question type, using the component attribute
     const questionDialog = this.dialog.open(this.questionsArray.find(x => (questionType === x.type)).component, {
@@ -107,6 +119,50 @@ export class TopicDetailsComponent implements OnInit {
     questionDialog.afterClosed().subscribe((value) => {
       if (value) {
         this.getQuestionsList();
+      }
+    });
+  }
+
+  public deleteTopic(): void {
+    const confirmDialog = this.dialog.open(ConfirmModalComponent, {
+      data: {
+        title: this.translateService.instant('assessmentBuilder.assessmentSummary.deleteTopic'),
+        content: this.translateService.instant(
+          'assessmentBuilder.assessmentSummary.deleteTopicPrompt', { topicTitle: this.topicDetails.name }
+        ),
+        contentType: 'innerHTML',
+        confirmColor: 'warn'
+      }
+    });
+
+    confirmDialog.afterClosed().subscribe((res) => {
+      if (res) {
+        this.assessmentService.deleteTopic(this.assessmentId, this.topicId).subscribe(() => {
+          this.alertService.success(this.translateService.instant('assessmentBuilder.assessmentSummary.topicDetailSuccess'));
+          this.router.navigate(['/assessment-builder/your-assessments']);
+        });
+      }
+    });
+  }
+
+  public deleteQuestion(questionId: string, questionTitle: string): void {
+    const confirmDialog = this.dialog.open(ConfirmModalComponent, {
+      data: {
+        title: this.translateService.instant('assessmentBuilder.topicDetails.deleteQuestion'),
+        content: this.translateService.instant('assessmentBuilder.topicDetails.deleteQuestionPrompt', {questionTitle}),
+        contentType: 'innerHTML',
+        confirmColor: 'warn'
+      }
+    });
+
+    confirmDialog.afterClosed().subscribe((res) => {
+      if (res) {
+        this.assessmentService.deleteQuestion(this.assessmentId, this.topicId, questionId).subscribe(() => {
+          this.alertService.success(
+            this.translateService.instant('assessmentBuilder.topicDetails.deleteQuestionSuccess')
+          );
+          this.getQuestionsList();
+        });
       }
     });
   }

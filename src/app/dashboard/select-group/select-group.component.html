@@ -1,0 +1,31 @@
+
+<div *ngIf="multiple; else singleGroupSelect" class="main-board__charts-container__select">
+  <mat-form-field appearance="outline" color="accent">
+    <mat-label>
+      {{ "groups.filterByGroup" | translate }}
+    </mat-label>
+    <mat-select multiple [(value)]="selectedGroupArr">
+      <mat-option *ngFor="let group of groups"
+        [value]="group"
+        [disabled]="group.students?.length === 0"
+        (click)="onSelect(group)">
+          {{ group.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<ng-template #singleGroupSelect class="main-board__charts-container__select">
+  <mat-form-field appearance="outline" color="accent">
+    <mat-label>
+      {{ "groups.chooseGroup" | translate }}
+    </mat-label>
+    <mat-select [(value)]="selectedGroup">
+      <mat-option *ngFor="let group of groups"
+        [value]="group"
+        [disabled]="group.students?.length === 0"
+        (click)="onSelect(group)">
+          {{ group.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</ng-template>

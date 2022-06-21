@@ -9,6 +9,7 @@ import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { UtilitiesService } from 'src/app/core/services/utilities.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Group } from 'src/app/core/models/group.model';
 
 interface DialogData {
   studentsList?: any[];
@@ -22,25 +23,41 @@ interface DialogData {
 
 export class TopicAccessesBuilderComponent implements OnInit {
 
-  minDate: Date = new Date();
+  private topicsList: Topic[] = [];
+  public groupsList: Group[] = [];
+  private selectedAssessmentId: string;
+  private applyToAllTopics: boolean;
 
+  public minDate: Date = new Date();
   public studentsList: any[];
+  public assessmentsList: Assessment[] = [];
+  public startDate: Date;
+  public endDate: Date;
 
-  assessmentsList: Assessment[] = [];
-  topicsList: Topic[] = [];
-  selectedAssessmentId: string;
-
-  public startDate;
-  public endDate;
-
-  private setDate: boolean;
-
-  assignTopicForm: FormGroup = new FormGroup({
+  public assignTopicForm: FormGroup = new FormGroup({
     access: new FormArray([]),
   });
 
-  get controls(): AbstractControl[] {
+  assignGroupForm: FormGroup = new FormGroup({
+    groups: new FormArray([])
+  });
+
+  get topicControls(): AbstractControl[] {
     return (this.assignTopicForm.get('access') as FormArray).controls;
+  }
+
+  get groupControls(): AbstractControl[] {
+    return (this.assignGroupForm.get('groups') as FormArray).controls;
+  }
+
+  get disabledAssign(): boolean {
+    let studentsSelected = false;
+    if (this.data.studentsList && !this.data.studentsList.length) {
+      studentsSelected = this.assignGroupForm.value.groups.filter(element => element.selected === true).length ? true : false;
+    } else {
+      studentsSelected = true;
+    }
+    return !studentsSelected;
   }
 
   constructor(
@@ -58,17 +75,26 @@ export class TopicAccessesBuilderComponent implements OnInit {
     this.assessmentService.getAssessmentsList().subscribe((assessmentsList) => {
       this.assessmentsList = assessmentsList.filter(assessment => assessment.archived !== true);
     });
+
+    this.loadGroupsList();
   }
 
-  loadTopicsList(assessmentId: string): void {
+  public loadTopicsList(assessmentId: string): void {
     this.selectedAssessmentId = assessmentId;
     this.assessmentService.getAssessmentTopics(assessmentId).subscribe((newList) => {
       this.topicsList = newList.filter(topic => topic.archived !== true);
-      this.generateForm();
+      this.generateTopicsForm();
     });
   }
 
-  onDate(type, date): void {
+  loadGroupsList(): void {
+    this.userService.getGroups().subscribe((groups) => {
+      this.groupsList = groups.filter(group => group.students.length);
+      this.generateGroupsForm();
+    });
+  }
+
+  public onDateInput(type, date): void {
     if (type === 'start_date') {
       this.startDate = date;
     }
@@ -77,20 +103,20 @@ export class TopicAccessesBuilderComponent implements OnInit {
     }
   }
 
-  setAll(event): void {
-    this.setDate = event;
+  public onApplyToAllTopics(value: boolean): void {
+    this.applyToAllTopics = value;
     const accessForm = this.assignTopicForm.get('access') as FormArray;
     accessForm.controls.forEach((access, i) => {
       access.setValue({
         topic: access.value.topic,
         selected: access.value.selected,
-        start_date: event || i === 0 ? this.startDate : null,
-        end_date: event || i === 0 ? this.endDate : null
+        start_date: value || i === 0 ? this.startDate : null,
+        end_date: value || i === 0 ? this.endDate : null
       });
     });
   }
 
-  generateForm(): void {
+  public generateTopicsForm(): void {
     const accessForm = this.assignTopicForm.get('access') as FormArray;
     accessForm.clear();
 
@@ -98,18 +124,40 @@ export class TopicAccessesBuilderComponent implements OnInit {
       const topicAccess = this.formBuilder.group({
         topic: new FormControl(topic),
         selected: new FormControl(true),
-        start_date: this.setDate ? this.startDate : new FormControl(null, Validators.required),
-        end_date: this.setDate ? this.endDate : new FormControl(null, Validators.required)
+        start_date: this.applyToAllTopics ? this.startDate : new FormControl(null, Validators.required),
+        end_date: this.applyToAllTopics ? this.endDate : new FormControl(null, Validators.required)
       });
       accessForm.push(topicAccess);
     });
   }
 
-  submitCreateTopicAccesses(): void {
-    const studentsArray: number[] = [];
-    this.studentsList.forEach(student => {
-      studentsArray.push(student.id);
+  public generateGroupsForm(): void {
+    const groupForm = this.assignGroupForm.get('groups') as FormArray;
+    groupForm.clear();
+
+    this.groupsList.forEach((group: Group, i: number) => {
+      const groupAccess = this.formBuilder.group({
+        group: new FormControl(group),
+        selected: new FormControl(false),
+        name: new FormControl(group.name),
+      });
+      groupForm.push(groupAccess);
     });
+  }
+
+  public submitCreateTopicAccesses(): void {
+    let studentsArray: number[] = [];
+    if (this.studentsList.length) {
+      this.studentsList.forEach(student => {
+        studentsArray.push(student.id);
+      });
+    }
+
+    for (const element of this.assignGroupForm.value.groups) {
+      if (element.selected) {
+        studentsArray = studentsArray.concat(element.group.students);
+      }
+    }
 
     const accessesArray = new Array<{
       topic: number,
@@ -148,7 +196,7 @@ export class TopicAccessesBuilderComponent implements OnInit {
   }
 
   // Selected topics needs validations, unselected ones don't
-  selectTopic(topic, selected): void {
+  public selectTopic(topic, selected): void {
     if (selected) {
       topic.get('start_date').setValidators([Validators.required]);
       topic.get('start_date').updateValueAndValidity();

@@ -31,11 +31,8 @@ export class AssessmentsComponent implements OnInit {
   ];
 
   public assessmentsDataSource: MatTableDataSource<Assessment> = new MatTableDataSource([]);
-
-
-  public filters: TableFilter[];
-  private filtersData = { country: '', language: '' };
-
+  private tableFiltersData = { country: '', language: '' };
+  public tableFilters: TableFilter[];
   public isAssessmentPrivate = false;
 
   @ViewChild('createAssessmentDialog') createAssessmentDialog: TemplateRef<any>;
@@ -63,7 +60,7 @@ export class AssessmentsComponent implements OnInit {
   ngOnInit(): void {
     forkJoin([this.userService.getCountries(), this.userService.getLanguages()]).subscribe(
       ([countries, languages]: [Country[], Language[]]) => {
-        this.filters = [
+        this.tableFilters = [
           {
             key: 'country',
             name: 'general.country',
@@ -77,7 +74,7 @@ export class AssessmentsComponent implements OnInit {
             options: [{ key: '', value: 'All' }].concat(languages.map(language => ({ key: language.code, value: language.name_en })))
           }
         ];
-        this.filters.forEach(filter => {
+        this.tableFilters.forEach(filter => {
           this.translateService.stream(filter.name).subscribe(translated => filter.name = translated);
         });
       }
@@ -88,27 +85,27 @@ export class AssessmentsComponent implements OnInit {
     });
   }
 
-  onFiltersChange(data: { key: string | number, value: any }): void {
-    this.filtersData[data.key] = data.value;
+  public onTableFiltersChange(data: { key: string | number, value: any }): void {
+    this.tableFiltersData[data.key] = data.value;
 
-    this.assessmentService.getAssessmentsList(this.filtersData).subscribe((assessmentsList) => {
+    this.assessmentService.getAssessmentsList(this.tableFiltersData).subscribe((assessmentsList) => {
       this.assessmentsDataSource = new MatTableDataSource(assessmentsList);
     });
   }
 
-  onOpenDetails(id: string): void {
+  public onOpenDetails(id: string): void {
     this.router.navigate([`/assessments/${id}`]);
   }
 
-  togglePrivate(event: { checked: boolean; }): void {
+  public togglePrivate(event: { checked: boolean; }): void {
     this.isAssessmentPrivate = event.checked;
   }
 
-  deleteSelection(): void {
+  public deleteSelection(): void {
     console.log('DEL');
   }
 
-  downloadData(): void {
+  public downloadData(): void {
     console.log('Work In Progress');
   }
 }

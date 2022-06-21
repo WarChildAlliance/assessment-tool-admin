@@ -17,5 +17,11 @@
     [icon]="icon"
     [inline]="!isIcon"
   ></app-custom-icon>
+  <app-spinner
+    *ngIf="loading"
+    class="custom-btn-spinner"
+    size="small"
+    [variant]="spinnerVariant"
+  ></app-spinner>
   <ng-content></ng-content>
 </button>

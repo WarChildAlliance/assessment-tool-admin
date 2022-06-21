@@ -10,6 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
+import { ConfirmModalComponent } from 'src/app/shared/confirm-modal/confirm-modal.component';
 import { environment } from 'src/environments/environment';
 import { AssessmentFormDialogComponent } from '../assessment-form-dialog/assessment-form-dialog.component';
 import { TopicFormDialogComponent } from '../topic-form-dialog/topic-form-dialog.component';
@@ -21,10 +22,10 @@ import { TopicFormDialogComponent } from '../topic-form-dialog/topic-form-dialog
 })
 export class AssessmentSummaryComponent implements OnInit {
 
-  @Input() assessment;
+  @Input() assessment: any;
   @Input() canEdit: boolean;
 
-  @Output() archivedAssessment = new EventEmitter<boolean>();
+  @Output() reloadAssessments = new EventEmitter<boolean>();
 
   public assessmentId: string;
 
@@ -46,7 +47,21 @@ export class AssessmentSummaryComponent implements OnInit {
     this.orderTopics();
   }
 
-  getAssessmentDetails(assessmentId: string): void {
+  private orderTopics(): void {
+    // To order and display unarchived topic cards first
+    this.assessment.topics.sort((a, b) => {
+      if (a.archived > b.archived) {
+        return 1;
+      }
+      if (a.archived < b.archived) {
+        return -1;
+      }
+
+      return 0;
+    });
+  }
+
+  private getAssessmentDetails(assessmentId: string): void {
     this.assessmentService.getAssessmentTopics(assessmentId).subscribe(() => {
       this.assessmentService.getAssessmentDetails(assessmentId).subscribe(assessmentDetails => {
         this.assessment = assessmentDetails;
@@ -55,27 +70,67 @@ export class AssessmentSummaryComponent implements OnInit {
     });
   }
 
-  openCreateTopicDialog(assessmentId: string): void {
+  public openTopicFormDialog(assessmentId: string): void {
     this.assessmentId = assessmentId;
 
-    const createTopicDialog = this.dialog.open(TopicFormDialogComponent, {
+    const topicFormDialog = this.dialog.open(TopicFormDialogComponent, {
       data: {
         assessmentId: this.assessmentId
       }
     });
 
-    createTopicDialog.afterClosed().subscribe((value) => {
+    topicFormDialog.afterClosed().subscribe((value) => {
       if (value) {
         this.getAssessmentDetails(this.assessmentId);
       }
     });
   }
 
-  // deleteAssessment(assessmentId: string): void {
-  //   console.log('id', assessmentId)
-  // }
+  public deleteAssessment(assessmentId: string, assessmentTitle: string): void {
+    const confirmDialog = this.dialog.open(ConfirmModalComponent, {
+      data: {
+        title: this.translateService.instant('assessmentBuilder.assessmentSummary.deleteAssessment'),
+        content: this.translateService.instant('assessmentBuilder.assessmentSummary.deleteAssessmentPrompt', { assessmentTitle }),
+        contentType: 'innerHTML',
+        confirmColor: 'warn'
+      }
+    });
 
-  archiveTopic(assessmentId, topicId, archived): void {
+    confirmDialog.afterClosed().subscribe((res) => {
+      if (res) {
+        this.assessmentService.deleteAssessment(assessmentId).subscribe(() => {
+          this.alertService.success(this.translateService.instant('assessmentBuilder.assessmentSummary.deleteAssessmentSuccess'));
+          this.reloadAssessments.emit(true);
+        });
+      }
+    });
+  }
+
+  public deleteTopic(event: MouseEvent, assessmentId: string, topicId: string, topicTitle: string): void {
+    event.stopPropagation();
+
+    const confirmDialog = this.dialog.open(ConfirmModalComponent, {
+      data: {
+        title: this.translateService.instant('assessmentBuilder.assessmentSummary.deleteTopic'),
+        content: this.translateService.instant('assessmentBuilder.assessmentSummary.deleteTopicPrompt', { topicTitle }),
+        contentType: 'innerHTML',
+        confirmColor: 'warn'
+      }
+    });
+
+    confirmDialog.afterClosed().subscribe((res) => {
+      if (res) {
+        this.assessmentService.deleteTopic(assessmentId, topicId).subscribe(() => {
+          this.alertService.success(this.translateService.instant('assessmentBuilder.assessmentSummary.topicDetailSuccess'));
+          this.getAssessmentDetails(assessmentId);
+        });
+      }
+    });
+  }
+
+  public archiveTopic(event: MouseEvent, assessmentId, topicId, archived): void {
+    event.stopPropagation();
+
     const formData: FormData = new FormData();
     formData.append('archived', archived);
 
@@ -85,17 +140,17 @@ export class AssessmentSummaryComponent implements OnInit {
     });
   }
 
-  archiveAssessment(assessmentId, archived): void {
+  public archiveAssessment(assessmentId, archived): void {
     const formData: FormData = new FormData();
     formData.append('archived', archived);
 
     this.assessmentService.editAssessment(assessmentId, formData).subscribe(res => {
       this.alertService.success(this.translateService.instant('assessmentBuilder.assessmentEditSuccess'));
-      this.archivedAssessment.emit(true);
+      this.reloadAssessments.emit(true);
     });
   }
 
-  editAssessment(assessment): void{
+  public editAssessment(assessment): void {
     this.edit = true;
     this.assessment = assessment;
 
@@ -109,36 +164,22 @@ export class AssessmentSummaryComponent implements OnInit {
     createAssessmentDialog.afterClosed().subscribe((value) => {
       if (value) {
         if (value.archived !== assessment.archived) {
-          this.archivedAssessment.emit(true);
+          this.reloadAssessments.emit(true);
         }
         this.getAssessmentDetails(this.assessment.id);
       }
     });
   }
 
-  goToTopicDetails(assessmentId, topicId): void {
+  public goToTopicDetails(assessmentId, topicId): void {
     this.router.navigate([`${assessmentId}/topic/${topicId}`], { relativeTo: this.route });
   }
 
-  getSource(path: string): string {
+  public getSource(path: string): string {
     return `${environment.API_URL}${path}`;
   }
 
-  getMediaSource(path: string): string {
+  public getMediaSource(path: string): string {
     return `${environment.API_URL}/media/${path}`;
-  }
-
-  orderTopics(): void {
-    // To order and display unarchived topic cards first
-    this.assessment.topics.sort((a, b) => {
-      if (a.archived > b.archived) {
-        return 1;
-      }
-      if (a.archived < b.archived) {
-        return -1;
-      }
-
-      return 0;
-    });
   }
 }

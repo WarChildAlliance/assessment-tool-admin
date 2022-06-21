@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>{{ title }}</h1>
+<mat-dialog-content cdkfocusinitial [ngSwitch]="contentType">
+  <div *ngSwitchCase="'innerHTML'" [innerHTML]="content"></div>
+  <div *ngSwitchCase="'text'">{{content}}</div>
+</mat-dialog-content>
+<div mat-dialog-actions class="dialog-buttons">
+  <button mat-button mat-dialog-close class="dialog-buttons__cancel">{{ cancelText | translate }}</button>
+  <button mat-flat-button class="dialog-buttons__submit" [color]="confirmColor" [mat-dialog-close]="true">{{ confirmText | translate }}</button>
+</div>

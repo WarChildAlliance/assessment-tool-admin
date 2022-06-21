@@ -5,7 +5,9 @@ import { AlertService } from 'src/app/core/services/alert.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { UtilitiesService } from 'src/app/core/services/utilities.service';
 import { TranslateService } from '@ngx-translate/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { ConfirmModalComponent } from 'src/app/shared/confirm-modal/confirm-modal.component';
+
 
 interface DialogData {
   assessment?: any;
@@ -17,20 +19,18 @@ interface DialogData {
   styleUrls: ['./topic-access-modal.component.scss']
 })
 export class TopicAccessModalComponent implements OnInit {
-  minDate: Date = new Date();
+  private startDate: Date;
+  private endDate: Date;
+  private applyToAllTopics: boolean;
 
+  public minDate: Date = new Date();
   public assessment: any;
   public studentId: any;
-
-  private startDate;
-  private endDate;
-  public assessmentTitle;
-  public assessmentId;
-
-  private setDate: boolean;
+  public assessmentTitle: string;
+  public assessmentId: string;
   public deletedTopic = false;
 
-  assignTopicForm: FormGroup = new FormGroup({
+  public assignTopicForm: FormGroup = new FormGroup({
     access: new FormArray([]),
   });
 
@@ -44,7 +44,8 @@ export class TopicAccessModalComponent implements OnInit {
     private utilitiesService: UtilitiesService,
     private alertService: AlertService,
     private userService: UserService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -55,7 +56,7 @@ export class TopicAccessModalComponent implements OnInit {
     }
   }
 
-  generateForm(): void {
+  private generateForm(): void {
     const accessForm = this.assignTopicForm.get('access') as FormArray;
 
     this.assessment.forEach((elem) => {
@@ -72,8 +73,8 @@ export class TopicAccessModalComponent implements OnInit {
 
       const topicAccess = this.formBuilder.group({
         topic: new FormControl(topic),
-        start_date: this.setDate ? this.startDate : new FormControl(startDate, Validators.required),
-        end_date: this.setDate ? this.endDate : new FormControl(endDate, Validators.required)
+        start_date: this.applyToAllTopics ? this.startDate : new FormControl(startDate, Validators.required),
+        end_date: this.applyToAllTopics ? this.endDate : new FormControl(endDate, Validators.required)
       });
 
       accessForm.push(topicAccess);
@@ -81,7 +82,7 @@ export class TopicAccessModalComponent implements OnInit {
     });
   }
 
-  onDate(type, date): void {
+  public onDateInput(type, date): void {
     if (type === 'start_date') {
       this.startDate = date;
     }
@@ -90,19 +91,19 @@ export class TopicAccessModalComponent implements OnInit {
     }
   }
 
-  setAll(event): void {
-    this.setDate = event;
+  public onApplyToAllTopics(value: boolean): void {
+    this.applyToAllTopics = value;
     const accessForm = this.assignTopicForm.get('access') as FormArray;
     accessForm.controls.forEach((access, i) => {
       access.setValue({
         topic: access.value.topic,
-        start_date: event || i === 0 ? this.startDate : null,
-        end_date: event || i === 0 ? this.endDate : null
+        start_date: value || i === 0 ? this.startDate : null,
+        end_date: value || i === 0 ? this.endDate : null
       });
     });
   }
 
-  submitCreateTopicAccesses(): void {
+  public submitCreateTopicAccesses(): void {
     const studentsArray: number[] = [this.studentId];
 
     const accessesArray: any[] = [];
@@ -135,7 +136,7 @@ export class TopicAccessModalComponent implements OnInit {
     );
   }
 
-  delete(topic): void {
+  private deleteTopicAccess(topic): void {
     const topicAccessId = topic.get('topic').value.topic_access_id;
 
     this.userService.removeTopicAccess(this.assessmentId, topicAccessId).subscribe(
@@ -152,5 +153,22 @@ export class TopicAccessModalComponent implements OnInit {
         this.alertService.error(this.translateService.instant('students.topicAccessesEdit.errorOnDeletion'));
       }
     );
+  }
+
+  public removeTopicAccess(topic): void {
+    const topicTitle = topic.get('topic').value.topic_name;
+    const confirmDialog = this.dialog.open(ConfirmModalComponent, {
+      data: {
+        title: this.translateService.instant('students.topicAccessesEdit.removeTopicAccess'),
+        content: this.translateService.instant('students.topicAccessesEdit.removeTopicAccessPrompt', { topicTitle }),
+        contentType: 'innerHTML',
+        confirmColor: 'warn'
+      }
+    });
+    confirmDialog.afterClosed().subscribe((res) => {
+      if (res) {
+        this.deleteTopicAccess(topic);
+      }
+    });
   }
 }

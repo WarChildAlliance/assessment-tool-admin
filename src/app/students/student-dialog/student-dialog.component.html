@@ -1,7 +1,7 @@
 <h2 mat-dialog-title>
-    {{ ( isStudentEdited ? "students.editStudent" : "students.createStudentDialog.createStudent" ) | translate }}
-    </h2>
-<form class="form-primary" [formGroup]="createNewStudentForm">
+    {{ ( !!student ? "students.editStudent" : "students.createStudentDialog.createStudent" ) | translate }}
+</h2>
+<form class="form-primary" [formGroup]="studentForm">
     <div class="form-primary__flex-container">
         <div class="form-primary__flex-container__field-container">
             <mat-form-field appearance="outline" color="accent">
@@ -10,7 +10,7 @@
                     </mat-label>
                 <input matInput type="text" formControlName="first_name">
             </mat-form-field>
-            <small class="text-danger" *ngIf="formChanges && createNewStudentForm.get('first_name').hasError('required')">
+            <small class="text-danger" *ngIf="hasFormChanged && studentForm.get('first_name').hasError('required')">
                 {{ "general.fieldRequired" | translate }}
             </small>
         </div>
@@ -20,7 +20,7 @@
                     </mat-label>
                 <input matInput type="text" formControlName="last_name">
             </mat-form-field>
-            <small class="text-danger" *ngIf="formChanges && createNewStudentForm.get('last_name').hasError('required')">
+            <small class="text-danger" *ngIf="hasFormChanged && studentForm.get('last_name').hasError('required')">
                 {{ "general.fieldRequired" | translate }}
             </small>
         </div>
@@ -32,7 +32,7 @@
                     <mat-option *ngFor="let country of countries" [value]="country.code">{{country.name_en}}</mat-option>
                 </mat-select>
             </mat-form-field>
-            <small class="text-danger" *ngIf="formChanges && createNewStudentForm.get('country').hasError('required')">
+            <small class="text-danger" *ngIf="hasFormChanged && studentForm.get('country').hasError('required')">
                 {{ "general.fieldRequired" | translate }}
             </small>
         </div>
@@ -44,9 +44,28 @@
                     <mat-option *ngFor="let language of languages" [value]="language.code">{{language.name_en}}</mat-option>
                 </mat-select>
             </mat-form-field>
-            <small class="text-danger" *ngIf="formChanges && createNewStudentForm.get('language').hasError('required')">
+            <small class="text-danger" *ngIf="hasFormChanged && studentForm.get('language').hasError('required')">
                 {{ "general.fieldRequired" | translate }}
             </small>
+        </div>
+        <div class="form-primary__flex-container__field-container">
+            <mat-form-field appearance="outline" color="accent">
+                <mat-label>{{ ( groups?.length ? "general.group" : "general.noData" ) | translate }}</mat-label>
+                <mat-select formControlName="group">
+                    <mat-option>-</mat-option>
+                    <mat-option *ngFor="let group of groups" [value]="group.id.toString()">
+                        {{ group.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <app-custom-button category="secondary" variant="neutral" icon="add" (click)="openGroupDialog()">
+                {{ "groups.addGroup" | translate }}
+            </app-custom-button>
+        </div>
+        <div class="form-primary__flex-container__field-container">
+            <mat-checkbox formControlName="active">
+                {{ "students.active" | translate}}
+            </mat-checkbox>
         </div>
     </div>
     <div class="dialog-buttons">
@@ -54,9 +73,9 @@
             {{ "general.cancel" | translate }}
         </button>
         <button mat-flat-button color="accent" type="submit" class="dialog-buttons__submit"
-         [mat-dialog-close]="createNewStudentForm.value" (click)="submitCreateNewStudent()"
-         [disabled]="createNewStudentForm.invalid || !createNewStudentForm.dirty">
-            {{ ( isStudentEdited ? "general.save" : "general.submit" ) | translate }}
+         [mat-dialog-close]="studentForm.value" (click)="submitStudent()"
+         [disabled]="studentForm.invalid || !studentForm.dirty">
+            {{ ( !!student ? "general.save" : "general.submit" ) | translate }}
         </button>
     </div>
 </form>

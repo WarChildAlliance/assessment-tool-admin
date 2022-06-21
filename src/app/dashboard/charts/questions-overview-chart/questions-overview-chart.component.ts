@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import * as Chart from 'chart.js';
 import { ChartData } from 'chart.js';
+import { filter } from 'rxjs/operators';
 import { TopicDashboard } from 'src/app/core/models/topic-dashboard.model';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
-import { TranslateService } from '@ngx-translate/core';
-
 
 @Component({
   selector: 'app-questions-overview-chart',
@@ -25,19 +24,31 @@ export class QuestionsOverviewChartComponent implements OnInit {
   private assessmentId: string;
   private topicId: string;
 
-  public questionDetails;
+  public questionDetails: any;
 
   public index: number;
 
   public hasData = true;
+  public selectionHasData = true;
 
   constructor(private assessmentService: AssessmentService) { }
 
   ngOnInit(): void {
   }
 
+  public getQuestionsOverview(groupID?: number[]): void {
+    const filteringParams = groupID?.length ? { groups: groupID } : null;
+    this.assessmentService.getQuestionsOverview(this.assessmentId, this.topicId, filteringParams)
+    .subscribe(data => {
+      this.getBarChartData(data);
+    });
+  }
 
-  getBarChartData(questionData): void {
+  private getBarChartData(questionData): void {
+    if (questionData?.length === 0) {
+      this.selectionHasData = false;
+      return;
+    }
     this.questionData = [];
     const data = [];
     const incorrectAnswers = [];
@@ -60,17 +71,18 @@ export class QuestionsOverviewChartComponent implements OnInit {
     });
 
     this.barChart.update();
+    this.selectionHasData = true;
     this.getQuestionDetails(0);
   }
 
-  getQuestionDetails(index): any {
+  private getQuestionDetails(index): any {
     this.index = index + 1;
     this.assessmentService.getQuestionDetails(this.assessmentId, this.topicId, this.questionData[index].id).subscribe(details => {
       this.questionDetails = details;
     });
   }
 
-  onTopicSelection(assessmentTopicInfos: {assessmentId: string, topic: TopicDashboard}): void {
+  public onTopicSelection(assessmentTopicInfos: {assessmentId: string, topic: TopicDashboard}): void {
     this.assessmentId = assessmentTopicInfos?.assessmentId;
 
     if (assessmentTopicInfos?.topic.started) {
@@ -100,13 +112,9 @@ export class QuestionsOverviewChartComponent implements OnInit {
         },
       });
       this.topicId = assessmentTopicInfos.topic.id;
-      this.assessmentService.getQuestionsOverview(assessmentTopicInfos.assessmentId, this.topicId).subscribe(data => {
-        this.getBarChartData(data);
-        this.getQuestionDetails(0);
-      });
+      this.getQuestionsOverview();
     } else {
       this.hasData = false;
     }
   }
-
 }

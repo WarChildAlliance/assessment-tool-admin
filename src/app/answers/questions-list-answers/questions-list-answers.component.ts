@@ -19,14 +19,13 @@ import { TopicTableData } from 'src/app/core/models/topic-table-data.model';
   styleUrls: ['./questions-list-answers.component.scss']
 })
 export class QuestionsListAnswersComponent implements OnInit {
+  private currentStudentId: string;
+  public assessmentId: string;
+  public topicId: string;
 
-  questionsAnswersDataSource: MatTableDataSource<QuestionTableData> = new MatTableDataSource([]);
-  currentStudentId: string;
-  assessmentId: string;
-  topicId: string;
-
-  currentStudent: StudentTableData;
-  currentTopic: TopicTableData;
+  public questionsAnswersDataSource: MatTableDataSource<QuestionTableData> = new MatTableDataSource([]);
+  public currentStudent: StudentTableData;
+  public currentTopic: TopicTableData;
 
   @ViewChild('questionPreviewDialog') questionPreviewDialog: TemplateRef<any>;
 
@@ -81,17 +80,26 @@ export class QuestionsListAnswersComponent implements OnInit {
     });
   }
 
-  onOpenDetails(questionId: string): void {
+  public onOpenDetails(questionId: string): void {
     /*
     this.router.navigate([`students/${this.currentStudentId}/assessments/
       ${this.assessmentId}/topics/${this.topicId}/questions/${questionId}`]);
     */
   }
 
-  onCustomAction(element: any): void {
+  public onCustomAction(element: any): void {
     this.assessmentService.getQuestionDetails(this.assessmentId, this.topicId, element.id).subscribe(details => {
       this.questionDetails = details;
-      this.matDialog.open(this.questionPreviewDialog);
+
+      // To add scroll in the dialog because the drag and drop component has a height that can cause problems
+      let config = {};
+      if (this.questionDetails.question_type === 'DRAG_AND_DROP') {
+        config = {
+          height: '95%'
+        };
+      }
+
+      this.matDialog.open(this.questionPreviewDialog, config);
     });
   }
 }

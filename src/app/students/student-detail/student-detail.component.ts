@@ -1,13 +1,16 @@
 import { formatDate } from '@angular/common';
 import * as moment from 'moment';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { StudentTableData } from 'src/app/core/models/student-table-data.model';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { MatDialog } from '@angular/material/dialog';
-import { CreateStudentDialogComponent } from '../create-student-dialog/create-student-dialog.component';
+import { StudentDialogComponent } from '../student-dialog/student-dialog.component';
 import { TopicAccessModalComponent } from '../topic-access-modal/topic-access-modal.component';
+import { ConfirmModalComponent } from 'src/app/shared/confirm-modal/confirm-modal.component';
+import { TranslateService } from '@ngx-translate/core';
+import { AlertService } from 'src/app/core/services/alert.service';
 
 @Component({
   selector: 'app-student-detail',
@@ -16,14 +19,18 @@ import { TopicAccessModalComponent } from '../topic-access-modal/topic-access-mo
 })
 export class StudentDetailComponent implements OnInit {
   public student: StudentTableData;
-  public studentAssessments;
-  public assessment;
+  public studentAssessments: any[];
+  public assessment: any;
+  public deletable = false;
 
   constructor(
     private userService: UserService,
     private assessmentService: AssessmentService,
     private route: ActivatedRoute,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private translateService: TranslateService,
+    private alertService: AlertService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -33,14 +40,15 @@ export class StudentDetailComponent implements OnInit {
     });
   }
 
-  getStudentDetails(studentId): void {
+  private getStudentDetails(studentId): void {
     this.userService
       .getStudentDetails(studentId.toString()).subscribe((student) => {
         this.student = student;
+        this.deletable = this.student.is_active ? false : this.inactiveOneYear();
     });
   }
 
-  getStudentAssessments(studentId): void {
+  private getStudentAssessments(studentId): void {
     this.assessmentService.getStudentAssessments(studentId).subscribe(
       (assessments) => {
         assessments.forEach((assessment) => {
@@ -54,10 +62,23 @@ export class StudentDetailComponent implements OnInit {
     });
   }
 
-  editCurrentStudent(): void {
-    const editStudentDialog = this.dialog.open(CreateStudentDialogComponent, {
+  // TODO: make it in the back-end for performance
+  private inactiveOneYear(): boolean {
+    const today = new Date();
+    const inactiveSince = new Date(this.student.active_status_updated_on);
+    const y1 = inactiveSince.getFullYear();
+    const y2 = today.getFullYear();
+
+    const d1 = new Date(inactiveSince).setFullYear(2000);
+    const d2 = new Date(today).setFullYear(2000);
+
+    return (y2 - y1 > 1 || (y2 - y1 === 1 && d2 > d1));
+  }
+
+  public onEdit(): void {
+    const editStudentDialog = this.dialog.open(StudentDialogComponent, {
       data: {
-        newStudent: this.student
+        student: this.student
       }
     });
 
@@ -68,7 +89,7 @@ export class StudentDetailComponent implements OnInit {
     });
   }
 
-  editTopicsAccesses(assessment): void {
+  public editTopicsAccesses(assessment): void {
     this.assessment = assessment;
     const editAssignTopicDialog = this.dialog.open(TopicAccessModalComponent, {
       data: {
@@ -84,7 +105,28 @@ export class StudentDetailComponent implements OnInit {
     });
   }
 
-  deleteCurrentStudent(): void {
-    console.log('DELETE CURRENT USER');
+  public onDelete(): void {
+    const confirmDialog = this.dialog.open(ConfirmModalComponent, {
+      data: {
+        title: this.translateService.instant('students.deleteStudent'),
+        content: this.translateService.instant('students.deleteStudentPrompt'),
+        contentType: 'innerHTML',
+        confirmColor: 'warn'
+      }
+    });
+
+    confirmDialog.afterClosed().subscribe(res => {
+      if (res) {
+        this.userService.deleteStudent(this.student.id.toString()).subscribe(() => {
+          this.alertService.success(
+            this.translateService.instant(
+              'students.studentDeleteSuccess',
+              { fullname: this.student.full_name, username: this.student.username }
+          ));
+
+          this.router.navigate(['students']);
+        });
+      }
+    });
   }
 }
