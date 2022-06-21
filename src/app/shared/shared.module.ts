@@ -21,6 +21,10 @@ import { QuestionSelectComponent } from './questions/question-select/question-se
 import { QuestionInputComponent } from './questions/question-input/question-input.component';
 import { QuestionSortComponent } from './questions/question-sort/question-sort.component';
 import { QuestionNumberlineComponent } from './questions/question-numberline/question-numberline.component';
+import { QuestionDragAndDropComponent } from './questions/question-drag-and-drop/question-drag-and-drop.component';
+import { MatDividerModule } from '@angular/material/divider';
+import { HorizontalScrollArrowsComponent } from './horizontal-scroll-arrows/horizontal-scroll-arrows.component';
+import { CustomButtonModule } from './button/button.module';
 
 @NgModule({
   declarations: [
@@ -30,6 +34,8 @@ import { QuestionNumberlineComponent } from './questions/question-numberline/que
     QuestionInputComponent,
     QuestionSortComponent,
     QuestionNumberlineComponent,
+    QuestionDragAndDropComponent,
+    HorizontalScrollArrowsComponent
   ],
   imports: [
     CommonModule,
@@ -48,6 +54,8 @@ import { QuestionNumberlineComponent } from './questions/question-numberline/que
     MatCardModule,
     ClipboardModule,
     TranslateModule,
+    MatDividerModule,
+    CustomButtonModule
   ],
   exports: [
     TableComponent,
@@ -56,7 +64,9 @@ import { QuestionNumberlineComponent } from './questions/question-numberline/que
     QuestionInputComponent,
     QuestionSortComponent,
     QuestionNumberlineComponent,
+    QuestionDragAndDropComponent,
     TranslateModule,
+    HorizontalScrollArrowsComponent
   ]
 })
 

@@ -1,0 +1,81 @@
+.attachments-container {
+    display: flex;
+}
+
+.mat-form-field {
+    margin: 10px !important;
+}
+
+.validate-drag {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.container {
+    overflow: auto;
+    max-height: 85vh;
+    min-width: 85vh;
+
+    .drag-and-drop-form {
+        display: flex;
+        justify-content: center;
+    }
+
+    .drop-areas-button {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 10px;
+        .notifier {
+            margin-top: 1em;
+            color: red;
+        }
+    }
+}
+
+.area-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+
+    p {
+        font-weight: bold;
+    }
+
+    .left {
+        .area {
+            display: flex;
+            flex-direction: column;
+
+            .items-container {
+                display: flex;
+                align-items: center;
+            }
+        }
+
+        .without-area {
+            flex-direction: column;
+            padding-top: 1em;
+
+            .list {
+                display: flex;
+                align-items: center;
+            }
+        }
+    }
+
+    .items-selectors {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.dialog-buttons {
+    margin-top: 0.5em;
+}
+
+.attachments-container {
+    app-image-selector {
+        margin-right: 20px;
+    }
+}
