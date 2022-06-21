@@ -6,6 +6,12 @@
     margin: 10px !important;
 }
 
+.validate-drag {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
 .container {
     overflow: auto;
     max-height: 85vh;
@@ -13,17 +19,13 @@
 
     .drag-and-drop-form {
         display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-bottom: 1em;
+        justify-content: center;
+    }
 
-        .form-button {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 0.5em;
-        }
-
+    .drop-areas-button {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 10px;
         .notifier {
             margin-top: 1em;
             color: red;
@@ -42,14 +44,12 @@
 
     .left {
         .area {
-            .area-name {
-                display: flex;
-                flex-direction: column;
+            display: flex;
+            flex-direction: column;
 
-                .items-container {
-                    display: flex;
-                    align-items: center;
-                }
+            .items-container {
+                display: flex;
+                align-items: center;
             }
         }
 
@@ -74,9 +74,8 @@
     margin-top: 0.5em;
 }
 
-.attachments-container,
-items-selectors {
-    div:first-child {
+.attachments-container {
+    app-image-selector {
         margin-right: 20px;
     }
 }
