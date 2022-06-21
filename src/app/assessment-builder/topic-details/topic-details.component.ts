@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
+import { QuestionDragAndDropFormComponent } from '../questions/question-drag-and-drop-form/question-drag-and-drop-form.component';
 import { ConfirmModalComponent } from 'src/app/shared/confirm-modal/confirm-modal.component';
 import { QuestionInputFormComponent } from '../questions/question-input-form/question-input-form.component';
 import { QuestionNumberlineFormComponent } from '../questions/question-numberline-form/question-numberline-form.component';
@@ -38,6 +39,11 @@ export class TopicDetailsComponent implements OnInit {
     type: 'NUMBER_LINE',
     text: 'Number Line',
     component: QuestionNumberlineFormComponent
+    },
+    {
+      type: 'DRAG_AND_DROP',
+      text: 'Drag and Drop',
+      component: QuestionDragAndDropFormComponent
     },
 ];
 

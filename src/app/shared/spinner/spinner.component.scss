@@ -1,0 +1,11 @@
+.custom-spinner-success {
+  ::ng-deep circle {
+    stroke: #63d168;
+  }
+}
+
+.custom-spinner-light {
+  ::ng-deep circle {
+    stroke: white;
+  }
+}

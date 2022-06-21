@@ -20,8 +20,8 @@ import { TopicTableData } from 'src/app/core/models/topic-table-data.model';
 })
 export class QuestionsListAnswersComponent implements OnInit {
   private currentStudentId: string;
-  private assessmentId: string;
-  private topicId: string;
+  public assessmentId: string;
+  public topicId: string;
 
   public questionsAnswersDataSource: MatTableDataSource<QuestionTableData> = new MatTableDataSource([]);
   public currentStudent: StudentTableData;
@@ -90,7 +90,16 @@ export class QuestionsListAnswersComponent implements OnInit {
   public onCustomAction(element: any): void {
     this.assessmentService.getQuestionDetails(this.assessmentId, this.topicId, element.id).subscribe(details => {
       this.questionDetails = details;
-      this.matDialog.open(this.questionPreviewDialog);
+
+      // To add scroll in the dialog because the drag and drop component has a height that can cause problems
+      let config = {};
+      if (this.questionDetails.question_type === 'DRAG_AND_DROP') {
+        config = {
+          height: '95%'
+        };
+      }
+
+      this.matDialog.open(this.questionPreviewDialog, config);
     });
   }
 }

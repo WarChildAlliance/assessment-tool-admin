@@ -93,6 +93,7 @@
     "addAssessments": "أضف التقييمات",
     "allowSkip": "السماح بالتخطي",
     "chooseFile": "اختر ملف",
+    "changeFile": "",
     "description": "وصف",
     "evaluated": "مقيمة",
     "icon": "أيقونة",
@@ -147,6 +148,25 @@
         "isMultipleChoice": "هو الاختيار من متعدد؟",
         "question": "سؤال",
         "value": "قيمة"
+      },
+      "dragAndDrop": {
+        "editAreasButton": "تحرير صورة الخلفية ومناطق الإسقاط",
+        "createAreasButton": "حدد صورة الخلفية ومناطق الإسقاط",
+        "areas": "المناطق:",
+        "questionAttachments": "مرفقات السؤال",
+        "imageAreasNotifier": "يرجى تحديد صورة الخلفية ومناطق الإسقاط للمتابعة",
+        "dragItemsNotifier": "",
+        "dragItemsMatTooltip": "حدد المنطقة (المناطق) حيث يكون العنصر القابل للسحب صالحًا وقم بتحميل الصورة. بالنسبة للعناصر القابلة للسحب بدون منطقة صالحة: ما عليك سوى تحميل الصورة دون تحديد أي شيء.",
+        "deleteItem": "حذف البند",
+        "draggableWithoutArea": "العناصر القابلة للسحب بدون منطقة صالحة:",
+        "noCorrectDragOption": "لا يوجد خيار سحب صحيح لهذه المنطقة",
+        "noCorrectArea": "العناصر القابلة للسحب بدون المنطقة الصحيحة:"
+      },
+      "areaSelector": {
+        "imageNotifier": "لتحديد المناطق التي تحتاج إلى تحميل صورة الخلفية.",
+        "nameNotifier": "تحتاج إلى تعيين اسم المنطقة أولاً.",
+        "areaName": "اسم المنطقة",
+        "deleteArea": "حذف المنطقة"
       }
     },
     "topicDetails": {

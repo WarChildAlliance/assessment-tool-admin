@@ -1,0 +1,126 @@
+.question-header {
+  text-align: center;
+}
+
+.play-audio {
+  cursor: pointer;
+}
+
+#draw #rectanglesList {
+  fill: blue;
+  stroke: white;
+  stroke-width: 1;
+  fill-opacity: 0.5;
+  stroke-opacity: 0.9;
+}
+
+#draw #rectangle {
+  fill: white;
+  stroke: blue;
+  stroke-width: 1;
+  stroke-dasharray: 5, 5;
+  stroke-opacity: 0.9;
+  fill-opacity: 0.2;
+}
+
+.background {
+  padding-top: 1em;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding-bottom: 1em;
+}
+
+.img-overlay-wrap {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  box-sizing: border-box;
+  border: 1px solid #d3d3d3;
+}
+
+.img-overlay-wrap svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+
+.areas {
+  display: flex;
+  flex-direction: column;
+
+  p {
+    font-weight: bold;
+  }
+
+  .span-without {
+    box-sizing: border-box;
+    border-top: 1px solid #d3d3d3;
+    margin-top: 0.5em;
+  }
+}
+
+.with-options,
+.without-options {
+  display: flex;
+  position: relative;
+}
+
+.scrollable {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  overflow-x: hidden;
+  scroll-snap-type: x proximity;
+  scroll-behavior: smooth;
+  scroll-padding: 50px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgb(223, 223, 223);
+  padding: 0.5rem;
+  border-radius: 1.25rem;
+  // height: max-content;
+  margin: 0.5em;
+  min-width: fit-content;
+
+  div {
+    display: flex;
+    flex-direction: column;
+
+    .option {
+      font-family: monospace;
+      background-color: #d4d4d4;
+      flex-direction: column;
+      display: flex;
+      margin-bottom: 0.5em;
+      align-items: center;
+      border-radius: 0.5rem;
+
+      // For students' correct answers
+      &.valid {
+        outline-width: 3px;
+        outline-color: #7EBF9A;
+        outline-style: solid;
+      }
+
+      // For students' wrong answers
+      &.student {
+        outline-width: 2px;
+        outline-color: #7e8abf;
+        outline-style: solid;
+      }
+    }
+  }
+
+  .option-img {
+    max-width: 100px;
+    max-height: 100px;
+  }
+}

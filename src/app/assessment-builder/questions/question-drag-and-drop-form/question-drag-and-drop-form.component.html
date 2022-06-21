@@ -1,0 +1,93 @@
+<div class="container">
+
+    <form [formGroup]="dragAndDropForm">
+        <div class="drag-and-drop-form">
+            <mat-form-field appearance="outline" color="accent">
+                <mat-label>{{ "general.title" | translate }}</mat-label>
+                <input matInput required type="text" formControlName="title">
+            </mat-form-field>
+            <mat-form-field appearance="outline" color="accent">
+                <mat-label>{{ "general.order" | translate }}</mat-label>
+                <input matInput required type="number" formControlName="order">
+            </mat-form-field>
+        </div>
+
+        <div class="drop-areas-button" *ngIf="dragAndDropForm.controls.drop_areas.invalid || (question && setDragItems)">
+            <app-custom-button category="tertiary" variant="secondary" (click)="openAreaSelector()" variant="default">
+                {{ ( question ? "assessmentBuilder.questions.dragAndDrop.editAreasButton" :
+                 "assessmentBuilder.questions.dragAndDrop.createAreasButton" ) | translate }}
+            </app-custom-button>
+            <span class="notifier" *ngIf="dragAndDropForm.controls.drop_areas.invalid">
+                {{ "assessmentBuilder.questions.dragAndDrop.imageAreasNotifier" | translate }}
+            </span>
+        </div>
+
+        <div class="area-container" *ngIf="setDragItems">
+            <div class="left">
+                <p>{{ "assessmentBuilder.questions.dragAndDrop.areas" | translate }}</p>
+                <div class="area" *ngFor="let area of dragAndDropForm.controls.drop_areas.value; let i = index;">
+                    <mat-checkbox color="accent" (click)="$event.stopPropagation()" (change)="selection.toggle(i)"
+                        [checked]="selection.isSelected(i)">
+                            {{area.name}}
+                    </mat-checkbox>
+
+                    <div *ngIf="dragItemsArea[i]?.attachments.length">
+                        <div class="items-container" *ngFor="let item of dragItemsArea[i]?.attachments; let j = index;">
+                            <app-custom-button matTooltip="{{ 'assessmentBuilder.questions.dragAndDrop.deleteItem' | translate }}"
+                                [isIcon]="true" icon="remove_circle_outline" (click)="removeArea(dragItemsArea[i].attachments, j)">
+                            </app-custom-button>
+                            {{item.file.name}}
+                        </div>
+                        <mat-divider></mat-divider>
+                    </div>
+                </div>
+
+                <div class="without-area" *ngIf="dragItems.length > 0">
+                    <p>{{ "assessmentBuilder.questions.dragAndDrop.draggableWithoutArea" | translate }}</p>
+                    <div class="list" *ngFor="let item of dragItems; let k = index;">
+                        <app-custom-button matTooltip="{{ 'assessmentBuilder.questions.dragAndDrop.deleteItem' | translate }}"
+                         [isIcon]="true" icon="remove_circle_outline" (click)="removeArea(dragItems, k)">
+                        </app-custom-button>
+                        {{item.file.name}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="items-selectors">
+                <app-image-selector [reset$]="attachmentsResetSubject$.asObservable()"
+                    (newImageEvent)="handleFileInputOptions($event, 'IMAGE', selection.selected)"></app-image-selector>
+            </div>
+        </div>
+
+        <div class="validate-drag" *ngIf="setDragItems">
+            <app-custom-button category="tertiary" variant="secondary" [disabled]="!confirmDraggable"
+            (click)="onSetDraggableItems()" variant="default">
+            {{ "assessmentBuilder.questions.dragAndDrop.dragItemsNotifier" | translate }}
+            </app-custom-button>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <h2>{{ "assessmentBuilder.questions.dragAndDrop.questionAttachments" | translate }}</h2>
+        <div class="attachments-container">
+            <app-image-selector [reset$]="attachmentsResetSubject$.asObservable()"
+                (newImageEvent)="onNewImageAttachment($event)" [imageAttachment]="imageAttachment">
+            </app-image-selector>
+            <app-audio-selector [isRecorderEnabled]="true" [reset$]="attachmentsResetSubject$.asObservable()"
+                (newAudioEvent)="onNewAudioAttachment($event)" [audioAttachment]="audioAttachment">
+            </app-audio-selector>
+        </div>
+
+    </form>
+</div>
+
+<div class="dialog-buttons">
+    <button mat-flat-button mat-dialog-close class="dialog-buttons__cancel" color="secondary">
+        {{ "general.cancel" | translate }}
+    </button>
+    <button mat-flat-button [mat-dialog-close]="true" color="accent"
+        [disabled]="dragAndDropForm.invalid" (click)="onSubmit()">
+        {{ question ? toClone ? ("general.clone" | translate) : ("general.save" | translate) : ("general.create" |
+        translate) }}
+    </button>
+</div>

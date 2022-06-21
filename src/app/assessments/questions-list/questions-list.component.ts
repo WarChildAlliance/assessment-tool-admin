@@ -14,8 +14,8 @@ import { AssessmentService } from 'src/app/core/services/assessment.service';
 })
 export class QuestionsListComponent implements OnInit {
 
-  private assessmentId: string;
-  private topicId: string;
+  public assessmentId: string;
+  public topicId: string;
 
   public displayedColumns: TableColumn[] = [
     { key: 'title', name: 'general.title' },
