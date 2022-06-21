@@ -18,12 +18,14 @@
       ></app-select-group>
     </div>
 
-    <div class="barChart" [hidden]="!selectionHasData">
+    <app-spinner style="margin: auto;" *ngIf="loading" size="large" [variant]="'default'"></app-spinner>
+
+    <div class="barChart" [hidden]="!selectionHasData || loading">
       <canvas id="barChart"></canvas>
     </div>
 
     <ng-container *ngIf="selectionHasData; else selectionNoData">
-      <div class="question-details" *ngIf="questionDetails">
+      <div class="question-details" *ngIf="questionDetails && !loading">
         <ng-container *ngIf="questionDetails.question_type === 'SELECT'">
           <app-question-select [question]="questionDetails" [index]="index" [evaluated]="true"></app-question-select>
         </ng-container>

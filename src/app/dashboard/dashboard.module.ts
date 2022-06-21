@@ -15,6 +15,7 @@ import { ScoreByTopicChartComponent } from './charts/score-by-topic-chart/score-
 import { ScoreByTopicTableComponent } from './charts/score-by-topic-table/score-by-topic-table.component';
 import { AnswersOverviewComponent } from './charts/answers-overview/answers-overview.component';
 import { SelectGroupComponent } from './select-group/select-group.component';
+import { CustomSpinnerModule } from '../shared/spinner/spinner.module';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { SelectGroupComponent } from './select-group/select-group.component';
     MatCardModule,
     ChartsModule,
     SharedModule,
+    CustomSpinnerModule
   ]
 })
 export class DashboardModule { }

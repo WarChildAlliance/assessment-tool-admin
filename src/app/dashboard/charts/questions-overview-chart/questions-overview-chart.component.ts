@@ -30,6 +30,7 @@ export class QuestionsOverviewChartComponent implements OnInit {
 
   public hasData = true;
   public selectionHasData = true;
+  public loading = true;
 
   constructor(private assessmentService: AssessmentService) { }
 
@@ -37,6 +38,7 @@ export class QuestionsOverviewChartComponent implements OnInit {
   }
 
   public getQuestionsOverview(groupID?: number[]): void {
+    this.loading = true;
     const filteringParams = groupID?.length ? { groups: groupID } : null;
     this.assessmentService.getQuestionsOverview(this.assessmentId, this.topicId, filteringParams)
     .subscribe(data => {
@@ -47,6 +49,7 @@ export class QuestionsOverviewChartComponent implements OnInit {
   private getBarChartData(questionData): void {
     if (questionData?.length === 0) {
       this.selectionHasData = false;
+      this.loading = false;
       return;
     }
     this.questionData = [];
@@ -79,10 +82,12 @@ export class QuestionsOverviewChartComponent implements OnInit {
     this.index = index + 1;
     this.assessmentService.getQuestionDetails(this.assessmentId, this.topicId, this.questionData[index].id).subscribe(details => {
       this.questionDetails = details;
+      this.loading = false;
     });
   }
 
   public onTopicSelection(assessmentTopicInfos: {assessmentId: string, topic: TopicDashboard}): void {
+    this.loading = true;
     this.assessmentId = assessmentTopicInfos?.assessmentId;
 
     if (assessmentTopicInfos?.topic.started) {

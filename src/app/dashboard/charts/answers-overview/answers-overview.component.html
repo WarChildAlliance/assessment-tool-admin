@@ -24,7 +24,10 @@
         </mat-radio-group>
       </div>
     </div>
-    <ng-container *ngIf="selectedStudent; else selectionNoData">
+
+    <app-spinner style="margin: auto;" *ngIf="loading" size="large" [variant]="'default'"></app-spinner>
+
+    <ng-container *ngIf="hasData && !loading; else selectionNoData">
       <div class="answers-list" *ngIf="studentTopicAnswers">
         <ul>
           <li *ngFor="let answer of studentTopicAnswers; let i = index" (click)="displayAnswerDetails(answer)">Q{{ i + 1
@@ -57,7 +60,7 @@
       </div>
     </ng-container>
     <ng-template #selectionNoData>
-        <p class="selection-no-data">{{ "general.noData" | translate }}</p>
+        <p *ngIf="!hasData" class="selection-no-data">{{ "general.noData" | translate }}</p>
     </ng-template>
   </mat-card-content>
   <p *ngIf="!hasData" style="text-align: center;">
