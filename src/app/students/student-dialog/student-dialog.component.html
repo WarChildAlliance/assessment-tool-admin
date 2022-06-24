@@ -73,8 +73,7 @@
             {{ "general.cancel" | translate }}
         </button>
         <button mat-flat-button color="accent" type="submit" class="dialog-buttons__submit"
-         [mat-dialog-close]="studentForm.value" (click)="submitStudent()"
-         [disabled]="studentForm.invalid || !studentForm.dirty">
+         (click)="submitStudent()" [disabled]="studentForm.invalid || !studentForm.dirty">
             {{ ( !!student ? "general.save" : "general.submit" ) | translate }}
         </button>
     </div>
