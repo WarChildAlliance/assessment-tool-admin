@@ -26,12 +26,14 @@ export class AnswersOverviewComponent implements OnInit {
   public selectedStudent: TopicAccessStudents;
 
   public hasData = true;
+  public loading = true;
 
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {}
 
   public getStudentListForTopic(groupID?: number[]): void {
+    this.loading = true;
     const filteringParams = groupID?.length ? { groups: groupID } : null;
 
     this.userService.getStudentsListForATopic(this.topicId, filteringParams)
@@ -41,20 +43,24 @@ export class AnswersOverviewComponent implements OnInit {
       if (this.selectedStudent) {
         this.selectStudent(this.selectedStudent);
       }
+      this.loading = false;
     });
   }
 
   public onTopicSelection(assessmentTopicInfos: {assessmentId: string, topic: TopicDashboard}): void {
+    this.loading = true;
     if (assessmentTopicInfos && assessmentTopicInfos.topic.started) {
       this.topicId = assessmentTopicInfos.topic.id;
       this.evaluated = assessmentTopicInfos.topic.evaluated;
       this.getStudentListForTopic();
     } else {
       this.hasData = false;
+      this.loading = false;
     }
   }
 
   public selectStudent(student: TopicAccessStudents): void {
+    this.loading = true;
     this.selectedStudent = student;
     if (student.topic_first_try) {
       this.assessmentTopicAnswer = student.topic_first_try.id;
@@ -63,6 +69,7 @@ export class AnswersOverviewComponent implements OnInit {
         this.displayAnswerDetails(this.studentTopicAnswers[0]);
       });
     }
+    this.loading = false;
   }
 
   public isAnswerValid(validity: boolean): string {

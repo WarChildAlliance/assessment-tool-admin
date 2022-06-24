@@ -24,10 +24,12 @@
       </mat-radio-group>
     </div>
 
-    <div class="main-board__charts-container__chart" [hidden]="!selectionHasData">
+    <app-spinner style="margin: auto;" *ngIf="loading" size="large" [variant]="'default'"></app-spinner>
+
+    <div class="main-board__charts-container__chart" [hidden]="!selectionHasData || loading">
       <canvas id="currentChart"></canvas>
     </div>
-    <p *ngIf="!selectionHasData" class="selection-no-data">{{ "general.noData" | translate }}</p>
+    <p *ngIf="!selectionHasData && !loading" class="selection-no-data">{{ "general.noData" | translate }}</p>
   </mat-card-content>
   <p *ngIf="!hasData" style="text-align: center;">{{ "general.noData" | translate }}</p>
 </mat-card>

@@ -37,7 +37,7 @@
         </p>
       </div>
     </div>
-    <div class="main-board__charts-container__chart">
+    <div class="main-board__charts-container__chart" *ngIf="!loading; else loadingTemplate">
       <app-table [tableData]="studentsDataSource" [displayedColumns]="displayedColumns" [isSelectable]="false"
         [hideSearchBar]="true" (openDetailsEvent)="onOpenStudentDetails($event)"></app-table>
     </div>
@@ -46,3 +46,7 @@
     {{ "general.noData" | translate }}
   </p>
 </mat-card>
+
+<ng-template #loadingTemplate>
+  <app-spinner style="margin: auto;" size="large" [variant]="'default'"></app-spinner>
+</ng-template>

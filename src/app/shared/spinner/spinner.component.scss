@@ -9,3 +9,9 @@
     stroke: white;
   }
 }
+
+.custom-spinner-default {
+  ::ng-deep circle {
+    stroke: #ffdc64;
+  }
+}

@@ -20,6 +20,9 @@ export class CustomSpinnerComponent implements OnInit {
       case SpinnerSize.MEDIUM: {
         return 24;
       }
+      case SpinnerSize.LARGE: {
+        return 100;
+      }
       default: {
         return 24;
       }
