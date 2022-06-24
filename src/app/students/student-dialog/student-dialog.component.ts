@@ -93,7 +93,7 @@ export class StudentDialogComponent implements OnInit {
       role: 'STUDENT',
       language: this.studentForm.value.language,
       country: this.studentForm.value.country,
-      group: this.studentForm.value.group,
+      group: this.studentForm.value.group ?? '',
       is_active: this.studentForm.value.active
     };
 
