@@ -53,7 +53,7 @@ export class LanguageService {
     this.language = language;
     localStorage.setItem('la-language', language.code.toLowerCase());
     this.translateService.use(language.code);
-    this.setDirection();
+    this.setDirection(language.direction);
     // moment.locale(language.code);
   }
 
@@ -62,9 +62,14 @@ export class LanguageService {
     return this.direction;
   }
 
-  private setDirection(): void {
+  private setDirection(direction?: string): void {
     document.getElementsByTagName('html')[0].setAttribute('dir', 'ltr');
-    document.getElementsByTagName('html')[0].className = 'ltr';
+    document.getElementsByTagName('html')[0].classList.add('ltr');
+    if (direction === 'rtl') {
+      document.getElementsByTagName('html')[0].classList.add('arabic');
+    } else {
+      document.getElementsByTagName('html')[0].classList.remove('arabic');
+    }
  // WARNING! We currently dont change the UI according to language but might need to do so in the future.
   // To do so, uncomment the following two lines
 /*   document.getElementsByTagName('html')[0].setAttribute('dir', this.language.direction);
