@@ -119,7 +119,9 @@
       "deleteAssessmentSuccess": "تم حذف التقييم بنجاح",
       "deleteAssessmentPrompt": "هل تريد حقا حذف التقييم؟",
       "topicDetailSuccess": "تم حذف الموضوع بنجاح",
-      "deleteTopicPrompt": "هل تريد حقا حذف الموضوع؟"
+      "deleteTopicPrompt": "هل تريد حقا حذف الموضوع؟",
+      "fileDownloadNotice": "يمكن استخدام الملف الذي توشك على تنزيله <br> لأغراض النسخ فقط ، وليس البيع.",
+      "fileDownloadNoticeTitle": "يرجى الملاحظة"
     },
     "questions": {
       "audioAttachment": "مرفق صوتي",
@@ -177,7 +179,7 @@
       "showFeedback": "إظهار الملاحظات",
       "deleteQuestion": "حذف السؤال",
       "deleteQuestionSuccess": "تم حذف السؤال بنجاح",
-      "deleteQuestionPrompt" : "هل تريد حقا حذف السؤال؟"
+      "deleteQuestionPrompt": "هل تريد حقا حذف السؤال؟"
     },
     "topicFormDialog": {
       "changeFile": "تغيير الملف",
@@ -190,7 +192,9 @@
     "assessmentSaveSuccess": "تم حفظ التقييم بنجاح",
     "topicCreateSuccess": "تم إنشاء الموضوع بنجاح",
     "topicEditSuccess": "تم تغيير الموضوع بنجاح",
-    "topicSaveSuccess": "تم حفظ الموضوع بنجاح"
+    "topicSaveSuccess": "تم حفظ الموضوع بنجاح",
+    "download": "تحميل",
+    "downloadable": "للتحميل"
   },
   "assessments": {
     "selected": "تم الاختيار",

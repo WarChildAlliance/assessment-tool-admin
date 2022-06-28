@@ -182,4 +182,25 @@ export class AssessmentSummaryComponent implements OnInit {
   public getMediaSource(path: string): string {
     return `${environment.API_URL}/media/${path}`;
   }
+
+  public downloadPDF(assessmentId: string): void {
+    // Skip confirmation dialog for private assessments
+    if (this.assessment.private) {
+      this.assessmentService.downloadPDF(assessmentId);
+      return;
+    }
+    const confirmDialog = this.dialog.open(ConfirmModalComponent, {
+      data: {
+        title: this.translateService.instant('assessmentBuilder.assessmentSummary.fileDownloadNoticeTitle'),
+        content: this.translateService.instant('assessmentBuilder.assessmentSummary.fileDownloadNotice'),
+        contentType: 'innerHTML',
+        confirmColor: 'accent'
+      }
+    });
+    confirmDialog.afterClosed().subscribe((res) => {
+      if (res) {
+        this.assessmentService.downloadPDF(assessmentId);
+      }
+    });
+  }
 }

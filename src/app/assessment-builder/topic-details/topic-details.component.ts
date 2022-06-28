@@ -24,6 +24,8 @@ export class TopicDetailsComponent implements OnInit {
   public assessmentType: string;
   public topic: any;
 
+  public isDownloadable = false;
+
   public questionsArray: any[] = [
     {
     type: 'SELECT',
@@ -69,6 +71,7 @@ export class TopicDetailsComponent implements OnInit {
       this.getQuestionsList();
       this.getTopicDetails();
     });
+    this.getIsDownloadable();
   }
 
   private getQuestionsList(): void {
@@ -85,6 +88,12 @@ export class TopicDetailsComponent implements OnInit {
   private getTopicDetails(): void {
     this.assessmentService.getTopicDetails(this.assessmentId, this.topicId).subscribe(topicDetails => {
       this.topicDetails = topicDetails;
+    });
+  }
+
+  private getIsDownloadable(): void {
+    this.assessmentService.getAssessmentDetails(this.assessmentId).subscribe((assessmentDetails) => {
+      this.isDownloadable = assessmentDetails.downloadable;
     });
   }
 
@@ -165,5 +174,9 @@ export class TopicDetailsComponent implements OnInit {
         });
       }
     });
+  }
+
+  public downloadPDF(assessmentId: string, topicId: string, questionId?: string): void {
+    this.assessmentService.downloadPDF(assessmentId, topicId, questionId);
   }
 }

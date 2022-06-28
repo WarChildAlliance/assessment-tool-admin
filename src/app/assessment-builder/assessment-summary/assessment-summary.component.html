@@ -31,12 +31,15 @@
                 {{ "general.edit" | translate }}
             </app-custom-button>
             <app-custom-button *ngIf="canEdit" category="tertiary" variant="primary" [icon]="assessment.archived ? 'unarchive' : 'archive'"
-             (click)="archiveAssessment(assessment.id, !assessment.archived)">
+                (click)="archiveAssessment(assessment.id, !assessment.archived)">
                 {{ assessment.archived ? ("assessmentBuilder.assessmentSummary.unarchive" | translate)
-                 : ("assessmentBuilder.assessmentSummary.archive" | translate) }}
+                : ("assessmentBuilder.assessmentSummary.archive" | translate) }}
             </app-custom-button>
             <app-custom-button *ngIf="canEdit" category="tertiary" variant="primary" icon="delete" (click)="deleteAssessment(assessment.id, assessment.title)">
                 {{ "general.delete" | translate }}
+            </app-custom-button>
+            <app-custom-button *ngIf="assessment.downloadable" category="tertiary" variant="primary" icon="download" (click)="downloadPDF(assessment.id)">
+                {{ "assessmentBuilder.download" | translate }}
             </app-custom-button>
         </div>
     </div>
