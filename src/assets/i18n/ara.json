@@ -146,6 +146,7 @@
         "display": "عرض",
         "isCorrectAnswer": "هل الجواب الصحيح؟",
         "isMultipleChoice": "هو الاختيار من متعدد؟",
+        "onPopup": "عرض السؤال على المنبثقة؟",
         "question": "سؤال",
         "value": "قيمة"
       },

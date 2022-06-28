@@ -10,6 +10,9 @@
                 <mat-label>{{ "general.order" | translate }}</mat-label>
                 <input matInput required type="number" formControlName="order">
             </mat-form-field>
+            <mat-checkbox formControlName="on_popup">
+                <mat-label for="on_popup">{{ "assessmentBuilder.questions.select.onPopup" | translate }}</mat-label>
+            </mat-checkbox>
         </div>
 
         <div class="drop-areas-button" *ngIf="dragAndDropForm.controls.drop_areas.invalid || (question && setDragItems)">

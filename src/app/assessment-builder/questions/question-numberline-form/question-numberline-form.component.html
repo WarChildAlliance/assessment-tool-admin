@@ -34,15 +34,17 @@
         <input type="number" matInput formControlName="expected_value" class="form-control">
     </mat-form-field>
 
-    <span style="margin-right: 20px;">
-        <mat-label style="margin-right: 10px;">{{ "assessmentBuilder.questions.numberline.showTicks" | translate }}</mat-label>
-        <mat-checkbox matInput formControlName="show_ticks" class="form-control"></mat-checkbox>
-    </span>
+    <mat-checkbox formControlName="show_ticks">
+        <mat-label for="show_ticks">{{ "assessmentBuilder.questions.numberline.showTicks" | translate }}</mat-label>
+    </mat-checkbox>
 
-    <span>
-        <mat-label style="margin-right: 10px;">{{ "assessmentBuilder.questions.numberline.showValue" | translate }}</mat-label>
-        <mat-checkbox matInput formControlName="show_value" class="form-control"></mat-checkbox>
-    </span>
+    <mat-checkbox formControlName="show_value">
+        <mat-label for="show_value">{{ "assessmentBuilder.questions.numberline.showValue" | translate }}</mat-label>
+    </mat-checkbox>
+
+    <mat-checkbox formControlName="on_popup">
+        <mat-label for="on_popup">{{ "assessmentBuilder.questions.select.onPopup" | translate }}</mat-label>
+    </mat-checkbox>
 
     <div class="attachments-container">
         <div style="margin-right: 20px;">

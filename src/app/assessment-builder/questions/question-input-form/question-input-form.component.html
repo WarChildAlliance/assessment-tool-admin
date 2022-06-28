@@ -11,6 +11,9 @@
             <mat-label>{{ "general.answer" | translate }}</mat-label>
             <input matInput required type="text" formControlName="valid_answer">
         </mat-form-field>
+        <mat-checkbox formControlName="on_popup">
+            <mat-label for="on_popup">{{ "assessmentBuilder.questions.select.onPopup" | translate }}</mat-label>
+        </mat-checkbox>
 
         <div class="attachments-container">
             <div style="margin-right: 20px;">
