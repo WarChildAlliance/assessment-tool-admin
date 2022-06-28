@@ -6,6 +6,7 @@
 <div class="number-line">
     <span>{{ question.start }}</span>
     <mat-slider
+            disabled
             style="overflow-x: hidden"
             class="number-line-slider"
             [value]="evaluated ? question.expected_value : answer"
