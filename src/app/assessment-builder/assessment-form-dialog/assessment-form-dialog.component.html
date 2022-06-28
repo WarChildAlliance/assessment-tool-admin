@@ -41,12 +41,20 @@
                 (newImageEvent)="handleFileInput($event)"
             ></app-image-selector>
         </div>
-        <mat-checkbox formControlName="private">
-            {{ "general.private" | translate }}
-        </mat-checkbox> 
-        <mat-checkbox formControlName="archived">
-            {{ "general.archive" | translate }}
-        </mat-checkbox> 
+        <div class="checkboxes">
+            <mat-checkbox formControlName="private">
+                {{ "general.private" | translate }}
+            </mat-checkbox>
+            <mat-checkbox
+                *ngIf="!assessmentForm.get('private').value"
+                formControlName="downloadable"
+            >
+                {{ "assessmentBuilder.downloadable" | translate }}
+            </mat-checkbox>
+            <mat-checkbox formControlName="archived">
+                {{ "general.archive" | translate }}
+            </mat-checkbox>
+        </div>
     </div>
     <mat-divider></mat-divider>
     <div class="dialog-buttons buttons-margin">
