@@ -116,7 +116,7 @@ export class StudentDialogComponent implements OnInit {
         this.dialogRef.close(false);
       });
     } else {
-      const canCreate = await this.checkStudentDuplication();
+      const canCreate = await this.checkStudentDuplication(studentToSave);
 
       if (canCreate) {
         this.userService.createNewStudent(studentToSave).subscribe((student: User) => {
@@ -145,22 +145,22 @@ export class StudentDialogComponent implements OnInit {
   }
 
   // Check student duplication on creation: based on name
-  private async checkStudentDuplication(): Promise<boolean | void> {
+  private async checkStudentDuplication(studentToSave: any): Promise<boolean | void> {
     let create = false;
 
     for (const student of this.studentList) {
-      if (student.first_name.toLowerCase() === this.studentForm.value.first_name.toLowerCase()
-        && student.last_name.toLowerCase() === this.studentForm.value.last_name.toLowerCase()) {
+      if (student.first_name.toLowerCase() === studentToSave.first_name.toLowerCase()
+        && student.last_name.toLowerCase() === studentToSave.last_name.toLowerCase()) {
 
         // if similar name but different country/language show alert to confirm
-        if (student.country_code !== this.studentForm.value.country || student.language_code !== this.studentForm.value.language) {
+        if (student.country_code !== studentToSave.country || student.language_code !== studentToSave.language) {
           const confirmDialog = this.dialog.open(ConfirmModalComponent, {
             data: {
               title: this.translateService.instant('students.createStudentDialog.nameExists'),
               content: this.translateService.instant('students.createStudentDialog.similarName',
                 { name: student.full_name, country: student.country_name, language: student.language_name }),
               contentType: 'innerHTML',
-              confirmColor: 'warn'
+              confirmColor: 'accent'
             }
           });
 
