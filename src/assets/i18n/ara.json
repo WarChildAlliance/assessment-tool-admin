@@ -278,7 +278,10 @@
       "lastName": "اسم العائلة",
       "noGroups": "",
       "studentCreateSuccess": "تم بنجاح إنشاء الطالب {{name}} بالمعرف {{اسم المستخدم}}",
-      "studentEditSuccess": "تم تحرير معلومات {{name}} بنجاح"
+      "studentEditSuccess": "تم تحرير معلومات {{name}} بنجاح",
+      "duplicateName": "يوجد طالب يحمل نفس الاسم والبلد واللغة بالفعل",
+      "nameExists": "الاسم موجود بالفعل",
+      "similarName": "يوجد طالب يحمل الاسم <b> {{name}} </b> بالفعل ولكن لديه دولة / لغة مختلفة (<b> {{country}} </b> / <b> {{language}} </b> ). إنشاء طالب جديد على أي حال؟"
     },
     "studentDetail": {
       "activeAccess": "وصول نشط",

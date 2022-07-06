@@ -216,7 +216,11 @@ export class StudentsComponent implements OnInit {
   }
 
   public openCreateStudentDialog(): void {
-    const createStudentDialog = this.dialog.open(StudentDialogComponent);
+    const createStudentDialog = this.dialog.open(StudentDialogComponent, {
+      data: {
+        studentList: this.studentsDataSource.data
+      }
+    });
     createStudentDialog.afterClosed().subscribe((value) => {
       if (value) {
         this.getStudentTableList(this.filtersData);
