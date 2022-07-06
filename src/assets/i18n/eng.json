@@ -280,10 +280,7 @@
       "lastName": "Last name",
       "noGroups": "No groups available",
       "studentEditSuccess": "{{name}}'s information have been edited successfully ",
-      "studentCreateSuccess": "Student {{name}} with ID {{username}} was successfully created",
-      "duplicateName": "Student with the same name, country and language already exists",
-      "nameExists": "Name already exists",
-      "similarName": "Student with the name <b>{{name}}</b> already exists but with different country/language (<b>{{country}}</b> / <b>{{language}}</b>). Create new student anyway?"
+      "studentCreateSuccess": "Student {{name}} with ID {{username}} was successfully created"
     },
     "studentDetail": {
       "activeAccess": "Active access",
