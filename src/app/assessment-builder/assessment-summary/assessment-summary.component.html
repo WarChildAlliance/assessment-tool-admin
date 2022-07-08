@@ -56,7 +56,7 @@
                     {{ "assessmentBuilder.assessmentSummary.addTopic" | translate }}<mat-icon>add</mat-icon>
                 </div>
             </mat-card>
-            <mat-card class="topic-card" *ngFor="let topic of assessment.topics; let i = index" 
+            <mat-card class="topic-card" *ngFor="let topic of assessment.topics; let i = index" [ngClass]="reorder ? 'drag-hover' : ''"
             (click)="goToTopicDetails(assessment.id, topic.id)" cdkDrag [cdkDragDisabled]="topic.archived || !reorder">
                 <img *ngIf="topic.icon" [src]="getMediaSource(topic.icon)">
                 <span class="topic-title">{{ topic.title }}</span>
