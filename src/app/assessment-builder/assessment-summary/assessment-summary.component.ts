@@ -1,3 +1,4 @@
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import {
   Component,
   Input,
@@ -33,6 +34,8 @@ export class AssessmentSummaryComponent implements OnInit {
   public smallScreen: boolean;
   public leftScrollEnabled = false;
   public rightScrollEnabled = true;
+  public reorder = false;
+  public changedOrder = false;
 
   constructor(
     private dialog: MatDialog,
@@ -70,12 +73,13 @@ export class AssessmentSummaryComponent implements OnInit {
     });
   }
 
-  public openTopicFormDialog(assessmentId: string): void {
-    this.assessmentId = assessmentId;
+  public openTopicFormDialog(assessment: any): void {
+    this.assessmentId = assessment.id;
 
     const topicFormDialog = this.dialog.open(TopicFormDialogComponent, {
       data: {
-        assessmentId: this.assessmentId
+        assessmentId: this.assessmentId,
+        order: this.assessment.topics.length + 1
       }
     });
 
@@ -202,5 +206,35 @@ export class AssessmentSummaryComponent implements OnInit {
         this.assessmentService.downloadPDF(assessmentId);
       }
     });
+  }
+
+  // Start and save reorder topics by drag&drop
+  public reorderTopics(save: boolean, assessmentId: string): void {
+    if (!save) {
+      this.reorder = true;
+    } else {
+      if (this.changedOrder) {
+        const data = {
+          topics: [],
+          assessment_id: assessmentId
+        };
+
+        this.assessment.topics.forEach(topic => {
+          data.topics.push(topic.id);
+        });
+
+        this.assessmentService.reorderTopics(assessmentId, data).subscribe(() => {
+          this.alertService.success(this.translateService.instant('assessmentBuilder.topicEditSuccess'));
+        });
+      }
+      this.reorder = false;
+      this.changedOrder = false;
+    }
+  }
+
+  // To reorder the topics in the topics list after drop
+  public dropTopic(event: CdkDragDrop<object[]>): void {
+    moveItemInArray(this.assessment.topics, event.previousIndex, event.currentIndex);
+    this.changedOrder = true;
   }
 }

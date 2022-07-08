@@ -73,6 +73,10 @@ export class AssessmentService {
     return this.http.put<any>(`${environment.API_URL}/assessments/${assessmentId}/topics/${topicId}/`, topic);
   }
 
+  public reorderTopics(assessmentId: string, data: any): Observable<any> {
+    return this.http.put<any>(`${environment.API_URL}/assessments/${assessmentId}/topics/reorder/`, data);
+  }
+
   public editQuestion(assessmentId: string, topicId: string, questionId: string, question: any): Observable<any> {
     return this.http.put<any>(`${environment.API_URL}/assessments/${assessmentId}/topics/${topicId}/questions/${questionId}/`, question);
   }
