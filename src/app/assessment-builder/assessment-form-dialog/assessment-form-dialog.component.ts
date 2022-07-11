@@ -55,7 +55,8 @@ export class AssessmentFormDialogComponent implements OnInit {
     country: new FormControl('', [Validators.required]),
     private: new FormControl(false, [Validators.required]),
     icon: new FormControl(null),
-    archived: new FormControl(false)
+    archived: new FormControl(false),
+    downloadable: new FormControl(true)
   });
 
   constructor(
@@ -80,7 +81,8 @@ export class AssessmentFormDialogComponent implements OnInit {
         country: this.assessment.country_code,
         private: this.assessment.private,
         icon: this.icon,
-        archived: this.assessment.archived
+        archived: this.assessment.archived,
+        downloadable: this.assessment.downloadable
       });
     }
   }
@@ -122,6 +124,7 @@ export class AssessmentFormDialogComponent implements OnInit {
     this.formData.append('country', this.assessmentForm.value.country);
     this.formData.append('private', this.assessmentForm.value.private);
     this.formData.append('archived', this.assessmentForm.value.archived);
+    this.formData.append('downloadable', this.assessmentForm.value.downloadable);
 
     return this.formData;
   }

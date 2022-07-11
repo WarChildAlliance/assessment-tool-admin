@@ -99,6 +99,8 @@
     "chooseFile": "Choose File",
     "changeFile": "Change File",
     "description": "Description",
+    "download": "Download",
+    "downloadable": "Downloadable",
     "evaluated": "Evaluated",
     "icon": "Icon",
     "maxWrongAnswers": "Max wrong answers",
@@ -125,7 +127,9 @@
       "deleteAssessmentSuccess": "Assessment deleted successfully",
       "deleteAssessmentPrompt": "Do you really want to delete the assessment <b>{{assessmentTitle}}</b> ?",
       "topicDetailSuccess": "Topic deleted successfully!",
-      "deleteTopicPrompt": "Do you really want to delete the topic <b>{{topicTitle}}</b> ?"
+      "deleteTopicPrompt": "Do you really want to delete the topic <b>{{topicTitle}}</b> ?",
+      "fileDownloadNotice": "The file you are about to download can be<br>used for reproduction purposes only, not selling.",
+      "fileDownloadNoticeTitle": "Please note"
     },
     "questions": {
       "audioAttachment": "Audio attachment",
