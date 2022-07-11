@@ -155,6 +155,7 @@
         "attachments": "Attachments",
         "display": "Display",
         "isMultipleChoice": "Is multiple choice?",
+        "onPopup": "Display question on popup?",
         "isCorrectAnswer": "Is correct answer?",
         "value": "Value"
       },

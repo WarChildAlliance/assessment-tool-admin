@@ -50,6 +50,7 @@ export class QuestionNumberlineFormComponent implements OnInit {
     expected_value: new FormControl('', [Validators.required]),
     show_ticks: new FormControl(false),
     show_value: new FormControl(false),
+    on_popup: new FormControl(false)
   });
 
   constructor(
@@ -76,7 +77,8 @@ export class QuestionNumberlineFormComponent implements OnInit {
         tick_step: this.question.tick_step,
         expected_value: this.question.expected_value,
         show_ticks: this.question.show_ticks,
-        show_value: this.question.show_value
+        show_value: this.question.show_value,
+        on_popup: this.question.on_popup
       });
       await this.setExistingAttachments();
       if (this.toClone) {
@@ -93,7 +95,8 @@ export class QuestionNumberlineFormComponent implements OnInit {
         tick_step: null,
         expected_value: null,
         show_ticks: false,
-        show_value: false
+        show_value: false,
+        on_popup: false
       });
     }
   }

@@ -58,6 +58,7 @@ export class QuestionDragAndDropFormComponent implements OnInit {
   public dragAndDropForm: FormGroup = new FormGroup({
     title: new FormControl('', Validators.required),
     order: new FormControl('', Validators.required),
+    on_popup: new FormControl(false),
     background_image: new FormControl(null, Validators.required),
     drop_areas: new FormControl(null, Validators.required),
     drag_options: new FormControl(null, Validators.required)
@@ -82,6 +83,7 @@ export class QuestionDragAndDropFormComponent implements OnInit {
       this.dragAndDropForm.setValue({
         title: this.question.title,
         order: this.toClone ? this.order : this.question.order,
+        on_popup: this.question.on_popup,
         background_image: null,
         drop_areas: this.question.drop_areas,
         drag_options: null
@@ -109,6 +111,7 @@ export class QuestionDragAndDropFormComponent implements OnInit {
       this.dragAndDropForm.setValue({
         title: '',
         order: this.order,
+        on_popup: false,
         background_image: null,
         drop_areas: null,
         drag_options: null
@@ -463,6 +466,7 @@ export class QuestionDragAndDropFormComponent implements OnInit {
     return new FormGroup({
       question_type: new FormControl('DRAG_AND_DROP'),
       title: new FormControl(this.dragAndDropForm.controls.title.value),
+      on_popup: new FormControl(this.dragAndDropForm.controls.on_popup.value),
       order: new FormControl(this.dragAndDropForm.controls.order.value),
       drop_areas: new FormControl(this.dragAndDropForm.controls.drop_areas.value)
     });
