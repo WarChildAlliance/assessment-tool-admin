@@ -27,33 +27,49 @@
             </div>
         </div>
         <div class="buttons">
-            <app-custom-button *ngIf="canEdit && !assessment.archived" category="tertiary" variant="primary" icon="edit" (click)="editAssessment(assessment)">
-                {{ "general.edit" | translate }}
+            <app-custom-button *ngIf="canEdit && !assessment.archived" matTooltip="{{ 'assessmentBuilder.assessmentSummary.reorderTooltip' | translate }}"
+            matTooltipPosition="above" [category]="reorder ? 'secondary' : 'tertiary'" variant="primary" icon="linear_scale" (click)="reorderTopics(reorder, assessment.id)">
+                {{ reorder ? ("assessmentBuilder.assessmentSummary.saveOrder" | translate)
+                : ("assessmentBuilder.assessmentSummary.reorderTopics" | translate) }}
             </app-custom-button>
-            <app-custom-button *ngIf="canEdit" category="tertiary" variant="primary" [icon]="assessment.archived ? 'unarchive' : 'archive'"
-                (click)="archiveAssessment(assessment.id, !assessment.archived)">
-                {{ assessment.archived ? ("assessmentBuilder.assessmentSummary.unarchive" | translate)
-                : ("assessmentBuilder.assessmentSummary.archive" | translate) }}
-            </app-custom-button>
-            <app-custom-button *ngIf="canEdit" category="tertiary" variant="primary" icon="delete" (click)="deleteAssessment(assessment.id, assessment.title)">
-                {{ "general.delete" | translate }}
-            </app-custom-button>
-            <app-custom-button *ngIf="assessment.downloadable" category="tertiary" variant="primary" icon="download" (click)="downloadPDF(assessment.id)">
-                {{ "assessmentBuilder.download" | translate }}
-            </app-custom-button>
+            <span *ngIf="!reorder">
+                <app-custom-button *ngIf="canEdit && !assessment.archived" category="tertiary" variant="primary" icon="edit" (click)="editAssessment(assessment)">
+                    {{ "general.edit" | translate }}
+                </app-custom-button>
+                <app-custom-button *ngIf="canEdit" category="tertiary" variant="primary" [icon]="assessment.archived ? 'unarchive' : 'archive'"
+                    (click)="archiveAssessment(assessment.id, !assessment.archived)">
+                    {{ assessment.archived ? ("assessmentBuilder.assessmentSummary.unarchive" | translate)
+                    : ("assessmentBuilder.assessmentSummary.archive" | translate) }}
+                </app-custom-button>
+                <app-custom-button *ngIf="canEdit" category="tertiary" variant="primary" icon="delete" (click)="deleteAssessment(assessment.id, assessment.title)">
+                    {{ "general.delete" | translate }}
+                </app-custom-button>
+                <app-custom-button *ngIf="assessment.downloadable" category="tertiary" variant="primary" icon="download" (click)="downloadPDF(assessment.id)">
+                    {{ "assessmentBuilder.download" | translate }}
+                </app-custom-button>
+            </span>
+            <span *ngIf="reorder">
+                <app-custom-button *ngIf="canEdit && !assessment.archived" category="tertiary" variant="danger" icon="close" (click)="cancelReorder()">
+                    {{ "general.cancel" | translate }}
+                </app-custom-button>
+            </span>
         </div>
     </div>
     <hr>
     <div class="topics-container">
-        <div #topicsList class="topics">
-            <mat-card class="add-topic" (click)="openTopicFormDialog(assessment.id)" *ngIf="canEdit">
+        <div #topicsList class="topics" [cdkDropListData]="topicToOrder"
+        cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="dropTopic($event)">
+            <mat-card class="add-topic" (click)="openTopicFormDialog(assessment)" *ngIf="canEdit">
                 <div class="add-topic-text">
                     {{ "assessmentBuilder.assessmentSummary.addTopic" | translate }}<mat-icon>add</mat-icon>
                 </div>
             </mat-card>
-            <mat-card class="topic-card" *ngFor="let topic of assessment.topics" (click)="goToTopicDetails(assessment.id, topic.id)">
+            <mat-card class="topic-card" *ngFor="let topic of assessment.topics; let i = index" [ngClass]="reorder ? 'drag-hover' : ''"
+            (click)="goToTopicDetails(assessment.id, topic.id)" cdkDrag [cdkDragDisabled]="topic.archived || !reorder">
                 <img *ngIf="topic.icon" [src]="getMediaSource(topic.icon)">
                 <span class="topic-title">{{ topic.title }}</span>
+
+                <span class="topic-counter">{{i + 1}}</span>
                 <p class="small-description">{{ topic.description }}</p>
                 <span class="question_count">({{ topic.questionsCount }} {{ "general.questions" | translate }})</span>
 

@@ -28,6 +28,7 @@ import { AudioSelectorComponent } from '../shared/attachments/audio-selector/aud
 import { PreviousButtonModule } from '../shared/previous-button/previous-button.module';
 import { QuestionDragAndDropFormComponent } from './questions/question-drag-and-drop-form/question-drag-and-drop-form.component';
 import { AreaSelectorComponent } from './questions/area-selector/area-selector.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { AreaSelectorComponent } from './questions/area-selector/area-selector.c
     MatDividerModule,
     MatTooltipModule,
     CustomButtonModule,
-    PreviousButtonModule
+    PreviousButtonModule,
+    DragDropModule
   ]
 })
 export class AssessmentBuilderModule { }

@@ -98,6 +98,7 @@
     "evaluated": "مقيمة",
     "icon": "أيقونة",
     "maxWrongAnswers": "ماكس إجابات خاطئة",
+    "order": "ترتيب",
     "noFileChosen": "لم تقم باختيار ملف",
     "praise": "مديح",
     "publicAssessments": "التقييم (التقييمات) العامة",
@@ -121,7 +122,10 @@
       "topicDetailSuccess": "تم حذف الموضوع بنجاح",
       "deleteTopicPrompt": "هل تريد حقا حذف الموضوع؟",
       "fileDownloadNotice": "يمكن استخدام الملف الذي توشك على تنزيله <br> لأغراض النسخ فقط ، وليس البيع.",
-      "fileDownloadNoticeTitle": "يرجى الملاحظة"
+      "fileDownloadNoticeTitle": "يرجى الملاحظة",
+      "reorderTopics": "أعد ترتيب المواضيع",
+      "reorderTooltip": "أعد ترتيب الموضوعات عن طريق سحبها وإفلاتها", 
+      "saveOrder": "حفظ النظام"
     },
     "questions": {
       "audioAttachment": "مرفق صوتي",

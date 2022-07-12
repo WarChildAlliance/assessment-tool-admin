@@ -1,3 +1,4 @@
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import {
   Component,
   Input,
@@ -8,6 +9,7 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { Topic } from 'src/app/core/models/topic.models';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { ConfirmModalComponent } from 'src/app/shared/confirm-modal/confirm-modal.component';
@@ -33,6 +35,9 @@ export class AssessmentSummaryComponent implements OnInit {
   public smallScreen: boolean;
   public leftScrollEnabled = false;
   public rightScrollEnabled = true;
+  public reorder = false;
+  public changedOrder = false;
+  public topicToOrder: Topic[] = [];
 
   constructor(
     private dialog: MatDialog,
@@ -70,12 +75,13 @@ export class AssessmentSummaryComponent implements OnInit {
     });
   }
 
-  public openTopicFormDialog(assessmentId: string): void {
-    this.assessmentId = assessmentId;
+  public openTopicFormDialog(assessment: any): void {
+    this.assessmentId = assessment.id;
 
     const topicFormDialog = this.dialog.open(TopicFormDialogComponent, {
       data: {
-        assessmentId: this.assessmentId
+        assessmentId: this.assessmentId,
+        order: this.assessment.topics.length + 1
       }
     });
 
@@ -202,5 +208,43 @@ export class AssessmentSummaryComponent implements OnInit {
         this.assessmentService.downloadPDF(assessmentId);
       }
     });
+  }
+
+  // Start and save reorder topics by drag&drop
+  public reorderTopics(save: boolean, assessmentId: string): void {
+    if (!save) {
+      this.reorder = true;
+      // Deep copy to avoid modifying both arrays
+      this.topicToOrder = [...this.assessment.topics];
+    } else {
+      if (this.changedOrder) {
+        const data = {
+          topics: [],
+          assessment_id: assessmentId
+        };
+
+        this.assessment.topics.forEach(topic => {
+          data.topics.push(topic.id);
+        });
+
+        this.assessmentService.reorderTopics(assessmentId, data).subscribe(() => {
+          this.alertService.success(this.translateService.instant('assessmentBuilder.topicEditSuccess'));
+        });
+      }
+      this.reorder = false;
+      this.changedOrder = false;
+    }
+  }
+
+  // To reorder the topics in the topics list after drop
+  public dropTopic(event: CdkDragDrop<object[]>): void {
+    moveItemInArray(this.assessment.topics, event.previousIndex, event.currentIndex);
+    this.changedOrder = true;
+  }
+
+  // Go back to previous order
+  public cancelReorder(): void {
+    this.assessment.topics = this.topicToOrder;
+    this.reorder = false;
   }
 }
