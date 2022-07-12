@@ -28,29 +28,37 @@
         </div>
         <div class="buttons">
             <app-custom-button *ngIf="canEdit && !assessment.archived" matTooltip="{{ 'assessmentBuilder.assessmentSummary.reorderTooltip' | translate }}"
-            matTooltipPosition="above" category="tertiary" variant="primary" icon="linear_scale" (click)="reorderTopics(reorder, assessment.id)">
+            matTooltipPosition="above" [category]="reorder ? 'secondary' : 'tertiary'" variant="primary" icon="linear_scale" (click)="reorderTopics(reorder, assessment.id)">
                 {{ reorder ? ("assessmentBuilder.assessmentSummary.saveOrder" | translate)
                 : ("assessmentBuilder.assessmentSummary.reorderTopics" | translate) }}
             </app-custom-button>
-            <app-custom-button *ngIf="canEdit && !assessment.archived" category="tertiary" variant="primary" icon="edit" (click)="editAssessment(assessment)">
-                {{ "general.edit" | translate }}
-            </app-custom-button>
-            <app-custom-button *ngIf="canEdit" category="tertiary" variant="primary" [icon]="assessment.archived ? 'unarchive' : 'archive'"
-                (click)="archiveAssessment(assessment.id, !assessment.archived)">
-                {{ assessment.archived ? ("assessmentBuilder.assessmentSummary.unarchive" | translate)
-                : ("assessmentBuilder.assessmentSummary.archive" | translate) }}
-            </app-custom-button>
-            <app-custom-button *ngIf="canEdit" category="tertiary" variant="primary" icon="delete" (click)="deleteAssessment(assessment.id, assessment.title)">
-                {{ "general.delete" | translate }}
-            </app-custom-button>
-            <app-custom-button *ngIf="assessment.downloadable" category="tertiary" variant="primary" icon="download" (click)="downloadPDF(assessment.id)">
-                {{ "assessmentBuilder.download" | translate }}
-            </app-custom-button>
+            <span *ngIf="!reorder">
+                <app-custom-button *ngIf="canEdit && !assessment.archived" category="tertiary" variant="primary" icon="edit" (click)="editAssessment(assessment)">
+                    {{ "general.edit" | translate }}
+                </app-custom-button>
+                <app-custom-button *ngIf="canEdit" category="tertiary" variant="primary" [icon]="assessment.archived ? 'unarchive' : 'archive'"
+                    (click)="archiveAssessment(assessment.id, !assessment.archived)">
+                    {{ assessment.archived ? ("assessmentBuilder.assessmentSummary.unarchive" | translate)
+                    : ("assessmentBuilder.assessmentSummary.archive" | translate) }}
+                </app-custom-button>
+                <app-custom-button *ngIf="canEdit" category="tertiary" variant="primary" icon="delete" (click)="deleteAssessment(assessment.id, assessment.title)">
+                    {{ "general.delete" | translate }}
+                </app-custom-button>
+                <app-custom-button *ngIf="assessment.downloadable" category="tertiary" variant="primary" icon="download" (click)="downloadPDF(assessment.id)">
+                    {{ "assessmentBuilder.download" | translate }}
+                </app-custom-button>
+            </span>
+            <span *ngIf="reorder">
+                <app-custom-button *ngIf="canEdit && !assessment.archived" category="tertiary" variant="danger" icon="close" (click)="cancelReorder()">
+                    {{ "general.cancel" | translate }}
+                </app-custom-button>
+            </span>
         </div>
     </div>
     <hr>
     <div class="topics-container">
-        <div #topicsList class="topics" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="dropTopic($event)">
+        <div #topicsList class="topics" [cdkDropListData]="topicToOrder"
+        cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="dropTopic($event)">
             <mat-card class="add-topic" (click)="openTopicFormDialog(assessment)" *ngIf="canEdit">
                 <div class="add-topic-text">
                     {{ "assessmentBuilder.assessmentSummary.addTopic" | translate }}<mat-icon>add</mat-icon>
@@ -60,6 +68,8 @@
             (click)="goToTopicDetails(assessment.id, topic.id)" cdkDrag [cdkDragDisabled]="topic.archived || !reorder">
                 <img *ngIf="topic.icon" [src]="getMediaSource(topic.icon)">
                 <span class="topic-title">{{ topic.title }}</span>
+
+                <span class="topic-counter">{{i + 1}}</span>
                 <p class="small-description">{{ topic.description }}</p>
                 <span class="question_count">({{ topic.questionsCount }} {{ "general.questions" | translate }})</span>
 
@@ -68,8 +78,6 @@
                         <app-custom-button matTooltip="{{ 'assessmentBuilder.assessmentSummary.archiveTopic' | translate }}" [isIcon]="true"
                         icon="archive" (click)="archiveTopic($event, assessment.id, topic.id, true)">
                         </app-custom-button>
-
-                        <span>{{i + 1}}</span>
 
                         <app-custom-button *ngIf="canEdit" matTooltip="{{ 'assessmentBuilder.assessmentSummary.deleteTopic' | translate }}"
                         [isIcon]="true" icon="delete" (click)="deleteTopic($event, assessment.id, topic.id, topic.title)">

@@ -9,6 +9,7 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { Topic } from 'src/app/core/models/topic.models';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { ConfirmModalComponent } from 'src/app/shared/confirm-modal/confirm-modal.component';
@@ -36,6 +37,7 @@ export class AssessmentSummaryComponent implements OnInit {
   public rightScrollEnabled = true;
   public reorder = false;
   public changedOrder = false;
+  public topicToOrder: Topic[] = [];
 
   constructor(
     private dialog: MatDialog,
@@ -212,6 +214,8 @@ export class AssessmentSummaryComponent implements OnInit {
   public reorderTopics(save: boolean, assessmentId: string): void {
     if (!save) {
       this.reorder = true;
+      // Deep copy to avoid modifying both arrays
+      this.topicToOrder = [...this.assessment.topics];
     } else {
       if (this.changedOrder) {
         const data = {
@@ -236,5 +240,11 @@ export class AssessmentSummaryComponent implements OnInit {
   public dropTopic(event: CdkDragDrop<object[]>): void {
     moveItemInArray(this.assessment.topics, event.previousIndex, event.currentIndex);
     this.changedOrder = true;
+  }
+
+  // Go back to previous order
+  public cancelReorder(): void {
+    this.assessment.topics = this.topicToOrder;
+    this.reorder = false;
   }
 }
