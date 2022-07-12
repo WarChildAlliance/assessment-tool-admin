@@ -44,6 +44,7 @@ export class QuestionInputFormComponent implements OnInit {
     title: new FormControl('', [Validators.required]),
     order: new FormControl('', [Validators.required]),
     valid_answer: new FormControl('', [Validators.required]),
+    on_popup: new FormControl(false)
   });
 
   constructor(
@@ -64,7 +65,8 @@ export class QuestionInputFormComponent implements OnInit {
         question_type: 'INPUT',
         title: this.question.title,
         order: this.toClone ? this.order : this.question.order,
-        valid_answer: this.question.valid_answer
+        valid_answer: this.question.valid_answer,
+        on_popup: this.question.on_popup
       });
       await this.setExistingAttachments();
       if (this.toClone) {
@@ -76,6 +78,7 @@ export class QuestionInputFormComponent implements OnInit {
         title: '',
         order: this.order,
         valid_answer: '',
+        on_popup: false
       });
     }
   }

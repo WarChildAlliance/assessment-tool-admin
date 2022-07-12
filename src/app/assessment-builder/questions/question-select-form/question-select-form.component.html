@@ -2,8 +2,6 @@
     <form [formGroup]="selectForm">
         <div class="form-container">
             <div class="select-details-container">
-                <h2>{{ "assessmentBuilder.questions.select.question" | translate }}</h2>
-
                 <mat-form-field appearance="outline" class="form-group" color="accent">
                     <mat-label for="title">{{ "general.title" | translate }}</mat-label>
                     <input matInput formControlName="title">
@@ -29,6 +27,9 @@
                 <br>
                 <mat-checkbox formControlName="multiple">
                     <mat-label for="multiple">{{ "assessmentBuilder.questions.select.isMultipleChoice" | translate }}</mat-label>
+                </mat-checkbox>
+                <mat-checkbox formControlName="on_popup">
+                    <mat-label for="on_popup">{{ "assessmentBuilder.questions.select.onPopup" | translate }}</mat-label>
                 </mat-checkbox>
             </div>
 
