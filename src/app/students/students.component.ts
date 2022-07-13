@@ -143,25 +143,10 @@ export class StudentsComponent implements OnInit {
     this.router.navigate([`/students/${id}`]);
   }
 
-  private inactiveOneYear(inactiveDate: string): boolean {
-    const today = new Date();
-    const inactiveSince = new Date(inactiveDate);
-
-    const y1 = inactiveSince.getFullYear();
-    const y2 = today.getFullYear();
-
-    const d1 = new Date(inactiveSince).setFullYear(2000);
-    const d2 = new Date(today).setFullYear(2000);
-
-    return (y2 - y1 > 1 || (y2 - y1 === 1 && d2 > d1));
-  }
-
   public deleteStudent(): void {
-    // Check if all students are inactive over one year
+    // Check if all students can be deleted (have been inactive for more than 1 year)
     const studentsToDeleteInactive = this.selectedUsers.every(
-      (student) =>
-        student.is_active === false &&
-        this.inactiveOneYear(student.active_status_updated_on)
+      (student) => student.can_delete === true
     );
 
     if (studentsToDeleteInactive) {

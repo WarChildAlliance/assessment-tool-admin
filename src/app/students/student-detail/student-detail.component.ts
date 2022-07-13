@@ -44,7 +44,7 @@ export class StudentDetailComponent implements OnInit {
     this.userService
       .getStudentDetails(studentId.toString()).subscribe((student) => {
         this.student = student;
-        this.deletable = this.student.is_active ? false : this.inactiveOneYear();
+        this.deletable = this.student.can_delete;
     });
   }
 
@@ -60,19 +60,6 @@ export class StudentDetailComponent implements OnInit {
         });
         this.studentAssessments = assessments;
     });
-  }
-
-  // TODO: make it in the back-end for performance
-  private inactiveOneYear(): boolean {
-    const today = new Date();
-    const inactiveSince = new Date(this.student.active_status_updated_on);
-    const y1 = inactiveSince.getFullYear();
-    const y2 = today.getFullYear();
-
-    const d1 = new Date(inactiveSince).setFullYear(2000);
-    const d2 = new Date(today).setFullYear(2000);
-
-    return (y2 - y1 > 1 || (y2 - y1 === 1 && d2 > d1));
   }
 
   public onEdit(): void {
