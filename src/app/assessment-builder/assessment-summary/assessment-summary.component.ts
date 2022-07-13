@@ -38,6 +38,7 @@ export class AssessmentSummaryComponent implements OnInit {
   public reorder = false;
   public changedOrder = false;
   public topicToOrder: Topic[] = [];
+  public translateParam = {item: this.translateService.instant('general.topics')};
 
   constructor(
     private dialog: MatDialog,
@@ -50,6 +51,9 @@ export class AssessmentSummaryComponent implements OnInit {
 
   ngOnInit(): void {
     this.orderTopics();
+    this.translateService.onLangChange.subscribe(() =>
+      this.translateParam.item = this.translateService.instant('general.topics')
+    );
   }
 
   private orderTopics(): void {
@@ -228,7 +232,7 @@ export class AssessmentSummaryComponent implements OnInit {
         });
 
         this.assessmentService.reorderTopics(assessmentId, data).subscribe(() => {
-          this.alertService.success(this.translateService.instant('assessmentBuilder.topicEditSuccess'));
+          this.alertService.success(this.translateService.instant('assessmentBuilder.assessmentSummary.orderChanged'));
         });
       }
       this.reorder = false;

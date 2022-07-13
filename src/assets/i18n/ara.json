@@ -123,9 +123,10 @@
       "deleteTopicPrompt": "هل تريد حقا حذف الموضوع؟",
       "fileDownloadNotice": "يمكن استخدام الملف الذي توشك على تنزيله <br> لأغراض النسخ فقط ، وليس البيع.",
       "fileDownloadNoticeTitle": "يرجى الملاحظة",
-      "reorderTopics": "أعد ترتيب المواضيع",
-      "reorderTooltip": "أعد ترتيب الموضوعات عن طريق سحبها وإفلاتها", 
-      "saveOrder": "حفظ النظام"
+      "reorderItems": "إعادة ترتيب {{item}}",
+      "reorderTooltip": "أعد ترتيب {{item}} عن طريق سحبها وإفلاتها", 
+      "saveOrder": "حفظ النظام",
+      "orderChanged": "تم تغيير الطلب بنجاح"
     },
     "questions": {
       "audioAttachment": "مرفق صوتي",
