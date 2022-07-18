@@ -131,9 +131,10 @@
       "deleteTopicPrompt": "Do you really want to delete the topic <b>{{topicTitle}}</b> ?",
       "fileDownloadNotice": "The file you are about to download can be<br>used for reproduction purposes only, not selling.",
       "fileDownloadNoticeTitle": "Please note",
-      "reorderTopics": "Reorder topics",
-      "reorderTooltip": "Reorder topics by dragging and dropping them", 
-      "saveOrder": "Save order"
+      "reorderItems": "Reorder {{item}}",
+      "reorderTooltip": "Reorder {{item}} by dragging and dropping them", 
+      "saveOrder": "Save order",
+      "orderChanged": "Order changed successfully"
     },
     "questions": {
       "audioAttachment": "Audio attachment",

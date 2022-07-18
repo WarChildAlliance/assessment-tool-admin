@@ -10,6 +10,7 @@ import { QuestionInputFormComponent } from '../questions/question-input-form/que
 import { QuestionNumberlineFormComponent } from '../questions/question-numberline-form/question-numberline-form.component';
 import { QuestionSelectFormComponent } from '../questions/question-select-form/question-select-form.component';
 import { TopicFormDialogComponent } from '../topic-form-dialog/topic-form-dialog.component';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-topic-details',
@@ -25,6 +26,10 @@ export class TopicDetailsComponent implements OnInit {
   public topic: any;
 
   public isDownloadable = false;
+
+  public reorder = false;
+  public changedOrder = false;
+  public questionsToOrder: any[] = [];
 
   public questionsArray: any[] = [
     {
@@ -178,5 +183,44 @@ export class TopicDetailsComponent implements OnInit {
 
   public downloadPDF(assessmentId: string, topicId: string, questionId?: string): void {
     this.assessmentService.downloadPDF(assessmentId, topicId, questionId);
+  }
+
+  // Start and save reorder questions by drag&drop
+  public reorderQuestions(save: boolean): void {
+    if (!save) {
+      this.reorder = true;
+      // Deep copy to avoid modifying both arrays
+      this.questionsToOrder = [...this.questionsList];
+    } else {
+      if (this.changedOrder) {
+        const data = {
+          questions: [],
+          assessment_topic: this.topicId
+        };
+
+        this.questionsList.forEach(question => {
+          data.questions.push(question.id);
+        });
+
+        this.assessmentService.reorderQuestions(this.assessmentId, this.topicId, data).subscribe(() => {
+          this.getQuestionsList();
+          this.alertService.success(this.translateService.instant('assessmentBuilder.assessmentSummary.orderChanged'));
+        });
+      }
+      this.reorder = false;
+      this.changedOrder = false;
+    }
+  }
+
+  // To reorder the questions in the question list after drop
+  public dropQuestion(event: CdkDragDrop<object[]>): void {
+    moveItemInArray(this.questionsList, event.previousIndex, event.currentIndex);
+    this.changedOrder = true;
+  }
+
+  // Go back to previous order
+  public cancelReorder(): void {
+    this.questionsList = this.questionsToOrder;
+    this.reorder = false;
   }
 }

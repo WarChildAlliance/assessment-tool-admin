@@ -228,7 +228,7 @@ export class AssessmentSummaryComponent implements OnInit {
         });
 
         this.assessmentService.reorderTopics(assessmentId, data).subscribe(() => {
-          this.alertService.success(this.translateService.instant('assessmentBuilder.topicEditSuccess'));
+          this.alertService.success(this.translateService.instant('assessmentBuilder.assessmentSummary.orderChanged'));
         });
       }
       this.reorder = false;
