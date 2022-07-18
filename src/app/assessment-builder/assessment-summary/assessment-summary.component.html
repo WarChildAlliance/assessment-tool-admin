@@ -27,10 +27,11 @@
             </div>
         </div>
         <div class="buttons">
-            <app-custom-button *ngIf="canEdit && !assessment.archived" matTooltip="{{ 'assessmentBuilder.assessmentSummary.reorderTooltip' | translate:translateParam }}"
-            matTooltipPosition="above" [category]="reorder ? 'secondary' : 'tertiary'" variant="primary" icon="linear_scale" (click)="reorderTopics(reorder, assessment.id)">
+            <app-custom-button *ngIf="canEdit && !assessment.archived"
+             matTooltip="{{ 'assessmentBuilder.assessmentSummary.reorderTooltip' | translate:{ item: ('general.topics' | translate)} }}"
+                matTooltipPosition="above" [category]="reorder ? 'secondary' : 'tertiary'" variant="primary" icon="linear_scale" (click)="reorderTopics(reorder, assessment.id)">
                 {{ reorder ? ("assessmentBuilder.assessmentSummary.saveOrder" | translate)
-                : ("assessmentBuilder.assessmentSummary.reorderItems" | translate:translateParam) }}
+                : ("assessmentBuilder.assessmentSummary.reorderItems" | translate: { item: ("general.topics" | translate)}) }}
             </app-custom-button>
             <span *ngIf="!reorder">
                 <app-custom-button *ngIf="canEdit && !assessment.archived" category="tertiary" variant="primary" icon="edit" (click)="editAssessment(assessment)">

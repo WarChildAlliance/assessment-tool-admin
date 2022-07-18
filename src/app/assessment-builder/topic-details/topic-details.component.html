@@ -6,10 +6,11 @@
       <h1>{{ topicDetails.name }}</h1>
     </div>
     <div>
-      <app-custom-button *ngIf="topicDetails.can_edit && !topicDetails.archived" matTooltip="{{ 'assessmentBuilder.assessmentSummary.reorderTooltip' | translate:translateParam }}"
-              matTooltipPosition="above" [category]="'tertiary'" variant="primary" icon="reorder" (click)="reorderQuestions(reorder)">
-                  {{ reorder ? ("assessmentBuilder.assessmentSummary.saveOrder" | translate)
-                  : ("assessmentBuilder.assessmentSummary.reorderItems" | translate:translateParam) }}
+      <app-custom-button *ngIf="topicDetails.can_edit && !topicDetails.archived" 
+        matTooltip="{{ 'assessmentBuilder.assessmentSummary.reorderTooltip' | translate:{ item: ('general.questions' | translate)} }}"
+        matTooltipPosition="above" [category]="reorder ? 'secondary' : 'tertiary'" variant="primary" icon="reorder" (click)="reorderQuestions(reorder)">
+          {{ reorder ? ("assessmentBuilder.assessmentSummary.saveOrder" | translate)
+          : ("assessmentBuilder.assessmentSummary.reorderItems" | translate: { item: ("general.questions" | translate)}) }}
       </app-custom-button>
       <span *ngIf="!reorder">
         <app-custom-button *ngIf="topicDetails.can_edit && !topicDetails.archived" category="tertiary" variant="primary"

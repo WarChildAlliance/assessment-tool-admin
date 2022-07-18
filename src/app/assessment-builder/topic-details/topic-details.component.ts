@@ -30,7 +30,6 @@ export class TopicDetailsComponent implements OnInit {
   public reorder = false;
   public changedOrder = false;
   public questionsToOrder: any[] = [];
-  public translateParam = {item: this.translateService.instant('general.questions')};
 
   public questionsArray: any[] = [
     {
@@ -78,9 +77,6 @@ export class TopicDetailsComponent implements OnInit {
       this.getTopicDetails();
     });
     this.getIsDownloadable();
-    this.translateService.onLangChange.subscribe(() =>
-      this.translateParam.item = this.translateService.instant('general.topics')
-    );
   }
 
   private getQuestionsList(): void {
