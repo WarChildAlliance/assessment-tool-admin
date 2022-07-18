@@ -32,7 +32,7 @@
         <ul>
           <li *ngFor="let answer of studentTopicAnswers; let i = index" (click)="displayAnswerDetails(answer)">Q{{ i + 1
             }}<span>
-              <mat-icon *ngIf="evaluated" [style.color]="isAnswerValid(answer.valid)">stop</mat-icon>
+              <mat-icon *ngIf="evaluated" [style.color]="answer.color">stop</mat-icon>
               <p *ngIf="!evaluated">{{answer.question.title}}</p>
             </span></li>
         </ul>

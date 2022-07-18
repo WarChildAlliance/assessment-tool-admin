@@ -72,14 +72,6 @@ export class AnswersOverviewComponent implements OnInit {
     this.loading = false;
   }
 
-  public isAnswerValid(validity: boolean): string {
-    if (validity) {
-      return '#7EBF9A';
-    } else {
-      return '#F2836B';
-    }
-  }
-
   public displayAnswerDetails(answer: TopicAnswer): void {
     this.userService.getAnswerDetails(this.topicId, this.assessmentTopicAnswer, answer.id).subscribe(answerDetails => {
       this.answerDetails = answerDetails;
