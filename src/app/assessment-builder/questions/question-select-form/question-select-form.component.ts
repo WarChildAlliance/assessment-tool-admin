@@ -20,6 +20,7 @@ import { Subject } from 'rxjs';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { environment } from 'src/environments/environment';
 
 interface DialogData {
   topicId?: string;
@@ -35,6 +36,8 @@ interface DialogData {
   styleUrls: ['./question-select-form.component.scss'],
 })
 export class QuestionSelectFormComponent implements OnInit {
+  public questionsList: any;
+  public selectQuestion: boolean;
 
   public assessmentId: string;
   public topicId: string;
@@ -49,6 +52,7 @@ export class QuestionSelectFormComponent implements OnInit {
 
   public options = [];
   private optionsAtt = [];
+  private optionsForm: FormArray;
 
   public imageAttachment = null;
   public audioAttachment = null;
@@ -66,6 +70,10 @@ export class QuestionSelectFormComponent implements OnInit {
 
   public saveOptions = false;
   public attachmentsResetSubject$ = new Subject<void>();
+
+  public selectQuestionForm: FormGroup = new FormGroup({
+    question: new FormControl(null)
+  });
 
   public selectForm: FormGroup = new FormGroup({
     question_type: new FormControl('SELECT'),
@@ -98,54 +106,12 @@ export class QuestionSelectFormComponent implements OnInit {
     if (this.data?.order) { this.order = this.data.order; }
     if (this.data?.question) { this.question = this.data.question; }
     if (this.data?.toClone) { this.toClone = this.data.toClone; }
-    const optionsForm = this.selectForm.get('options') as FormArray;
+    this.optionsForm = this.selectForm.get('options') as FormArray;
     if (this.question) {
-      await this.setExistingAttachments();
-
-      const options = [];
-      this.question.options.forEach((element) => {
-        const attObj = {
-          audio:
-            element.attachments.find((a) => a.attachment_type === 'AUDIO')
-              ?.file || null,
-          image:
-            element.attachments.find((a) => a.attachment_type === 'IMAGE')
-              ?.file || null,
-        };
-        this.optionsAtt.push({ attachments: [] });
-        this.optionsAttachmentEdit.push(attObj);
-        const optOject = {
-          valid: element.valid,
-          title: element.title,
-          value: element.value,
-        };
-        options.push(optOject);
-      });
-
-      for (let i = 1; i < options.length; i++) {
-        const optionsGroup = this.formBuilder.group({
-          valid: new FormControl(null),
-          title: new FormControl(null),
-          value: new FormControl(null),
-        });
-        optionsForm.push(optionsGroup);
-      }
-
-      const q = this.question;
-      this.selectForm.setValue({
-        question_type: 'SELECT',
-        value: q.value,
-        title: q.title,
-        order: this.toClone ? this.order : this.question.order,
-        display: q.display_type ? this.displayTypeFormat(q.display_type) : 'Grid',
-        multiple: q.multiple,
-        on_popup: this.question.on_popup,
-        options,
-      });
-      if (this.toClone) {
-        this.selectForm.markAsDirty();
-      }
+      this.setForm(this.question);
     } else {
+      this.getQuestionsList();
+      this.selectQuestion = true;
       this.selectForm.setValue({
         question_type: 'SELECT',
         value: '',
@@ -157,7 +123,7 @@ export class QuestionSelectFormComponent implements OnInit {
       });
       this.optionsAtt.push({ attachments: [] });
     }
-    optionsForm.valueChanges.subscribe((data) => {
+    this.optionsForm.valueChanges.subscribe((data) => {
       this.options = data;
     });
   }
@@ -387,7 +353,7 @@ export class QuestionSelectFormComponent implements OnInit {
     const fileType = attachment.attachment_type === 'IMAGE' ? 'image/png' : 'audio/wav';
     const fileName = attachment.file.split('/').at(-1);
 
-    await fetch(attachment.file)
+    await fetch((attachment.file?.slice(0, 5) === 'http:') ? attachment.file : environment.API_URL + attachment.file)
       .then((res) => res.arrayBuffer())
       .then((buf) =>  new File([buf], fileName, {type: fileType}))
       .then((file) => {
@@ -443,7 +409,7 @@ export class QuestionSelectFormComponent implements OnInit {
     if (type === 'IMAGE') {
       overwritePrevious = this.optionsAttachmentEdit[i]?.image ? true : false;
       id = this.question
-        ? this.question.options[i].attachments.find(
+        ? this.question.options[i]?.attachments.find(
             (a) => a.attachment_type === 'IMAGE'
           )?.id
         : i;
@@ -451,7 +417,7 @@ export class QuestionSelectFormComponent implements OnInit {
     if (type === 'AUDIO') {
       overwritePrevious = this.optionsAttachmentEdit[i]?.audio ? true : false;
       id = this.question
-        ? this.question.options[i].attachments.find(
+        ? this.question.options[i]?.attachments.find(
             (a) => a.attachment_type === 'AUDIO'
           )?.id
         : i;
@@ -465,4 +431,68 @@ export class QuestionSelectFormComponent implements OnInit {
     this.optionAttChange = true;
     this.optionsAttachment = true;
   }
+
+    // TODO: when merged 'GOBEE-260: Factorization of question forms' generalize this function and add to the question service
+    public getQuestionsList(): void {
+      this.assessmentService.getQuestionsTypeList('SELECT').subscribe(questions => {
+        this.questionsList = questions;
+      });
+    }
+
+    public onSelectQuestion(): void {
+      const question = this.selectQuestionForm.controls.question.value;
+      this.toClone = true;
+      this.setForm(question);
+    }
+
+    private async setForm(question: any): Promise<void> {
+      this.selectQuestion = false;
+      this.question = question;
+
+      await this.setExistingAttachments();
+
+      const options = [];
+      this.question.options.forEach((element) => {
+        const attObj = {
+          audio:
+            element.attachments.find((a) => a.attachment_type === 'AUDIO')
+              ?.file || null,
+          image:
+            element.attachments.find((a) => a.attachment_type === 'IMAGE')
+              ?.file || null,
+        };
+        this.optionsAtt.push({ attachments: [] });
+        this.optionsAttachmentEdit.push(attObj);
+        const optOject = {
+          valid: element.valid,
+          title: element.title,
+          value: element.value,
+        };
+        options.push(optOject);
+      });
+
+      for (let i = 1; i < options.length; i++) {
+        const optionsGroup = this.formBuilder.group({
+          valid: new FormControl(null),
+          title: new FormControl(null),
+          value: new FormControl(null),
+        });
+        this.optionsForm.push(optionsGroup);
+      }
+
+      const q = this.question;
+      this.selectForm.setValue({
+        question_type: 'SELECT',
+        value: q.value,
+        title: q.title,
+        order: this.toClone ? this.order : this.question.order,
+        display: q.display_type ? this.displayTypeFormat(q.display_type) : 'Grid',
+        multiple: q.multiple,
+        on_popup: this.question.on_popup,
+        options,
+      });
+      if (this.toClone) {
+        this.selectForm.markAsDirty();
+      }
+    }
 }

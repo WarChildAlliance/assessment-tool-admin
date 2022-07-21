@@ -18,6 +18,9 @@ interface DialogData {
   styleUrls: ['./topic-form-dialog.component.scss']
 })
 export class TopicFormDialogComponent implements OnInit {
+  public topicsList: any;
+  public selectTopic: boolean;
+  private toClone: boolean;
 
   public assessmentId: string;
   public topic: any;
@@ -32,6 +35,10 @@ export class TopicFormDialogComponent implements OnInit {
   public iconOptions = ['flower_green.svg', 'flower_purple.svg', 'flower_cyan.svg'];
 
   public feedbacks = [{id: 0, name: 'Never'}, {id: 1, name: 'Always'}, {id: 2, name: 'Second attempt'}];
+
+  public selectTopicForm: FormGroup = new FormGroup({
+    topic: new FormControl(null)
+  });
 
   public createNewTopicForm: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required]),
@@ -59,19 +66,10 @@ export class TopicFormDialogComponent implements OnInit {
     if (this.data?.edit) { this.edit = this.data?.edit; }
     if (this.data?.order) { this.order = this.data?.order; }
     if (this.topic) {
-      this.createNewTopicForm.setValue({
-        name: this.topic.name,
-        description: this.topic.description,
-        show_feedback: this.topic.show_feedback,
-        allow_skip: this.topic.allow_skip,
-        evaluated: this.topic.evaluated,
-        praise: this.topic.praise,
-        max_wrong_answers: this.topic.max_wrong_answers,
-        order: this.topic.order,
-        icon: this.icon,
-        archived: this.topic.archived
-      });
+      this.setForm(this.topic);
     } else {
+      this.getTopics();
+      this.selectTopic = true;
       this.createNewTopicForm.controls.order.setValue(this.order);
     }
   }
@@ -130,5 +128,58 @@ export class TopicFormDialogComponent implements OnInit {
   public handleFileInput(event): void {
     this.icon = event;
     this.createNewTopicForm.patchValue({icon: this.icon});
+  }
+
+  private getTopics(): void {
+    this.assessmentService.getAssessmentTopicsList().subscribe(topics => {
+      this.topicsList = topics;
+    });
+  }
+
+  public onSelectTopic(): void {
+    this.toClone = true;
+    const topicId = this.selectTopicForm.controls.topic.value.id;
+    const assessmentId = this.selectTopicForm.controls.topic.value.assessment_id;
+
+    this.assessmentService.getTopicDetails(assessmentId, topicId).subscribe(details => {
+      this.setForm(details);
+    });
+  }
+
+  private async setForm(topic: any): Promise<void> {
+    this.selectTopic = false;
+
+    if (this.toClone) {
+      this.createNewTopicForm.markAsDirty();
+      if (topic.icon) {
+        await this.iconToFile(topic.icon);
+      }
+    }
+
+    this.createNewTopicForm.setValue({
+      name: topic.name,
+      description: topic.description,
+      show_feedback: topic.show_feedback,
+      allow_skip: topic.allow_skip,
+      evaluated: topic.evaluated,
+      praise: topic.praise,
+      max_wrong_answers: topic.max_wrong_answers,
+      order: this.toClone ? this.order : topic.order,
+      icon: this.icon,
+      archived: topic.archived
+    });
+  }
+
+  // When creating a new topic based on an existing one: convert object from icon to file
+  private async iconToFile(icon): Promise<void> {
+    const fileName = icon.split('/').at(-1);
+
+    await fetch(icon)
+      .then((res) => res.arrayBuffer())
+      .then((buf) =>  new File([buf], fileName, {type: 'IMAGE'}))
+      .then((file) => {
+        this.icon = file;
+      }
+    );
   }
 }

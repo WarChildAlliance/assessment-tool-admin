@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { environment } from 'src/environments/environment';
 
 interface DialogData {
   topicId?: string;
@@ -20,6 +21,8 @@ interface DialogData {
   styleUrls: ['./question-input-form.component.scss'],
 })
 export class QuestionInputFormComponent implements OnInit {
+  public questionsList: any;
+  public selectQuestion: boolean;
 
   public assessmentId: string;
   public topicId: string;
@@ -38,6 +41,10 @@ export class QuestionInputFormComponent implements OnInit {
 
   public alertMessage = '';
   public attachmentsResetSubject$ = new Subject<void>();
+
+  public selectQuestionForm: FormGroup = new FormGroup({
+    question: new FormControl(null)
+  });
 
   public inputForm: FormGroup = new FormGroup({
     question_type: new FormControl('INPUT'),
@@ -61,18 +68,10 @@ export class QuestionInputFormComponent implements OnInit {
     if (this.data?.question) { this.question = this.data.question; }
     if (this.data?.toClone) { this.toClone = this.data.toClone; }
     if (this.question) {
-      this.inputForm.setValue({
-        question_type: 'INPUT',
-        title: this.question.title,
-        order: this.toClone ? this.order : this.question.order,
-        valid_answer: this.question.valid_answer,
-        on_popup: this.question.on_popup
-      });
-      await this.setExistingAttachments();
-      if (this.toClone) {
-        this.inputForm.markAsDirty();
-      }
+      this.setForm(this.question);
     } else {
+      this.getQuestionsList();
+      this.selectQuestion = true;
       this.inputForm.setValue({
         question_type: 'INPUT',
         title: '',
@@ -205,7 +204,7 @@ export class QuestionInputFormComponent implements OnInit {
     const fileType = attachment.attachment_type === 'IMAGE' ? 'image/png' : 'audio/wav';
     const fileName = attachment.file.split('/').at(-1);
 
-    await fetch(attachment.file)
+    await fetch((attachment.file?.slice(0, 5) === 'http:') ? attachment.file : environment.API_URL + attachment.file)
       .then((res) => res.arrayBuffer())
       .then((buf) =>  new File([buf], fileName, {type: fileType}))
       .then((file) => {
@@ -240,4 +239,36 @@ export class QuestionInputFormComponent implements OnInit {
     this.changedAudio = true;
     this.audioAttachment = event;
   }
+
+    // TODO: when merged 'GOBEE-260: Factorization of question forms' generalize this function and add to the question service
+    public getQuestionsList(): void {
+      this.assessmentService.getQuestionsTypeList('INPUT').subscribe(questions => {
+        this.questionsList = questions;
+      });
+    }
+
+    public onSelectQuestion(): void {
+      const question = this.selectQuestionForm.controls.question.value;
+      this.toClone = true;
+      this.setForm(question);
+    }
+
+    private async setForm(question: any): Promise<void> {
+      this.selectQuestion = false;
+      this.question = question;
+
+      this.inputForm.setValue({
+        question_type: 'INPUT',
+        title: question.title,
+        order: this.toClone ? this.order : question.order,
+        valid_answer: question.valid_answer,
+        on_popup: question.on_popup
+      });
+
+      await this.setExistingAttachments();
+
+      if (this.toClone) {
+        this.inputForm.markAsDirty();
+      }
+    }
 }

@@ -7,10 +7,13 @@ import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { Language } from 'src/app/core/models/language.model';
 import { Country } from 'src/app/core/models/country.model';
+import { environment } from 'src/environments/environment';
 
 interface DialogData {
   edit?: boolean;
+  clone?: boolean;
   assessment?: any;
+  assessmentsList?: any;
 }
 @Component({
   selector: 'app-assessment-form-dialog',
@@ -18,7 +21,10 @@ interface DialogData {
   styleUrls: ['./assessment-form-dialog.component.scss']
 })
 export class AssessmentFormDialogComponent implements OnInit {
+  public assessmentsList: any;
+  public selectAssessment = true;
 
+  public clone: boolean;
   public edit: boolean;
   public assessment: any;
 
@@ -47,6 +53,10 @@ export class AssessmentFormDialogComponent implements OnInit {
 
   public iconOptions = ['flower_green.svg', 'flower_purple.svg', 'flower_cyan.svg'];
 
+  public selectAssessmentForm: FormGroup = new FormGroup({
+    assessment: new FormControl(null)
+  });
+
   public assessmentForm: FormGroup = new FormGroup({
     title: new FormControl('', [Validators.required]),
     grade: new FormControl(0, [Validators.required]),
@@ -68,22 +78,14 @@ export class AssessmentFormDialogComponent implements OnInit {
     ) {}
 
   ngOnInit(): void {
+    if (this.data?.assessmentsList) { this.assessmentsList = this.data.assessmentsList; }
     if (this.data?.assessment) { this.assessment = this.data.assessment; }
     if (this.data?.edit) { this.edit = this.data.edit; }
+    if (this.data?.clone) { this.clone = this.data.clone; }
     this.userService.getLanguages().subscribe((res: Language[]) => this.languages = res);
     this.userService.getCountries().subscribe((res: Country[]) => this.countries = res);
-    if (this.edit) {
-      this.assessmentForm.setValue({
-        title: this.assessment.title,
-        grade: this.assessment.grade,
-        subject: this.assessment.subject.toUpperCase(),
-        language: this.assessment.language_code,
-        country: this.assessment.country_code,
-        private: this.assessment.private,
-        icon: this.icon,
-        archived: this.assessment.archived,
-        downloadable: this.assessment.downloadable
-      });
+    if (this.edit || this.clone) {
+      this.setForm(this.assessment);
     }
   }
 
@@ -141,5 +143,47 @@ export class AssessmentFormDialogComponent implements OnInit {
       .then((res) => res.arrayBuffer())
       .then((buf) => new File([buf], imageName, {type: 'image/svg+xml'}))
       .then((file) => this.formData.append('icon', file));
+  }
+
+  public onSelectAssessment(): void {
+    const assessment = this.selectAssessmentForm.controls.assessment.value;
+    this.clone = true;
+    this.setForm(assessment);
+  }
+
+  private async setForm(assessment: any): Promise<void> {
+    this.selectAssessment = false;
+
+    if (this.clone) {
+      this.assessmentForm.markAsDirty();
+      if (assessment.icon) {
+        await this.iconToFile(assessment.icon);
+      }
+    }
+
+    this.assessmentForm.setValue({
+      title: assessment.title,
+      grade: Number(assessment.grade),
+      subject: assessment.subject.toUpperCase(),
+      language: assessment.language_code,
+      country: assessment.country_code,
+      private: assessment.private,
+      icon: this.icon,
+      archived: assessment.archived,
+      downloadable: assessment.downloadable
+    });
+  }
+
+  // When creating a new assessment based on an existing one: convert object from icon to file
+  private async iconToFile(icon): Promise<void> {
+    const fileName = icon.split('/').at(-1);
+
+    await fetch((icon?.slice(0, 5) === 'http:') ? icon : environment.API_URL + icon)
+      .then((res) => res.arrayBuffer())
+      .then((buf) =>  new File([buf], fileName, {type: 'IMAGE'}))
+      .then((file) => {
+        this.icon = file;
+      }
+    );
   }
 }

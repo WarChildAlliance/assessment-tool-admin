@@ -9,3 +9,13 @@
 .file_input{
     background-color: rgb(233, 233, 233);
 }
+
+.select {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dialog-buttons {
+    margin-top: 20px;
+}

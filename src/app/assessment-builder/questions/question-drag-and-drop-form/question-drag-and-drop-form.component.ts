@@ -7,6 +7,7 @@ import { Subject } from 'rxjs';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { AreaSelectorComponent } from '../area-selector/area-selector.component';
+import { environment } from 'src/environments/environment';
 
 interface DialogData {
   topicId?: string;
@@ -22,6 +23,8 @@ interface DialogData {
   styleUrls: ['./question-drag-and-drop-form.component.scss']
 })
 export class QuestionDragAndDropFormComponent implements OnInit {
+  public questionsList: any;
+  public selectQuestion: boolean;
 
   public assessmentId: string;
   public topicId: string;
@@ -55,6 +58,10 @@ export class QuestionDragAndDropFormComponent implements OnInit {
   private alertMessage = '';
   public attachmentsResetSubject$ = new Subject<void>();
 
+  public selectQuestionForm: FormGroup = new FormGroup({
+    question: new FormControl(null)
+  });
+
   public dragAndDropForm: FormGroup = new FormGroup({
     title: new FormControl('', Validators.required),
     order: new FormControl('', Validators.required),
@@ -80,34 +87,10 @@ export class QuestionDragAndDropFormComponent implements OnInit {
     if (this.data?.toClone) { this.toClone = this.data.toClone; }
 
     if (this.question) {
-      this.dragAndDropForm.setValue({
-        title: this.question.title,
-        order: this.toClone ? this.order : this.question.order,
-        on_popup: this.question.on_popup,
-        background_image: null,
-        drop_areas: this.question.drop_areas,
-        drag_options: null
-      });
-
-      // Setting background_image and drag_options
-      this.question.drop_areas.forEach(area => {
-        this.dragItemsArea.push({ attachments: [], area_id: area.id });
-      });
-
-      const backgroundImage = this.question.attachments.find(
-        (i) => i.attachment_type === 'IMAGE' && i.background_image === true
-      );
-
-      await this.getDraggableOptions();
-      this.setDragItems = true;
-
-      await this.objectToFile(backgroundImage);
-      await this.setExistingAttachments();
-
-      if (this.toClone) {
-        this.dragAndDropForm.markAsDirty();
-      }
+      this.setForm(this.question);
     } else {
+      this.getQuestionsList();
+      this.selectQuestion = true;
       this.dragAndDropForm.setValue({
         title: '',
         order: this.order,
@@ -410,7 +393,7 @@ export class QuestionDragAndDropFormComponent implements OnInit {
       const fileType = attachment.attachment_type === 'IMAGE' ? 'image/png' : 'audio/wav';
       const fileName = attachment.file.split('/').at(-1);
 
-      await fetch(attachment.file)
+      await fetch((attachment.file?.slice(0, 5) === 'http:') ? attachment.file : environment.API_URL + attachment.file)
         .then((res) => res.arrayBuffer())
         .then((buf) => new File([buf], fileName, { type: fileType }))
         .then((file) => {
@@ -470,5 +453,51 @@ export class QuestionDragAndDropFormComponent implements OnInit {
       order: new FormControl(this.dragAndDropForm.controls.order.value),
       drop_areas: new FormControl(this.dragAndDropForm.controls.drop_areas.value)
     });
+  }
+
+  // TODO: when merged 'GOBEE-260: Factorization of question forms' generalize this function and add to the question service
+  public getQuestionsList(): void {
+    this.assessmentService.getQuestionsTypeList('DRAG_AND_DROP').subscribe(questions => {
+      this.questionsList = questions;
+    });
+  }
+
+  public onSelectQuestion(): void {
+    const question = this.selectQuestionForm.controls.question.value;
+    this.toClone = true;
+    this.setForm(question);
+  }
+
+  private async setForm(question: any): Promise<void> {
+    this.selectQuestion = false;
+    this.question = question;
+
+    this.dragAndDropForm.setValue({
+      title: this.question.title,
+      order: this.toClone ? this.order : this.question.order,
+      on_popup: this.question.on_popup,
+      background_image: null,
+      drop_areas: this.question.drop_areas,
+      drag_options: null
+    });
+
+    // Setting background_image and drag_options
+    this.question.drop_areas.forEach(area => {
+      this.dragItemsArea.push({ attachments: [], area_id: area.id });
+    });
+
+    const backgroundImage = this.question.attachments.find(
+      (i) => i.attachment_type === 'IMAGE' && i.background_image === true
+    );
+
+    await this.getDraggableOptions();
+    this.setDragItems = true;
+
+    await this.objectToFile(backgroundImage);
+    await this.setExistingAttachments();
+
+    if (this.toClone) {
+      this.dragAndDropForm.markAsDirty();
+    }
   }
 }

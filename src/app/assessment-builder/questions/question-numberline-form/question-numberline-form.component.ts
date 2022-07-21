@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { environment } from 'src/environments/environment';
 
 interface DialogData {
   topicId?: string;
@@ -20,6 +21,8 @@ interface DialogData {
   styleUrls: ['./question-numberline-form.component.scss']
 })
 export class QuestionNumberlineFormComponent implements OnInit {
+  public questionsList: any;
+  public selectQuestion: boolean;
 
   public assessmentId: string;
   public topicId: string;
@@ -38,6 +41,10 @@ export class QuestionNumberlineFormComponent implements OnInit {
 
   public alertMessage =  '';
   public attachmentsResetSubject$ = new Subject<void>();
+
+  public selectQuestionForm: FormGroup = new FormGroup({
+    question: new FormControl(null)
+  });
 
   public numberLineForm: FormGroup = new FormGroup({
     question_type: new FormControl('NUMBER_LINE'),
@@ -67,24 +74,10 @@ export class QuestionNumberlineFormComponent implements OnInit {
     if (this.data?.question) { this.question = this.data.question; }
     if (this.data?.toClone) { this.toClone = this.data.toClone; }
     if (this.question) {
-      this.numberLineForm.setValue({
-        question_type: 'NUMBER_LINE',
-        title: this.question.title,
-        order: this.toClone ? this.order : this.question.order,
-        start: this.question.start,
-        end: this.question.end,
-        step: this.question.step,
-        tick_step: this.question.tick_step,
-        expected_value: this.question.expected_value,
-        show_ticks: this.question.show_ticks,
-        show_value: this.question.show_value,
-        on_popup: this.question.on_popup
-      });
-      await this.setExistingAttachments();
-      if (this.toClone) {
-        this.numberLineForm.markAsDirty();
-      }
+      this.setForm(this.question);
     } else {
+      this.getQuestionsList();
+      this.selectQuestion = true;
       this.numberLineForm.setValue({
         question_type: 'NUMBER_LINE',
         title: '',
@@ -190,7 +183,7 @@ export class QuestionNumberlineFormComponent implements OnInit {
     const fileType = attachment.attachment_type === 'IMAGE' ? 'image/png' : 'audio/wav';
     const fileName = attachment.file.split('/').at(-1);
 
-    await fetch(attachment.file)
+    await fetch((attachment.file?.slice(0, 5) === 'http:') ? attachment.file : environment.API_URL + attachment.file)
       .then((res) => res.arrayBuffer())
       .then((buf) =>  new File([buf], fileName, {type: fileType}))
       .then((file) => {
@@ -223,6 +216,44 @@ export class QuestionNumberlineFormComponent implements OnInit {
     } else {
       this.alertMessage = 'Question successfully created';
       this.createNumberLineQuestion();
+    }
+  }
+
+  // TODO: when merged 'GOBEE-260: Factorization of question forms' generalize this function and add to the question service
+  public getQuestionsList(): void {
+    this.assessmentService.getQuestionsTypeList('NUMBER_LINE').subscribe(questions => {
+      this.questionsList = questions;
+    });
+  }
+
+  public onSelectQuestion(): void {
+    const question = this.selectQuestionForm.controls.question.value;
+    this.toClone = true;
+    this.setForm(question);
+  }
+
+  private async setForm(question: any): Promise<void> {
+    this.selectQuestion = false;
+    this.question = question;
+
+    this.numberLineForm.setValue({
+      question_type: 'NUMBER_LINE',
+      title: question.title,
+      order: this.toClone ? this.order : question.order,
+      start: question.start,
+      end: question.end,
+      step: question.step,
+      tick_step: question.tick_step,
+      expected_value: question.expected_value,
+      show_ticks: question.show_ticks,
+      show_value: question.show_value,
+      on_popup: question.on_popup
+    });
+
+    await this.setExistingAttachments();
+
+    if (this.toClone) {
+      this.numberLineForm.markAsDirty();
     }
   }
 }

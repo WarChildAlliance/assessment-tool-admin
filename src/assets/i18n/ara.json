@@ -9,6 +9,7 @@
     "publicAssessments": "التقييم (التقييمات) العامة",
     "archivedAssessments": "التقييم (التقييمات) المؤرشف",
     "assessments": "التقييمات",
+    "assessment": "تقييم",
     "assessmentsOverview": "نظرة عامة على التقييمات",
     "assign": "تعيين",
     "cancel": "إلغاء",
@@ -50,8 +51,11 @@
     "totalCompletedTopics": "إجمالي المواضيع المكتملة",
     "workInProgress": "جاري العمل ... متاح قريبًا",
     "topics": "المواضيع",
+    "topic": "عنوان",
     "no": "لا",
     "yes": "نعم",
+    "createNewOne": "قم بإنشاء واحدة جديدة",
+    "selectItem": "حدد {{item}}",
     "grades": {
       "0": "0",
       "1": "1",
@@ -126,7 +130,8 @@
       "reorderItems": "إعادة ترتيب {{item}}",
       "reorderTooltip": "أعد ترتيب {{item}} عن طريق سحبها وإفلاتها", 
       "saveOrder": "حفظ النظام",
-      "orderChanged": "تم تغيير الطلب بنجاح"
+      "orderChanged": "تم تغيير الطلب بنجاح",
+      "copyAssessment": "قم بإنشاء نسخة"
     },
     "questions": {
       "audioAttachment": "مرفق صوتي",

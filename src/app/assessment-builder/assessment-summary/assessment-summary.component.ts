@@ -156,13 +156,14 @@ export class AssessmentSummaryComponent implements OnInit {
     });
   }
 
-  public editAssessment(assessment): void {
-    this.edit = true;
+  public editAssessment(assessment, clone?: boolean): void {
+    this.edit = clone ? false : true;
     this.assessment = assessment;
 
     const createAssessmentDialog = this.dialog.open(AssessmentFormDialogComponent, {
       data: {
         edit: this.edit,
+        clone,
         assessment: this.assessment
       }
     });

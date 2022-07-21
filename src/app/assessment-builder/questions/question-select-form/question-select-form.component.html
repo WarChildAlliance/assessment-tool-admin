@@ -1,5 +1,20 @@
 <mat-dialog-content style="max-height: 80vh">
-    <form [formGroup]="selectForm">
+    <div *ngIf="selectQuestion" class="select">
+        <form class="form-primary" [formGroup]="selectQuestionForm">
+            <mat-form-field appearance="outline" color="accent">
+                <mat-label>{{ 'general.selectItem' | translate:{ item: ('general.question' | translate)} }}</mat-label>
+                <mat-select formControlName="question" (selectionChange)="onSelectQuestion()">
+                    <mat-option *ngFor="let question of questionsList" [value]="question">{{ question.title }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </form>
+    
+        <app-custom-button category="secondary" variant="neutral" icon="add" (click)="selectQuestion = false">
+            {{ 'general.createNewOne' | translate }}
+        </app-custom-button>
+    </div>
+
+    <form *ngIf="!selectQuestion" [formGroup]="selectForm">
         <div class="form-container">
             <div class="select-details-container">
                 <mat-form-field appearance="outline" class="form-group" color="accent">
@@ -90,13 +105,14 @@
             </div>
         </div>
 
-        <div class="dialog-buttons">
-            <button mat-flat-button mat-dialog-close class="dialog-buttons__cancel" color="secondary">
-                {{ "general.cancel" | translate }}
-            </button>
-            <button mat-flat-button [mat-dialog-close]="true" color="accent" [disabled]="selectForm.invalid || !selectForm.dirty" (click)="onSubmit()">
-                {{ question ? toClone ? ("general.clone" | translate) : ("general.save" | translate) : ("general.create" | translate) }}
-            </button>
-        </div>
     </form>
+
+    <div class="dialog-buttons">
+        <button mat-flat-button mat-dialog-close class="dialog-buttons__cancel" color="secondary">
+            {{ "general.cancel" | translate }}
+        </button>
+        <button mat-flat-button [mat-dialog-close]="true" color="accent" [disabled]="selectForm.invalid || !selectForm.dirty" (click)="onSubmit()">
+            {{ question ? toClone ? ("general.clone" | translate) : ("general.save" | translate) : ("general.create" | translate) }}
+        </button>
+    </div>
 </mat-dialog-content>
