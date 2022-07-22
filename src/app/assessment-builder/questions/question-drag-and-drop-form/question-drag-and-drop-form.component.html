@@ -6,6 +6,7 @@
                 <mat-option *ngFor="let question of questionsList" [value]="question">{{ question.title }}</mat-option>
             </mat-select>
         </mat-form-field>
+        <app-spinner *ngIf="!questionsList" size="medium" [variant]="'primary'"></app-spinner>
     </form>
 
     <app-custom-button category="secondary" variant="neutral" icon="add" (click)="selectQuestion = false">
@@ -88,11 +89,16 @@
 
         <h2>{{ "assessmentBuilder.questions.dragAndDrop.questionAttachments" | translate }}</h2>
         <div class="attachments-container">
-            <app-image-selector [reset$]="attachmentsResetSubject$.asObservable()"
-                (newImageEvent)="onNewImageAttachment($event)" [imageAttachment]="imageAttachment">
+            <app-image-selector 
+                [reset$]="attachmentsResetSubject$.asObservable()"
+                (newImageEvent)="questionFormService.imageAttachment = $event"
+                [imageAttachment]="imageAttachment">
             </app-image-selector>
-            <app-audio-selector [isRecorderEnabled]="true" [reset$]="attachmentsResetSubject$.asObservable()"
-                (newAudioEvent)="onNewAudioAttachment($event)" [audioAttachment]="audioAttachment">
+            <app-audio-selector
+                [isRecorderEnabled]="true"
+                [reset$]="attachmentsResetSubject$.asObservable()"
+                (newAudioEvent)="questionFormService.audioAttachment = $event"
+                [audioAttachment]="audioAttachment">
             </app-audio-selector>
         </div>
 

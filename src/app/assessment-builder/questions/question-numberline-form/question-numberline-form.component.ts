@@ -1,11 +1,8 @@
-import { Component, Input, OnInit, Output, EventEmitter, Inject } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
-import { AlertService } from 'src/app/core/services/alert.service';
-import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { environment } from 'src/environments/environment';
+import { QuestionFormService } from 'src/app/core/services/question-form.service';
 
 interface DialogData {
   topicId?: string;
@@ -30,16 +27,9 @@ export class QuestionNumberlineFormComponent implements OnInit {
   public question: any;
   public toClone: boolean;
 
-  @Output() questionCreatedEvent = new EventEmitter<boolean>();
-  @Output() closeModalEvent = new EventEmitter<boolean>();
+  public imageAttachment = this.questionFormService.imageAttachment;
+  public audioAttachment = this.questionFormService.audioAttachment;
 
-  public imageAttachment = null;
-  public audioAttachment = null;
-  // making sure that we dont store an new attachment on editQuestion, if attachment didnt change
-  public changedAudio = false;
-  public changedImage = false;
-
-  public alertMessage =  '';
   public attachmentsResetSubject$ = new Subject<void>();
 
   public selectQuestionForm: FormGroup = new FormGroup({
@@ -62,9 +52,7 @@ export class QuestionNumberlineFormComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    private translateService: TranslateService,
-    private assessmentService: AssessmentService,
-    private alertService: AlertService
+    public questionFormService: QuestionFormService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -76,92 +64,28 @@ export class QuestionNumberlineFormComponent implements OnInit {
     if (this.question) {
       this.setForm(this.question);
     } else {
-      this.getQuestionsList();
       this.selectQuestion = true;
-      this.numberLineForm.setValue({
-        question_type: 'NUMBER_LINE',
-        title: '',
-        order: this.order,
-        start: null,
-        end: null,
-        step: null,
-        tick_step: null,
-        expected_value: null,
-        show_ticks: false,
-        show_value: false,
-        on_popup: false
+      this.numberLineForm.controls.order.setValue(this.order);
+      await this.questionFormService.getQuestionsTypeList('NUMBER_LINE').then(res => {
+        this.questionsList = res;
       });
     }
+    await this.questionFormService.resetAttachments().then(() => this.attachmentsResetSubject$.next());
   }
 
-  private createNumberLineQuestion(): void {
-    this.assessmentService.createQuestion(this.numberLineForm.value, this.topicId.toString(),
-      this.assessmentId.toString()).subscribe((res) => {
-        if (this.imageAttachment) {
-          this.saveAttachments(this.assessmentId, this.imageAttachment, 'IMAGE', { name: 'question', value: res.id });
-        }
-        if (this.audioAttachment) {
-          this.saveAttachments(this.assessmentId, this.audioAttachment, 'AUDIO', { name: 'question', value: res.id });
-        }
-        this.alertService.success(this.alertMessage);
-        this.questionCreatedEvent.emit(true);
-        if (!this.toClone) {
-          this.resetForm();
-        }
-      });
-  }
-
-  private editQuestion(): void {
-    this.assessmentService.editQuestion(this.assessmentId.toString(), this.topicId.toString(),
-      this.question.id, this.numberLineForm.value).subscribe(res => {
-        if (this.imageAttachment && this.changedImage) {
-          this.updateQuestionAttachments('IMAGE', res.id, this.imageAttachment);
-        }
-        if (this.audioAttachment && this.changedAudio) {
-          this.updateQuestionAttachments('AUDIO', res.id, this.audioAttachment);
-        }
-        this.alertService.success(this.alertMessage);
-        this.questionCreatedEvent.emit(true);
-        this.closeModalEvent.emit(true);
-      });
-  }
-
-  private updateQuestionAttachments(type: string, id: any, attachment: any): void {
-    const file = this.question.attachments.find( a => a.attachment_type === type);
-    if (file) {
-      this.assessmentService.updateAttachments(this.assessmentId, attachment, type, file.id).subscribe();
-    } else {
-      this.saveAttachments(this.assessmentId, attachment, type, { name: 'question', value: id });
-    }
-  }
-
-  private saveAttachments(assessmentId: string, attachment, type: string, obj): void {
-    this.assessmentService.addAttachments(assessmentId, attachment, type, obj).subscribe(() => {
-      this.alertService.success(this.alertMessage);
+  private createNumberLineQuestion(data: any): void {
+    this.questionFormService.createQuestion(data).then(() => {
+      this.questionFormService.emitMessage(this.question === undefined, this.toClone);
+      if (!this.toClone) {
+        this.resetForm();
+      }
     });
   }
 
-  private async setExistingAttachments(): Promise<void>{
-    const image = this.question.attachments.find( i => i.attachment_type === 'IMAGE');
-    const audio = this.question.attachments.find( a => a.attachment_type === 'AUDIO');
-
-    if (this.toClone) {
-      if (image) {
-        await this.objectToFile(image);
-      }
-      if (audio) {
-        await this.objectToFile(audio);
-      }
-    } else {
-      if (image) {
-        this.imageAttachment = image;
-        this.imageAttachment.name = image ? image.file.split('/').at(-1) : null;
-      }
-      if (audio) {
-        this.audioAttachment = audio;
-        this.audioAttachment.name = audio ? audio.file.split('/').at(-1) : null;
-      }
-    }
+  private editNumberLineQuestion(data: any): void {
+    this.questionFormService.editQuestion(data).then(() => {
+      this.questionFormService.emitMessage(false, false);
+    });
   }
 
   private resetForm(): void {
@@ -169,61 +93,23 @@ export class QuestionNumberlineFormComponent implements OnInit {
     this.numberLineForm.controls.question_type.setValue('NUMBER_LINE');
     this.numberLineForm.controls.show_ticks.setValue(false);
     this.numberLineForm.controls.show_value.setValue(false);
-
-    this.imageAttachment = null;
-    this.audioAttachment = null;
-
-    this.changedAudio = false;
-    this.changedImage = false;
-
     this.attachmentsResetSubject$.next();
   }
 
-  private async objectToFile(attachment): Promise<void> {
-    const fileType = attachment.attachment_type === 'IMAGE' ? 'image/png' : 'audio/wav';
-    const fileName = attachment.file.split('/').at(-1);
-
-    await fetch((attachment.file?.slice(0, 5) === 'http:') ? attachment.file : environment.API_URL + attachment.file)
-      .then((res) => res.arrayBuffer())
-      .then((buf) =>  new File([buf], fileName, {type: fileType}))
-      .then((file) => {
-        if (attachment.attachment_type === 'IMAGE') {
-          this.imageAttachment = file;
-        }
-        else if (attachment.attachment_type === 'AUDIO') {
-          this.audioAttachment = file;
-        }
-    });
-  }
-
-  public onNewImageAttachment(event: File): void {
-    this.changedImage = true;
-    this.imageAttachment = event;
-  }
-
-  public onNewAudioAttachment(event: File): void {
-    this.changedAudio = true;
-    this.audioAttachment = event;
-  }
-
   public onSubmit(): void {
-    if (this.question && !this.toClone) {
-      this.alertMessage = 'Question successfully updated';
-      this.editQuestion();
-    } else if (this.toClone){
-      this.alertMessage = 'Question successfully cloned';
-      this.createNumberLineQuestion();
-    } else {
-      this.alertMessage = 'Question successfully created';
-      this.createNumberLineQuestion();
-    }
-  }
+    const data = {
+      toClone: this.toClone,
+      formGroup: this.numberLineForm.value,
+      topicId: this.topicId.toString(),
+      assessmentId: this.assessmentId.toString(),
+      question: this.question
+    };
 
-  // TODO: when merged 'GOBEE-260: Factorization of question forms' generalize this function and add to the question service
-  public getQuestionsList(): void {
-    this.assessmentService.getQuestionsTypeList('NUMBER_LINE').subscribe(questions => {
-      this.questionsList = questions;
-    });
+    if (this.question && !this.toClone) {
+      this.editNumberLineQuestion(data);
+    } else {
+      this.createNumberLineQuestion(data);
+    }
   }
 
   public onSelectQuestion(): void {
@@ -250,7 +136,10 @@ export class QuestionNumberlineFormComponent implements OnInit {
       on_popup: question.on_popup
     });
 
-    await this.setExistingAttachments();
+    await this.questionFormService.setExistingAttachments(this.question, this.toClone).then(res => {
+      this.imageAttachment = res.image;
+      this.audioAttachment = res.audio;
+    });
 
     if (this.toClone) {
       this.numberLineForm.markAsDirty();

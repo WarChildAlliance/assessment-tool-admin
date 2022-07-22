@@ -29,6 +29,7 @@ import { PreviousButtonModule } from '../shared/previous-button/previous-button.
 import { QuestionDragAndDropFormComponent } from './questions/question-drag-and-drop-form/question-drag-and-drop-form.component';
 import { AreaSelectorComponent } from './questions/area-selector/area-selector.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import { CustomSpinnerModule } from '../shared/spinner/spinner.module';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     MatTooltipModule,
     CustomButtonModule,
     PreviousButtonModule,
-    DragDropModule
+    DragDropModule,
+    CustomSpinnerModule
   ]
 })
 export class AssessmentBuilderModule { }

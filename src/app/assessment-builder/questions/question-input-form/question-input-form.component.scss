@@ -19,3 +19,12 @@
 .dialog-buttons {
     margin-top: 20px;
 }
+
+.form-primary {
+    display: flex;
+    flex-direction: row;
+
+    app-spinner {
+        margin: auto;
+    }
+}

@@ -31,8 +31,8 @@
                         <div *ngFor="let option of draggableOptions">
                             <div *ngIf="option.area_option.includes(area.id)">
                                 <span class="option">
-                                    {{option.attachments[0].file.substring(option.attachments[0].file.lastIndexOf('/')+1)}}
-                                    <img [src]="getSource(option.attachments[0].file)" class="option-img" draggable="false">
+                                    {{option.attachments[0]?.file.substring(option.attachments[0].file.lastIndexOf('/')+1)}}
+                                    <img [src]="getSource(option.attachments[0]?.file)" class="option-img" draggable="false">
                                 </span>
                             </div>
                         </div>
@@ -50,8 +50,8 @@
     <div class="without-options" *ngIf="optionsWithoutArea.length">
         <div #withoutOptions class="scrollable">
             <div class="options" #without_areas *ngFor="let option of optionsWithoutArea">
-                {{option.attachments[0].file.substring(option.attachments[0].file.lastIndexOf('/')+1)}}
-                <img [src]="getSource(option.attachments[0].file)" class="option-img" draggable="false">
+                {{option.attachments[0]?.file.substring(option.attachments[0].file.lastIndexOf('/')+1)}}
+                <img [src]="getSource(option.attachments[0]?.file)" class="option-img" draggable="false">
             </div>
         </div>
         <app-horizontal-scroll-arrows
