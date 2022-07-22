@@ -121,36 +121,37 @@ export class QuestionDragAndDropFormComponent implements OnInit {
       .subscribe(async dragOptions => {
         await dragOptions.forEach(async element => {
           // Convert the drag options images objects retrieved from the back-end to files
-          const file = await this.questionFormService.objectToFile(element.attachments[0]);
-          const fileType = element.attachments[0].attachment_type === 'IMAGE' ? 'image/png' : 'audio/wav';
+          if (element.attachments[0]) {
+            const file = await this.questionFormService.objectToFile(element.attachments[0]);
+            const fileType = element.attachments[0].attachment_type === 'IMAGE' ? 'image/png' : 'audio/wav';
 
-          if (element.area_option.length > 0) {
-            this.dragItemsArea.forEach((item, index) => {
-              if (element.area_option.includes(item.area_id)) {
-                item.attachments.push({
-                  attachment_type: fileType,
-                  file,
-                  area_id: index,
-                  drag_item: this.dragItemNumber
-                });
+            if (element.area_option.length > 0) {
+              this.dragItemsArea.forEach((item, index) => {
+                if (element.area_option.includes(item.area_id)) {
+                  item.attachments.push({
+                    attachment_type: fileType,
+                    file,
+                    area_id: index,
+                    drag_item: this.dragItemNumber
+                  });
 
-                this.dragItemNumber++;
-              }
-            });
-          }
-          else {
-            this.dragItems.push({
-              attachment_type: fileType,
-              file,
-              area_id: null,
-              drag_item: this.dragItemNumber
-            });
+                  this.dragItemNumber++;
+                }
+              });
+            }
+            else {
+              this.dragItems.push({
+                attachment_type: fileType,
+                file,
+                area_id: null,
+                drag_item: this.dragItemNumber
+              });
 
-            this.dragItemNumber++;
+              this.dragItemNumber++;
+            }
+            this.confirmDraggable = true;
           }
         });
-
-        this.confirmDraggable = true;
     });
   }
 
