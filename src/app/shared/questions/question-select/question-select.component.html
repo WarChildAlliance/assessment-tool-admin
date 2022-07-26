@@ -26,6 +26,9 @@
             <ng-template #noImageAttached>
                 <div [class]="getAnswerBackgroundStyle(option)" class="option">
                         {{ option.title }}
+                        <ng-container *ngFor="let attachment of option.attachments">
+                            <mat-icon (click)="playAudio(attachment.file)" *ngIf="attachment.attachment_type === 'AUDIO'">volume_up</mat-icon>
+                        </ng-container>
                 </div>
             </ng-template>
         </ng-container>
@@ -50,7 +53,7 @@
                         </span>
                     </mat-checkbox>
                     <ng-container *ngFor="let attachment of option.attachments">
-                        <mat-icon *ngIf="attachment.attachment_type === 'AUDIO'">volume_up</mat-icon>
+                        <mat-icon (click)="playAudio(attachment.file)" *ngIf="attachment.attachment_type === 'AUDIO'">volume_up</mat-icon>
                     </ng-container>
                 </mat-card-actions>
             </mat-card>
@@ -62,6 +65,9 @@
                         {{ option.title }}
                     </span>
                 </mat-checkbox>
+                <ng-container *ngFor="let attachment of option.attachments">
+                    <mat-icon (click)="playAudio(attachment.file)" *ngIf="attachment.attachment_type === 'AUDIO'">volume_up</mat-icon>
+                </ng-container>
             </div>
         </ng-template>
     </ng-container>
