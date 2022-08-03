@@ -81,12 +81,10 @@ export class TopicDetailsComponent implements OnInit {
 
   private getQuestionsList(): void {
     this.assessmentService.getQuestionsList(this.assessmentId, this.topicId).subscribe(questionList => {
-      if (questionList.length) {
-        this.questionsList = questionList;
-        this.order = questionList.sort((a, b) => parseFloat(a.order) - parseFloat(b.order))[questionList.length - 1].order + 1;
-      } else {
-        this.order = 1;
-      }
+      this.questionsList = questionList;
+      this.order = questionList.length
+        ? questionList.sort((a, b) => parseFloat(a.order) - parseFloat(b.order))[questionList.length - 1].order + 1
+        : 1;
     });
   }
 
