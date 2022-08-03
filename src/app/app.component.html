@@ -65,7 +65,7 @@
           {{ "general.publicAssessments" | translate }}
         </a>
         <a mat-list-item routerLink="assessment-builder/archived-assessments" routerLinkActive="list-item-active">
-          {{ "general.archivedAssessments" | translate }}
+          {{ "general.archived" | translate: {type: "general.assessments" | translate | lowercase} }}
         </a>
       </div>
     </mat-nav-list>

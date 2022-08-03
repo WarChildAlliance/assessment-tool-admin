@@ -175,10 +175,14 @@ export class QuestionDragAndDropFormComponent implements OnInit {
       this.alertMessage =  this.translateService.instant('assessmentBuilder.questions.questionCloneSuccess');
     } else if (this.question && !this.toClone) {
       this.editQuestion();
-      this.alertMessage = this.translateService.instant('assessmentBuilder.questions.questionUpdateSuccess');
+      this.alertService.success(this.translateService.instant('general.editSuccess', {
+        type: this.translateService.instant('general.question')
+      }));
     } else {
       this.createQuestion();
-      this.alertMessage = this.translateService.instant('assessmentBuilder.questions.questionCreateSuccess');
+      this.alertService.success(this.translateService.instant('general.createSuccess', {
+        type: this.translateService.instant('general.question')
+      }));
     }
   }
 

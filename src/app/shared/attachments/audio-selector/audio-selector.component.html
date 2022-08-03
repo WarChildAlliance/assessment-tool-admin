@@ -1,7 +1,7 @@
 <h3><b>{{ "assessmentBuilder.questions.audioAttachment" | translate }}</b></h3>
 <input hidden accept="audio/*" (change)="handleFileInput($event)" #audioAttachmentInput type="file">
 <app-custom-button class="file_input" category="secondary" variant="neutral" (click)="audioAttachmentInput.click()">
-  {{ "assessmentBuilder.chooseFile" | translate }}
+  {{ "general.choose" | translate: { type: "assessmentBuilder.file" | translate } }}
 </app-custom-button>
 <p class="file-name">{{ audioAttachment ? audioAttachment.name : ("assessmentBuilder.noFileChosen" | translate) }}</p>
 <p><b>{{ "assessmentBuilder.questions.or" | translate }}</b></p>
