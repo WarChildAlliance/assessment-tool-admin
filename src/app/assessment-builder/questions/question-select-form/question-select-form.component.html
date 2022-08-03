@@ -8,7 +8,7 @@
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" class="form-group" color="accent">
-                    <mat-label>{{ "assessmentBuilder.questions.select.value" | translate }}</mat-label>
+                    <mat-label>{{ "assessmentBuilder.value" | translate }}</mat-label>
                     <input matInput formControlName="value">
                 </mat-form-field>
 
@@ -53,7 +53,7 @@
         <div class="options-header">
             <h2 style="margin-top: 20px;"> {{ "assessmentBuilder.questions.select.options" | translate }}</h2>
             <app-custom-button class="file_input" icon="add" category="secondary" variant="neutral" (click)="addOptions()">
-                {{ "assessmentBuilder.questions.select.addOption" | translate }}
+                {{ "general.add" | translate: { type: ("assessmentBuilder.questions.select.option" | translate) } }}
             </app-custom-button>
         </div>
         <div class="options-container">
@@ -67,7 +67,7 @@
                         </mat-form-field>
                     </div>
                     <mat-form-field appearance="outline" class="form-group" color="accent">
-                        <mat-label>{{ "assessmentBuilder.questions.select.value" | translate }}</mat-label>
+                        <mat-label>{{ "assessmentBuilder.value" | translate }}</mat-label>
                         <input matInput formControlName="value">
                     </mat-form-field>
                     <br>

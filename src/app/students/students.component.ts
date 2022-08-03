@@ -150,10 +150,18 @@ export class StudentsComponent implements OnInit {
     );
 
     if (studentsToDeleteInactive) {
+      const studentTranslation = this.translateService.instant(
+        this.selectedUsers.length > 1 ? 'general.students' : 'general.student'
+      );
       const confirmDialog = this.dialog.open(ConfirmModalComponent, {
         data: {
-          title: this.translateService.instant('students.deleteStudent'),
-          content: this.translateService.instant('students.deleteStudentPrompt'),
+          title:  this.translateService.instant('general.delete', {
+            type: studentTranslation.toLocaleLowerCase()
+          }),
+          content: this.translateService.instant('general.simpleDeletePrompt', {
+            type: studentTranslation.toLocaleLowerCase(),
+            name: ''
+          }),
           contentType: 'innerHTML',
           confirmColor: 'warn'
         }
@@ -169,7 +177,9 @@ export class StudentsComponent implements OnInit {
           });
 
           forkJoin(toDelete).subscribe(() => {
-            this.alertService.success(this.translateService.instant('students.studentDeleteSuccess'));
+            this.alertService.success(this.translateService.instant('general.deleteSuccess', {
+              type: studentTranslation
+            }));
             this.getStudentTableList(this.filtersData);
           });
         }

@@ -140,10 +140,13 @@ export class TopicDetailsComponent implements OnInit {
   public deleteTopic(): void {
     const confirmDialog = this.dialog.open(ConfirmModalComponent, {
       data: {
-        title: this.translateService.instant('assessmentBuilder.assessmentSummary.deleteTopic'),
-        content: this.translateService.instant(
-          'assessmentBuilder.assessmentSummary.deleteTopicPrompt', { topicTitle: this.topicDetails.name }
-        ),
+        title: this.translateService.instant('general.delete', {
+          type: this.translateService.instant('general.topic').toLocaleLowerCase()
+        }),
+        content: this.translateService.instant('general.simpleDeletePrompt', {
+          type: this.translateService.instant('general.topic').toLocaleLowerCase(),
+          name: this.topicDetails.name
+        }),
         contentType: 'innerHTML',
         confirmColor: 'warn'
       }
@@ -152,7 +155,9 @@ export class TopicDetailsComponent implements OnInit {
     confirmDialog.afterClosed().subscribe((res) => {
       if (res) {
         this.assessmentService.deleteTopic(this.assessmentId, this.topicId).subscribe(() => {
-          this.alertService.success(this.translateService.instant('assessmentBuilder.assessmentSummary.topicDetailSuccess'));
+          this.alertService.success(this.translateService.instant('general.deleteSuccess', {
+            type:  this.translateService.instant('general.topic')
+          }));
           this.router.navigate(['/assessment-builder/your-assessments']);
         });
       }
@@ -162,8 +167,13 @@ export class TopicDetailsComponent implements OnInit {
   public deleteQuestion(questionId: string, questionTitle: string): void {
     const confirmDialog = this.dialog.open(ConfirmModalComponent, {
       data: {
-        title: this.translateService.instant('assessmentBuilder.topicDetails.deleteQuestion'),
-        content: this.translateService.instant('assessmentBuilder.topicDetails.deleteQuestionPrompt', {questionTitle}),
+        title: this.translateService.instant('general.delete', {
+          type: this.translateService.instant('general.question').toLocaleLowerCase()
+        }),
+        content: this.translateService.instant('general.simpleDeletePrompt', {
+          type: this.translateService.instant('general.question').toLocaleLowerCase(),
+          name: questionTitle
+        }),
         contentType: 'innerHTML',
         confirmColor: 'warn'
       }
@@ -172,9 +182,9 @@ export class TopicDetailsComponent implements OnInit {
     confirmDialog.afterClosed().subscribe((res) => {
       if (res) {
         this.assessmentService.deleteQuestion(this.assessmentId, this.topicId, questionId).subscribe(() => {
-          this.alertService.success(
-            this.translateService.instant('assessmentBuilder.topicDetails.deleteQuestionSuccess')
-          );
+          this.alertService.success(this.translateService.instant('general.deleteSuccess', {
+            type:  this.translateService.instant('general.question')
+          }));
           this.getQuestionsList();
         });
       }

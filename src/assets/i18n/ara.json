@@ -1,57 +1,30 @@
 {
   "general": {
+    "add": "أضف {{type}}",
     "adminDashboard": "لوحة تحكم المسؤول",
     "answer": "إجابه",
-    "archive": "مؤرشف",
-    "archived": "Archived",
+    "archived": "مؤرشف {{type}}",
+    "assessment": "تقييم",
     "assessmentBuilder": "منشئ التقييم",
-    "yourAssessments": "تقييمك (تقييماتك)",
-    "publicAssessments": "التقييم (التقييمات) العامة",
-    "archivedAssessments": "التقييم (التقييمات) المؤرشف",
     "assessments": "التقييمات",
     "assessmentsOverview": "نظرة عامة على التقييمات",
     "assign": "تعيين",
     "cancel": "إلغاء",
+    "choose": "اختر {{type}}",
+    "clone": "استنساخ",
     "confirm": "يتأكد",
     "country": "الدولة",
-    "clone": "استنساخ",
     "create": "خلق",
+    "createNew": "إنشاء {{type}} جديد",
+    "createSuccess": "تم إنشاء {{type}} بنجاح",
     "dashboard": "لوحة القيادة",
-    "edit": "تعديل",
     "delete": "حذف",
-    "selected": "تم الاختيار",
+    "deleteSuccess": "تم حذف {{type}} بنجاح",
+    "edit": "تعديل",
+    "editSuccess": "تم تحديث {{type}} بنجاح",
     "fieldRequired": "هذه الخانة مطلوبه",
     "from": "من",
     "grade": "العلامة",
-    "group": "مجموعة",
-    "groupsOverview": "نظرة عامة على المجموعات",
-    "groups": "مجموعات",
-    "language": "اللغة",
-    "lastLogin": "آخر تسجيل دخول",
-    "logout": "تسجيل خروج",
-    "name": "اسم",
-    "noData": "لا توجد بيانات لعرضها",
-    "order": "طلب",
-    "preview": "معاينة",
-    "private": "نشر",
-    "question": "سؤال",
-    "questions": "أسئلة",
-    "questionDetails": "تفاصيل السؤال",
-    "questionsNumber": "عدد الأسئلة",
-    "questionType": "نوع السؤال",
-    "save": "يحفظ",
-    "studentName": "اسم الطالب",
-    "studentsOverview": "نظرة عامة على الطلاب",
-    "students": "طلاب",
-    "subject": "موضوعات",
-    "submit": "إرسال",
-    "title": "عنوان",
-    "to": "إلى",
-    "totalCompletedTopics": "إجمالي المواضيع المكتملة",
-    "workInProgress": "جاري العمل ... متاح قريبًا",
-    "topics": "المواضيع",
-    "no": "لا",
-    "yes": "نعم",
     "grades": {
       "0": "0",
       "1": "1",
@@ -66,7 +39,43 @@
       "10": "10",
       "11": "11",
       "12": "12"
-    }
+    },
+    "group": "مجموعة",
+    "groups": "مجموعات",
+    "groupsOverview": "نظرة عامة على المجموعات",
+    "language": "اللغة",
+    "lastLogin": "آخر تسجيل دخول",
+    "logout": "تسجيل خروج",
+    "logoutPrompt": "هل تريد حقًا تسجيل الخروج؟",
+    "name": "اسم",
+    "no": "لا",
+    "noData": "لا توجد بيانات لعرضها",
+    "order": "طلب",
+    "preview": "معاينة",
+    "private": "نشر",
+    "publicAssessments": "التقييم (التقييمات) العامة",
+    "question": "سؤال",
+    "questionDetails": "تفاصيل السؤال",
+    "questions": "أسئلة",
+    "questionsNumber": "عدد الأسئلة",
+    "questionType": "نوع السؤال",
+    "save": "يحفظ",
+    "selected": "تم الاختيار",
+    "simpleDeletePrompt": "هل تريد حقًا حذف {{type}} <b> {{name}} </b>؟",
+    "student": "طالب علم",
+    "studentName": "اسم الطالب",
+    "students": "طلاب",
+    "studentsOverview": "نظرة عامة على الطلاب",
+    "subject": "موضوعات",
+    "submit": "إرسال",
+    "title": "عنوان",
+    "to": "إلى",
+    "topic": "عنوان",
+    "topics": "المواضيع",
+    "totalCompletedTopics": "إجمالي المواضيع المكتملة",
+    "workInProgress": "جاري العمل ... متاح قريبًا",
+    "yes": "نعم",
+    "yourAssessments": "تقييمك (تقييماتك)"
   },
   "answers": {
     "assessmentAnswers": {
@@ -90,122 +99,93 @@
     }
   },
   "assessmentBuilder": {
-    "addAssessments": "أضف التقييمات",
     "allowSkip": "السماح بالتخطي",
-    "chooseFile": "اختر ملف",
-    "changeFile": "",
-    "description": "وصف",
-    "evaluated": "مقيمة",
-    "icon": "أيقونة",
-    "maxWrongAnswers": "ماكس إجابات خاطئة",
-    "order": "ترتيب",
-    "noFileChosen": "لم تقم باختيار ملف",
-    "praise": "مديح",
-    "publicAssessments": "التقييم (التقييمات) العامة",
-    "yourAssessments": "تقييمك (تقييماتك)",
-    "archivedAssessments": "التقييم (التقييمات) المؤرشف",
     "assessmentFormDialog": {
-      "createNewAssessment": "قم بإنشاء تقييم جديد",
-      "editAssessment": "تحرير التقييم",
       "gradeTooltip": "المستوى المدرسي المقصود"
     },
     "assessmentSummary": {
-      "addTopic": "أضف موضوعًا",
-      "archive": "أرشيف",
-      "unarchive": "أخرج من الأرشيف",
-      "archiveTopic": "موضوع الأرشيف",
-      "deleteTopic": "حذف الموضوع",
-      "topicDetails": "تفاصيل الموضوع",
-      "deleteAssessment": "حذف التقييم",
-      "deleteAssessmentSuccess": "تم حذف التقييم بنجاح",
-      "deleteAssessmentPrompt": "هل تريد حقا حذف التقييم؟",
-      "topicDetailSuccess": "تم حذف الموضوع بنجاح",
-      "deleteTopicPrompt": "هل تريد حقا حذف الموضوع؟",
+      "archive": "أرشفة {{type}}",
+      "aTopic": "موضوع",
       "fileDownloadNotice": "يمكن استخدام الملف الذي توشك على تنزيله <br> لأغراض النسخ فقط ، وليس البيع.",
       "fileDownloadNoticeTitle": "يرجى الملاحظة",
+      "orderChanged": "تم تغيير الطلب بنجاح",
       "reorderItems": "إعادة ترتيب {{item}}",
-      "reorderTooltip": "أعد ترتيب {{item}} عن طريق سحبها وإفلاتها", 
+      "reorderTooltip": "أعد ترتيب {{item}} عن طريق سحبها وإفلاتها",
       "saveOrder": "حفظ النظام",
-      "orderChanged": "تم تغيير الطلب بنجاح"
+      "unarchive": "أخرج من الأرشيف"
     },
+    "changeFile": "تغيير الملف",
+    "description": "وصف",
+    "download": "تحميل",
+    "downloadable": "للتحميل",
+    "evaluated": "مقيمة",
+    "file": "ملف",
+    "icon": "أيقونة",
+    "maxWrongAnswers": "ماكس إجابات خاطئة",
+    "noFileChosen": "لم تقم باختيار ملف",
+    "order": "ترتيب",
+    "praise": "مديح",
     "questions": {
+      "areaSelector": {
+        "area": "منطقة",
+        "areaName": "اسم المنطقة",
+        "imageNotifier": "لتحديد المناطق التي تحتاج إلى تحميل صورة الخلفية.",
+        "nameNotifier": "تحتاج إلى تعيين اسم المنطقة أولاً."
+      },
       "audioAttachment": "مرفق صوتي",
+      "blocked": "السؤال له إجابة بالفعل ولا يمكن تعديله",
+      "dragAndDrop": {
+        "areas": "المناطق:",
+        "bgImageAndDropAreas": "صورة الخلفية ومناطق الإسقاط",
+        "createAreasButton": "حدد صورة الخلفية ومناطق الإسقاط",
+        "draggableWithoutArea": "العناصر القابلة للسحب بدون منطقة صالحة:",
+        "dragItemsMatTooltip": "حدد المنطقة (المناطق) حيث يكون العنصر القابل للسحب صالحًا وقم بتحميل الصورة. بالنسبة للعناصر القابلة للسحب بدون منطقة صالحة: ما عليك سوى تحميل الصورة دون تحديد أي شيء.",
+        "dragItemsNotifier": "تحقق من صحة العناصر",
+        "imageAreasNotifier": "يرجى تحديد صورة الخلفية ومناطق الإسقاط للمتابعة",
+        "item": "العنصر",
+        "noCorrectArea": "العناصر القابلة للسحب بدون المنطقة الصحيحة:",
+        "noCorrectDragOption": "لا يوجد خيار سحب صحيح لهذه المنطقة",
+        "questionAttachments": "مرفقات السؤال"
+      },
+      "errorAudio": "لا يمكن تشغيل الصوت في متصفحك",
       "imageAttachment": "مرفق الصورة",
-      "errorAudio": "",
-      "questionCloneSuccess": "تم استنساخ السؤال بنجاح",
-      "questionCreateSuccess": "تم إنشاء السؤال بنجاح",
-      "questionUpdateSuccess": "تم تحديث السؤال بنجاح",
-      "blocked": "",
-      "or": "أو",
       "numberline": {
         "endNumber": "رقم النهاية",
         "expectedValue": "القيمة المتوقعة",
-        "showTicks": "عرض القراد",
-        "showValue": "إظهار القيمة",
         "startNumber": "رقم البداية",
         "stepSize": "حجم الخطوة",
+        "ticks": "القراد",
         "tickStep": "ضع علامة في الخطوة"
       },
+      "or": "أو",
+      "questionCloneSuccess": "تم استنساخ السؤال بنجاح",
       "select": {
-        "options": "خيارات",
-        "addOption": "إضافة خيار",
         "attachments": "المرفقات",
         "display": "عرض",
         "isCorrectAnswer": "هل الجواب الصحيح؟",
         "isMultipleChoice": "هو الاختيار من متعدد؟",
         "onPopup": "عرض السؤال على المنبثقة؟",
-        "question": "سؤال",
-        "value": "قيمة"
-      },
-      "dragAndDrop": {
-        "editAreasButton": "تحرير صورة الخلفية ومناطق الإسقاط",
-        "createAreasButton": "حدد صورة الخلفية ومناطق الإسقاط",
-        "areas": "المناطق:",
-        "questionAttachments": "مرفقات السؤال",
-        "imageAreasNotifier": "يرجى تحديد صورة الخلفية ومناطق الإسقاط للمتابعة",
-        "dragItemsNotifier": "",
-        "dragItemsMatTooltip": "حدد المنطقة (المناطق) حيث يكون العنصر القابل للسحب صالحًا وقم بتحميل الصورة. بالنسبة للعناصر القابلة للسحب بدون منطقة صالحة: ما عليك سوى تحميل الصورة دون تحديد أي شيء.",
-        "deleteItem": "حذف البند",
-        "draggableWithoutArea": "العناصر القابلة للسحب بدون منطقة صالحة:",
-        "noCorrectDragOption": "لا يوجد خيار سحب صحيح لهذه المنطقة",
-        "noCorrectArea": "العناصر القابلة للسحب بدون المنطقة الصحيحة:"
-      },
-      "areaSelector": {
-        "imageNotifier": "لتحديد المناطق التي تحتاج إلى تحميل صورة الخلفية.",
-        "nameNotifier": "تحتاج إلى تعيين اسم المنطقة أولاً.",
-        "areaName": "اسم المنطقة",
-        "deleteArea": "حذف المنطقة"
+        "option": "اختيار",
+        "options": "خيارات"
       }
     },
+    "saveSuccess": "تم حفظ {{type}} بنجاح",
+    "show": "إظهار {{type}}",
     "topicDetails": {
-      "addQuestion": "أضف سؤالاً",
-      "clone": "استنساخ",
+      "aQuestion": "سؤال",
+      "feedback": "استجابة",
       "numberLineButton": "رقم الخط",
-      "selectButton": "(تحديد متعدد",
-      "showFeedback": "إظهار الملاحظات",
-      "deleteQuestion": "حذف السؤال",
-      "deleteQuestionSuccess": "تم حذف السؤال بنجاح",
-      "deleteQuestionPrompt": "هل تريد حقا حذف السؤال؟"
+      "selectButton": "(تحديد متعدد"
     },
     "topicFormDialog": {
       "changeFile": "تغيير الملف",
       "createTopic": "قم بإنشاء موضوع",
-      "editTopic": "editTopic",
-      "whenToShowFeedbacks": "متى تظهر التقيمات؟",
-      "praiseTooltip": "حالات الحمد"
+      "praiseTooltip": "حالات الحمد",
+      "whenToShowFeedbacks": "متى تظهر التقيمات؟"
     },
-    "assessmentEditSuccess": "تم تعديل التقييم بنجاح",
-    "assessmentSaveSuccess": "تم حفظ التقييم بنجاح",
-    "topicCreateSuccess": "تم إنشاء الموضوع بنجاح",
-    "topicEditSuccess": "تم تغيير الموضوع بنجاح",
-    "topicSaveSuccess": "تم حفظ الموضوع بنجاح",
-    "download": "تحميل",
-    "downloadable": "للتحميل"
+    "value": "قيمة"
   },
   "assessments": {
-    "selected": "تم الاختيار",
-    "studentsLinkedToAssessment": "عدد الطلاب المرتبطين حاليًا بهذا التقييم",
-    "topicsNumber": "عدد المواضيع",
     "assessmentDetail": {
       "activeAccessCompletedStudents": "عدد الطلاب الذين لديهم وصول نشط والذين أكملوها",
       "activeAccessStudents": "عدد الطلاب الذين لديهم وصول نشط",
@@ -216,7 +196,10 @@
       "correctAnswersFirstTry": "مجموع الإجابات الصحيحة في المحاولة الأولى للطلاب",
       "correctAnswersLastTry": "مجموع الإجابات الصحيحة في المحاولة الأخيرة للطلاب",
       "questions": "أسئلة"
-    }
+    },
+    "selected": "تم الاختيار",
+    "studentsLinkedToAssessment": "عدد الطلاب المرتبطين حاليًا بهذا التقييم",
+    "topicsNumber": "عدد المواضيع"
   },
   "auth": {
     "login": {
@@ -226,10 +209,10 @@
     }
   },
   "dashboard": {
-    "firstTry": "أول محاولة",
     "answersOverview": {
       "individualResults": "النتائج الفردية"
     },
+    "firstTry": "أول محاولة",
     "questionsOverview": {
       "groupResults": "نتائج المجموعة"
     },
@@ -238,15 +221,25 @@
       "comparisonAverage": "مقارنة بالمتوسط"
     },
     "scoreByTopicTable": {
-      "4171correct": "من 41% - 70%: صحيح",
       "41correct": "< 41%: صحيح",
       "70correct": "> 70%: صحيح",
       "95correct": "> 95%: صحيح",
+      "4171correct": "من 41% - 70%: صحيح",
       "chartLegend": "دليل المصطلحات",
-      "student": "طالب علم",
       "studentNotLinked": "غيرمعتمد",
       "studentNotStarted": "لم يبدأ"
     }
+  },
+  "groups": {
+    "deleteGroupPrompt": "هل تريد حقًا حذف {{type}}؟ <br> سيتم سحب جميع الطلاب من {{type}} وتركهم بدون أحد.",
+    "errorMessage": "هناك خطأ ما:",
+    "filterByGroup": "تصفية حسب المجموعة",
+    "groupName": "أسم المجموعة",
+    "groupOneOrMany": "مجموعات)",
+    "groupStudents": "طلاب المجموعة",
+    "numberStudents": "عدد الطلاب",
+    "requiredField": "يتطلب حقلا",
+    "supervisor": "مشرف"
   },
   "shared": {
     "audioRecorder": {
@@ -258,41 +251,34 @@
       "studentAnswer": "إجابة الطالب"
     },
     "selectAssessment": {
-      "addAssessment": "أضف تقييماً",
-      "chooseAssessment": "اختر تقييماً",
-      "chooseTopic": "اختر موضوعاً",
-      "noTopics": "لا يوجد موضوع متاح",
-      "hintNoStudent": "إذا كان الموضوع باللون الرمادي، فلا يوجد أي طالب قد بدأه"
+      "anAssessment": "تقييم",
+      "hintNoStudent": "إذا كان الموضوع باللون الرمادي، فلا يوجد أي طالب قد بدأه",
+      "noTopics": "لا يوجد موضوع متاح"
     },
     "table": {
+      "copySuccess": "تم النسخ بنجاح!",
       "hintSearchColumn": "يمكنك البحث في أي عمود!",
-      "search": "بحث...",
-      "copySuccess": "تم النسخ بنجاح!"
+      "search": "بحث..."
     }
   },
   "students": {
     "active": "نشيط",
     "activeAssessmentsNumber": "عدد التقييمات النشطة",
-    "addStudent": "أضف طالباً",
     "assignTopic": "قم بتعيين موضوع",
     "completedTopicsNumber": "عدد المواضيع المكتملة",
-    "editStudent": "حرر طالباً",
-    "deleteStudent": "احذف الطلاب",
-    "deleteStudentPrompt": "هل تريد حقًا حذف الطالب (الطلاب)؟",
-    "studentCode": "كود طالب",
-    "statusError": "لا يمكن حذف الطلاب إلا بعد عام واحد من عدم النشاط",
-    "studentDeleteSuccess": "تم حذف الطلاب بنجاح",
     "createStudentDialog": {
-      "createStudent": "قم بإنشاء طالب جديد",
+      "duplicateName": "يوجد طالب يحمل نفس الاسم والبلد واللغة بالفعل",
       "firstName": "الاسم الأول",
       "lastName": "اسم العائلة",
-      "noGroups": "",
-      "studentCreateSuccess": "تم بنجاح إنشاء الطالب {{name}} بالمعرف {{اسم المستخدم}}",
-      "studentEditSuccess": "تم تحرير معلومات {{name}} بنجاح",
-      "duplicateName": "يوجد طالب يحمل نفس الاسم والبلد واللغة بالفعل",
       "nameExists": "الاسم موجود بالفعل",
-      "similarName": "يوجد طالب يحمل الاسم <b> {{name}} </b> بالفعل ولكن لديه دولة / لغة مختلفة (<b> {{country}} </b> / <b> {{language}} </b> ). إنشاء طالب جديد على أي حال؟"
+      "noGroups": "لا توجد مجموعات متاحة",
+      "similarName": "يوجد طالب يحمل الاسم <b> {{name}} </b> بالفعل ولكن لديه دولة / لغة مختلفة (<b> {{country}} </b> / <b> {{language}} </b> ). إنشاء طالب جديد على أي حال؟",
+      "studentCreateSuccess": "تم بنجاح إنشاء الطالب {{name}} بالمعرف {{اسم المستخدم}}",
+      "studentEditSuccess": "تم تحرير معلومات {{name}} بنجاح"
     },
+    "incompatibleLanguageError": "يمكنك فقط منح حق الوصول إلى موضوع ما للطلاب من نفس البلد واللغة.",
+    "statusError": "لا يمكن حذف الطلاب إلا بعد عام واحد من عدم النشاط",
+    "studentCode": "كود طالب",
     "studentDetail": {
       "activeAccess": "وصول نشط",
       "linkedTopics": "موضوع (مواضيع) مرتبطة",
@@ -300,50 +286,32 @@
       "numberAssessments": "عدد التقييمات",
       "studentAssessments": "تقييمات الطلاب",
       "studentNotLinkedAssessment": "هذا الطالب حالياً غير مرتبط بأي تقييم",
-      "editTopicAccess": "تحرير الوصول إلى الموضوع"
+      "topicAccesses": "الوصول إلى الموضوع"
     },
+    "studentDetails": "تفاصيل الطالب",
+    "studentOneOrMany": "الطلاب)",
     "topicAccessesBuilder": {
+      "accessesSet": "تم تعيين الوصول إلى الموضوع الجديد بنجاح!",
       "applySameDatesAllTopics": "تطبيق نفس التواريخ على جميع المواضيع؟",
       "assessment": "تقييم",
       "endDate": "تاريخ الانتهاء",
-      "startDate": "تاريخ البدء",
-      "topicAvailability": "مدى توفر موضوع (مواضيع) التقييم",
-      "notifier": "تحتاج إلى تحديد الطالب (الطلاب) أو المجموعة (المجموعات) وتعيين تاريخ البدء وتاريخ الانتهاء لكل موضوع محدد",
-      "accessesSet": "تم تعيين الوصول إلى الموضوع الجديد بنجاح!",
       "errorOnSubmit": "حدث خطأ أثناء تقديم وصول الموضوع",
+      "groupsInfo": "يتم عرض المجموعات ذات الطلاب المسجلين فقط",
       "noGroups": "ليس لديك مجموعات مع الطلاب.",
-      "groupsInfo": "يتم عرض المجموعات ذات الطلاب المسجلين فقط"
+      "notifier": "تحتاج إلى تحديد الطالب (الطلاب) أو المجموعة (المجموعات) وتعيين تاريخ البدء وتاريخ الانتهاء لكل موضوع محدد",
+      "startDate": "تاريخ البدء",
+      "topicAvailability": "مدى توفر موضوع (مواضيع) التقييم"
     },
     "topicAccessesEdit": {
+      "accessEdited": "تم حذف الوصول إلى الموضوع بنجاح!",
+      "allTopicsAccessesDeleted": "تم حذف كافة المواضيع التي يتم الوصول إليها من هذا التقييم",
       "editTopicsAccess": "تحرير الوصول إلى موضوع (مواضيع) التقييم",
+      "errorOnDeletion": "حدث خطأ أثناء إرسال حذف الوصول للموضوع",
+      "errorOnEdit": "حدث خطأ أثناء تقديم موضوع الوصول إلى التحديث",
+      "missingDates": "تحتاج إلى تحديد تاريخ بدء وتاريخ انتهاء لكل موضوع",
       "removeTopicAccess": "حذف الوصول إلى الموضوع",
       "removeTopicAccessPrompt": "'<b>{{topicTitle}}</b>' ?",
-      "allTopicsAccessesDeleted": "تم حذف كافة المواضيع التي يتم الوصول إليها من هذا التقييم",
-      "missingDates": "تحتاج إلى تحديد تاريخ بدء وتاريخ انتهاء لكل موضوع",
-      "topicsUpdated": "تم تحديث المواضيع التي تم الوصول إليها بنجاح!",
-      "errorOnEdit": "حدث خطأ أثناء تقديم موضوع الوصول إلى التحديث",
-      "accessEdited": "تم حذف الوصول إلى الموضوع بنجاح!",
-      "errorOnDeletion": "حدث خطأ أثناء إرسال حذف الوصول للموضوع"
-    },
-    "incompatibleLanguageError": "يمكنك فقط منح حق الوصول إلى موضوع ما للطلاب من نفس البلد واللغة.",
-    "studentDetails": "تفاصيل الطالب"
-  },
-  "groups": {
-    "editGroup": "تحرير المجموعة",
-    "createGroup": "أنشئ مجموعة جديدة",
-    "addGroup": "أضف مجموعة",
-    "numberStudents": "عدد الطلاب",
-    "requiredField": "يتطلب حقلا",
-    "groupName": "أسم المجموعة",
-    "supervisor": "مشرف",
-    "groupStudents": "طلاب المجموعة",
-    "groupEdited": "تم تحرير المجموعة بنجاح",
-    "errorMessage": "هناك خطأ ما:",
-    "groupCreated": "تم إنشاء المجموعة بنجاح",
-    "deleteGroup": "حذف المجموعة (المجموعات)",
-    "deleteGroupSuccess": "تم حذف المجموعة (المجموعات) بنجاح",
-    "deleteGroupPrompt": "هل تريد حقًا حذف المجموعة (المجموعات)؟ سيتم سحب جميع الطلاب من المجموعة وتركهم بدون واحد.",
-    "chooseGroup": "اختر مجموعة",
-    "filterByGroup": "تصفية حسب المجموعة"
+      "topicsUpdated": "تم تحديث المواضيع التي تم الوصول إليها بنجاح!"
+    }
   }
 }

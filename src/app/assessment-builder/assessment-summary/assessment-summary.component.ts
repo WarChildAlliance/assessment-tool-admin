@@ -95,8 +95,13 @@ export class AssessmentSummaryComponent implements OnInit {
   public deleteAssessment(assessmentId: string, assessmentTitle: string): void {
     const confirmDialog = this.dialog.open(ConfirmModalComponent, {
       data: {
-        title: this.translateService.instant('assessmentBuilder.assessmentSummary.deleteAssessment'),
-        content: this.translateService.instant('assessmentBuilder.assessmentSummary.deleteAssessmentPrompt', { assessmentTitle }),
+        title: this.translateService.instant('general.delete', {
+          type: this.translateService.instant('general.assessment').toLocaleLowerCase()
+        }),
+        content: this.translateService.instant('general.simpleDeletePrompt', {
+          type: this.translateService.instant('general.assessment').toLocaleLowerCase(),
+          name: assessmentTitle
+        }),
         contentType: 'innerHTML',
         confirmColor: 'warn'
       }
@@ -105,7 +110,9 @@ export class AssessmentSummaryComponent implements OnInit {
     confirmDialog.afterClosed().subscribe((res) => {
       if (res) {
         this.assessmentService.deleteAssessment(assessmentId).subscribe(() => {
-          this.alertService.success(this.translateService.instant('assessmentBuilder.assessmentSummary.deleteAssessmentSuccess'));
+          this.alertService.success(this.translateService.instant('general.deleteSuccess', {
+            type:  this.translateService.instant('general.assessment')
+          }));
           this.reloadAssessments.emit(true);
         });
       }
@@ -117,8 +124,13 @@ export class AssessmentSummaryComponent implements OnInit {
 
     const confirmDialog = this.dialog.open(ConfirmModalComponent, {
       data: {
-        title: this.translateService.instant('assessmentBuilder.assessmentSummary.deleteTopic'),
-        content: this.translateService.instant('assessmentBuilder.assessmentSummary.deleteTopicPrompt', { topicTitle }),
+        title: this.translateService.instant('general.delete', {
+          type: this.translateService.instant('general.topic').toLocaleLowerCase()
+        }),
+        content: this.translateService.instant('general.simpleDeletePrompt', {
+          type: this.translateService.instant('general.topic').toLocaleLowerCase(),
+          name: topicTitle
+        }),
         contentType: 'innerHTML',
         confirmColor: 'warn'
       }
@@ -127,7 +139,9 @@ export class AssessmentSummaryComponent implements OnInit {
     confirmDialog.afterClosed().subscribe((res) => {
       if (res) {
         this.assessmentService.deleteTopic(assessmentId, topicId).subscribe(() => {
-          this.alertService.success(this.translateService.instant('assessmentBuilder.assessmentSummary.topicDetailSuccess'));
+          this.alertService.success(this.translateService.instant('general.deleteSuccess', {
+            type:  this.translateService.instant('general.topic')
+          }));
           this.getAssessmentDetails(assessmentId);
         });
       }
@@ -141,7 +155,9 @@ export class AssessmentSummaryComponent implements OnInit {
     formData.append('archived', archived);
 
     this.assessmentService.editTopic(assessmentId.toString(), topicId, formData).subscribe(() => {
-      this.alertService.success(this.translateService.instant('assessmentBuilder.topicEditSuccess'));
+      this.alertService.success(this.translateService.instant('general.editSuccess', {
+        type: this.translateService.instant('general.topic')
+      }));
       this.getAssessmentDetails(assessmentId);
     });
   }
@@ -151,7 +167,9 @@ export class AssessmentSummaryComponent implements OnInit {
     formData.append('archived', archived);
 
     this.assessmentService.editAssessment(assessmentId, formData).subscribe(res => {
-      this.alertService.success(this.translateService.instant('assessmentBuilder.assessmentEditSuccess'));
+      this.alertService.success(this.translateService.instant('general.editSuccess', {
+        type: this.translateService.instant('general.assessment')
+      }));
       this.reloadAssessments.emit(true);
     });
   }
