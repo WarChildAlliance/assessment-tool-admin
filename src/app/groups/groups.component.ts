@@ -9,7 +9,6 @@ import { GroupTableData } from '../core/models/group-table-data.model';
 import { GroupDialogComponent } from './group-dialog/group-dialog.component';
 import { AlertService } from '../core/services/alert.service';
 import { ConfirmModalComponent } from '../shared/confirm-modal/confirm-modal.component';
-import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-groups',
@@ -111,19 +110,19 @@ export class GroupsComponent implements OnInit {
 
     confirmDialog.afterClosed().subscribe((res) => {
       if (res) {
-        const toDelete = [];
-        this.selectedGroups.forEach(group => {
-          toDelete.push(
-            this.userService.deleteGroup(group.id.toString())
-          );
-        });
-
-        forkJoin(toDelete).subscribe(() => {
+        const toDelete = this.selectedGroups.map(group => group.id.toString());
+        const onDeleteCallback = (): void => {
           this.alertService.success(this.translateService.instant('general.deleteSuccess', {
             type: groupTranslation
           }));
           this.getGroups();
-        });
+        };
+
+        if (toDelete.length === 1) {
+          this.userService.deleteGroup(toDelete[0]).subscribe(onDeleteCallback);
+          return;
+        }
+        this.userService.deleteGroups(toDelete).subscribe(onDeleteCallback);
       }
     });
   }
