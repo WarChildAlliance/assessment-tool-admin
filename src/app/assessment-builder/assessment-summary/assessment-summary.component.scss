@@ -26,6 +26,7 @@
         .buttons {
             display: flex;
             align-items: center;
+            white-space: nowrap;
 
             app-custom-button {
                 padding: 0.1em;

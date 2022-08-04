@@ -45,6 +45,10 @@
 
 .question-header{
   text-align: center;
+
+  h2:nth-child(1) {
+    float: left;
+  }
 }
 
 .play-audio {

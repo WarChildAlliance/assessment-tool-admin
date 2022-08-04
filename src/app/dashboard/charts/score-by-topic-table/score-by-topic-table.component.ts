@@ -16,7 +16,7 @@ export class ScoreByTopicTableComponent implements OnInit {
 
   public studentsDataSource: MatTableDataSource<any> = new MatTableDataSource([]);
   public displayedColumns: any[] = [
-    { key: 'full_name', name: 'dashboard.scoreByTopicTable.student'}
+    { key: 'full_name', name: 'general.student'}
   ];
 
   public newTableData = [];

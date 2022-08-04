@@ -17,7 +17,7 @@
 <ng-template #singleGroupSelect class="main-board__charts-container__select">
   <mat-form-field appearance="outline" color="accent">
     <mat-label>
-      {{ "groups.chooseGroup" | translate }}
+      {{ "general.choose" | translate: { type: "general.group" | translate | lowercase } }}
     </mat-label>
     <mat-select [(value)]="selectedGroup">
       <mat-option *ngFor="let group of groups"

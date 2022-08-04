@@ -1,5 +1,8 @@
 <h2 mat-dialog-title>
-    {{ ( data?.group ? "groups.editGroup" : "groups.createGroup" ) | translate }}
+    {{ data?.group ?
+        ("general.edit" | translate: { type: "general.group" | translate | lowercase }) :
+        ("general.createNew" | translate: { type: "general.group" | translate | lowercase})
+    }}
 </h2>
 
 <form class="form-primary" [formGroup]="groupForm">

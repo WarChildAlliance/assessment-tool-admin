@@ -17,8 +17,8 @@ import { UserService } from 'src/app/core/services/user.service';
   styleUrls: ['./topics-list-answers.component.scss']
 })
 export class TopicsListAnswersComponent implements OnInit {
-  private currentStudentId: string;
   private assessmentId: string;
+  public currentStudentId: string;
 
   public topicsAnswersDataSource: MatTableDataSource<TopicTableData> = new MatTableDataSource([]);
   public currentStudent: StudentTableData;
