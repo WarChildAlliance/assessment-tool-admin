@@ -169,19 +169,19 @@ export class StudentsComponent implements OnInit {
 
       confirmDialog.afterClosed().subscribe(res => {
         if (res) {
-          const toDelete = [];
-          this.selectedUsers.forEach(student => {
-            toDelete.push(
-              this.userService.deleteStudent(student.id.toString())
-            );
-          });
-
-          forkJoin(toDelete).subscribe(() => {
+          const toDelete = this.selectedUsers.map(student => student.id.toString());
+          const onDeleteCallback = (): void => {
             this.alertService.success(this.translateService.instant('general.deleteSuccess', {
               type: studentTranslation
             }));
             this.getStudentTableList(this.filtersData);
-          });
+          };
+
+          if (toDelete.length === 1) {
+            this.userService.deleteStudent(toDelete[0]).subscribe(onDeleteCallback);
+            return;
+          }
+          this.userService.deleteStudents(toDelete).subscribe(onDeleteCallback);
         }
       });
     } else {

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -56,6 +56,16 @@ export class UserService {
     return this.http.delete<any>(`${environment.API_URL}/users/${id}/`);
   }
 
+  public deleteStudents(ids: string[]): Observable<any> {
+    const reqOptions = {
+      headers: new HttpHeaders({'Content-Type': 'application/json'}),
+      body: {
+        students: ids
+      },
+    };
+    return this.http.delete<any>(`${environment.API_URL}/users/bulk_delete_students/`, reqOptions);
+  }
+
   public assignTopicsAccesses(batchTopicAccesses: BatchTopicAccesses, assessmentId: string): Observable<BatchTopicAccesses> {
     return this.http.post<BatchTopicAccesses>(
       `${environment.API_URL}/assessments/${assessmentId}/accesses/bulk_create/`, batchTopicAccesses);
@@ -91,6 +101,16 @@ export class UserService {
 
   public deleteGroup(id: string): Observable<any> {
     return this.http.delete<any>(`${environment.API_URL}/users/groups/${id}/`);
+  }
+
+  public deleteGroups(ids: string[]): Observable<any> {
+    const reqOptions = {
+      headers: new HttpHeaders({'Content-Type': 'application/json'}),
+      body: {
+        groups: ids
+      },
+    };
+    return this.http.delete<any>(`${environment.API_URL}/users/groups/bulk_delete/`, reqOptions);
   }
 
   public getStudentTopicsChart(assessmentId: string):
