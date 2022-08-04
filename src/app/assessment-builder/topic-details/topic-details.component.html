@@ -15,10 +15,10 @@
       <span *ngIf="!reorder">
         <app-custom-button *ngIf="topicDetails.can_edit && !topicDetails.archived" category="tertiary" variant="primary"
          icon="edit" (click)="openEditTopicDialog(topicDetails)">
-         {{ "general.edit" | translate }}
+         {{ "general.edit" | translate: {type: ''} }}
         </app-custom-button>
         <app-custom-button *ngIf="topicDetails.can_edit" category="tertiary" variant="primary" icon="delete" (click)="deleteTopic()">
-          {{ "general.delete" | translate }}
+          {{ "general.delete" | translate: {type: ''} }}
         </app-custom-button>
         <app-custom-button *ngIf="isDownloadable" category="tertiary" variant="primary" icon="download" (click)="downloadPDF(assessmentId, topicId)">
           {{ "assessmentBuilder.download" | translate }}
@@ -58,14 +58,16 @@
         <p>{{ topicDetails.praise }} </p>
       </div>
       <div class="detail">
-        <p>{{ "assessmentBuilder.topicDetails.showFeedback" | translate }}</p>
+        <p>{{ "assessmentBuilder.show" | translate: {type: "assessmentBuilder.topicDetails.feedback" | translate} }}</p>
         <p>{{ topicDetails.show_feedback }} </p>
       </div>
     </div>
   </mat-card>
   <div class="question" cdkDropList cdkDropListOrientation="vertical" [cdkDropListData]="questionsToOrder" (cdkDropListDropped)="dropQuestion($event)">
     <mat-card *ngIf="topicDetails.can_edit">
-      <h2>{{ "assessmentBuilder.topicDetails.addQuestion" | translate }}</h2>
+      <h2>
+        {{ "general.add" | translate: { type: ("assessmentBuilder.topicDetails.aQuestion" | translate) } }}
+      </h2>
       <div class="question-options-button">
         <app-custom-button *ngFor="let question of questionsArray" category="tertiary" variant="primary"
           (click)="openQuestionDialog(null, false, question.type)" variant="default">
@@ -77,14 +79,14 @@
       <span matTooltip="{{ 'assessmentBuilder.questions.blocked' | translate }}" [matTooltipDisabled]="!questionDetails.answered" matTooltipPosition="above">
         <app-custom-button *ngIf="topicDetails.can_edit" [disabled]="questionDetails.answered" category="tertiary" variant="neutral"
           (click)="openQuestionDialog(questionDetails)">
-          {{ "general.edit" | translate }}
+          {{ "general.edit" | translate: {type: ''} }}
         </app-custom-button>
       </span>
       <app-custom-button *ngIf="topicDetails.can_edit" category="tertiary" variant="neutral" (click)="deleteQuestion(questionDetails.id, questionDetails.title)">
-        {{ "general.delete" | translate }}
+        {{ "general.delete" | translate: {type: ''} }}
       </app-custom-button>
       <app-custom-button *ngIf="topicDetails.can_edit" category="tertiary" variant="neutral" (click)="openQuestionDialog(questionDetails, true)">
-        {{ "assessmentBuilder.topicDetails.clone" | translate }}
+        {{ "general.clone" | translate }}
       </app-custom-button>
       <app-custom-button *ngIf="isDownloadable" category="tertiary" variant="neutral" (click)="downloadPDF(assessmentId, topicId, questionDetails.id)">
         {{ "assessmentBuilder.download" | translate }}

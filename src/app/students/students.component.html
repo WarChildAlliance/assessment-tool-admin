@@ -5,15 +5,18 @@
     </h1>
     <div class="main-board__top-container__actions">
       <app-custom-button icon="add_circle_outline" category="secondary" variant="primary" (click)="openCreateStudentDialog()">
-        {{ "students.addStudent" | translate }}
+        {{ "general.add" | translate: { type: ("general.student" | translate | lowercase) } }}
       </app-custom-button>
       <app-custom-button icon="edit_outline" category="secondary" variant="primary" (click)="openEditStudentDialog()"
       [disabled]="!selectedUsers.length || selectedUsers.length > 1">
-      {{ "students.editStudent" | translate }}
+      {{ "general.edit" | translate: { type: ("general.student" | translate | lowercase) } }}
       </app-custom-button>
       <app-custom-button icon="delete" category="secondary" variant="primary" (click)="deleteStudent()"
       [disabled]="!selectedUsers.length">
-      {{ "students.deleteStudent" | translate }}
+      {{ "general.delete" | translate: {
+        type: !selectedUsers.length ? ("students.studentOneOrMany" | translate) :
+          (selectedUsers.length == 1 ? "general.student" : "general.students") | translate | lowercase
+      } }}
       </app-custom-button>
       <app-custom-button icon="event_available" category="secondary" variant="primary" (click)="openAssignTopicDialog()">
       {{ "students.assignTopic" | translate }}

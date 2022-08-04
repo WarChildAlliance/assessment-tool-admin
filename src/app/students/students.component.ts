@@ -150,10 +150,18 @@ export class StudentsComponent implements OnInit {
     );
 
     if (studentsToDeleteInactive) {
+      const studentTranslation = this.translateService.instant(
+        this.selectedUsers.length > 1 ? 'general.students' : 'general.student'
+      );
       const confirmDialog = this.dialog.open(ConfirmModalComponent, {
         data: {
-          title: this.translateService.instant('students.deleteStudent'),
-          content: this.translateService.instant('students.deleteStudentPrompt'),
+          title:  this.translateService.instant('general.delete', {
+            type: studentTranslation.toLocaleLowerCase()
+          }),
+          content: this.translateService.instant('general.simpleDeletePrompt', {
+            type: studentTranslation.toLocaleLowerCase(),
+            name: ''
+          }),
           contentType: 'innerHTML',
           confirmColor: 'warn'
         }
@@ -161,17 +169,19 @@ export class StudentsComponent implements OnInit {
 
       confirmDialog.afterClosed().subscribe(res => {
         if (res) {
-          const toDelete = [];
-          this.selectedUsers.forEach(student => {
-            toDelete.push(
-              this.userService.deleteStudent(student.id.toString())
-            );
-          });
-
-          forkJoin(toDelete).subscribe(() => {
-            this.alertService.success(this.translateService.instant('students.studentDeleteSuccess'));
+          const toDelete = this.selectedUsers.map(student => student.id.toString());
+          const onDeleteCallback = (): void => {
+            this.alertService.success(this.translateService.instant('general.deleteSuccess', {
+              type: studentTranslation
+            }));
             this.getStudentTableList(this.filtersData);
-          });
+          };
+
+          if (toDelete.length === 1) {
+            this.userService.deleteStudent(toDelete[0]).subscribe(onDeleteCallback);
+            return;
+          }
+          this.userService.deleteStudents(toDelete).subscribe(onDeleteCallback);
         }
       });
     } else {

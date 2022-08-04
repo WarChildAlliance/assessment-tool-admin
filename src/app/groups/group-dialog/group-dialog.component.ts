@@ -60,7 +60,9 @@ export class GroupDialogComponent implements OnInit {
     groupService.subscribe(
       (group: Group) => {
         this.alertService.success(
-          this.translateService.instant(this.data?.group ? 'groups.groupEdited' : 'groups.groupCreated')
+          this.translateService.instant(this.data?.group ? 'general.editSuccess' : 'general.createSuccess', {
+            type: this.translateService.instant('general.group'),
+          })
         );
       },
       error => {
