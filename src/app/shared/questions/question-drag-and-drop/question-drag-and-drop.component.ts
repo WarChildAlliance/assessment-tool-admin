@@ -15,6 +15,7 @@ export class QuestionDragAndDropComponent implements OnInit, AfterViewInit, OnCh
   @Input() answer: any;
   @Input() evaluated: boolean;
   @Input() index: number;
+  @Input() shrinkBackgroundImage = false;
 
   @ViewChild('rectangle') rectangleElement: ElementRef;
   @ViewChild('rectanglesList') rectanglesListElement: ElementRef;
@@ -28,9 +29,7 @@ export class QuestionDragAndDropComponent implements OnInit, AfterViewInit, OnCh
   public draggableOptions = null;
   public optionsWithoutArea = [];
 
-  constructor(
-    private assessmentService: AssessmentService,
-  ) { }
+  constructor(private assessmentService: AssessmentService) { }
 
   ngOnInit(): void {
     this.imageAttachment = this.question.attachments.find( i => i.attachment_type === 'IMAGE' && i.background_image === false);
@@ -87,13 +86,13 @@ export class QuestionDragAndDropComponent implements OnInit, AfterViewInit, OnCh
     return svgElement;
   }
 
-  private drawName(svgElement, x: number, y: number, areaNumber: number): any {
+  private drawName(svgElement, x: number, y: number, areaNumber: number, fontSize = 20): any {
     svgElement.setAttribute('x', (x).toString());
-    svgElement.setAttribute('y', (y + 20).toString());
+    svgElement.setAttribute('y', (y + fontSize).toString());
     svgElement.innerHTML = areaNumber;
     svgElement.style.fill = 'white';
     svgElement.style.stroke = 'blue';
-    svgElement.style.fontSize = '20';
+    svgElement.style.fontSize = fontSize.toString() + 'px';
 
     return svgElement;
   }
@@ -111,10 +110,11 @@ export class QuestionDragAndDropComponent implements OnInit, AfterViewInit, OnCh
         )
       );
 
+      const fontSize = this.shrinkBackgroundImage ? 40 : 20;
       rectanglesListRef.appendChild(
         this.drawName(
           document.createElementNS('http://www.w3.org/2000/svg', 'text'),
-          area.x, area.y, areaNumber
+          area.x, area.y, areaNumber, fontSize
         )
       );
 
@@ -124,5 +124,16 @@ export class QuestionDragAndDropComponent implements OnInit, AfterViewInit, OnCh
 
   public noOptions(areaId: number): boolean {
     return !(this.draggableOptions.find(item => item.area_option.includes(areaId)) !== undefined);
+  }
+
+  public getBackgroundImageTransform(bgElement: HTMLElement): string {
+    if (this.shrinkBackgroundImage) {
+      return `scale(calc(${bgElement.offsetWidth}/ 600))`;
+    }
+    return '';
+  }
+
+  public getAreaAnswer(areaId: number): any {
+    return this.answer.answers_per_area.find(item => item.area.id === areaId);
   }
 }
