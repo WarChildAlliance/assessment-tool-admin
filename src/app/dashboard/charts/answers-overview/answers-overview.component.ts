@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { AnswerDetails } from 'src/app/core/models/answer-details.model';
 import { TopicAccessStudents } from 'src/app/core/models/topic-access-students.model';
 import { TopicAnswer } from 'src/app/core/models/topic-answer.model';
@@ -13,6 +13,7 @@ import { UserService } from 'src/app/core/services/user.service';
 export class AnswersOverviewComponent implements OnInit {
 
   public studentsList: TopicAccessStudents[];
+  public assessmentId: string;
   public topicId: string;
   public assessmentTopicAnswer: string;
   public studentTopicAnswers: TopicAnswer[];
@@ -28,7 +29,9 @@ export class AnswersOverviewComponent implements OnInit {
   public hasData = true;
   public loading = true;
 
-  constructor(private userService: UserService) { }
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private userService: UserService) { }
 
   ngOnInit(): void {}
 
@@ -50,6 +53,7 @@ export class AnswersOverviewComponent implements OnInit {
   public onTopicSelection(assessmentTopicInfos: {assessmentId: string, topic: TopicDashboard}): void {
     this.loading = true;
     if (assessmentTopicInfos && assessmentTopicInfos.topic.started) {
+      this.assessmentId = assessmentTopicInfos.assessmentId;
       this.topicId = assessmentTopicInfos.topic.id;
       this.evaluated = assessmentTopicInfos.topic.evaluated;
       this.getStudentListForTopic();
@@ -75,6 +79,7 @@ export class AnswersOverviewComponent implements OnInit {
   public displayAnswerDetails(answer: TopicAnswer): void {
     this.userService.getAnswerDetails(this.topicId, this.assessmentTopicAnswer, answer.id).subscribe(answerDetails => {
       this.answerDetails = answerDetails;
+      this.cdr.detectChanges();
     });
   }
 }

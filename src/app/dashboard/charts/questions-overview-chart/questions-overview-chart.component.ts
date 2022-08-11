@@ -21,8 +21,8 @@ export class QuestionsOverviewChartComponent implements OnInit {
 
   private questionData = [];
 
-  private assessmentId: string;
-  private topicId: string;
+  public assessmentId: string;
+  public topicId: string;
 
   public questionDetails: any;
 
