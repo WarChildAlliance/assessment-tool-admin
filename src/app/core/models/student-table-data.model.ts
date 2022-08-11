@@ -13,4 +13,5 @@ export interface StudentTableData {
     last_session: Date;
     is_active: boolean;
     active_status_updated_on: Date;
+    can_delete: boolean;
 }

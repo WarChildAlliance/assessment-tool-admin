@@ -3,12 +3,12 @@
     <app-previous-button path="students"></app-previous-button>
     <div class="main-board__top-container__actions">
       <app-custom-button icon="edit_outline" category="secondary" variant="primary" (click)="onEdit()">
-        {{ "students.editStudent" | translate }}
+        {{ "general.edit" | translate: { type: ("general.student" | translate | lowercase) } }}
       </app-custom-button>
       <span  *ngIf="student" matTooltip="{{ 'students.statusError' | translate }}" [matTooltipDisabled]="deletable" matTooltipPosition="above">
         <app-custom-button icon="delete" category="secondary" variant="primary" (click)="onDelete()"
         [disabled]="!deletable">
-          {{ "students.deleteStudent" | translate }}
+          {{ "general.delete" | translate: {type: "general.student" | translate | lowercase} }}
         </app-custom-button>
       </span>
     </div>
@@ -76,7 +76,7 @@
               </span>
             </div>
             <app-custom-button icon="event_available" category="tertiary" (click)="editTopicsAccesses(assessment)">
-              {{ 'students.studentDetail.editTopicAccess' | translate }}
+              {{ 'general.edit' | translate: { type: 'students.studentDetail.topicAccesses' | translate } }}
             </app-custom-button>
           </mat-panel-title>
         </mat-expansion-panel-header>

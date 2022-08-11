@@ -1,5 +1,14 @@
 .question-header {
   text-align: center;
+
+  h2:nth-child(1) {
+    float: left;
+  }
+
+  .img-small {
+    width: 50%;
+    height: auto;
+  }
 }
 
 .play-audio {
@@ -29,6 +38,14 @@
   justify-content: space-around;
   align-items: center;
   padding-bottom: 1em;
+
+  &.small {
+    max-height: 320px;
+
+    @media (max-width: 1024px) {
+      max-height: 200px;
+    }
+  }
 }
 
 .img-overlay-wrap {

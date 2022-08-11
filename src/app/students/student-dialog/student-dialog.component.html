@@ -1,5 +1,6 @@
 <h2 mat-dialog-title>
-    {{ ( !!student ? "students.editStudent" : "students.createStudentDialog.createStudent" ) | translate }}
+      {{ !!student ? ("general.edit" | translate: { type: ("general.student" | translate | lowercase) }) :
+        ("general.createNew" | translate: { type: "general.student" | translate | lowercase}) }}
 </h2>
 <form class="form-primary" [formGroup]="studentForm">
     <div class="form-primary__flex-container">
@@ -59,7 +60,7 @@
                 </mat-select>
             </mat-form-field>
             <app-custom-button category="secondary" variant="neutral" icon="add" (click)="openGroupDialog()">
-                {{ "groups.addGroup" | translate }}
+                {{ "general.add" | translate: { type: ("general.group" | translate | lowercase) } }}
             </app-custom-button>
         </div>
         <div class="form-primary__flex-container__field-container">
@@ -73,8 +74,7 @@
             {{ "general.cancel" | translate }}
         </button>
         <button mat-flat-button color="accent" type="submit" class="dialog-buttons__submit"
-         [mat-dialog-close]="studentForm.value" (click)="submitStudent()"
-         [disabled]="studentForm.invalid || !studentForm.dirty">
+         (click)="submitStudent()" [disabled]="studentForm.invalid || !studentForm.dirty">
             {{ ( !!student ? "general.save" : "general.submit" ) | translate }}
         </button>
     </div>

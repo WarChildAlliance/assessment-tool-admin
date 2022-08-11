@@ -143,32 +143,25 @@ export class StudentsComponent implements OnInit {
     this.router.navigate([`/students/${id}`]);
   }
 
-  private inactiveOneYear(inactiveDate: string): boolean {
-    const today = new Date();
-    const inactiveSince = new Date(inactiveDate);
-
-    const y1 = inactiveSince.getFullYear();
-    const y2 = today.getFullYear();
-
-    const d1 = new Date(inactiveSince).setFullYear(2000);
-    const d2 = new Date(today).setFullYear(2000);
-
-    return (y2 - y1 > 1 || (y2 - y1 === 1 && d2 > d1));
-  }
-
   public deleteStudent(): void {
-    // Check if all students are inactive over one year
+    // Check if all students can be deleted (have been inactive for more than 1 year)
     const studentsToDeleteInactive = this.selectedUsers.every(
-      (student) =>
-        student.is_active === false &&
-        this.inactiveOneYear(student.active_status_updated_on)
+      (student) => student.can_delete === true
     );
 
     if (studentsToDeleteInactive) {
+      const studentTranslation = this.translateService.instant(
+        this.selectedUsers.length > 1 ? 'general.students' : 'general.student'
+      );
       const confirmDialog = this.dialog.open(ConfirmModalComponent, {
         data: {
-          title: this.translateService.instant('students.deleteStudent'),
-          content: this.translateService.instant('students.deleteStudentPrompt'),
+          title:  this.translateService.instant('general.delete', {
+            type: studentTranslation.toLocaleLowerCase()
+          }),
+          content: this.translateService.instant('general.simpleDeletePrompt', {
+            type: studentTranslation.toLocaleLowerCase(),
+            name: ''
+          }),
           contentType: 'innerHTML',
           confirmColor: 'warn'
         }
@@ -176,17 +169,19 @@ export class StudentsComponent implements OnInit {
 
       confirmDialog.afterClosed().subscribe(res => {
         if (res) {
-          const toDelete = [];
-          this.selectedUsers.forEach(student => {
-            toDelete.push(
-              this.userService.deleteStudent(student.id.toString())
-            );
-          });
-
-          forkJoin(toDelete).subscribe(() => {
-            this.alertService.success(this.translateService.instant('students.studentDeleteSuccess'));
+          const toDelete = this.selectedUsers.map(student => student.id.toString());
+          const onDeleteCallback = (): void => {
+            this.alertService.success(this.translateService.instant('general.deleteSuccess', {
+              type: studentTranslation
+            }));
             this.getStudentTableList(this.filtersData);
-          });
+          };
+
+          if (toDelete.length === 1) {
+            this.userService.deleteStudent(toDelete[0]).subscribe(onDeleteCallback);
+            return;
+          }
+          this.userService.deleteStudents(toDelete).subscribe(onDeleteCallback);
         }
       });
     } else {
@@ -216,7 +211,11 @@ export class StudentsComponent implements OnInit {
   }
 
   public openCreateStudentDialog(): void {
-    const createStudentDialog = this.dialog.open(StudentDialogComponent);
+    const createStudentDialog = this.dialog.open(StudentDialogComponent, {
+      data: {
+        studentList: this.studentsDataSource.data
+      }
+    });
     createStudentDialog.afterClosed().subscribe((value) => {
       if (value) {
         this.getStudentTableList(this.filtersData);

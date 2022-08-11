@@ -19,7 +19,7 @@ import { TopicTableData } from 'src/app/core/models/topic-table-data.model';
   styleUrls: ['./questions-list-answers.component.scss']
 })
 export class QuestionsListAnswersComponent implements OnInit {
-  private currentStudentId: string;
+  public currentStudentId: string;
   public assessmentId: string;
   public topicId: string;
 

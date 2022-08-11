@@ -1,11 +1,10 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, ElementRef, EventEmitter, Inject, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
-import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
+import { QuestionFormService } from 'src/app/core/services/question-form.service';
 import { AreaSelectorComponent } from '../area-selector/area-selector.component';
 
 interface DialogData {
@@ -29,19 +28,14 @@ export class QuestionDragAndDropFormComponent implements OnInit {
   public question: any;
   public toClone: boolean;
 
-  @Output() questionCreatedEvent = new EventEmitter<boolean>();
-  @Output() closeModalEvent = new EventEmitter<boolean>();
-
   @ViewChild('dragItems') dragItemsElement: ElementRef;
 
   public selection: SelectionModel<any> = new SelectionModel<any>(true, []);
 
-  public imageAttachment = null;
-  public audioAttachment = null;
+  public imageAttachment = this.questionFormService.imageAttachment;
+  public audioAttachment = this.questionFormService.audioAttachment;
 
-  // making sure that we dont store an new attachment on editQuestion, if attachment didn't change
-  private changedAudio = false;
-  private changedImage = false;
+  // making sure that we dont store an new background image on editQuestion, if attachment didn't change
   private changedBackgroundImage = false;
 
   private dragItemNumber = 0;
@@ -52,12 +46,12 @@ export class QuestionDragAndDropFormComponent implements OnInit {
   public setDragItems = false;
   private changedDragItems = false;
 
-  private alertMessage = '';
   public attachmentsResetSubject$ = new Subject<void>();
 
   public dragAndDropForm: FormGroup = new FormGroup({
     title: new FormControl('', Validators.required),
     order: new FormControl('', Validators.required),
+    on_popup: new FormControl(false),
     background_image: new FormControl(null, Validators.required),
     drop_areas: new FormControl(null, Validators.required),
     drag_options: new FormControl(null, Validators.required)
@@ -67,8 +61,7 @@ export class QuestionDragAndDropFormComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private dialog: MatDialog,
     private assessmentService: AssessmentService,
-    private translateService: TranslateService,
-    private alertService: AlertService
+    public questionFormService: QuestionFormService
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -77,30 +70,36 @@ export class QuestionDragAndDropFormComponent implements OnInit {
     if (this.data?.order) { this.order = this.data.order; }
     if (this.data?.question) { this.question = this.data.question; }
     if (this.data?.toClone) { this.toClone = this.data.toClone; }
-
+    await this.questionFormService.resetAttachments().then(() => this.attachmentsResetSubject$.next());
     if (this.question) {
       this.dragAndDropForm.setValue({
         title: this.question.title,
         order: this.toClone ? this.order : this.question.order,
+        on_popup: this.question.on_popup,
         background_image: null,
         drop_areas: this.question.drop_areas,
         drag_options: null
       });
 
-      // Setting background_image and drag_options
+      // Setting drag_options
       this.question.drop_areas.forEach(area => {
         this.dragItemsArea.push({ attachments: [], area_id: area.id });
       });
-
-      const backgroundImage = this.question.attachments.find(
-        (i) => i.attachment_type === 'IMAGE' && i.background_image === true
-      );
-
       await this.getDraggableOptions();
       this.setDragItems = true;
 
-      await this.objectToFile(backgroundImage);
-      await this.setExistingAttachments();
+      // Setting background_image
+      let backgroundImage = this.question.attachments.find(
+        (i) => i.attachment_type === 'IMAGE' && i.background_image === true
+      );
+      backgroundImage = await this.questionFormService.objectToFile(backgroundImage);
+      this.dragAndDropForm.controls.background_image.setValue(backgroundImage);
+
+      // Setting existing attachments
+      await this.questionFormService.setExistingAttachments(this.question, this.toClone).then(res => {
+        this.imageAttachment = res.image;
+        this.audioAttachment = res.audio;
+      });
 
       if (this.toClone) {
         this.dragAndDropForm.markAsDirty();
@@ -109,6 +108,7 @@ export class QuestionDragAndDropFormComponent implements OnInit {
       this.dragAndDropForm.setValue({
         title: '',
         order: this.order,
+        on_popup: false,
         background_image: null,
         drop_areas: null,
         drag_options: null
@@ -119,7 +119,39 @@ export class QuestionDragAndDropFormComponent implements OnInit {
   private async getDraggableOptions(): Promise<any> {
     this.assessmentService.getDraggableOptions(this.assessmentId.toString(), this.topicId.toString(), this.question.id)
       .subscribe(async dragOptions => {
-        await this.objectToFile(dragOptions, true);
+        await dragOptions.forEach(async element => {
+          // Convert the drag options images objects retrieved from the back-end to files
+          if (element.attachments[0]) {
+            const file = await this.questionFormService.objectToFile(element.attachments[0]);
+            const fileType = element.attachments[0].attachment_type === 'IMAGE' ? 'image/png' : 'audio/wav';
+
+            if (element.area_option.length > 0) {
+              this.dragItemsArea.forEach((item, index) => {
+                if (element.area_option.includes(item.area_id)) {
+                  item.attachments.push({
+                    attachment_type: fileType,
+                    file,
+                    area_id: index,
+                    drag_item: this.dragItemNumber
+                  });
+
+                  this.dragItemNumber++;
+                }
+              });
+            }
+            else {
+              this.dragItems.push({
+                attachment_type: fileType,
+                file,
+                area_id: null,
+                drag_item: this.dragItemNumber
+              });
+
+              this.dragItemNumber++;
+            }
+            this.confirmDraggable = true;
+          }
+        });
     });
   }
 
@@ -167,261 +199,88 @@ export class QuestionDragAndDropFormComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    if (this.toClone) {
-      this.createQuestion();
-      this.alertMessage =  this.translateService.instant('assessmentBuilder.questions.questionCloneSuccess');
-    } else if (this.question && !this.toClone) {
-      this.editQuestion();
-      this.alertMessage = this.translateService.instant('assessmentBuilder.questions.questionUpdateSuccess');
+    const data = {
+      toClone: this.toClone,
+      formGroup: this.createQuestionForm().value,
+      topicId: this.topicId.toString(),
+      assessmentId: this.assessmentId.toString(),
+      question: this.question
+    };
+
+    if (this.question && ! this.toClone) {
+      this.editDragAndDropQuestion(data);
     } else {
-      this.createQuestion();
-      this.alertMessage = this.translateService.instant('assessmentBuilder.questions.questionCreateSuccess');
+      this.createDragAndDropQuestion(data);
     }
   }
 
-  private createQuestion(): void {
-    const data = this.createQuestionForm();
-
-    this.assessmentService.createQuestion(data.value,
-      this.topicId.toString(),
-      this.assessmentId.toString()
-    ).subscribe(questionCreated => {
-      this.saveAttachments(
+  private createDragAndDropQuestion(data: any): void {
+    this.questionFormService.createQuestion(data).then(questionCreated => {
+      this.questionFormService.saveAttachments(
         this.assessmentId.toString(), this.dragAndDropForm.controls.background_image.value,
         'IMAGE', { name: 'question', value: questionCreated.id, background_image: true }, true
       );
 
-      if (this.changedImage) {
-        this.saveAttachments(this.assessmentId.toString(), this.imageAttachment, 'IMAGE',
-        { name: 'question', value: questionCreated.id }, false);
-      }
-      if (this.changedAudio) {
-        this.saveAttachments(this.assessmentId.toString(), this.audioAttachment, 'AUDIO',
-        { name: 'question', value: questionCreated.id }, false);
-      }
-
-      // Created Areas ids: will be used to create the draggable options
-      const createdAreas = [];
-      questionCreated.drop_areas.forEach(area => {
-        createdAreas.push(area.id);
-      });
-
-      const dragOptionsToCreate = [];
-      this.dragAndDropForm.controls.drag_options.value.forEach(element => {
-        if (dragOptionsToCreate.indexOf(element.drag_item) === (-1)) {
-          dragOptionsToCreate.push(element.drag_item);
-        }
-      });
-
-      // Creating draggable options
-      dragOptionsToCreate.forEach(toCreate => {
-        const areasId = [];
-        const dragItem = this.dragAndDropForm.controls.drag_options.value.filter(item => {
-          return item.drag_item === toCreate;
-        });
-
-        if (dragItem.length) {
-          const file = dragItem[0].file;
-
-          dragItem.forEach(item => {
-            if (item.area_id !== null) {
-              areasId.push(createdAreas[item.area_id]);
-            }
-          });
-
-          this.assessmentService.addDraggableOption(this.assessmentId.toString(), this.topicId.toString(), questionCreated.id,
-            { area_option: areasId, question_drag_and_drop: questionCreated.id }).subscribe(dragOptionCreated => {
-
-              this.saveAttachments(
-                this.assessmentId.toString(), file, 'IMAGE',
-                { name: 'draggable_option', value: dragOptionCreated.id }, false
-              );
-          });
-        }
-      });
-
-      this.alertService.success(this.alertMessage);
-      this.questionCreatedEvent.emit(true);
+      this.createDraggableOptions(questionCreated);
+      this.questionFormService.emitMessage(this.question === undefined, this.toClone);
     });
   }
 
-  private editQuestion(): void {
-    const data = this.createQuestionForm();
-
-    this.assessmentService.editQuestion(
-      this.assessmentId.toString(),
-      this.topicId.toString(),
-      this.question.id.toString(),
-      data.value
-    ).subscribe(question => {
+  private editDragAndDropQuestion(data: any): void {
+    this.questionFormService.editQuestion(data).then(question => {
       if (this.changedBackgroundImage) {
-        this.updateQuestionAttachments('IMAGE', { name: 'question', value: question.id },
-        this.dragAndDropForm.controls.background_image.value, true);
-      }
-      if (this.changedImage) {
-        this.updateQuestionAttachments('IMAGE', { name: 'question', value: question.id }, this.imageAttachment, false);
-      }
-      if (this.changedAudio) {
-        this.updateQuestionAttachments('AUDIO', { name: 'question', value: question.id }, this.audioAttachment, false);
+        this.questionFormService.updateAttachments(
+          this.assessmentId, 'IMAGE', { name: 'question', value: question.id },
+          this.dragAndDropForm.controls.background_image.value, true, null, this.question
+        );
       }
 
-      // Areas ids: will be used to the draggable options
-      const createdAreas = [];
-      question.drop_areas.forEach(area => {
-        createdAreas.push(area.id);
-      });
-
-      const dragOptionsToCreate = [];
-      this.dragAndDropForm.controls.drag_options.value.forEach(element => {
-        if (dragOptionsToCreate.indexOf(element.drag_item) === (-1)) {
-          dragOptionsToCreate.push(element.drag_item);
-        }
-      });
-
-      // Draggable options
-      dragOptionsToCreate.forEach(toCreate => {
-        const areasId = [];
-        const dragItem = this.dragAndDropForm.controls.drag_options.value.filter(item => {
-          return item.drag_item === toCreate;
-        });
-
-        if (dragItem.length) {
-          const file = dragItem[0].file;
-
-          dragItem.forEach(item => {
-            if (item.area_id !== null) {
-              areasId.push(createdAreas[item.area_id]);
-            }
-          });
-
-          this.assessmentService.addDraggableOption(this.assessmentId.toString(), this.topicId.toString(), question.id,
-            { area_option: areasId, question_drag_and_drop: question.id }).subscribe(dragOptionCreated => {
-              this.saveAttachments(
-                this.assessmentId.toString(), file, 'IMAGE',
-                { name: 'draggable_option', value: dragOptionCreated.id }, false
-              );
-          });
-        }
-      });
-      this.alertService.success(this.alertMessage);
-      this.questionCreatedEvent.emit(true);
+      this.createDraggableOptions(question);
+      this.questionFormService.emitMessage(false, false);
     });
   }
 
-  private saveAttachments(assessmentId: string, attachment, type: string, obj, backgroundImage: boolean): void {
-    this.assessmentService
-      .addAttachments(assessmentId, attachment, type, obj, backgroundImage)
-      .subscribe(() => {
-        this.alertService.success(this.alertMessage);
-      });
-  }
+  private createDraggableOptions(question: any): void {
+    // Areas ids: will be used to the draggable options
+    const createdAreas = [];
+    question.drop_areas.forEach(area => {
+      createdAreas.push(area.id);
+    });
 
-  private updateQuestionAttachments(type: string, obj: any, attachment: any, backgroundImage: boolean): void {
-    const file = this.question.attachments.find(a => a.attachment_type === type && a.background_image === backgroundImage);
-    if (file) {
-      this.assessmentService.updateAttachments(this.assessmentId, attachment, type, file.id).subscribe();
-    } else {
-      this.saveAttachments(this.assessmentId, attachment, type, obj, backgroundImage);
-    }
-  }
-
-  public onNewImageAttachment(event: File): void {
-    this.changedImage = true;
-    this.imageAttachment = event;
-  }
-
-  public onNewAudioAttachment(event: File): void {
-    this.changedAudio = true;
-    this.audioAttachment = event;
-  }
-
-  private async setExistingAttachments(): Promise<void> {
-    const image = this.question.attachments.find(
-      (i) => i.attachment_type === 'IMAGE' && i.background_image === false
-    );
-    const audio = this.question.attachments.find(
-      (a) => a.attachment_type === 'AUDIO'
-    );
-
-    if (this.toClone) {
-      if (image) {
-        await this.objectToFile(image);
+    const dragOptionsToCreate = [];
+    this.dragAndDropForm.controls.drag_options.value.forEach(element => {
+      if (dragOptionsToCreate.indexOf(element.drag_item) === (-1)) {
+        dragOptionsToCreate.push(element.drag_item);
       }
-      if (audio) {
-        await this.objectToFile(audio);
-      }
-    } else {
-      if (image) {
-        this.imageAttachment = image;
-        this.imageAttachment.name = image ? image.file.split('/').at(-1) : null;
-      }
-      if (audio) {
-        this.audioAttachment = audio;
-        this.audioAttachment.name = audio ? audio.file.split('/').at(-1) : null;
-      }
-    }
-  }
+    });
 
-  private async objectToFile(attachment, dragOptions?: boolean): Promise<void> {
-    // To convert the drag options images objects retrieved from the back-end to files
-    if (dragOptions) {
-      await attachment.forEach(async element => {
-        const fileType = element.attachments[0].attachment_type === 'IMAGE' ? 'image/png' : 'audio/wav';
-        const fileName = element.attachments[0].file.split('/').at(-1);
-
-        await fetch(element.attachments[0].file)
-          .then((res) => res.arrayBuffer())
-          .then((buf) => new File([buf], fileName, { type: fileType }))
-          .then((file) => {
-            if (element.area_option.length > 0) {
-              this.dragItemsArea.forEach((item, index) => {
-                if (element.area_option.includes(item.area_id)) {
-                  item.attachments.push({
-                    attachment_type: fileType,
-                    file,
-                    area_id: index,
-                    drag_item: this.dragItemNumber
-                  });
-
-                  this.dragItemNumber++;
-                }
-              });
-            }
-            else {
-              this.dragItems.push({
-                attachment_type: fileType,
-                file,
-                area_id: null,
-                drag_item: this.dragItemNumber
-              });
-
-              this.dragItemNumber++;
-            }
-          });
+    // Draggable options
+    dragOptionsToCreate.forEach(toCreate => {
+      const areasId = [];
+      const dragItem = this.dragAndDropForm.controls.drag_options.value.filter(item => {
+        return item.drag_item === toCreate;
       });
 
-      this.confirmDraggable = true;
-    }
-    // Convert question attachments and background_image objects retrieved from the back-end to files
-    else {
-      const fileType = attachment.attachment_type === 'IMAGE' ? 'image/png' : 'audio/wav';
-      const fileName = attachment.file.split('/').at(-1);
+      if (dragItem.length) {
+        const file = dragItem[0].file;
 
-      await fetch(attachment.file)
-        .then((res) => res.arrayBuffer())
-        .then((buf) => new File([buf], fileName, { type: fileType }))
-        .then((file) => {
-          if (attachment.background_image === true) {
-            this.dragAndDropForm.controls.background_image.setValue(file);
-          }
-          else if (attachment.attachment_type === 'IMAGE') {
-            this.imageAttachment = file;
-          }
-          else if (attachment.attachment_type === 'AUDIO') {
-            this.audioAttachment = file;
+        dragItem.forEach(item => {
+          if (item.area_id !== null) {
+            areasId.push(createdAreas[item.area_id]);
           }
         });
-    }
+
+        this.assessmentService.addDraggableOption(
+          this.assessmentId.toString(), this.topicId.toString(), question.id,
+          { area_option: areasId, question_drag_and_drop: question.id }
+        ).subscribe(dragOptionCreated => {
+          this.questionFormService.saveAttachments(
+            this.assessmentId.toString(), file, 'IMAGE',
+            { name: 'draggable_option', value: dragOptionCreated.id }, false
+          );
+        });
+      }
+    });
   }
 
   public removeArea(array: any[], itemIndex: number): void {
@@ -463,6 +322,7 @@ export class QuestionDragAndDropFormComponent implements OnInit {
     return new FormGroup({
       question_type: new FormControl('DRAG_AND_DROP'),
       title: new FormControl(this.dragAndDropForm.controls.title.value),
+      on_popup: new FormControl(this.dragAndDropForm.controls.on_popup.value),
       order: new FormControl(this.dragAndDropForm.controls.order.value),
       drop_areas: new FormControl(this.dragAndDropForm.controls.drop_areas.value)
     });

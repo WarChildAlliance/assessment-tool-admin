@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -73,8 +73,16 @@ export class AssessmentService {
     return this.http.put<any>(`${environment.API_URL}/assessments/${assessmentId}/topics/${topicId}/`, topic);
   }
 
+  public reorderTopics(assessmentId: string, data: any): Observable<any> {
+    return this.http.put<any>(`${environment.API_URL}/assessments/${assessmentId}/topics/reorder/`, data);
+  }
+
   public editQuestion(assessmentId: string, topicId: string, questionId: string, question: any): Observable<any> {
     return this.http.put<any>(`${environment.API_URL}/assessments/${assessmentId}/topics/${topicId}/questions/${questionId}/`, question);
+  }
+
+  public reorderQuestions(assessmentId: string, topicId: string, data: any): Observable<any> {
+    return this.http.put<any>(`${environment.API_URL}/assessments/${assessmentId}/topics/${topicId}/questions/reorder/`, data);
   }
 
   public getStudentAssessments(studentId: number): Observable<any[]> {
@@ -139,6 +147,32 @@ export class AssessmentService {
     return this.http.get<any[]>(`${environment.API_URL}/export/answers/`);
   }
 
+  private openPDF(data: HttpResponse<Blob>): void {
+    const filename = data.headers.get('Content-Disposition').match(/(?:filename=")(.*)(?:"{1})/)[1];
+    const url = window.URL.createObjectURL(data.body);
+    const w = window.open();
+    w.document.write(
+      `<html>
+        <head>
+          <title>${filename}</title>
+        </head>
+        <body style="margin: 0; padding: 0">
+          <iframe src="${url}" style="width: 100%; height: 100%; margin: 0; padding: 0; border: none;"></iframe>
+        </body>
+      </html>`
+    );
+  }
+
+  public downloadPDF(assessmentId: string, topicId?: string, questionId?: string): void {
+    const url = `${environment.API_URL}/export/assessments/${assessmentId}/` + `${ topicId ? `topics/${topicId}/` : '' }` + `${ questionId ? `questions/${questionId}/` : '' }`;
+    this.http.get(url, {
+        responseType: 'blob', observe: 'response'
+      }
+    ).subscribe((data: HttpResponse<Blob>) => {
+      this.openPDF(data);
+    });
+  }
+
   public addDraggableOption(assessmentId: string, topicId: string, questionId: string, data): Observable<any> {
     return this.http.post<any>(
       `${environment.API_URL}/assessments/${assessmentId}/topics/${topicId}/questions/${questionId}/draggable/`, data
@@ -148,4 +182,5 @@ export class AssessmentService {
   public getDraggableOptions(assessmentId: string, topicId: string, questionId: string): Observable<any> {
     return this.http.get<any>(`${environment.API_URL}/assessments/${assessmentId}/topics/${topicId}/questions/${questionId}/draggable/`);
   }
+
 }

@@ -32,7 +32,7 @@
         <ul>
           <li *ngFor="let answer of studentTopicAnswers; let i = index" (click)="displayAnswerDetails(answer)">Q{{ i + 1
             }}<span>
-              <mat-icon *ngIf="evaluated" [style.color]="isAnswerValid(answer.valid)">stop</mat-icon>
+              <mat-icon *ngIf="evaluated" [style.color]="answer.color">stop</mat-icon>
               <p *ngIf="!evaluated">{{answer.question.title}}</p>
             </span></li>
         </ul>
@@ -56,6 +56,12 @@
         <ng-container *ngIf="answerDetails && answerDetails.question.question_type === 'NUMBER_LINE'">
           <app-question-numberline [question]="answerDetails.question" [index]="index" [answer]="answerDetails.value"
             [evaluated]="evaluated"></app-question-numberline>
+        </ng-container>
+
+        <ng-container *ngIf="answerDetails && answerDetails.question.question_type === 'DRAG_AND_DROP'">
+          <app-question-drag-and-drop [question]="answerDetails.question" [assessmentId]="assessmentId" [topicId]="topicId"
+            [index]="index" [answer]="answerDetails" [evaluated]="evaluated" [shrinkBackgroundImage]="true">
+          </app-question-drag-and-drop>
         </ng-container>
       </div>
     </ng-container>

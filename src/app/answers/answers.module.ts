@@ -6,6 +6,7 @@ import { QuestionsListAnswersComponent } from './questions-list-answers/question
 import { SharedModule } from 'src/app/shared/shared.module';
 import { QuestionDetailAnswersComponent } from './question-detail-answers/question-detail-answers.component';
 import { MatIconModule } from '@angular/material/icon';
+import { PreviousButtonModule } from '../shared/previous-button/previous-button.module';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { MatIconModule } from '@angular/material/icon';
   imports: [
     CommonModule,
     SharedModule,
-    MatIconModule
+    MatIconModule,
+    PreviousButtonModule
   ],
   exports: [
     AssessmentsAnswersComponent

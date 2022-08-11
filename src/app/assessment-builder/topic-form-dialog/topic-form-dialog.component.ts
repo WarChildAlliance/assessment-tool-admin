@@ -9,6 +9,7 @@ interface DialogData {
   edit?: boolean;
   topic?: any;
   assessmentId?: any;
+  order?: string;
 }
 
 @Component({
@@ -21,6 +22,7 @@ export class TopicFormDialogComponent implements OnInit {
   public assessmentId: string;
   public topic: any;
   public edit: boolean;
+  public order: string;
   public formData: FormData = new FormData();
 
   public imageAttachment: File = null;
@@ -39,6 +41,7 @@ export class TopicFormDialogComponent implements OnInit {
     evaluated: new FormControl(true, [Validators.required]),
     praise: new FormControl(0, [Validators.required]),
     max_wrong_answers: new FormControl(0, [Validators.required]),
+    order: new FormControl(0, [Validators.required]),
     icon: new FormControl(null),
     archived: new FormControl(false)
   });
@@ -54,6 +57,7 @@ export class TopicFormDialogComponent implements OnInit {
     if (this.data?.assessmentId) { this.assessmentId = this.data?.assessmentId; }
     if (this.data?.topic) { this.topic = this.data?.topic; }
     if (this.data?.edit) { this.edit = this.data?.edit; }
+    if (this.data?.order) { this.order = this.data?.order; }
     if (this.topic) {
       this.createNewTopicForm.setValue({
         name: this.topic.name,
@@ -63,9 +67,12 @@ export class TopicFormDialogComponent implements OnInit {
         evaluated: this.topic.evaluated,
         praise: this.topic.praise,
         max_wrong_answers: this.topic.max_wrong_answers,
+        order: this.topic.order,
         icon: this.icon,
         archived: this.topic.archived
       });
+    } else {
+      this.createNewTopicForm.controls.order.setValue(this.order);
     }
   }
 
@@ -86,6 +93,7 @@ export class TopicFormDialogComponent implements OnInit {
     this.formData.append('evaluated', this.createNewTopicForm.value.evaluated);
     this.formData.append('praise', this.createNewTopicForm.value.praise);
     this.formData.append('max_wrong_answers', this.createNewTopicForm.value.max_wrong_answers);
+    this.formData.append('order', this.createNewTopicForm.value.order);
     this.formData.append('archived', this.createNewTopicForm.value.archived);
 
     return this.formData;

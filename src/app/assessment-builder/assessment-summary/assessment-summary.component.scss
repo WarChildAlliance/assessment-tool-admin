@@ -20,8 +20,17 @@
         }
         .details {
             display: flex;
-            width: 50%;
+            width: 45%;
             justify-content: space-evenly;
+        }
+        .buttons {
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+
+            app-custom-button {
+                padding: 0.1em;
+            }
         }
     }
 
@@ -59,11 +68,12 @@
             .topic-buttons {
                 display: flex;
                 justify-content: space-between;
+                align-items: center;
                 .mat-icon-button {
                     width: auto;
                 }
             }
-            mat-card{
+            mat-card {
                 scroll-snap-align: start;
                 width: 20%;
                 min-width: 210px;
@@ -99,24 +109,81 @@
                     font-size: 12px;
                     color: rgb(86, 86, 86);
                 }
+                .topic-counter {
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    padding: 10px;
+                }
             }
 
             @media (max-width: 1024px) {
                 .small-description {
-                    display: none!important;
+                    display: none !important;
                 }
             }
         }
         &.-archived {
-                background-color: #f2f2f2;
+            background-color: #f2f2f2;
             .assessment-details {
                 background-color: #f2f2f2;
             }
             .topics {
-                mat-card{
+                mat-card {
                     background-color: #f2f2f2;
                 }
             }
         }
     }
+}
+
+.cdk-drag {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: space-between;
+    text-align: center;
+    box-sizing: border-box;
+
+    img {
+        width: 28px;
+        height: auto;
+        position: absolute;
+        top: 10px;
+    }
+
+    .topic-title {
+        margin-top: 4px;
+        font-weight: 500;
+    }
+
+    p {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+        overflow: hidden;
+        font-weight: 400;
+        font-size: 13px;
+        margin-bottom: 1px;
+    }
+
+    .question_count {
+        font-weight: 300;
+        font-size: 12px;
+        color: rgb(86, 86, 86);
+    }
+
+    .topic-buttons {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .mat-icon-button {
+            width: auto;
+        }
+    }
+}
+
+.drag-hover {
+    cursor: move !important;
 }

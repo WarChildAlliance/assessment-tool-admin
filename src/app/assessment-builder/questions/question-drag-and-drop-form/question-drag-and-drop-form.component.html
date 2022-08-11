@@ -10,11 +10,14 @@
                 <mat-label>{{ "general.order" | translate }}</mat-label>
                 <input matInput required type="number" formControlName="order">
             </mat-form-field>
+            <mat-checkbox formControlName="on_popup">
+                <mat-label for="on_popup">{{ "assessmentBuilder.questions.select.onPopup" | translate }}</mat-label>
+            </mat-checkbox>
         </div>
 
         <div class="drop-areas-button" *ngIf="dragAndDropForm.controls.drop_areas.invalid || (question && setDragItems)">
             <app-custom-button category="tertiary" variant="secondary" (click)="openAreaSelector()" variant="default">
-                {{ ( question ? "assessmentBuilder.questions.dragAndDrop.editAreasButton" :
+                {{ ( question ? ("general.edit" | translate: { type: "assessmentBuilder.questions.dragAndDrop.bgImageAndDropAreas" | translate }) :
                  "assessmentBuilder.questions.dragAndDrop.createAreasButton" ) | translate }}
             </app-custom-button>
             <span class="notifier" *ngIf="dragAndDropForm.controls.drop_areas.invalid">
@@ -33,7 +36,7 @@
 
                     <div *ngIf="dragItemsArea[i]?.attachments.length">
                         <div class="items-container" *ngFor="let item of dragItemsArea[i]?.attachments; let j = index;">
-                            <app-custom-button matTooltip="{{ 'assessmentBuilder.questions.dragAndDrop.deleteItem' | translate }}"
+                            <app-custom-button matTooltip="{{ 'general.delete' | translate: {type: 'assessmentBuilder.questions.dragAndDrop.item' | translate} }}"
                                 [isIcon]="true" icon="remove_circle_outline" (click)="removeArea(dragItemsArea[i].attachments, j)">
                             </app-custom-button>
                             {{item.file.name}}
@@ -45,7 +48,7 @@
                 <div class="without-area" *ngIf="dragItems.length > 0">
                     <p>{{ "assessmentBuilder.questions.dragAndDrop.draggableWithoutArea" | translate }}</p>
                     <div class="list" *ngFor="let item of dragItems; let k = index;">
-                        <app-custom-button matTooltip="{{ 'assessmentBuilder.questions.dragAndDrop.deleteItem' | translate }}"
+                        <app-custom-button matTooltip="{{ 'general.delete' | translate: {type: 'assessmentBuilder.questions.dragAndDrop.item' | translate} }}"
                          [isIcon]="true" icon="remove_circle_outline" (click)="removeArea(dragItems, k)">
                         </app-custom-button>
                         {{item.file.name}}
@@ -70,11 +73,16 @@
 
         <h2>{{ "assessmentBuilder.questions.dragAndDrop.questionAttachments" | translate }}</h2>
         <div class="attachments-container">
-            <app-image-selector [reset$]="attachmentsResetSubject$.asObservable()"
-                (newImageEvent)="onNewImageAttachment($event)" [imageAttachment]="imageAttachment">
+            <app-image-selector 
+                [reset$]="attachmentsResetSubject$.asObservable()"
+                (newImageEvent)="questionFormService.imageAttachment = $event"
+                [imageAttachment]="imageAttachment">
             </app-image-selector>
-            <app-audio-selector [isRecorderEnabled]="true" [reset$]="attachmentsResetSubject$.asObservable()"
-                (newAudioEvent)="onNewAudioAttachment($event)" [audioAttachment]="audioAttachment">
+            <app-audio-selector
+                [isRecorderEnabled]="true"
+                [reset$]="attachmentsResetSubject$.asObservable()"
+                (newAudioEvent)="questionFormService.audioAttachment = $event"
+                [audioAttachment]="audioAttachment">
             </app-audio-selector>
         </div>
 
