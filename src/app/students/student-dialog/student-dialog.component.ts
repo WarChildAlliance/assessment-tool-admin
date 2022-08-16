@@ -72,7 +72,6 @@ export class StudentDialogComponent implements OnInit {
         this.groups = groups;
       }
     );
-
     this.studentForm.valueChanges.subscribe(() => { this.hasFormChanged = true; });
   }
 
