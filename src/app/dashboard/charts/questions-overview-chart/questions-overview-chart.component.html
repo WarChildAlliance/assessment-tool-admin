@@ -18,12 +18,14 @@
       ></app-select-group>
     </div>
 
-    <div class="barChart" [hidden]="!selectionHasData">
+    <app-spinner style="margin: auto;" *ngIf="loading" size="large" [variant]="'default'"></app-spinner>
+
+    <div class="barChart" [hidden]="!selectionHasData || loading">
       <canvas id="barChart"></canvas>
     </div>
 
     <ng-container *ngIf="selectionHasData; else selectionNoData">
-      <div class="question-details" *ngIf="questionDetails">
+      <div class="question-details" *ngIf="questionDetails && !loading">
         <ng-container *ngIf="questionDetails.question_type === 'SELECT'">
           <app-question-select [question]="questionDetails" [index]="index" [evaluated]="true"></app-question-select>
         </ng-container>
@@ -39,6 +41,11 @@
         <ng-container *ngIf="questionDetails.question_type === 'NUMBER_LINE'">
           <app-question-numberline [question]="questionDetails" [index]="index" [evaluated]="true">
           </app-question-numberline>
+        </ng-container>
+
+        <ng-container *ngIf="questionDetails.question_type === 'DRAG_AND_DROP'">
+          <app-question-drag-and-drop [question]="questionDetails" [assessmentId]="assessmentId" [topicId]="topicId"
+            [index]="index" [evaluated]="true" [shrinkBackgroundImage]="true"></app-question-drag-and-drop>
         </ng-container>
       </div>
     </ng-container>

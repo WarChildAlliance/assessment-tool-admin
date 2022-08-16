@@ -16,7 +16,7 @@ export class ScoreByTopicTableComponent implements OnInit {
 
   public studentsDataSource: MatTableDataSource<any> = new MatTableDataSource([]);
   public displayedColumns: any[] = [
-    { key: 'full_name', name: 'dashboard.scoreByTopicTable.student'}
+    { key: 'full_name', name: 'general.student'}
   ];
 
   public newTableData = [];
@@ -26,6 +26,7 @@ export class ScoreByTopicTableComponent implements OnInit {
   public scoreByTopicTable = [];
 
   public hasData = true;
+  public loading = true;
 
   constructor(
     private userService: UserService,
@@ -90,13 +91,18 @@ export class ScoreByTopicTableComponent implements OnInit {
         } else {
           this.hasData = false;
         }
+
+        this.loading = false;
       });
     } else {
       this.hasData = false;
+      this.loading = false;
     }
   }
 
   public selectTableAssessment(assessment: AssessmentDashboard): void {
+    this.loading = true;
+
     if (!this.scoreByTopicTable.length) {
       this.selectedAssessments.push(assessment);
       this.getScoreByTopicsData(assessment, true);
@@ -122,6 +128,8 @@ export class ScoreByTopicTableComponent implements OnInit {
         this.getTableData(this.newTableData);
       }
     }
+
+    this.loading = false;
   }
 
   public onOpenStudentDetails(id: string): void {
@@ -129,6 +137,8 @@ export class ScoreByTopicTableComponent implements OnInit {
   }
 
   public onGroupsSelection(groupIds: number[]): void {
+    this.loading = true;
+
     for (const assessment of this.selectedAssessments) {
       this.displayedColumns = this.displayedColumns.filter(col => col.assmnt !== assessment.title);
       this.getScoreByTopicsData(assessment, false, groupIds);

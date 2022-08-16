@@ -55,7 +55,8 @@ export class AssessmentFormDialogComponent implements OnInit {
     country: new FormControl('', [Validators.required]),
     private: new FormControl(false, [Validators.required]),
     icon: new FormControl(null),
-    archived: new FormControl(false)
+    archived: new FormControl(false),
+    downloadable: new FormControl(true)
   });
 
   constructor(
@@ -80,7 +81,8 @@ export class AssessmentFormDialogComponent implements OnInit {
         country: this.assessment.country_code,
         private: this.assessment.private,
         icon: this.icon,
-        archived: this.assessment.archived
+        archived: this.assessment.archived,
+        downloadable: this.assessment.downloadable
       });
     }
   }
@@ -89,11 +91,15 @@ export class AssessmentFormDialogComponent implements OnInit {
     const data = await this.formGroupToFormData();
     if (this.edit) {
       this.assessmentService.editAssessment(this.assessment.id, data).subscribe(() => {
-        this.alertService.success(this.translateService.instant('assessmentBuilder.assessmentEditSuccess'));
+        this.alertService.success(this.translateService.instant('general.editSuccess', {
+          type: this.translateService.instant('general.assessment')
+        }));
       });
     } else {
       this.assessmentService.createAssessment(data).subscribe(res => {
-        this.alertService.success(this.translateService.instant('assessmentBuilder.assessmentSaveSuccess'));
+        this.alertService.success(this.translateService.instant('assessmentBuilder.saveSuccess', {
+          type: this.translateService.instant('general.assessment')
+        }));
     });
     }
     this.assessmentForm.reset();
@@ -101,7 +107,9 @@ export class AssessmentFormDialogComponent implements OnInit {
 
   public saveAttachments(assessmentId: string, attachment, type: string, obj): void {
     this.assessmentService.addAttachments(assessmentId, attachment, type, obj).subscribe((res) => {
-      this.alertService.success(this.translateService.instant('assessmentBuilder.assessmentSaveSuccess'));
+      this.alertService.success(this.translateService.instant('assessmentBuilder.saveSuccess', {
+        type: this.translateService.instant('general.assessment')
+      }));
     });
   }
 
@@ -122,6 +130,7 @@ export class AssessmentFormDialogComponent implements OnInit {
     this.formData.append('country', this.assessmentForm.value.country);
     this.formData.append('private', this.assessmentForm.value.private);
     this.formData.append('archived', this.assessmentForm.value.archived);
+    this.formData.append('downloadable', this.assessmentForm.value.downloadable);
 
     return this.formData;
   }

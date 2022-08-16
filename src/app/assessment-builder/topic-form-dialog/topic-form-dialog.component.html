@@ -1,4 +1,4 @@
-<h2>{{ edit ? ("assessmentBuilder.topicFormDialog.editTopic" | translate) : ("assessmentBuilder.topicFormDialog.createTopic" | translate) }}</h2>
+<h2>{{ edit ? ("general.edit" | translate: { type: '' }) : ("assessmentBuilder.topicFormDialog.createTopic" | translate) }}</h2>
 <form class="form-primary" [formGroup]="createNewTopicForm">
     <div class="form-primary__flex-container">
         <mat-form-field appearance="outline" color="accent">
@@ -23,6 +23,10 @@
             <mat-label>{{ "assessmentBuilder.maxWrongAnswers" | translate }}</mat-label>
             <input matInput type="number" formControlName="max_wrong_answers">
         </mat-form-field>
+        <mat-form-field appearance="outline" color="accent">
+            <mat-label>{{ "assessmentBuilder.order" | translate }}</mat-label>
+            <input matInput type="number" min="1" formControlName="order" [readonly]="order">
+        </mat-form-field>
     </div>
     <div class="form-primary__flex-container">
         <mat-checkbox formControlName="evaluated">
@@ -32,7 +36,7 @@
             {{ "assessmentBuilder.allowSkip" | translate }}
         </mat-checkbox>
         <mat-checkbox formControlName="archived">
-            Archived
+            {{ "general.archived" |  translate: {type: ''} }}
         </mat-checkbox>
         <div>
             <h3>{{ "assessmentBuilder.icon" |  translate }} *</h3>

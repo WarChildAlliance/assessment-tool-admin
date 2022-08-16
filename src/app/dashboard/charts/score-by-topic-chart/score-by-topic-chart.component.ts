@@ -25,6 +25,7 @@ export class ScoreByTopicChartComponent implements OnInit {
 
   public hasData = true;
   public selectionHasData = true;
+  public loading = true;
 
   public lineChartOptions: ChartOptions = {
     responsive: true,
@@ -99,6 +100,7 @@ export class ScoreByTopicChartComponent implements OnInit {
   }
 
   private getStudentTopicsChart(assessmentId: string, groupIds: number[]): void {
+    this.loading = true;
     this.userService.getStudentTopicsChart(assessmentId).subscribe(scoreByTopic => {
       const filteredScoreByTopic = scoreByTopic.filter(el => {
         const groups = el.group as Group[];
@@ -112,6 +114,7 @@ export class ScoreByTopicChartComponent implements OnInit {
         return el.student_access && hasSelectedGroup;
       });
       this.getChartLineData(filteredScoreByTopic, this.topicsName, this.topicsAverage);
+      this.loading = false;
     });
   }
 
@@ -125,6 +128,7 @@ export class ScoreByTopicChartComponent implements OnInit {
   }
 
   public selectChartAssessment(assessment: AssessmentDashboard): void {
+    this.loading = true;
     if (assessment && assessment.started) {
       this.assessment = assessment;
       this.topicsName = [];
@@ -142,7 +146,8 @@ export class ScoreByTopicChartComponent implements OnInit {
       });
       this.getStudentTopicsChart(assessment.id, this.selectedGroupIds);
     } else {
-      this.hasData = false;
+      this.selectionHasData = false;
+      this.loading = false;
     }
   }
 

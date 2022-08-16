@@ -2,15 +2,13 @@
     <form [formGroup]="selectForm">
         <div class="form-container">
             <div class="select-details-container">
-                <h2>{{ "assessmentBuilder.questions.select.question" | translate }}</h2>
-
                 <mat-form-field appearance="outline" class="form-group" color="accent">
                     <mat-label for="title">{{ "general.title" | translate }}</mat-label>
                     <input matInput formControlName="title">
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" class="form-group" color="accent">
-                    <mat-label>{{ "assessmentBuilder.questions.select.value" | translate }}</mat-label>
+                    <mat-label>{{ "assessmentBuilder.value" | translate }}</mat-label>
                     <input matInput formControlName="value">
                 </mat-form-field>
 
@@ -30,19 +28,22 @@
                 <mat-checkbox formControlName="multiple">
                     <mat-label for="multiple">{{ "assessmentBuilder.questions.select.isMultipleChoice" | translate }}</mat-label>
                 </mat-checkbox>
+                <mat-checkbox formControlName="on_popup">
+                    <mat-label for="on_popup">{{ "assessmentBuilder.questions.select.onPopup" | translate }}</mat-label>
+                </mat-checkbox>
             </div>
 
             <div class="attachments-container">
                 <h2>{{ "assessmentBuilder.questions.select.attachments" | translate }}</h2>
                 <app-image-selector
                     [reset$]="attachmentsResetSubject$.asObservable()"
-                    (newImageEvent)="onNewImageAttachment($event)"
+                    (newImageEvent)="questionFormService.imageAttachment = $event"
                     [imageAttachment]="imageAttachment"
                 ></app-image-selector>
                 <app-audio-selector
                     [isRecorderEnabled]="true"
                     [reset$]="attachmentsResetSubject$.asObservable()"
-                    (newAudioEvent)="onNewAudioAttachment($event)"
+                    (newAudioEvent)="questionFormService.audioAttachment = $event"
                     [audioAttachment]="audioAttachment"
                 ></app-audio-selector>
             </div>
@@ -52,7 +53,7 @@
         <div class="options-header">
             <h2 style="margin-top: 20px;"> {{ "assessmentBuilder.questions.select.options" | translate }}</h2>
             <app-custom-button class="file_input" icon="add" category="secondary" variant="neutral" (click)="addOptions()">
-                {{ "assessmentBuilder.questions.select.addOption" | translate }}
+                {{ "general.add" | translate: { type: ("assessmentBuilder.questions.select.option" | translate) } }}
             </app-custom-button>
         </div>
         <div class="options-container">
@@ -66,7 +67,7 @@
                         </mat-form-field>
                     </div>
                     <mat-form-field appearance="outline" class="form-group" color="accent">
-                        <mat-label>{{ "assessmentBuilder.questions.select.value" | translate }}</mat-label>
+                        <mat-label>{{ "assessmentBuilder.value" | translate }}</mat-label>
                         <input matInput formControlName="value">
                     </mat-form-field>
                     <br>

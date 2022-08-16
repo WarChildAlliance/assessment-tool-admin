@@ -34,21 +34,27 @@
         <input type="number" matInput formControlName="expected_value" class="form-control">
     </mat-form-field>
 
-    <span style="margin-right: 20px;">
-        <mat-label style="margin-right: 10px;">{{ "assessmentBuilder.questions.numberline.showTicks" | translate }}</mat-label>
-        <mat-checkbox matInput formControlName="show_ticks" class="form-control"></mat-checkbox>
-    </span>
+    <mat-checkbox formControlName="show_ticks">
+        <mat-label for="show_ticks">
+            {{ "assessmentBuilder.show" | translate: {type: "assessmentBuilder.questions.numberline.ticks" | translate} }}
+        </mat-label>
+    </mat-checkbox>
 
-    <span>
-        <mat-label style="margin-right: 10px;">{{ "assessmentBuilder.questions.numberline.showValue" | translate }}</mat-label>
-        <mat-checkbox matInput formControlName="show_value" class="form-control"></mat-checkbox>
-    </span>
+    <mat-checkbox formControlName="show_value">
+        <mat-label for="show_value">
+            {{ "assessmentBuilder.show" | translate: {type: "assessmentBuilder.value" | translate | lowercase} }}
+        </mat-label>
+    </mat-checkbox>
+
+    <mat-checkbox formControlName="on_popup">
+        <mat-label for="on_popup">{{ "assessmentBuilder.questions.select.onPopup" | translate }}</mat-label>
+    </mat-checkbox>
 
     <div class="attachments-container">
         <div style="margin-right: 20px;">
             <app-image-selector
                 [reset$]="attachmentsResetSubject$.asObservable()"
-                (newImageEvent)="onNewImageAttachment($event)"
+                (newImageEvent)="questionFormService.imageAttachment = $event"
                 [imageAttachment]="imageAttachment"
             ></app-image-selector>
         </div>
@@ -56,7 +62,7 @@
             <app-audio-selector
                 [isRecorderEnabled]="true"
                 [reset$]="attachmentsResetSubject$.asObservable()"
-                (newAudioEvent)="onNewAudioAttachment($event)"
+                (newAudioEvent)="questionFormService.audioAttachment = $event"
                 [audioAttachment]="audioAttachment"
             ></app-audio-selector>
         </div>

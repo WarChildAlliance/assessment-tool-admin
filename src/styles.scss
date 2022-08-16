@@ -15,6 +15,13 @@ body { margin: 0;
     overflow: hidden;
 }
 
+// Larger size for arabic text
+.arabic {
+    *:not(mat-card-title) {
+      font-size: 25px !important;
+    }
+  }
+
 $assessment-tool-palette: (
     green : rgb(187, 226, 190),
     grey : rgb(194, 194, 194),

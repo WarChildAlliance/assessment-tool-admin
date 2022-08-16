@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>
-    {{ edit ? ("assessmentBuilder.assessmentFormDialog.editAssessment" | translate)
-     : ("assessmentBuilder.assessmentFormDialog.createNewAssessment" | translate) }}</h2>
+    {{ edit ? ("general.edit" | translate: { type: "general.assessment" | translate | lowercase})
+     : ("general.createNew" | translate: { type: "general.assessment" | translate | lowercase }) }}</h2>
 <form class="form-primary" [formGroup]="assessmentForm">
     <div class="form-primary__flex-container">
         <mat-form-field appearance="outline" color="accent">
@@ -41,12 +41,20 @@
                 (newImageEvent)="handleFileInput($event)"
             ></app-image-selector>
         </div>
-        <mat-checkbox formControlName="private">
-            {{ "general.private" | translate }}
-        </mat-checkbox> 
-        <mat-checkbox formControlName="archived">
-            {{ "general.archive" | translate }}
-        </mat-checkbox> 
+        <div class="checkboxes">
+            <mat-checkbox formControlName="private">
+                {{ "general.private" | translate }}
+            </mat-checkbox>
+            <mat-checkbox
+                *ngIf="!assessmentForm.get('private').value"
+                formControlName="downloadable"
+            >
+                {{ "assessmentBuilder.downloadable" | translate }}
+            </mat-checkbox>
+            <mat-checkbox formControlName="archived">
+                {{ "general.archived" | translate: {type: ''} }}
+            </mat-checkbox>
+        </div>
     </div>
     <mat-divider></mat-divider>
     <div class="dialog-buttons buttons-margin">

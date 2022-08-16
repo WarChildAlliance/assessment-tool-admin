@@ -84,12 +84,15 @@ export class GroupDetailComponent implements OnInit {
   }
 
   public onDelete(): void {
-    const groupName = this.group.name;
-
+    const groupTranslation = this.translateService.instant('general.group').toLocaleLowerCase();
     const confirmDialog = this.dialog.open(ConfirmModalComponent, {
       data: {
-        title: this.translateService.instant('groups.deleteGroup'),
-        content: this.translateService.instant('groups.deleteGroupPrompt', {groupName}),
+        title: this.translateService.instant('general.delete', {
+          type: groupTranslation
+        }),
+        content: this.translateService.instant('groups.deleteGroupPrompt', {
+          type: groupTranslation,
+        }),
         contentType: 'innerHTML',
         confirmColor: 'warn'
       }
@@ -98,9 +101,9 @@ export class GroupDetailComponent implements OnInit {
     confirmDialog.afterClosed().subscribe((res) => {
       if (res) {
         this.userService.deleteGroup(this.group.id.toString()).subscribe(() => {
-          this.alertService.success(
-            this.translateService.instant('groups.deleteGroupSuccess')
-          );
+          this.alertService.success(this.translateService.instant('general.deleteSuccess', {
+            type:  this.translateService.instant('general.group')
+          }));
           this.router.navigate([`/groups/`]);
         });
       }

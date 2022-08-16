@@ -1,3 +1,4 @@
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import {
   Component,
   Input,
@@ -8,6 +9,7 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { Topic } from 'src/app/core/models/topic.models';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { ConfirmModalComponent } from 'src/app/shared/confirm-modal/confirm-modal.component';
@@ -33,6 +35,9 @@ export class AssessmentSummaryComponent implements OnInit {
   public smallScreen: boolean;
   public leftScrollEnabled = false;
   public rightScrollEnabled = true;
+  public reorder = false;
+  public changedOrder = false;
+  public topicToOrder: Topic[] = [];
 
   constructor(
     private dialog: MatDialog,
@@ -70,12 +75,13 @@ export class AssessmentSummaryComponent implements OnInit {
     });
   }
 
-  public openTopicFormDialog(assessmentId: string): void {
-    this.assessmentId = assessmentId;
+  public openTopicFormDialog(assessment: any): void {
+    this.assessmentId = assessment.id;
 
     const topicFormDialog = this.dialog.open(TopicFormDialogComponent, {
       data: {
-        assessmentId: this.assessmentId
+        assessmentId: this.assessmentId,
+        order: this.assessment.topics.length + 1
       }
     });
 
@@ -89,8 +95,13 @@ export class AssessmentSummaryComponent implements OnInit {
   public deleteAssessment(assessmentId: string, assessmentTitle: string): void {
     const confirmDialog = this.dialog.open(ConfirmModalComponent, {
       data: {
-        title: this.translateService.instant('assessmentBuilder.assessmentSummary.deleteAssessment'),
-        content: this.translateService.instant('assessmentBuilder.assessmentSummary.deleteAssessmentPrompt', { assessmentTitle }),
+        title: this.translateService.instant('general.delete', {
+          type: this.translateService.instant('general.assessment').toLocaleLowerCase()
+        }),
+        content: this.translateService.instant('general.simpleDeletePrompt', {
+          type: this.translateService.instant('general.assessment').toLocaleLowerCase(),
+          name: assessmentTitle
+        }),
         contentType: 'innerHTML',
         confirmColor: 'warn'
       }
@@ -99,7 +110,9 @@ export class AssessmentSummaryComponent implements OnInit {
     confirmDialog.afterClosed().subscribe((res) => {
       if (res) {
         this.assessmentService.deleteAssessment(assessmentId).subscribe(() => {
-          this.alertService.success(this.translateService.instant('assessmentBuilder.assessmentSummary.deleteAssessmentSuccess'));
+          this.alertService.success(this.translateService.instant('general.deleteSuccess', {
+            type:  this.translateService.instant('general.assessment')
+          }));
           this.reloadAssessments.emit(true);
         });
       }
@@ -111,8 +124,13 @@ export class AssessmentSummaryComponent implements OnInit {
 
     const confirmDialog = this.dialog.open(ConfirmModalComponent, {
       data: {
-        title: this.translateService.instant('assessmentBuilder.assessmentSummary.deleteTopic'),
-        content: this.translateService.instant('assessmentBuilder.assessmentSummary.deleteTopicPrompt', { topicTitle }),
+        title: this.translateService.instant('general.delete', {
+          type: this.translateService.instant('general.topic').toLocaleLowerCase()
+        }),
+        content: this.translateService.instant('general.simpleDeletePrompt', {
+          type: this.translateService.instant('general.topic').toLocaleLowerCase(),
+          name: topicTitle
+        }),
         contentType: 'innerHTML',
         confirmColor: 'warn'
       }
@@ -121,7 +139,9 @@ export class AssessmentSummaryComponent implements OnInit {
     confirmDialog.afterClosed().subscribe((res) => {
       if (res) {
         this.assessmentService.deleteTopic(assessmentId, topicId).subscribe(() => {
-          this.alertService.success(this.translateService.instant('assessmentBuilder.assessmentSummary.topicDetailSuccess'));
+          this.alertService.success(this.translateService.instant('general.deleteSuccess', {
+            type:  this.translateService.instant('general.topic')
+          }));
           this.getAssessmentDetails(assessmentId);
         });
       }
@@ -135,7 +155,9 @@ export class AssessmentSummaryComponent implements OnInit {
     formData.append('archived', archived);
 
     this.assessmentService.editTopic(assessmentId.toString(), topicId, formData).subscribe(() => {
-      this.alertService.success(this.translateService.instant('assessmentBuilder.topicEditSuccess'));
+      this.alertService.success(this.translateService.instant('general.editSuccess', {
+        type: this.translateService.instant('general.topic')
+      }));
       this.getAssessmentDetails(assessmentId);
     });
   }
@@ -145,7 +167,9 @@ export class AssessmentSummaryComponent implements OnInit {
     formData.append('archived', archived);
 
     this.assessmentService.editAssessment(assessmentId, formData).subscribe(res => {
-      this.alertService.success(this.translateService.instant('assessmentBuilder.assessmentEditSuccess'));
+      this.alertService.success(this.translateService.instant('general.editSuccess', {
+        type: this.translateService.instant('general.assessment')
+      }));
       this.reloadAssessments.emit(true);
     });
   }
@@ -181,5 +205,64 @@ export class AssessmentSummaryComponent implements OnInit {
 
   public getMediaSource(path: string): string {
     return `${environment.API_URL}/media/${path}`;
+  }
+
+  public downloadPDF(assessmentId: string): void {
+    // Skip confirmation dialog for private assessments
+    if (this.assessment.private) {
+      this.assessmentService.downloadPDF(assessmentId);
+      return;
+    }
+    const confirmDialog = this.dialog.open(ConfirmModalComponent, {
+      data: {
+        title: this.translateService.instant('assessmentBuilder.assessmentSummary.fileDownloadNoticeTitle'),
+        content: this.translateService.instant('assessmentBuilder.assessmentSummary.fileDownloadNotice'),
+        contentType: 'innerHTML',
+        confirmColor: 'accent'
+      }
+    });
+    confirmDialog.afterClosed().subscribe((res) => {
+      if (res) {
+        this.assessmentService.downloadPDF(assessmentId);
+      }
+    });
+  }
+
+  // Start and save reorder topics by drag&drop
+  public reorderTopics(save: boolean, assessmentId: string): void {
+    if (!save) {
+      this.reorder = true;
+      // Deep copy to avoid modifying both arrays
+      this.topicToOrder = [...this.assessment.topics];
+    } else {
+      if (this.changedOrder) {
+        const data = {
+          topics: [],
+          assessment_id: assessmentId
+        };
+
+        this.assessment.topics.forEach(topic => {
+          data.topics.push(topic.id);
+        });
+
+        this.assessmentService.reorderTopics(assessmentId, data).subscribe(() => {
+          this.alertService.success(this.translateService.instant('assessmentBuilder.assessmentSummary.orderChanged'));
+        });
+      }
+      this.reorder = false;
+      this.changedOrder = false;
+    }
+  }
+
+  // To reorder the topics in the topics list after drop
+  public dropTopic(event: CdkDragDrop<object[]>): void {
+    moveItemInArray(this.assessment.topics, event.previousIndex, event.currentIndex);
+    this.changedOrder = true;
+  }
+
+  // Go back to previous order
+  public cancelReorder(): void {
+    this.assessment.topics = this.topicToOrder;
+    this.reorder = false;
   }
 }

@@ -1,25 +1,8 @@
-import {
-  Component,
-  ElementRef,
-  Input,
-  OnInit,
-  ViewChild,
-  Output,
-  EventEmitter,
-  Inject,
-} from '@angular/core';
-import {
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
+import { Component, ElementRef, OnInit, ViewChild, Inject } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { AlertService } from 'src/app/core/services/alert.service';
-import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { QuestionFormService } from 'src/app/core/services/question-form.service';
 
 interface DialogData {
   topicId?: string;
@@ -42,27 +25,18 @@ export class QuestionSelectFormComponent implements OnInit {
   public question: any;
   public toClone: boolean;
 
-  @Output() questionCreatedEvent = new EventEmitter<boolean>();
-  @Output() closeModalEvent = new EventEmitter<boolean>();
-
   @ViewChild('fileInput') el: ElementRef;
 
   public options = [];
+
   private optionsAtt = [];
-
-  public imageAttachment = null;
-  public audioAttachment = null;
-
-  public changedAudio = false;
-  public changedImage = false;
   private optionAttChange = false;
+
+  public imageAttachment = this.questionFormService.imageAttachment;
+  public audioAttachment = this.questionFormService.audioAttachment;
 
   public optionsAttachment = false;
   public optionsAttachmentEdit = [];
-  public type: string;
-  public attachment: File;
-
-  public alertMessage = '';
 
   public saveOptions = false;
   public attachmentsResetSubject$ = new Subject<void>();
@@ -74,6 +48,7 @@ export class QuestionSelectFormComponent implements OnInit {
     order: new FormControl('', [Validators.required]),
     display: new FormControl('Grid', [Validators.required]),
     multiple: new FormControl(false),
+    on_popup: new FormControl(false),
     options: new FormArray([
       this.formBuilder.group({
         title: new FormControl(''),
@@ -86,9 +61,7 @@ export class QuestionSelectFormComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private formBuilder: FormBuilder,
-    private translateService: TranslateService,
-    private assessmentService: AssessmentService,
-    private alertService: AlertService
+    public questionFormService: QuestionFormService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -98,8 +71,12 @@ export class QuestionSelectFormComponent implements OnInit {
     if (this.data?.question) { this.question = this.data.question; }
     if (this.data?.toClone) { this.toClone = this.data.toClone; }
     const optionsForm = this.selectForm.get('options') as FormArray;
+    await this.questionFormService.resetAttachments().then(() => this.attachmentsResetSubject$.next());
     if (this.question) {
-      await this.setExistingAttachments();
+      await this.questionFormService.setExistingAttachments(this.question, this.toClone).then(res => {
+        this.imageAttachment = res.image;
+        this.audioAttachment = res.audio;
+      });
 
       const options = [];
       this.question.options.forEach((element) => {
@@ -138,6 +115,7 @@ export class QuestionSelectFormComponent implements OnInit {
         order: this.toClone ? this.order : this.question.order,
         display: q.display_type ? this.displayTypeFormat(q.display_type) : 'Grid',
         multiple: q.multiple,
+        on_popup: this.question.on_popup,
         options,
       });
       if (this.toClone) {
@@ -150,6 +128,7 @@ export class QuestionSelectFormComponent implements OnInit {
         title: '',
         order: this.order, display: 'Grid',
         multiple: false,
+        on_popup: false,
         options: [{ title: '', valid: false, value: '' }],
       });
       this.optionsAtt.push({ attachments: [] });
@@ -159,82 +138,25 @@ export class QuestionSelectFormComponent implements OnInit {
     });
   }
 
-  private createQuestion(): void {
-    this.assessmentService
-      .createQuestion(
-        this.selectForm.value,
-        this.topicId.toString(),
-        this.assessmentId.toString()
-      )
-      .subscribe((res) => {
-        if (this.imageAttachment) {
-          this.saveAttachments(
-            this.assessmentId,
-            this.imageAttachment,
-            'IMAGE',
-            { name: 'question', value: res.id }
-          );
-        }
-        if (this.audioAttachment) {
-          this.saveAttachments(
-            this.assessmentId,
-            this.audioAttachment,
-            'AUDIO',
-            { name: 'question', value: res.id }
-          );
-        }
-        if (this.optionsAttachment) {
-          this.saveOptionsAttachments(res);
-        }
-        this.alertService.success(this.alertMessage);
-        this.questionCreatedEvent.emit(true);
-        if (!this.toClone) {
-          this.resetForm();
-        }
-      });
+  private createSelectQuestion(data?: any): void {
+    this.questionFormService.createQuestion(data).then(res => {
+      if (this.optionsAttachment) {
+        this.saveOptionsAttachments(res);
+      }
+      this.questionFormService.emitMessage(this.question === undefined, this.toClone);
+      if (!this.toClone) {
+        this.resetForm();
+      }
+    });
   }
 
-  private editQuestion(): void {
-    this.assessmentService
-      .editQuestion(
-        this.assessmentId.toString(),
-        this.topicId.toString(),
-        this.question.id,
-        this.selectForm.value
-      )
-      .subscribe((res) => {
-        if (this.changedImage && this.imageAttachment) {
-          this.updateQuestionAttachments('IMAGE', res.id, this.imageAttachment);
-        }
-        if (this.changedAudio && this.audioAttachment) {
-          this.updateQuestionAttachments('AUDIO', res.id, this.audioAttachment);
-        }
+  private editQuestion(data: any): void {
+    this.questionFormService.editQuestion(data)
+      .then((res) => {
         if (this.optionAttChange && this.optionsAttachment) {
           this.updateOptionsAttachments(res);
-        } else {
-          this.alertService.success(this.alertMessage);
-          this.questionCreatedEvent.emit(true);
-          this.closeModalEvent.emit(true);
         }
-        this.alertService.success(this.alertMessage);
-        this.questionCreatedEvent.emit(true);
-      });
-  }
-
-  private updateQuestionAttachments(type: string, id: any, attachment: any): void {
-    const file = this.question.attachments.find( a => a.attachment_type === type);
-    if (file) {
-      this.assessmentService.updateAttachments(this.assessmentId, attachment, type, file.id).subscribe();
-    } else {
-      this.saveAttachments(this.assessmentId, attachment, type, { name: 'question', value: id });
-    }
-  }
-
-  private saveAttachments(assessmentId: string, attachment, type: string, obj): void {
-    this.assessmentService
-      .addAttachments(assessmentId, attachment, type, obj)
-      .subscribe(() => {
-        this.alertService.success(this.alertMessage);
+        this.questionFormService.emitMessage(false, false);
       });
   }
 
@@ -242,22 +164,16 @@ export class QuestionSelectFormComponent implements OnInit {
     this.optionsAtt.forEach((o, index) => {
       if (o.attachments.length) {
         o.attachments.forEach((att) => {
-          if (att.attachment_type === 'IMAGE') {
-            this.assessmentService
-              .addAttachments(this.assessmentId.toString(), att.file, 'IMAGE', {
-                name: 'select_option',
-                value: question.options[index].id,
-              })
-              .subscribe();
-          }
-          if (att.attachment_type === 'AUDIO') {
-            this.assessmentService
-              .addAttachments(this.assessmentId.toString(), att.file, 'AUDIO', {
-                name: 'select_option',
-                value: question.options[index].id,
-              })
-              .subscribe();
-          }
+          this.questionFormService.saveAttachments(
+            this.assessmentId.toString(),
+            att.file,
+            att.attachment_type,
+            {
+              name: 'select_option',
+              value: question.options[index].id,
+            },
+            false
+          );
         });
       }
     });
@@ -267,78 +183,27 @@ export class QuestionSelectFormComponent implements OnInit {
     this.optionsAtt.forEach((o, index) => {
       if (o.attachments.length) {
         o.attachments.forEach((att) => {
-          if (att.attachment_type === 'IMAGE') {
-            if (att.overwritePrevious === true) {
-              this.assessmentService
-                .updateAttachments(
-                  this.assessmentId.toString(),
-                  att.file,
-                  'IMAGE',
-                  att.id
-                )
-                .subscribe();
-            } else if (att.overwritePrevious === false) {
-              this.assessmentService
-                .addAttachments(
-                  this.assessmentId.toString(),
-                  att.file,
-                  'IMAGE',
-                  { name: 'select_option', value: question.options[index].id }
-                )
-                .subscribe();
-            }
-          }
-          if (att.attachment_type === 'AUDIO') {
-            if (att.overwritePrevious === true) {
-              this.assessmentService
-                .updateAttachments(
-                  this.assessmentId.toString(),
-                  att.file,
-                  'AUDIO',
-                  att.id
-                )
-                .subscribe();
-            } else if (att.overwritePrevious === false) {
-              this.assessmentService
-                .addAttachments(
-                  this.assessmentId.toString(),
-                  att.file,
-                  'AUDIO',
-                  { name: 'select_option', value: question.options[index].id }
-                )
-                .subscribe();
-            }
+          if (att.overwritePrevious === true) {
+            this.questionFormService.updateAttachments(
+              this.assessmentId.toString(),
+              att.attachment_type,
+              { name: 'select_option', value: att.id },
+              att.file,
+              false,
+              att
+            );
+          } else if (att.overwritePrevious === false) {
+            this.questionFormService.saveAttachments(
+              this.assessmentId.toString(),
+              att.file,
+              att.attachment_type,
+              { name: 'select_option', value: question.options[index].id },
+              false
+            );
           }
         });
       }
     });
-  }
-
-  private async setExistingAttachments(): Promise<void> {
-    const image = this.question.attachments.find(
-      (i) => i.attachment_type === 'IMAGE'
-    );
-    const audio = this.question.attachments.find(
-      (a) => a.attachment_type === 'AUDIO'
-    );
-
-    if (this.toClone) {
-      if (image) {
-        await this.objectToFile(image);
-      }
-      if (audio) {
-        await this.objectToFile(audio);
-      }
-    } else {
-      if (image) {
-        this.imageAttachment = image;
-        this.imageAttachment.name = image ? image.file.split('/').at(-1) : null;
-      }
-      if (audio) {
-        this.audioAttachment = audio;
-        this.audioAttachment.name = audio ? audio.file.split('/').at(-1) : null;
-      }
-    }
   }
 
   private resetForm(): void {
@@ -348,6 +213,7 @@ export class QuestionSelectFormComponent implements OnInit {
       title: '',
       order: this.order, display: 'Grid',
       multiple: false,
+      on_popup: false,
       options: [{ title: '', valid: false, value: '' }],
     });
 
@@ -355,11 +221,6 @@ export class QuestionSelectFormComponent implements OnInit {
     this.optionsAtt = [{ attachments: [] }];
     this.optionsAttachmentEdit = [];
 
-    this.imageAttachment = null;
-    this.audioAttachment = null;
-
-    this.changedAudio = false;
-    this.changedImage = false;
     this.optionAttChange = false;
     this.saveOptions = false;
     this.selectForm.controls.order.setValue(this.order + 1, [Validators.required]);
@@ -379,23 +240,6 @@ export class QuestionSelectFormComponent implements OnInit {
     return str.charAt(0).toUpperCase() + str.substring(1).toLowerCase();
   }
 
-  private async objectToFile(attachment): Promise<void> {
-    const fileType = attachment.attachment_type === 'IMAGE' ? 'image/png' : 'audio/wav';
-    const fileName = attachment.file.split('/').at(-1);
-
-    await fetch(attachment.file)
-      .then((res) => res.arrayBuffer())
-      .then((buf) =>  new File([buf], fileName, {type: fileType}))
-      .then((file) => {
-        if (attachment.attachment_type === 'IMAGE') {
-          this.imageAttachment = file;
-        }
-        else if (attachment.attachment_type === 'AUDIO') {
-          this.audioAttachment = file;
-        }
-    });
-  }
-
   public addOptions(): void {
     this.optionsAtt.push({ attachments: [] });
     const formGroup: FormGroup = this.formBuilder.group({
@@ -408,28 +252,19 @@ export class QuestionSelectFormComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    if (this.toClone) {
-      this.createQuestion();
-      this.alertMessage = 'Question successfully cloned';
-    } else if (this.question && !this.toClone) {
-      this.editQuestion();
-      this.alertMessage = 'Question successfully updated';
+    const data = {
+      toClone: this.toClone,
+      formGroup: this.selectForm.value,
+      topicId: this.topicId.toString(),
+      assessmentId: this.assessmentId.toString(),
+      question: this.question
+    };
+
+    if (this.question && ! this.toClone) {
+      this.editQuestion(data);
     } else {
-      this.createQuestion();
-      this.alertMessage = 'Question successfully created';
+      this.createSelectQuestion(data);
     }
-  }
-
-  public onNewImageAttachment(event: File): void {
-    if (this.editQuestion) { this.selectForm.markAsDirty(); }
-    this.changedImage = true;
-    this.imageAttachment = event;
-  }
-
-  public onNewAudioAttachment(event: File): void {
-    if (this.editQuestion) { this.selectForm.markAsDirty(); }
-    this.changedAudio = true;
-    this.audioAttachment = event;
   }
 
   public handleFileInputOptions(event: File, type, i): void {
