@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { forkJoin } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Country } from 'src/app/core/models/country.model';
 import { Language } from 'src/app/core/models/language.model';
 import { User } from 'src/app/core/models/user.model';
@@ -10,9 +10,11 @@ import { Group } from 'src/app/core/models/group.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { GroupDialogComponent } from '../../groups/group-dialog/group-dialog.component';
+import { ConfirmModalComponent } from 'src/app/shared/confirm-modal/confirm-modal.component';
 
 interface DialogData {
   student?: any;
+  studentList?: any;
 }
 @Component({
   selector: 'app-student-dialog',
@@ -22,6 +24,7 @@ interface DialogData {
 export class StudentDialogComponent implements OnInit {
 
   public student: any;
+  public studentList: any;
 
   // Defines if a student is edited or if a new one is created
 
@@ -45,11 +48,13 @@ export class StudentDialogComponent implements OnInit {
     private dialog: MatDialog,
     private translateService: TranslateService,
     private userService: UserService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    public dialogRef: MatDialogRef<StudentDialogComponent>
   ) { }
 
   ngOnInit(): void {
     if (this.data?.student) { this.student = this.data.student; }
+    if (this.data?.studentList) { this.studentList = this.data.studentList; }
     if (!!this.student) {
       this.studentForm.setValue({
         first_name: this.student.first_name,
@@ -85,7 +90,7 @@ export class StudentDialogComponent implements OnInit {
       });
   }
 
-  public submitStudent(): void {
+  public async submitStudent(): Promise<void> {
     const studentToSave = {
       first_name: this.studentForm.value.first_name,
       last_name: this.studentForm.value.last_name,
@@ -104,6 +109,10 @@ export class StudentDialogComponent implements OnInit {
             {name: student.first_name + ' ' + student.last_name}
           )
         );
+        this.dialogRef.close(true);
+      }, error => {
+        this.alertService.error(error.message);
+        this.dialogRef.close(false);
       });
     } else {
       const canCreate = await this.checkStudentDuplication(studentToSave);
@@ -121,7 +130,6 @@ export class StudentDialogComponent implements OnInit {
         });
       }
     }
-    this.studentForm.reset();
   }
 
   public openGroupDialog(): void {
