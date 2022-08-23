@@ -69,7 +69,9 @@ export class QuestionSelectFormComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private formBuilder: FormBuilder,
     public questionFormService: QuestionFormService
-  ) {}
+  ) {
+    this.attachmentsResetSubject$.subscribe(() => this.questionFormService.resetAttachments());
+  }
 
   async ngOnInit(): Promise<void> {
     if (this.data?.assessmentId) { this.assessmentId = this.data.assessmentId; }
