@@ -45,3 +45,22 @@
 .mat-checkbox {
     margin: 0.5em;
 }
+
+.select {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dialog-buttons {
+    margin-top: 20px;
+}
+
+.form-primary {
+    display: flex;
+    flex-direction: row;
+
+    app-spinner {
+        margin: auto;
+    }
+}

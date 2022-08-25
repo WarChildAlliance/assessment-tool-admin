@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { environment } from 'src/environments/environment';
 import { AlertService } from './alert.service';
 import { AssessmentService } from './assessment.service';
 
@@ -48,7 +49,7 @@ export class QuestionFormService {
     const fileType = attachment.attachment_type === 'IMAGE' ? 'image/png' : 'audio/wav';
     const fileName = attachment.file.split('/').at(-1);
 
-    await fetch(attachment.file)
+    await fetch((attachment.file?.slice(0, 5) === 'http:') ? attachment.file : environment.API_URL + attachment.file)
       .then((res) => res.arrayBuffer())
       .then((buf) =>  new File([buf], fileName, {type: fileType}))
       .then((file) => {
@@ -171,6 +172,15 @@ export class QuestionFormService {
       this.changedAudio = false;
       this.changedImage = false;
       resolve();
+    });
+  }
+
+  // Gets all questions of certain type accessible to the logged in supervisor
+  public getQuestionsTypeList(type: string): Promise<any> {
+    return new Promise(resolve => {
+      this.assessmentService.getQuestionsTypeList(type).subscribe(questions => {
+        resolve(questions);
+      });
     });
   }
 }

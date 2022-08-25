@@ -26,8 +26,6 @@ export class AssessmentBuilderComponent implements OnInit {
   public edit = false;
   public type;
 
-  public assessmentId: string;
-
   public createNewAssessmentForm: FormGroup = new FormGroup({
     title: new FormControl('', [Validators.required]),
     grade: new FormControl(0, [Validators.required]),
@@ -63,7 +61,8 @@ export class AssessmentBuilderComponent implements OnInit {
   public openAssessmentFormDialog(): void {
     const createAssessmentDialog = this.dialog.open(AssessmentFormDialogComponent, {
       data: {
-        edit: this.edit
+        edit: this.edit,
+        assessmentsList: this.currentAssessments
       }
     });
     createAssessmentDialog.afterClosed().subscribe((value) => {

@@ -1,5 +1,21 @@
 <h2>{{ edit ? ("general.edit" | translate: { type: '' }) : ("assessmentBuilder.topicFormDialog.createTopic" | translate) }}</h2>
-<form class="form-primary" [formGroup]="createNewTopicForm">
+
+<div *ngIf="selectTopic" class="select">
+    <form class="form-primary" [formGroup]="selectTopicForm">
+        <mat-form-field appearance="outline" color="accent">
+            <mat-label>{{ 'general.selectItem' | translate:{ item: ('general.topic' | translate)} }}</mat-label>
+            <mat-select formControlName="topic" (selectionChange)="onSelectTopic()">
+                <mat-option *ngFor="let topic of topicsList" [value]="topic">{{ topic.name }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </form>
+
+    <app-custom-button category="secondary" variant="neutral" icon="add" (click)="selectTopic = false">
+        {{ 'general.createNewOne' | translate }}
+    </app-custom-button>
+</div>
+
+<form *ngIf="!selectTopic" class="form-primary" [formGroup]="createNewTopicForm">
     <div class="form-primary__flex-container">
         <mat-form-field appearance="outline" color="accent">
             <mat-label>{{ "general.title" | translate }}</mat-label>
@@ -43,14 +59,16 @@
             <app-image-selector
                 [showLabel]="false"
                 (newImageEvent)="handleFileInput($event)"
+                [imageAttachment]="icon"
             ></app-image-selector>
         </div>
     </div>
     <mat-divider></mat-divider>
-    <div class="dialog-buttons buttons-margin">
-        <button mat-button class="dialog-buttons__cancel" color="secondary" mat-dialog-close>{{ "general.cancel" | translate }}</button>
-        <button mat-flat-button class="dialog-buttons__submit" color="accent" type="submit"
-        [mat-dialog-close]="createNewTopicForm.value" (click)="onSubmit()"
-        [disabled]="createNewTopicForm.invalid || !createNewTopicForm.dirty">{{ topic ? ("general.save" | translate) : ("general.create" | translate) }}</button>
-    </div>
 </form>
+
+<div class="dialog-buttons buttons-margin">
+    <button mat-button class="dialog-buttons__cancel" color="secondary" mat-dialog-close>{{ "general.cancel" | translate }}</button>
+    <button mat-flat-button class="dialog-buttons__submit" color="accent" type="submit"
+    [mat-dialog-close]="createNewTopicForm.value" (click)="onSubmit()"
+    [disabled]="createNewTopicForm.invalid || !createNewTopicForm.dirty">{{ topic ? ("general.save" | translate) : ("general.create" | translate) }}</button>
+</div>
