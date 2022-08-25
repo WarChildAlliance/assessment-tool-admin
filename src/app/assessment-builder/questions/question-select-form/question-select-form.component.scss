@@ -5,6 +5,11 @@
 
     .select-details-container, .attachments-container {
         flex: 1;
+
+        // In case of using display_type again: uncomment the following
+        mat-checkbox {
+            display: block;
+        }
     }
 }
 .question-form-button {
