@@ -18,6 +18,8 @@ interface DialogData {
   styleUrls: ['./question-numberline-form.component.scss']
 })
 export class QuestionNumberlineFormComponent implements OnInit {
+  public questionsList: any;
+  public selectQuestion: boolean;
 
   public assessmentId: string;
   public topicId: string;
@@ -29,6 +31,10 @@ export class QuestionNumberlineFormComponent implements OnInit {
   public audioAttachment = this.questionFormService.audioAttachment;
 
   public attachmentsResetSubject$ = new Subject<void>();
+
+  public selectQuestionForm: FormGroup = new FormGroup({
+    question: new FormControl(null)
+  });
 
   public numberLineForm: FormGroup = new FormGroup({
     question_type: new FormControl('NUMBER_LINE'),
@@ -47,7 +53,9 @@ export class QuestionNumberlineFormComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public questionFormService: QuestionFormService
-  ) {}
+  ) {
+    this.attachmentsResetSubject$.subscribe(() => this.questionFormService.resetAttachments());
+  }
 
   async ngOnInit(): Promise<void> {
     if (this.data?.assessmentId) { this.assessmentId = this.data.assessmentId; }
@@ -55,45 +63,16 @@ export class QuestionNumberlineFormComponent implements OnInit {
     if (this.data?.order) { this.order = this.data.order; }
     if (this.data?.question) { this.question = this.data.question; }
     if (this.data?.toClone) { this.toClone = this.data.toClone; }
-    await this.questionFormService.resetAttachments().then(() => this.attachmentsResetSubject$.next());
     if (this.question) {
-      this.numberLineForm.setValue({
-        question_type: 'NUMBER_LINE',
-        title: this.question.title,
-        order: this.toClone ? this.order : this.question.order,
-        start: this.question.start,
-        end: this.question.end,
-        step: this.question.step,
-        tick_step: this.question.tick_step,
-        expected_value: this.question.expected_value,
-        show_ticks: this.question.show_ticks,
-        show_value: this.question.show_value,
-        on_popup: this.question.on_popup
-      });
-
-      await this.questionFormService.setExistingAttachments(this.question, this.toClone).then(res => {
-        this.imageAttachment = res.image;
-        this.audioAttachment = res.audio;
-      });
-
-      if (this.toClone) {
-        this.numberLineForm.markAsDirty();
-      }
+      this.setForm(this.question);
     } else {
-      this.numberLineForm.setValue({
-        question_type: 'NUMBER_LINE',
-        title: '',
-        order: this.order,
-        start: null,
-        end: null,
-        step: null,
-        tick_step: null,
-        expected_value: null,
-        show_ticks: false,
-        show_value: false,
-        on_popup: false
+      this.selectQuestion = true;
+      this.numberLineForm.controls.order.setValue(this.order);
+      await this.questionFormService.getQuestionsTypeList('NUMBER_LINE').then(res => {
+        this.questionsList = res;
       });
     }
+    await this.questionFormService.resetAttachments().then(() => this.attachmentsResetSubject$.next());
   }
 
   private createNumberLineQuestion(data: any): void {
@@ -132,6 +111,40 @@ export class QuestionNumberlineFormComponent implements OnInit {
       this.editNumberLineQuestion(data);
     } else {
       this.createNumberLineQuestion(data);
+    }
+  }
+
+  public onSelectQuestion(): void {
+    const question = this.selectQuestionForm.controls.question.value;
+    this.toClone = true;
+    this.setForm(question);
+  }
+
+  private async setForm(question: any): Promise<void> {
+    this.selectQuestion = false;
+    this.question = question;
+
+    this.numberLineForm.setValue({
+      question_type: 'NUMBER_LINE',
+      title: question.title,
+      order: this.toClone ? this.order : question.order,
+      start: question.start,
+      end: question.end,
+      step: question.step,
+      tick_step: question.tick_step,
+      expected_value: question.expected_value,
+      show_ticks: question.show_ticks,
+      show_value: question.show_value,
+      on_popup: question.on_popup
+    });
+
+    await this.questionFormService.setExistingAttachments(this.question, this.toClone).then(res => {
+      this.imageAttachment = res.image;
+      this.audioAttachment = res.audio;
+    });
+
+    if (this.toClone) {
+      this.numberLineForm.markAsDirty();
     }
   }
 }

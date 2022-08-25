@@ -21,6 +21,8 @@ interface DialogData {
   styleUrls: ['./question-drag-and-drop-form.component.scss']
 })
 export class QuestionDragAndDropFormComponent implements OnInit {
+  public questionsList: any;
+  public selectQuestion: boolean;
 
   public assessmentId: string;
   public topicId: string;
@@ -48,6 +50,10 @@ export class QuestionDragAndDropFormComponent implements OnInit {
 
   public attachmentsResetSubject$ = new Subject<void>();
 
+  public selectQuestionForm: FormGroup = new FormGroup({
+    question: new FormControl(null)
+  });
+
   public dragAndDropForm: FormGroup = new FormGroup({
     title: new FormControl('', Validators.required),
     order: new FormControl('', Validators.required),
@@ -62,7 +68,9 @@ export class QuestionDragAndDropFormComponent implements OnInit {
     private dialog: MatDialog,
     private assessmentService: AssessmentService,
     public questionFormService: QuestionFormService
-  ) { }
+  ) {
+    this.attachmentsResetSubject$.subscribe(() => this.questionFormService.resetAttachments());
+  }
 
   async ngOnInit(): Promise<void> {
     if (this.data?.assessmentId) { this.assessmentId = this.data.assessmentId; }
@@ -70,50 +78,16 @@ export class QuestionDragAndDropFormComponent implements OnInit {
     if (this.data?.order) { this.order = this.data.order; }
     if (this.data?.question) { this.question = this.data.question; }
     if (this.data?.toClone) { this.toClone = this.data.toClone; }
-    await this.questionFormService.resetAttachments().then(() => this.attachmentsResetSubject$.next());
     if (this.question) {
-      this.dragAndDropForm.setValue({
-        title: this.question.title,
-        order: this.toClone ? this.order : this.question.order,
-        on_popup: this.question.on_popup,
-        background_image: null,
-        drop_areas: this.question.drop_areas,
-        drag_options: null
-      });
-
-      // Setting drag_options
-      this.question.drop_areas.forEach(area => {
-        this.dragItemsArea.push({ attachments: [], area_id: area.id });
-      });
-      await this.getDraggableOptions();
-      this.setDragItems = true;
-
-      // Setting background_image
-      let backgroundImage = this.question.attachments.find(
-        (i) => i.attachment_type === 'IMAGE' && i.background_image === true
-      );
-      backgroundImage = await this.questionFormService.objectToFile(backgroundImage);
-      this.dragAndDropForm.controls.background_image.setValue(backgroundImage);
-
-      // Setting existing attachments
-      await this.questionFormService.setExistingAttachments(this.question, this.toClone).then(res => {
-        this.imageAttachment = res.image;
-        this.audioAttachment = res.audio;
-      });
-
-      if (this.toClone) {
-        this.dragAndDropForm.markAsDirty();
-      }
+      this.setForm(this.question);
     } else {
-      this.dragAndDropForm.setValue({
-        title: '',
-        order: this.order,
-        on_popup: false,
-        background_image: null,
-        drop_areas: null,
-        drag_options: null
+      this.selectQuestion = true;
+      this.dragAndDropForm.controls.order.setValue(this.order);
+      await this.questionFormService.getQuestionsTypeList('DRAG_AND_DROP').then(res => {
+        this.questionsList = res;
       });
     }
+    await this.questionFormService.resetAttachments().then(() => this.attachmentsResetSubject$.next());
   }
 
   private async getDraggableOptions(): Promise<any> {
@@ -326,5 +300,49 @@ export class QuestionDragAndDropFormComponent implements OnInit {
       order: new FormControl(this.dragAndDropForm.controls.order.value),
       drop_areas: new FormControl(this.dragAndDropForm.controls.drop_areas.value)
     });
+  }
+
+  public onSelectQuestion(): void {
+    const question = this.selectQuestionForm.controls.question.value;
+    this.toClone = true;
+    this.setForm(question);
+  }
+
+  private async setForm(question: any): Promise<void> {
+    this.selectQuestion = false;
+    this.question = question;
+
+    this.dragAndDropForm.setValue({
+      title: this.question.title,
+      order: this.toClone ? this.order : this.question.order,
+      on_popup: this.question.on_popup,
+      background_image: null,
+      drop_areas: this.question.drop_areas,
+      drag_options: null
+    });
+
+    /// Setting drag_options
+    this.question.drop_areas.forEach(area => {
+      this.dragItemsArea.push({ attachments: [], area_id: area.id });
+    });
+    await this.getDraggableOptions();
+    this.setDragItems = true;
+
+    // Setting background_image
+    let backgroundImage = this.question.attachments.find(
+      (i) => i.attachment_type === 'IMAGE' && i.background_image === true
+    );
+    backgroundImage = await this.questionFormService.objectToFile(backgroundImage);
+    this.dragAndDropForm.controls.background_image.setValue(backgroundImage);
+
+    // Setting existing attachments
+    await this.questionFormService.setExistingAttachments(this.question, this.toClone).then(res => {
+      this.imageAttachment = res.image;
+      this.audioAttachment = res.audio;
+    });
+
+    if (this.toClone) {
+      this.dragAndDropForm.markAsDirty();
+    }
   }
 }

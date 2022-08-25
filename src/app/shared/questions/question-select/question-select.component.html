@@ -6,7 +6,8 @@
 </div>
 <!-- Options with only one choice -->
 <section *ngIf="!question.multiple">
-    <div class="options-container" [class]="question.display_type | lowercase">
+    <!-- In case of using display_type again: [class]="question.display_type | lowercase" -->
+    <div class="options-container">
         <ng-container *ngFor="let option of question.options">
             <div [class]="getAnswerBackgroundStyle(option)" *ngIf="hasImageAttached(option); else noImageAttached" class="option -card">
                 <mat-card>
@@ -26,6 +27,9 @@
             <ng-template #noImageAttached>
                 <div [class]="getAnswerBackgroundStyle(option)" class="option">
                         {{ option.title }}
+                        <ng-container *ngFor="let attachment of option.attachments">
+                            <mat-icon (click)="playAudio(attachment.file)" *ngIf="attachment.attachment_type === 'AUDIO'">volume_up</mat-icon>
+                        </ng-container>
                 </div>
             </ng-template>
         </ng-container>
@@ -33,8 +37,8 @@
 </section>
 
 <!-- Options with multiple choices -->
-<section class="options-container" [class]="question.display_type | lowercase" 
-         *ngIf="question.multiple">
+<!-- In case of using display_type again: [class]="question.display_type | lowercase" -->
+<section class="options-container" *ngIf="question.multiple">
     <ng-container *ngFor="let option of question.options; let i = index">
         <div [class]="getAnswerBackgroundStyle(option)" *ngIf="hasImageAttached(option); else noImageAttachmentOption" class="option -card">
             <mat-card>
@@ -50,7 +54,7 @@
                         </span>
                     </mat-checkbox>
                     <ng-container *ngFor="let attachment of option.attachments">
-                        <mat-icon *ngIf="attachment.attachment_type === 'AUDIO'">volume_up</mat-icon>
+                        <mat-icon (click)="playAudio(attachment.file)" *ngIf="attachment.attachment_type === 'AUDIO'">volume_up</mat-icon>
                     </ng-container>
                 </mat-card-actions>
             </mat-card>
@@ -62,6 +66,9 @@
                         {{ option.title }}
                     </span>
                 </mat-checkbox>
+                <ng-container *ngFor="let attachment of option.attachments">
+                    <mat-icon (click)="playAudio(attachment.file)" *ngIf="attachment.attachment_type === 'AUDIO'">volume_up</mat-icon>
+                </ng-container>
             </div>
         </ng-template>
     </ng-container>

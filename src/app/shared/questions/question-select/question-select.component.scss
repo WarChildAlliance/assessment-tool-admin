@@ -27,6 +27,8 @@
       margin-bottom: 0.5rem;
       width: 35%;
       text-align: center;
+      display: flex;
+      flex-direction: column;
   
       mat-checkbox {
         cursor: pointer;
@@ -42,6 +44,10 @@
       mat-card img {
         cursor: pointer;
         height: 60px;
+      }
+
+      mat-icon {
+        align-self: center;
       }
   
       &:not(.-card) {
