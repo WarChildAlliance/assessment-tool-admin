@@ -36,8 +36,9 @@
     </div>
     <div class="form-primary__flex-container">
         <div>
-            <h3>Icon</h3>
+            <h3>{{ "assessmentBuilder.icon" |  translate }}</h3>
             <app-image-selector
+                [showLabel]="false"
                 (newImageEvent)="handleFileInput($event)"
             ></app-image-selector>
         </div>
