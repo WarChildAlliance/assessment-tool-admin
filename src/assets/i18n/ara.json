@@ -117,6 +117,7 @@
       "copyAssessment": "قم بإنشاء نسخة",
       "unarchive": "أخرج من الأرشيف"
     },
+    "blocked": "تم بالفعل الرد على {{type}} ولا يمكن تعديله",
     "changeFile": "تغيير الملف",
     "description": "وصف",
     "download": "تحميل",
@@ -136,7 +137,6 @@
         "nameNotifier": "تحتاج إلى تعيين اسم المنطقة أولاً."
       },
       "audioAttachment": "مرفق صوتي",
-      "blocked": "السؤال له إجابة بالفعل ولا يمكن تعديله",
       "dragAndDrop": {
         "areas": "المناطق:",
         "bgImageAndDropAreas": "صورة الخلفية ومناطق الإسقاط",

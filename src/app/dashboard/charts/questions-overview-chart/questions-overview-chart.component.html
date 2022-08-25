@@ -42,6 +42,11 @@
           <app-question-numberline [question]="questionDetails" [index]="index" [evaluated]="true">
           </app-question-numberline>
         </ng-container>
+
+        <ng-container *ngIf="questionDetails.question_type === 'DRAG_AND_DROP'">
+          <app-question-drag-and-drop [question]="questionDetails" [assessmentId]="assessmentId" [topicId]="topicId"
+            [index]="index" [evaluated]="true" [shrinkBackgroundImage]="true"></app-question-drag-and-drop>
+        </ng-container>
       </div>
     </ng-container>
     <ng-template #selectionNoData>

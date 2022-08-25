@@ -26,6 +26,7 @@ export class TopicDetailsComponent implements OnInit {
   public topic: any;
 
   public isDownloadable = false;
+  public isAnswered = false;
 
   public reorder = false;
   public changedOrder = false;
@@ -85,6 +86,7 @@ export class TopicDetailsComponent implements OnInit {
       this.order = questionList.length
         ? questionList.sort((a, b) => parseFloat(a.order) - parseFloat(b.order))[questionList.length - 1].order + 1
         : 1;
+      this.isAnswered = questionList.some(question => question.answered);
     });
   }
 

@@ -1,12 +1,13 @@
-<div class="question-header" *ngIf="evaluated">
-    <h2>Q{{ question.order }}</h2>
-    <h2>{{ question.title }}</h2>
-    <img *ngIf="imageAttachment" [src]="getSource(imageAttachment.file)" alt="">
+<div class="question-header" *ngIf="evaluated" [class.small]="shrinkBackgroundImage">
+    <h2>Q{{ question.order }}: {{ question.title }}</h2>
+    <img *ngIf="imageAttachment" [src]="getSource(imageAttachment.file)" alt="" [class.img-small]="shrinkBackgroundImage">
     <mat-icon class="play-audio" (click)="playAudio(audioAttachment.file)" *ngIf="audioAttachment">volume_up</mat-icon>
 </div>
 
-<div class="background">
-    <div class="img-overlay-wrap" *ngIf="evaluated && backgroundImage">
+<div #backgroundEl class="background" [class.small]="shrinkBackgroundImage">
+    <div class="img-overlay-wrap" *ngIf="evaluated && backgroundImage"
+    [style.transform]="getBackgroundImageTransform(backgroundEl)"
+    >
         <img  [src]="getSource(backgroundImage.file)" width="600" height="500" id="myImg" #myImage draggable="false">
         <svg width="600" height="500" viewBox="0 0 600 500" #draw id="draw" xmlns="http://www.w3.org/2000/svg">
             <rect #rectangle id="rectangle" x="0" y="0" width="150" height="150" />
@@ -22,11 +23,11 @@
             <div class="options" #with_areas *ngFor="let area of question.drop_areas; let i = index">
                 <p>{{i+1}}: {{area.name}}</p>
                 <div [ngSwitch]="noOptions(area.id)">
-                    
+
                     <ng-container *ngSwitchCase="true">
                         <span>{{ "assessmentBuilder.questions.dragAndDrop.noCorrectDragOption" | translate }}</span>
                     </ng-container>
-    
+
                     <ng-container *ngSwitchCase="false">
                         <div *ngFor="let option of draggableOptions">
                             <div *ngIf="option.area_option.includes(area.id)">
@@ -50,15 +51,48 @@
     <div class="without-options" *ngIf="optionsWithoutArea.length">
         <div #withoutOptions class="scrollable">
             <div class="options" #without_areas *ngFor="let option of optionsWithoutArea">
-                {{option.attachments[0]?.file.substring(option.attachments[0].file.lastIndexOf('/')+1)}}
-                <img [src]="getSource(option.attachments[0]?.file)" class="option-img" draggable="false">
+                {{option.attachments[0].file.substring(option.attachments[0].file.lastIndexOf('/')+1)}}
+                <img [src]="getSource(option.attachments[0].file)" class="option-img" draggable="false">
             </div>
         </div>
         <app-horizontal-scroll-arrows
-        [scrollableElement]="withoutOptions"
+        [scrollableElement]="withOptions"
         [pxScrollAmount]="600">
         </app-horizontal-scroll-arrows>
     </div>
 </div>
 
-<!-- TODO: alternative div that takes into account the students' answers to display the options, which will be needed for the dashboard (in the components: questions-overview-chart and answers-overview) -->
+<!-- alternative div that takes into account the students' answers to display the options, which will be needed for the dashboard (in the components: questions-overview-chart and answers-overview) -->
+<div class="areas" *ngIf="answer">
+    <div class="with-options">
+        <div #withOptions class="scrollable">
+            <div class="options" #with_areas *ngFor="let area of question.drop_areas; let i = index">
+                <p>{{i+1}}: {{area.name}}</p>
+                <div *ngIf="getAreaAnswer(area.id) as areaAnswer; else noAnswer">
+                    <div *ngFor="let option of areaAnswer.selected_draggable_options">
+                        <span class="option"
+                        [ngClass]="option.area_option.includes(areaAnswer.area.id) ? 'valid' : 'student'"
+                    >
+                            {{option.attachments[0].file.substring(option.attachments[0].file.lastIndexOf('/')+1)}}
+                            <img [src]="getSource(option.attachments[0].file)" class="option-img" draggable="false">
+                        </span>
+                    </div>
+                </div>
+                <ng-template #noAnswer>
+                    <div>
+                        <span class="option"
+                            [style.padding]="'0 20px'"
+                            [ngClass]="noOptions(area.id) ? 'valid' : 'student'"
+                        >
+                            {{ "assessmentBuilder.questions.dragAndDrop.noAnswerArea" | translate }}
+                        </span>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+        <app-horizontal-scroll-arrows
+        [scrollableElement]="withOptions"
+        [pxScrollAmount]="600">
+        </app-horizontal-scroll-arrows>
+    </div>
+</div>

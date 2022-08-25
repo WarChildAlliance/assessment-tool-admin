@@ -117,6 +117,7 @@
       "copyAssessment": "Create a copy",
       "unarchive": "Unarchive"
     },
+    "blocked": "The {{type}} has already been answered and cannot be edited",
     "changeFile": "Change File",
     "description": "Description",
     "download": "Download",
@@ -136,7 +137,6 @@
         "nameNotifier": "You need to set the area name first."
       },
       "audioAttachment": "Audio attachment",
-      "blocked": "The question already has answer and cannot be edited",
       "dragAndDrop": {
         "areas": "Areas:",
         "bgImageAndDropAreas": "background image and the drop areas",
