@@ -93,11 +93,15 @@ export class AssessmentFormDialogComponent implements OnInit {
     const data = await this.formGroupToFormData();
     if (this.edit) {
       this.assessmentService.editAssessment(this.assessment.id, data).subscribe(() => {
-        this.alertService.success(this.translateService.instant('assessmentBuilder.assessmentEditSuccess'));
+        this.alertService.success(this.translateService.instant('general.editSuccess', {
+          type: this.translateService.instant('general.assessment')
+        }));
       });
     } else {
       this.assessmentService.createAssessment(data).subscribe(res => {
-        this.alertService.success(this.translateService.instant('assessmentBuilder.assessmentSaveSuccess'));
+        this.alertService.success(this.translateService.instant('assessmentBuilder.saveSuccess', {
+          type: this.translateService.instant('general.assessment')
+        }));
     });
     }
     this.assessmentForm.reset();
@@ -105,7 +109,9 @@ export class AssessmentFormDialogComponent implements OnInit {
 
   public saveAttachments(assessmentId: string, attachment, type: string, obj): void {
     this.assessmentService.addAttachments(assessmentId, attachment, type, obj).subscribe((res) => {
-      this.alertService.success(this.translateService.instant('assessmentBuilder.assessmentSaveSuccess'));
+      this.alertService.success(this.translateService.instant('assessmentBuilder.saveSuccess', {
+        type: this.translateService.instant('general.assessment')
+      }));
     });
   }
 

@@ -95,8 +95,13 @@ export class StudentDetailComponent implements OnInit {
   public onDelete(): void {
     const confirmDialog = this.dialog.open(ConfirmModalComponent, {
       data: {
-        title: this.translateService.instant('students.deleteStudent'),
-        content: this.translateService.instant('students.deleteStudentPrompt'),
+        title: this.translateService.instant('general.delete', {
+          type: this.translateService.instant('general.student').toLocaleLowerCase()
+        }),
+        content: this.translateService.instant('general.simpleDeletePrompt', {
+          type: this.translateService.instant('general.student').toLocaleLowerCase(),
+          name: ''
+        }),
         contentType: 'innerHTML',
         confirmColor: 'warn'
       }

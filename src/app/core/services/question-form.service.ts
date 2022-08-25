@@ -151,11 +151,15 @@ export class QuestionFormService {
 
   public emitMessage(question: boolean, clone: boolean): void {
     if (question) {
-      this.alertMessage = this.translateService.instant('assessmentBuilder.questions.questionCreateSuccess');
+      this.alertMessage = this.translateService.instant('general.createSuccess', {
+        type: this.translateService.instant('general.question')
+      });
     } else if (clone) {
       this.alertMessage = this.translateService.instant('assessmentBuilder.questions.questionCloneSuccess');
     } else {
-      this.alertMessage = this.translateService.instant('assessmentBuilder.questions.questionUpdateSuccess');
+      this.alertMessage = this.translateService.instant('general.editSuccess', {
+        type: this.translateService.instant('general.question')
+      });
     }
 
     this.alertService.success(this.alertMessage);

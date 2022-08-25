@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>
-    {{ edit ? ("assessmentBuilder.assessmentFormDialog.editAssessment" | translate)
-     : ("assessmentBuilder.assessmentFormDialog.createNewAssessment" | translate) }}</h2>
+    {{ edit ? ("general.edit" | translate: { type: "general.assessment" | translate | lowercase})
+     : ("general.createNew" | translate: { type: "general.assessment" | translate | lowercase }) }}</h2>
 
 <div *ngIf="selectAssessment" class="select">
     <form class="form-primary" [formGroup]="selectAssessmentForm">
@@ -52,8 +52,9 @@
     </div>
     <div class="form-primary__flex-container">
         <div>
-            <h3>Icon</h3>
+            <h3>{{ "assessmentBuilder.icon" |  translate }}</h3>
             <app-image-selector
+                [showLabel]="false"
                 (newImageEvent)="handleFileInput($event)"
             ></app-image-selector>
         </div>
@@ -68,7 +69,7 @@
                 {{ "assessmentBuilder.downloadable" | translate }}
             </mat-checkbox>
             <mat-checkbox formControlName="archived">
-                {{ "general.archive" | translate }}
+                {{ "general.archived" | translate: {type: ''} }}
             </mat-checkbox>
         </div>
     </div>

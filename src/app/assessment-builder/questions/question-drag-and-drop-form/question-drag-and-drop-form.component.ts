@@ -68,7 +68,9 @@ export class QuestionDragAndDropFormComponent implements OnInit {
     private dialog: MatDialog,
     private assessmentService: AssessmentService,
     public questionFormService: QuestionFormService
-  ) { }
+  ) {
+    this.attachmentsResetSubject$.subscribe(() => this.questionFormService.resetAttachments());
+  }
 
   async ngOnInit(): Promise<void> {
     if (this.data?.assessmentId) { this.assessmentId = this.data.assessmentId; }

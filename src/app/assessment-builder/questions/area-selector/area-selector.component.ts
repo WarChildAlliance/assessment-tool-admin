@@ -65,7 +65,6 @@ export class AreaSelectorComponent implements AfterViewInit {
     this.svgStyle.setProperty('visibility', 'hidden');
 
     const drawElRef = this.drawElement.nativeElement;
-    const dialogRef = this.areaSelectorDialogElement.nativeElement;
 
     if (this.data?.areas && this.data?.image_background) {
       this.reDraw();
@@ -75,8 +74,8 @@ export class AreaSelectorComponent implements AfterViewInit {
       if (statusName === 'VALID') {
         this.renderer.setStyle(drawElRef, 'pointer-events', 'all');
 
-        this.unlistenStartDrag = this.renderer.listen(drawElRef, 'pointerdown', eventStarDrag => {
-          this.startDrag(eventStarDrag);
+        this.unlistenStartDrag = this.renderer.listen(drawElRef, 'pointerdown', eventStartDrag => {
+          this.startDrag(eventStartDrag);
 
           this.ngZone.runOutsideAngular(() => {
             this.unlistenMoveDrag = this.renderer.listen(drawElRef, 'pointermove', eventMoveDrag => {
@@ -84,7 +83,7 @@ export class AreaSelectorComponent implements AfterViewInit {
             });
           });
 
-          this.unlistenStopDrag = this.renderer.listen(dialogRef, 'pointerup', eventStopDrag => {
+          this.unlistenStopDrag = this.renderer.listen(drawElRef, 'pointerup', eventStopDrag => {
             this.stopDrag(eventStopDrag);
             this.unlistenMoveDrag();
             this.unlistenStopDrag();
@@ -108,7 +107,7 @@ export class AreaSelectorComponent implements AfterViewInit {
   private stopDrag(event): void {
     this.svgStyle.setProperty('visibility', 'hidden');
 
-    if (event.target === this.drawElement.nativeElement && this.coordinatesForm.valid) {
+    if (event.currentTarget === this.drawElement.nativeElement && this.coordinatesForm.valid) {
       this.addArea();
       this.reDraw();
     }

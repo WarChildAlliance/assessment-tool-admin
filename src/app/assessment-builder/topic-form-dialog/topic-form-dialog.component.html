@@ -1,4 +1,4 @@
-<h2>{{ edit ? ("assessmentBuilder.topicFormDialog.editTopic" | translate) : ("assessmentBuilder.topicFormDialog.createTopic" | translate) }}</h2>
+<h2>{{ edit ? ("general.edit" | translate: { type: '' }) : ("assessmentBuilder.topicFormDialog.createTopic" | translate) }}</h2>
 
 <div *ngIf="selectTopic" class="select">
     <form class="form-primary" [formGroup]="selectTopicForm">
@@ -52,11 +52,12 @@
             {{ "assessmentBuilder.allowSkip" | translate }}
         </mat-checkbox>
         <mat-checkbox formControlName="archived">
-            {{ "general.archived" |  translate }}
+            {{ "general.archived" |  translate: {type: ''} }}
         </mat-checkbox>
         <div>
-            <h3>{{ "assessmentBuilder.icon" |  translate }} *</h3>
+            <h3>{{ "assessmentBuilder.icon" |  translate }}</h3>
             <app-image-selector
+                [showLabel]="false"
                 (newImageEvent)="handleFileInput($event)"
                 [imageAttachment]="icon"
             ></app-image-selector>

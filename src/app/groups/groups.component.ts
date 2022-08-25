@@ -9,7 +9,6 @@ import { GroupTableData } from '../core/models/group-table-data.model';
 import { GroupDialogComponent } from './group-dialog/group-dialog.component';
 import { AlertService } from '../core/services/alert.service';
 import { ConfirmModalComponent } from '../shared/confirm-modal/confirm-modal.component';
-import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-groups',
@@ -93,10 +92,17 @@ export class GroupsComponent implements OnInit {
   }
 
   public onDelete(): void {
+    const groupTranslation = this.translateService.instant(
+      this.selectedGroups.length > 1 ? 'general.groups' : 'general.group'
+    );
     const confirmDialog = this.dialog.open(ConfirmModalComponent, {
       data: {
-        title: this.translateService.instant('groups.deleteGroup'),
-        content: this.translateService.instant('groups.deleteGroupPrompt'),
+        title: this.translateService.instant('general.delete', {
+          type: groupTranslation.toLocaleLowerCase()
+        }),
+        content: this.translateService.instant('groups.deleteGroupPrompt', {
+          type: groupTranslation.toLocaleLowerCase()
+        }),
         contentType: 'innerHTML',
         confirmColor: 'warn'
       }
@@ -104,17 +110,19 @@ export class GroupsComponent implements OnInit {
 
     confirmDialog.afterClosed().subscribe((res) => {
       if (res) {
-        const toDelete = [];
-        this.selectedGroups.forEach(group => {
-          toDelete.push(
-            this.userService.deleteGroup(group.id.toString())
-          );
-        });
-
-        forkJoin(toDelete).subscribe(() => {
-          this.alertService.success(this.translateService.instant('groups.deleteGroupSuccess'));
+        const toDelete = this.selectedGroups.map(group => group.id.toString());
+        const onDeleteCallback = (): void => {
+          this.alertService.success(this.translateService.instant('general.deleteSuccess', {
+            type: groupTranslation
+          }));
           this.getGroups();
-        });
+        };
+
+        if (toDelete.length === 1) {
+          this.userService.deleteGroup(toDelete[0]).subscribe(onDeleteCallback);
+          return;
+        }
+        this.userService.deleteGroups(toDelete).subscribe(onDeleteCallback);
       }
     });
   }

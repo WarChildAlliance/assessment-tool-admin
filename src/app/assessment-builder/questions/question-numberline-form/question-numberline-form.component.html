@@ -51,11 +51,15 @@
     </mat-form-field>
 
     <mat-checkbox formControlName="show_ticks">
-        <mat-label for="show_ticks">{{ "assessmentBuilder.questions.numberline.showTicks" | translate }}</mat-label>
+        <mat-label for="show_ticks">
+            {{ "assessmentBuilder.show" | translate: {type: "assessmentBuilder.questions.numberline.ticks" | translate} }}
+        </mat-label>
     </mat-checkbox>
 
     <mat-checkbox formControlName="show_value">
-        <mat-label for="show_value">{{ "assessmentBuilder.questions.numberline.showValue" | translate }}</mat-label>
+        <mat-label for="show_value">
+            {{ "assessmentBuilder.show" | translate: {type: "assessmentBuilder.value" | translate | lowercase} }}
+        </mat-label>
     </mat-checkbox>
 
     <mat-checkbox formControlName="on_popup">

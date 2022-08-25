@@ -77,7 +77,6 @@ export class StudentDialogComponent implements OnInit {
         this.groups = groups;
       }
     );
-
     this.studentForm.valueChanges.subscribe(() => { this.hasFormChanged = true; });
   }
 
@@ -126,6 +125,8 @@ export class StudentDialogComponent implements OnInit {
               { name: student.first_name + ' ' + student.last_name, username: student.username }
             )
           );
+
+          this.dialogRef.close(true);
         });
       }
     }
@@ -146,7 +147,7 @@ export class StudentDialogComponent implements OnInit {
 
   // Check student duplication on creation: based on name
   private async checkStudentDuplication(studentToSave: any): Promise<boolean | void> {
-    let create = false;
+    let create = this.studentList.length ? false : true;
 
     for (const student of this.studentList) {
       if (student.first_name.toLowerCase() === studentToSave.first_name.toLowerCase()
@@ -183,6 +184,8 @@ export class StudentDialogComponent implements OnInit {
           create = false;
         }
         break;
+      } else {
+        create = true;
       }
     }
 
