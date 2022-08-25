@@ -18,6 +18,8 @@ interface DialogData {
   styleUrls: ['./question-input-form.component.scss'],
 })
 export class QuestionInputFormComponent implements OnInit {
+  public questionsList: any;
+  public selectQuestion: boolean;
 
   public assessmentId: string;
   public topicId: string;
@@ -30,6 +32,10 @@ export class QuestionInputFormComponent implements OnInit {
 
   public attachmentsResetSubject$ = new Subject<void>();
 
+  public selectQuestionForm: FormGroup = new FormGroup({
+    question: new FormControl(null)
+  });
+
   public inputForm: FormGroup = new FormGroup({
     question_type: new FormControl('INPUT'),
     title: new FormControl('', [Validators.required]),
@@ -41,7 +47,9 @@ export class QuestionInputFormComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public questionFormService: QuestionFormService
-  ) {}
+  ) {
+    this.attachmentsResetSubject$.subscribe(() => this.questionFormService.resetAttachments());
+  }
 
   async ngOnInit(): Promise<void> {
     if (this.data?.assessmentId) { this.assessmentId = this.data.assessmentId; }
@@ -49,33 +57,16 @@ export class QuestionInputFormComponent implements OnInit {
     if (this.data?.order) { this.order = this.data.order; }
     if (this.data?.question) { this.question = this.data.question; }
     if (this.data?.toClone) { this.toClone = this.data.toClone; }
-    await this.questionFormService.resetAttachments().then(() => this.attachmentsResetSubject$.next());
     if (this.question) {
-      this.inputForm.setValue({
-        question_type: 'INPUT',
-        title: this.question.title,
-        order: this.toClone ? this.order : this.question.order,
-        valid_answer: this.question.valid_answer,
-        on_popup: this.question.on_popup
-      });
-
-      await this.questionFormService.setExistingAttachments(this.question, this.toClone).then(res => {
-        this.imageAttachment = res.image;
-        this.audioAttachment = res.audio;
-      });
-
-      if (this.toClone) {
-        this.inputForm.markAsDirty();
-      }
+      this.setForm(this.question);
     } else {
-      this.inputForm.setValue({
-        question_type: 'INPUT',
-        title: '',
-        order: this.order,
-        valid_answer: '',
-        on_popup: false
+      this.selectQuestion = true;
+      this.inputForm.controls.order.setValue(this.order);
+      await this.questionFormService.getQuestionsTypeList('INPUT').then(res => {
+        this.questionsList = res;
       });
     }
+    await this.questionFormService.resetAttachments().then(() => this.attachmentsResetSubject$.next());
   }
 
   private createInputQuestion(data?: any): void {
@@ -113,6 +104,34 @@ export class QuestionInputFormComponent implements OnInit {
       this.editInputQuestion(data);
     } else {
       this.createInputQuestion(data);
+    }
+  }
+
+  public onSelectQuestion(): void {
+    const question = this.selectQuestionForm.controls.question.value;
+    this.toClone = true;
+    this.setForm(question);
+  }
+
+  private async setForm(question: any): Promise<void> {
+    this.selectQuestion = false;
+    this.question = question;
+
+    this.inputForm.setValue({
+      question_type: 'INPUT',
+      title: question.title,
+      order: this.toClone ? this.order : question.order,
+      valid_answer: question.valid_answer,
+      on_popup: question.on_popup
+    });
+
+    await this.questionFormService.setExistingAttachments(this.question, this.toClone).then(res => {
+      this.imageAttachment = res.image;
+      this.audioAttachment = res.audio;
+    });
+
+    if (this.toClone) {
+      this.inputForm.markAsDirty();
     }
   }
 }

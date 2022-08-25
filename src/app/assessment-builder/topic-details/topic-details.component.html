@@ -13,10 +13,15 @@
           : ("assessmentBuilder.assessmentSummary.reorderItems" | translate: { item: ("general.questions" | translate)}) }}
       </app-custom-button>
       <span *ngIf="!reorder">
-        <app-custom-button *ngIf="topicDetails.can_edit && !topicDetails.archived" category="tertiary" variant="primary"
-         icon="edit" (click)="openEditTopicDialog(topicDetails)">
-         {{ "general.edit" | translate: {type: ''} }}
-        </app-custom-button>
+        <span matTooltip="{{ 'assessmentBuilder.blocked' | translate: { type: ('general.topic' | translate | lowercase) } }}"
+          matTooltipPosition="above"
+          [matTooltipDisabled]="!isAnswered"
+        >
+          <app-custom-button *ngIf="topicDetails.can_edit && !topicDetails.archived" category="tertiary" variant="primary"
+            icon="edit" (click)="openEditTopicDialog(topicDetails)" [disabled]="isAnswered">
+          {{ "general.edit" | translate: {type: ''} }}
+          </app-custom-button>
+        </span>
         <app-custom-button *ngIf="topicDetails.can_edit" category="tertiary" variant="primary" icon="delete" (click)="deleteTopic()">
           {{ "general.delete" | translate: {type: ''} }}
         </app-custom-button>
@@ -76,7 +81,8 @@
       </div>
     </mat-card>
     <div class="question-details" *ngFor="let questionDetails of questionsList" cdkDrag [cdkDragDisabled]="!reorder">
-      <span matTooltip="{{ 'assessmentBuilder.questions.blocked' | translate }}" [matTooltipDisabled]="!questionDetails.answered" matTooltipPosition="above">
+      <span matTooltip="{{ 'assessmentBuilder.blocked' | translate: { type: ('general.question' | translate | lowercase) } }}"
+        [matTooltipDisabled]="!questionDetails.answered" matTooltipPosition="above">
         <app-custom-button *ngIf="topicDetails.can_edit" [disabled]="questionDetails.answered" category="tertiary" variant="neutral"
           (click)="openQuestionDialog(questionDetails)">
           {{ "general.edit" | translate: {type: ''} }}

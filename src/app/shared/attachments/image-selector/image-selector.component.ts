@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 export class ImageSelectorComponent implements OnInit {
   @Input() reset$: Observable<void> = null;
   @Input() imageAttachment: File;
+  @Input() showLabel = true;
 
   @Output() newImageEvent = new EventEmitter<File>();
 

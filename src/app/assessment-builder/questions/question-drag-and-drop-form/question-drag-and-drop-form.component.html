@@ -1,4 +1,20 @@
-<div class="container">
+<div *ngIf="selectQuestion" class="select">
+    <form class="form-primary" [formGroup]="selectQuestionForm">
+        <mat-form-field appearance="outline" color="accent">
+            <mat-label>{{ 'general.selectItem' | translate:{ item: ('general.question' | translate)} }}</mat-label>
+            <mat-select formControlName="question" (selectionChange)="onSelectQuestion()">
+                <mat-option *ngFor="let question of questionsList" [value]="question">{{ question.title }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <app-spinner *ngIf="!questionsList" size="medium" [variant]="'primary'"></app-spinner>
+    </form>
+
+    <app-custom-button category="secondary" variant="neutral" icon="add" (click)="selectQuestion = false">
+        {{ 'general.createNewOne' | translate }}
+    </app-custom-button>
+</div>
+
+<div *ngIf="!selectQuestion" class="container">
 
     <form [formGroup]="dragAndDropForm">
         <div class="drag-and-drop-form">

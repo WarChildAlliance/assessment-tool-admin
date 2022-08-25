@@ -49,6 +49,14 @@ export class AssessmentService {
     return this.http.get<any[]>(`${environment.API_URL}/visualization/assessments/${id}/topics/`);
   }
 
+  public getAssessmentTopicsList(): Observable<any[]> {
+    return this.http.get<any[]>(`${environment.API_URL}/visualization/topics/all/`);
+  }
+
+  public getQuestionsTypeList(questionType: string): Observable<any> {
+    return this.http.get<any>(`${environment.API_URL}/assessments/questions/all/?type=${questionType}`);
+  }
+
   public getTopicQuestions(assessmentId: string, topicId: string): Observable<any[]> {
     return this.http.get<any[]>(`${environment.API_URL}/visualization/assessments/${assessmentId}/topics/${topicId}/questions/`);
   }
@@ -97,7 +105,7 @@ export class AssessmentService {
 
   public getQuestionDetails(assessmentId, topicId, questionId): Observable<any[]> {
     return this.http.get<any[]>(`
-    ${environment.API_URL}/visualization/assessments/${assessmentId}/topics/${topicId}/questions/${questionId}`
+    ${environment.API_URL}/visualization/assessments/${assessmentId}/topics/${topicId}/questions/${questionId}/`
     );
   }
 

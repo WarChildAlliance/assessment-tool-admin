@@ -48,6 +48,9 @@
                 <app-custom-button *ngIf="assessment.downloadable" category="tertiary" variant="primary" icon="download" (click)="downloadPDF(assessment.id)">
                     {{ "assessmentBuilder.download" | translate }}
                 </app-custom-button>
+                <app-custom-button *ngIf="!canEdit" category="tertiary" variant="primary" icon="control_point_duplicate" (click)="editAssessment(assessment, true)">
+                    {{ "assessmentBuilder.assessmentSummary.copyAssessment" | translate }}
+                </app-custom-button>
             </span>
             <span *ngIf="reorder">
                 <app-custom-button *ngIf="canEdit && !assessment.archived" category="tertiary" variant="danger" icon="close" (click)="cancelReorder()">
