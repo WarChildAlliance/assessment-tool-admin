@@ -41,12 +41,13 @@ export class QuestionSelectFormComponent implements OnInit {
   public saveOptions = false;
   public attachmentsResetSubject$ = new Subject<void>();
 
+  // In case of using display_type again: uncomment all occurences of selectForm.controls.display for this component
   public selectForm: FormGroup = new FormGroup({
     question_type: new FormControl('SELECT'),
     title: new FormControl(''),
     value: new FormControl('', [Validators.required]),
     order: new FormControl('', [Validators.required]),
-    display: new FormControl('Grid', [Validators.required]),
+    // display: new FormControl('Grid', [Validators.required]),
     multiple: new FormControl(false),
     on_popup: new FormControl(false),
     options: new FormArray([
@@ -113,7 +114,7 @@ export class QuestionSelectFormComponent implements OnInit {
         value: q.value,
         title: q.title,
         order: this.toClone ? this.order : this.question.order,
-        display: q.display_type ? this.displayTypeFormat(q.display_type) : 'Grid',
+        // display: q.display_type ? this.displayTypeFormat(q.display_type) : 'Grid',
         multiple: q.multiple,
         on_popup: this.question.on_popup,
         options,
@@ -126,7 +127,7 @@ export class QuestionSelectFormComponent implements OnInit {
         question_type: 'SELECT',
         value: '',
         title: '',
-        order: this.order, display: 'Grid',
+        order: this.order, //  display: 'Grid',
         multiple: false,
         on_popup: false,
         options: [{ title: '', valid: false, value: '' }],
@@ -211,7 +212,7 @@ export class QuestionSelectFormComponent implements OnInit {
       question_type: 'SELECT',
       value: '',
       title: '',
-      order: this.order, display: 'Grid',
+      order: this.order, // display: 'Grid',
       multiple: false,
       on_popup: false,
       options: [{ title: '', valid: false, value: '' }],
@@ -224,7 +225,7 @@ export class QuestionSelectFormComponent implements OnInit {
     this.optionAttChange = false;
     this.saveOptions = false;
     this.selectForm.controls.order.setValue(this.order + 1, [Validators.required]);
-    this.selectForm.controls.display.setValue('Grid', [Validators.required]);
+    // this.selectForm.controls.display.setValue('Grid', [Validators.required]);
     this.selectForm.controls.question_type.setValue('SELECT');
     this.selectForm.controls.multiple.setValue(false);
 
@@ -236,9 +237,11 @@ export class QuestionSelectFormComponent implements OnInit {
   }
 
   // TODO: later changes it in backend
-  private displayTypeFormat(str: string): string {
-    return str.charAt(0).toUpperCase() + str.substring(1).toLowerCase();
-  }
+  // In case of using display_type again: uncomment following method
+
+  // private displayTypeFormat(str: string): string {
+  //   return str.charAt(0).toUpperCase() + str.substring(1).toLowerCase();
+  // }
 
   public addOptions(): void {
     this.optionsAtt.push({ attachments: [] });

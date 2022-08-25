@@ -6,7 +6,8 @@
 </div>
 <!-- Options with only one choice -->
 <section *ngIf="!question.multiple">
-    <div class="options-container" [class]="question.display_type | lowercase">
+    <!-- In case of using display_type again: [class]="question.display_type | lowercase" -->
+    <div class="options-container">
         <ng-container *ngFor="let option of question.options">
             <div [class]="getAnswerBackgroundStyle(option)" *ngIf="hasImageAttached(option); else noImageAttached" class="option -card">
                 <mat-card>
@@ -33,8 +34,8 @@
 </section>
 
 <!-- Options with multiple choices -->
-<section class="options-container" [class]="question.display_type | lowercase" 
-         *ngIf="question.multiple">
+<!-- In case of using display_type again: [class]="question.display_type | lowercase" -->
+<section class="options-container" *ngIf="question.multiple">
     <ng-container *ngFor="let option of question.options; let i = index">
         <div [class]="getAnswerBackgroundStyle(option)" *ngIf="hasImageAttached(option); else noImageAttachmentOption" class="option -card">
             <mat-card>
