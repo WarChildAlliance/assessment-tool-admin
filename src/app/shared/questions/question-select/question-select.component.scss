@@ -1,26 +1,23 @@
 .options-container {
   display: flex;
   justify-content: space-evenly;
-  flex-wrap: wrap
-  ;
+  flex-wrap: wrap;
+
     &.grid {
       display: grid;
       place-items: center;
       grid-template-columns: 1fr 1fr;
       // TODO verify if we need a media query
     }
-  
     &.vertical {
       display: grid;
       align-items: center;
       grid-template-columns: 1fr;
     }
-  
     &.horizontal {
       display: flex;
       flex-wrap: nowrap;
     }
-  
     .option {
       padding: 0.5rem;
       border-radius: 1.25rem;
@@ -31,13 +28,10 @@
       flex-direction: column;
   
       mat-checkbox {
-        cursor: pointer;
-  
         span {
           color: black;
         }
       }
-
       mat-card {
         padding: 8px !important;
       }
@@ -45,21 +39,17 @@
         cursor: pointer;
         height: 60px;
       }
-
       mat-icon {
         align-self: center;
       }
-  
       &:not(.-card) {
         background-color: rgb(223, 223, 223);
       }
-  
       &.valid {
         outline-width: 4px;
         outline-color: #7EBF9A;;
         outline-style: solid;
       }
-
       &.student {
         outline-width: 2px;
         outline-color: #7e8abf;;
@@ -67,7 +57,6 @@
       }
     }
 }
-
 .question-header{
   text-align: center;
 
@@ -75,8 +64,6 @@
     float: left;
   }
 }
-
 .play-audio {
   cursor: pointer;
 }
-  
