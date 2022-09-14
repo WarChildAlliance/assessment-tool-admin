@@ -15,6 +15,7 @@ export class AudioRecorderComponent implements OnInit {
 
   private title = 'micRecorder';
   private recorder: RecordRTC.StereoAudioRecorder;
+  private stream: MediaStream;
 
   public isRecording = false;
   public recordingUrl: string;
@@ -47,6 +48,8 @@ export class AudioRecorderComponent implements OnInit {
       sampleRate: 48000,
     };
     const StereoAudioRecorder = RecordRTC.StereoAudioRecorder;
+
+    this.stream = stream;
     this.recorder = new StereoAudioRecorder(stream, options);
     this.recorder.record();
   }
@@ -74,6 +77,7 @@ export class AudioRecorderComponent implements OnInit {
   public stopRecording(): void {
     this.isRecording = false;
     this.recorder.stop(this.processRecording.bind(this));
+    this.stream.getTracks().forEach(track => track.stop());
   }
 }
 
