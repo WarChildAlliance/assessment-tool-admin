@@ -48,7 +48,7 @@
                     </div>
                 </mat-card-content>
                 <mat-card-actions>
-                    <mat-checkbox>
+                    <mat-checkbox disabled>
                         <span>
                             {{ option.title }}
                         </span>
@@ -61,7 +61,7 @@
         </div>
         <ng-template #noImageAttachmentOption>
             <div [class]="getAnswerBackgroundStyle(option)" class="option">
-                <mat-checkbox>
+                <mat-checkbox disabled>
                     <span>
                         {{ option.title }}
                     </span>
