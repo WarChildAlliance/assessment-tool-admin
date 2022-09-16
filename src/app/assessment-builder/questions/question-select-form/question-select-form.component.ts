@@ -20,6 +20,7 @@ interface DialogData {
 export class QuestionSelectFormComponent implements OnInit {
   public questionsList: any;
   public selectQuestion: boolean;
+  public difficulties = this.questionFormService.questionDifficulties;
 
   public assessmentId: string;
   public topicId: string;
@@ -53,6 +54,7 @@ export class QuestionSelectFormComponent implements OnInit {
     title: new FormControl(''),
     value: new FormControl('', [Validators.required]),
     order: new FormControl('', [Validators.required]),
+    difficulty: new FormControl('', [Validators.required]),
     // display: new FormControl('Grid', [Validators.required]),
     multiple: new FormControl(false),
     on_popup: new FormControl(false),
@@ -89,6 +91,7 @@ export class QuestionSelectFormComponent implements OnInit {
         value: '',
         title: '',
         order: this.order, //  display: 'Grid',
+        difficulty: '',
         multiple: false,
         on_popup: false,
         options: [{ title: '', valid: false, value: '' }],
@@ -153,6 +156,7 @@ export class QuestionSelectFormComponent implements OnInit {
       value: '',
       title: '',
       order: this.order, // display: 'Grid',
+      difficulty: '',
       multiple: false,
       on_popup: false,
       options: [{ title: '', valid: false, value: '' }],
@@ -325,6 +329,7 @@ export class QuestionSelectFormComponent implements OnInit {
         value: q.value,
         title: q.title,
         order: this.toClone ? this.order : this.question.order,
+        difficulty: question.difficulty,
         // display: q.display_type ? this.displayTypeFormat(q.display_type) : 'Grid',
         multiple: q.multiple,
         on_popup: this.question.on_popup,

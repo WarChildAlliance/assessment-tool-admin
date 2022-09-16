@@ -66,6 +66,10 @@
         <p>{{ "assessmentBuilder.show" | translate: {type: "assessmentBuilder.topicDetails.feedback" | translate} }}</p>
         <p>{{ topicDetails.show_feedback }} </p>
       </div>
+      <div class="detail">
+        <p>{{ "assessmentBuilder.topicFormDialog.subtopic" | translate }}</p>
+        <p>{{ topicDetails.subtopic }} </p>
+      </div>
     </div>
   </mat-card>
   <div class="question" cdkDropList cdkDropListOrientation="vertical" [cdkDropListData]="questionsToOrder" (cdkDropListDropped)="dropQuestion($event)">

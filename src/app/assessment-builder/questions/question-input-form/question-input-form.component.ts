@@ -26,6 +26,7 @@ export class QuestionInputFormComponent implements OnInit {
   public order: any;
   public question: any;
   public toClone: boolean;
+  public difficulties = this.questionFormService.questionDifficulties;
 
   public imageAttachment = this.questionFormService.imageAttachment;
   public audioAttachment = this.questionFormService.audioAttachment;
@@ -41,6 +42,7 @@ export class QuestionInputFormComponent implements OnInit {
     title: new FormControl('', [Validators.required]),
     order: new FormControl('', [Validators.required]),
     valid_answer: new FormControl('', [Validators.required]),
+    difficulty: new FormControl('', [Validators.required]),
     on_popup: new FormControl(false)
   });
 
@@ -122,7 +124,8 @@ export class QuestionInputFormComponent implements OnInit {
       title: question.title,
       order: this.toClone ? this.order : question.order,
       valid_answer: question.valid_answer,
-      on_popup: question.on_popup
+      on_popup: question.on_popup,
+      difficulty: question.difficulty
     });
 
     await this.questionFormService.setExistingAttachments(this.question, this.toClone).then(res => {
