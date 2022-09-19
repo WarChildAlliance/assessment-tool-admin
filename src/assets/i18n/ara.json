@@ -8,6 +8,7 @@
     "assessments": "التقييمات",
     "assessment": "تقييم",
     "assessmentsOverview": "نظرة عامة على التقييمات",
+    "library": "مكتبة",
     "assign": "تعيين",
     "cancel": "إلغاء",
     "choose": "اختر {{type}}",
@@ -162,6 +163,7 @@
       },
       "or": "أو",
       "questionCloneSuccess": "تم استنساخ السؤال بنجاح",
+      "difficulty": "صعوبة",
       "select": {
         "attachments": "المرفقات",
         "display": "عرض",
@@ -184,7 +186,8 @@
       "changeFile": "تغيير الملف",
       "createTopic": "قم بإنشاء موضوع",
       "praiseTooltip": "حالات الحمد",
-      "whenToShowFeedbacks": "متى تظهر التقيمات؟"
+      "whenToShowFeedbacks": "متى تظهر التقيمات؟",
+      "subtopic": "موضوع فرعي"
     },
     "value": "قيمة"
   },
@@ -303,7 +306,10 @@
       "noGroups": "ليس لديك مجموعات مع الطلاب.",
       "notifier": "تحتاج إلى تحديد الطالب (الطلاب) أو المجموعة (المجموعات) وتعيين تاريخ البدء وتاريخ الانتهاء لكل موضوع محدد",
       "startDate": "تاريخ البدء",
-      "topicAvailability": "مدى توفر موضوع (مواضيع) التقييم"
+      "topicAvailability": "مدى توفر موضوع (مواضيع) التقييم",
+      "replaceAsssessmentAccess": "هل تريد استبدال <b> {{previousAssessment}} </b> بـ <b> {{newAssessment}} </b>؟",
+      "studentAssessmentPrompt": "الطالب {{studentName}} لديه تقييم معين بالفعل",
+      "newAssessment": "تقييم جديد"
     },
     "topicAccessesEdit": {
       "accessEdited": "تم حذف الوصول إلى الموضوع بنجاح!",

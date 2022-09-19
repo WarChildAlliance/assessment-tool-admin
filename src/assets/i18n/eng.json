@@ -8,6 +8,7 @@
     "assessments": "Assessments",
     "assessment": "Assessment",
     "assessmentsOverview": "Assessments Overview",
+    "library": "Library",
     "assign": "Assign",
     "cancel": "Cancel",
     "choose": "Choose {{type}}",
@@ -162,6 +163,7 @@
       },
       "or": "OR",
       "questionCloneSuccess": "Question successfully cloned",
+      "difficulty": "Difficulty",
       "select": {
         "attachments": "Attachments",
         "display": "Display",
@@ -184,7 +186,8 @@
       "changeFile": "Change File",
       "createTopic": "Create a topic",
       "praiseTooltip": "Praise occurencies",
-      "whenToShowFeedbacks": "When to show feedbacks ?"
+      "whenToShowFeedbacks": "When to show feedbacks ?",
+      "subtopic": "Subtopic"
     },
     "value": "Value"
   },
@@ -303,7 +306,10 @@
       "noGroups": "You don't have groups with students.",
       "notifier": "You need to select student(s) or group(s) and set a start date and an end date for each selected topic.",
       "startDate": "Start date",
-      "topicAvailability": "Assessment topic(s) availability"
+      "topicAvailability": "Assessment topic(s) availability",
+      "replaceAsssessmentAccess": "Do you want to replace <b>{{previousAssessment}}</b> with <b>{{newAssessment}}</b>?",
+      "studentAssessmentPrompt": "Student {{studentName}} already has an assessment assigned",
+      "newAssessment": "a new assessment"
     },
     "topicAccessesEdit": {
       "accessEdited": "The topic access have been successfully deleted!",
