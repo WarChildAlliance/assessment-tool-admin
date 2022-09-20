@@ -116,7 +116,8 @@
       "reorderTooltip": "Reorder {{item}} by dragging and dropping them",
       "saveOrder": "Save order",
       "copyAssessment": "Create a copy",
-      "unarchive": "Unarchive"
+      "unarchive": "Unarchive",
+      "assignAssessment": "Assign assessment"
     },
     "blocked": "The {{type}} has already been answered and cannot be edited",
     "changeFile": "Change File",

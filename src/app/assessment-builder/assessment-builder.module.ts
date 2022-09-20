@@ -30,6 +30,8 @@ import { QuestionDragAndDropFormComponent } from './questions/question-drag-and-
 import { AreaSelectorComponent } from './questions/area-selector/area-selector.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { CustomSpinnerModule } from '../shared/spinner/spinner.module';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [
@@ -66,7 +68,12 @@ import { CustomSpinnerModule } from '../shared/spinner/spinner.module';
     CustomButtonModule,
     PreviousButtonModule,
     DragDropModule,
-    CustomSpinnerModule
+    CustomSpinnerModule,
+    MatNativeDateModule,
+    MatDatepickerModule
+  ],
+  exports: [
+    AssessmentSummaryComponent
   ]
 })
 export class AssessmentBuilderModule { }

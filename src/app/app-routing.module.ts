@@ -54,6 +54,17 @@ const routes: Routes = [
     },
   },
   {
+    path: 'library',
+    loadChildren: () => import('./library/library.module')
+      .then(m => m.LibraryModule),
+    canLoad: [AuthGuard],
+    data: {
+      breadcrumb: [
+        { label: 'general.library', url: '' }
+      ]
+    },
+  },
+  {
     path: 'assessment-builder/:type',
     loadChildren: () => import('./assessment-builder/assessment-builder.module')
       .then(m => m.AssessmentBuilderModule),

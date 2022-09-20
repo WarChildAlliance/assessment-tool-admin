@@ -51,6 +51,10 @@
         <mat-icon matListIcon>quiz</mat-icon>
         {{ "general.assessments" | translate }}
       </a>
+      <a mat-list-item routerLink="library" routerLinkActive="list-item-active" (click)="showSubmenu = false">
+        <mat-icon matListIcon>library_books</mat-icon>
+        {{ "general.library" | translate }}
+      </a>
       <mat-divider *ngIf="showSubmenu"></mat-divider>
       <mat-list-item (click)="showSubmenu = !showSubmenu">
         <mat-icon matListIcon>space_dashboard</mat-icon>

@@ -116,7 +116,8 @@
       "saveOrder": "حفظ النظام",
       "orderChanged": "تم تغيير الطلب بنجاح",
       "copyAssessment": "قم بإنشاء نسخة",
-      "unarchive": "أخرج من الأرشيف"
+      "unarchive": "أخرج من الأرشيف",
+      "assignAssessment": "تعيين التقييم"
     },
     "blocked": "تم بالفعل الرد على {{type}} ولا يمكن تعديله",
     "changeFile": "تغيير الملف",
