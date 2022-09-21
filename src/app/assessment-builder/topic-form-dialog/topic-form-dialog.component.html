@@ -26,6 +26,12 @@
             <input matInput type="text" required formControlName="description">
         </mat-form-field>
         <mat-form-field appearance="outline" color="accent">
+            <mat-label>{{ "assessmentBuilder.topicFormDialog.subtopic" | translate }}</mat-label>
+            <mat-select formControlName="subtopic">
+                <mat-option *ngFor="let subtopic of subtopics" [value]="subtopic">{{ subtopic }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" color="accent">
             <mat-label>{{ "assessmentBuilder.topicFormDialog.whenToShowFeedbacks" | translate }}</mat-label>
             <mat-select formControlName="show_feedback">
                 <mat-option *ngFor="let feedback of feedbacks" [value]="feedback.id">{{ feedback.name }}</mat-option>

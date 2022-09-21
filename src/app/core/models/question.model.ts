@@ -6,6 +6,7 @@ export interface Question {
   question_type: QuestionTypeEnum;
   hint: Hint;
   attachments: [];
+  difficulty: QuestionDifficulty;
 }
 
 export interface QuestionInput extends Question {
@@ -66,6 +67,12 @@ enum QuestionTypeEnum {
   Sort = 'SORT',
   NumberLine = 'NUMBER_LINE',
   DragAndDrop = 'DRAG_AND_DROP',
+}
+
+enum QuestionDifficulty {
+  'Difficulty 1' = 1,
+  'Difficulty 2' = 2,
+  'Difficulty 3' = 3,
 }
 
 export interface Hint {

@@ -23,6 +23,7 @@ interface DialogData {
 export class QuestionDragAndDropFormComponent implements OnInit {
   public questionsList: any;
   public selectQuestion: boolean;
+  public difficulties = this.questionFormService.questionDifficulties;
 
   public assessmentId: string;
   public topicId: string;
@@ -57,6 +58,7 @@ export class QuestionDragAndDropFormComponent implements OnInit {
   public dragAndDropForm: FormGroup = new FormGroup({
     title: new FormControl('', Validators.required),
     order: new FormControl('', Validators.required),
+    difficulty: new FormControl('', [Validators.required]),
     on_popup: new FormControl(false),
     background_image: new FormControl(null, Validators.required),
     drop_areas: new FormControl(null, Validators.required),
@@ -297,6 +299,7 @@ export class QuestionDragAndDropFormComponent implements OnInit {
       question_type: new FormControl('DRAG_AND_DROP'),
       title: new FormControl(this.dragAndDropForm.controls.title.value),
       on_popup: new FormControl(this.dragAndDropForm.controls.on_popup.value),
+      difficulty: new FormControl(this.dragAndDropForm.controls.difficulty.value),
       order: new FormControl(this.dragAndDropForm.controls.order.value),
       drop_areas: new FormControl(this.dragAndDropForm.controls.drop_areas.value)
     });
@@ -316,6 +319,7 @@ export class QuestionDragAndDropFormComponent implements OnInit {
       title: this.question.title,
       order: this.toClone ? this.order : this.question.order,
       on_popup: this.question.on_popup,
+      difficulty: question.difficulty,
       background_image: null,
       drop_areas: this.question.drop_areas,
       drag_options: null
