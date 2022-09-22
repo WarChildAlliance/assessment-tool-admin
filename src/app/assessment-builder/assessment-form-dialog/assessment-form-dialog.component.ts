@@ -51,7 +51,8 @@ export class AssessmentFormDialogComponent implements OnInit {
     private: new FormControl(false, [Validators.required]),
     icon: new FormControl(null),
     archived: new FormControl(false),
-    downloadable: new FormControl(true)
+    downloadable: new FormControl(true),
+    selQuestion: new FormControl(true)
   });
 
   constructor(
@@ -118,6 +119,7 @@ export class AssessmentFormDialogComponent implements OnInit {
     this.formData.append('private', this.assessmentForm.value.private);
     this.formData.append('archived', this.assessmentForm.value.archived);
     this.formData.append('downloadable', this.assessmentForm.value.downloadable);
+    this.formData.append('selQuestion', this.assessmentForm.value.selQuestion);
 
     return this.formData;
   }
@@ -160,7 +162,8 @@ export class AssessmentFormDialogComponent implements OnInit {
       private: assessment.private,
       icon: this.icon,
       archived: assessment.archived,
-      downloadable: assessment.downloadable
+      downloadable: assessment.downloadable,
+      selQuestion: assessment.selQuestion
     });
   }
 

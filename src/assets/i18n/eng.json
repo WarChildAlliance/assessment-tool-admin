@@ -46,6 +46,7 @@
     "questionType": "Question type",
     "save": "Save",
     "selected": "selected",
+    "selQuestion": "SEL Question",
     "simpleDeletePrompt": "Do you really want to delete the {{type}} <b>{{name}}</b> ?",
     "student": "Student",
     "studentName": "Student name",

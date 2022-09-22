@@ -45,6 +45,7 @@
     "questionType": "نوع السؤال",
     "save": "يحفظ",
     "selected": "تم الاختيار",
+    "selQuestion": "سؤال سيل",
     "simpleDeletePrompt": "هل تريد حقًا حذف {{type}} <b> {{name}} </b>؟",
     "student": "طالب علم",
     "studentName": "اسم الطالب",
