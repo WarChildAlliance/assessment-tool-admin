@@ -52,7 +52,7 @@ export class AssessmentFormDialogComponent implements OnInit {
     icon: new FormControl(null),
     archived: new FormControl(false),
     downloadable: new FormControl(true),
-    selQuestion: new FormControl(true)
+    sel_question: new FormControl(true)
   });
 
   constructor(
@@ -119,7 +119,7 @@ export class AssessmentFormDialogComponent implements OnInit {
     this.formData.append('private', this.assessmentForm.value.private);
     this.formData.append('archived', this.assessmentForm.value.archived);
     this.formData.append('downloadable', this.assessmentForm.value.downloadable);
-    this.formData.append('selQuestion', this.assessmentForm.value.selQuestion);
+    this.formData.append('sel_question', this.assessmentForm.value.sel_question);
 
     return this.formData;
   }
@@ -163,7 +163,7 @@ export class AssessmentFormDialogComponent implements OnInit {
       icon: this.icon,
       archived: assessment.archived,
       downloadable: assessment.downloadable,
-      selQuestion: assessment.selQuestion
+      sel_question: assessment.sel_question
     });
   }
 

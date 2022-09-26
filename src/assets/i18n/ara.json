@@ -88,6 +88,7 @@
   },
   "assessmentBuilder": {
     "allowSkip": "السماح بالتخطي",
+    "selQuestions": "يحتوي على أسئلة سيل",
     "assessmentFormDialog": {
       "gradeTooltip": "المستوى المدرسي المقصود"
     },
