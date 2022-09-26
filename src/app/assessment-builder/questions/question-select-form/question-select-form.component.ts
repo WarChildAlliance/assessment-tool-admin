@@ -1,8 +1,10 @@
 import { Component, ElementRef, OnInit, ViewChild, Inject } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { QuestionFormService } from 'src/app/core/services/question-form.service';
+import { AlertService } from 'src/app/core/services/alert.service';
+import { TranslateService } from '@ngx-translate/core';
 
 interface DialogData {
   topicId?: string;
@@ -39,10 +41,14 @@ export class QuestionSelectFormComponent implements OnInit {
   public audioAttachment = this.questionFormService.audioAttachment;
 
   public optionsAttachment = false;
+  public selectedOption = -1;
 
   public saveOptions = false;
   public attachmentsResetSubject$ = new Subject<void>();
 
+  private get checkValidAnswer(): boolean {
+    return this.optionsForm.value.filter(options => options.valid).length === 1;
+  }
 
   public selectQuestionForm: FormGroup = new FormGroup({
     question: new FormControl(null)
@@ -56,7 +62,6 @@ export class QuestionSelectFormComponent implements OnInit {
     order: new FormControl('', [Validators.required]),
     difficulty: new FormControl('', [Validators.required]),
     // display: new FormControl('Grid', [Validators.required]),
-    multiple: new FormControl(false),
     on_popup: new FormControl(false),
     options: new FormArray([
       this.formBuilder.group({
@@ -70,7 +75,10 @@ export class QuestionSelectFormComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private formBuilder: FormBuilder,
-    public questionFormService: QuestionFormService
+    public questionFormService: QuestionFormService,
+    private alertService: AlertService,
+    private translateService: TranslateService,
+    private dialogRef: MatDialog
   ) {
     this.attachmentsResetSubject$.subscribe(() => this.questionFormService.resetAttachments());
   }
@@ -92,7 +100,6 @@ export class QuestionSelectFormComponent implements OnInit {
         title: '',
         order: this.order, //  display: 'Grid',
         difficulty: '',
-        multiple: false,
         on_popup: false,
         options: [{ title: '', valid: false, value: '' }],
       });
@@ -157,7 +164,6 @@ export class QuestionSelectFormComponent implements OnInit {
       title: '',
       order: this.order, // display: 'Grid',
       difficulty: '',
-      multiple: false,
       on_popup: false,
       options: [{ title: '', valid: false, value: '' }],
     });
@@ -169,7 +175,6 @@ export class QuestionSelectFormComponent implements OnInit {
     this.selectForm.controls.order.setValue(this.order + 1, [Validators.required]);
     // this.selectForm.controls.display.setValue('Grid', [Validators.required]);
     this.selectForm.controls.question_type.setValue('SELECT');
-    this.selectForm.controls.multiple.setValue(false);
 
     this.attachmentsResetSubject$.next();
 
@@ -205,10 +210,17 @@ export class QuestionSelectFormComponent implements OnInit {
       question: this.question
     };
 
-    if (this.question && !this.toClone) {
-      this.editQuestion(data);
+    if (this.checkValidAnswer) {
+      if (this.question && !this.toClone) {
+        this.editQuestion(data);
+      } else {
+        this.createSelectQuestion(data);
+      }
+      this.dialogRef.closeAll();
     } else {
-      this.createSelectQuestion(data);
+      this.alertService.error(
+        this.translateService.instant('assessmentBuilder.questions.select.optionsValidAnswerErros')
+      );
     }
   }
 
@@ -296,7 +308,7 @@ export class QuestionSelectFormComponent implements OnInit {
     });
 
     const options = [];
-    this.question.options.forEach((element) => {
+    this.question.options.forEach((element, index) => {
       const attObj = {
         audio:
           element.attachments.find((a) => a.attachment_type === 'AUDIO')
@@ -312,6 +324,9 @@ export class QuestionSelectFormComponent implements OnInit {
         value: element.value,
       };
       options.push(optOject);
+      if (element.valid) {
+        this.selectedOption = index;
+      }
     });
 
     for (let i = 1; i < options.length; i++) {
@@ -331,7 +346,6 @@ export class QuestionSelectFormComponent implements OnInit {
         order: this.toClone ? this.order : this.question.order,
         difficulty: question.difficulty,
         // display: q.display_type ? this.displayTypeFormat(q.display_type) : 'Grid',
-        multiple: q.multiple,
         on_popup: this.question.on_popup,
         options,
       });
@@ -340,6 +354,16 @@ export class QuestionSelectFormComponent implements OnInit {
 
     if (this.toClone) {
       this.selectForm.markAsDirty();
+    }
+  }
+
+  public checkValid(checkedIndex: number, eventChecked): void {
+    if (eventChecked) {
+      this.optionsForm.value.forEach((op, i) => {
+        if (op.valid && i !== checkedIndex) {
+          op.valid = false;
+        }
+      });
     }
   }
 }

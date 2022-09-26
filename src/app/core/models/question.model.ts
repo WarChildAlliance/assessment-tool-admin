@@ -23,7 +23,6 @@ export interface QuestionNumberLine extends Question {
 }
 
 export interface QuestionSelect extends Question {
-  multiple: boolean;
   options: SelectOption[];
 }
 

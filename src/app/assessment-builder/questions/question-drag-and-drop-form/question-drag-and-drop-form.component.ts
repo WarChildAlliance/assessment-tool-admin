@@ -101,15 +101,15 @@ export class QuestionDragAndDropFormComponent implements OnInit {
             const file = await this.questionFormService.objectToFile(element.attachments[0]);
             const fileType = element.attachments[0].attachment_type === 'IMAGE' ? 'image/png' : 'audio/wav';
 
-            if (element.area_option.length > 0) {
+            if (element.area_option !== null) {
               this.dragItemsArea.forEach((item, index) => {
-                if (element.area_option.includes(item.area_id)) {
-                  item.attachments.push({
+                if (element.area_option === item.area_id) {
+                  item.attachments = [{
                     attachment_type: fileType,
                     file,
                     area_id: index,
                     drag_item: this.dragItemNumber
-                  });
+                  }];
 
                   this.dragItemNumber++;
                 }
@@ -232,7 +232,7 @@ export class QuestionDragAndDropFormComponent implements OnInit {
 
     // Draggable options
     dragOptionsToCreate.forEach(toCreate => {
-      const areasId = [];
+      let areaId = null;
       const dragItem = this.dragAndDropForm.controls.drag_options.value.filter(item => {
         return item.drag_item === toCreate;
       });
@@ -242,13 +242,13 @@ export class QuestionDragAndDropFormComponent implements OnInit {
 
         dragItem.forEach(item => {
           if (item.area_id !== null) {
-            areasId.push(createdAreas[item.area_id]);
+            areaId = createdAreas[item.area_id];
           }
         });
 
         this.assessmentService.addDraggableOption(
           this.assessmentId.toString(), this.topicId.toString(), question.id,
-          { area_option: areasId, question_drag_and_drop: question.id }
+          { area_option: areaId, question_drag_and_drop: question.id }
         ).subscribe(dragOptionCreated => {
           this.questionFormService.saveAttachments(
             this.assessmentId.toString(), file, 'IMAGE',
@@ -279,12 +279,12 @@ export class QuestionDragAndDropFormComponent implements OnInit {
       this.confirmDraggable = true;
 
       selectedAreas.forEach(area => {
-        this.dragItemsArea[area].attachments.push({
+        this.dragItemsArea[area].attachments = [{
           attachment_type: type,
           file: event,
           area_id: area,
           drag_item: this.dragItemNumber
-        });
+        }];
 
         this.changedDragItems = true;
       });

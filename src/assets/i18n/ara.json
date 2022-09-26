@@ -155,7 +155,8 @@
         "isMultipleChoice": "هو الاختيار من متعدد؟",
         "onPopup": "عرض السؤال على المنبثقة؟",
         "option": "اختيار",
-        "options": "خيارات"
+        "options": "خيارات",
+        "optionsValidAnswerErros": "يمكن أن يكون للأسئلة إجابة واحدة صحيحة."
       }
     },
     "saveSuccess": "تم حفظ {{type}} بنجاح",

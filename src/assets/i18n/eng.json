@@ -152,10 +152,10 @@
         "attachments": "Attachments",
         "display": "Display",
         "isCorrectAnswer": "Is correct answer?",
-        "isMultipleChoice": "Is multiple choice?",
         "onPopup": "Display question on popup?",
         "option": "option",
-        "options": "Options"
+        "options": "Options",
+        "optionsValidAnswerErros": "Questions can only have one correct answer."
       }
     },
     "saveSuccess": "{{type}} successfully saved",
