@@ -35,7 +35,7 @@ export class TopicDetailsComponent implements OnInit {
   public questionsArray: any[] = [
     {
     type: 'SELECT',
-    text: '(Multi-)Select',
+    text: 'Select',
     component: QuestionSelectFormComponent
     },
     {
