@@ -163,6 +163,8 @@
     "saveSuccess": "{{type}} successfully saved",
     "show": "Show {{type}}",
     "topicDetails": {
+      "fiveSelQuestionsMessage": "Only up to 5 SEL Questions can be created by assessment.",
+      "selQuestionsOrder": "SEL Questions must be at the beginning of the topic.",
       "aQuestion": "a question",
       "feedback": "feedback",
       "numberLineButton": "Number line",

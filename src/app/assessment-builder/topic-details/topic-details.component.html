@@ -77,9 +77,14 @@
       <h2>
         {{ "general.add" | translate: { type: ("assessmentBuilder.topicDetails.aQuestion" | translate) } }}
       </h2>
-      <div class="question-options-button">
+      <div class="question-options-button"
+        matTooltip="{{ 'assessmentBuilder.topicDetails.fiveSelQuestionsMessage' | translate }}"
+        matTooltipPosition="above" [matTooltipDisabled]="!(selQuestionsCount === 5)"
+      >
         <app-custom-button *ngFor="let question of questionsArray" category="tertiary" variant="primary"
-          (click)="openQuestionDialog(null, false, question.type)" variant="default">
+        (click)="openQuestionDialog(null, false, question.type)" variant="default"
+        [disabled]="(question.type === 'SEL') && (selQuestionsCount === 5)"
+        >
           {{ question.text }}
         </app-custom-button>
       </div>
@@ -95,9 +100,13 @@
       <app-custom-button *ngIf="topicDetails.can_edit" category="tertiary" variant="neutral" (click)="deleteQuestion(questionDetails.id, questionDetails.title)">
         {{ "general.delete" | translate: {type: ''} }}
       </app-custom-button>
-      <app-custom-button *ngIf="topicDetails.can_edit" category="tertiary" variant="neutral" (click)="openQuestionDialog(questionDetails, true)">
-        {{ "general.clone" | translate }}
-      </app-custom-button>
+      <span matTooltip="{{ 'assessmentBuilder.topicDetails.fiveSelQuestionsMessage' | translate }}" matTooltipPosition="above"
+      [matTooltipDisabled]="(questionDetails.question_type !== 'SEL') || (!(selQuestionsCount === 5) && questionDetails.question_type === 'SEL')">
+        <app-custom-button *ngIf="topicDetails.can_edit" category="tertiary" variant="neutral" (click)="openQuestionDialog(questionDetails, true)"
+        [disabled]="(questionDetails.question_type === 'SEL') && (selQuestionsCount === 5)">
+          {{ "general.clone" | translate }}
+        </app-custom-button>
+      </span>
       <app-custom-button *ngIf="isDownloadable" category="tertiary" variant="neutral" (click)="downloadPDF(assessmentId, topicId, questionDetails.id)">
         {{ "assessmentBuilder.download" | translate }}
       </app-custom-button>

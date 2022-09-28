@@ -10,6 +10,7 @@ interface DialogData {
   question?: any;
   toClone?: boolean;
   assessmentId?: string;
+  selQuestionOrder?: any;
 }
 
 @Component({
@@ -26,6 +27,7 @@ export class QuestionInputFormComponent implements OnInit {
   public order: any;
   public question: any;
   public toClone: boolean;
+  public selQuestionOrder: any;
   public difficulties = this.questionFormService.questionDifficulties;
 
   public imageAttachment = this.questionFormService.imageAttachment;
@@ -59,6 +61,10 @@ export class QuestionInputFormComponent implements OnInit {
     if (this.data?.order) { this.order = this.data.order; }
     if (this.data?.question) { this.question = this.data.question; }
     if (this.data?.toClone) { this.toClone = this.data.toClone; }
+    if (this.data?.selQuestionOrder) {
+      this.selQuestionOrder = this.data.selQuestionOrder + 1;
+      this.inputForm.controls.order.setValidators([Validators.required, Validators.min(this.selQuestionOrder)]);
+    }
     if (this.question) {
       this.setForm(this.question);
     } else {

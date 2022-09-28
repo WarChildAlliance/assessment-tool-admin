@@ -45,7 +45,7 @@
     "questionType": "نوع السؤال",
     "save": "يحفظ",
     "selected": "تم الاختيار",
-    "selQuestion": "سؤال سيل",
+    "selQuestion": "سؤال التعلم الاجتماعي والعاطفي",
     "simpleDeletePrompt": "هل تريد حقًا حذف {{type}} <b> {{name}} </b>؟",
     "student": "طالب علم",
     "studentName": "اسم الطالب",
@@ -88,7 +88,7 @@
   },
   "assessmentBuilder": {
     "allowSkip": "السماح بالتخطي",
-    "selQuestions": "يحتوي على أسئلة سيل",
+    "selQuestions": "يحتوي على أسئلة التعلم الاجتماعي والعاطفي",
     "assessmentFormDialog": {
       "gradeTooltip": "المستوى المدرسي المقصود"
     },
@@ -163,6 +163,8 @@
     "saveSuccess": "تم حفظ {{type}} بنجاح",
     "show": "إظهار {{type}}",
     "topicDetails": {
+      "fiveSelQuestionsMessage": "يمكن فقط إنشاء ما يصل إلى خمسة أسئلة تعلم اجتماعية وعاطفية عن طريق التقييم.",
+      "selQuestionsOrder": "يجب أن تكون أسئلة التعلم الاجتماعي والعاطفي في بداية الموضوع.",
       "aQuestion": "سؤال",
       "feedback": "استجابة",
       "numberLineButton": "رقم الخط",
