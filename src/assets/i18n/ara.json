@@ -43,6 +43,7 @@
     "questions": "أسئلة",
     "questionsNumber": "عدد الأسئلة",
     "questionType": "نوع السؤال",
+    "type": "يكتب",
     "save": "يحفظ",
     "selected": "تم الاختيار",
     "selQuestion": "سؤال التعلم الاجتماعي والعاطفي",
@@ -158,6 +159,14 @@
         "onPopup": "عرض السؤال على المنبثقة؟",
         "option": "اختيار",
         "options": "خيارات"
+      },
+      "sel" : {
+        "mathSelfEfficacy": "الكفاءة الذاتية للرياضيات",
+        "readSelfEfficacy": "اقرأ الفعالية الذاتية",
+        "growthMindset": "عقلية النمو",
+        "notReallyLikeMe": "لا تحبني حقًا",
+        "aLittleLikeMe": "قليلا مثلي",
+        "aLotLikeMe": "كثيرا مثلي"
       }
     },
     "saveSuccess": "تم حفظ {{type}} بنجاح",

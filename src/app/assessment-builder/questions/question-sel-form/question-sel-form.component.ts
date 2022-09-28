@@ -26,6 +26,12 @@ export class QuestionSelFormComponent implements OnInit {
   public toClone: boolean;
   public selQuestionOrder: any;
 
+  public selTypes = [
+    {id: 'MATH', name: 'Math Self-Efficacy', path: 'mathSelfEfficacy'},
+    {id: 'READ', name: 'Read Self-Efficacy', path: 'readSelfEfficacy'},
+    {id: 'GROWTH_MINDSET', name: 'Growth Mindset', path: 'growthMindset'}
+  ];
+
   public selectQuestionForm: FormGroup = new FormGroup({
     question: new FormControl(null)
   });
@@ -34,6 +40,7 @@ export class QuestionSelFormComponent implements OnInit {
     question_type: new FormControl('SEL'),
     title: new FormControl('', [Validators.required]),
     order: new FormControl('', [Validators.required]),
+    sel_type: new FormControl('', [Validators.required]),
     on_popup: new FormControl(false)
   });
 
@@ -50,7 +57,7 @@ export class QuestionSelFormComponent implements OnInit {
     if (this.data?.selQuestionOrder !== undefined) {
       this.selQuestionOrder = this.data.selQuestionOrder === 5
         ? this.data.selQuestionOrder
-        : this.question ? this.data.selQuestionOrder : this.data.selQuestionOrder + 1;
+        : this.question && !this.toClone ? this.data.selQuestionOrder : this.data.selQuestionOrder + 1;
     }
     if (this.question) {
       this.setForm(this.question);
@@ -107,6 +114,7 @@ export class QuestionSelFormComponent implements OnInit {
       question_type: 'SEL',
       title: question.title,
       order: this.toClone ? this.selQuestionOrder : question.order,
+      sel_type: question.sel_type,
       on_popup: question.on_popup
     });
 

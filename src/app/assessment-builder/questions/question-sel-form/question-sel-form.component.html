@@ -19,10 +19,18 @@
         <mat-label>{{ "general.title" | translate }}</mat-label>
         <input matInput required type="text" formControlName="title">
     </mat-form-field>
-        <mat-form-field appearance="outline" color="accent">
-            <mat-label>{{ "general.order" | translate }}</mat-label>
-            <input matInput name="order" required type="number" formControlName="order" min="1" max="{{selQuestionOrder}}">
-        </mat-form-field>
+    <mat-form-field appearance="outline" color="accent">
+        <mat-label>{{ "general.type" | translate }}</mat-label>
+        <mat-select required formControlName="sel_type">
+            <mat-option *ngFor="let type of selTypes" [value]="type.id">
+                {{ "assessmentBuilder.questions.sel." + type.path | translate }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" color="accent">
+        <mat-label>{{ "general.order" | translate }}</mat-label>
+        <input matInput name="order" required type="number" formControlName="order" min="1" max="{{selQuestionOrder}}">
+    </mat-form-field>
     <mat-checkbox formControlName="on_popup">
         <mat-label for="on_popup">{{ "assessmentBuilder.questions.select.onPopup" | translate }}</mat-label>
     </mat-checkbox>

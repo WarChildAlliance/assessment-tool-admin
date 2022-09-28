@@ -1,0 +1,16 @@
+<div class="question-header">
+    <h2>Q{{ question.order }}</h2>
+    <h2>{{ question.title }}</h2>
+</div>
+<div class="options-container">
+    <ng-container *ngFor="let option of selOptions">
+        <div class="option -card">
+            <mat-card [ngClass]="{'student': answer && option.id === answer.statement}">
+                <img [src]="'assets/icons/SEL_faces_' + option.path + '.png'" alt="">
+                <span>
+                    {{ "assessmentBuilder.questions.sel." + option.path | translate }}
+                </span>
+            </mat-card>
+        </div>
+    </ng-container>
+</div>
