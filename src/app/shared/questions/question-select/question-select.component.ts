@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { StudentDetailComponent } from 'src/app/students/student-detail/student-detail.component';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -26,7 +25,7 @@ export class QuestionSelectComponent implements OnInit {
 
   public getAnswerBackgroundStyle(option: any): string {
     if (this.answer) {
-      if (option.id === this.answer.selected_options[0]) {
+      if (option.id === this.answer.selected_option) {
         return 'student';
       }
       return  option.valid ? 'valid' : '';

@@ -51,9 +51,6 @@
                 </mat-form-field>
                 -->
                 <br>
-                <mat-checkbox formControlName="multiple">
-                    <mat-label for="multiple">{{ "assessmentBuilder.questions.select.isMultipleChoice" | translate }}</mat-label>
-                </mat-checkbox>
                 <mat-checkbox formControlName="on_popup">
                     <mat-label for="on_popup">{{ "assessmentBuilder.questions.select.onPopup" | translate }}</mat-label>
                 </mat-checkbox>
@@ -97,7 +94,7 @@
                         <input matInput formControlName="value">
                     </mat-form-field>
                     <br>
-                    <mat-checkbox formControlName="valid">
+                    <mat-checkbox formControlName="valid" [checked]="selectedOption === i" (change)="selectedOption = i; checkValid(i, $event.checked)">
                         <mat-label>{{ "assessmentBuilder.questions.select.isCorrectAnswer" | translate }}</mat-label>
                     </mat-checkbox>
 
@@ -122,7 +119,7 @@
         <button mat-flat-button mat-dialog-close class="dialog-buttons__cancel" color="secondary">
             {{ "general.cancel" | translate }}
         </button>
-        <button mat-flat-button [mat-dialog-close]="true" color="accent" [disabled]="selectForm.invalid || !selectForm.dirty" (click)="onSubmit()">
+        <button mat-flat-button color="accent" [disabled]="selectForm.invalid || !selectForm.dirty" (click)="onSubmit()">
             {{ question ? toClone ? ("general.clone" | translate) : ("general.save" | translate) : ("general.create" | translate) }}
         </button>
     </div>
