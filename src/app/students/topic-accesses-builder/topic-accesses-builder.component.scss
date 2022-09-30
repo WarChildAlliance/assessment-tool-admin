@@ -1,6 +1,9 @@
 .dialog-container {
     position: relative;
 
+    h1 {
+        display: inline-flex;;
+    }
     .close-dialog-button {
         position: absolute;
         top: 0;
