@@ -63,21 +63,6 @@
     "yes": "Yes",
     "createNewOne": "Create a new one",
     "selectItem": "Select a {{item}}",
-    "grades": {
-      "0": "Kindergarten",
-      "1": "1st",
-      "2": "2nd",
-      "3": "3rd",
-      "4": "4th",
-      "5": "5th",
-      "6": "6th",
-      "7": "7th",
-      "8": "8th",
-      "9": "9th",
-      "10": "10th",
-      "11": "11th",
-      "12": "12th"
-    },
     "yourAssessments": "Your assessments"
   },
   "answers": {
@@ -169,10 +154,10 @@
         "attachments": "Attachments",
         "display": "Display",
         "isCorrectAnswer": "Is correct answer?",
-        "isMultipleChoice": "Is multiple choice?",
         "onPopup": "Display question on popup?",
         "option": "option",
-        "options": "Options"
+        "options": "Options",
+        "optionsValidAnswerErros": "Questions can only have one correct answer."
       }
     },
     "saveSuccess": "{{type}} successfully saved",

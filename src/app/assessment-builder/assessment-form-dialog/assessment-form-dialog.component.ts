@@ -30,22 +30,7 @@ export class AssessmentFormDialogComponent implements OnInit {
 
   public icon: File = null;
 
-  public grades = [
-    'general.grades.0',
-    'general.grades.1',
-    'general.grades.2',
-    'general.grades.3',
-    'general.grades.4',
-    'general.grades.5',
-    'general.grades.6',
-    'general.grades.7',
-    'general.grades.8',
-    'general.grades.9',
-    'general.grades.10',
-    'general.grades.11',
-    'general.grades.12'
-  ];
-
+  public grades = ['1', '2', '3'];
   public languages: Language[];
   public countries: Country[];
   public subjects = ['PRESEL', 'POSTSEL', 'MATH', 'LITERACY'];
@@ -59,7 +44,7 @@ export class AssessmentFormDialogComponent implements OnInit {
 
   public assessmentForm: FormGroup = new FormGroup({
     title: new FormControl('', [Validators.required]),
-    grade: new FormControl(0, [Validators.required]),
+    grade: new FormControl(1, [Validators.required]),
     subject: new FormControl('', [Validators.required]),
     language: new FormControl('', [Validators.required]),
     country: new FormControl('', [Validators.required]),
@@ -166,10 +151,9 @@ export class AssessmentFormDialogComponent implements OnInit {
         await this.iconToFile(assessment.icon);
       }
     }
-
     this.assessmentForm.setValue({
       title: assessment.title,
-      grade: Number(assessment.grade),
+      grade: assessment.grade,
       subject: assessment.subject.toUpperCase(),
       language: assessment.language_code,
       country: assessment.country_code,

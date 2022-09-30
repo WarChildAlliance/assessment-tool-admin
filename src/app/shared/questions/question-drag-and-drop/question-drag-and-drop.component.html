@@ -30,7 +30,7 @@
 
                     <ng-container *ngSwitchCase="false">
                         <div *ngFor="let option of draggableOptions">
-                            <div *ngIf="option.area_option.includes(area.id)">
+                            <div *ngIf="option.area_option === area.id">
                                 <span class="option">
                                     {{option.attachments[0]?.file.substring(option.attachments[0].file.lastIndexOf('/')+1)}}
                                     <img [src]="getSource(option.attachments[0]?.file)" class="option-img" draggable="false">
@@ -69,14 +69,12 @@
             <div class="options" #with_areas *ngFor="let area of question.drop_areas; let i = index">
                 <p>{{i+1}}: {{area.name}}</p>
                 <div *ngIf="getAreaAnswer(area.id) as areaAnswer; else noAnswer">
-                    <div *ngFor="let option of areaAnswer.selected_draggable_options">
-                        <span class="option"
-                        [ngClass]="option.area_option.includes(areaAnswer.area.id) ? 'valid' : 'student'"
+                    <span class="option"
+                        [ngClass]="areaAnswer.selected_draggable_option.area_option === areaAnswer.area.id ? 'valid' : 'student'"
                     >
-                            {{option.attachments[0].file.substring(option.attachments[0].file.lastIndexOf('/')+1)}}
-                            <img [src]="getSource(option.attachments[0].file)" class="option-img" draggable="false">
-                        </span>
-                    </div>
+                        {{areaAnswer.selected_draggable_option.attachments[0].file.substring(areaAnswer.selected_draggable_option.attachments[0].file.lastIndexOf('/')+1)}}
+                        <img [src]="getSource(areaAnswer.selected_draggable_option.attachments[0].file)" class="option-img" draggable="false">
+                    </span>
                 </div>
                 <ng-template #noAnswer>
                     <div>

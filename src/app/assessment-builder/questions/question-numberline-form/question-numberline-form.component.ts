@@ -20,6 +20,7 @@ interface DialogData {
 export class QuestionNumberlineFormComponent implements OnInit {
   public questionsList: any;
   public selectQuestion: boolean;
+  public difficulties = this.questionFormService.questionDifficulties;
 
   public assessmentId: string;
   public topicId: string;
@@ -45,6 +46,7 @@ export class QuestionNumberlineFormComponent implements OnInit {
     step: new FormControl('', [Validators.required]),
     tick_step: new FormControl('', [Validators.required]),
     expected_value: new FormControl('', [Validators.required]),
+    difficulty: new FormControl('', [Validators.required]),
     show_ticks: new FormControl(false),
     show_value: new FormControl(false),
     on_popup: new FormControl(false)
@@ -135,7 +137,8 @@ export class QuestionNumberlineFormComponent implements OnInit {
       expected_value: question.expected_value,
       show_ticks: question.show_ticks,
       show_value: question.show_value,
-      on_popup: question.on_popup
+      on_popup: question.on_popup,
+      difficulty: question.difficulty
     });
 
     await this.questionFormService.setExistingAttachments(this.question, this.toClone).then(res => {

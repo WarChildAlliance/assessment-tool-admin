@@ -35,6 +35,7 @@ export class TopicFormDialogComponent implements OnInit {
   public iconOptions = ['flower_green.svg', 'flower_purple.svg', 'flower_cyan.svg'];
 
   public feedbacks = [{id: 0, name: 'Never'}, {id: 1, name: 'Always'}, {id: 2, name: 'Second attempt'}];
+  public subtopics = ['Subtopic 1', 'Subtopic 2', 'Subtopic 3'];
 
   public selectTopicForm: FormGroup = new FormGroup({
     topic: new FormControl(null)
@@ -44,6 +45,7 @@ export class TopicFormDialogComponent implements OnInit {
     name: new FormControl('', [Validators.required]),
     description: new FormControl('', [Validators.required]),
     show_feedback: new FormControl(0, [Validators.required]),
+    subtopic: new FormControl('', [Validators.required]),
     allow_skip: new FormControl(false, [Validators.required]),
     evaluated: new FormControl(true, [Validators.required]),
     praise: new FormControl(0, [Validators.required]),
@@ -87,6 +89,7 @@ export class TopicFormDialogComponent implements OnInit {
     this.formData.append('name', this.createNewTopicForm.value.name);
     this.formData.append('description', this.createNewTopicForm.value.description);
     this.formData.append('show_feedback', this.createNewTopicForm.value.show_feedback);
+    this.formData.append('subtopic', this.createNewTopicForm.value.subtopic);
     this.formData.append('allow_skip', this.createNewTopicForm.value.allow_skip);
     this.formData.append('evaluated', this.createNewTopicForm.value.evaluated);
     this.formData.append('praise', this.createNewTopicForm.value.praise);
@@ -160,6 +163,7 @@ export class TopicFormDialogComponent implements OnInit {
       name: topic.name,
       description: topic.description,
       show_feedback: topic.show_feedback,
+      subtopic: topic.subtopic,
       allow_skip: topic.allow_skip,
       evaluated: topic.evaluated,
       praise: topic.praise,

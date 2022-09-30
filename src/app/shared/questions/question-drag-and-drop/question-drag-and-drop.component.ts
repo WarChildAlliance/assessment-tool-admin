@@ -72,8 +72,8 @@ export class QuestionDragAndDropComponent implements OnInit, AfterViewInit, OnCh
     this.assessmentService.getDraggableOptions(
       this.assessmentId.toString(), this.topicId || this.question.assessment_topic.toString(), this.question.id
       ).subscribe(dragOptions => {
-        this.draggableOptions = dragOptions.filter(item => item.area_option.length > 0);
-        this.optionsWithoutArea = dragOptions.filter(item => item.area_option.length === 0);
+        this.draggableOptions = dragOptions.filter(item => item.area_option !== null);
+        this.optionsWithoutArea = dragOptions.filter(item => item.area_option === null);
     });
   }
 
@@ -123,7 +123,7 @@ export class QuestionDragAndDropComponent implements OnInit, AfterViewInit, OnCh
   }
 
   public noOptions(areaId: number): boolean {
-    return !(this.draggableOptions.find(item => item.area_option.includes(areaId)) !== undefined);
+    return !(this.draggableOptions.find(item => item.area_option === areaId) !== undefined);
   }
 
   public getBackgroundImageTransform(bgElement: HTMLElement): string {
