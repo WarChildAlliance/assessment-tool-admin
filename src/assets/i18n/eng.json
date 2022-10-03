@@ -158,7 +158,8 @@
         "isMultipleChoice": "Is multiple choice?",
         "onPopup": "Display question on popup?",
         "option": "option",
-        "options": "Options"
+        "options": "Options",
+        "optionsValidAnswerErros": "Questions must have only one correct answer."
       },
       "sel" : {
         "mathSelfEfficacy": "Math Self-Efficacy",
@@ -167,6 +168,10 @@
         "notReallyLikeMe": "Not really like me",
         "aLittleLikeMe": "A little like me",
         "aLotLikeMe": "A lot like me"
+      },
+      "domino": {
+        "leftSideValue": "Left Side Value",
+        "rightSideValue": "Right Side Value"
       }
     },
     "saveSuccess": "{{type}} successfully saved",

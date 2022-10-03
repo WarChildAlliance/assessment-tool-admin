@@ -158,7 +158,8 @@
         "isMultipleChoice": "هو الاختيار من متعدد؟",
         "onPopup": "عرض السؤال على المنبثقة؟",
         "option": "اختيار",
-        "options": "خيارات"
+        "options": "خيارات",
+        "optionsValidAnswerErros": "يجب أن تحتوي الأسئلة على إجابة واحدة صحيحة."
       },
       "sel" : {
         "mathSelfEfficacy": "الكفاءة الذاتية للرياضيات",
@@ -167,6 +168,10 @@
         "notReallyLikeMe": "لا تحبني حقًا",
         "aLittleLikeMe": "قليلا مثلي",
         "aLotLikeMe": "كثيرا مثلي"
+      },
+      "domino": {
+        "leftSideValue": "قيمة الجانب الأيسر",
+        "rightSideValue": "قيمة الجانب الأيمن"
       }
     },
     "saveSuccess": "تم حفظ {{type}} بنجاح",

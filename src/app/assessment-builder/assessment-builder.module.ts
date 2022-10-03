@@ -31,6 +31,7 @@ import { AreaSelectorComponent } from './questions/area-selector/area-selector.c
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { CustomSpinnerModule } from '../shared/spinner/spinner.module';
 import { QuestionSelFormComponent } from './questions/question-sel-form/question-sel-form.component';
+import { QuestionDominoFormComponent } from './questions/question-domino-form/question-domino-form.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { QuestionSelFormComponent } from './questions/question-sel-form/question
     AudioSelectorComponent,
     QuestionDragAndDropFormComponent,
     AreaSelectorComponent,
-    QuestionSelFormComponent
+    QuestionSelFormComponent,
+    QuestionDominoFormComponent
   ],
   imports: [
     CommonModule,
