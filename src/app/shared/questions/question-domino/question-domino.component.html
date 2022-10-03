@@ -10,7 +10,7 @@
     <div class="dominoes">
         <ng-container *ngFor="let option of question.options; let i = index">
             <div class="option -card">
-                <mat-card [ngClass]="{'student': answer && option.id === answer.statement,
+                <mat-card [ngClass]="{'student': answer && option.id === answer.selected_domino,
                     'valid': !answer && option.valid === true}">
                     <div class="half">
                         <div class="part">
