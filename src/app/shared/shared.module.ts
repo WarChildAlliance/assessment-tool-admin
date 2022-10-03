@@ -26,6 +26,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { HorizontalScrollArrowsComponent } from './horizontal-scroll-arrows/horizontal-scroll-arrows.component';
 import { CustomButtonModule } from './button/button.module';
 import { QuestionSelComponent } from './questions/question-sel/question-sel.component';
+import { QuestionDominoComponent } from './questions/question-domino/question-domino.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { QuestionSelComponent } from './questions/question-sel/question-sel.comp
     QuestionNumberlineComponent,
     QuestionDragAndDropComponent,
     HorizontalScrollArrowsComponent,
-    QuestionSelComponent
+    QuestionSelComponent,
+    QuestionDominoComponent
   ],
   imports: [
     CommonModule,
@@ -69,7 +71,8 @@ import { QuestionSelComponent } from './questions/question-sel/question-sel.comp
     QuestionDragAndDropComponent,
     TranslateModule,
     HorizontalScrollArrowsComponent,
-    QuestionSelComponent
+    QuestionSelComponent,
+    QuestionDominoComponent
   ]
 })
 

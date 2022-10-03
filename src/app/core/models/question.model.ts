@@ -26,6 +26,11 @@ export interface QuestionNumberLine extends Question {
   show_ticks: boolean;
 }
 
+export interface QuestionDomino extends Question {
+  expected_value: number;
+  options: DominoOption[];
+}
+
 export interface QuestionSelect extends Question {
   multiple: boolean;
   options: SelectOption[];
@@ -58,6 +63,13 @@ export interface SelectOption {
   attachments: [];
 }
 
+export interface DominoOption {
+  id: number;
+  left_side_value: number;
+  right_side_value: number;
+  valid: boolean;
+}
+
 export interface SortOption {
   id: number;
   value: string;
@@ -71,6 +83,7 @@ enum QuestionTypeEnum {
   Sort = 'SORT',
   NumberLine = 'NUMBER_LINE',
   DragAndDrop = 'DRAG_AND_DROP',
+  Domino = 'DOMINO'
 }
 
 enum QuestionDifficulty {

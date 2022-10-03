@@ -1,0 +1,110 @@
+.question-header {
+    text-align: center;
+
+    h2:nth-child(1) {
+        float: left;
+    }
+}
+
+.container {
+    place-items: center;
+    display: flex;
+    place-items: center;
+    justify-content: space-evenly;
+
+    .left-number {
+        color: #E66C33;
+        font-weight: 500;
+        font-size: 160px;
+        line-height: 208px;
+    }
+
+    .dominoes {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        place-items: center;
+        gap: 1em 5em;
+
+        .option {
+            padding: 0.5rem;
+            width: 25%;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            min-width: 200px;
+
+            mat-card {
+                border: 1px solid #f2f5fa;
+                background: #FFFFFF;
+                box-shadow: inset -2px -2px 0px rgb(0 0 0 / 8%);
+                border-radius: 5px;
+                padding: 8px !important;
+                display: inline-flex;
+                justify-content: space-around;
+                flex-direction: row;
+
+                .divider-line {
+                    width: 2px;
+                    background-color: #475D96;
+                }
+
+                .half {
+                    width: 70%;
+                    height: 32%;
+                    padding: 0 5%;
+                    display: flex;
+                    flex-direction: column;
+
+                    .part {
+                        padding: 5%;
+                        min-height: 13.74px;
+
+                        .dot {
+                            border-radius: 50%;
+                            width: 10px;
+                            height: 10px;
+                            background-color: black;
+                            margin-top: 1px;
+                        }
+
+                        .left {
+                            float: left;
+                        }
+
+                        .right {
+                            float: right;
+                        }
+
+                        .middle {
+                            margin: auto;
+                        }
+                    }
+
+                    .part:first-child {
+                        padding-top: 0%;
+                    }
+
+                    .part:last-child {
+                        padding-bottom: 0%;
+                    }
+                }
+            }
+
+            &:not(.-card) {
+                background-color: rgb(223, 223, 223);
+            }
+
+            .student {
+                outline-width: 4px;
+                outline-color: #7e8abf;
+                outline-style: solid;
+            }
+
+            .valid {
+                outline-width: 4px;
+                outline-color: #7EBF9A;
+                outline-style: solid;
+            }
+        }
+    }
+}

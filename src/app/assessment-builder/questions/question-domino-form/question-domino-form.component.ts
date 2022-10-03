@@ -152,8 +152,8 @@ export class QuestionDominoFormComponent implements OnInit {
     // There're always 9 dominoes
     for (let i = 0; i < 9; i++) {
       const optionsGroup = this.formBuilder.group({
-        left_side_value: new FormControl(null, Validators.required),
-        right_side_value: new FormControl(null, Validators.required),
+        left_side_value: new FormControl(null, [Validators.required, Validators.min(1), Validators.max(6)]),
+        right_side_value: new FormControl(null, [Validators.required, Validators.min(1), Validators.max(6)]),
         valid: new FormControl(false),
       });
       this.optionsForm.push(optionsGroup);
