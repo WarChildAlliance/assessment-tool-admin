@@ -24,6 +24,8 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpLoaderFactory } from './core/factories/http-loader-translate.factory';
 import { ConfirmModalModule } from './shared/confirm-modal/confirm-modal.module';
 import { MatDividerModule } from '@angular/material/divider';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -56,7 +58,13 @@ import { MatDividerModule } from '@angular/material/divider';
       }
     }),
     ConfirmModalModule,
-    CustomBreadcrumbModule
+    CustomBreadcrumbModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the app is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [
     httpInterceptorProviders,
