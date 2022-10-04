@@ -271,6 +271,7 @@
     "incompatibleLanguageError": "You can only give access to a topic to students with the same country and language.",
     "statusError": "Students can only be deleted after one year of inactivity",
     "studentCode": "Student code",
+    "studentLoginURL": "Login URL",
     "studentDetail": {
       "activeAccess": "Active access",
       "linkedTopics": "linked topic(s)",

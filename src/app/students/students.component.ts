@@ -17,6 +17,7 @@ import { UserService } from '../core/services/user.service';
 import { TopicAccessesBuilderComponent } from './topic-accesses-builder/topic-accesses-builder.component';
 import { StudentDialogComponent } from './student-dialog/student-dialog.component';
 import { ConfirmModalComponent } from 'src/app/shared/confirm-modal/confirm-modal.component';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-students',
@@ -30,6 +31,7 @@ export class StudentsComponent implements OnInit {
     { key: 'full_name', name: 'general.studentName' },
     { key: 'username', name: 'students.studentCode', type: 'copy' },
     { key: 'group', name: 'general.group' },
+    { key: 'login_url', name: 'students.studentLoginURL', label: 'username', type: 'link' },
     { key: 'assessments_count', name: 'students.activeAssessmentsNumber' },
     { key: 'completed_topics_count', name: 'students.completedTopicsNumber' },
     { key: 'last_session', name: 'general.lastLogin', type: 'date' },
@@ -124,7 +126,11 @@ export class StudentsComponent implements OnInit {
     this.userService
       .getStudentsList(filtersData)
       .subscribe((studentsList: StudentTableData[]) => {
-        this.studentsDataSource = new MatTableDataSource(studentsList);
+        const mappedStudentList = studentsList.map(student => ({
+          ...student,
+          login_url: `${environment.STUDENT_PORTAL_LOGIN_URL}?code=${student.username}`
+        }));
+        this.studentsDataSource = new MatTableDataSource(mappedStudentList);
       });
   }
 
