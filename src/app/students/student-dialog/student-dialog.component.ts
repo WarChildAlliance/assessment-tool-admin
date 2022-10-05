@@ -24,7 +24,7 @@ interface DialogData {
 export class StudentDialogComponent implements OnInit {
 
   public student: any;
-  public studentList: any;
+  public studentList: any = [];
 
   // Defines if a student is edited or if a new one is created
 
@@ -54,7 +54,7 @@ export class StudentDialogComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.data?.student) { this.student = this.data.student; }
-    if (this.data?.studentList) { this.studentList = this.data.studentList; }
+    if (this.data?.studentList) { this.studentList = this.data.studentList ?? []; }
     if (!!this.student) {
       this.studentForm.setValue({
         first_name: this.student.first_name,
@@ -147,7 +147,7 @@ export class StudentDialogComponent implements OnInit {
 
   // Check student duplication on creation: based on name
   private async checkStudentDuplication(studentToSave: any): Promise<boolean | void> {
-    let create = this.studentList.length ? false : true;
+    let create = this.studentList?.length ? false : true;
 
     for (const student of this.studentList) {
       if (student.first_name.toLowerCase() === studentToSave.first_name.toLowerCase()
