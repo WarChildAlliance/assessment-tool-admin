@@ -3,7 +3,7 @@ import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Valida
 import { TranslateService } from '@ngx-translate/core';
 import { Assessment } from 'src/app/core/models/assessment.model';
 import { BatchTopicAccesses } from 'src/app/core/models/batch-topic-accesses.model';
-import { Topic } from 'src/app/core/models/topic.models';
+import { TopicTableData } from 'src/app/core/models/topic-table-data.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { UserService } from 'src/app/core/services/user.service';
@@ -25,7 +25,7 @@ interface DialogData {
 
 export class TopicAccessesBuilderComponent implements OnInit {
 
-  private topicsList: Topic[] = [];
+  private topicsList: TopicTableData[] = [];
   public groupsList: Group[] = [];
   private selectedAssessmentId: string;
   private applyToAllTopics: boolean;
@@ -161,7 +161,10 @@ export class TopicAccessesBuilderComponent implements OnInit {
     const accessForm = this.assignTopicForm.get('access') as FormArray;
     accessForm.clear();
 
-    this.topicsList.forEach((topic: Topic, i: number) => {
+    this.topicsList.forEach((topic: TopicTableData) => {
+      if (topic.questions_count === 0) {
+        return;
+      }
       const topicAccess = this.formBuilder.group({
         topic: new FormControl(topic),
         selected: new FormControl(true),
