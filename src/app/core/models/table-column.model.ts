@@ -6,11 +6,14 @@ export interface TableColumn {
     // Column name on top of the table
     name: string;
 
+    /* Only needed in case type = 'link' */
+    label?: string;
+
     // Those are all the available types for a column. Different structures, styling and
     //  behaviors can then be defined on 'shared/table/table.component.html'
     // The 'action' type is a bit different, in that there is no precise value to retrieve,
     //  so the 'key' property is used as the Material icon name
-    type?: null | 'boolean' | 'percentage' | 'date' | 'duration' | 'copy' | 'action' | 'circle';
+    type?: null | 'boolean' | 'percentage' | 'date' | 'duration' | 'copy' | 'action' | 'circle' | 'link';
 
     // This property allows for default sorting on a column
     sorting?: 'asc' | 'desc';

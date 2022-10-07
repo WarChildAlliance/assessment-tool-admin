@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  API_URL: 'http://localhost:8002'
+  API_URL: 'http://localhost:8002',
+  STUDENT_PORTAL_LOGIN_URL: 'http://localhost:4300/auth'
 };
 
 /*

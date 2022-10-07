@@ -8,6 +8,7 @@
     "assessments": "Assessments",
     "assessment": "Assessment",
     "assessmentsOverview": "Assessments Overview",
+    "library": "Library",
     "assign": "Assign",
     "cancel": "Cancel",
     "choose": "Choose {{type}}",
@@ -103,7 +104,8 @@
       "reorderTooltip": "Reorder {{item}} by dragging and dropping them",
       "saveOrder": "Save order",
       "copyAssessment": "Create a copy",
-      "unarchive": "Unarchive"
+      "unarchive": "Unarchive",
+      "assignAssessment": "Assign assessment"
     },
     "blocked": "The {{type}} has already been answered and cannot be edited",
     "changeFile": "Change File",
@@ -155,10 +157,10 @@
         "attachments": "Attachments",
         "display": "Display",
         "isCorrectAnswer": "Is correct answer?",
-        "isMultipleChoice": "Is multiple choice?",
         "onPopup": "Display question on popup?",
         "option": "option",
-        "options": "Options"
+        "options": "Options",
+        "optionsValidAnswerErrors": "Questions can only have one correct answer."
       },
       "sel" : {
         "mathSelfEfficacy": "Math Self-Efficacy",
@@ -282,6 +284,7 @@
     "incompatibleLanguageError": "You can only give access to a topic to students with the same country and language.",
     "statusError": "Students can only be deleted after one year of inactivity",
     "studentCode": "Student code",
+    "studentLoginURL": "Login URL",
     "studentDetail": {
       "activeAccess": "Active access",
       "linkedTopics": "linked topic(s)",
@@ -303,7 +306,10 @@
       "noGroups": "You don't have groups with students.",
       "notifier": "You need to select student(s) or group(s) and set a start date and an end date for each selected topic.",
       "startDate": "Start date",
-      "topicAvailability": "Assessment topic(s) availability"
+      "topicAvailability": "Assessment topic(s) availability",
+      "replaceAsssessmentAccess": "Do you want to replace <b>{{previousAssessment}}</b> with <b>{{newAssessment}}</b>?",
+      "studentAssessmentPrompt": "Student {{studentName}} already has an assessment assigned",
+      "newAssessment": "a new assessment"
     },
     "topicAccessesEdit": {
       "accessEdited": "The topic access have been successfully deleted!",

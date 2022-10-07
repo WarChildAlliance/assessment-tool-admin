@@ -31,6 +31,8 @@ import { AreaSelectorComponent } from './questions/area-selector/area-selector.c
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { CustomSpinnerModule } from '../shared/spinner/spinner.module';
 import { QuestionSelFormComponent } from './questions/question-sel-form/question-sel-form.component';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [
@@ -68,7 +70,12 @@ import { QuestionSelFormComponent } from './questions/question-sel-form/question
     CustomButtonModule,
     PreviousButtonModule,
     DragDropModule,
-    CustomSpinnerModule
+    CustomSpinnerModule,
+    MatNativeDateModule,
+    MatDatepickerModule
+  ],
+  exports: [
+    AssessmentSummaryComponent
   ]
 })
 export class AssessmentBuilderModule { }
