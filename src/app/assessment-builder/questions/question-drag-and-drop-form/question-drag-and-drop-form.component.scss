@@ -74,6 +74,7 @@
 
 .dialog-buttons {
     margin-top: 20px;
+    align-items: center;
 }
 
 .attachments-container {
@@ -95,4 +96,8 @@
     app-spinner {
         margin: auto;
     }
+}
+
+.notifier {
+    color: red;
 }

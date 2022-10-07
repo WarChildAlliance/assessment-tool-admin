@@ -17,6 +17,10 @@
     (openDetailsEvent)="onOpenDetails($event)" (customActionEvent)="onCustomAction($event)"></app-table>
 
   <div *ngIf="showQuestionPreview">
+    <mat-card *ngIf="questionDetails && questionDetails.question_type === 'SEL'">
+      <app-question-sel [question]="questionDetails"></app-question-sel>
+    </mat-card>
+
     <mat-card *ngIf="questionDetails && questionDetails.question_type === 'SELECT'">
       <app-question-select [question]="questionDetails" [evaluated]="true"></app-question-select>
     </mat-card>

@@ -112,6 +112,7 @@
 </div>
 
 <div class="dialog-buttons">
+    <span class="notifier" *ngIf="dragAndDropForm.controls.order.errors">{{ "assessmentBuilder.topicDetails.selQuestionsOrder" | translate }}</span>
     <button mat-flat-button mat-dialog-close class="dialog-buttons__cancel" color="secondary">
         {{ "general.cancel" | translate }}
     </button>

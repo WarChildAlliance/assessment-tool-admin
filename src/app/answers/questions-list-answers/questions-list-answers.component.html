@@ -21,6 +21,10 @@
   (customActionEvent)="onCustomAction($event)"></app-table>
 
 <ng-template #questionPreviewDialog>
+  <ng-container *ngIf="questionDetails && questionDetails.question_type === 'SEL'">
+    <app-question-sel [question]="questionDetails"></app-question-sel>
+  </ng-container>
+
   <ng-container *ngIf="questionDetails && questionDetails.question_type === 'SELECT'">
     <app-question-select [question]="questionDetails" [evaluated]="true"></app-question-select>
   </ng-container>

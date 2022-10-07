@@ -9,6 +9,10 @@ export interface Question {
   difficulty: QuestionDifficulty;
 }
 
+export interface QuestionSEL extends Question {
+  sel_type: string;
+}
+
 export interface QuestionInput extends Question {
   valid_answer: string;
 }

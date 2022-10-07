@@ -12,6 +12,7 @@ interface DialogData {
   question?: any;
   toClone?: boolean;
   assessmentId?: string;
+  selQuestionOrder?: any;
 }
 
 @Component({
@@ -29,6 +30,7 @@ export class QuestionSelectFormComponent implements OnInit {
   public order: any;
   public question: any;
   public toClone: boolean;
+  public selQuestionOrder: any;
 
   @ViewChild('fileInput') el: ElementRef;
 
@@ -89,6 +91,10 @@ export class QuestionSelectFormComponent implements OnInit {
     if (this.data?.order) { this.order = this.data.order; }
     if (this.data?.question) { this.question = this.data.question; }
     if (this.data?.toClone) { this.toClone = this.data.toClone; }
+    if (this.data?.selQuestionOrder) {
+      this.selQuestionOrder = this.data.selQuestionOrder + 1;
+      this.selectForm.controls.order.setValidators([Validators.required, Validators.min(this.selQuestionOrder)]);
+    }
     this.optionsForm = this.selectForm.get('options') as FormArray;
     if (this.question) {
       this.setForm(this.question);
@@ -219,7 +225,7 @@ export class QuestionSelectFormComponent implements OnInit {
       this.dialogRef.closeAll();
     } else {
       this.alertService.error(
-        this.translateService.instant('assessmentBuilder.questions.select.optionsValidAnswerErros')
+        this.translateService.instant('assessmentBuilder.questions.select.optionsValidAnswerErrors')
       );
     }
   }

@@ -9,6 +9,7 @@ import { ConfirmModalComponent } from 'src/app/shared/confirm-modal/confirm-moda
 import { QuestionInputFormComponent } from '../questions/question-input-form/question-input-form.component';
 import { QuestionNumberlineFormComponent } from '../questions/question-numberline-form/question-numberline-form.component';
 import { QuestionSelectFormComponent } from '../questions/question-select-form/question-select-form.component';
+import { QuestionSelFormComponent } from '../questions/question-sel-form/question-sel-form.component';
 import { TopicFormDialogComponent } from '../topic-form-dialog/topic-form-dialog.component';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
@@ -31,6 +32,12 @@ export class TopicDetailsComponent implements OnInit {
   public reorder = false;
   public changedOrder = false;
   public questionsToOrder: any[] = [];
+
+  private quesionSEL = {
+    type: 'SEL',
+    text: 'SEL (Social and Emotional Learning)',
+    component: QuestionSelFormComponent
+  };
 
   public questionsArray: any[] = [
     {
@@ -56,6 +63,7 @@ export class TopicDetailsComponent implements OnInit {
 ];
 
   public order: number;
+  public selQuestionsCount: number;
 
   public questionsList: any[];
   public topicDetails: any;
@@ -75,7 +83,7 @@ export class TopicDetailsComponent implements OnInit {
       this.topicId = params.topic_id;
       this.assessmentType = params.type;
       this.getQuestionsList();
-      this.getTopicDetails();
+      this.getTopicDetails(true);
     });
     this.getIsDownloadable();
   }
@@ -87,12 +95,17 @@ export class TopicDetailsComponent implements OnInit {
         ? questionList.sort((a, b) => parseFloat(a.order) - parseFloat(b.order))[questionList.length - 1].order + 1
         : 1;
       this.isAnswered = questionList.some(question => question.answered);
+      this.selQuestionsCount = this.questionsList.filter(question => question.question_type === 'SEL').length;
     });
   }
 
-  private getTopicDetails(): void {
+  private getTopicDetails(initComponent?: boolean): void {
     this.assessmentService.getTopicDetails(this.assessmentId, this.topicId).subscribe(topicDetails => {
       this.topicDetails = topicDetails;
+      if (initComponent && this.topicDetails.sel_question) {
+        // Adds SEL Question type to the 'Add a question' section
+        this.questionsArray.unshift(this.quesionSEL);
+      }
     });
   }
 
@@ -127,7 +140,8 @@ export class TopicDetailsComponent implements OnInit {
         order: this.order,
         question: question ?? null,
         toClone: clone ? true : false,
-        assessmentId: this.assessmentId
+        assessmentId: this.assessmentId,
+        selQuestionOrder: this.selQuestionsCount
       }
     });
     questionDialog.afterClosed().subscribe((value) => {
@@ -203,6 +217,18 @@ export class TopicDetailsComponent implements OnInit {
       this.questionsToOrder = [...this.questionsList];
     } else {
       if (this.changedOrder) {
+        // If has SEL questions checks if they are at the beginning
+        if (this.topicDetails.sel_question) {
+          const breakCondition = this.questionsList.some((question, index) =>
+            (question.question_type === 'SEL' && index > this.selQuestionsCount)
+            || (question.question_type !== 'SEL' && index < this.selQuestionsCount)
+          );
+
+          if (breakCondition) {
+            this.alertService.error(this.translateService.instant('assessmentBuilder.topicDetails.selQuestionsOrder'));
+            return;
+          }
+        }
         const data = {
           questions: [],
           assessment_topic: this.topicId

@@ -30,6 +30,7 @@ import { QuestionDragAndDropFormComponent } from './questions/question-drag-and-
 import { AreaSelectorComponent } from './questions/area-selector/area-selector.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { CustomSpinnerModule } from '../shared/spinner/spinner.module';
+import { QuestionSelFormComponent } from './questions/question-sel-form/question-sel-form.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 
@@ -47,7 +48,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     ImageSelectorComponent,
     AudioSelectorComponent,
     QuestionDragAndDropFormComponent,
-    AreaSelectorComponent
+    AreaSelectorComponent,
+    QuestionSelFormComponent
   ],
   imports: [
     CommonModule,

@@ -45,8 +45,10 @@
     "questions": "Questions",
     "questionsNumber": "Number of questions",
     "questionType": "Question type",
+    "type": "Type",
     "save": "Save",
     "selected": "selected",
+    "selQuestion": "SEL Question",
     "simpleDeletePrompt": "Do you really want to delete the {{type}} <b>{{name}}</b> ?",
     "student": "Student",
     "studentName": "Student name",
@@ -88,6 +90,7 @@
   },
   "assessmentBuilder": {
     "allowSkip": "Allow skip",
+    "selQuestions": "Contains SEL questions",
     "assessmentFormDialog": {
       "gradeTooltip": "Intended school level"
     },
@@ -157,12 +160,22 @@
         "onPopup": "Display question on popup?",
         "option": "option",
         "options": "Options",
-        "optionsValidAnswerErros": "Questions can only have one correct answer."
+        "optionsValidAnswerErrors": "Questions can only have one correct answer."
+      },
+      "sel" : {
+        "mathSelfEfficacy": "Math Self-Efficacy",
+        "readSelfEfficacy": "Read Self-Efficacy",
+        "growthMindset": "Growth Mindset",
+        "notReallyLikeMe": "Not really like me",
+        "aLittleLikeMe": "A little like me",
+        "aLotLikeMe": "A lot like me"
       }
     },
     "saveSuccess": "{{type}} successfully saved",
     "show": "Show {{type}}",
     "topicDetails": {
+      "fiveSelQuestionsMessage": "Only up to 5 SEL Questions can be created by assessment.",
+      "selQuestionsOrder": "SEL Questions must be at the beginning of the topic.",
       "aQuestion": "a question",
       "feedback": "feedback",
       "numberLineButton": "Number line",

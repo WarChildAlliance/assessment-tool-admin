@@ -25,6 +25,10 @@
                 <p>{{ "general.private" | translate }}</p>
                 <p>{{ assessment.private }}</p>
             </div>
+            <div class="infos">
+                <p>{{ "general.selQuestion" | translate }}</p>
+                <p>{{ assessment.sel_question }}</p>
+            </div>
         </div>
         <div class="buttons">
             <app-custom-button *ngIf="canEdit && !assessment.archived"
