@@ -6,7 +6,7 @@
     <ng-container *ngFor="let option of selOptions">
         <div class="option -card">
             <mat-card [ngClass]="{'student': answer && option.id === answer.statement}">
-                <img [src]="'assets/icons/SEL_faces_' + option.path + '.png'" alt="">
+                <img [src]="'assets/icons/SEL_faces_' + option.path + '.svg'" alt="">
                 <span>
                     {{ "assessmentBuilder.questions.sel." + option.path | translate }}
                 </span>
