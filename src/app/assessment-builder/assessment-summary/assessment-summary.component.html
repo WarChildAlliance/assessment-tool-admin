@@ -55,6 +55,9 @@
                 <app-custom-button *ngIf="!canEdit" category="tertiary" variant="primary" icon="control_point_duplicate" (click)="editAssessment(assessment, true)">
                     {{ "assessmentBuilder.assessmentSummary.copyAssessment" | translate }}
                 </app-custom-button>
+                <app-custom-button *ngIf="library" category="tertiary" variant="primary" icon="event_available" (click)="openAssignTopicDialog(assessment)">
+                    {{ "assessmentBuilder.assessmentSummary.assignAssessment" | translate }}
+                </app-custom-button>
             </span>
             <span *ngIf="reorder">
                 <app-custom-button *ngIf="canEdit && !assessment.archived" category="tertiary" variant="danger" icon="close" (click)="cancelReorder()">
@@ -82,7 +85,7 @@
                 <p class="small-description">{{ topic.description }}</p>
                 <span class="question_count">({{ topic.questionsCount }} {{ "general.questions" | translate }})</span>
 
-                <div [ngSwitch]="topic.archived">
+                <div *ngIf="canEdit" [ngSwitch]="topic.archived">
                     <div class="topic-buttons" *ngSwitchCase="false">
                         <app-custom-button
                         matTooltip="{{ 'assessmentBuilder.assessmentSummary.archive' | translate: {type: 'general.topic' | translate | lowercase} }}"
@@ -90,7 +93,7 @@
                         icon="archive" (click)="archiveTopic($event, assessment.id, topic.id, true)">
                         </app-custom-button>
 
-                        <app-custom-button *ngIf="canEdit" matTooltip="{{ 'general.delete' | translate: {type: 'general.topic' | translate | lowercase} }}"
+                        <app-custom-button matTooltip="{{ 'general.delete' | translate: {type: 'general.topic' | translate | lowercase} }}"
                         [isIcon]="true" icon="delete" (click)="deleteTopic($event, assessment.id, topic.id, topic.title)">
                         </app-custom-button>
                     </div>

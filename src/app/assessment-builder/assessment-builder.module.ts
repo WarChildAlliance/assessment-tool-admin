@@ -32,6 +32,8 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import { CustomSpinnerModule } from '../shared/spinner/spinner.module';
 import { QuestionSelFormComponent } from './questions/question-sel-form/question-sel-form.component';
 import { QuestionDominoFormComponent } from './questions/question-domino-form/question-domino-form.component';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [
@@ -70,7 +72,12 @@ import { QuestionDominoFormComponent } from './questions/question-domino-form/qu
     CustomButtonModule,
     PreviousButtonModule,
     DragDropModule,
-    CustomSpinnerModule
+    CustomSpinnerModule,
+    MatNativeDateModule,
+    MatDatepickerModule
+  ],
+  exports: [
+    AssessmentSummaryComponent
   ]
 })
 export class AssessmentBuilderModule { }

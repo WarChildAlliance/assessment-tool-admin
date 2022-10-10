@@ -1,15 +1,27 @@
 <div>
     <div class="dialog-container">
-        <h1>{{ "students.assignTopic" | translate }}</h1>
+        <h1>{{ "students.assignTopic" | translate }} <span *ngIf="libraryAssessment">: {{assessment.title}}</span> </h1>
         <div mat-dialog-close class="close-dialog-button">
             <mat-icon>close</mat-icon>
         </div>
         <div class="topic-accesses-builder">
             <div class="topic-accesses-builder__list -students" *ngIf="studentsList.length">
                 <span class="header">{{ "general.students" | translate }}</span>
-                <div class="topic-accesses-builder__list-row" *ngFor="let student of studentsList">
-                    <mat-icon color="accent">person</mat-icon>
-                    <span>{{ student.full_name }}</span>
+                <div *ngIf="!libraryAssessment">
+                    <div class="topic-accesses-builder__list-row" *ngFor="let student of studentsList">
+                        <mat-icon color="accent">person</mat-icon>
+                        <span>{{ student.full_name }}</span>
+                    </div>
+                </div>
+                <div *ngIf="libraryAssessment" [formGroup]="assignStudentsForm">
+                    <ng-container formArrayName="students">
+                        <div *ngFor="let control of studentControls; let i=index;" [formGroupName]="i"
+                            class="topic-accesses-builder__list-row -topic-access">
+                            <mat-checkbox formControlName="selected" (change)="uniqueAssessmentCheck(control, $event.checked)">
+                                {{ control.get('student').value.full_name }}
+                            </mat-checkbox>
+                        </div>
+                    </ng-container>
                 </div>
             </div>
 
@@ -29,7 +41,7 @@
                 </ng-container>
             </div>
 
-            <div class="topic-accesses-builder__list">
+            <div *ngIf="!libraryAssessment" class="topic-accesses-builder__list">
                 <span class="header">{{ "students.topicAccessesBuilder.assessment" | translate }}</span>
 
                 <mat-radio-button class="topic-accesses-builder__list-row -assessment" title="{{ assessment.title }}" *ngFor="let assessment of assessmentsList"

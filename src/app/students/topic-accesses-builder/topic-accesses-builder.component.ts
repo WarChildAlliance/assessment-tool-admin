@@ -3,16 +3,18 @@ import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Valida
 import { TranslateService } from '@ngx-translate/core';
 import { Assessment } from 'src/app/core/models/assessment.model';
 import { BatchTopicAccesses } from 'src/app/core/models/batch-topic-accesses.model';
-import { Topic } from 'src/app/core/models/topic.models';
+import { TopicTableData } from 'src/app/core/models/topic-table-data.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { UtilitiesService } from 'src/app/core/services/utilities.service';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Group } from 'src/app/core/models/group.model';
+import { ConfirmModalComponent } from 'src/app/shared/confirm-modal/confirm-modal.component';
 
 interface DialogData {
   studentsList?: any[];
+  assessment?: any;
 }
 
 @Component({
@@ -23,14 +25,16 @@ interface DialogData {
 
 export class TopicAccessesBuilderComponent implements OnInit {
 
-  private topicsList: Topic[] = [];
+  private topicsList: TopicTableData[] = [];
   public groupsList: Group[] = [];
   private selectedAssessmentId: string;
   private applyToAllTopics: boolean;
+  public libraryAssessment: boolean;
 
   public minDate: Date = new Date();
-  public studentsList: any[];
-  public assessmentsList: Assessment[] = [];
+  public studentsList: any[] = [];
+  public assessmentsList: Assessment[] = [] ;
+  public assessment: Assessment;
   public startDate: Date;
   public endDate: Date;
 
@@ -38,8 +42,12 @@ export class TopicAccessesBuilderComponent implements OnInit {
     access: new FormArray([]),
   });
 
-  assignGroupForm: FormGroup = new FormGroup({
+  public assignGroupForm: FormGroup = new FormGroup({
     groups: new FormArray([])
+  });
+
+  public assignStudentsForm: FormGroup = new FormGroup({
+    students: new FormArray([])
   });
 
   get topicControls(): AbstractControl[] {
@@ -50,10 +58,19 @@ export class TopicAccessesBuilderComponent implements OnInit {
     return (this.assignGroupForm.get('groups') as FormArray).controls;
   }
 
+  get studentControls(): AbstractControl[] {
+    return (this.assignStudentsForm.get('students') as FormArray).controls;
+  }
+
   get disabledAssign(): boolean {
     let studentsSelected = false;
-    if (this.data.studentsList && !this.data.studentsList.length) {
+    if ((this.data.studentsList && !this.data.studentsList.length) || this.libraryAssessment) {
       studentsSelected = this.assignGroupForm.value.groups.filter(element => element.selected === true).length ? true : false;
+      if (this.libraryAssessment) {
+        studentsSelected = studentsSelected
+          ? true
+          : this.assignStudentsForm.value.students.filter(element => element.selected === true).length ? true : false;
+      }
     } else {
       studentsSelected = true;
     }
@@ -67,14 +84,31 @@ export class TopicAccessesBuilderComponent implements OnInit {
     private formBuilder: FormBuilder,
     private alertService: AlertService,
     private utilitiesService: UtilitiesService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
-    if (this.data?.studentsList) { this.studentsList = this.data.studentsList; }
-    this.assessmentService.getAssessmentsList().subscribe((assessmentsList) => {
-      this.assessmentsList = assessmentsList.filter(assessment => assessment.archived !== true);
-    });
+    if (this.data?.studentsList) {
+      this.data.studentsList.forEach((student, index) => {
+        if (student.assessments_count) {
+          const translatedText = this.translateService.instant('students.topicAccessesBuilder.newAssessment');
+          this.confirmReplaceAssessment(student.id, translatedText, student.full_name, index);
+        } else {
+          this.studentsList.push(student);
+        }
+      });
+    }
+    if (this.data?.assessment) {
+      this.libraryAssessment = true;
+      this.assessment = this.data?.assessment;
+      this.loadStudentsList();
+      this.loadTopicsList(this.data?.assessment.id);
+    } else {
+      this.assessmentService.getAssessmentsList().subscribe((assessmentsList) => {
+        this.assessmentsList = assessmentsList.filter(assessment => assessment.archived !== true);
+      });
+    }
 
     this.loadGroupsList();
   }
@@ -87,10 +121,17 @@ export class TopicAccessesBuilderComponent implements OnInit {
     });
   }
 
-  loadGroupsList(): void {
+  private loadGroupsList(): void {
     this.userService.getGroups().subscribe((groups) => {
       this.groupsList = groups.filter(group => group.students.length);
       this.generateGroupsForm();
+    });
+  }
+
+  private loadStudentsList(): void {
+    this.userService.getStudentsList().subscribe(studentsList => {
+      this.studentsList = studentsList;
+      this.generateStudentsForm();
     });
   }
 
@@ -116,11 +157,14 @@ export class TopicAccessesBuilderComponent implements OnInit {
     });
   }
 
-  public generateTopicsForm(): void {
+  private generateTopicsForm(): void {
     const accessForm = this.assignTopicForm.get('access') as FormArray;
     accessForm.clear();
 
-    this.topicsList.forEach((topic: Topic, i: number) => {
+    this.topicsList.forEach((topic: TopicTableData) => {
+      if (topic.questions_count === 0) {
+        return;
+      }
       const topicAccess = this.formBuilder.group({
         topic: new FormControl(topic),
         selected: new FormControl(true),
@@ -131,7 +175,7 @@ export class TopicAccessesBuilderComponent implements OnInit {
     });
   }
 
-  public generateGroupsForm(): void {
+  private generateGroupsForm(): void {
     const groupForm = this.assignGroupForm.get('groups') as FormArray;
     groupForm.clear();
 
@@ -145,12 +189,34 @@ export class TopicAccessesBuilderComponent implements OnInit {
     });
   }
 
+  private generateStudentsForm(): void {
+    const studentsForm = this.assignStudentsForm.get('students') as FormArray;
+    studentsForm.clear();
+
+    this.studentsList.forEach(student => {
+      const studentForm = this.formBuilder.group({
+        student: new FormControl(student),
+        selected: new FormControl(false),
+        name: new FormControl(student.name),
+      });
+      studentsForm.push(studentForm);
+    });
+  }
+
   public submitCreateTopicAccesses(): void {
     let studentsArray: number[] = [];
     if (this.studentsList.length) {
-      this.studentsList.forEach(student => {
-        studentsArray.push(student.id);
-      });
+      if (this.libraryAssessment) {
+        this.studentControls.forEach(control => {
+          if (control.get('selected').value) {
+            studentsArray.push(control.get('student').value.id);
+          }
+        });
+      } else {
+        this.studentsList.forEach(student => {
+          studentsArray.push(student.id);
+        });
+      }
     }
 
     for (const element of this.assignGroupForm.value.groups) {
@@ -210,5 +276,38 @@ export class TopicAccessesBuilderComponent implements OnInit {
       topic.get('end_date').clearValidators();
       topic.get('end_date').updateValueAndValidity();
     }
+  }
+
+  public uniqueAssessmentCheck(student, selected): void {
+    const studentValue = student.get('student').value;
+    if (selected && studentValue.assessments_count) {
+      this.confirmReplaceAssessment(studentValue.id, this.assessment.title, studentValue.full_name, student);
+    }
+  }
+  // A student should only have one and one assessment
+  private confirmReplaceAssessment(studentId: number, newAssessment: string, studentName: string, student: any): void {
+    this.assessmentService.getStudentAssessments(studentId).subscribe(studentAssessments => {
+      const confirmDialog = this.dialog.open(ConfirmModalComponent, {
+        data: {
+          title: this.translateService.instant('students.topicAccessesBuilder.studentAssessmentPrompt', {
+            studentName
+          }),
+          content: this.translateService.instant('students.topicAccessesBuilder.replaceAsssessmentAccess', {
+            previousAssessment: studentAssessments[0].title,
+            newAssessment
+          }),
+          contentType: 'innerHTML',
+          confirmColor: 'warn'
+        }
+      });
+
+      confirmDialog.afterClosed().subscribe(res => {
+        if (!res && this.libraryAssessment) {
+          student.get('selected').setValue(false);
+        } else if (res && !this.libraryAssessment) {
+          this.studentsList.push(this.data?.studentsList[student]);
+        }
+      });
+    });
   }
 }

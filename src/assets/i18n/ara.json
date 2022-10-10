@@ -8,6 +8,7 @@
     "assessments": "التقييمات",
     "assessment": "تقييم",
     "assessmentsOverview": "نظرة عامة على التقييمات",
+    "library": "مكتبة",
     "assign": "تعيين",
     "cancel": "إلغاء",
     "choose": "اختر {{type}}",
@@ -103,7 +104,8 @@
       "saveOrder": "حفظ النظام",
       "orderChanged": "تم تغيير الطلب بنجاح",
       "copyAssessment": "قم بإنشاء نسخة",
-      "unarchive": "أخرج من الأرشيف"
+      "unarchive": "أخرج من الأرشيف",
+      "assignAssessment": "تعيين التقييم"
     },
     "blocked": "تم بالفعل الرد على {{type}} ولا يمكن تعديله",
     "changeFile": "تغيير الملف",
@@ -142,11 +144,11 @@
       "imageAttachment": "مرفق الصورة",
       "numberline": {
         "endNumber": "رقم النهاية",
-        "expectedValue": "القيمة المتوقعة",
         "startNumber": "رقم البداية",
         "stepSize": "حجم الخطوة",
-        "ticks": "القراد",
-        "tickStep": "ضع علامة في الخطوة"
+        "expectedValue": "القيمة المتوقعة",
+        "endError": "يجب أن يكون أعلى بشكل صارم من رقم البداية",
+        "stepError": "يجب أن يكون أعلى بشكل صارم من رقم البداية"
       },
       "or": "أو",
       "questionCloneSuccess": "تم استنساخ السؤال بنجاح",
@@ -159,7 +161,7 @@
         "onPopup": "عرض السؤال على المنبثقة؟",
         "option": "اختيار",
         "options": "خيارات",
-        "optionsValidAnswerErros": "يجب أن تحتوي الأسئلة على إجابة واحدة صحيحة."
+        "optionsValidAnswerErrors": "يمكن أن يكون للأسئلة إجابة واحدة صحيحة."
       },
       "sel" : {
         "mathSelfEfficacy": "الكفاءة الذاتية للرياضيات",
@@ -308,7 +310,10 @@
       "noGroups": "ليس لديك مجموعات مع الطلاب.",
       "notifier": "تحتاج إلى تحديد الطالب (الطلاب) أو المجموعة (المجموعات) وتعيين تاريخ البدء وتاريخ الانتهاء لكل موضوع محدد",
       "startDate": "تاريخ البدء",
-      "topicAvailability": "مدى توفر موضوع (مواضيع) التقييم"
+      "topicAvailability": "مدى توفر موضوع (مواضيع) التقييم",
+      "replaceAsssessmentAccess": "هل تريد استبدال <b> {{previousAssessment}} </b> بـ <b> {{newAssessment}} </b>؟",
+      "studentAssessmentPrompt": "الطالب {{studentName}} لديه تقييم معين بالفعل",
+      "newAssessment": "تقييم جديد"
     },
     "topicAccessesEdit": {
       "accessEdited": "تم حذف الوصول إلى الموضوع بنجاح!",
