@@ -63,6 +63,11 @@
             [index]="index" [answer]="answerDetails" [evaluated]="evaluated" [shrinkBackgroundImage]="true">
           </app-question-drag-and-drop>
         </ng-container>
+
+        <ng-container *ngIf="answerDetails.question.question_type === 'DOMINO'">
+          <app-question-domino [question]="answerDetails.question" [index]="index" [answer]="answerDetails"
+            [evaluated]="evaluated"></app-question-domino>
+        </ng-container>
       </div>
     </ng-container>
     <ng-template #selectionNoData>

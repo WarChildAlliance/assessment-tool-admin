@@ -169,6 +169,10 @@
         "notReallyLikeMe": "Not really like me",
         "aLittleLikeMe": "A little like me",
         "aLotLikeMe": "A lot like me"
+      },
+      "domino": {
+        "leftSideValue": "Left Side Value",
+        "rightSideValue": "Right Side Value"
       }
     },
     "saveSuccess": "{{type}} successfully saved",

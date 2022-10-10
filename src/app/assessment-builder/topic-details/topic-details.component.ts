@@ -12,6 +12,7 @@ import { QuestionSelectFormComponent } from '../questions/question-select-form/q
 import { QuestionSelFormComponent } from '../questions/question-sel-form/question-sel-form.component';
 import { TopicFormDialogComponent } from '../topic-form-dialog/topic-form-dialog.component';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { QuestionDominoFormComponent } from '../questions/question-domino-form/question-domino-form.component';
 
 @Component({
   selector: 'app-topic-details',
@@ -59,6 +60,11 @@ export class TopicDetailsComponent implements OnInit {
       type: 'DRAG_AND_DROP',
       text: 'Drag and Drop',
       component: QuestionDragAndDropFormComponent
+    },
+    {
+      type: 'DOMINO',
+      text: 'Domino',
+      component: QuestionDominoFormComponent
     },
 ];
 

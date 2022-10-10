@@ -1,0 +1,109 @@
+.form-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+
+    .details-container,
+    .attachments-container {
+        flex: 1;
+
+        mat-checkbox {
+            display: block;
+        }
+    }
+
+    .mat-form-field {
+        margin-right: 20px;
+    }
+
+    .attachments-container {
+        .attachments-options {
+            display: flex;
+            place-content: space-around;
+        }
+    }
+}
+
+.question-form-button {
+    margin-top: 20px;
+    width: 50%;
+    margin-left: 25%;
+}
+
+.file_input {
+    background-color: rgb(233, 233, 233);
+}
+
+.options-container {
+    display: flex;
+    justify-content: center;
+    overflow-x: none;
+
+    .option-forms-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        place-items: center;
+        gap: 1em;
+
+        .option-form {
+            border: 1px solid #F0F0F0;
+
+            .mat-checkbox {
+                display: grid;
+                justify-items: center;
+            }
+
+            .sides {
+                display: flex;
+
+
+                .mat-form-field {
+                    max-width: 180px;
+                    margin: 0 0.3em;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 1466px) {
+        .option-forms-container {
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5em;
+        }
+
+    }
+}
+
+.options-header {
+    position: relative;
+
+    app-custom-button {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+}
+
+.select {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dialog-buttons {
+    margin-top: 20px;
+    align-items: center;
+}
+
+.form-primary {
+    display: flex;
+    flex-direction: row;
+
+    app-spinner {
+        margin: auto;
+    }
+}
+
+.notifier {
+    color: red;
+}

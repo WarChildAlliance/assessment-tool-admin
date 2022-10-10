@@ -142,6 +142,11 @@
         <app-question-drag-and-drop [question]="questionDetails" [index]="1" [evaluated]="true" [assessmentId]="assessmentId">
         </app-question-drag-and-drop>
       </mat-card>
+
+      <mat-card *ngIf="questionDetails && questionDetails.question_type === 'DOMINO'">
+        <mat-icon cdkDragHandle [ngClass]="reorder ? 'drag-hover' : ''">drag_indicator</mat-icon>
+        <app-question-domino [question]="questionDetails" [index]="1" [evaluated]="true"></app-question-domino>
+      </mat-card>
     </div>
   </div>
 </div>

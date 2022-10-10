@@ -47,6 +47,10 @@
           <app-question-drag-and-drop [question]="questionDetails" [assessmentId]="assessmentId" [topicId]="topicId"
             [index]="index" [evaluated]="true" [shrinkBackgroundImage]="true"></app-question-drag-and-drop>
         </ng-container>
+
+        <ng-container *ngIf="questionDetails.question_type === 'DOMINO'">
+          <app-question-domino [question]="questionDetails" [index]="index" [evaluated]="true"></app-question-domino>
+        </ng-container>
       </div>
     </ng-container>
     <ng-template #selectionNoData>

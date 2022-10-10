@@ -170,6 +170,10 @@
         "notReallyLikeMe": "لا تحبني حقًا",
         "aLittleLikeMe": "قليلا مثلي",
         "aLotLikeMe": "كثيرا مثلي"
+      },
+      "domino": {
+        "leftSideValue": "قيمة الجانب الأيسر",
+        "rightSideValue": "قيمة الجانب الأيمن"
       }
     },
     "saveSuccess": "تم حفظ {{type}} بنجاح",

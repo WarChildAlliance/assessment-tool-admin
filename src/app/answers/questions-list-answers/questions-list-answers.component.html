@@ -45,4 +45,8 @@
     <app-question-drag-and-drop [question]="questionDetails" [evaluated]="true" [assessmentId]="assessmentId" [topicId]="topicId">
     </app-question-drag-and-drop>
   </ng-container>
+
+  <ng-container *ngIf="questionDetails && questionDetails.question_type === 'DOMINO'">
+    <app-question-domino [question]="questionDetails" [evaluated]="true"></app-question-domino>
+  </ng-container>
 </ng-template>
