@@ -144,11 +144,11 @@
       "imageAttachment": "مرفق الصورة",
       "numberline": {
         "endNumber": "رقم النهاية",
-        "expectedValue": "القيمة المتوقعة",
         "startNumber": "رقم البداية",
         "stepSize": "حجم الخطوة",
-        "ticks": "القراد",
-        "tickStep": "ضع علامة في الخطوة"
+        "expectedValue": "القيمة المتوقعة",
+        "endError": "يجب أن يكون أعلى بشكل صارم من رقم البداية",
+        "stepError": "يجب أن يكون أعلى بشكل صارم من رقم البداية"
       },
       "or": "أو",
       "questionCloneSuccess": "تم استنساخ السؤال بنجاح",

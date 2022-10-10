@@ -144,11 +144,11 @@
       "imageAttachment": "Image attachment",
       "numberline": {
         "endNumber": "End number",
+        "endError": "Must be strictly superior to the start number",
         "expectedValue": "Expected value",
         "startNumber": "Start number",
         "stepSize": "Step size",
-        "ticks": "ticks",
-        "tickStep": "Tick step"
+        "stepError": "Must be strictly superior to the start number"
       },
       "or": "OR",
       "questionCloneSuccess": "Question successfully cloned",
