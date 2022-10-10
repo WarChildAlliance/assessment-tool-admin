@@ -13,6 +13,38 @@ interface DialogData {
   selQuestionOrder?: any;
 }
 
+function validateNumberLine(form: FormGroup): any {
+  const start = form.get('start');
+  const end = form.get('end');
+  const step = form.get('step');
+  const expectedVal = form.get('expected_value');
+
+  if (!start.value || !end.value) {
+    return;
+  }
+  if (start.value > end.value - 1) {
+    end.setErrors({ startGreaterThanEnd: true });
+  }
+  if (step.value) {
+    const stepsNb = (end.value - start.value) / step.value;
+
+    if (!Number.isInteger(stepsNb)) {
+      step.setErrors({ invalidStep: true });
+    }
+    if (stepsNb > 10) {
+      step.setErrors({ tooManySteps: true });
+    }
+    if (expectedVal.value) {
+      if (expectedVal.value < start || expectedVal.value > end) {
+        expectedVal.setErrors({ expectedValueOutOfBounds: true });
+      }
+      if ((expectedVal.value - start.value) % step.value !== 0) {
+        expectedVal.setErrors({ expectedValueNotOnStep: true });
+      }
+    }
+  }
+}
+
 @Component({
   selector: 'app-question-numberline-form',
   templateUrl: './question-numberline-form.component.html',
@@ -43,16 +75,13 @@ export class QuestionNumberlineFormComponent implements OnInit {
     question_type: new FormControl('NUMBER_LINE'),
     title: new FormControl(''),
     order: new FormControl('', [Validators.required]),
-    start: new FormControl('', [Validators.required]),
-    end: new FormControl('', [Validators.required]),
-    step: new FormControl('', [Validators.required]),
-    tick_step: new FormControl('', [Validators.required]),
+    start: new FormControl('', [Validators.required, Validators.max(9999)]),
+    end: new FormControl('', [Validators.required, Validators.max(10000)]),
+    step: new FormControl('', [Validators.required, Validators.min(1)]),
     expected_value: new FormControl('', [Validators.required]),
     difficulty: new FormControl('', [Validators.required]),
-    show_ticks: new FormControl(false),
-    show_value: new FormControl(false),
     on_popup: new FormControl(false)
-  });
+  }, validateNumberLine);
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -101,8 +130,6 @@ export class QuestionNumberlineFormComponent implements OnInit {
   private resetForm(): void {
     this.numberLineForm.controls['order'.toString()].setValue(this.order + 1);
     this.numberLineForm.controls.question_type.setValue('NUMBER_LINE');
-    this.numberLineForm.controls.show_ticks.setValue(false);
-    this.numberLineForm.controls.show_value.setValue(false);
     this.attachmentsResetSubject$.next();
   }
 
@@ -131,7 +158,6 @@ export class QuestionNumberlineFormComponent implements OnInit {
   private async setForm(question: any): Promise<void> {
     this.selectQuestion = false;
     this.question = question;
-
     this.numberLineForm.setValue({
       question_type: 'NUMBER_LINE',
       title: question.title,
@@ -139,10 +165,7 @@ export class QuestionNumberlineFormComponent implements OnInit {
       start: question.start,
       end: question.end,
       step: question.step,
-      tick_step: question.tick_step,
       expected_value: question.expected_value,
-      show_ticks: question.show_ticks,
-      show_value: question.show_value,
       on_popup: question.on_popup,
       difficulty: question.difficulty
     });

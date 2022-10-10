@@ -18,12 +18,10 @@ export interface QuestionInput extends Question {
 }
 
 export interface QuestionNumberLine extends Question {
-  expected_value: number;
   start: number;
   end: number;
   step: number;
-  show_value: boolean;
-  show_ticks: boolean;
+  expected_value: number;
 }
 
 export interface QuestionSelect extends Question {

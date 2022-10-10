@@ -15,82 +15,82 @@
 </div>
 
 <form *ngIf="!selectQuestion" [formGroup]="numberLineForm">
-    <mat-form-field appearance="outline" class="form-group" color="accent">
-        <mat-label>{{ "general.title" | translate }} </mat-label>
-        <input type="text" matInput formControlName="title">
-    </mat-form-field>
+    <div class="form-container">
+        <div class="numberline-details-container">
+            <mat-form-field appearance="outline" class="form-group" color="accent">
+                <mat-label>{{ "general.title" | translate }} </mat-label>
+                <input type="text" matInput formControlName="title">
+            </mat-form-field>
 
-    <mat-form-field appearance="outline" class="form-group" color="accent">
-        <mat-label>{{ "general.order" | translate }}</mat-label>
-        <input type="number" matInput formControlName="order">
-    </mat-form-field>
+            <mat-form-field appearance="outline" class="form-group" color="accent">
+                <mat-label>{{ "general.order" | translate }}</mat-label>
+                <input type="number" matInput formControlName="order">
+            </mat-form-field>
 
-    <mat-form-field appearance="outline" color="accent">
-        <mat-label>{{ "assessmentBuilder.questions.difficulty" | translate }}</mat-label>
-        <mat-select formControlName="difficulty">
-            <mat-option *ngFor="let difficulty of difficulties" [value]="difficulty.id">{{ difficulty.name }}</mat-option>
-        </mat-select>
-    </mat-form-field>
+            <mat-form-field appearance="outline" class="form-group" color="accent">
+                <mat-label>{{ "assessmentBuilder.questions.numberline.startNumber" | translate }}</mat-label>
+                <input type="number" matInput formControlName="start"
+                    [max]="9999">
+            </mat-form-field>
 
-    <mat-form-field appearance="outline" class="form-group" color="accent">
-        <mat-label>{{ "assessmentBuilder.questions.numberline.startNumber" | translate }}</mat-label>
-        <input type="number" matInput formControlName="start">
-    </mat-form-field>
+            <mat-form-field appearance="outline" class="form-group" color="accent">
+                <mat-label>{{ "assessmentBuilder.questions.numberline.endNumber" | translate }}</mat-label>
+                <input type="number" matInput formControlName="end"
+                    [min]="numberLineForm.controls.start.value" max="10000"
+                >
+                <mat-error *ngIf="numberLineForm.get('end').hasError('startGreaterThanEnd')">
+                    {{ "assessmentBuilder.questions.numberline.endError" | translate }}
+                </mat-error>
+            </mat-form-field>
 
-    <mat-form-field appearance="outline" class="form-group" color="accent">
-        <mat-label>{{ "assessmentBuilder.questions.numberline.endNumber" | translate }}</mat-label>
-        <input type="number" matInput formControlName="end">
-    </mat-form-field>
+            <mat-form-field appearance="outline" color="accent">
+                <mat-label>{{ "assessmentBuilder.questions.difficulty" | translate }}</mat-label>
+                <mat-select formControlName="difficulty">
+                    <mat-option *ngFor="let difficulty of difficulties" [value]="difficulty.id">{{ difficulty.name }}</mat-option>
+                </mat-select>
+            </mat-form-field>
 
-    <mat-form-field appearance="outline" class="form-group" color="accent">
-        <mat-label>{{ "assessmentBuilder.questions.numberline.stepSize" | translate }}</mat-label>
-        <input type="number" matInput formControlName="step" class="form-control">
-    </mat-form-field>
+            <mat-form-field appearance="outline" class="form-group" color="accent">
+                <mat-label>{{ "assessmentBuilder.questions.numberline.stepSize" | translate }}</mat-label>
+                <input type="number" matInput formControlName="step" class="form-control"
+                    min="1" [max]="numberLineForm.controls.end.value - numberLineForm.controls.start.value"
+                >
+                <mat-error *ngIf="numberLineForm.get('step').hasError('tooManySteps')">
+                    {{ "assessmentBuilder.questions.numberline.stepError" | translate }}
+                </mat-error>
+            </mat-form-field>
 
-    <mat-form-field appearance="outline" class="form-group" color="accent">
-        <mat-label>{{ "assessmentBuilder.questions.numberline.tickStep" | translate }}</mat-label>
-        <input type="number" matInput formControlName="tick_step" class="form-control">
-    </mat-form-field>
+            <mat-form-field appearance="outline" class="form-group" color="accent">
+                <mat-label>{{ "assessmentBuilder.questions.numberline.expectedValue" | translate }}</mat-label>
+                <input type="number" matInput formControlName="expected_value" class="form-control"
+                    [min]="numberLineForm.controls.start.value"
+                    [max]="numberLineForm.controls.end.value"
+                    [step]="numberLineForm.controls.step.value"
+                >
+            </mat-form-field>
 
-    <mat-form-field appearance="outline" class="form-group" color="accent">
-        <mat-label>{{ "assessmentBuilder.questions.numberline.expectedValue" | translate }}</mat-label>
-        <input type="number" matInput formControlName="expected_value" class="form-control">
-    </mat-form-field>
-
-    <mat-checkbox formControlName="show_ticks">
-        <mat-label for="show_ticks">
-            {{ "assessmentBuilder.show" | translate: {type: "assessmentBuilder.questions.numberline.ticks" | translate} }}
-        </mat-label>
-    </mat-checkbox>
-
-    <mat-checkbox formControlName="show_value">
-        <mat-label for="show_value">
-            {{ "assessmentBuilder.show" | translate: {type: "assessmentBuilder.value" | translate | lowercase} }}
-        </mat-label>
-    </mat-checkbox>
-
-    <mat-checkbox formControlName="on_popup">
-        <mat-label for="on_popup">{{ "assessmentBuilder.questions.select.onPopup" | translate }}</mat-label>
-    </mat-checkbox>
-
-    <div class="attachments-container">
-        <div style="margin-right: 20px;">
-            <app-image-selector
-                [reset$]="attachmentsResetSubject$.asObservable()"
-                (newImageEvent)="questionFormService.imageAttachment = $event"
-                [imageAttachment]="imageAttachment"
-            ></app-image-selector>
+            <mat-checkbox formControlName="on_popup">
+                <mat-label for="on_popup">{{ "assessmentBuilder.questions.select.onPopup" | translate }}</mat-label>
+            </mat-checkbox>
         </div>
-        <div>
-            <app-audio-selector
-                [isRecorderEnabled]="true"
-                [reset$]="attachmentsResetSubject$.asObservable()"
-                (newAudioEvent)="questionFormService.audioAttachment = $event"
-                [audioAttachment]="audioAttachment"
-            ></app-audio-selector>
+        <div class="attachments-container">
+            <div style="margin-right: 20px;">
+                <app-image-selector
+                    [reset$]="attachmentsResetSubject$.asObservable()"
+                    (newImageEvent)="questionFormService.imageAttachment = $event"
+                    [imageAttachment]="imageAttachment"
+                ></app-image-selector>
+            </div>
+            <div>
+                <app-audio-selector
+                    [isRecorderEnabled]="true"
+                    [reset$]="attachmentsResetSubject$.asObservable()"
+                    (newAudioEvent)="questionFormService.audioAttachment = $event"
+                    [audioAttachment]="audioAttachment"
+                ></app-audio-selector>
+            </div>
         </div>
     </div>
-
 </form>
 
 <div class="dialog-buttons">

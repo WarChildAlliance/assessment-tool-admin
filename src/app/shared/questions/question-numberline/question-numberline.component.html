@@ -5,21 +5,16 @@
     <mat-icon class="play-audio" (click)="playAudio(getSource(audioAttachment.file))" *ngIf="audioAttachment">volume_up</mat-icon>
 </div>
 <div class="number-line">
-    <span>{{ question.start }}</span>
-    <mat-slider
-            disabled
-            style="overflow-x: hidden"
-            class="number-line-slider"
-            [value]="evaluated ? question.expected_value : answer"
-            [max]="question.end"
-            [min]="question.start"
-            [step]="question.step"
-            [tickInterval]="question.show_ticks ? question.step : 0">
-    </mat-slider>
-    <span>{{ question.end }}</span>
+    <div *ngFor="let val of numberlineItems"
+        class="number-line__item"
+        [class.answer]="val === question.expected_value"
+        [style]="'color: ' + getNumberColor(val)"
+    >
+        {{ val }}
+    </div>
 </div>
 <div class="correct-answer" *ngIf="evaluated">
-    {{ "shared.questions.correctAnswer" | translate }} {{question.expected_value}}
+    {{ "shared.questions.correctAnswer" | translate }}: {{ question.expected_value }}
 </div>
 <div *ngIf="answer" class="student-answer">
     {{ "shared.questions.studentAnswer" | translate }} {{answer}}
