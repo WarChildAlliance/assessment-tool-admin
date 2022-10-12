@@ -27,6 +27,7 @@ import { HorizontalScrollArrowsComponent } from './horizontal-scroll-arrows/hori
 import { CustomButtonModule } from './button/button.module';
 import { QuestionSelComponent } from './questions/question-sel/question-sel.component';
 import { QuestionDominoComponent } from './questions/question-domino/question-domino.component';
+import { QuestionCalculComponent } from './questions/question-calcul/question-calcul.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { QuestionDominoComponent } from './questions/question-domino/question-do
     QuestionDragAndDropComponent,
     HorizontalScrollArrowsComponent,
     QuestionSelComponent,
-    QuestionDominoComponent
+    QuestionDominoComponent,
+    QuestionCalculComponent
   ],
   imports: [
     CommonModule,
@@ -72,7 +74,8 @@ import { QuestionDominoComponent } from './questions/question-domino/question-do
     TranslateModule,
     HorizontalScrollArrowsComponent,
     QuestionSelComponent,
-    QuestionDominoComponent
+    QuestionDominoComponent,
+    QuestionCalculComponent
   ]
 })
 
