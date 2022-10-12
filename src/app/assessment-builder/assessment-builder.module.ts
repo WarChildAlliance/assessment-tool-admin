@@ -34,6 +34,7 @@ import { QuestionSelFormComponent } from './questions/question-sel-form/question
 import { QuestionDominoFormComponent } from './questions/question-domino-form/question-domino-form.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { QuestionCalculFormComponent } from './questions/question-calcul-form/question-calcul-form.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     QuestionDragAndDropFormComponent,
     AreaSelectorComponent,
     QuestionSelFormComponent,
-    QuestionDominoFormComponent
+    QuestionDominoFormComponent,
+    QuestionCalculFormComponent
   ],
   imports: [
     CommonModule,

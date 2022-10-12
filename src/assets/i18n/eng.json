@@ -173,6 +173,16 @@
       "domino": {
         "leftSideValue": "Left Side Value",
         "rightSideValue": "Right Side Value"
+      },
+      "calcul": {
+        "firstNumber": "First number",
+        "secondNumber": "Second number",
+        "operator": "Operator",
+        "addition": "Addition",
+        "substraction": "Subtraction",
+        "division": "Division",
+        "multiplication": "Multiplication",
+        "calculError": "The calculation result must be a positive integer."
       }
     },
     "saveSuccess": "{{type}} successfully saved",
