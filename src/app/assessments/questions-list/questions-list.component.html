@@ -45,5 +45,9 @@
     <mat-card *ngIf="questionDetails && questionDetails.question_type === 'DOMINO'">
       <app-question-domino [question]="questionDetails" [evaluated]="true"></app-question-domino>
     </mat-card>
+
+    <mat-card *ngIf="questionDetails && questionDetails.question_type === 'CALCUL'">
+      <app-question-calcul [question]="questionDetails" [evaluated]="true"></app-question-calcul>
+    </mat-card>
   </div>
 </div>
