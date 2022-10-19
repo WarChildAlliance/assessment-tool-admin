@@ -22,6 +22,7 @@ export interface QuestionNumberLine extends Question {
   end: number;
   step: number;
   expected_value: number;
+  shuffle: boolean;
 }
 
 export interface QuestionDomino extends Question {

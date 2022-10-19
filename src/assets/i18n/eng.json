@@ -148,7 +148,8 @@
         "expectedValue": "Expected value",
         "startNumber": "Start number",
         "stepSize": "Step size",
-        "stepError": "Must be strictly superior to the start number"
+        "stepError": "Must be strictly superior to the start number",
+        "shuffle": "Shuffle"
       },
       "or": "OR",
       "questionCloneSuccess": "Question successfully cloned",
