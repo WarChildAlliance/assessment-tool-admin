@@ -314,7 +314,8 @@
       "topicAvailability": "مدى توفر موضوع (مواضيع) التقييم",
       "replaceAsssessmentAccess": "هل تريد استبدال <b> {{previousAssessment}} </b> بـ <b> {{newAssessment}} </b>؟",
       "studentAssessmentPrompt": "الطالب {{studentName}} لديه تقييم معين بالفعل",
-      "newAssessment": "تقييم جديد"
+      "newAssessment": "تقييم جديد",
+      "studentAssessmentIncompletePrompt": "لم ينته هذا الطالب من التقييم الحالي <b> {{currentAssessment}} </b> ، هل أنت متأكد من أنك تريد المتابعة؟"
     },
     "topicAccessesEdit": {
       "accessEdited": "تم حذف الوصول إلى الموضوع بنجاح!",
