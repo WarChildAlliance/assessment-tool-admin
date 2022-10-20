@@ -51,6 +51,17 @@
         </div>
         <div class="form-primary__flex-container__field-container">
             <mat-form-field appearance="outline" color="accent">
+                <mat-label>{{ ( grades?.length ? "general.grade" : "general.noData" ) | translate }}</mat-label>
+                <mat-select formControlName="grade">
+                    <mat-option [value]="''">-</mat-option>
+                    <mat-option *ngFor="let grade of grades" [value]="grade">
+                        {{ grade }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="form-primary__flex-container__field-container">
+            <mat-form-field appearance="outline" color="accent">
                 <mat-label>{{ ( groups?.length ? "general.group" : "general.noData" ) | translate }}</mat-label>
                 <mat-select formControlName="group">
                     <mat-option [value]="''">-</mat-option>

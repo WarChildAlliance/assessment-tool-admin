@@ -33,6 +33,7 @@ export class StudentDialogComponent implements OnInit {
   public countries: Country[];
   public languages: Language[];
   public groups: Group[];
+  public grades = ['1', '2', '3'];
 
   public studentForm: FormGroup = new FormGroup({
     first_name: new FormControl('', [Validators.required, Validators.pattern('^[A-Za-zÀ-ÖØ-öø-ÿ\u0621-\u064A]+(-[A-Za-zÀ-ÖØ-öø-ÿ\u0621-\u064A]+)?$')]),
@@ -40,6 +41,7 @@ export class StudentDialogComponent implements OnInit {
     country: new FormControl('', [Validators.required]),
     language: new FormControl('', [Validators.required]),
     group: new FormControl(''),
+    grade: new FormControl(''),
     active: new FormControl(true)
   });
 
@@ -62,7 +64,8 @@ export class StudentDialogComponent implements OnInit {
         country: this.student.country_code,
         language: this.student.language_code,
         group: this.student.group ?? '',
-        active: this.student.is_active
+        active: this.student.is_active,
+        grade: this.student.student_grade ?? '',
       });
     }
 
@@ -98,7 +101,8 @@ export class StudentDialogComponent implements OnInit {
       language: this.studentForm.value.language,
       country: this.studentForm.value.country,
       group: this.studentForm.value.group ?? '',
-      is_active: this.studentForm.value.active
+      is_active: this.studentForm.value.active,
+      student_grade: this.studentForm.value.grade ?? '',
     };
 
     if (!!this.student) {

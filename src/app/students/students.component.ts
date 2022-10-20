@@ -31,6 +31,7 @@ export class StudentsComponent implements OnInit {
     { key: 'full_name', name: 'general.studentName' },
     { key: 'username', name: 'students.studentCode', type: 'copy' },
     { key: 'group', name: 'general.group' },
+    { key: 'student_grade', name: 'general.grade' },
     { key: 'login_url', name: 'students.studentLoginURL', label: 'username', type: 'link' },
     { key: 'assessments_count', name: 'students.activeAssessmentsNumber' },
     { key: 'completed_topics_count', name: 'students.completedTopicsNumber' },

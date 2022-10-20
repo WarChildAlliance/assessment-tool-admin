@@ -11,6 +11,7 @@ import { TopicAccessModalComponent } from '../topic-access-modal/topic-access-mo
 import { ConfirmModalComponent } from 'src/app/shared/confirm-modal/confirm-modal.component';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertService } from 'src/app/core/services/alert.service';
+import { Group } from 'src/app/core/models/group.model';
 
 @Component({
   selector: 'app-student-detail',
@@ -22,6 +23,8 @@ export class StudentDetailComponent implements OnInit {
   public studentAssessments: any[];
   public assessment: any;
   public deletable = false;
+
+  private groups: Group[] = [];
 
   constructor(
     private userService: UserService,
@@ -35,6 +38,7 @@ export class StudentDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
+      this.getGoups();
       this.getStudentDetails(params.student_id);
       this.getStudentAssessments(params.student_id);
     });
@@ -46,6 +50,10 @@ export class StudentDetailComponent implements OnInit {
         this.student = student;
         this.deletable = this.student.can_delete;
     });
+  }
+
+  private getGoups(): void {
+    this.userService.getGroups().subscribe((groups) => this.groups = groups);
   }
 
   private getStudentAssessments(studentId): void {
@@ -63,9 +71,12 @@ export class StudentDetailComponent implements OnInit {
   }
 
   public onEdit(): void {
+    const studentGroup = this.groups.find(group => group.name === this.student.group[0]);
+    const studentToEdit = {...this.student, group: studentGroup?.id.toString()};
+
     const editStudentDialog = this.dialog.open(StudentDialogComponent, {
       data: {
-        student: this.student
+        student: {...studentToEdit, }
       }
     });
 
