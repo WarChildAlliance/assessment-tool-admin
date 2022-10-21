@@ -38,7 +38,7 @@ export class StudentDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      this.getGoups();
+      this.getGroups();
       this.getStudentDetails(params.student_id);
       this.getStudentAssessments(params.student_id);
     });
@@ -52,8 +52,9 @@ export class StudentDetailComponent implements OnInit {
     });
   }
 
-  private getGoups(): void {
+  private getGroups(): void {
     this.userService.getGroups().subscribe((groups) => this.groups = groups);
+    console.log('this groups = ', this.groups);
   }
 
   private getStudentAssessments(studentId): void {
@@ -71,7 +72,9 @@ export class StudentDetailComponent implements OnInit {
   }
 
   public onEdit(): void {
+    console.log('this groups = ', this.groups);
     const studentGroup = this.groups.find(group => group.name === this.student.group[0]);
+    console.log('studentGroup = ', studentGroup);
     const studentToEdit = {...this.student, group: studentGroup?.id.toString()};
 
     const editStudentDialog = this.dialog.open(StudentDialogComponent, {

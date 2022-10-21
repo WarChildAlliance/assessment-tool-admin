@@ -65,7 +65,7 @@ export class StudentDialogComponent implements OnInit {
         language: this.student.language_code,
         group: this.student.group ?? '',
         active: this.student.is_active,
-        grade: this.student.student_grade ?? '',
+        grade: this.student.grade ?? '',
       });
     }
 
@@ -102,7 +102,7 @@ export class StudentDialogComponent implements OnInit {
       country: this.studentForm.value.country,
       group: this.studentForm.value.group ?? '',
       is_active: this.studentForm.value.active,
-      student_grade: this.studentForm.value.grade ?? '',
+      grade: this.studentForm.value.grade ?? '',
     };
 
     if (!!this.student) {
