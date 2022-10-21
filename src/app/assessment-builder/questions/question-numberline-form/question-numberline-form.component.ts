@@ -80,6 +80,7 @@ export class QuestionNumberlineFormComponent implements OnInit {
     step: new FormControl('', [Validators.required, Validators.min(1)]),
     expected_value: new FormControl('', [Validators.required]),
     difficulty: new FormControl('', [Validators.required]),
+    shuffle: new FormControl(false, [Validators.required]),
     on_popup: new FormControl(false)
   }, validateNumberLine);
 
@@ -167,6 +168,7 @@ export class QuestionNumberlineFormComponent implements OnInit {
       step: question.step,
       expected_value: question.expected_value,
       on_popup: question.on_popup,
+      shuffle: question.shuffle,
       difficulty: question.difficulty
     });
 
