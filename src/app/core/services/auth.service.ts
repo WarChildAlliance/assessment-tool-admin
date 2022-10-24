@@ -25,7 +25,7 @@ export class AuthService {
     this.authenticatedSource.next(this.cookieService.has('auth-token'));
   }
 
-  public login(username: string, password: string): void {
+  public login(username: string, password: string, keepConnection?: boolean): void {
     this.http.post<Token>(`${environment.API_URL}/users/token-auth/`, { username, password }).subscribe(
       res => {
         this.isAuthenticated = true;

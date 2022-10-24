@@ -1,3 +1,71 @@
 .password-visibility-icon {
     color: #707070ac;
 }
+
+.container {
+    background: url("/assets/images/login-background.svg");
+    height: 100vh;
+    background-size: cover;
+}
+
+.form {
+    background: rgba(255, 255, 255, 0.85);
+    border: 2px solid #FFFFFF;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 3em;
+
+    h1 {
+        margin-bottom: 5px;
+        font-size: 40px;
+    }
+
+    .header {
+        background-color: yellow;
+    }
+
+    .questions {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    button {
+        align-self: center;
+        width: 154px;
+        margin: 2em 0 5em 0;
+    }
+
+    .sign-up {
+        a {
+            color: #4AA0DB;
+            cursor: pointer;
+        }
+    }
+}
+
+
+@media (max-width: 845px) {
+    .form {
+        width: 90%;
+        padding: 1em;
+    }
+}
+
+@media (max-width: 700px) {
+    .sign-up {
+        display: none;
+    }
+
+    .form {
+        button {
+            margin: auto;
+        }
+    }
+}
