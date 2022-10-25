@@ -4,12 +4,14 @@ import { TranslateService } from '@ngx-translate/core';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Subtopic } from 'src/app/core/models/question.model';
 
 interface DialogData {
   edit?: boolean;
   topic?: any;
   assessmentId?: any;
   order?: string;
+  subject?: string;
 }
 
 @Component({
@@ -18,9 +20,11 @@ interface DialogData {
   styleUrls: ['./topic-form-dialog.component.scss']
 })
 export class TopicFormDialogComponent implements OnInit {
+  private toClone: boolean;
+  private subject: string;
+
   public topicsList: any;
   public selectTopic: boolean;
-  private toClone: boolean;
 
   public assessmentId: string;
   public topic: any;
@@ -35,7 +39,7 @@ export class TopicFormDialogComponent implements OnInit {
   public iconOptions = ['flower_green.svg', 'flower_purple.svg', 'flower_cyan.svg'];
 
   public feedbacks = [{id: 0, name: 'Never'}, {id: 1, name: 'Always'}, {id: 2, name: 'Second attempt'}];
-  public subtopics = ['Subtopic 1', 'Subtopic 2', 'Subtopic 3'];
+  public subtopics: Subtopic[];
 
   public selectTopicForm: FormGroup = new FormGroup({
     topic: new FormControl(null)
@@ -45,7 +49,7 @@ export class TopicFormDialogComponent implements OnInit {
     name: new FormControl('', [Validators.required]),
     description: new FormControl('', [Validators.required]),
     show_feedback: new FormControl(0, [Validators.required]),
-    subtopic: new FormControl('', [Validators.required]),
+    subtopic: new FormControl(''),
     allow_skip: new FormControl(false, [Validators.required]),
     evaluated: new FormControl(true, [Validators.required]),
     praise: new FormControl(0, [Validators.required]),
@@ -67,10 +71,12 @@ export class TopicFormDialogComponent implements OnInit {
     if (this.data?.topic) { this.topic = this.data?.topic; }
     if (this.data?.edit) { this.edit = this.data?.edit; }
     if (this.data?.order) { this.order = this.data?.order; }
+    if (this.data?.subject) { this.subject = this.data?.subject; }
     if (this.topic) {
       this.setForm(this.topic);
     } else {
       this.getTopics();
+      this.getSubtopics();
       this.selectTopic = true;
       this.createNewTopicForm.controls.order.setValue(this.order);
     }
@@ -139,6 +145,17 @@ export class TopicFormDialogComponent implements OnInit {
     });
   }
 
+  private getSubtopics(): void {
+    this.assessmentService.getSubtopics(this.subject).subscribe(subtopics => {
+      this.subtopics = subtopics;
+
+      if (this.subtopics?.length) {
+        this.createNewTopicForm.controls.subtopic.setValidators([Validators.required]);
+        this.createNewTopicForm.controls.subtopic.updateValueAndValidity();
+      }
+    });
+  }
+
   public onSelectTopic(): void {
     this.toClone = true;
     const topicId = this.selectTopicForm.controls.topic.value.id;
@@ -163,7 +180,7 @@ export class TopicFormDialogComponent implements OnInit {
       name: topic.name,
       description: topic.description,
       show_feedback: topic.show_feedback,
-      subtopic: topic.subtopic,
+      subtopic: topic.subtopic?.id,
       allow_skip: topic.allow_skip,
       evaluated: topic.evaluated,
       praise: topic.praise,
@@ -172,6 +189,10 @@ export class TopicFormDialogComponent implements OnInit {
       icon: this.icon,
       archived: topic.archived
     });
+    if (this.topic.questions_count > 0) {
+      this.createNewTopicForm.controls.subtopic.disable();
+    }
+    this.getSubtopics();
   }
 
   // When creating a new topic based on an existing one: convert object from icon to file
