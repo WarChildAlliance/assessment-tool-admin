@@ -8,14 +8,6 @@ import { AssessmentService } from './assessment.service';
   providedIn: 'root'
 })
 export class QuestionFormService {
-  public get questionDifficulties(): any[] {
-    return [
-      {id: 1, name: 'Difficulty 1'},
-      {id: 2, name: 'Difficulty 2'},
-      {id: 3, name: 'Difficulty 3'}
-    ];
-  }
-
   private fileAttachment: File;
   private alertMessage = '';
 

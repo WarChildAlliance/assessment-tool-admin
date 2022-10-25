@@ -6,6 +6,8 @@ import { Subject } from 'rxjs';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { QuestionFormService } from 'src/app/core/services/question-form.service';
 import { AreaSelectorComponent } from '../area-selector/area-selector.component';
+import { LanguageService } from 'src/app/core/services/language.service';
+import { LearningObjective } from 'src/app/core/models/question.model';
 
 interface DialogData {
   topicId?: string;
@@ -14,6 +16,9 @@ interface DialogData {
   toClone?: boolean;
   assessmentId?: string;
   selQuestionOrder?: any;
+  subject?: 'MATH' | 'LITERACY';
+  grade?: '1' | '2' | '3';
+  subtopicId?: number;
 }
 
 @Component({
@@ -24,7 +29,7 @@ interface DialogData {
 export class QuestionDragAndDropFormComponent implements OnInit {
   public questionsList: any;
   public selectQuestion: boolean;
-  public difficulties = this.questionFormService.questionDifficulties;
+  public learningObjectives: LearningObjective[];
 
   public assessmentId: string;
   public topicId: string;
@@ -32,6 +37,9 @@ export class QuestionDragAndDropFormComponent implements OnInit {
   public question: any;
   public toClone: boolean;
   public selQuestionOrder: any;
+  public grade: string;
+  public subject: string;
+  public subtopicId: number;
 
   @ViewChild('dragItems') dragItemsElement: ElementRef;
 
@@ -59,8 +67,8 @@ export class QuestionDragAndDropFormComponent implements OnInit {
 
   public dragAndDropForm: FormGroup = new FormGroup({
     title: new FormControl('', Validators.required),
+    learning_objective: new FormControl(null),
     order: new FormControl('', Validators.required),
-    difficulty: new FormControl('', [Validators.required]),
     on_popup: new FormControl(false),
     background_image: new FormControl(null, Validators.required),
     drop_areas: new FormControl(null, Validators.required),
@@ -71,6 +79,7 @@ export class QuestionDragAndDropFormComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private dialog: MatDialog,
     private assessmentService: AssessmentService,
+    public languageService: LanguageService,
     public questionFormService: QuestionFormService
   ) {
     this.attachmentsResetSubject$.subscribe(() => this.questionFormService.resetAttachments());
@@ -86,6 +95,12 @@ export class QuestionDragAndDropFormComponent implements OnInit {
       this.selQuestionOrder = this.data.selQuestionOrder + 1;
       this.dragAndDropForm.controls.order.setValidators([Validators.required, Validators.min(this.selQuestionOrder)]);
     }
+    if (this.data?.subject) { this.subject = this.data.subject; }
+    if (this.data?.grade) { this.grade = this.data.grade; }
+    if (this.data?.subtopicId) {
+      this.subtopicId = this.data.subtopicId;
+      this.getLearningObjectives();
+    }
     if (this.question) {
       this.setForm(this.question);
     } else {
@@ -96,6 +111,29 @@ export class QuestionDragAndDropFormComponent implements OnInit {
       });
     }
     await this.questionFormService.resetAttachments().then(() => this.attachmentsResetSubject$.next());
+  }
+
+  private getLearningObjectives(): void {
+    const filteringParams = {
+      grade: this.grade,
+      subject: this.subject,
+      subtopic: this.subtopicId,
+    };
+    this.assessmentService.getLearningObjectives(filteringParams).subscribe((objectives: LearningObjective[]) => {
+      this.learningObjectives = objectives;
+
+      if (this.learningObjectives.length) {
+        this.dragAndDropForm.controls.learning_objective.setValidators([Validators.required]);
+      } else {
+        this.dragAndDropForm.controls.learning_objective.clearValidators();
+      }
+      this.dragAndDropForm.controls.learning_objective.updateValueAndValidity();
+
+      const currentObjective = this.dragAndDropForm.controls.learning_objective.value;
+      if (currentObjective && !this.learningObjectives.find(el => el.code === currentObjective)) {
+        this.dragAndDropForm.controls.learning_objective.setValue(null);
+      }
+    });
   }
 
   private async getDraggableOptions(): Promise<any> {
@@ -304,8 +342,8 @@ export class QuestionDragAndDropFormComponent implements OnInit {
     return new FormGroup({
       question_type: new FormControl('DRAG_AND_DROP'),
       title: new FormControl(this.dragAndDropForm.controls.title.value),
+      learning_objective: new FormControl(this.dragAndDropForm.controls.learning_objective.value),
       on_popup: new FormControl(this.dragAndDropForm.controls.on_popup.value),
-      difficulty: new FormControl(this.dragAndDropForm.controls.difficulty.value),
       order: new FormControl(this.dragAndDropForm.controls.order.value),
       drop_areas: new FormControl(this.dragAndDropForm.controls.drop_areas.value)
     });
@@ -322,10 +360,13 @@ export class QuestionDragAndDropFormComponent implements OnInit {
     this.question = question;
 
     this.dragAndDropForm.setValue({
+      grade: question.grade,
+      subject: question.subject,
+      subtopic: question.subtopic?.id ?? null,
+      learning_objective: question.learning_objective?.code ?? null,
       title: this.question.title,
       order: this.toClone ? this.order : this.question.order,
       on_popup: this.question.on_popup,
-      difficulty: question.difficulty,
       background_image: null,
       drop_areas: this.question.drop_areas,
       drag_options: null

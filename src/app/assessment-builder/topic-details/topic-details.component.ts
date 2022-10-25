@@ -13,6 +13,7 @@ import { QuestionSelFormComponent } from '../questions/question-sel-form/questio
 import { TopicFormDialogComponent } from '../topic-form-dialog/topic-form-dialog.component';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { QuestionDominoFormComponent } from '../questions/question-domino-form/question-domino-form.component';
+import { Assessment } from 'src/app/core/models/assessment.model';
 
 @Component({
   selector: 'app-topic-details',
@@ -73,6 +74,7 @@ export class TopicDetailsComponent implements OnInit {
 
   public questionsList: any[];
   public topicDetails: any;
+  private assessment: Assessment;
 
   constructor(
     private dialog: MatDialog,
@@ -90,6 +92,7 @@ export class TopicDetailsComponent implements OnInit {
       this.assessmentType = params.type;
       this.getQuestionsList();
       this.getTopicDetails(true);
+      this.getAssessmentDetails();
     });
     this.getIsDownloadable();
   }
@@ -112,6 +115,12 @@ export class TopicDetailsComponent implements OnInit {
         // Adds SEL Question type to the 'Add a question' section
         this.questionsArray.unshift(this.quesionSEL);
       }
+    });
+  }
+
+  private getAssessmentDetails(): void {
+    this.assessmentService.getAssessmentDetails(this.assessmentId).subscribe((assessmentDetails: Assessment) => {
+      this.assessment = assessmentDetails;
     });
   }
 
@@ -147,7 +156,10 @@ export class TopicDetailsComponent implements OnInit {
         question: question ?? null,
         toClone: clone ? true : false,
         assessmentId: this.assessmentId,
-        selQuestionOrder: this.selQuestionsCount
+        selQuestionOrder: this.selQuestionsCount,
+        subject: this.assessment.subject.toUpperCase(),
+        grade: this.assessment.grade,
+        subtopicId: this.topicDetails.subtopic?.id
       }
     });
     questionDialog.afterClosed().subscribe((value) => {

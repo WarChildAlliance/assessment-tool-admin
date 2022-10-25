@@ -153,7 +153,6 @@
       },
       "or": "أو",
       "questionCloneSuccess": "تم استنساخ السؤال بنجاح",
-      "difficulty": "صعوبة",
       "select": {
         "attachments": "المرفقات",
         "display": "عرض",
@@ -192,9 +191,11 @@
       "createTopic": "قم بإنشاء موضوع",
       "praiseTooltip": "حالات الحمد",
       "whenToShowFeedbacks": "متى تظهر التقيمات؟",
-      "subtopic": "موضوع فرعي"
     },
-    "value": "قيمة"
+    "value": "قيمة",
+    "gradeTooltip": "المستوى المدرسي المقصود",
+    "learningObjective": "هدف التعلم",
+    "subtopic": "موضوع فرعي"
   },
   "assessments": {
     "assessmentDetail": {

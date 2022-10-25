@@ -83,7 +83,8 @@ export class AssessmentSummaryComponent implements OnInit {
     const topicFormDialog = this.dialog.open(TopicFormDialogComponent, {
       data: {
         assessmentId: this.assessmentId,
-        order: this.assessment.topics.length + 1
+        order: this.assessment.topics.length + 1,
+        subject: this.assessment.subject.toUpperCase()
       }
     });
 

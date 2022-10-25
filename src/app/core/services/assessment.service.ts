@@ -191,4 +191,14 @@ export class AssessmentService {
     return this.http.get<any>(`${environment.API_URL}/assessments/${assessmentId}/topics/${topicId}/questions/${questionId}/draggable/`);
   }
 
+  public getSubtopics(subject: string = null): Observable<any> {
+    const queryParams = subject ? `?subject=${subject}` : '';
+    return this.http.get<any>(`${environment.API_URL}/assessments/subtopics/${queryParams}`);
+  }
+
+  public getLearningObjectives(filteringParams?: object): Observable<any> {
+    const initialUrl = `${environment.API_URL}/assessments/learning-objectives/`;
+    const finalUrl = filteringParams ? this.utilitiesService.urlBuilder(initialUrl, filteringParams) : initialUrl;
+    return this.http.get<any>(finalUrl);
+  }
 }

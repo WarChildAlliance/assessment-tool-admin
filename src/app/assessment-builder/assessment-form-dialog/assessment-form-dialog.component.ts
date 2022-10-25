@@ -33,7 +33,7 @@ export class AssessmentFormDialogComponent implements OnInit {
   public grades = ['1', '2', '3'];
   public languages: Language[];
   public countries: Country[];
-  public subjects = ['PRESEL', 'POSTSEL', 'MATH', 'LITERACY'];
+  public subjects = ['MATH', 'LITERACY'];
   public formData: FormData = new FormData();
 
   public iconOptions = ['flower_green.svg', 'flower_purple.svg', 'flower_cyan.svg'];
@@ -165,6 +165,10 @@ export class AssessmentFormDialogComponent implements OnInit {
       downloadable: assessment.downloadable,
       sel_question: assessment.sel_question
     });
+    if (this.assessment.topics_count > 0) {
+      this.assessmentForm.controls.grade.disable();
+      this.assessmentForm.controls.subject.disable();
+    }
   }
 
   // When creating a new assessment based on an existing one: convert object from icon to file
