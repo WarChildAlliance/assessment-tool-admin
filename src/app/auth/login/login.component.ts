@@ -27,7 +27,8 @@ export class LoginComponent implements OnInit {
   public onSubmit(): void {
     this.authService.login(
       this.loginForm.value.username,
-      this.loginForm.value.password
+      this.loginForm.value.password,
+      this.loginForm.value.keepConnection
     );
   }
 
@@ -38,5 +39,9 @@ export class LoginComponent implements OnInit {
 
   public onSignup(): void {
     console.log('Sign up!');
+  }
+
+  public onForgotPassword?(): void {
+    console.log('Forgot Password?');
   }
 }

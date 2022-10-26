@@ -1,7 +1,3 @@
-.password-visibility-icon {
-    color: #707070ac;
-}
-
 .container {
     background: url("/assets/images/login-background.svg");
     height: 100vh;
@@ -20,20 +16,38 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    padding: 3em;
+    padding: 3em 2em 2em 2em;
 
     h1 {
         margin-bottom: 5px;
         font-size: 40px;
+        white-space: nowrap;
+    }
+
+    p {
+        color: #666666;
     }
 
     .header {
         background-color: yellow;
     }
 
+    input[type=password] {
+        font-size: 40px;
+        height: 23px;
+        background: -webkit-linear-gradient(#858889, #7C8080, #515354, #494C4D, #000000);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
     .questions {
         display: flex;
         justify-content: space-between;
+
+        a {
+            color: #666666;
+            cursor: pointer;
+        }
     }
 
     button {
@@ -54,7 +68,7 @@
 @media (max-width: 845px) {
     .form {
         width: 90%;
-        padding: 1em;
+        padding: 3em 1em;
     }
 }
 
@@ -65,7 +79,7 @@
 
     .form {
         button {
-            margin: auto;
+            margin: 2em 0 0 0;
         }
     }
 }

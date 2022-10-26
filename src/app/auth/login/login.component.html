@@ -1,7 +1,7 @@
 <div class="container">
   <form [formGroup]="loginForm" class="form">
-    <h1>Teacher's Platform</h1>
-    <p>Welcome back! Please login to your account</p>
+    <h1>{{ "auth.login.title" | translate }}</h1>
+    <p>{{ "auth.login.subtitle" | translate }}</p>
 
     <mat-form-field appearance="outline" class="form-group" color="accent">
       <mat-label>{{ "auth.login.username" | translate }}</mat-label>
@@ -11,24 +11,21 @@
       <mat-label>{{ "auth.login.password" | translate }}</mat-label>
       <input matInput #passwordElement name="passwordElement" type="password" autocomplete="current-password"
         formControlName="password">
-      <!-- <button matSuffix mat-icon-button aria-label="Show password" (click)="showPassword()">
-        <mat-icon class="password-visibility-icon">visibility</mat-icon>
-      </button> -->
     </mat-form-field>
 
     <div class="questions">
       <mat-checkbox formControlName="keepConnection">
-        <mat-label for="keepConnection">Remember me?</mat-label>
+        <mat-label for="keepConnection">{{ "auth.login.keepConnection" | translate }}</mat-label>
       </mat-checkbox>
 
-      <a>Forgot Password?</a>
+      <a (click)="onForgotPassword()">{{ "auth.login.forgotPassword" | translate }}</a>
     </div>
 
     <button (click)="onSubmit()" mat-flat-button type="submit" color="accent" [disabled]="!loginForm.valid">{{
       "auth.login.login" | translate }}</button>
 
     <p class="sign-up">
-      New User? <a (click)="onSignup()">Sign up</a>
+      {{ "auth.login.newUser" | translate }} <a (click)="onSignup()">{{ "auth.login.signup" | translate }}</a>
     </p>
   </form>
 </div>
