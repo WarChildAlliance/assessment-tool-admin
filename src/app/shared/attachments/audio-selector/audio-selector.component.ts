@@ -26,12 +26,10 @@ export class AudioSelectorComponent implements OnInit {
     }
   }
 
-  private blobToFile = (theBlob: Blob, fileName: string): File => {
-    return new File([theBlob], fileName, {
+  private blobToFile = (theBlob: Blob, fileName: string): File => new File([theBlob], fileName, {
       lastModified: new Date().getTime(),
       type: theBlob.type,
     });
-  }
 
   public handleFileInput(event): void {
     this.audioAttachment = event.target.files[0];

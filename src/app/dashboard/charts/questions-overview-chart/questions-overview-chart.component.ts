@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as Chart from 'chart.js';
 import { ChartData } from 'chart.js';
-import { filter } from 'rxjs/operators';
 import { TopicDashboard } from 'src/app/core/models/topic-dashboard.model';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 
@@ -11,15 +10,6 @@ import { AssessmentService } from 'src/app/core/services/assessment.service';
   styleUrls: ['./questions-overview-chart.component.scss']
 })
 export class QuestionsOverviewChartComponent implements OnInit {
-
-  private barChart: Chart;
-
-  private barChartData: ChartData = {
-    labels: [],
-    datasets: []
-  };
-
-  private questionData = [];
 
   public assessmentId: string;
   public topicId: string;
@@ -32,9 +22,54 @@ export class QuestionsOverviewChartComponent implements OnInit {
   public selectionHasData = true;
   public loading = true;
 
+  private barChart: Chart;
+
+  private barChartData: ChartData = {
+    labels: [],
+    datasets: []
+  };
+
+  private questionData = [];
   constructor(private assessmentService: AssessmentService) { }
 
   ngOnInit(): void {
+  }
+
+  public onTopicSelection(assessmentTopicInfos: {assessmentId: string; topic: TopicDashboard}): void {
+    this.loading = true;
+    this.assessmentId = assessmentTopicInfos?.assessmentId;
+
+    if (assessmentTopicInfos?.topic.started) {
+      this.barChart = new Chart('barChart', {
+        type: 'horizontalBar',
+        data: this.barChartData,
+        options: {
+          maintainAspectRatio: false,
+          scales: {
+              xAxes: [{
+                  ticks: {
+                      beginAtZero: true,
+                      stepSize: 1
+                  },
+                  stacked: true
+              }],
+              yAxes: [{
+                stacked: true
+              }]
+          },
+          onClick: event => {
+            /* eslint-disable @typescript-eslint/dot-notation */
+            const datasetIndex =  this.barChart.getElementAtEvent(event)[0]['_index'];
+            /* eslint-enable @typescript-eslint/dot-notation */
+            this.getQuestionDetails(datasetIndex);
+          }
+        },
+      });
+      this.topicId = assessmentTopicInfos.topic.id;
+      this.getQuestionsOverview();
+    } else {
+      this.hasData = false;
+    }
   }
 
   public getQuestionsOverview(groupID?: number[]): void {
@@ -84,42 +119,5 @@ export class QuestionsOverviewChartComponent implements OnInit {
       this.questionDetails = details;
       this.loading = false;
     });
-  }
-
-  public onTopicSelection(assessmentTopicInfos: {assessmentId: string, topic: TopicDashboard}): void {
-    this.loading = true;
-    this.assessmentId = assessmentTopicInfos?.assessmentId;
-
-    if (assessmentTopicInfos?.topic.started) {
-      this.barChart = new Chart('barChart', {
-        type: 'horizontalBar',
-        data: this.barChartData,
-        options: {
-          maintainAspectRatio: false,
-          scales: {
-              xAxes: [{
-                  ticks: {
-                      beginAtZero: true,
-                      stepSize: 1
-                  },
-                  stacked: true
-              }],
-              yAxes: [{
-                stacked: true
-              }]
-          },
-          onClick: event => {
-            /* tslint:disable:no-string-literal */
-            const datasetIndex =  this.barChart.getElementAtEvent(event)[0]['_index'];
-            /* tslint:enable:no-string-literal */
-            this.getQuestionDetails(datasetIndex);
-          }
-        },
-      });
-      this.topicId = assessmentTopicInfos.topic.id;
-      this.getQuestionsOverview();
-    } else {
-      this.hasData = false;
-    }
   }
 }

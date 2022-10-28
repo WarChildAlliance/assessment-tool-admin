@@ -27,7 +27,7 @@ export class SelectAssessmentComponent implements OnInit {
   @Input() displayNonEvaluated: boolean;
 
   @Output() assessmentSelection = new EventEmitter<AssessmentDashboard>();
-  @Output() topicSelection = new EventEmitter<{assessmentId: string, topic: TopicDashboard}>();
+  @Output() topicSelection = new EventEmitter<{assessmentId: string; topic: TopicDashboard}>();
 
   constructor(private assessmentService: AssessmentService) { }
 

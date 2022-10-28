@@ -27,6 +27,9 @@ interface DialogData {
   styleUrls: ['./question-select-form.component.scss'],
 })
 export class QuestionSelectFormComponent implements OnInit {
+
+  @ViewChild('fileInput') el: ElementRef;
+
   public questionsList: any;
   public selectQuestion: boolean;
   public learningObjectives: LearningObjective[];
@@ -41,12 +44,8 @@ export class QuestionSelectFormComponent implements OnInit {
   public subject: string;
   public subtopicId: number;
 
-  @ViewChild('fileInput') el: ElementRef;
 
   public options = [];
-
-  private optionsAtt = [];
-  private optionsForm: FormArray;
 
   public imageAttachment = this.questionFormService.imageAttachment;
   public audioAttachment = this.questionFormService.audioAttachment;
@@ -56,10 +55,6 @@ export class QuestionSelectFormComponent implements OnInit {
 
   public saveOptions = false;
   public attachmentsResetSubject$ = new Subject<void>();
-
-  private get checkValidAnswer(): boolean {
-    return this.optionsForm.value.filter(options => options.valid).length === 1;
-  }
 
   public selectQuestionForm: FormGroup = new FormGroup({
     question: new FormControl(null)
@@ -83,6 +78,9 @@ export class QuestionSelectFormComponent implements OnInit {
     ]),
   });
 
+  private optionsAtt = [];
+  private optionsForm: FormArray;
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private formBuilder: FormBuilder,
@@ -94,6 +92,10 @@ export class QuestionSelectFormComponent implements OnInit {
     private dialogRef: MatDialog
   ) {
     this.attachmentsResetSubject$.subscribe(() => this.questionFormService.resetAttachments());
+  }
+
+  private get checkValidAnswer(): boolean {
+    return this.optionsForm.value.filter(options => options.valid).length === 1;
   }
 
   async ngOnInit(): Promise<void> {
@@ -138,103 +140,6 @@ export class QuestionSelectFormComponent implements OnInit {
 
     await this.questionFormService.resetAttachments().then(() => this.attachmentsResetSubject$.next());
   }
-
-  private getLearningObjectives(): void {
-    const filteringParams = {
-      grade: this.grade,
-      subject: this.subject,
-      subtopic: this.subtopicId,
-    };
-    this.assessmentService.getLearningObjectives(filteringParams).subscribe((objectives: LearningObjective[]) => {
-      this.learningObjectives = objectives;
-
-      if (this.learningObjectives.length) {
-        this.selectForm.controls.learning_objective.setValidators([Validators.required]);
-      } else {
-        this.selectForm.controls.learning_objective.clearValidators();
-      }
-      this.selectForm.controls.learning_objective.updateValueAndValidity();
-
-      const currentObjective = this.selectForm.controls.learning_objective.value;
-      if (currentObjective && !this.learningObjectives.find(el => el.code === currentObjective)) {
-        this.selectForm.controls.learning_objective.setValue(null);
-      }
-    });
-  }
-
-  private createSelectQuestion(data?: any): void {
-    this.questionFormService.createQuestion(data).then(res => {
-      if (this.optionsAttachment) {
-        this.saveOptionsAttachments(res);
-      }
-      this.questionFormService.emitMessage(this.question === undefined, this.toClone);
-      if (!this.toClone) {
-        this.resetForm();
-      }
-    });
-  }
-
-  private editQuestion(data: any): void {
-    this.questionFormService.editQuestion(data)
-      .then((res) => {
-        if (this.optionsAttachment) {
-          this.saveOptionsAttachments(res);
-        }
-        this.questionFormService.emitMessage(false, false);
-      });
-  }
-
-  private saveOptionsAttachments(question): void {
-    this.optionsAtt.forEach((o, index) => {
-      if (o.attachments.length) {
-        o.attachments.forEach((att) => {
-          this.questionFormService.saveAttachments(
-            this.assessmentId.toString(),
-            att.file,
-            att.attachment_type,
-            {
-              name: 'select_option',
-              value: question.options[index].id,
-            },
-            false
-          );
-        });
-      }
-    });
-  }
-
-  private resetForm(): void {
-    this.selectForm.setValue({
-      learning_objective: null,
-      question_type: 'SELECT',
-      value: '',
-      title: '',
-      order: this.order, // display: 'Grid',
-      on_popup: false,
-      options: [{ title: '', valid: false, value: '' }],
-    });
-
-    this.options = [];
-    this.optionsAtt = [{ attachments: [] }];
-
-    this.saveOptions = false;
-    this.selectForm.controls.order.setValue(this.order + 1, [Validators.required]);
-    // this.selectForm.controls.display.setValue('Grid', [Validators.required]);
-    this.selectForm.controls.question_type.setValue('SELECT');
-
-    this.attachmentsResetSubject$.next();
-
-    const optionsForm = this.selectForm.get('options') as FormArray;
-    optionsForm.clear();
-    this.addOptions();
-  }
-
-  // TODO: later changes it in backend
-  // In case of using display_type again: uncomment following method
-
-  // private displayTypeFormat(str: string): string {
-  //   return str.charAt(0).toUpperCase() + str.substring(1).toLowerCase();
-  // }
 
   public addOptions(): void {
     this.optionsAtt.push({ attachments: [] });
@@ -344,6 +249,16 @@ export class QuestionSelectFormComponent implements OnInit {
     this.setForm(question);
   }
 
+  public checkValid(checkedIndex: number, eventChecked): void {
+    if (eventChecked) {
+      this.optionsForm.value.forEach((op, i) => {
+        if (op.valid && i !== checkedIndex) {
+          op.valid = false;
+        }
+      });
+    }
+  }
+
   private async setForm(question: any): Promise<void> {
     this.selectQuestion = false;
     this.question = question;
@@ -403,13 +318,100 @@ export class QuestionSelectFormComponent implements OnInit {
     }
   }
 
-  public checkValid(checkedIndex: number, eventChecked): void {
-    if (eventChecked) {
-      this.optionsForm.value.forEach((op, i) => {
-        if (op.valid && i !== checkedIndex) {
-          op.valid = false;
-        }
-      });
-    }
+  private getLearningObjectives(): void {
+    const filteringParams = {
+      grade: this.grade,
+      subject: this.subject,
+      subtopic: this.subtopicId,
+    };
+    this.assessmentService.getLearningObjectives(filteringParams).subscribe((objectives: LearningObjective[]) => {
+      this.learningObjectives = objectives;
+
+      if (this.learningObjectives.length) {
+        this.selectForm.controls.learning_objective.setValidators([Validators.required]);
+      } else {
+        this.selectForm.controls.learning_objective.clearValidators();
+      }
+      this.selectForm.controls.learning_objective.updateValueAndValidity();
+
+      const currentObjective = this.selectForm.controls.learning_objective.value;
+      if (currentObjective && !this.learningObjectives.find(el => el.code === currentObjective)) {
+        this.selectForm.controls.learning_objective.setValue(null);
+      }
+    });
   }
+
+  private createSelectQuestion(data?: any): void {
+    this.questionFormService.createQuestion(data).then(res => {
+      if (this.optionsAttachment) {
+        this.saveOptionsAttachments(res);
+      }
+      this.questionFormService.emitMessage(this.question === undefined, this.toClone);
+      if (!this.toClone) {
+        this.resetForm();
+      }
+    });
+  }
+
+  private editQuestion(data: any): void {
+    this.questionFormService.editQuestion(data)
+      .then((res) => {
+        if (this.optionsAttachment) {
+          this.saveOptionsAttachments(res);
+        }
+        this.questionFormService.emitMessage(false, false);
+      });
+  }
+
+  private saveOptionsAttachments(question): void {
+    this.optionsAtt.forEach((o, index) => {
+      if (o.attachments.length) {
+        o.attachments.forEach((att) => {
+          this.questionFormService.saveAttachments(
+            this.assessmentId.toString(),
+            att.file,
+            att.attachment_type,
+            {
+              name: 'select_option',
+              value: question.options[index].id,
+            },
+            false
+          );
+        });
+      }
+    });
+  }
+
+  private resetForm(): void {
+    this.selectForm.setValue({
+      learning_objective: null,
+      question_type: 'SELECT',
+      value: '',
+      title: '',
+      order: this.order, // display: 'Grid',
+      on_popup: false,
+      options: [{ title: '', valid: false, value: '' }],
+    });
+
+    this.options = [];
+    this.optionsAtt = [{ attachments: [] }];
+
+    this.saveOptions = false;
+    this.selectForm.controls.order.setValue(this.order + 1, [Validators.required]);
+    // this.selectForm.controls.display.setValue('Grid', [Validators.required]);
+    this.selectForm.controls.question_type.setValue('SELECT');
+
+    this.attachmentsResetSubject$.next();
+
+    const optionsForm = this.selectForm.get('options') as FormArray;
+    optionsForm.clear();
+    this.addOptions();
+  }
+
+  // TODO: later changes it in backend
+  // In case of using display_type again: uncomment following method
+
+  // private displayTypeFormat(str: string): string {
+  //   return str.charAt(0).toUpperCase() + str.substring(1).toLowerCase();
+  // }
 }

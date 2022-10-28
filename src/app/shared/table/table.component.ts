@@ -29,7 +29,7 @@ export class TableComponent implements OnInit, OnChanges {
 
   // Notice here that the eventEmitter constructor accepts a "true" argument, which makes it asynchronous and prevents NG0100
   @Output() selectionChangedEvent = new EventEmitter<any[]>(true);
-  @Output() filtersChangedEvent = new EventEmitter<{ key: string | number, value: any}>(true);
+  @Output() filtersChangedEvent = new EventEmitter<{ key: string | number; value: any}>(true);
   @Output() openDetailsEvent = new EventEmitter<string>();
   @Output() customActionEvent = new EventEmitter<any>();
 
@@ -59,9 +59,7 @@ export class TableComponent implements OnInit, OnChanges {
 
   // Verify if all the filtered results are selected
   private isAllFilteredSelected(): boolean {
-    const result = this.tableData.filteredData.every(element => {
-      return this.selection.selected.includes(element);
-    });
+    const result = this.tableData.filteredData.every(element => this.selection.selected.includes(element));
     return result;
   }
 

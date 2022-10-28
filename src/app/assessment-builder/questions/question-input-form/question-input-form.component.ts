@@ -94,6 +94,30 @@ export class QuestionInputFormComponent implements OnInit {
     await this.questionFormService.resetAttachments().then(() => this.attachmentsResetSubject$.next());
   }
 
+
+
+  public onSubmit(): void {
+    const data = {
+      toClone: this.toClone,
+      formGroup: this.inputForm.value,
+      topicId: this.topicId.toString(),
+      assessmentId: this.assessmentId.toString(),
+      question: this.question
+    };
+
+    if (this.question && !this.toClone) {
+      this.editInputQuestion(data);
+    } else {
+      this.createInputQuestion(data);
+    }
+  }
+
+  public onSelectQuestion(): void {
+    const question = this.selectQuestionForm.controls.question.value;
+    this.toClone = true;
+    this.setForm(question);
+  }
+
   private getLearningObjectives(): void {
     const filteringParams = {
       grade: this.grade,
@@ -137,28 +161,6 @@ export class QuestionInputFormComponent implements OnInit {
     this.inputForm.controls['order'.toString()].setValue(this.order + 1);
     this.inputForm.controls.question_type.setValue('INPUT');
     this.attachmentsResetSubject$.next();
-  }
-
-  public onSubmit(): void {
-    const data = {
-      toClone: this.toClone,
-      formGroup: this.inputForm.value,
-      topicId: this.topicId.toString(),
-      assessmentId: this.assessmentId.toString(),
-      question: this.question
-    };
-
-    if (this.question && !this.toClone) {
-      this.editInputQuestion(data);
-    } else {
-      this.createInputQuestion(data);
-    }
-  }
-
-  public onSelectQuestion(): void {
-    const question = this.selectQuestionForm.controls.question.value;
-    this.toClone = true;
-    this.setForm(question);
   }
 
   private async setForm(question: any): Promise<void> {

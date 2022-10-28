@@ -20,8 +20,6 @@ interface DialogData {
   styleUrls: ['./topic-form-dialog.component.scss']
 })
 export class TopicFormDialogComponent implements OnInit {
-  private toClone: boolean;
-  private subject: string;
 
   public topicsList: any;
   public selectTopic: boolean;
@@ -59,6 +57,9 @@ export class TopicFormDialogComponent implements OnInit {
     archived: new FormControl(false)
   });
 
+  private toClone: boolean;
+  private subject: string;
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private translateService: TranslateService,
@@ -80,6 +81,57 @@ export class TopicFormDialogComponent implements OnInit {
       this.selectTopic = true;
       this.createNewTopicForm.controls.order.setValue(this.order);
     }
+  }
+
+  public saveAttachments(assessmentId: string, attachment, type: string, obj): void {
+    this.assessmentService.addAttachments(assessmentId, attachment, type, obj).subscribe(() => {
+      this.alertService.success('Topic was saved successfully');
+    });
+  }
+
+  public async onSubmit(): Promise<void> {
+    const data = await this.formGroupToFormData();
+    if (this.edit) {
+      this.assessmentService.editTopic(this.assessmentId.toString(), this.topic.id, data).subscribe(res => {
+        this.alertService.success('Topic was altered successfully');
+      });
+    } else {
+      this.assessmentService.createTopic(this.assessmentId.toString(), data).subscribe(res => {
+        this.alertService.success('Topic was created successfully');
+      });
+    }
+  }
+
+  public handleFileInput(event): void {
+    this.icon = event;
+    this.createNewTopicForm.patchValue({icon: this.icon});
+  }
+
+  public onSelectTopic(): void {
+    this.toClone = true;
+    const topicId = this.selectTopicForm.controls.topic.value.id;
+    const assessmentId = this.selectTopicForm.controls.topic.value.assessment_id;
+
+    this.assessmentService.getTopicDetails(assessmentId, topicId).subscribe(details => {
+      this.setForm(details);
+    });
+  }
+
+  private getTopics(): void {
+    this.assessmentService.getAssessmentTopicsList().subscribe(topics => {
+      this.topicsList = topics;
+    });
+  }
+
+  private getSubtopics(): void {
+    this.assessmentService.getSubtopics(this.subject).subscribe(subtopics => {
+      this.subtopics = subtopics;
+
+      if (this.subtopics?.length) {
+        this.createNewTopicForm.controls.subtopic.setValidators([Validators.required]);
+        this.createNewTopicForm.controls.subtopic.updateValueAndValidity();
+      }
+    });
   }
 
   private async formGroupToFormData(): Promise<FormData> {
@@ -113,57 +165,6 @@ export class TopicFormDialogComponent implements OnInit {
       .then((res) => res.arrayBuffer())
       .then((buf) =>  new File([buf], imageName, {type: 'image/svg+xml'}))
       .then((file) => this.formData.append('icon', file));
-  }
-
-  public saveAttachments(assessmentId: string, attachment, type: string, obj): void {
-    this.assessmentService.addAttachments(assessmentId, attachment, type, obj).subscribe(() => {
-      this.alertService.success('Topic was saved successfully');
-    });
-  }
-
-  public async onSubmit(): Promise<void> {
-    const data = await this.formGroupToFormData();
-    if (this.edit) {
-      this.assessmentService.editTopic(this.assessmentId.toString(), this.topic.id, data).subscribe(res => {
-        this.alertService.success('Topic was altered successfully');
-      });
-    } else {
-      this.assessmentService.createTopic(this.assessmentId.toString(), data).subscribe(res => {
-        this.alertService.success('Topic was created successfully');
-      });
-    }
-  }
-
-  public handleFileInput(event): void {
-    this.icon = event;
-    this.createNewTopicForm.patchValue({icon: this.icon});
-  }
-
-  private getTopics(): void {
-    this.assessmentService.getAssessmentTopicsList().subscribe(topics => {
-      this.topicsList = topics;
-    });
-  }
-
-  private getSubtopics(): void {
-    this.assessmentService.getSubtopics(this.subject).subscribe(subtopics => {
-      this.subtopics = subtopics;
-
-      if (this.subtopics?.length) {
-        this.createNewTopicForm.controls.subtopic.setValidators([Validators.required]);
-        this.createNewTopicForm.controls.subtopic.updateValueAndValidity();
-      }
-    });
-  }
-
-  public onSelectTopic(): void {
-    this.toClone = true;
-    const topicId = this.selectTopicForm.controls.topic.value.id;
-    const assessmentId = this.selectTopicForm.controls.topic.value.assessment_id;
-
-    this.assessmentService.getTopicDetails(assessmentId, topicId).subscribe(details => {
-      this.setForm(details);
-    });
   }
 
   private async setForm(topic: any): Promise<void> {

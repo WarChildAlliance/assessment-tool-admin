@@ -226,9 +226,9 @@ export class TopicAccessesBuilderComponent implements OnInit {
     }
 
     const accessesArray = new Array<{
-      topic: number,
-      start_date: string,
-      end_date: string
+      topic: number;
+      start_date: string;
+      end_date: string;
     }>();
 
     for (const element of this.assignTopicForm.value.access) {

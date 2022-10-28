@@ -46,13 +46,6 @@ export class QuestionDominoFormComponent implements OnInit {
   public audioAttachment = this.questionFormService.audioAttachment;
   public attachmentsResetSubject$ = new Subject<void>();
 
-  private optionsForm: FormArray;
-
-
-  private get checkValidAnswer(): boolean {
-    return this.optionsForm.value.filter(options => options.valid).length === 1;
-  }
-
   public selectQuestionForm: FormGroup = new FormGroup({
     question: new FormControl(null)
   });
@@ -67,6 +60,8 @@ export class QuestionDominoFormComponent implements OnInit {
     options: new FormArray([]),
   });
 
+  private optionsForm: FormArray;
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public questionFormService: QuestionFormService,
@@ -78,6 +73,10 @@ export class QuestionDominoFormComponent implements OnInit {
     public dialogRef: MatDialogRef<QuestionDominoFormComponent>
   ) {
     this.attachmentsResetSubject$.subscribe(() => this.questionFormService.resetAttachments());
+  }
+
+  private get checkValidAnswer(): boolean {
+    return this.optionsForm.value.filter(options => options.valid).length === 1;
   }
 
   async ngOnInit(): Promise<void> {
@@ -111,28 +110,6 @@ export class QuestionDominoFormComponent implements OnInit {
     await this.questionFormService.resetAttachments().then(() => this.attachmentsResetSubject$.next());
   }
 
-  private getLearningObjectives(): void {
-    const filteringParams = {
-      grade: this.grade,
-      subject: this.subject,
-      subtopic: this.subtopicId,
-    };
-    this.assessmentService.getLearningObjectives(filteringParams).subscribe((objectives: LearningObjective[]) => {
-      this.learningObjectives = objectives;
-
-      if (this.learningObjectives.length) {
-        this.dominoForm.controls.learning_objective.setValidators([Validators.required]);
-      } else {
-        this.dominoForm.controls.learning_objective.clearValidators();
-      }
-      this.dominoForm.controls.learning_objective.updateValueAndValidity();
-
-      const currentObjective = this.dominoForm.controls.learning_objective.value;
-      if (currentObjective && !this.learningObjectives.find(el => el.code === currentObjective)) {
-        this.dominoForm.controls.learning_objective.setValue(null);
-      }
-    });
-  }
 
   public onSelectQuestion(): void {
     const question = this.selectQuestionForm.controls.question.value;
@@ -172,6 +149,29 @@ export class QuestionDominoFormComponent implements OnInit {
         this.translateService.instant('assessmentBuilder.questions.select.optionsValidAnswerErros')
       );
     }
+  }
+
+  private getLearningObjectives(): void {
+    const filteringParams = {
+      grade: this.grade,
+      subject: this.subject,
+      subtopic: this.subtopicId,
+    };
+    this.assessmentService.getLearningObjectives(filteringParams).subscribe((objectives: LearningObjective[]) => {
+      this.learningObjectives = objectives;
+
+      if (this.learningObjectives.length) {
+        this.dominoForm.controls.learning_objective.setValidators([Validators.required]);
+      } else {
+        this.dominoForm.controls.learning_objective.clearValidators();
+      }
+      this.dominoForm.controls.learning_objective.updateValueAndValidity();
+
+      const currentObjective = this.dominoForm.controls.learning_objective.value;
+      if (currentObjective && !this.learningObjectives.find(el => el.code === currentObjective)) {
+        this.dominoForm.controls.learning_objective.setValue(null);
+      }
+    });
   }
 
   private createDominoQuestion(data?: any): void {

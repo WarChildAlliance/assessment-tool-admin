@@ -35,12 +35,6 @@ export class TopicDetailsComponent implements OnInit {
   public changedOrder = false;
   public questionsToOrder: any[] = [];
 
-  private quesionSEL = {
-    type: 'SEL',
-    text: 'SEL (Social and Emotional Learning)',
-    component: QuestionSelFormComponent
-  };
-
   public questionsArray: any[] = [
     {
     type: 'SELECT',
@@ -76,6 +70,13 @@ export class TopicDetailsComponent implements OnInit {
   public topicDetails: any;
   private assessment: Assessment;
 
+
+  private questionSEL = {
+    type: 'SEL',
+    text: 'SEL (Social and Emotional Learning)',
+    component: QuestionSelFormComponent
+  };
+
   constructor(
     private dialog: MatDialog,
     private assessmentService: AssessmentService,
@@ -95,39 +96,6 @@ export class TopicDetailsComponent implements OnInit {
       this.getAssessmentDetails();
     });
     this.getIsDownloadable();
-  }
-
-  private getQuestionsList(): void {
-    this.assessmentService.getQuestionsList(this.assessmentId, this.topicId).subscribe(questionList => {
-      this.questionsList = questionList;
-      this.order = questionList.length
-        ? questionList.sort((a, b) => parseFloat(a.order) - parseFloat(b.order))[questionList.length - 1].order + 1
-        : 1;
-      this.isAnswered = questionList.some(question => question.answered);
-      this.selQuestionsCount = this.questionsList.filter(question => question.question_type === 'SEL').length;
-    });
-  }
-
-  private getTopicDetails(initComponent?: boolean): void {
-    this.assessmentService.getTopicDetails(this.assessmentId, this.topicId).subscribe(topicDetails => {
-      this.topicDetails = topicDetails;
-      if (initComponent && this.topicDetails.sel_question) {
-        // Adds SEL Question type to the 'Add a question' section
-        this.questionsArray.unshift(this.quesionSEL);
-      }
-    });
-  }
-
-  private getAssessmentDetails(): void {
-    this.assessmentService.getAssessmentDetails(this.assessmentId).subscribe((assessmentDetails: Assessment) => {
-      this.assessment = assessmentDetails;
-    });
-  }
-
-  private getIsDownloadable(): void {
-    this.assessmentService.getAssessmentDetails(this.assessmentId).subscribe((assessmentDetails) => {
-      this.isDownloadable = assessmentDetails.downloadable;
-    });
   }
 
   public openEditTopicDialog(topic): void {
@@ -276,5 +244,38 @@ export class TopicDetailsComponent implements OnInit {
   public cancelReorder(): void {
     this.questionsList = this.questionsToOrder;
     this.reorder = false;
+  }
+
+  private getQuestionsList(): void {
+    this.assessmentService.getQuestionsList(this.assessmentId, this.topicId).subscribe(questionList => {
+      this.questionsList = questionList;
+      this.order = questionList.length
+        ? questionList.sort((a, b) => parseFloat(a.order) - parseFloat(b.order))[questionList.length - 1].order + 1
+        : 1;
+      this.isAnswered = questionList.some(question => question.answered);
+      this.selQuestionsCount = this.questionsList.filter(question => question.question_type === 'SEL').length;
+    });
+  }
+
+  private getTopicDetails(initComponent?: boolean): void {
+    this.assessmentService.getTopicDetails(this.assessmentId, this.topicId).subscribe(topicDetails => {
+      this.topicDetails = topicDetails;
+      if (initComponent && this.topicDetails.sel_question) {
+        // Adds SEL Question type to the 'Add a question' section
+        this.questionsArray.unshift(this.questionSEL);
+      }
+    });
+  }
+
+  private getAssessmentDetails(): void {
+    this.assessmentService.getAssessmentDetails(this.assessmentId).subscribe((assessmentDetails: Assessment) => {
+      this.assessment = assessmentDetails;
+    });
+  }
+
+  private getIsDownloadable(): void {
+    this.assessmentService.getAssessmentDetails(this.assessmentId).subscribe((assessmentDetails) => {
+      this.isDownloadable = assessmentDetails.downloadable;
+    });
   }
 }
