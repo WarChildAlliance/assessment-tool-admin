@@ -36,6 +36,10 @@ export class AppComponent implements OnInit {
       });
     }
 
+  public get isAuthenticated(): boolean {
+    return this.authService.isAuthenticated;
+  }
+
   ngOnInit(): void {
     this.authService.currentAuthentication.subscribe( authenticated => {
       if (authenticated) {
@@ -54,10 +58,6 @@ export class AppComponent implements OnInit {
         });
       }
     });
-  }
-
-  public get isAuthenticated(): boolean {
-    return this.authService.isAuthenticated;
   }
 
   public logout(): void {

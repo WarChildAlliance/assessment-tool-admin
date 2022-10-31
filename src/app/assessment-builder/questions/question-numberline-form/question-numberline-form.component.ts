@@ -19,7 +19,7 @@ interface DialogData {
   subtopicId?: number;
 }
 
-function validateNumberLine(form: FormGroup): any {
+const validateNumberLine: any = (form: FormGroup) => {
   const start = form.get('start');
   const end = form.get('end');
   const step = form.get('step');
@@ -49,7 +49,7 @@ function validateNumberLine(form: FormGroup): any {
       }
     }
   }
-}
+};
 
 @Component({
   selector: 'app-question-numberline-form',
@@ -130,6 +130,28 @@ export class QuestionNumberlineFormComponent implements OnInit {
     await this.questionFormService.resetAttachments().then(() => this.attachmentsResetSubject$.next());
   }
 
+  public onSubmit(): void {
+    const data = {
+      toClone: this.toClone,
+      formGroup: this.numberLineForm.value,
+      topicId: this.topicId.toString(),
+      assessmentId: this.assessmentId.toString(),
+      question: this.question
+    };
+
+    if (this.question && !this.toClone) {
+      this.editNumberLineQuestion(data);
+    } else {
+      this.createNumberLineQuestion(data);
+    }
+  }
+
+  public onSelectQuestion(): void {
+    const question = this.selectQuestionForm.controls.question.value;
+    this.toClone = true;
+    this.setForm(question);
+  }
+
   private getLearningObjectives(): void {
     const filteringParams = {
       grade: this.grade,
@@ -172,28 +194,6 @@ export class QuestionNumberlineFormComponent implements OnInit {
     this.numberLineForm.controls['order'.toString()].setValue(this.order + 1);
     this.numberLineForm.controls.question_type.setValue('NUMBER_LINE');
     this.attachmentsResetSubject$.next();
-  }
-
-  public onSubmit(): void {
-    const data = {
-      toClone: this.toClone,
-      formGroup: this.numberLineForm.value,
-      topicId: this.topicId.toString(),
-      assessmentId: this.assessmentId.toString(),
-      question: this.question
-    };
-
-    if (this.question && !this.toClone) {
-      this.editNumberLineQuestion(data);
-    } else {
-      this.createNumberLineQuestion(data);
-    }
-  }
-
-  public onSelectQuestion(): void {
-    const question = this.selectQuestionForm.controls.question.value;
-    this.toClone = true;
-    this.setForm(question);
   }
 
   private async setForm(question: any): Promise<void> {

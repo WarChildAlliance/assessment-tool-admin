@@ -91,6 +91,28 @@ export class QuestionSelFormComponent implements OnInit {
     this.selForm.controls.order.setValidators([Validators.required, Validators.max(this.selQuestionOrder)]);
   }
 
+  public onSelectQuestion(): void {
+    const question = this.selectQuestionForm.controls.question.value;
+    this.toClone = true;
+    this.setForm(question);
+  }
+
+  public onSubmit(): void {
+    const data = {
+      toClone: this.toClone,
+      formGroup: this.selForm.value,
+      topicId: this.topicId.toString(),
+      assessmentId: this.assessmentId.toString(),
+      question: this.question
+    };
+
+    if (this.question && !this.toClone) {
+      this.editSELQuestion(data);
+    } else {
+      this.createSELQuestion(data);
+    }
+  }
+
   private getLearningObjectives(): void {
     const filteringParams = {
       grade: this.grade,
@@ -112,28 +134,6 @@ export class QuestionSelFormComponent implements OnInit {
         this.selForm.controls.learning_objective.setValue(null);
       }
     });
-  }
-
-  public onSelectQuestion(): void {
-    const question = this.selectQuestionForm.controls.question.value;
-    this.toClone = true;
-    this.setForm(question);
-  }
-
-  public onSubmit(): void {
-    const data = {
-      toClone: this.toClone,
-      formGroup: this.selForm.value,
-      topicId: this.topicId.toString(),
-      assessmentId: this.assessmentId.toString(),
-      question: this.question
-    };
-
-    if (this.question && !this.toClone) {
-      this.editSELQuestion(data);
-    } else {
-      this.createSELQuestion(data);
-    }
   }
 
   private createSELQuestion(data?: any): void {

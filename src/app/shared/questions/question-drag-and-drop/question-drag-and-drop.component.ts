@@ -20,7 +20,6 @@ export class QuestionDragAndDropComponent implements OnInit, AfterViewInit, OnCh
   @ViewChild('rectangle') rectangleElement: ElementRef;
   @ViewChild('rectanglesList') rectanglesListElement: ElementRef;
 
-  private svgStyle: CSSStyleDeclaration;
 
   public imageAttachment = null;
   public audioAttachment = null;
@@ -28,6 +27,8 @@ export class QuestionDragAndDropComponent implements OnInit, AfterViewInit, OnCh
 
   public draggableOptions = null;
   public optionsWithoutArea = [];
+
+  private svgStyle: CSSStyleDeclaration;
 
   constructor(private assessmentService: AssessmentService) { }
 
@@ -66,6 +67,21 @@ export class QuestionDragAndDropComponent implements OnInit, AfterViewInit, OnCh
     const audio = new Audio(file);
     audio.load();
     audio.play();
+  }
+
+  public noOptions(areaId: number): boolean {
+    return !(this.draggableOptions.find(item => item.area_option === areaId) !== undefined);
+  }
+
+  public getBackgroundImageTransform(bgElement: HTMLElement): string {
+    if (this.shrinkBackgroundImage) {
+      return `scale(calc(${bgElement.offsetWidth}/ 600))`;
+    }
+    return '';
+  }
+
+  public getAreaAnswer(areaId: number): any {
+    return this.answer.answers_per_area.find(item => item.area.id === areaId);
   }
 
   private getDraggableOptions(): void {
@@ -120,20 +136,5 @@ export class QuestionDragAndDropComponent implements OnInit, AfterViewInit, OnCh
 
       areaNumber++;
     });
-  }
-
-  public noOptions(areaId: number): boolean {
-    return !(this.draggableOptions.find(item => item.area_option === areaId) !== undefined);
-  }
-
-  public getBackgroundImageTransform(bgElement: HTMLElement): string {
-    if (this.shrinkBackgroundImage) {
-      return `scale(calc(${bgElement.offsetWidth}/ 600))`;
-    }
-    return '';
-  }
-
-  public getAreaAnswer(areaId: number): any {
-    return this.answer.answers_per_area.find(item => item.area.id === areaId);
   }
 }

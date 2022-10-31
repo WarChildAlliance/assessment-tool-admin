@@ -15,8 +15,6 @@ import { AnswerService } from 'src/app/core/services/answer.service';
 })
 export class AssessmentsAnswersComponent implements OnInit {
 
-  private currentStudentId: string;
-
   public assessmentsAnswersDataSource: MatTableDataSource<AssessmentTableData> = new MatTableDataSource([]);
   public displayedColumns: TableColumn[] = [
     { key: 'title', name: 'general.title' },
@@ -30,6 +28,8 @@ export class AssessmentsAnswersComponent implements OnInit {
   ];
 
   public searchableColumns = ['title', 'subject'];
+
+  private currentStudentId: string;
 
   constructor(
     private router: Router,

@@ -42,13 +42,6 @@ export class GroupDialogComponent implements OnInit {
     }
   }
 
-  private getSupervisor(): void {
-    this.userService.getSelf().subscribe(res => {
-      this.supervisorName = res.first_name && res.last_name ? res.first_name + ' ' + res.last_name : res.username;
-      this.groupForm.patchValue({supervisor: res.id});
-    });
-  }
-
   public onSubmit(): void {
     const groupToSave = {
       name: this.groupForm.value.name,
@@ -71,5 +64,12 @@ export class GroupDialogComponent implements OnInit {
         );
       }
     );
+  }
+
+  private getSupervisor(): void {
+    this.userService.getSelf().subscribe(res => {
+      this.supervisorName = res.first_name && res.last_name ? res.first_name + ' ' + res.last_name : res.username;
+      this.groupForm.patchValue({supervisor: res.id});
+    });
   }
 }

@@ -50,7 +50,7 @@ export class AnswersOverviewComponent implements OnInit {
     });
   }
 
-  public onTopicSelection(assessmentTopicInfos: {assessmentId: string, topic: TopicDashboard}): void {
+  public onTopicSelection(assessmentTopicInfos: {assessmentId: string; topic: TopicDashboard}): void {
     this.loading = true;
     if (assessmentTopicInfos && assessmentTopicInfos.topic.started) {
       this.assessmentId = assessmentTopicInfos.assessmentId;
