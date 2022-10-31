@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
     console.log('Sign up!');
   }
 
-  public onForgotPassword?(): void {
+  public onForgotPassword(): void {
     console.log('Forgot Password?');
   }
 }
