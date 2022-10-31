@@ -19,7 +19,7 @@ export class AssessmentBuilderComponent implements OnInit {
 
   public languages: Language[];
   public countries: Country[];
-  public subjects = ['PRESEL', 'POSTSEL', 'MATH', 'LITERACY'];
+  public subjects = ['MATH', 'LITERACY'];
 
   public icon: File = null;
 

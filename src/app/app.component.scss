@@ -15,6 +15,11 @@
   }
 }
 
+.login {
+  height: 100vh !important;
+  padding: inherit !important;
+}
+
 .mat-sidenav-container {
   height: calc(100vh - 64px); // Height of the toolbar
   width: 100vw;

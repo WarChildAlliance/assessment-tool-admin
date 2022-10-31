@@ -22,7 +22,20 @@
                     <mat-label for="title">{{ "general.title" | translate }}</mat-label>
                     <input matInput formControlName="title">
                 </mat-form-field>
-
+                <mat-form-field *ngIf="learningObjectives?.length" appearance="outline" color="accent">
+                    <mat-label>{{ "assessmentBuilder.learningObjective" | translate }}</mat-label>
+                    <mat-select #learningObjectiveSelect required formControlName="learning_objective">
+                        <mat-option *ngFor="let learningObjective of learningObjectives" [value]="learningObjective.code"
+                        [matTooltip]="languageService.getLanguageCode() === 'eng' ? learningObjective.name_eng : learningObjective.name_ara"
+                        matTooltipShowDelay="1000"
+                        >
+                            <span style="font-weight: 500; margin-right: 10px;">{{ learningObjective.code }}</span>
+                            <ng-container *ngIf="learningObjectiveSelect.panelOpen">
+                                {{ languageService.getLanguageCode() === 'eng' ? learningObjective.name_eng : learningObjective.name_ara }}
+                            </ng-container>
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
                 <mat-form-field appearance="outline" class="form-group" color="accent">
                     <mat-label>{{ "assessmentBuilder.value" | translate }}</mat-label>
                     <input matInput formControlName="value">
@@ -32,14 +45,6 @@
                     <mat-label for="order">{{ "general.order" | translate }}</mat-label>
                     <input matInput type="number" formControlName="order">
                 </mat-form-field>
-
-                <mat-form-field appearance="outline" color="accent">
-                    <mat-label>{{ "assessmentBuilder.questions.difficulty" | translate }}</mat-label>
-                    <mat-select formControlName="difficulty">
-                        <mat-option *ngFor="let difficulty of difficulties" [value]="difficulty.id">{{ difficulty.name }}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-
                 <!-- In case of using display_type again: uncomment the following mat-form-field attribute -->
                 <!--
                 <mat-form-field appearance="outline" class="form-group" color="accent">

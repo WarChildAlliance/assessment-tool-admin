@@ -24,18 +24,6 @@ export class QuestionNumberlineComponent implements OnChanges {
     this.setQuestionItems();
   }
 
-  private setQuestionItems(): void {
-    this.numberlineItems = [];
-    for (let i = this.question.start; i <= this.question.end; i += this.question.step) {
-      this.numberlineItems.push(i);
-    }
-  }
-
-  private setAttachments(): void{
-    this.imageAttachment = this.question.attachments.find( i => i.attachment_type === 'IMAGE');
-    this.audioAttachment = this.question.attachments.find( a => a.attachment_type === 'AUDIO');
-  }
-
   public getSource(path: string): string {
     // TODO find out why we get two different paths here!
     return (path.slice(0, 5) === 'http:') ? path : environment.API_URL + path;
@@ -53,5 +41,17 @@ export class QuestionNumberlineComponent implements OnChanges {
       '#F89F04', '#EC6F1B', '#CC0E2F', '#B9358B'
     ];
     return numberColors[Math.abs(value / this.question.step) % numberColors.length];
+  }
+
+  private setQuestionItems(): void {
+    this.numberlineItems = [];
+    for (let i = this.question.start; i <= this.question.end; i += this.question.step) {
+      this.numberlineItems.push(i);
+    }
+  }
+
+  private setAttachments(): void{
+    this.imageAttachment = this.question.attachments.find( i => i.attachment_type === 'IMAGE');
+    this.audioAttachment = this.question.attachments.find( a => a.attachment_type === 'AUDIO');
   }
 }

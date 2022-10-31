@@ -23,11 +23,6 @@ export class QuestionDominoComponent implements OnInit {
     this.setAttachments();
   }
 
-  private setAttachments(): void {
-    this.imageAttachment = this.question.attachments.find(i => i.attachment_type === 'IMAGE');
-    this.audioAttachment = this.question.attachments.find(a => a.attachment_type === 'AUDIO');
-  }
-
   public getSource(path: string): string {
     return (path.slice(0, 5) === 'http:') ? path : environment.API_URL + path;
   }
@@ -43,5 +38,10 @@ export class QuestionDominoComponent implements OnInit {
       '#DD8D77', '#91B393', '#7BA7D8', '#F2B3CC', '#F1D26A', '#AB749F'
     ];
     return colors[dotNumbers - 1];
+  }
+
+  private setAttachments(): void {
+    this.imageAttachment = this.question.attachments.find(i => i.attachment_type === 'IMAGE');
+    this.audioAttachment = this.question.attachments.find(a => a.attachment_type === 'AUDIO');
   }
 }

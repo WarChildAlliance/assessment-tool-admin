@@ -9,24 +9,20 @@ import { UserService } from 'src/app/core/services/user.service';
 })
 export class SelectGroupComponent implements OnInit {
 
+  @Input() multiple = false;
+
+  @Output() groupsSelection = new EventEmitter<number[]>();
+
   public groups: Group[] = [];
 
   public selectedGroup: Group;
   public selectedGroupArr: Group[] = [];
 
-  @Input() multiple = false;
-
-  @Output() groupsSelection = new EventEmitter<number[]>();
 
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
     this.getGroups();
-  }
-
-  private getGroups(): void {
-    this.userService.getGroups().subscribe(
-      (groups: Group[]) => this.groups = groups);
   }
 
   public onSelect(group: Group): void {
@@ -35,5 +31,10 @@ export class SelectGroupComponent implements OnInit {
       return;
     }
     this.groupsSelection.emit([group.id]);
+  }
+
+  private getGroups(): void {
+    this.userService.getGroups().subscribe(
+      (groups: Group[]) => this.groups = groups);
   }
 }

@@ -17,7 +17,7 @@ import { UserService } from 'src/app/core/services/user.service';
   styleUrls: ['./topics-list-answers.component.scss']
 })
 export class TopicsListAnswersComponent implements OnInit {
-  private assessmentId: string;
+
   public currentStudentId: string;
 
   public topicsAnswersDataSource: MatTableDataSource<TopicTableData> = new MatTableDataSource([]);
@@ -34,6 +34,8 @@ export class TopicsListAnswersComponent implements OnInit {
   ];
 
   public searchableColumns = ['name'];
+
+  private assessmentId: string;
 
   constructor(
     private router: Router,

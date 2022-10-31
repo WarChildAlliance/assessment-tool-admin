@@ -8,13 +8,6 @@ import { AssessmentService } from './assessment.service';
   providedIn: 'root'
 })
 export class QuestionFormService {
-  public get questionDifficulties(): any[] {
-    return [
-      {id: 1, name: 'Difficulty 1'},
-      {id: 2, name: 'Difficulty 2'},
-      {id: 3, name: 'Difficulty 3'}
-    ];
-  }
 
   private fileAttachment: File;
   private alertMessage = '';
@@ -27,29 +20,30 @@ export class QuestionFormService {
   private imageAttachmentFile = null;
   private audioAttachmentFile = null;
 
+  constructor(
+    private assessmentService: AssessmentService,
+    private alertService: AlertService,
+    private translateService: TranslateService
+  ) { }
+
+  get imageAttachment(): File {
+    return this.imageAttachmentFile;
+  }
+
   set imageAttachment(event: File) {
     this.imageAttachmentFile = event;
     this.changedImage = true;
   }
 
-  get imageAttachment(): File {
-    return this.imageAttachmentFile;
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  get audioAttachment(): File {
+    return this.audioAttachmentFile;
   }
 
   set audioAttachment(event: File) {
     this.audioAttachmentFile = event;
     this.changedAudio = true;
   }
-
-  get audioAttachment(): File {
-    return this.audioAttachmentFile;
-  }
-
-  constructor(
-    private assessmentService: AssessmentService,
-    private alertService: AlertService,
-    private translateService: TranslateService
-  ) { }
 
   // Convert attachments objects retrieved from the back-end to files
   public async objectToFile(attachment): Promise<File> {
@@ -66,7 +60,7 @@ export class QuestionFormService {
     return this.fileAttachment;
   }
 
-  public async setExistingAttachments(question: any, toClone: boolean): Promise<{ image: any, audio: any }> {
+  public async setExistingAttachments(question: any, toClone: boolean): Promise<{ image: any; audio: any }> {
     const image = question.attachments.find(
       (i) => i.attachment_type === 'IMAGE' && i.background_image === false
     );

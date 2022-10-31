@@ -153,7 +153,6 @@
       },
       "or": "أو",
       "questionCloneSuccess": "تم استنساخ السؤال بنجاح",
-      "difficulty": "صعوبة",
       "select": {
         "attachments": "المرفقات",
         "display": "عرض",
@@ -191,10 +190,12 @@
       "changeFile": "تغيير الملف",
       "createTopic": "قم بإنشاء موضوع",
       "praiseTooltip": "حالات الحمد",
-      "whenToShowFeedbacks": "متى تظهر التقيمات؟",
-      "subtopic": "موضوع فرعي"
+      "whenToShowFeedbacks": "متى تظهر التقيمات؟"
     },
-    "value": "قيمة"
+    "value": "قيمة",
+    "gradeTooltip": "المستوى المدرسي المقصود",
+    "learningObjective": "هدف التعلم",
+    "subtopic": "موضوع فرعي"
   },
   "assessments": {
     "assessmentDetail": {
@@ -214,9 +215,15 @@
   },
   "auth": {
     "login": {
+      "title": "منصة المعلم",
+      "subtitle": "مرحبًا بعودتك! يرجى تسجيل الدخول إلى حسابك",
       "login": "تسجيل الدخول",
       "password": "كلمه السر",
-      "username": "اسم المستخدم"
+      "username": "اسم المستخدم",
+      "forgotPassword": "هل نسيت كلمة السر؟",
+      "signup": "اشتراك",
+      "keepConnection": "تذكرنى؟",
+      "newUser": "مستخدم جديد؟"
     }
   },
   "dashboard": {
