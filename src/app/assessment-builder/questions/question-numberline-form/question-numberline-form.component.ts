@@ -19,7 +19,7 @@ interface DialogData {
   subtopicId?: number;
 }
 
-function validateNumberLine(form: FormGroup): any {
+const validateNumberLine: any = (form: FormGroup) => {
   const start = form.get('start');
   const end = form.get('end');
   const step = form.get('step');
@@ -49,7 +49,7 @@ function validateNumberLine(form: FormGroup): any {
       }
     }
   }
-}
+};
 
 @Component({
   selector: 'app-question-numberline-form',

@@ -10,13 +10,15 @@ import { Subtopic } from '../core/models/question.model';
   styleUrls: ['./library.component.scss']
 })
 export class LibraryComponent implements OnInit {
-  private filtersData = { subject: '', topic: '', subtopic: '' };
+
   public tableFilters: TableFilter[];
   public subjectsList = ['MATH', 'LITERACY'];
   public subtopicsList: Subtopic[] = [];
   public topicsList: any[] = [];
 
   public assessments: any;
+
+  private filtersData = { subject: '', topic: '', subtopic: '' };
 
   constructor(
     private assessmentService: AssessmentService,
@@ -27,6 +29,11 @@ export class LibraryComponent implements OnInit {
     this.getAssessments();
     this.getTopics();
     this.getSubtopics();
+  }
+
+  public applySelectFilters(key: string | number, value: any): void {
+    this.filtersData[key] = value;
+    this.getAssessments(this.filtersData);
   }
 
   private getAssessments(params?: object): void {
@@ -49,11 +56,6 @@ export class LibraryComponent implements OnInit {
       this.subtopicsList = subtopics;
       this.setUpFilters();
     });
-  }
-
-  public applySelectFilters(key: string | number, value: any): void {
-    this.filtersData[key] = value;
-    this.getAssessments(this.filtersData);
   }
 
   private setUpFilters(): void {

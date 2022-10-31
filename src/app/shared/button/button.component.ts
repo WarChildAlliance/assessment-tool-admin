@@ -35,6 +35,8 @@ export class CustomButtonComponent implements OnInit {
 
   public emittedEventSubject: Subject<string> = new Subject();
 
+  constructor() {}
+
   public get color(): string {
     switch (this.variant) {
       case ButtonVariant.PRIMARY: {
@@ -69,7 +71,6 @@ export class CustomButtonComponent implements OnInit {
       }
     }
   }
-  constructor() {}
 
   ngOnInit(): void {}
 }

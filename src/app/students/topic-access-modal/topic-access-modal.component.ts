@@ -19,9 +19,6 @@ interface DialogData {
   styleUrls: ['./topic-access-modal.component.scss']
 })
 export class TopicAccessModalComponent implements OnInit {
-  private startDate: Date;
-  private endDate: Date;
-  private applyToAllTopics: boolean;
 
   public minDate: Date = new Date();
   public assessment: any;
@@ -34,9 +31,9 @@ export class TopicAccessModalComponent implements OnInit {
     access: new FormArray([]),
   });
 
-  get controls(): AbstractControl[] {
-    return (this.assignTopicForm.get('access') as FormArray).controls;
-  }
+  private startDate: Date;
+  private endDate: Date;
+  private applyToAllTopics: boolean;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -48,38 +45,17 @@ export class TopicAccessModalComponent implements OnInit {
     private dialog: MatDialog
   ) { }
 
+
+  get controls(): AbstractControl[] {
+    return (this.assignTopicForm.get('access') as FormArray).controls;
+  }
+
   ngOnInit(): void {
     if (this.data?.assessment) { this.assessment = this.data.assessment; }
     if (this.data?.studentId) { this.studentId = this.data.studentId; }
     if (this.assessment) {
       this.generateForm();
     }
-  }
-
-  private generateForm(): void {
-    const accessForm = this.assignTopicForm.get('access') as FormArray;
-
-    this.assessment.forEach((elem) => {
-      this.assessmentTitle = elem.title;
-      this.assessmentId = elem.id;
-
-      elem.topic_access.forEach(topic => {
-      // Format initials dates
-      const startDate = new Date (topic.start_date);
-      startDate.setDate(startDate.getDate() + 1);
-
-      const endDate = new Date (topic.end_date);
-      endDate.setDate(endDate.getDate() + 1);
-
-      const topicAccess = this.formBuilder.group({
-        topic: new FormControl(topic),
-        start_date: this.applyToAllTopics ? this.startDate : new FormControl(startDate, Validators.required),
-        end_date: this.applyToAllTopics ? this.endDate : new FormControl(endDate, Validators.required)
-      });
-
-      accessForm.push(topicAccess);
-      });
-    });
   }
 
   public onDateInput(type, date): void {
@@ -136,6 +112,23 @@ export class TopicAccessModalComponent implements OnInit {
     );
   }
 
+  public removeTopicAccess(topic): void {
+    const topicTitle = topic.get('topic').value.topic_name;
+    const confirmDialog = this.dialog.open(ConfirmModalComponent, {
+      data: {
+        title: this.translateService.instant('students.topicAccessesEdit.removeTopicAccess'),
+        content: this.translateService.instant('students.topicAccessesEdit.removeTopicAccessPrompt', { topicTitle }),
+        contentType: 'innerHTML',
+        confirmColor: 'warn'
+      }
+    });
+    confirmDialog.afterClosed().subscribe((res) => {
+      if (res) {
+        this.deleteTopicAccess(topic);
+      }
+    });
+  }
+
   private deleteTopicAccess(topic): void {
     const topicAccessId = topic.get('topic').value.topic_access_id;
 
@@ -155,20 +148,29 @@ export class TopicAccessModalComponent implements OnInit {
     );
   }
 
-  public removeTopicAccess(topic): void {
-    const topicTitle = topic.get('topic').value.topic_name;
-    const confirmDialog = this.dialog.open(ConfirmModalComponent, {
-      data: {
-        title: this.translateService.instant('students.topicAccessesEdit.removeTopicAccess'),
-        content: this.translateService.instant('students.topicAccessesEdit.removeTopicAccessPrompt', { topicTitle }),
-        contentType: 'innerHTML',
-        confirmColor: 'warn'
-      }
-    });
-    confirmDialog.afterClosed().subscribe((res) => {
-      if (res) {
-        this.deleteTopicAccess(topic);
-      }
+  private generateForm(): void {
+    const accessForm = this.assignTopicForm.get('access') as FormArray;
+
+    this.assessment.forEach((elem) => {
+      this.assessmentTitle = elem.title;
+      this.assessmentId = elem.id;
+
+      elem.topic_access.forEach(topic => {
+      // Format initials dates
+      const startDate = new Date (topic.start_date);
+      startDate.setDate(startDate.getDate() + 1);
+
+      const endDate = new Date (topic.end_date);
+      endDate.setDate(endDate.getDate() + 1);
+
+      const topicAccess = this.formBuilder.group({
+        topic: new FormControl(topic),
+        start_date: this.applyToAllTopics ? this.startDate : new FormControl(startDate, Validators.required),
+        end_date: this.applyToAllTopics ? this.endDate : new FormControl(endDate, Validators.required)
+      });
+
+      accessForm.push(topicAccess);
+      });
     });
   }
 }

@@ -12,6 +12,8 @@ export class CustomSpinnerComponent implements OnInit {
 
   @Input() variant: SpinnerVariant | string = SpinnerVariant.DEFAULT;
 
+  constructor() {}
+
   get diameter(): number {
     switch (this.size) {
       case SpinnerSize.SMALL: {
@@ -42,8 +44,6 @@ export class CustomSpinnerComponent implements OnInit {
       }
     }
   }
-
-  constructor() {}
 
   ngOnInit(): void {}
 }

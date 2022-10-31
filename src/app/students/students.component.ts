@@ -25,7 +25,6 @@ import {environment} from '../../environments/environment';
   styleUrls: ['./students.component.scss'],
 })
 export class StudentsComponent implements OnInit {
-  private filtersData = { country: '', language: '', group: '', ordering: '-id' };
 
   public displayedColumns: TableColumn[] = [
     { key: 'full_name', name: 'general.studentName' },
@@ -58,6 +57,8 @@ export class StudentsComponent implements OnInit {
     country: new FormControl('', [Validators.required]),
     language: new FormControl('', [Validators.required]),
   });
+
+  private filtersData = { country: '', language: '', group: '', ordering: '-id' };
 
   constructor(
     private userService: UserService,
@@ -121,18 +122,6 @@ export class StudentsComponent implements OnInit {
       });
     });
     this.getStudentTableList(this.filtersData);
-  }
-
-  private getStudentTableList(filtersData?): void {
-    this.userService
-      .getStudentsList(filtersData)
-      .subscribe((studentsList: StudentTableData[]) => {
-        const mappedStudentList = studentsList.map(student => ({
-          ...student,
-          login_url: `${environment.STUDENT_PORTAL_LOGIN_URL}?code=${student.username}`
-        }));
-        this.studentsDataSource = new MatTableDataSource(mappedStudentList);
-      });
   }
 
   public onFiltersChange(data: { key: string | number; value: any }): void {
@@ -251,5 +240,17 @@ export class StudentsComponent implements OnInit {
 
   public downloadData(): void {
     console.log('Work In Progress');
+  }
+
+  private getStudentTableList(filtersData?): void {
+    this.userService
+      .getStudentsList(filtersData)
+      .subscribe((studentsList: StudentTableData[]) => {
+        const mappedStudentList = studentsList.map(student => ({
+          ...student,
+          login_url: `${environment.STUDENT_PORTAL_LOGIN_URL}?code=${student.username}`
+        }));
+        this.studentsDataSource = new MatTableDataSource(mappedStudentList);
+      });
   }
 }

@@ -25,13 +25,13 @@ export class TableComponent implements OnInit, OnChanges {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  public selection: SelectionModel<any> = new SelectionModel<any>(true, []);
-
   // Notice here that the eventEmitter constructor accepts a "true" argument, which makes it asynchronous and prevents NG0100
   @Output() selectionChangedEvent = new EventEmitter<any[]>(true);
   @Output() filtersChangedEvent = new EventEmitter<{ key: string | number; value: any}>(true);
   @Output() openDetailsEvent = new EventEmitter<string>();
   @Output() customActionEvent = new EventEmitter<any>();
+
+  public selection: SelectionModel<any> = new SelectionModel<any>(true, []);
 
   constructor(
     private translateService: TranslateService,
@@ -55,30 +55,6 @@ export class TableComponent implements OnInit, OnChanges {
       this.loadInitialSorting();
     }
     this.tableData.paginator = this.paginator;
-  }
-
-  // Verify if all the filtered results are selected
-  private isAllFilteredSelected(): boolean {
-    const result = this.tableData.filteredData.every(element => this.selection.selected.includes(element));
-    return result;
-  }
-
-  // Sort the table on one of its elements at initialization
-  private loadInitialSorting(): void {
-    // Look for an element that should be used as initial sorting reference in the table data
-    // Only one element can be used as such
-    const initialSortTarget = this.displayedColumns.find((element) => element.sorting);
-
-    if (initialSortTarget) {
-      // Find the corresponding MatSortable element
-      const initialSortElement = this.tableData.sort.sortables.get(initialSortTarget.key);
-
-      // Attribute the sorting order according to the specified parameter
-      initialSortElement.start = initialSortTarget.sorting;
-
-      // Do an initial sorting matching these conditions
-      this.tableData.sort.sort(initialSortElement);
-    }
   }
 
   // Return an array exclusively composed of the keys of the columns we want displayed
@@ -144,5 +120,29 @@ export class TableComponent implements OnInit, OnChanges {
   // The element object is the row on wich the user triggered the action.
   public customAction(element: any): void {
     this.customActionEvent.emit(element);
+  }
+
+  // Verify if all the filtered results are selected
+  private isAllFilteredSelected(): boolean {
+    const result = this.tableData.filteredData.every(element => this.selection.selected.includes(element));
+    return result;
+  }
+
+  // Sort the table on one of its elements at initialization
+  private loadInitialSorting(): void {
+    // Look for an element that should be used as initial sorting reference in the table data
+    // Only one element can be used as such
+    const initialSortTarget = this.displayedColumns.find((element) => element.sorting);
+
+    if (initialSortTarget) {
+      // Find the corresponding MatSortable element
+      const initialSortElement = this.tableData.sort.sortables.get(initialSortTarget.key);
+
+      // Attribute the sorting order according to the specified parameter
+      initialSortElement.start = initialSortTarget.sorting;
+
+      // Do an initial sorting matching these conditions
+      this.tableData.sort.sort(initialSortElement);
+    }
   }
 }
