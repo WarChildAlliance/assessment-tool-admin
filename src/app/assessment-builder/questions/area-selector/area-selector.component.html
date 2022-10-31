@@ -42,7 +42,7 @@
     </button>
     <button mat-flat-button class="dialog-buttons__submit" color="accent" type="submit"
         [mat-dialog-close]="[areasOptions, coordinatesForm.controls.image.value]"
-        [disabled]="areasOptions.length == 0">
+        [disabled]="areasOptions.length === 0">
         {{ "general.save" | translate }}
     </button>
 </div>

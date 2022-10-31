@@ -36,8 +36,10 @@ export class StudentDialogComponent implements OnInit {
   public grades = ['1', '2', '3'];
 
   public studentForm: FormGroup = new FormGroup({
-    first_name: new FormControl('', [Validators.required, Validators.pattern('^[A-Za-zÀ-ÖØ-öø-ÿ\u0621-\u064A]+(-[A-Za-zÀ-ÖØ-öø-ÿ\u0621-\u064A]+)?$')]),
-    last_name: new FormControl('', [Validators.required, Validators.pattern('^[A-Za-zÀ-ÖØ-öø-ÿ\u0621-\u064A]+(-[A-Za-zÀ-ÖØ-öø-ÿ\u0621-\u064A]+)?$')]),
+    first_name: new FormControl('',
+     [Validators.required, Validators.pattern('^[A-Za-zÀ-ÖØ-öø-ÿ\u0621-\u064A]+(-[A-Za-zÀ-ÖØ-öø-ÿ\u0621-\u064A]+)?$')]),
+    last_name: new FormControl('',
+     [Validators.required, Validators.pattern('^[A-Za-zÀ-ÖØ-öø-ÿ\u0621-\u064A]+(-[A-Za-zÀ-ÖØ-öø-ÿ\u0621-\u064A]+)?$')]),
     country: new FormControl('', [Validators.required]),
     language: new FormControl('', [Validators.required]),
     group: new FormControl(''),
@@ -81,16 +83,6 @@ export class StudentDialogComponent implements OnInit {
       }
     );
     this.studentForm.valueChanges.subscribe(() => { this.hasFormChanged = true; });
-  }
-
-  private getGroups(successCallback: CallableFunction = null): void {
-    this.userService.getGroups()
-      .subscribe((groups: Group[]) => {
-        this.groups = groups;
-        if (successCallback) {
-          successCallback();
-        }
-      });
   }
 
   public async submitStudent(): Promise<void> {
@@ -147,6 +139,16 @@ export class StudentDialogComponent implements OnInit {
         });
       }
     });
+  }
+
+  private getGroups(successCallback: CallableFunction = null): void {
+    this.userService.getGroups()
+      .subscribe((groups: Group[]) => {
+        this.groups = groups;
+        if (successCallback) {
+          successCallback();
+        }
+      });
   }
 
   // Check student duplication on creation: based on name

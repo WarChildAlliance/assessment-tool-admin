@@ -40,14 +40,14 @@ export class UserService {
   }
 
   public createNewStudent(
-    user: { first_name: string, last_name: string, role: string, language: string, country: string, group: string }
+    user: { first_name: string; last_name: string; role: string; language: string; country: string; group: string }
   ): Observable<User> {
     return this.http.post<User>(`${environment.API_URL}/users/`, user);
   }
 
   public editStudent(
     id: string,
-    user: { first_name: string, last_name: string, role: string, language: string, country: string, group: string }
+    user: { first_name: string; last_name: string; role: string; language: string; country: string; group: string }
   ): Observable<User> {
     return this.http.put<User>(`${environment.API_URL}/users/${id}/`, user);
   }
@@ -91,11 +91,11 @@ export class UserService {
     return this.http.get<Group>(`${environment.API_URL}/users/groups/${groupId}/`);
   }
 
-  public createNewGroup(group: { name: string, supervisor: string }): Observable<Group> {
+  public createNewGroup(group: { name: string; supervisor: string }): Observable<Group> {
     return this.http.post<Group>(`${environment.API_URL}/users/groups/`, group);
   }
 
-  public editGroup(groupId: string, group: { name: string, supervisor: string }): Observable<Group> {
+  public editGroup(groupId: string, group: { name: string; supervisor: string }): Observable<Group> {
     return this.http.put<Group>(`${environment.API_URL}/users/groups/${groupId}/`, group);
   }
 
@@ -114,16 +114,16 @@ export class UserService {
   }
 
   public getStudentTopicsChart(assessmentId: string):
-  Observable<{full_name: string, topics: {}[], student_access: boolean, group: {}[]}[]> {
-    return this.http.get<{full_name: string, topics: {}[], student_access: boolean, group: Group[]}[]>(
+  Observable<{full_name: string; topics: any[]; student_access: boolean; group: any[]}[]> {
+    return this.http.get<{full_name: string; topics: any[]; student_access: boolean; group: Group[]}[]>(
       `${environment.API_URL}/visualization/charts/score_by_topic/${assessmentId}/`
       );
   }
 
   public getGroupStudentsTopicsChart(assessmentId: string, groupId: string): Observable<
-    { full_name: string, topics: {}[], student_access: boolean, group: {}[] }[] >
+    { full_name: string; topics: any[]; student_access: boolean; group: any[] }[] >
   {
-    return this.http.get<{full_name: string, topics: {}[], student_access: boolean, group: {}[]}[]>(
+    return this.http.get<{full_name: string; topics: any[]; student_access: boolean; group: any[]}[]>(
       `${environment.API_URL}/visualization/charts/score_by_topic/${assessmentId}/group/${groupId}/`
     );
   }
@@ -135,10 +135,12 @@ export class UserService {
   }
 
   public getStudentTopicAnswers(topicId: string, assessmentTopicAnswer: string): Observable<TopicAnswer[]> {
-    return this.http.get<TopicAnswer[]>(`${environment.API_URL}/visualization/charts/topic/${topicId}/student/${assessmentTopicAnswer}/answers/`);
+    return this.http.get<TopicAnswer[]>
+    (`${environment.API_URL}/visualization/charts/topic/${topicId}/student/${assessmentTopicAnswer}/answers/`);
   }
 
   public getAnswerDetails(topicId: string, assessmentTopicAnswer: string, answerId: string): Observable<AnswerDetails> {
-    return this.http.get<AnswerDetails>(`${environment.API_URL}/visualization/charts/topic/${topicId}/student/${assessmentTopicAnswer}/answers/${answerId}`);
+    return this.http.get<AnswerDetails>
+    (`${environment.API_URL}/visualization/charts/topic/${topicId}/student/${assessmentTopicAnswer}/answers/${answerId}`);
   }
 }

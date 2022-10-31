@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { TableFilter } from '../core/models/table-filter.model';
 import { AssessmentService } from '../core/services/assessment.service';
+import { Subtopic } from '../core/models/question.model';
 
 @Component({
   selector: 'app-library',
@@ -9,19 +10,15 @@ import { AssessmentService } from '../core/services/assessment.service';
   styleUrls: ['./library.component.scss']
 })
 export class LibraryComponent implements OnInit {
-  private filtersData = { subject: '', topic: '', subtopic: '', difficulty: '' };
-  public tableFilters: TableFilter[];
 
-  public difficultiesList = [
-    {id: 1, name: 'Difficulty 1'},
-    {id: 2, name: 'Difficulty 2'},
-    {id: 3, name: 'Difficulty 3'}
-  ];
-  public subjectsList = ['PRESEL', 'POSTSEL', 'MATH', 'LITERACY'];
-  public subtopicsList = ['Subtopic 1', 'Subtopic 2', 'Subtopic 3'];
+  public tableFilters: TableFilter[];
+  public subjectsList = ['MATH', 'LITERACY'];
+  public subtopicsList: Subtopic[] = [];
   public topicsList: any[] = [];
 
   public assessments: any;
+
+  private filtersData = { subject: '', topic: '', subtopic: '' };
 
   constructor(
     private assessmentService: AssessmentService,
@@ -31,6 +28,12 @@ export class LibraryComponent implements OnInit {
   ngOnInit(): void {
     this.getAssessments();
     this.getTopics();
+    this.getSubtopics();
+  }
+
+  public applySelectFilters(key: string | number, value: any): void {
+    this.filtersData[key] = value;
+    this.getAssessments(this.filtersData);
   }
 
   private getAssessments(params?: object): void {
@@ -48,9 +51,11 @@ export class LibraryComponent implements OnInit {
     });
   }
 
-  public applySelectFilters(key: string | number, value: any): void {
-    this.filtersData[key] = value;
-    this.getAssessments(this.filtersData);
+  private getSubtopics(): void {
+    this.assessmentService.getSubtopics().subscribe(subtopics => {
+      this.subtopicsList = subtopics;
+      this.setUpFilters();
+    });
   }
 
   private setUpFilters(): void {
@@ -69,16 +74,11 @@ export class LibraryComponent implements OnInit {
       },
       {
         key: 'subtopic',
-        name: 'assessmentBuilder.topicFormDialog.subtopic',
+        name: 'assessmentBuilder.subtopic',
         type: 'select',
-        options: [{ key: '', value: 'All' }].concat(this.subtopicsList.map(item => ({ key: item, value: item })))
+        options: [{ key: '', value: 'All' }].concat(this.subtopicsList.map(
+          subtopic => ({ key: subtopic.id.toString(), value: subtopic.name })))
       },
-      {
-        key: 'difficulty',
-        name: 'assessmentBuilder.questions.difficulty',
-        type: 'select',
-          options: [{ key: '', value: 'All' }].concat(this.difficultiesList.map(item => ({ key: item.id.toString(), value: item.name })))
-        },
     ];
     this.tableFilters.forEach(filter => {
       this.translateService.stream(filter.name).subscribe(translated => filter.name = translated);

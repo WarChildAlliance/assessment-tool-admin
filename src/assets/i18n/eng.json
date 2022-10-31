@@ -90,6 +90,9 @@
   },
   "assessmentBuilder": {
     "allowSkip": "Allow skip",
+    "learningObjective": "Learning objective",
+    "subtopic": "Subtopic",
+    "gradeTooltip": "Intended school level",
     "selQuestions": "Contains SEL questions",
     "assessmentFormDialog": {
       "gradeTooltip": "Intended school level"
@@ -153,7 +156,6 @@
       },
       "or": "OR",
       "questionCloneSuccess": "Question successfully cloned",
-      "difficulty": "Difficulty",
       "select": {
         "attachments": "Attachments",
         "display": "Display",
@@ -190,8 +192,7 @@
       "changeFile": "Change File",
       "createTopic": "Create a topic",
       "praiseTooltip": "Praise occurencies",
-      "whenToShowFeedbacks": "When to show feedbacks ?",
-      "subtopic": "Subtopic"
+      "whenToShowFeedbacks": "When to show feedbacks ?"
     },
     "value": "Value"
   },

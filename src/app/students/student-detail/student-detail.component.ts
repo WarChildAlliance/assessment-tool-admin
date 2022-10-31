@@ -44,33 +44,6 @@ export class StudentDetailComponent implements OnInit {
     });
   }
 
-  private getStudentDetails(studentId): void {
-    this.userService
-      .getStudentDetails(studentId.toString()).subscribe((student) => {
-        this.student = student;
-        this.deletable = this.student.can_delete;
-    });
-  }
-
-  private getGroups(): void {
-    this.userService.getGroups().subscribe((groups) => this.groups = groups);
-    console.log('this groups = ', this.groups);
-  }
-
-  private getStudentAssessments(studentId): void {
-    this.assessmentService.getStudentAssessments(studentId).subscribe(
-      (assessments) => {
-        assessments.forEach((assessment) => {
-          assessment.topic_access.forEach((topic) => {
-            topic.hasAccess = moment(
-              formatDate(new Date(), 'yyyy-MM-dd', 'en')
-            ).isBetween(topic.start_date, topic.end_date, null, '[]');
-          });
-        });
-        this.studentAssessments = assessments;
-    });
-  }
-
   public onEdit(): void {
     console.log('this groups = ', this.groups);
     const studentGroup = this.groups.find(group => group.name === this.student.group[0]);
@@ -133,6 +106,33 @@ export class StudentDetailComponent implements OnInit {
           this.router.navigate(['students']);
         });
       }
+    });
+  }
+
+  private getStudentDetails(studentId): void {
+    this.userService
+      .getStudentDetails(studentId.toString()).subscribe((student) => {
+        this.student = student;
+        this.deletable = this.student.can_delete;
+    });
+  }
+
+  private getGroups(): void {
+    this.userService.getGroups().subscribe((groups) => this.groups = groups);
+    console.log('this groups = ', this.groups);
+  }
+
+  private getStudentAssessments(studentId): void {
+    this.assessmentService.getStudentAssessments(studentId).subscribe(
+      (assessments) => {
+        assessments.forEach((assessment) => {
+          assessment.topic_access.forEach((topic) => {
+            topic.hasAccess = moment(
+              formatDate(new Date(), 'yyyy-MM-dd', 'en')
+            ).isBetween(topic.start_date, topic.end_date, null, '[]');
+          });
+        });
+        this.studentAssessments = assessments;
     });
   }
 }
