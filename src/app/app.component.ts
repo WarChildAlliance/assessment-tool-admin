@@ -56,6 +56,8 @@ export class AppComponent implements OnInit {
             this.languageService.setLanguage(language);
           }
         });
+      } else {
+        this.authService.logout();
       }
     });
   }

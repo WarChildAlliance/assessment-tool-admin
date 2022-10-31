@@ -215,9 +215,15 @@
   },
   "auth": {
     "login": {
+      "title": "منصة المعلم",
+      "subtitle": "مرحبًا بعودتك! يرجى تسجيل الدخول إلى حسابك",
       "login": "تسجيل الدخول",
       "password": "كلمه السر",
-      "username": "اسم المستخدم"
+      "username": "اسم المستخدم",
+      "forgotPassword": "هل نسيت كلمة السر؟",
+      "signup": "اشتراك",
+      "keepConnection": "تذكرنى؟",
+      "newUser": "مستخدم جديد؟"
     }
   },
   "dashboard": {

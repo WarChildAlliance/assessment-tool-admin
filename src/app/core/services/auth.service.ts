@@ -22,13 +22,16 @@ export class AuthService {
     private cookieService: CookieService,
   ) {
     this.isAuthenticated = this.cookieService.has('auth-token');
-    this.authenticatedSource.next(this.cookieService.has('auth-token'));
+    const keepConnection = this.cookieService.get('keep-connection') === 'true';
+    this.authenticatedSource.next(this.cookieService.has('auth-token') && keepConnection);
   }
 
-  public login(username: string, password: string): void {
+  public login(username: string, password: string, keepConnection: boolean): void {
     this.http.post<Token>(`${environment.API_URL}/users/token-auth/`, { username, password }).subscribe(
       res => {
         this.isAuthenticated = true;
+        // If keep connection is true set cookie expiration to 7 days (max default), otherwise 1 day
+        this.cookieService.set('keep-connection', keepConnection.toString(), keepConnection ? 7 : 1);
         this.cookieService.set('auth-token', res.token);
         this.router.navigate(['']);
         this.authenticatedSource.next(true);
@@ -37,10 +40,13 @@ export class AuthService {
   }
 
   public logout(): void {
-    this.isAuthenticated = false;
-    this.cookieService.delete('auth-token');
-    this.router.navigate(['/auth']);
-    this.authenticatedSource.next(false);
+    if (this.isAuthenticated) {
+      this.isAuthenticated = false;
+      this.cookieService.delete('auth-token');
+      this.cookieService.delete('keep-connection');
+      this.router.navigate(['/auth']);
+      this.authenticatedSource.next(false);
+    }
   }
 
   public getToken(): string {

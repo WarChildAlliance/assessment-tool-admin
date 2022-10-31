@@ -214,9 +214,15 @@
   },
   "auth": {
     "login": {
+      "title": "Teacher's Platform",
+      "subtitle": "Welcome back! Please login to your account",
       "login": "Login",
       "password": "Password",
-      "username": "Username"
+      "username": "User Name",
+      "forgotPassword": "Forgot Password?",
+      "signup": "Sign up",
+      "keepConnection": "Remember me?",
+      "newUser": "New User? "
     }
   },
   "dashboard": {
