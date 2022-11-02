@@ -321,7 +321,8 @@
       "topicAvailability": "Assessment topic(s) availability",
       "replaceAsssessmentAccess": "Do you want to replace <b>{{previousAssessment}}</b> with <b>{{newAssessment}}</b>?",
       "studentAssessmentPrompt": "Student {{studentName}} already has an assessment assigned",
-      "newAssessment": "a new assessment"
+      "newAssessment": "a new assessment",
+      "studentAssessmentIncompletePrompt": "This student has not finished the current assessment <b>{{currentAssessment}}</b>, are you sure you want to continue?"
     },
     "topicAccessesEdit": {
       "accessEdited": "The topic access have been successfully deleted!",

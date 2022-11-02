@@ -94,7 +94,7 @@ export class TopicAccessesBuilderComponent implements OnInit {
       this.data.studentsList.forEach((student, index) => {
         if (student.assessments_count) {
           const translatedText = this.translateService.instant('students.topicAccessesBuilder.newAssessment');
-          this.confirmReplaceAssessment(student.id, translatedText, student.full_name, index);
+          this.confirmReplaceAssessment(student.id, translatedText, student.full_name, index, student.assessment_complete);
         } else {
           this.studentsList.push(student);
         }
@@ -222,7 +222,9 @@ export class TopicAccessesBuilderComponent implements OnInit {
   public uniqueAssessmentCheck(student, selected): void {
     const studentValue = student.get('student').value;
     if (selected && studentValue.assessments_count) {
-      this.confirmReplaceAssessment(studentValue.id, this.assessment.title, studentValue.full_name, student);
+      this.confirmReplaceAssessment(
+        studentValue.id, this.assessment.title, studentValue.full_name, student, studentValue.assessment_complete
+      );
     }
   }
 
@@ -287,17 +289,23 @@ export class TopicAccessesBuilderComponent implements OnInit {
   }
 
   // A student should only have one and one assessment
-  private confirmReplaceAssessment(studentId: number, newAssessment: string, studentName: string, student: any): void {
+  private confirmReplaceAssessment(
+    studentId: number, newAssessment: string, studentName: string, student: any, assessmentIncomplete: boolean
+  ): void {
     this.assessmentService.getStudentAssessments(studentId).subscribe(studentAssessments => {
       const confirmDialog = this.dialog.open(ConfirmModalComponent, {
         data: {
           title: this.translateService.instant('students.topicAccessesBuilder.studentAssessmentPrompt', {
             studentName
           }),
-          content: this.translateService.instant('students.topicAccessesBuilder.replaceAsssessmentAccess', {
-            previousAssessment: studentAssessments[0].title,
-            newAssessment
-          }),
+          content: assessmentIncomplete
+            ? this.translateService.instant('students.topicAccessesBuilder.studentAssessmentIncompletePrompt', {
+                currentAssessment: studentAssessments[0].title
+              })
+            : this.translateService.instant('students.topicAccessesBuilder.replaceAsssessmentAccess', {
+                previousAssessment: studentAssessments[0].title,
+                newAssessment
+              }),
           contentType: 'innerHTML',
           confirmColor: 'warn'
         }
