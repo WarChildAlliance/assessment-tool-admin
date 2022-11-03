@@ -31,12 +31,10 @@ export class AssessmentsComponent implements OnInit {
     { key: 'country_name', name: 'general.country' },
     { key: 'private', name: 'general.private', type: 'boolean' }
   ];
-
-  public assessmentsDataSource: MatTableDataSource<Assessment> = new MatTableDataSource([]);
-  private tableFiltersData = { country: '', language: '' };
   public tableFilters: TableFilter[];
   public isAssessmentPrivate = false;
 
+  public assessmentsDataSource: MatTableDataSource<Assessment> = new MatTableDataSource([]);
 
   public createNewAssessmentForm: FormGroup = new FormGroup({
     title: new FormControl('', [Validators.required]),
@@ -48,7 +46,6 @@ export class AssessmentsComponent implements OnInit {
   });
 
   private tableFiltersData = { country: '', language: '' };
-
   constructor(
     private assessmentService: AssessmentService,
     private router: Router,
