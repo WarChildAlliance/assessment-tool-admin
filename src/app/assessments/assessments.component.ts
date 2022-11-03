@@ -33,6 +33,7 @@ export class AssessmentsComponent implements OnInit {
   ];
 
   public assessmentsDataSource: MatTableDataSource<Assessment> = new MatTableDataSource([]);
+  private tableFiltersData = { country: '', language: '' };
   public tableFilters: TableFilter[];
   public isAssessmentPrivate = false;
 
