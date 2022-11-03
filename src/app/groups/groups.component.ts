@@ -42,18 +42,6 @@ export class GroupsComponent implements OnInit {
     this.getGroups();
   }
 
-  private getGroups(): void {
-    this.userService.getGroups().subscribe(groups => {
-      const tableData = [];
-
-      groups.forEach(group => {
-        tableData.push({ id: group.id, name: group.name, number_students: group.students.length });
-      });
-
-      this.groupsDataSource = new MatTableDataSource(tableData);
-    });
-  }
-
   public onSelectionChange(newSelection: any[]): void {
     this.selectedGroups = newSelection;
   }
@@ -124,6 +112,18 @@ export class GroupsComponent implements OnInit {
         }
         this.userService.deleteGroups(toDelete).subscribe(onDeleteCallback);
       }
+    });
+  }
+
+  private getGroups(): void {
+    this.userService.getGroups().subscribe(groups => {
+      const tableData = [];
+
+      groups.forEach(group => {
+        tableData.push({ id: group.id, name: group.name, number_students: group.students.length });
+      });
+
+      this.groupsDataSource = new MatTableDataSource(tableData);
     });
   }
 }

@@ -1,0 +1,61 @@
+<div *ngIf="selectQuestion" class="select">
+    <form class="form-primary" [formGroup]="selectQuestionForm">
+        <mat-form-field appearance="outline" color="accent">
+            <mat-label>{{ 'general.selectItem' | translate:{ item: ('general.question' | translate)} }}</mat-label>
+            <mat-select formControlName="question" (selectionChange)="onSelectQuestion()">
+                <mat-option *ngFor="let question of questionsList" [value]="question">{{ question.title }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <app-spinner *ngIf="!questionsList" size="medium" [variant]="'primary'"></app-spinner>
+    </form>
+
+    <app-custom-button category="secondary" variant="neutral" icon="add" (click)="selectQuestion = false">
+        {{ 'general.createNewOne' | translate }}
+    </app-custom-button>
+</div>
+
+<form *ngIf="!selectQuestion" [formGroup]="selForm">
+    <mat-form-field appearance="outline" color="accent">
+        <mat-label>{{ "general.title" | translate }}</mat-label>
+        <input matInput required type="text" formControlName="title">
+    </mat-form-field>
+    <mat-form-field *ngIf="learningObjectives?.length" appearance="outline" color="accent">
+        <mat-label>{{ "assessmentBuilder.learningObjective" | translate }}</mat-label>
+        <mat-select #learningObjectiveSelect required formControlName="learning_objective">
+            <mat-option *ngFor="let learningObjective of learningObjectives" [value]="learningObjective.code"
+            [matTooltip]="languageService.getLanguageCode() === 'eng' ? learningObjective.name_eng : learningObjective.name_ara"
+            matTooltipShowDelay="1000"
+            >
+                <span style="font-weight: 500; margin-right: 10px;">{{ learningObjective.code }}</span>
+                <ng-container *ngIf="learningObjectiveSelect.panelOpen">
+                    {{ languageService.getLanguageCode() === 'eng' ? learningObjective.name_eng : learningObjective.name_ara }}
+                </ng-container>
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" color="accent">
+        <mat-label>{{ "general.type" | translate }}</mat-label>
+        <mat-select required formControlName="sel_type">
+            <mat-option *ngFor="let type of selTypes" [value]="type.id">
+                {{ "assessmentBuilder.questions.sel." + type.path | translate }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" color="accent">
+        <mat-label>{{ "general.order" | translate }}</mat-label>
+        <input matInput name="order" required type="number" formControlName="order" min="1" max="{{selQuestionOrder}}">
+    </mat-form-field>
+    <mat-checkbox formControlName="on_popup">
+        <mat-label for="on_popup">{{ "assessmentBuilder.questions.select.onPopup" | translate }}</mat-label>
+    </mat-checkbox>
+</form>
+
+<div class="dialog-buttons">
+    <span class="notifier" *ngIf="selForm.controls.order.errors">{{ "assessmentBuilder.topicDetails.selQuestionsOrder" | translate }}</span>
+    <button mat-flat-button mat-dialog-close class="dialog-buttons__cancel" color="secondary">
+        {{ "general.cancel" | translate }}
+    </button>
+    <button mat-flat-button [mat-dialog-close]="true" color="accent" [disabled]="selForm.invalid || !selForm.dirty" (click)="onSubmit()">
+        {{ question ? toClone ? ("general.clone" | translate) : ("general.save" | translate) : ("general.create" | translate) }}
+    </button>
+</div>

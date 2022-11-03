@@ -13,16 +13,18 @@ import { TranslateService } from '@ngx-translate/core';
 
 export class AudioRecorderComponent implements OnInit {
 
-  private title = 'micRecorder';
-  private recorder: RecordRTC.StereoAudioRecorder;
+  @Input() reset$: Observable<void>;
+
+  @Output() newAudioRecordingEvent = new EventEmitter<string>();
 
   public isRecording = false;
   public recordingUrl: string;
   public errorMessage: string;
 
-  @Input() reset$: Observable<void>;
 
-  @Output() newAudioRecordingEvent = new EventEmitter<string>();
+  private title = 'micRecorder';
+  private recorder: RecordRTC.StereoAudioRecorder;
+  private stream: MediaStream;
 
   constructor(
     private domSanitizer: DomSanitizer,
@@ -33,26 +35,6 @@ export class AudioRecorderComponent implements OnInit {
     this.reset$.subscribe((_) => {
       this.recordingUrl = undefined;
     });
-  }
-
-  private processRecording(blob): void {
-    this.recordingUrl = URL.createObjectURL(blob);
-    this.newAudioRecordingEvent.emit(blob);
-  }
-
-  private recordingSuccessCallback(stream): void {
-    const options = {
-      mimeType: 'audio/wav',
-      numberOfAudioChannels: 1,
-      sampleRate: 48000,
-    };
-    const StereoAudioRecorder = RecordRTC.StereoAudioRecorder;
-    this.recorder = new StereoAudioRecorder(stream, options);
-    this.recorder.record();
-  }
-
-  private recordingErrorCallback(error): void {
-    this.errorMessage = this.translateService.instant('assessmentBuilder.questions.errorAudio');
   }
 
   public sanitizeUrl(url: string): SafeUrl {
@@ -74,6 +56,29 @@ export class AudioRecorderComponent implements OnInit {
   public stopRecording(): void {
     this.isRecording = false;
     this.recorder.stop(this.processRecording.bind(this));
+    this.stream.getTracks().forEach(track => track.stop());
+  }
+
+  private processRecording(blob): void {
+    this.recordingUrl = URL.createObjectURL(blob);
+    this.newAudioRecordingEvent.emit(blob);
+  }
+
+  private recordingSuccessCallback(stream): void {
+    const options = {
+      mimeType: 'audio/wav',
+      numberOfAudioChannels: 1,
+      sampleRate: 48000,
+    };
+    const StereoAudioRecorder = RecordRTC.StereoAudioRecorder;
+
+    this.stream = stream;
+    this.recorder = new StereoAudioRecorder(stream, options);
+    this.recorder.record();
+  }
+
+  private recordingErrorCallback(error): void {
+    this.errorMessage = this.translateService.instant('assessmentBuilder.questions.errorAudio');
   }
 }
 

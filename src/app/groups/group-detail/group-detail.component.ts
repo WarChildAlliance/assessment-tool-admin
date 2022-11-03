@@ -51,24 +51,6 @@ export class GroupDetailComponent implements OnInit {
     });
   }
 
-  private getGroupDetails(groupId: string): void {
-    this.userService.getGroupById(groupId).subscribe(details => {
-      this.groupName = details.name;
-      this.group = details;
-    });
-  }
-
-  private getStudents(groupId: string): void {
-    const filteringParams = {
-      ordering: '-id',
-      group: groupId
-    };
-
-    this.userService.getStudentsList(filteringParams).subscribe(students => {
-      this.studentsDataSource = new MatTableDataSource(students);
-    });
-  }
-
   public onEdit(): void {
     const editGroupDialog = this.dialog.open(GroupDialogComponent, {
       data: {
@@ -112,5 +94,23 @@ export class GroupDetailComponent implements OnInit {
 
   public onOpenDetails(id: string): void {
     this.router.navigate([`/students/${id}`]);
+  }
+
+  private getGroupDetails(groupId: string): void {
+    this.userService.getGroupById(groupId).subscribe(details => {
+      this.groupName = details.name;
+      this.group = details;
+    });
+  }
+
+  private getStudents(groupId: string): void {
+    const filteringParams = {
+      ordering: '-id',
+      group: groupId
+    };
+
+    this.userService.getStudentsList(filteringParams).subscribe(students => {
+      this.studentsDataSource = new MatTableDataSource(students);
+    });
   }
 }

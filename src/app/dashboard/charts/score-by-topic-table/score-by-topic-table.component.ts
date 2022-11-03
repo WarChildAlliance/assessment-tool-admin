@@ -12,7 +12,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./score-by-topic-table.component.scss']
 })
 export class ScoreByTopicTableComponent implements OnInit {
-  private selectedAssessments: AssessmentDashboard[] = [];
 
   public studentsDataSource: MatTableDataSource<any> = new MatTableDataSource([]);
   public displayedColumns: any[] = [
@@ -28,6 +27,8 @@ export class ScoreByTopicTableComponent implements OnInit {
   public hasData = true;
   public loading = true;
 
+  private selectedAssessments: AssessmentDashboard[] = [];
+
   constructor(
     private userService: UserService,
     private translateService: TranslateService,
@@ -39,6 +40,51 @@ export class ScoreByTopicTableComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  public selectTableAssessment(assessment: AssessmentDashboard): void {
+    this.loading = true;
+
+    if (!this.scoreByTopicTable.length) {
+      this.selectedAssessments.push(assessment);
+      this.getScoreByTopicsData(assessment, true);
+    } else {
+      const matchingCol = this.displayedColumns.find(val => val.assmnt === assessment.title);
+      if (!matchingCol) {
+        this.selectedAssessments.push(assessment);
+        this.getScoreByTopicsData(assessment, false);
+      } else {
+        this.selectedAssessments.splice(this.selectedAssessments.indexOf(assessment), 1);
+        this.displayedColumns = this.displayedColumns.filter(col => col.assmnt !== assessment.title);
+        this.newTableData.forEach(data => {
+          for (const key in data) {
+            if (data.hasOwnProperty(key)) {
+              assessment.topics.forEach(topic => {
+                if (topic.name.toLocaleLowerCase() === key) {
+                  delete data[key];
+                }
+              });
+            }
+          }
+        });
+        this.getTableData(this.newTableData);
+      }
+    }
+
+    this.loading = false;
+  }
+
+  public onOpenStudentDetails(id: string): void {
+    this.router.navigate([`/students/${id}`]);
+  }
+
+  public onGroupsSelection(groupIds: number[]): void {
+    this.loading = true;
+
+    for (const assessment of this.selectedAssessments) {
+      this.displayedColumns = this.displayedColumns.filter(col => col.assmnt !== assessment.title);
+      this.getScoreByTopicsData(assessment, false, groupIds);
+    }
   }
 
   private getTableColumns(studentsList, assessmentTitle): any[]{
@@ -97,51 +143,6 @@ export class ScoreByTopicTableComponent implements OnInit {
     } else {
       this.hasData = false;
       this.loading = false;
-    }
-  }
-
-  public selectTableAssessment(assessment: AssessmentDashboard): void {
-    this.loading = true;
-
-    if (!this.scoreByTopicTable.length) {
-      this.selectedAssessments.push(assessment);
-      this.getScoreByTopicsData(assessment, true);
-    } else {
-      const matchingCol = this.displayedColumns.find(val => val.assmnt === assessment.title);
-      if (!matchingCol) {
-        this.selectedAssessments.push(assessment);
-        this.getScoreByTopicsData(assessment, false);
-      } else {
-        this.selectedAssessments.splice(this.selectedAssessments.indexOf(assessment), 1);
-        this.displayedColumns = this.displayedColumns.filter(col => col.assmnt !== assessment.title);
-        this.newTableData.forEach(data => {
-          for (const key in data) {
-            if (data.hasOwnProperty(key)) {
-              assessment.topics.forEach(topic => {
-                if (topic.name.toLocaleLowerCase() === key) {
-                  delete data[key];
-                }
-              });
-            }
-          }
-        });
-        this.getTableData(this.newTableData);
-      }
-    }
-
-    this.loading = false;
-  }
-
-  public onOpenStudentDetails(id: string): void {
-    this.router.navigate([`/students/${id}`]);
-  }
-
-  public onGroupsSelection(groupIds: number[]): void {
-    this.loading = true;
-
-    for (const assessment of this.selectedAssessments) {
-      this.displayedColumns = this.displayedColumns.filter(col => col.assmnt !== assessment.title);
-      this.getScoreByTopicsData(assessment, false, groupIds);
     }
   }
 }

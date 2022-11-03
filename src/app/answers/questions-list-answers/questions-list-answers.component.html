@@ -21,6 +21,10 @@
   (customActionEvent)="onCustomAction($event)"></app-table>
 
 <ng-template #questionPreviewDialog>
+  <ng-container *ngIf="questionDetails && questionDetails.question_type === 'SEL'">
+    <app-question-sel [question]="questionDetails"></app-question-sel>
+  </ng-container>
+
   <ng-container *ngIf="questionDetails && questionDetails.question_type === 'SELECT'">
     <app-question-select [question]="questionDetails" [evaluated]="true"></app-question-select>
   </ng-container>
@@ -40,5 +44,9 @@
   <ng-container *ngIf="questionDetails && questionDetails.question_type === 'DRAG_AND_DROP'">
     <app-question-drag-and-drop [question]="questionDetails" [evaluated]="true" [assessmentId]="assessmentId" [topicId]="topicId">
     </app-question-drag-and-drop>
+  </ng-container>
+
+  <ng-container *ngIf="questionDetails && questionDetails.question_type === 'DOMINO'">
+    <app-question-domino [question]="questionDetails" [evaluated]="true"></app-question-domino>
   </ng-container>
 </ng-template>

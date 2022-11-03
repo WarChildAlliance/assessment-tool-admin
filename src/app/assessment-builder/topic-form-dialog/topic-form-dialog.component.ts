@@ -4,12 +4,14 @@ import { TranslateService } from '@ngx-translate/core';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Subtopic } from 'src/app/core/models/question.model';
 
 interface DialogData {
   edit?: boolean;
   topic?: any;
   assessmentId?: any;
   order?: string;
+  subject?: string;
 }
 
 @Component({
@@ -18,9 +20,9 @@ interface DialogData {
   styleUrls: ['./topic-form-dialog.component.scss']
 })
 export class TopicFormDialogComponent implements OnInit {
+
   public topicsList: any;
   public selectTopic: boolean;
-  private toClone: boolean;
 
   public assessmentId: string;
   public topic: any;
@@ -35,6 +37,7 @@ export class TopicFormDialogComponent implements OnInit {
   public iconOptions = ['flower_green.svg', 'flower_purple.svg', 'flower_cyan.svg'];
 
   public feedbacks = [{id: 0, name: 'Never'}, {id: 1, name: 'Always'}, {id: 2, name: 'Second attempt'}];
+  public subtopics: Subtopic[];
 
   public selectTopicForm: FormGroup = new FormGroup({
     topic: new FormControl(null)
@@ -44,6 +47,7 @@ export class TopicFormDialogComponent implements OnInit {
     name: new FormControl('', [Validators.required]),
     description: new FormControl('', [Validators.required]),
     show_feedback: new FormControl(0, [Validators.required]),
+    subtopic: new FormControl(''),
     allow_skip: new FormControl(false, [Validators.required]),
     evaluated: new FormControl(true, [Validators.required]),
     praise: new FormControl(0, [Validators.required]),
@@ -52,6 +56,9 @@ export class TopicFormDialogComponent implements OnInit {
     icon: new FormControl(null),
     archived: new FormControl(false)
   });
+
+  private toClone: boolean;
+  private subject: string;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -65,45 +72,15 @@ export class TopicFormDialogComponent implements OnInit {
     if (this.data?.topic) { this.topic = this.data?.topic; }
     if (this.data?.edit) { this.edit = this.data?.edit; }
     if (this.data?.order) { this.order = this.data?.order; }
+    if (this.data?.subject) { this.subject = this.data?.subject; }
     if (this.topic) {
       this.setForm(this.topic);
     } else {
       this.getTopics();
+      this.getSubtopics();
       this.selectTopic = true;
       this.createNewTopicForm.controls.order.setValue(this.order);
     }
-  }
-
-  private async formGroupToFormData(): Promise<FormData> {
-    // if user upload an icon
-    if (this.icon) {
-      this.formData.append('icon', this.icon);
-    }
-    // if user doesn’t upload an icon (on edit mode: set default icon if no icon has been uploaded before)
-    else if (!this.topic?.icon) {
-      await this.setDefaultIcon();
-    }
-
-    this.formData.append('name', this.createNewTopicForm.value.name);
-    this.formData.append('description', this.createNewTopicForm.value.description);
-    this.formData.append('show_feedback', this.createNewTopicForm.value.show_feedback);
-    this.formData.append('allow_skip', this.createNewTopicForm.value.allow_skip);
-    this.formData.append('evaluated', this.createNewTopicForm.value.evaluated);
-    this.formData.append('praise', this.createNewTopicForm.value.praise);
-    this.formData.append('max_wrong_answers', this.createNewTopicForm.value.max_wrong_answers);
-    this.formData.append('order', this.createNewTopicForm.value.order);
-    this.formData.append('archived', this.createNewTopicForm.value.archived);
-
-    return this.formData;
-  }
-
-  private async setDefaultIcon(): Promise<void> {
-    const imageName = this.iconOptions[Math.floor(Math.random() * this.iconOptions.length)];
-    const imagePath = '../../../../assets/icons/' + imageName;
-    await fetch(imagePath)
-      .then((res) => res.arrayBuffer())
-      .then((buf) =>  new File([buf], imageName, {type: 'image/svg+xml'}))
-      .then((file) => this.formData.append('icon', file));
   }
 
   public saveAttachments(assessmentId: string, attachment, type: string, obj): void {
@@ -130,12 +107,6 @@ export class TopicFormDialogComponent implements OnInit {
     this.createNewTopicForm.patchValue({icon: this.icon});
   }
 
-  private getTopics(): void {
-    this.assessmentService.getAssessmentTopicsList().subscribe(topics => {
-      this.topicsList = topics;
-    });
-  }
-
   public onSelectTopic(): void {
     this.toClone = true;
     const topicId = this.selectTopicForm.controls.topic.value.id;
@@ -144,6 +115,56 @@ export class TopicFormDialogComponent implements OnInit {
     this.assessmentService.getTopicDetails(assessmentId, topicId).subscribe(details => {
       this.setForm(details);
     });
+  }
+
+  private getTopics(): void {
+    this.assessmentService.getAssessmentTopicsList().subscribe(topics => {
+      this.topicsList = topics;
+    });
+  }
+
+  private getSubtopics(): void {
+    this.assessmentService.getSubtopics(this.subject).subscribe(subtopics => {
+      this.subtopics = subtopics;
+
+      if (this.subtopics?.length) {
+        this.createNewTopicForm.controls.subtopic.setValidators([Validators.required]);
+        this.createNewTopicForm.controls.subtopic.updateValueAndValidity();
+      }
+    });
+  }
+
+  private async formGroupToFormData(): Promise<FormData> {
+    // if user upload an icon
+    if (this.icon) {
+      this.formData.append('icon', this.icon);
+    }
+    // if user doesn’t upload an icon (on edit mode: set default icon if no icon has been uploaded before)
+    else if (!this.topic?.icon) {
+      await this.setDefaultIcon();
+    }
+
+    this.formData.append('name', this.createNewTopicForm.value.name);
+    this.formData.append('description', this.createNewTopicForm.value.description);
+    this.formData.append('show_feedback', this.createNewTopicForm.value.show_feedback);
+    this.formData.append('subtopic', this.createNewTopicForm.value.subtopic);
+    this.formData.append('allow_skip', this.createNewTopicForm.value.allow_skip);
+    this.formData.append('evaluated', this.createNewTopicForm.value.evaluated);
+    this.formData.append('praise', this.createNewTopicForm.value.praise);
+    this.formData.append('max_wrong_answers', this.createNewTopicForm.value.max_wrong_answers);
+    this.formData.append('order', this.createNewTopicForm.value.order);
+    this.formData.append('archived', this.createNewTopicForm.value.archived);
+
+    return this.formData;
+  }
+
+  private async setDefaultIcon(): Promise<void> {
+    const imageName = this.iconOptions[Math.floor(Math.random() * this.iconOptions.length)];
+    const imagePath = '../../../../assets/icons/' + imageName;
+    await fetch(imagePath)
+      .then((res) => res.arrayBuffer())
+      .then((buf) =>  new File([buf], imageName, {type: 'image/svg+xml'}))
+      .then((file) => this.formData.append('icon', file));
   }
 
   private async setForm(topic: any): Promise<void> {
@@ -160,6 +181,7 @@ export class TopicFormDialogComponent implements OnInit {
       name: topic.name,
       description: topic.description,
       show_feedback: topic.show_feedback,
+      subtopic: topic.subtopic?.id,
       allow_skip: topic.allow_skip,
       evaluated: topic.evaluated,
       praise: topic.praise,
@@ -168,6 +190,10 @@ export class TopicFormDialogComponent implements OnInit {
       icon: this.icon,
       archived: topic.archived
     });
+    if (this.topic.questions_count > 0) {
+      this.createNewTopicForm.controls.subtopic.disable();
+    }
+    this.getSubtopics();
   }
 
   // When creating a new topic based on an existing one: convert object from icon to file

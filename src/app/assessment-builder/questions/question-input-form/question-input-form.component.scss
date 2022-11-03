@@ -18,6 +18,7 @@
 
 .dialog-buttons {
     margin-top: 20px;
+    align-items: center;
 }
 
 .form-primary {
@@ -27,4 +28,8 @@
     app-spinner {
         margin: auto;
     }
+}
+
+.notifier {
+    color: red;
 }

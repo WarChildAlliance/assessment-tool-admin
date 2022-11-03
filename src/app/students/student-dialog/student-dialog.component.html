@@ -51,6 +51,17 @@
         </div>
         <div class="form-primary__flex-container__field-container">
             <mat-form-field appearance="outline" color="accent">
+                <mat-label>{{ ( grades?.length ? "general.grade" : "general.noData" ) | translate }}</mat-label>
+                <mat-select formControlName="grade">
+                    <mat-option [value]="''">-</mat-option>
+                    <mat-option *ngFor="let grade of grades" [value]="grade">
+                        {{ grade }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="form-primary__flex-container__field-container">
+            <mat-form-field appearance="outline" color="accent">
                 <mat-label>{{ ( groups?.length ? "general.group" : "general.noData" ) | translate }}</mat-label>
                 <mat-select formControlName="group">
                     <mat-option [value]="''">-</mat-option>
@@ -63,11 +74,11 @@
                 {{ "general.add" | translate: { type: ("general.group" | translate | lowercase) } }}
             </app-custom-button>
         </div>
-        <div class="form-primary__flex-container__field-container">
-            <mat-checkbox formControlName="active">
-                {{ "students.active" | translate}}
-            </mat-checkbox>
-        </div>
+    </div>
+    <div class="form-primary__flex-container__field-container">
+        <mat-checkbox formControlName="active">
+            {{ "students.active" | translate}}
+        </mat-checkbox>
     </div>
     <div class="dialog-buttons">
         <button mat-button color="secondary" class="dialog-buttons__cancel" mat-dialog-close>

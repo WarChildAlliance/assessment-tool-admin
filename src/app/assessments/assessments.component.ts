@@ -19,6 +19,8 @@ import { forkJoin } from 'rxjs';
 })
 export class AssessmentsComponent implements OnInit {
 
+  @ViewChild('createAssessmentDialog') createAssessmentDialog: TemplateRef<any>;
+
   public displayedColumns: TableColumn[] = [
     { key: 'title', name: 'general.title' },
     { key: 'grade', name: 'general.grade' },
@@ -35,7 +37,6 @@ export class AssessmentsComponent implements OnInit {
   public tableFilters: TableFilter[];
   public isAssessmentPrivate = false;
 
-  @ViewChild('createAssessmentDialog') createAssessmentDialog: TemplateRef<any>;
 
   public createNewAssessmentForm: FormGroup = new FormGroup({
     title: new FormControl('', [Validators.required]),
@@ -45,6 +46,8 @@ export class AssessmentsComponent implements OnInit {
     country: new FormControl('', [Validators.required]),
     private: new FormControl(''),
   });
+
+  private tableFiltersData = { country: '', language: '' };
 
   constructor(
     private assessmentService: AssessmentService,
@@ -85,7 +88,7 @@ export class AssessmentsComponent implements OnInit {
     });
   }
 
-  public onTableFiltersChange(data: { key: string | number, value: any }): void {
+  public onTableFiltersChange(data: { key: string | number; value: any }): void {
     this.tableFiltersData[data.key] = data.value;
 
     this.assessmentService.getAssessmentsList(this.tableFiltersData).subscribe((assessmentsList) => {
@@ -97,7 +100,7 @@ export class AssessmentsComponent implements OnInit {
     this.router.navigate([`/assessments/${id}`]);
   }
 
-  public togglePrivate(event: { checked: boolean; }): void {
+  public togglePrivate(event: { checked: boolean }): void {
     this.isAssessmentPrivate = event.checked;
   }
 

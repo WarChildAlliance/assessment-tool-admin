@@ -1,3 +1,5 @@
+import { Group } from './group.model';
+
 export interface StudentTableData {
     id: number;
     username: string;
@@ -14,4 +16,6 @@ export interface StudentTableData {
     is_active: boolean;
     active_status_updated_on: Date;
     can_delete: boolean;
+    grade: string;
+    group: Group;
 }

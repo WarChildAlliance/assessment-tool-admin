@@ -21,10 +21,12 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        flex-wrap: wrap;
     }
 
     .drop-areas-button {
         display: flex;
+        margin-top: 20px;
         margin-bottom: 10px;
         flex-direction: column;
         align-items: center;
@@ -74,6 +76,7 @@
 
 .dialog-buttons {
     margin-top: 20px;
+    align-items: center;
 }
 
 .attachments-container {
@@ -95,4 +98,8 @@
     app-spinner {
         margin: auto;
     }
+}
+
+.notifier {
+    color: red;
 }

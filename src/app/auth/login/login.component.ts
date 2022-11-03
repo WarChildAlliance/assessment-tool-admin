@@ -9,12 +9,14 @@ import { AuthService } from 'src/app/core/services/auth.service';
 })
 export class LoginComponent implements OnInit {
 
+  @ViewChild('passwordElement') passwordElement: ElementRef<HTMLInputElement>;
+
   public loginForm = new FormGroup({
     username: new FormControl(null, [Validators.required]),
-    password: new FormControl(null, [Validators.required])
+    password: new FormControl(null, [Validators.required]),
+    keepConnection: new FormControl(true, [Validators.required])
   });
 
-  @ViewChild('passwordElement') passwordElement: ElementRef<HTMLInputElement>;
 
   constructor(
     private authService: AuthService
@@ -26,12 +28,21 @@ export class LoginComponent implements OnInit {
   public onSubmit(): void {
     this.authService.login(
       this.loginForm.value.username,
-      this.loginForm.value.password
+      this.loginForm.value.password,
+      this.loginForm.value.keepConnection
     );
   }
 
   public showPassword(): void {
     const newType = this.passwordElement.nativeElement.getAttribute('type') === 'password' ? 'text' : 'password';
     this.passwordElement.nativeElement.setAttribute('type', newType);
+  }
+
+  public onSignup(): void {
+    console.log('Sign up!');
+  }
+
+  public onForgotPassword(): void {
+    console.log('Forgot Password?');
   }
 }

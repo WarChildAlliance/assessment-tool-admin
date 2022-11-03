@@ -8,6 +8,7 @@
     "assessments": "Assessments",
     "assessment": "Assessment",
     "assessmentsOverview": "Assessments Overview",
+    "library": "Library",
     "assign": "Assign",
     "cancel": "Cancel",
     "choose": "Choose {{type}}",
@@ -44,8 +45,10 @@
     "questions": "Questions",
     "questionsNumber": "Number of questions",
     "questionType": "Question type",
+    "type": "Type",
     "save": "Save",
     "selected": "selected",
+    "selQuestion": "SEL Question",
     "simpleDeletePrompt": "Do you really want to delete the {{type}} <b>{{name}}</b> ?",
     "student": "Student",
     "studentName": "Student name",
@@ -62,21 +65,6 @@
     "yes": "Yes",
     "createNewOne": "Create a new one",
     "selectItem": "Select a {{item}}",
-    "grades": {
-      "0": "Kindergarten",
-      "1": "1st",
-      "2": "2nd",
-      "3": "3rd",
-      "4": "4th",
-      "5": "5th",
-      "6": "6th",
-      "7": "7th",
-      "8": "8th",
-      "9": "9th",
-      "10": "10th",
-      "11": "11th",
-      "12": "12th"
-    },
     "yourAssessments": "Your assessments"
   },
   "answers": {
@@ -102,6 +90,10 @@
   },
   "assessmentBuilder": {
     "allowSkip": "Allow skip",
+    "learningObjective": "Learning objective",
+    "subtopic": "Subtopic",
+    "gradeTooltip": "Intended school level",
+    "selQuestions": "Contains SEL questions",
     "assessmentFormDialog": {
       "gradeTooltip": "Intended school level"
     },
@@ -115,7 +107,8 @@
       "reorderTooltip": "Reorder {{item}} by dragging and dropping them",
       "saveOrder": "Save order",
       "copyAssessment": "Create a copy",
-      "unarchive": "Unarchive"
+      "unarchive": "Unarchive",
+      "assignAssessment": "Assign assessment"
     },
     "blocked": "The {{type}} has already been answered and cannot be edited",
     "changeFile": "Change File",
@@ -154,11 +147,12 @@
       "imageAttachment": "Image attachment",
       "numberline": {
         "endNumber": "End number",
+        "endError": "Must be strictly superior to the start number",
         "expectedValue": "Expected value",
         "startNumber": "Start number",
         "stepSize": "Step size",
-        "ticks": "ticks",
-        "tickStep": "Tick step"
+        "stepError": "Must be strictly superior to the start number",
+        "shuffle": "Shuffle"
       },
       "or": "OR",
       "questionCloneSuccess": "Question successfully cloned",
@@ -166,15 +160,29 @@
         "attachments": "Attachments",
         "display": "Display",
         "isCorrectAnswer": "Is correct answer?",
-        "isMultipleChoice": "Is multiple choice?",
         "onPopup": "Display question on popup?",
         "option": "option",
-        "options": "Options"
+        "options": "Options",
+        "optionsValidAnswerErrors": "Questions can only have one correct answer."
+      },
+      "sel" : {
+        "mathSelfEfficacy": "Math Self-Efficacy",
+        "readSelfEfficacy": "Read Self-Efficacy",
+        "growthMindset": "Growth Mindset",
+        "notReallyLikeMe": "Not really like me",
+        "aLittleLikeMe": "A little like me",
+        "aLotLikeMe": "A lot like me"
+      },
+      "domino": {
+        "leftSideValue": "Left Side Value",
+        "rightSideValue": "Right Side Value"
       }
     },
     "saveSuccess": "{{type}} successfully saved",
     "show": "Show {{type}}",
     "topicDetails": {
+      "fiveSelQuestionsMessage": "Only up to 5 SEL Questions can be created by assessment.",
+      "selQuestionsOrder": "SEL Questions must be at the beginning of the topic.",
       "aQuestion": "a question",
       "feedback": "feedback",
       "numberLineButton": "Number line",
@@ -206,9 +214,15 @@
   },
   "auth": {
     "login": {
+      "title": "Teacher's Platform",
+      "subtitle": "Welcome back! Please login to your account",
       "login": "Login",
       "password": "Password",
-      "username": "Username"
+      "username": "User Name",
+      "forgotPassword": "Forgot Password?",
+      "signup": "Sign up",
+      "keepConnection": "Remember me?",
+      "newUser": "New User? "
     }
   },
   "dashboard": {
@@ -282,6 +296,7 @@
     "incompatibleLanguageError": "You can only give access to a topic to students with the same country and language.",
     "statusError": "Students can only be deleted after one year of inactivity",
     "studentCode": "Student code",
+    "studentLoginURL": "Login URL",
     "studentDetail": {
       "activeAccess": "Active access",
       "linkedTopics": "linked topic(s)",
@@ -303,7 +318,11 @@
       "noGroups": "You don't have groups with students.",
       "notifier": "You need to select student(s) or group(s) and set a start date and an end date for each selected topic.",
       "startDate": "Start date",
-      "topicAvailability": "Assessment topic(s) availability"
+      "topicAvailability": "Assessment topic(s) availability",
+      "replaceAsssessmentAccess": "Do you want to replace <b>{{previousAssessment}}</b> with <b>{{newAssessment}}</b>?",
+      "studentAssessmentPrompt": "Student {{studentName}} already has an assessment assigned",
+      "newAssessment": "a new assessment",
+      "studentAssessmentIncompletePrompt": "This student has not finished the current assessment <b>{{currentAssessment}}</b>, are you sure you want to continue?"
     },
     "topicAccessesEdit": {
       "accessEdited": "The topic access have been successfully deleted!",

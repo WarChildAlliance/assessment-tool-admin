@@ -17,6 +17,10 @@
     (openDetailsEvent)="onOpenDetails($event)" (customActionEvent)="onCustomAction($event)"></app-table>
 
   <div *ngIf="showQuestionPreview">
+    <mat-card *ngIf="questionDetails && questionDetails.question_type === 'SEL'">
+      <app-question-sel [question]="questionDetails"></app-question-sel>
+    </mat-card>
+
     <mat-card *ngIf="questionDetails && questionDetails.question_type === 'SELECT'">
       <app-question-select [question]="questionDetails" [evaluated]="true"></app-question-select>
     </mat-card>
@@ -36,6 +40,10 @@
     <mat-card *ngIf="questionDetails && questionDetails.question_type === 'DRAG_AND_DROP'">
       <app-question-drag-and-drop [question]="questionDetails" [evaluated]="true" [assessmentId]="assessmentId" [topicId]="topicId">
       </app-question-drag-and-drop>
+    </mat-card>
+
+    <mat-card *ngIf="questionDetails && questionDetails.question_type === 'DOMINO'">
+      <app-question-domino [question]="questionDetails" [evaluated]="true"></app-question-domino>
     </mat-card>
   </div>
 </div>

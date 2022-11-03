@@ -24,7 +24,7 @@ interface DialogData {
 export class StudentDialogComponent implements OnInit {
 
   public student: any;
-  public studentList: any;
+  public studentList: any = [];
 
   // Defines if a student is edited or if a new one is created
 
@@ -33,13 +33,17 @@ export class StudentDialogComponent implements OnInit {
   public countries: Country[];
   public languages: Language[];
   public groups: Group[];
+  public grades = ['1', '2', '3'];
 
   public studentForm: FormGroup = new FormGroup({
-    first_name: new FormControl('', [Validators.required, Validators.pattern('^[A-Za-zÀ-ÖØ-öø-ÿ\u0621-\u064A]+(-[A-Za-zÀ-ÖØ-öø-ÿ\u0621-\u064A]+)?$')]),
-    last_name: new FormControl('', [Validators.required, Validators.pattern('^[A-Za-zÀ-ÖØ-öø-ÿ\u0621-\u064A]+(-[A-Za-zÀ-ÖØ-öø-ÿ\u0621-\u064A]+)?$')]),
+    first_name: new FormControl('',
+     [Validators.required, Validators.pattern('^[A-Za-zÀ-ÖØ-öø-ÿ\u0621-\u064A]+(-[A-Za-zÀ-ÖØ-öø-ÿ\u0621-\u064A]+)?$')]),
+    last_name: new FormControl('',
+     [Validators.required, Validators.pattern('^[A-Za-zÀ-ÖØ-öø-ÿ\u0621-\u064A]+(-[A-Za-zÀ-ÖØ-öø-ÿ\u0621-\u064A]+)?$')]),
     country: new FormControl('', [Validators.required]),
     language: new FormControl('', [Validators.required]),
     group: new FormControl(''),
+    grade: new FormControl(''),
     active: new FormControl(true)
   });
 
@@ -54,7 +58,7 @@ export class StudentDialogComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.data?.student) { this.student = this.data.student; }
-    if (this.data?.studentList) { this.studentList = this.data.studentList; }
+    if (this.data?.studentList) { this.studentList = this.data.studentList ?? []; }
     if (!!this.student) {
       this.studentForm.setValue({
         first_name: this.student.first_name,
@@ -62,7 +66,8 @@ export class StudentDialogComponent implements OnInit {
         country: this.student.country_code,
         language: this.student.language_code,
         group: this.student.group ?? '',
-        active: this.student.is_active
+        active: this.student.is_active,
+        grade: this.student.grade ?? '',
       });
     }
 
@@ -80,16 +85,6 @@ export class StudentDialogComponent implements OnInit {
     this.studentForm.valueChanges.subscribe(() => { this.hasFormChanged = true; });
   }
 
-  private getGroups(successCallback: CallableFunction = null): void {
-    this.userService.getGroups()
-      .subscribe((groups: Group[]) => {
-        this.groups = groups;
-        if (successCallback) {
-          successCallback();
-        }
-      });
-  }
-
   public async submitStudent(): Promise<void> {
     const studentToSave = {
       first_name: this.studentForm.value.first_name,
@@ -98,7 +93,8 @@ export class StudentDialogComponent implements OnInit {
       language: this.studentForm.value.language,
       country: this.studentForm.value.country,
       group: this.studentForm.value.group ?? '',
-      is_active: this.studentForm.value.active
+      is_active: this.studentForm.value.active,
+      grade: this.studentForm.value.grade ?? '',
     };
 
     if (!!this.student) {
@@ -145,9 +141,19 @@ export class StudentDialogComponent implements OnInit {
     });
   }
 
+  private getGroups(successCallback: CallableFunction = null): void {
+    this.userService.getGroups()
+      .subscribe((groups: Group[]) => {
+        this.groups = groups;
+        if (successCallback) {
+          successCallback();
+        }
+      });
+  }
+
   // Check student duplication on creation: based on name
   private async checkStudentDuplication(studentToSave: any): Promise<boolean | void> {
-    let create = this.studentList.length ? false : true;
+    let create = this.studentList?.length ? false : true;
 
     for (const student of this.studentList) {
       if (student.first_name.toLowerCase() === studentToSave.first_name.toLowerCase()

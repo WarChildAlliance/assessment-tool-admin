@@ -1,0 +1,109 @@
+<mat-dialog-content style="max-height: 80vh">
+    <div *ngIf="selectQuestion" class="select">
+        <form class="form-primary" [formGroup]="selectQuestionForm">
+            <mat-form-field appearance="outline" color="accent">
+                <mat-label>{{ 'general.selectItem' | translate:{ item: ('general.question' | translate)} }}</mat-label>
+                <mat-select formControlName="question" (selectionChange)="onSelectQuestion()">
+                    <mat-option *ngFor="let question of questionsList" [value]="question">{{ question.title }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <app-spinner *ngIf="!questionsList" size="medium" [variant]="'primary'"></app-spinner>
+        </form>
+
+        <app-custom-button category="secondary" variant="neutral" icon="add" (click)="selectQuestion = false">
+            {{ 'general.createNewOne' | translate }}
+        </app-custom-button>
+    </div>
+    <form *ngIf="!selectQuestion" [formGroup]="dominoForm">
+        <div class="form-container">
+            <div class="details-container">
+                <mat-form-field appearance="outline" class="form-group" color="accent">
+                    <mat-label for="title">{{ "general.title" | translate }}</mat-label>
+                    <input matInput formControlName="title">
+                </mat-form-field>
+
+                <mat-form-field *ngIf="learningObjectives?.length" appearance="outline" color="accent">
+                    <mat-label>{{ "assessmentBuilder.learningObjective" | translate }}</mat-label>
+                    <mat-select #learningObjectiveSelect required formControlName="learning_objective">
+                        <mat-option *ngFor="let learningObjective of learningObjectives" [value]="learningObjective.code"
+                        [matTooltip]="languageService.getLanguageCode() === 'eng' ? learningObjective.name_eng : learningObjective.name_ara"
+                        matTooltipShowDelay="1000"
+                        >
+                            <span style="font-weight: 500; margin-right: 10px;">{{ learningObjective.code }}</span>
+                            <ng-container *ngIf="learningObjectiveSelect.panelOpen">
+                                {{ languageService.getLanguageCode() === 'eng' ? learningObjective.name_eng : learningObjective.name_ara }}
+                            </ng-container>
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="form-group" color="accent">
+                    <mat-label>{{ "assessmentBuilder.questions.numberline.expectedValue" | translate }}</mat-label>
+                    <input type="number" matInput formControlName="expected_value" min="1">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="form-group" color="accent">
+                    <mat-label for="order">{{ "general.order" | translate }}</mat-label>
+                    <input matInput type="number" formControlName="order">
+                </mat-form-field>
+
+                <br>
+                <mat-checkbox formControlName="on_popup">
+                    <mat-label for="on_popup">{{ "assessmentBuilder.questions.select.onPopup" | translate }}</mat-label>
+                </mat-checkbox>
+            </div>
+
+            <div class="attachments-container">
+                <h2>{{ "assessmentBuilder.questions.select.attachments" | translate }}</h2>
+                <div class="attachments-options">
+                    <app-image-selector [reset$]="attachmentsResetSubject$.asObservable()"
+                        (newImageEvent)="questionFormService.imageAttachment = $event"
+                        [imageAttachment]="imageAttachment"></app-image-selector>
+                    <app-audio-selector [isRecorderEnabled]="true" [reset$]="attachmentsResetSubject$.asObservable()"
+                        (newAudioEvent)="questionFormService.audioAttachment = $event"
+                        [audioAttachment]="audioAttachment"></app-audio-selector>
+                </div>
+            </div>
+        </div>
+        <mat-divider></mat-divider>
+
+        <div class="options-header">
+            <h2 style="margin-top: 20px;"> {{ "assessmentBuilder.questions.select.options" | translate }}</h2>
+        </div>
+
+        <div class="options-container">
+            <div class="option-forms-container" formArrayName="options">
+                <div class="option-form" *ngFor="let control of dominoForm.controls.options['controls']; let i = index"
+                    [formGroupName]="i">
+                    <div class="sides">
+                        <mat-form-field appearance="outline" class="form-group" color="accent">
+                            <mat-label>{{ "assessmentBuilder.questions.domino.leftSideValue" | translate }}</mat-label>
+                            <input type="number" matInput formControlName="left_side_value" min="1" max="6">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="form-group" color="accent">
+                            <mat-label>{{ "assessmentBuilder.questions.domino.rightSideValue" | translate }}</mat-label>
+                            <input type="number" matInput formControlName="right_side_value" min="1" max="6">
+                        </mat-form-field>
+                    </div>
+                    <mat-checkbox formControlName="valid" [checked]="selectedOption === i"
+                        (change)="selectedOption = i; checkValid(i, $event.checked)">
+                        <mat-label>{{ "assessmentBuilder.questions.select.isCorrectAnswer" | translate }}</mat-label>
+                    </mat-checkbox>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="dialog-buttons">
+        <span class="notifier" *ngIf="dominoForm.controls.order.errors">{{
+            "assessmentBuilder.topicDetails.selQuestionsOrder" | translate }}</span>
+        <button mat-flat-button mat-dialog-close class="dialog-buttons__cancel" color="secondary">
+            {{ "general.cancel" | translate }}
+        </button>
+        <button mat-flat-button color="accent" [disabled]="dominoForm.invalid || !dominoForm.dirty" (click)="onSubmit()">
+            {{ question ? toClone ? ("general.clone" | translate) : ("general.save" | translate) : ("general.create" |
+            translate) }}
+        </button>
+    </div>
+</mat-dialog-content>

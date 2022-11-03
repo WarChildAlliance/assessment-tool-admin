@@ -25,9 +25,9 @@
         </mat-form-field>
         <mat-form-field appearance="outline" color="accent">
             <mat-label>{{ "general.grade" | translate }}</mat-label>
-            <mat-select formControlName="grade" [matTooltip]="'assessmentBuilder.assessmentFormDialog.gradeTooltip' | translate">
-                <mat-option *ngFor="let grade of grades; let i = index" [value]="i">
-                    {{ grade | translate }}
+            <mat-select formControlName="grade" [matTooltip]="'assessmentBuilder.gradeTooltip' | translate">
+                <mat-option *ngFor="let grade of grades" [value]="grade">
+                    {{ grade }}
                 </mat-option>
             </mat-select>
         </mat-form-field>
@@ -70,6 +70,9 @@
             </mat-checkbox>
             <mat-checkbox formControlName="archived">
                 {{ "general.archived" | translate: {type: ''} }}
+            </mat-checkbox>
+            <mat-checkbox formControlName="sel_question">
+                {{ "assessmentBuilder.selQuestions" | translate }}
             </mat-checkbox>
         </div>
     </div>
