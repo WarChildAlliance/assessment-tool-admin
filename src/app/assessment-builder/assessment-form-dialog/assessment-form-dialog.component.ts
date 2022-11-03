@@ -30,25 +30,10 @@ export class AssessmentFormDialogComponent implements OnInit {
 
   public icon: File = null;
 
-  public grades = [
-    'general.grades.0',
-    'general.grades.1',
-    'general.grades.2',
-    'general.grades.3',
-    'general.grades.4',
-    'general.grades.5',
-    'general.grades.6',
-    'general.grades.7',
-    'general.grades.8',
-    'general.grades.9',
-    'general.grades.10',
-    'general.grades.11',
-    'general.grades.12'
-  ];
-
+  public grades = ['1', '2', '3'];
   public languages: Language[];
   public countries: Country[];
-  public subjects = ['PRESEL', 'POSTSEL', 'MATH', 'LITERACY'];
+  public subjects = ['MATH', 'LITERACY'];
   public formData: FormData = new FormData();
 
   public iconOptions = ['flower_green.svg', 'flower_purple.svg', 'flower_cyan.svg'];
@@ -59,14 +44,15 @@ export class AssessmentFormDialogComponent implements OnInit {
 
   public assessmentForm: FormGroup = new FormGroup({
     title: new FormControl('', [Validators.required]),
-    grade: new FormControl(0, [Validators.required]),
+    grade: new FormControl(1, [Validators.required]),
     subject: new FormControl('', [Validators.required]),
     language: new FormControl('', [Validators.required]),
     country: new FormControl('', [Validators.required]),
     private: new FormControl(false, [Validators.required]),
     icon: new FormControl(null),
     archived: new FormControl(false),
-    downloadable: new FormControl(true)
+    downloadable: new FormControl(true),
+    sel_question: new FormControl(true)
   });
 
   constructor(
@@ -133,6 +119,7 @@ export class AssessmentFormDialogComponent implements OnInit {
     this.formData.append('private', this.assessmentForm.value.private);
     this.formData.append('archived', this.assessmentForm.value.archived);
     this.formData.append('downloadable', this.assessmentForm.value.downloadable);
+    this.formData.append('sel_question', this.assessmentForm.value.sel_question);
 
     return this.formData;
   }
@@ -166,18 +153,22 @@ export class AssessmentFormDialogComponent implements OnInit {
         await this.iconToFile(assessment.icon);
       }
     }
-
     this.assessmentForm.setValue({
       title: assessment.title,
-      grade: Number(assessment.grade),
+      grade: assessment.grade,
       subject: assessment.subject.toUpperCase(),
       language: assessment.language_code,
       country: assessment.country_code,
       private: assessment.private,
       icon: this.icon,
       archived: assessment.archived,
-      downloadable: assessment.downloadable
+      downloadable: assessment.downloadable,
+      sel_question: assessment.sel_question
     });
+    if (this.assessment.topics_count > 0) {
+      this.assessmentForm.controls.grade.disable();
+      this.assessmentForm.controls.subject.disable();
+    }
   }
 
   // When creating a new assessment based on an existing one: convert object from icon to file

@@ -4,9 +4,9 @@ export interface AssessmentDashboard {
     title: string;
     evaluated: boolean;
     topics: [{
-        id: string,
-        name: string,
-        average: number
+        id: string;
+        name: string;
+        average: number;
     }];
     started: boolean;
 }

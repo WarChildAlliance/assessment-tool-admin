@@ -4,8 +4,13 @@ export interface Question {
   title: string;
   order: number;
   question_type: QuestionTypeEnum;
+  learning_objective: LearningObjective | number;
   hint: Hint;
   attachments: [];
+}
+
+export interface QuestionSEL extends Question {
+  sel_type: string;
 }
 
 export interface QuestionInput extends Question {
@@ -13,16 +18,19 @@ export interface QuestionInput extends Question {
 }
 
 export interface QuestionNumberLine extends Question {
-  expected_value: number;
   start: number;
   end: number;
   step: number;
-  show_value: boolean;
-  show_ticks: boolean;
+  expected_value: number;
+  shuffle: boolean;
+}
+
+export interface QuestionDomino extends Question {
+  expected_value: number;
+  options: DominoOption[];
 }
 
 export interface QuestionSelect extends Question {
-  multiple: boolean;
   options: SelectOption[];
 }
 
@@ -53,6 +61,13 @@ export interface SelectOption {
   attachments: [];
 }
 
+export interface DominoOption {
+  id: number;
+  left_side_value: number;
+  right_side_value: number;
+  valid: boolean;
+}
+
 export interface SortOption {
   id: number;
   value: string;
@@ -66,10 +81,24 @@ enum QuestionTypeEnum {
   Sort = 'SORT',
   NumberLine = 'NUMBER_LINE',
   DragAndDrop = 'DRAG_AND_DROP',
+  Domino = 'DOMINO'
 }
 
 export interface Hint {
   id: number;
   text: string;
   attachments: [];
+}
+
+export interface Subtopic {
+  id: number;
+  name: string;
+}
+
+export interface LearningObjective {
+  code: string;
+  grade: number;
+  subtopic: Subtopic | number;
+  name_eng: string;
+  name_ara: string;
 }

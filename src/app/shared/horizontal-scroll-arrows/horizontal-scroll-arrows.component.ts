@@ -22,14 +22,6 @@ export class HorizontalScrollArrowsComponent implements OnInit {
     });
   }
 
-  private handleEdgeReached(): void {
-    if (this.scrollableElement.scrollLeft === 0) {
-      this.isLeftScrollButtonEnabled = false;
-    } else if (this.scrollableElement.scrollLeft === this.scrollableElement.scrollWidth - this.scrollableElement.clientWidth) {
-      this.isRightScrollButtonEnabled = false;
-    }
-  }
-
   public elementXOverflowEnabled(element): boolean {
     return element.offsetWidth < element.scrollWidth;
   }
@@ -50,5 +42,13 @@ export class HorizontalScrollArrowsComponent implements OnInit {
       behavior: 'smooth'
     });
     this.isLeftScrollButtonEnabled = true;
+  }
+
+  private handleEdgeReached(): void {
+    if (this.scrollableElement.scrollLeft === 0) {
+      this.isLeftScrollButtonEnabled = false;
+    } else if (this.scrollableElement.scrollLeft === this.scrollableElement.scrollWidth - this.scrollableElement.clientWidth) {
+      this.isRightScrollButtonEnabled = false;
+    }
   }
 }

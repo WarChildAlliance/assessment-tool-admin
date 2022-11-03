@@ -8,6 +8,7 @@
     "assessments": "التقييمات",
     "assessment": "تقييم",
     "assessmentsOverview": "نظرة عامة على التقييمات",
+    "library": "مكتبة",
     "assign": "تعيين",
     "cancel": "إلغاء",
     "choose": "اختر {{type}}",
@@ -43,8 +44,10 @@
     "questions": "أسئلة",
     "questionsNumber": "عدد الأسئلة",
     "questionType": "نوع السؤال",
+    "type": "يكتب",
     "save": "يحفظ",
     "selected": "تم الاختيار",
+    "selQuestion": "سؤال التعلم الاجتماعي والعاطفي",
     "simpleDeletePrompt": "هل تريد حقًا حذف {{type}} <b> {{name}} </b>؟",
     "student": "طالب علم",
     "studentName": "اسم الطالب",
@@ -62,21 +65,6 @@
     "yes": "نعم",
     "createNewOne": "قم بإنشاء واحدة جديدة",
     "selectItem": "حدد {{item}}",
-    "grades": {
-      "0": "0",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "6": "6",
-      "7": "7",
-      "8": "8",
-      "9": "9",
-      "10": "10",
-      "11": "11",
-      "12": "12"
-    },
     "yourAssessments": "تقييمك (تقييماتك)"
   },
   "answers": {
@@ -102,6 +90,7 @@
   },
   "assessmentBuilder": {
     "allowSkip": "السماح بالتخطي",
+    "selQuestions": "يحتوي على أسئلة التعلم الاجتماعي والعاطفي",
     "assessmentFormDialog": {
       "gradeTooltip": "المستوى المدرسي المقصود"
     },
@@ -115,7 +104,8 @@
       "saveOrder": "حفظ النظام",
       "orderChanged": "تم تغيير الطلب بنجاح",
       "copyAssessment": "قم بإنشاء نسخة",
-      "unarchive": "أخرج من الأرشيف"
+      "unarchive": "أخرج من الأرشيف",
+      "assignAssessment": "تعيين التقييم"
     },
     "blocked": "تم بالفعل الرد على {{type}} ولا يمكن تعديله",
     "changeFile": "تغيير الملف",
@@ -154,11 +144,12 @@
       "imageAttachment": "مرفق الصورة",
       "numberline": {
         "endNumber": "رقم النهاية",
-        "expectedValue": "القيمة المتوقعة",
         "startNumber": "رقم البداية",
         "stepSize": "حجم الخطوة",
-        "ticks": "القراد",
-        "tickStep": "ضع علامة في الخطوة"
+        "expectedValue": "القيمة المتوقعة",
+        "endError": "يجب أن يكون أعلى بشكل صارم من رقم البداية",
+        "stepError": "يجب أن يكون أعلى بشكل صارم من رقم البداية",
+        "shuffle": "خلط"
       },
       "or": "أو",
       "questionCloneSuccess": "تم استنساخ السؤال بنجاح",
@@ -169,12 +160,27 @@
         "isMultipleChoice": "هو الاختيار من متعدد؟",
         "onPopup": "عرض السؤال على المنبثقة؟",
         "option": "اختيار",
-        "options": "خيارات"
+        "options": "خيارات",
+        "optionsValidAnswerErrors": "يمكن أن يكون للأسئلة إجابة واحدة صحيحة."
+      },
+      "sel" : {
+        "mathSelfEfficacy": "الكفاءة الذاتية للرياضيات",
+        "readSelfEfficacy": "اقرأ الفعالية الذاتية",
+        "growthMindset": "عقلية النمو",
+        "notReallyLikeMe": "لا تحبني حقًا",
+        "aLittleLikeMe": "قليلا مثلي",
+        "aLotLikeMe": "كثيرا مثلي"
+      },
+      "domino": {
+        "leftSideValue": "قيمة الجانب الأيسر",
+        "rightSideValue": "قيمة الجانب الأيمن"
       }
     },
     "saveSuccess": "تم حفظ {{type}} بنجاح",
     "show": "إظهار {{type}}",
     "topicDetails": {
+      "fiveSelQuestionsMessage": "يمكن فقط إنشاء ما يصل إلى خمسة أسئلة تعلم اجتماعية وعاطفية عن طريق التقييم.",
+      "selQuestionsOrder": "يجب أن تكون أسئلة التعلم الاجتماعي والعاطفي في بداية الموضوع.",
       "aQuestion": "سؤال",
       "feedback": "استجابة",
       "numberLineButton": "رقم الخط",
@@ -186,7 +192,10 @@
       "praiseTooltip": "حالات الحمد",
       "whenToShowFeedbacks": "متى تظهر التقيمات؟"
     },
-    "value": "قيمة"
+    "value": "قيمة",
+    "gradeTooltip": "المستوى المدرسي المقصود",
+    "learningObjective": "هدف التعلم",
+    "subtopic": "موضوع فرعي"
   },
   "assessments": {
     "assessmentDetail": {
@@ -206,9 +215,15 @@
   },
   "auth": {
     "login": {
+      "title": "منصة المعلم",
+      "subtitle": "مرحبًا بعودتك! يرجى تسجيل الدخول إلى حسابك",
       "login": "تسجيل الدخول",
       "password": "كلمه السر",
-      "username": "اسم المستخدم"
+      "username": "اسم المستخدم",
+      "forgotPassword": "هل نسيت كلمة السر؟",
+      "signup": "اشتراك",
+      "keepConnection": "تذكرنى؟",
+      "newUser": "مستخدم جديد؟"
     }
   },
   "dashboard": {
@@ -303,7 +318,11 @@
       "noGroups": "ليس لديك مجموعات مع الطلاب.",
       "notifier": "تحتاج إلى تحديد الطالب (الطلاب) أو المجموعة (المجموعات) وتعيين تاريخ البدء وتاريخ الانتهاء لكل موضوع محدد",
       "startDate": "تاريخ البدء",
-      "topicAvailability": "مدى توفر موضوع (مواضيع) التقييم"
+      "topicAvailability": "مدى توفر موضوع (مواضيع) التقييم",
+      "replaceAsssessmentAccess": "هل تريد استبدال <b> {{previousAssessment}} </b> بـ <b> {{newAssessment}} </b>؟",
+      "studentAssessmentPrompt": "الطالب {{studentName}} لديه تقييم معين بالفعل",
+      "newAssessment": "تقييم جديد",
+      "studentAssessmentIncompletePrompt": "لم ينته هذا الطالب من التقييم الحالي <b> {{currentAssessment}} </b> ، هل أنت متأكد من أنك تريد المتابعة؟"
     },
     "topicAccessesEdit": {
       "accessEdited": "تم حذف الوصول إلى الموضوع بنجاح!",

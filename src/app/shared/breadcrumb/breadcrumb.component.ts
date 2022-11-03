@@ -15,7 +15,7 @@ export class CustomBreadcrumbComponent {
 
   public breadcrumb: Breadcrumb[] = [];
 
-  private params: { [key: string]: any; };
+  private params: { [key: string]: any };
 
   constructor(
     private activatedRoute: ActivatedRoute,

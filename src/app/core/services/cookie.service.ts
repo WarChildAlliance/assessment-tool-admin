@@ -45,7 +45,7 @@ export class CookieService {
 
     let cookieString = encodeURIComponent(name) + '=' + encodeURIComponent(value) + ';';
 
-    // Set cookie expiry to 7 days
+    // Set cookie expiry to expiresIn days (default is 7 days)
     const dateExpires = new Date(new Date().getTime() + expiresIn * 1000 * 60 * 60 * 24);
     cookieString += `expires=${dateExpires.toUTCString()};`;
 

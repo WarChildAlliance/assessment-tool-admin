@@ -17,25 +17,17 @@ interface DialogData {
 })
 
 export class AreaSelectorComponent implements AfterViewInit {
-  public attachmentsResetSubject$ = new Subject<void>();
-  public imageAttachment = null;
-
-  public icon = '';
-  public areasOptions: AreaOption[] = [];
-
-  private startX = 0;
-  private startY = 0;
-
-  private unlistenStartDrag: () => void;
-  private unlistenMoveDrag: () => void;
-  private unlistenStopDrag: () => void;
-
-  private svgStyle: CSSStyleDeclaration;
 
   @ViewChild('draw') drawElement: ElementRef;
   @ViewChild('rectangle') rectangleElement: ElementRef;
   @ViewChild('rectanglesList') rectanglesListElement: ElementRef;
   @ViewChild('areaSelectorDialog') areaSelectorDialogElement: ElementRef;
+
+  public attachmentsResetSubject$ = new Subject<void>();
+  public imageAttachment = null;
+
+  public icon = '';
+  public areasOptions: AreaOption[] = [];
 
   public coordinatesForm: FormGroup = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -45,6 +37,15 @@ export class AreaSelectorComponent implements AfterViewInit {
     height: new FormControl(null, Validators.required),
     image: new FormControl(null, Validators.required),
   });
+
+  private startX = 0;
+  private startY = 0;
+
+  private unlistenStartDrag: () => void;
+  private unlistenMoveDrag: () => void;
+  private unlistenStopDrag: () => void;
+
+  private svgStyle: CSSStyleDeclaration;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -93,6 +94,36 @@ export class AreaSelectorComponent implements AfterViewInit {
         this.renderer.setStyle(drawElRef, 'pointer-events', 'none');
         this.unlistenStartDrag();
       }
+    });
+  }
+
+  public onNewImageAttachment(event: any): void {
+    this.imageAttachment = event;
+    this.coordinatesForm.controls.image.setValue(event);
+
+    // Handle File Select
+    const reader = new FileReader();
+    reader.onload = this.handleReaderLoaded.bind(this);
+    reader.readAsBinaryString(event);
+  }
+
+  public removeArea(area: number): void {
+    this.areasOptions.splice(area, 1);
+    this.reDraw();
+  }
+
+  public addArea(): void {
+    const newAreaOption = {
+      x: this.coordinatesForm.controls.x.value,
+      y: this.coordinatesForm.controls.y.value,
+      width: this.coordinatesForm.controls.width.value,
+      height: this.coordinatesForm.controls.height.value,
+      name: this.coordinatesForm.controls.name.value
+    };
+    this.areasOptions.push(newAreaOption);
+
+    this.coordinatesForm.reset({
+      image: this.coordinatesForm.controls.image.value
     });
   }
 
@@ -180,38 +211,8 @@ export class AreaSelectorComponent implements AfterViewInit {
     });
   }
 
-  public onNewImageAttachment(event: any): void {
-    this.imageAttachment = event;
-    this.coordinatesForm.controls.image.setValue(event);
-
-    // Handle File Select
-    const reader = new FileReader();
-    reader.onload = this.handleReaderLoaded.bind(this);
-    reader.readAsBinaryString(event);
-  }
-
   private handleReaderLoaded(readerEvt: any): void {
     const binaryString = readerEvt.target.result;
     this.icon = 'data:image/jpg;base64,' + btoa(binaryString);
-  }
-
-  public removeArea(area: number): void {
-    this.areasOptions.splice(area, 1);
-    this.reDraw();
-  }
-
-  public addArea(): void {
-    const newAreaOption = {
-      x: this.coordinatesForm.controls.x.value,
-      y: this.coordinatesForm.controls.y.value,
-      width: this.coordinatesForm.controls.width.value,
-      height: this.coordinatesForm.controls.height.value,
-      name: this.coordinatesForm.controls.name.value
-    };
-    this.areasOptions.push(newAreaOption);
-
-    this.coordinatesForm.reset({
-      image: this.coordinatesForm.controls.image.value
-    });
   }
 }

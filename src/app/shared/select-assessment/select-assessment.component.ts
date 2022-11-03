@@ -11,8 +11,12 @@ import { AssessmentService } from 'src/app/core/services/assessment.service';
 })
 export class SelectAssessmentComponent implements OnInit {
 
-  private assessmentId: string;
-  private firstTopicRequest = true;
+  @Input() topicSelectionEnabled: boolean;
+  @Input() multiple: boolean;
+  @Input() displayNonEvaluated: boolean;
+
+  @Output() assessmentSelection = new EventEmitter<AssessmentDashboard>();
+  @Output() topicSelection = new EventEmitter<{assessmentId: string; topic: TopicDashboard}>();
 
   public assessmentsList: AssessmentDashboard[];
   public topicsList: TopicDashboard[];
@@ -22,12 +26,8 @@ export class SelectAssessmentComponent implements OnInit {
   public selected: AssessmentDashboard[] = [];
   public selectedTopic: TopicDashboard;
 
-  @Input() topicSelectionEnabled: boolean;
-  @Input() multiple: boolean;
-  @Input() displayNonEvaluated: boolean;
-
-  @Output() assessmentSelection = new EventEmitter<AssessmentDashboard>();
-  @Output() topicSelection = new EventEmitter<{assessmentId: string, topic: TopicDashboard}>();
+  private assessmentId: string;
+  private firstTopicRequest = true;
 
   constructor(private assessmentService: AssessmentService) { }
 
@@ -50,18 +50,6 @@ export class SelectAssessmentComponent implements OnInit {
     });
   }
 
-  private getTopics(assessmentId: string): void{
-    this.assessmentService.getTopicsListForDashboard(assessmentId).subscribe(topics => {
-      this.topicsList = topics;
-
-      if (this.firstTopicRequest) {
-        this.selectedTopic = this.topicsList.find(el => el.started);
-        this.topicSelection.emit({assessmentId: this.assessmentId, topic: this.selectedTopic});
-        this.firstTopicRequest = false;
-      }
-    });
-  }
-
   public selectAssessment(assessment: AssessmentDashboard): void {
     this.selectedAssessment = assessment;
     if (this.topicSelectionEnabled) {
@@ -75,5 +63,17 @@ export class SelectAssessmentComponent implements OnInit {
   public selectTopic(topic: TopicDashboard): void {
     this.selectedTopic = topic;
     this.topicSelection.emit({assessmentId: this.assessmentId, topic});
+  }
+
+  private getTopics(assessmentId: string): void{
+    this.assessmentService.getTopicsListForDashboard(assessmentId).subscribe(topics => {
+      this.topicsList = topics;
+
+      if (this.firstTopicRequest) {
+        this.selectedTopic = this.topicsList.find(el => el.started);
+        this.topicSelection.emit({assessmentId: this.assessmentId, topic: this.selectedTopic});
+        this.firstTopicRequest = false;
+      }
+    });
   }
 }

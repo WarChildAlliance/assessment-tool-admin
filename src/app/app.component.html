@@ -32,7 +32,7 @@
 </mat-toolbar>
 
 
-<mat-sidenav-container autosize="true">
+<mat-sidenav-container autosize="true" [ngClass]="isAuthenticated ? '' : 'login'">
   <mat-sidenav #sidenav mode="side" [opened]="isAuthenticated">
     <mat-nav-list>
       <a mat-list-item routerLink="dashboard" routerLinkActive="list-item-active" (click)="showSubmenu = false">
@@ -50,6 +50,10 @@
       <a mat-list-item routerLink="assessments" routerLinkActive="list-item-active" (click)="showSubmenu = false">
         <mat-icon matListIcon>quiz</mat-icon>
         {{ "general.assessments" | translate }}
+      </a>
+      <a mat-list-item routerLink="library" routerLinkActive="list-item-active" (click)="showSubmenu = false">
+        <mat-icon matListIcon>library_books</mat-icon>
+        {{ "general.library" | translate }}
       </a>
       <mat-divider *ngIf="showSubmenu"></mat-divider>
       <mat-list-item (click)="showSubmenu = !showSubmenu">
@@ -71,7 +75,7 @@
     </mat-nav-list>
   </mat-sidenav>
 
-  <mat-sidenav-content>
+  <mat-sidenav-content [ngClass]="isAuthenticated ? '' : 'login'">
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

@@ -155,24 +155,9 @@ export class AssessmentService {
     return this.http.get<any[]>(`${environment.API_URL}/export/answers/`);
   }
 
-  private openPDF(data: HttpResponse<Blob>): void {
-    const filename = data.headers.get('Content-Disposition').match(/(?:filename=")(.*)(?:"{1})/)[1];
-    const url = window.URL.createObjectURL(data.body);
-    const w = window.open();
-    w.document.write(
-      `<html>
-        <head>
-          <title>${filename}</title>
-        </head>
-        <body style="margin: 0; padding: 0">
-          <iframe src="${url}" style="width: 100%; height: 100%; margin: 0; padding: 0; border: none;"></iframe>
-        </body>
-      </html>`
-    );
-  }
-
   public downloadPDF(assessmentId: string, topicId?: string, questionId?: string): void {
-    const url = `${environment.API_URL}/export/assessments/${assessmentId}/` + `${ topicId ? `topics/${topicId}/` : '' }` + `${ questionId ? `questions/${questionId}/` : '' }`;
+    const url = `${environment.API_URL}/export/assessments/${assessmentId}/` + `${ topicId ? `topics/${topicId}/` : '' }`
+     + `${ questionId ? `questions/${questionId}/` : '' }`;
     this.http.get(url, {
         responseType: 'blob', observe: 'response'
       }
@@ -191,4 +176,30 @@ export class AssessmentService {
     return this.http.get<any>(`${environment.API_URL}/assessments/${assessmentId}/topics/${topicId}/questions/${questionId}/draggable/`);
   }
 
+  public getSubtopics(subject: string = null): Observable<any> {
+    const queryParams = subject ? `?subject=${subject}` : '';
+    return this.http.get<any>(`${environment.API_URL}/assessments/subtopics/${queryParams}`);
+  }
+
+  public getLearningObjectives(filteringParams?: object): Observable<any> {
+    const initialUrl = `${environment.API_URL}/assessments/learning-objectives/`;
+    const finalUrl = filteringParams ? this.utilitiesService.urlBuilder(initialUrl, filteringParams) : initialUrl;
+    return this.http.get<any>(finalUrl);
+  }
+
+  private openPDF(data: HttpResponse<Blob>): void {
+    const filename = data.headers.get('Content-Disposition').match(/(?:filename=")(.*)(?:"{1})/)[1];
+    const url = window.URL.createObjectURL(data.body);
+    const w = window.open();
+    w.document.write(
+      `<html>
+        <head>
+          <title>${filename}</title>
+        </head>
+        <body style="margin: 0; padding: 0">
+          <iframe src="${url}" style="width: 100%; height: 100%; margin: 0; padding: 0; border: none;"></iframe>
+        </body>
+      </html>`
+    );
+  }
 }
