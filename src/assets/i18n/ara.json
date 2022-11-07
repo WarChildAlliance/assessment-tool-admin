@@ -148,11 +148,11 @@
         "stepSize": "حجم الخطوة",
         "expectedValue": "القيمة المتوقعة",
         "endError": "يجب أن يكون أعلى بشكل صارم من رقم البداية",
-        "stepError": "يجب أن يكون أعلى بشكل صارم من رقم البداية"
+        "stepError": "يجب أن يكون أعلى بشكل صارم من رقم البداية",
+        "shuffle": "خلط"
       },
       "or": "أو",
       "questionCloneSuccess": "تم استنساخ السؤال بنجاح",
-      "difficulty": "صعوبة",
       "select": {
         "attachments": "المرفقات",
         "display": "عرض",
@@ -200,10 +200,12 @@
       "changeFile": "تغيير الملف",
       "createTopic": "قم بإنشاء موضوع",
       "praiseTooltip": "حالات الحمد",
-      "whenToShowFeedbacks": "متى تظهر التقيمات؟",
-      "subtopic": "موضوع فرعي"
+      "whenToShowFeedbacks": "متى تظهر التقيمات؟"
     },
-    "value": "قيمة"
+    "value": "قيمة",
+    "gradeTooltip": "المستوى المدرسي المقصود",
+    "learningObjective": "هدف التعلم",
+    "subtopic": "موضوع فرعي"
   },
   "assessments": {
     "assessmentDetail": {
@@ -223,9 +225,15 @@
   },
   "auth": {
     "login": {
+      "title": "منصة المعلم",
+      "subtitle": "مرحبًا بعودتك! يرجى تسجيل الدخول إلى حسابك",
       "login": "تسجيل الدخول",
       "password": "كلمه السر",
-      "username": "اسم المستخدم"
+      "username": "اسم المستخدم",
+      "forgotPassword": "هل نسيت كلمة السر؟",
+      "signup": "اشتراك",
+      "keepConnection": "تذكرنى؟",
+      "newUser": "مستخدم جديد؟"
     }
   },
   "dashboard": {
@@ -323,7 +331,8 @@
       "topicAvailability": "مدى توفر موضوع (مواضيع) التقييم",
       "replaceAsssessmentAccess": "هل تريد استبدال <b> {{previousAssessment}} </b> بـ <b> {{newAssessment}} </b>؟",
       "studentAssessmentPrompt": "الطالب {{studentName}} لديه تقييم معين بالفعل",
-      "newAssessment": "تقييم جديد"
+      "newAssessment": "تقييم جديد",
+      "studentAssessmentIncompletePrompt": "لم ينته هذا الطالب من التقييم الحالي <b> {{currentAssessment}} </b> ، هل أنت متأكد من أنك تريد المتابعة؟"
     },
     "topicAccessesEdit": {
       "accessEdited": "تم حذف الوصول إلى الموضوع بنجاح!",

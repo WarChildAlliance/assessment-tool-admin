@@ -19,7 +19,7 @@ import { forkJoin } from 'rxjs';
 })
 export class AssessmentsComponent implements OnInit {
 
-  private tableFiltersData = { country: '', language: '' };
+  @ViewChild('createAssessmentDialog') createAssessmentDialog: TemplateRef<any>;
 
   public displayedColumns: TableColumn[] = [
     { key: 'title', name: 'general.title' },
@@ -31,12 +31,10 @@ export class AssessmentsComponent implements OnInit {
     { key: 'country_name', name: 'general.country' },
     { key: 'private', name: 'general.private', type: 'boolean' }
   ];
-
-  public assessmentsDataSource: MatTableDataSource<Assessment> = new MatTableDataSource([]);
   public tableFilters: TableFilter[];
   public isAssessmentPrivate = false;
 
-  @ViewChild('createAssessmentDialog') createAssessmentDialog: TemplateRef<any>;
+  public assessmentsDataSource: MatTableDataSource<Assessment> = new MatTableDataSource([]);
 
   public createNewAssessmentForm: FormGroup = new FormGroup({
     title: new FormControl('', [Validators.required]),
@@ -47,6 +45,7 @@ export class AssessmentsComponent implements OnInit {
     private: new FormControl(''),
   });
 
+  private tableFiltersData = { country: '', language: '' };
   constructor(
     private assessmentService: AssessmentService,
     private router: Router,
@@ -86,7 +85,7 @@ export class AssessmentsComponent implements OnInit {
     });
   }
 
-  public onTableFiltersChange(data: { key: string | number, value: any }): void {
+  public onTableFiltersChange(data: { key: string | number; value: any }): void {
     this.tableFiltersData[data.key] = data.value;
 
     this.assessmentService.getAssessmentsList(this.tableFiltersData).subscribe((assessmentsList) => {
@@ -98,7 +97,7 @@ export class AssessmentsComponent implements OnInit {
     this.router.navigate([`/assessments/${id}`]);
   }
 
-  public togglePrivate(event: { checked: boolean; }): void {
+  public togglePrivate(event: { checked: boolean }): void {
     this.isAssessmentPrivate = event.checked;
   }
 

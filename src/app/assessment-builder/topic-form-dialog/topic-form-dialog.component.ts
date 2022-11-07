@@ -4,12 +4,14 @@ import { TranslateService } from '@ngx-translate/core';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Subtopic } from 'src/app/core/models/question.model';
 
 interface DialogData {
   edit?: boolean;
   topic?: any;
   assessmentId?: any;
   order?: string;
+  subject?: string;
 }
 
 @Component({
@@ -18,9 +20,9 @@ interface DialogData {
   styleUrls: ['./topic-form-dialog.component.scss']
 })
 export class TopicFormDialogComponent implements OnInit {
+
   public topicsList: any;
   public selectTopic: boolean;
-  private toClone: boolean;
 
   public assessmentId: string;
   public topic: any;
@@ -35,7 +37,7 @@ export class TopicFormDialogComponent implements OnInit {
   public iconOptions = ['flower_green.svg', 'flower_purple.svg', 'flower_cyan.svg'];
 
   public feedbacks = [{id: 0, name: 'Never'}, {id: 1, name: 'Always'}, {id: 2, name: 'Second attempt'}];
-  public subtopics = ['Subtopic 1', 'Subtopic 2', 'Subtopic 3'];
+  public subtopics: Subtopic[];
 
   public selectTopicForm: FormGroup = new FormGroup({
     topic: new FormControl(null)
@@ -45,7 +47,7 @@ export class TopicFormDialogComponent implements OnInit {
     name: new FormControl('', [Validators.required]),
     description: new FormControl('', [Validators.required]),
     show_feedback: new FormControl(0, [Validators.required]),
-    subtopic: new FormControl('', [Validators.required]),
+    subtopic: new FormControl(''),
     allow_skip: new FormControl(false, [Validators.required]),
     evaluated: new FormControl(true, [Validators.required]),
     praise: new FormControl(0, [Validators.required]),
@@ -54,6 +56,9 @@ export class TopicFormDialogComponent implements OnInit {
     icon: new FormControl(null),
     archived: new FormControl(false)
   });
+
+  private toClone: boolean;
+  private subject: string;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -67,13 +72,66 @@ export class TopicFormDialogComponent implements OnInit {
     if (this.data?.topic) { this.topic = this.data?.topic; }
     if (this.data?.edit) { this.edit = this.data?.edit; }
     if (this.data?.order) { this.order = this.data?.order; }
+    if (this.data?.subject) { this.subject = this.data?.subject; }
     if (this.topic) {
       this.setForm(this.topic);
     } else {
       this.getTopics();
+      this.getSubtopics();
       this.selectTopic = true;
       this.createNewTopicForm.controls.order.setValue(this.order);
     }
+  }
+
+  public saveAttachments(assessmentId: string, attachment, type: string, obj): void {
+    this.assessmentService.addAttachments(assessmentId, attachment, type, obj).subscribe(() => {
+      this.alertService.success('Topic was saved successfully');
+    });
+  }
+
+  public async onSubmit(): Promise<void> {
+    const data = await this.formGroupToFormData();
+    if (this.edit) {
+      this.assessmentService.editTopic(this.assessmentId.toString(), this.topic.id, data).subscribe(res => {
+        this.alertService.success('Topic was altered successfully');
+      });
+    } else {
+      this.assessmentService.createTopic(this.assessmentId.toString(), data).subscribe(res => {
+        this.alertService.success('Topic was created successfully');
+      });
+    }
+  }
+
+  public handleFileInput(event): void {
+    this.icon = event;
+    this.createNewTopicForm.patchValue({icon: this.icon});
+  }
+
+  public onSelectTopic(): void {
+    this.toClone = true;
+    const topicId = this.selectTopicForm.controls.topic.value.id;
+    const assessmentId = this.selectTopicForm.controls.topic.value.assessment_id;
+
+    this.assessmentService.getTopicDetails(assessmentId, topicId).subscribe(details => {
+      this.setForm(details);
+    });
+  }
+
+  private getTopics(): void {
+    this.assessmentService.getAssessmentTopicsList().subscribe(topics => {
+      this.topicsList = topics;
+    });
+  }
+
+  private getSubtopics(): void {
+    this.assessmentService.getSubtopics(this.subject).subscribe(subtopics => {
+      this.subtopics = subtopics;
+
+      if (this.subtopics?.length) {
+        this.createNewTopicForm.controls.subtopic.setValidators([Validators.required]);
+        this.createNewTopicForm.controls.subtopic.updateValueAndValidity();
+      }
+    });
   }
 
   private async formGroupToFormData(): Promise<FormData> {
@@ -109,46 +167,6 @@ export class TopicFormDialogComponent implements OnInit {
       .then((file) => this.formData.append('icon', file));
   }
 
-  public saveAttachments(assessmentId: string, attachment, type: string, obj): void {
-    this.assessmentService.addAttachments(assessmentId, attachment, type, obj).subscribe(() => {
-      this.alertService.success('Topic was saved successfully');
-    });
-  }
-
-  public async onSubmit(): Promise<void> {
-    const data = await this.formGroupToFormData();
-    if (this.edit) {
-      this.assessmentService.editTopic(this.assessmentId.toString(), this.topic.id, data).subscribe(res => {
-        this.alertService.success('Topic was altered successfully');
-      });
-    } else {
-      this.assessmentService.createTopic(this.assessmentId.toString(), data).subscribe(res => {
-        this.alertService.success('Topic was created successfully');
-      });
-    }
-  }
-
-  public handleFileInput(event): void {
-    this.icon = event;
-    this.createNewTopicForm.patchValue({icon: this.icon});
-  }
-
-  private getTopics(): void {
-    this.assessmentService.getAssessmentTopicsList().subscribe(topics => {
-      this.topicsList = topics;
-    });
-  }
-
-  public onSelectTopic(): void {
-    this.toClone = true;
-    const topicId = this.selectTopicForm.controls.topic.value.id;
-    const assessmentId = this.selectTopicForm.controls.topic.value.assessment_id;
-
-    this.assessmentService.getTopicDetails(assessmentId, topicId).subscribe(details => {
-      this.setForm(details);
-    });
-  }
-
   private async setForm(topic: any): Promise<void> {
     this.selectTopic = false;
 
@@ -163,7 +181,7 @@ export class TopicFormDialogComponent implements OnInit {
       name: topic.name,
       description: topic.description,
       show_feedback: topic.show_feedback,
-      subtopic: topic.subtopic,
+      subtopic: topic.subtopic?.id,
       allow_skip: topic.allow_skip,
       evaluated: topic.evaluated,
       praise: topic.praise,
@@ -172,6 +190,10 @@ export class TopicFormDialogComponent implements OnInit {
       icon: this.icon,
       archived: topic.archived
     });
+    if (this.topic.questions_count > 0) {
+      this.createNewTopicForm.controls.subtopic.disable();
+    }
+    this.getSubtopics();
   }
 
   // When creating a new topic based on an existing one: convert object from icon to file

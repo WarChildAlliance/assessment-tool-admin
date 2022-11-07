@@ -26,10 +26,12 @@ export class AnswerService {
   }
 
   public getTopicsAnswersDetails(studentId: string, assessmentId: string, topicId: string): Observable<TopicTableData> {
-    return this.http.get<any>(`${environment.API_URL}/visualization/student_answers/${studentId}/assessments/${assessmentId}/topics/${topicId}`);
+    return this.http.get<any>
+    (`${environment.API_URL}/visualization/student_answers/${studentId}/assessments/${assessmentId}/topics/${topicId}`);
   }
 
   public getQuestionsAnwsers(studentId: string, assessmentId: string, topicId: string): Observable<QuestionTableData[]> {
-    return this.http.get<any[]>(`${environment.API_URL}/visualization/student_answers/${studentId}/assessments/${assessmentId}/topics/${topicId}/questions`);
+    return this.http.get<any[]>
+    (`${environment.API_URL}/visualization/student_answers/${studentId}/assessments/${assessmentId}/topics/${topicId}/questions`);
   }
 }

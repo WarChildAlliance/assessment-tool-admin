@@ -46,14 +46,6 @@
                 <input type="number" matInput formControlName="second_value" min="0">
             </mat-form-field>
 
-            <mat-form-field appearance="outline" color="accent">
-                <mat-label>{{ "assessmentBuilder.questions.difficulty" | translate }}</mat-label>
-                <mat-select formControlName="difficulty">
-                    <mat-option *ngFor="let difficulty of difficulties" [value]="difficulty.id">{{ difficulty.name }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-
             <mat-checkbox formControlName="on_popup">
                 <mat-label for="on_popup">{{ "assessmentBuilder.questions.select.onPopup" | translate }}</mat-label>
             </mat-checkbox>

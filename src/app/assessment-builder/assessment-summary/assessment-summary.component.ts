@@ -54,36 +54,14 @@ export class AssessmentSummaryComponent implements OnInit {
     this.orderTopics();
   }
 
-  private orderTopics(): void {
-    // To order and display unarchived topic cards first
-    this.assessment.topics.sort((a, b) => {
-      if (a.archived > b.archived) {
-        return 1;
-      }
-      if (a.archived < b.archived) {
-        return -1;
-      }
-
-      return 0;
-    });
-  }
-
-  private getAssessmentDetails(assessmentId: string): void {
-    this.assessmentService.getAssessmentTopics(assessmentId).subscribe(() => {
-      this.assessmentService.getAssessmentDetails(assessmentId).subscribe(assessmentDetails => {
-        this.assessment = assessmentDetails;
-        this.orderTopics();
-      });
-    });
-  }
-
   public openTopicFormDialog(assessment: any): void {
     this.assessmentId = assessment.id;
 
     const topicFormDialog = this.dialog.open(TopicFormDialogComponent, {
       data: {
         assessmentId: this.assessmentId,
-        order: this.assessment.topics.length + 1
+        order: this.assessment.topics.length + 1,
+        subject: this.assessment.subject.toUpperCase()
       }
     });
 
@@ -274,6 +252,29 @@ export class AssessmentSummaryComponent implements OnInit {
       data: {
         assessment
       }
+    });
+  }
+
+  private orderTopics(): void {
+    // To order and display unarchived topic cards first
+    this.assessment.topics.sort((a, b) => {
+      if (a.archived > b.archived) {
+        return 1;
+      }
+      if (a.archived < b.archived) {
+        return -1;
+      }
+
+      return 0;
+    });
+  }
+
+  private getAssessmentDetails(assessmentId: string): void {
+    this.assessmentService.getAssessmentTopics(assessmentId).subscribe(() => {
+      this.assessmentService.getAssessmentDetails(assessmentId).subscribe(assessmentDetails => {
+        this.assessment = assessmentDetails;
+        this.orderTopics();
+      });
     });
   }
 }

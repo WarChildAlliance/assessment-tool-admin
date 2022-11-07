@@ -66,9 +66,9 @@
         <p>{{ "assessmentBuilder.show" | translate: {type: "assessmentBuilder.topicDetails.feedback" | translate} }}</p>
         <p>{{ topicDetails.show_feedback }} </p>
       </div>
-      <div class="detail">
-        <p>{{ "assessmentBuilder.topicFormDialog.subtopic" | translate }}</p>
-        <p>{{ topicDetails.subtopic }} </p>
+      <div *ngIf="topicDetails.subtopic" class="detail">
+        <p>{{ "assessmentBuilder.subtopic" | translate }}</p>
+        <p>{{ topicDetails.subtopic.name }} </p>
       </div>
     </div>
   </mat-card>

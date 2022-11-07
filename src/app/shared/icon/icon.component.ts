@@ -15,6 +15,8 @@ export class CustomIconComponent implements OnInit {
 
   @Input() size = 24;
 
+  constructor() {}
+
   public get fontSize(): string {
     return this.size + 'px';
   }
@@ -32,8 +34,6 @@ export class CustomIconComponent implements OnInit {
       }
     }
   }
-
-  constructor() {}
 
   ngOnInit(): void {}
 }

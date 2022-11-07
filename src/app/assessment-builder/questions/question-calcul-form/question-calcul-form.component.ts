@@ -13,7 +13,7 @@ interface DialogData {
   selQuestionOrder?: any;
 }
 
-function validateCalcul(form: FormGroup): any {
+const validateCalcul = (form: FormGroup): any => {
   const firstValue = form.get('first_value');
   const secondValue = form.get('second_value');
   const operator = form.get('operator');
@@ -41,7 +41,7 @@ function validateCalcul(form: FormGroup): any {
       secondValue.setErrors(null);
     }
   }
-}
+};
 
 @Component({
   selector: 'app-question-calcul-form',
@@ -52,7 +52,6 @@ export class QuestionCalculFormComponent implements OnInit {
   public questionsList: any;
   public selectQuestion: boolean;
   public selQuestionOrder: any;
-  public difficulties = this.questionFormService.questionDifficulties;
 
   public assessmentId: string;
   public topicId: string;

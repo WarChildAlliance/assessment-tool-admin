@@ -2,8 +2,8 @@
 export interface TopicAccessStudents {
     id: string;
     student: {
-        id: string,
-        full_name: string
+        id: string;
+        full_name: string;
     };
     topic_first_try: AssessmentTopicAnswer;
 }

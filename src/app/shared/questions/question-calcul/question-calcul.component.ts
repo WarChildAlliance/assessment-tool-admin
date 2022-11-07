@@ -44,11 +44,6 @@ export class QuestionCalculComponent implements OnInit {
     }
   }
 
-  private setAttachments(): void {
-    this.imageAttachment = this.question.attachments.find(i => i.attachment_type === 'IMAGE');
-    this.audioAttachment = this.question.attachments.find(a => a.attachment_type === 'AUDIO');
-  }
-
   public getSource(path: string): string {
     // TODO find out why we get two different paths here!
     return (path.slice(0, 5) === 'http:') ? path : environment.API_URL + path;
@@ -58,5 +53,10 @@ export class QuestionCalculComponent implements OnInit {
     const audio = new Audio(file);
     audio.load();
     audio.play();
+  }
+
+  private setAttachments(): void {
+    this.imageAttachment = this.question.attachments.find(i => i.attachment_type === 'IMAGE');
+    this.audioAttachment = this.question.attachments.find(a => a.attachment_type === 'AUDIO');
   }
 }

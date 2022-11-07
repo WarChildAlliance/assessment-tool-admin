@@ -25,10 +25,7 @@ interface DialogData {
 
 export class TopicAccessesBuilderComponent implements OnInit {
 
-  private topicsList: TopicTableData[] = [];
   public groupsList: Group[] = [];
-  private selectedAssessmentId: string;
-  private applyToAllTopics: boolean;
   public libraryAssessment: boolean;
 
   public minDate: Date = new Date();
@@ -49,6 +46,21 @@ export class TopicAccessesBuilderComponent implements OnInit {
   public assignStudentsForm: FormGroup = new FormGroup({
     students: new FormArray([])
   });
+
+  private topicsList: TopicTableData[] = [];
+  private selectedAssessmentId: string;
+  private applyToAllTopics: boolean;
+
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private assessmentService: AssessmentService,
+    private userService: UserService,
+    private formBuilder: FormBuilder,
+    private alertService: AlertService,
+    private utilitiesService: UtilitiesService,
+    private translateService: TranslateService,
+    private dialog: MatDialog
+  ) {}
 
   get topicControls(): AbstractControl[] {
     return (this.assignTopicForm.get('access') as FormArray).controls;
@@ -77,23 +89,12 @@ export class TopicAccessesBuilderComponent implements OnInit {
     return !studentsSelected;
   }
 
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    private assessmentService: AssessmentService,
-    private userService: UserService,
-    private formBuilder: FormBuilder,
-    private alertService: AlertService,
-    private utilitiesService: UtilitiesService,
-    private translateService: TranslateService,
-    private dialog: MatDialog
-  ) {}
-
   ngOnInit(): void {
     if (this.data?.studentsList) {
       this.data.studentsList.forEach((student, index) => {
         if (student.assessments_count) {
           const translatedText = this.translateService.instant('students.topicAccessesBuilder.newAssessment');
-          this.confirmReplaceAssessment(student.id, translatedText, student.full_name, index);
+          this.confirmReplaceAssessment(student.id, translatedText, student.full_name, index, student.assessment_complete);
         } else {
           this.studentsList.push(student);
         }
@@ -121,20 +122,6 @@ export class TopicAccessesBuilderComponent implements OnInit {
     });
   }
 
-  private loadGroupsList(): void {
-    this.userService.getGroups().subscribe((groups) => {
-      this.groupsList = groups.filter(group => group.students.length);
-      this.generateGroupsForm();
-    });
-  }
-
-  private loadStudentsList(): void {
-    this.userService.getStudentsList().subscribe(studentsList => {
-      this.studentsList = studentsList;
-      this.generateStudentsForm();
-    });
-  }
-
   public onDateInput(type, date): void {
     if (type === 'start_date') {
       this.startDate = date;
@@ -154,52 +141,6 @@ export class TopicAccessesBuilderComponent implements OnInit {
         start_date: value || i === 0 ? this.startDate : null,
         end_date: value || i === 0 ? this.endDate : null
       });
-    });
-  }
-
-  private generateTopicsForm(): void {
-    const accessForm = this.assignTopicForm.get('access') as FormArray;
-    accessForm.clear();
-
-    this.topicsList.forEach((topic: TopicTableData) => {
-      if (topic.questions_count === 0) {
-        return;
-      }
-      const topicAccess = this.formBuilder.group({
-        topic: new FormControl(topic),
-        selected: new FormControl(true),
-        start_date: this.applyToAllTopics ? this.startDate : new FormControl(null, Validators.required),
-        end_date: this.applyToAllTopics ? this.endDate : new FormControl(null, Validators.required)
-      });
-      accessForm.push(topicAccess);
-    });
-  }
-
-  private generateGroupsForm(): void {
-    const groupForm = this.assignGroupForm.get('groups') as FormArray;
-    groupForm.clear();
-
-    this.groupsList.forEach((group: Group, i: number) => {
-      const groupAccess = this.formBuilder.group({
-        group: new FormControl(group),
-        selected: new FormControl(false),
-        name: new FormControl(group.name),
-      });
-      groupForm.push(groupAccess);
-    });
-  }
-
-  private generateStudentsForm(): void {
-    const studentsForm = this.assignStudentsForm.get('students') as FormArray;
-    studentsForm.clear();
-
-    this.studentsList.forEach(student => {
-      const studentForm = this.formBuilder.group({
-        student: new FormControl(student),
-        selected: new FormControl(false),
-        name: new FormControl(student.name),
-      });
-      studentsForm.push(studentForm);
     });
   }
 
@@ -226,9 +167,9 @@ export class TopicAccessesBuilderComponent implements OnInit {
     }
 
     const accessesArray = new Array<{
-      topic: number,
-      start_date: string,
-      end_date: string
+      topic: number;
+      start_date: string;
+      end_date: string;
     }>();
 
     for (const element of this.assignTopicForm.value.access) {
@@ -281,21 +222,90 @@ export class TopicAccessesBuilderComponent implements OnInit {
   public uniqueAssessmentCheck(student, selected): void {
     const studentValue = student.get('student').value;
     if (selected && studentValue.assessments_count) {
-      this.confirmReplaceAssessment(studentValue.id, this.assessment.title, studentValue.full_name, student);
+      this.confirmReplaceAssessment(
+        studentValue.id, this.assessment.title, studentValue.full_name, student, studentValue.assessment_complete
+      );
     }
   }
+
+  private generateTopicsForm(): void {
+    const accessForm = this.assignTopicForm.get('access') as FormArray;
+    accessForm.clear();
+
+    this.topicsList.forEach((topic: TopicTableData) => {
+      if (topic.questions_count === 0) {
+        return;
+      }
+      const topicAccess = this.formBuilder.group({
+        topic: new FormControl(topic),
+        selected: new FormControl(true),
+        start_date: this.applyToAllTopics ? this.startDate : new FormControl(null, Validators.required),
+        end_date: this.applyToAllTopics ? this.endDate : new FormControl(null, Validators.required)
+      });
+      accessForm.push(topicAccess);
+    });
+  }
+
+  private generateGroupsForm(): void {
+    const groupForm = this.assignGroupForm.get('groups') as FormArray;
+    groupForm.clear();
+
+    this.groupsList.forEach((group: Group, i: number) => {
+      const groupAccess = this.formBuilder.group({
+        group: new FormControl(group),
+        selected: new FormControl(false),
+        name: new FormControl(group.name),
+      });
+      groupForm.push(groupAccess);
+    });
+  }
+
+  private generateStudentsForm(): void {
+    const studentsForm = this.assignStudentsForm.get('students') as FormArray;
+    studentsForm.clear();
+
+    this.studentsList.forEach(student => {
+      const studentForm = this.formBuilder.group({
+        student: new FormControl(student),
+        selected: new FormControl(false),
+        name: new FormControl(student.name),
+      });
+      studentsForm.push(studentForm);
+    });
+  }
+
+  private loadGroupsList(): void {
+    this.userService.getGroups().subscribe((groups) => {
+      this.groupsList = groups.filter(group => group.students.length);
+      this.generateGroupsForm();
+    });
+  }
+
+  private loadStudentsList(): void {
+    this.userService.getStudentsList().subscribe(studentsList => {
+      this.studentsList = studentsList;
+      this.generateStudentsForm();
+    });
+  }
+
   // A student should only have one and one assessment
-  private confirmReplaceAssessment(studentId: number, newAssessment: string, studentName: string, student: any): void {
+  private confirmReplaceAssessment(
+    studentId: number, newAssessment: string, studentName: string, student: any, assessmentIncomplete: boolean
+  ): void {
     this.assessmentService.getStudentAssessments(studentId).subscribe(studentAssessments => {
       const confirmDialog = this.dialog.open(ConfirmModalComponent, {
         data: {
           title: this.translateService.instant('students.topicAccessesBuilder.studentAssessmentPrompt', {
             studentName
           }),
-          content: this.translateService.instant('students.topicAccessesBuilder.replaceAsssessmentAccess', {
-            previousAssessment: studentAssessments[0].title,
-            newAssessment
-          }),
+          content: assessmentIncomplete
+            ? this.translateService.instant('students.topicAccessesBuilder.studentAssessmentIncompletePrompt', {
+                currentAssessment: studentAssessments[0].title
+              })
+            : this.translateService.instant('students.topicAccessesBuilder.replaceAsssessmentAccess', {
+                previousAssessment: studentAssessments[0].title,
+                newAssessment
+              }),
           contentType: 'innerHTML',
           confirmColor: 'warn'
         }

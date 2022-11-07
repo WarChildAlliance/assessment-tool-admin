@@ -14,6 +14,7 @@ import { TopicFormDialogComponent } from '../topic-form-dialog/topic-form-dialog
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { QuestionDominoFormComponent } from '../questions/question-domino-form/question-domino-form.component';
 import { QuestionCalculFormComponent } from '../questions/question-calcul-form/question-calcul-form.component';
+import { Assessment } from 'src/app/core/models/assessment.model';
 
 @Component({
   selector: 'app-topic-details',
@@ -34,12 +35,6 @@ export class TopicDetailsComponent implements OnInit {
   public reorder = false;
   public changedOrder = false;
   public questionsToOrder: any[] = [];
-
-  private quesionSEL = {
-    type: 'SEL',
-    text: 'SEL (Social and Emotional Learning)',
-    component: QuestionSelFormComponent
-  };
 
   public questionsArray: any[] = [
     {
@@ -79,6 +74,14 @@ export class TopicDetailsComponent implements OnInit {
 
   public questionsList: any[];
   public topicDetails: any;
+  private assessment: Assessment;
+
+
+  private questionSEL = {
+    type: 'SEL',
+    text: 'SEL (Social and Emotional Learning)',
+    component: QuestionSelFormComponent
+  };
 
   constructor(
     private dialog: MatDialog,
@@ -96,35 +99,9 @@ export class TopicDetailsComponent implements OnInit {
       this.assessmentType = params.type;
       this.getQuestionsList();
       this.getTopicDetails(true);
+      this.getAssessmentDetails();
     });
     this.getIsDownloadable();
-  }
-
-  private getQuestionsList(): void {
-    this.assessmentService.getQuestionsList(this.assessmentId, this.topicId).subscribe(questionList => {
-      this.questionsList = questionList;
-      this.order = questionList.length
-        ? questionList.sort((a, b) => parseFloat(a.order) - parseFloat(b.order))[questionList.length - 1].order + 1
-        : 1;
-      this.isAnswered = questionList.some(question => question.answered);
-      this.selQuestionsCount = this.questionsList.filter(question => question.question_type === 'SEL').length;
-    });
-  }
-
-  private getTopicDetails(initComponent?: boolean): void {
-    this.assessmentService.getTopicDetails(this.assessmentId, this.topicId).subscribe(topicDetails => {
-      this.topicDetails = topicDetails;
-      if (initComponent && this.topicDetails.sel_question) {
-        // Adds SEL Question type to the 'Add a question' section
-        this.questionsArray.unshift(this.quesionSEL);
-      }
-    });
-  }
-
-  private getIsDownloadable(): void {
-    this.assessmentService.getAssessmentDetails(this.assessmentId).subscribe((assessmentDetails) => {
-      this.isDownloadable = assessmentDetails.downloadable;
-    });
   }
 
   public openEditTopicDialog(topic): void {
@@ -153,7 +130,10 @@ export class TopicDetailsComponent implements OnInit {
         question: question ?? null,
         toClone: clone ? true : false,
         assessmentId: this.assessmentId,
-        selQuestionOrder: this.selQuestionsCount
+        selQuestionOrder: this.selQuestionsCount,
+        subject: this.assessment.subject.toUpperCase(),
+        grade: this.assessment.grade,
+        subtopicId: this.topicDetails.subtopic?.id
       }
     });
     questionDialog.afterClosed().subscribe((value) => {
@@ -270,5 +250,38 @@ export class TopicDetailsComponent implements OnInit {
   public cancelReorder(): void {
     this.questionsList = this.questionsToOrder;
     this.reorder = false;
+  }
+
+  private getQuestionsList(): void {
+    this.assessmentService.getQuestionsList(this.assessmentId, this.topicId).subscribe(questionList => {
+      this.questionsList = questionList;
+      this.order = questionList.length
+        ? questionList.sort((a, b) => parseFloat(a.order) - parseFloat(b.order))[questionList.length - 1].order + 1
+        : 1;
+      this.isAnswered = questionList.some(question => question.answered);
+      this.selQuestionsCount = this.questionsList.filter(question => question.question_type === 'SEL').length;
+    });
+  }
+
+  private getTopicDetails(initComponent?: boolean): void {
+    this.assessmentService.getTopicDetails(this.assessmentId, this.topicId).subscribe(topicDetails => {
+      this.topicDetails = topicDetails;
+      if (initComponent && this.topicDetails.sel_question) {
+        // Adds SEL Question type to the 'Add a question' section
+        this.questionsArray.unshift(this.questionSEL);
+      }
+    });
+  }
+
+  private getAssessmentDetails(): void {
+    this.assessmentService.getAssessmentDetails(this.assessmentId).subscribe((assessmentDetails: Assessment) => {
+      this.assessment = assessmentDetails;
+    });
+  }
+
+  private getIsDownloadable(): void {
+    this.assessmentService.getAssessmentDetails(this.assessmentId).subscribe((assessmentDetails) => {
+      this.isDownloadable = assessmentDetails.downloadable;
+    });
   }
 }

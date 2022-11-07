@@ -25,12 +25,12 @@ import {environment} from '../../environments/environment';
   styleUrls: ['./students.component.scss'],
 })
 export class StudentsComponent implements OnInit {
-  private filtersData = { country: '', language: '', group: '', ordering: '-id' };
 
   public displayedColumns: TableColumn[] = [
     { key: 'full_name', name: 'general.studentName' },
     { key: 'username', name: 'students.studentCode', type: 'copy' },
     { key: 'group', name: 'general.group' },
+    { key: 'grade', name: 'general.grade' },
     { key: 'login_url', name: 'students.studentLoginURL', label: 'username', type: 'link' },
     { key: 'assessments_count', name: 'students.activeAssessmentsNumber' },
     { key: 'completed_topics_count', name: 'students.completedTopicsNumber' },
@@ -57,6 +57,8 @@ export class StudentsComponent implements OnInit {
     country: new FormControl('', [Validators.required]),
     language: new FormControl('', [Validators.required]),
   });
+
+  private filtersData = { country: '', language: '', group: '', ordering: '-id' };
 
   constructor(
     private userService: UserService,
@@ -120,18 +122,6 @@ export class StudentsComponent implements OnInit {
       });
     });
     this.getStudentTableList(this.filtersData);
-  }
-
-  private getStudentTableList(filtersData?): void {
-    this.userService
-      .getStudentsList(filtersData)
-      .subscribe((studentsList: StudentTableData[]) => {
-        const mappedStudentList = studentsList.map(student => ({
-          ...student,
-          login_url: `${environment.STUDENT_PORTAL_LOGIN_URL}?code=${student.username}`
-        }));
-        this.studentsDataSource = new MatTableDataSource(mappedStudentList);
-      });
   }
 
   public onFiltersChange(data: { key: string | number; value: any }): void {
@@ -217,11 +207,7 @@ export class StudentsComponent implements OnInit {
   }
 
   public openCreateStudentDialog(): void {
-    const createStudentDialog = this.dialog.open(StudentDialogComponent, {
-      data: {
-        studentList: this.studentsDataSource.data
-      }
-    });
+    const createStudentDialog = this.dialog.open(StudentDialogComponent);
     createStudentDialog.afterClosed().subscribe((value) => {
       if (value) {
         this.getStudentTableList(this.filtersData);
@@ -250,5 +236,17 @@ export class StudentsComponent implements OnInit {
 
   public downloadData(): void {
     console.log('Work In Progress');
+  }
+
+  private getStudentTableList(filtersData?): void {
+    this.userService
+      .getStudentsList(filtersData)
+      .subscribe((studentsList: StudentTableData[]) => {
+        const mappedStudentList = studentsList.map(student => ({
+          ...student,
+          login_url: `${environment.STUDENT_PORTAL_LOGIN_URL}?code=${student.username}`
+        }));
+        this.studentsDataSource = new MatTableDataSource(mappedStudentList);
+      });
   }
 }

@@ -4,9 +4,9 @@ export interface Question {
   title: string;
   order: number;
   question_type: QuestionTypeEnum;
+  learning_objective: LearningObjective | number;
   hint: Hint;
   attachments: [];
-  difficulty: QuestionDifficulty;
 }
 
 export interface QuestionSEL extends Question {
@@ -22,6 +22,7 @@ export interface QuestionNumberLine extends Question {
   end: number;
   step: number;
   expected_value: number;
+  shuffle: boolean;
 }
 
 export interface QuestionCalcul extends Question {
@@ -89,14 +90,21 @@ enum QuestionTypeEnum {
   Calcul = 'CALCUL',
 }
 
-enum QuestionDifficulty {
-  'Difficulty 1' = 1,
-  'Difficulty 2' = 2,
-  'Difficulty 3' = 3,
-}
-
 export interface Hint {
   id: number;
   text: string;
   attachments: [];
+}
+
+export interface Subtopic {
+  id: number;
+  name: string;
+}
+
+export interface LearningObjective {
+  code: string;
+  grade: number;
+  subtopic: Subtopic | number;
+  name_eng: string;
+  name_ara: string;
 }

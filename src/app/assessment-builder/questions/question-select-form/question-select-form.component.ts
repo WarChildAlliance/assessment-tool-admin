@@ -5,6 +5,9 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { QuestionFormService } from 'src/app/core/services/question-form.service';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { TranslateService } from '@ngx-translate/core';
+import { AssessmentService } from 'src/app/core/services/assessment.service';
+import { LanguageService } from 'src/app/core/services/language.service';
+import { LearningObjective } from 'src/app/core/models/question.model';
 
 interface DialogData {
   topicId?: string;
@@ -13,6 +16,9 @@ interface DialogData {
   toClone?: boolean;
   assessmentId?: string;
   selQuestionOrder?: any;
+  subject?: 'MATH' | 'LITERACY';
+  grade?: '1' | '2' | '3';
+  subtopicId?: number;
 }
 
 @Component({
@@ -21,9 +27,12 @@ interface DialogData {
   styleUrls: ['./question-select-form.component.scss'],
 })
 export class QuestionSelectFormComponent implements OnInit {
+
+  @ViewChild('fileInput') el: ElementRef;
+
   public questionsList: any;
   public selectQuestion: boolean;
-  public difficulties = this.questionFormService.questionDifficulties;
+  public learningObjectives: LearningObjective[];
 
   public assessmentId: string;
   public topicId: string;
@@ -31,13 +40,12 @@ export class QuestionSelectFormComponent implements OnInit {
   public question: any;
   public toClone: boolean;
   public selQuestionOrder: any;
+  public grade: string;
+  public subject: string;
+  public subtopicId: number;
 
-  @ViewChild('fileInput') el: ElementRef;
 
   public options = [];
-
-  private optionsAtt = [];
-  private optionsForm: FormArray;
 
   public imageAttachment = this.questionFormService.imageAttachment;
   public audioAttachment = this.questionFormService.audioAttachment;
@@ -48,21 +56,17 @@ export class QuestionSelectFormComponent implements OnInit {
   public saveOptions = false;
   public attachmentsResetSubject$ = new Subject<void>();
 
-  private get checkValidAnswer(): boolean {
-    return this.optionsForm.value.filter(options => options.valid).length === 1;
-  }
-
   public selectQuestionForm: FormGroup = new FormGroup({
     question: new FormControl(null)
   });
 
   // In case of using display_type again: uncomment all occurences of selectForm.controls.display for this component
   public selectForm: FormGroup = new FormGroup({
+    learning_objective: new FormControl(null),
     question_type: new FormControl('SELECT'),
     title: new FormControl(''),
     value: new FormControl('', [Validators.required]),
     order: new FormControl('', [Validators.required]),
-    difficulty: new FormControl('', [Validators.required]),
     // display: new FormControl('Grid', [Validators.required]),
     on_popup: new FormControl(false),
     options: new FormArray([
@@ -74,15 +78,24 @@ export class QuestionSelectFormComponent implements OnInit {
     ]),
   });
 
+  private optionsAtt = [];
+  private optionsForm: FormArray;
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private formBuilder: FormBuilder,
+    private assessmentService: AssessmentService,
     public questionFormService: QuestionFormService,
+    public languageService: LanguageService,
     private alertService: AlertService,
     private translateService: TranslateService,
     public dialogRef: MatDialogRef<QuestionSelectFormComponent>
   ) {
     this.attachmentsResetSubject$.subscribe(() => this.questionFormService.resetAttachments());
+  }
+
+  private get checkValidAnswer(): boolean {
+    return this.optionsForm.value.filter(options => options.valid).length === 1;
   }
 
   async ngOnInit(): Promise<void> {
@@ -95,17 +108,23 @@ export class QuestionSelectFormComponent implements OnInit {
       this.selQuestionOrder = this.data.selQuestionOrder + 1;
       this.selectForm.controls.order.setValidators([Validators.required, Validators.min(this.selQuestionOrder)]);
     }
+    if (this.data?.subject) { this.subject = this.data.subject; }
+    if (this.data?.grade) { this.grade = this.data.grade; }
+    if (this.data?.subtopicId) {
+      this.subtopicId = this.data.subtopicId;
+      this.getLearningObjectives();
+    }
     this.optionsForm = this.selectForm.get('options') as FormArray;
     if (this.question) {
       this.setForm(this.question);
     } else {
       this.selectQuestion = true;
       this.selectForm.setValue({
+        learning_objective: null,
         question_type: 'SELECT',
         value: '',
         title: '',
         order: this.order, //  display: 'Grid',
-        difficulty: '',
         on_popup: false,
         options: [{ title: '', valid: false, value: '' }],
       });
@@ -121,80 +140,6 @@ export class QuestionSelectFormComponent implements OnInit {
 
     await this.questionFormService.resetAttachments().then(() => this.attachmentsResetSubject$.next());
   }
-
-  private createSelectQuestion(data?: any): void {
-    this.questionFormService.createQuestion(data).then(res => {
-      if (this.optionsAttachment) {
-        this.saveOptionsAttachments(res);
-      }
-      this.questionFormService.emitMessage(this.question === undefined, this.toClone);
-      if (!this.toClone) {
-        this.resetForm();
-      }
-    });
-  }
-
-  private editQuestion(data: any): void {
-    this.questionFormService.editQuestion(data)
-      .then((res) => {
-        if (this.optionsAttachment) {
-          this.saveOptionsAttachments(res);
-        }
-        this.questionFormService.emitMessage(false, false);
-      });
-  }
-
-  private saveOptionsAttachments(question): void {
-    this.optionsAtt.forEach((o, index) => {
-      if (o.attachments.length) {
-        o.attachments.forEach((att) => {
-          this.questionFormService.saveAttachments(
-            this.assessmentId.toString(),
-            att.file,
-            att.attachment_type,
-            {
-              name: 'select_option',
-              value: question.options[index].id,
-            },
-            false
-          );
-        });
-      }
-    });
-  }
-
-  private resetForm(): void {
-    this.selectForm.setValue({
-      question_type: 'SELECT',
-      value: '',
-      title: '',
-      order: this.order, // display: 'Grid',
-      difficulty: '',
-      on_popup: false,
-      options: [{ title: '', valid: false, value: '' }],
-    });
-
-    this.options = [];
-    this.optionsAtt = [{ attachments: [] }];
-
-    this.saveOptions = false;
-    this.selectForm.controls.order.setValue(this.order + 1, [Validators.required]);
-    // this.selectForm.controls.display.setValue('Grid', [Validators.required]);
-    this.selectForm.controls.question_type.setValue('SELECT');
-
-    this.attachmentsResetSubject$.next();
-
-    const optionsForm = this.selectForm.get('options') as FormArray;
-    optionsForm.clear();
-    this.addOptions();
-  }
-
-  // TODO: later changes it in backend
-  // In case of using display_type again: uncomment following method
-
-  // private displayTypeFormat(str: string): string {
-  //   return str.charAt(0).toUpperCase() + str.substring(1).toLowerCase();
-  // }
 
   public addOptions(): void {
     this.optionsAtt.push({ attachments: [] });
@@ -304,6 +249,16 @@ export class QuestionSelectFormComponent implements OnInit {
     this.setForm(question);
   }
 
+  public checkValid(checkedIndex: number, eventChecked): void {
+    if (eventChecked) {
+      this.optionsForm.value.forEach((op, i) => {
+        if (op.valid && i !== checkedIndex) {
+          op.valid = false;
+        }
+      });
+    }
+  }
+
   private async setForm(question: any): Promise<void> {
     this.selectQuestion = false;
     this.question = question;
@@ -346,11 +301,11 @@ export class QuestionSelectFormComponent implements OnInit {
 
     const q = this.question;
     this.selectForm.setValue({
+        learning_objective: q.learning_objective?.code ?? null,
         question_type: 'SELECT',
         value: q.value,
         title: q.title,
         order: this.toClone ? this.order : this.question.order,
-        difficulty: question.difficulty,
         // display: q.display_type ? this.displayTypeFormat(q.display_type) : 'Grid',
         on_popup: this.question.on_popup,
         options,
@@ -363,13 +318,100 @@ export class QuestionSelectFormComponent implements OnInit {
     }
   }
 
-  public checkValid(checkedIndex: number, eventChecked): void {
-    if (eventChecked) {
-      this.optionsForm.value.forEach((op, i) => {
-        if (op.valid && i !== checkedIndex) {
-          op.valid = false;
-        }
-      });
-    }
+  private getLearningObjectives(): void {
+    const filteringParams = {
+      grade: this.grade,
+      subject: this.subject,
+      subtopic: this.subtopicId,
+    };
+    this.assessmentService.getLearningObjectives(filteringParams).subscribe((objectives: LearningObjective[]) => {
+      this.learningObjectives = objectives;
+
+      if (this.learningObjectives.length) {
+        this.selectForm.controls.learning_objective.setValidators([Validators.required]);
+      } else {
+        this.selectForm.controls.learning_objective.clearValidators();
+      }
+      this.selectForm.controls.learning_objective.updateValueAndValidity();
+
+      const currentObjective = this.selectForm.controls.learning_objective.value;
+      if (currentObjective && !this.learningObjectives.find(el => el.code === currentObjective)) {
+        this.selectForm.controls.learning_objective.setValue(null);
+      }
+    });
   }
+
+  private createSelectQuestion(data?: any): void {
+    this.questionFormService.createQuestion(data).then(res => {
+      if (this.optionsAttachment) {
+        this.saveOptionsAttachments(res);
+      }
+      this.questionFormService.emitMessage(this.question === undefined, this.toClone);
+      if (!this.toClone) {
+        this.resetForm();
+      }
+    });
+  }
+
+  private editQuestion(data: any): void {
+    this.questionFormService.editQuestion(data)
+      .then((res) => {
+        if (this.optionsAttachment) {
+          this.saveOptionsAttachments(res);
+        }
+        this.questionFormService.emitMessage(false, false);
+      });
+  }
+
+  private saveOptionsAttachments(question): void {
+    this.optionsAtt.forEach((o, index) => {
+      if (o.attachments.length) {
+        o.attachments.forEach((att) => {
+          this.questionFormService.saveAttachments(
+            this.assessmentId.toString(),
+            att.file,
+            att.attachment_type,
+            {
+              name: 'select_option',
+              value: question.options[index].id,
+            },
+            false
+          );
+        });
+      }
+    });
+  }
+
+  private resetForm(): void {
+    this.selectForm.setValue({
+      learning_objective: null,
+      question_type: 'SELECT',
+      value: '',
+      title: '',
+      order: this.order, // display: 'Grid',
+      on_popup: false,
+      options: [{ title: '', valid: false, value: '' }],
+    });
+
+    this.options = [];
+    this.optionsAtt = [{ attachments: [] }];
+
+    this.saveOptions = false;
+    this.selectForm.controls.order.setValue(this.order + 1, [Validators.required]);
+    // this.selectForm.controls.display.setValue('Grid', [Validators.required]);
+    this.selectForm.controls.question_type.setValue('SELECT');
+
+    this.attachmentsResetSubject$.next();
+
+    const optionsForm = this.selectForm.get('options') as FormArray;
+    optionsForm.clear();
+    this.addOptions();
+  }
+
+  // TODO: later changes it in backend
+  // In case of using display_type again: uncomment following method
+
+  // private displayTypeFormat(str: string): string {
+  //   return str.charAt(0).toUpperCase() + str.substring(1).toLowerCase();
+  // }
 }
