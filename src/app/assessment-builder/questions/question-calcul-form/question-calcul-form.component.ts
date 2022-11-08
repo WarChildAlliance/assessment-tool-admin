@@ -158,7 +158,16 @@ export class QuestionCalculFormComponent implements OnInit {
   private createCalculQuestion(data: any): void {
     this.questionFormService.createQuestion(data).then(() => {
       this.questionFormService.emitMessage(this.question === undefined, this.toClone);
+      if (!this.toClone) {
+        this.resetForm();
+      }
     });
+  }
+
+  private resetForm(): void {
+    this.calculForm.controls['order'.toString()].setValue(this.order + 1);
+    this.calculForm.controls.question_type.setValue('CALCUL');
+    this.attachmentsResetSubject$.next();
   }
 
   private editCalculQuestion(data: any): void {
@@ -171,6 +180,7 @@ export class QuestionCalculFormComponent implements OnInit {
     this.selectQuestion = false;
     this.question = question;
     this.calculForm.setValue({
+      learning_objective: question.learning_objective?.code ?? null,
       question_type: 'CALCUL',
       title: question.title,
       order: this.toClone ? this.order : question.order,
