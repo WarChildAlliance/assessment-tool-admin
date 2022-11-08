@@ -49,11 +49,11 @@
             "scripts": []
           },
           "configurations": {
-            "production": {
+            "uat": {
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "with": "src/environments/environment.uat.ts"
                 }
               ],
               "optimization": true,
@@ -76,11 +76,11 @@
                 }
               ]
             },
-            "azure": {
+            "production": {
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.azure.ts"
+                  "with": "src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
