@@ -25,6 +25,11 @@ export interface QuestionNumberLine extends Question {
   shuffle: boolean;
 }
 
+export interface QuestionCalcul extends Question {
+  first_value: number;
+  second_value: number;
+  operator: string;
+}
 export interface QuestionDomino extends Question {
   expected_value: number;
   options: DominoOption[];
@@ -81,7 +86,8 @@ enum QuestionTypeEnum {
   Sort = 'SORT',
   NumberLine = 'NUMBER_LINE',
   DragAndDrop = 'DRAG_AND_DROP',
-  Domino = 'DOMINO'
+  Domino = 'DOMINO',
+  Calcul = 'CALCUL',
 }
 
 export interface Hint {
