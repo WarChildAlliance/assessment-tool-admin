@@ -13,6 +13,7 @@ import { QuestionSelFormComponent } from '../questions/question-sel-form/questio
 import { TopicFormDialogComponent } from '../topic-form-dialog/topic-form-dialog.component';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { QuestionDominoFormComponent } from '../questions/question-domino-form/question-domino-form.component';
+import { QuestionCalculFormComponent } from '../questions/question-calcul-form/question-calcul-form.component';
 import { Assessment } from 'src/app/core/models/assessment.model';
 
 @Component({
@@ -60,6 +61,11 @@ export class TopicDetailsComponent implements OnInit {
       type: 'DOMINO',
       text: 'Domino',
       component: QuestionDominoFormComponent
+    },
+    {
+      type: 'CALCUL',
+      text: 'Calcul',
+      component: QuestionCalculFormComponent
     },
 ];
 

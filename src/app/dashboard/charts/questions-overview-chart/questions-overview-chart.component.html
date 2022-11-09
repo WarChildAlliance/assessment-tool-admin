@@ -51,6 +51,10 @@
         <ng-container *ngIf="questionDetails.question_type === 'DOMINO'">
           <app-question-domino [question]="questionDetails" [index]="index" [evaluated]="true"></app-question-domino>
         </ng-container>
+
+        <ng-container *ngIf="questionDetails.question_type === 'CALCUL'">
+          <app-question-calcul [question]="questionDetails" [index]="index" [evaluated]="true"></app-question-calcul>
+        </ng-container>
       </div>
     </ng-container>
     <ng-template #selectionNoData>
