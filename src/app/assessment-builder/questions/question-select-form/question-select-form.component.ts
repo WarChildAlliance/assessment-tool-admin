@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild, Inject } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { QuestionFormService } from 'src/app/core/services/question-form.service';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -89,7 +89,7 @@ export class QuestionSelectFormComponent implements OnInit {
     public languageService: LanguageService,
     private alertService: AlertService,
     private translateService: TranslateService,
-    private dialogRef: MatDialog
+    public dialogRef: MatDialogRef<QuestionSelectFormComponent>
   ) {
     this.attachmentsResetSubject$.subscribe(() => this.questionFormService.resetAttachments());
   }
@@ -167,7 +167,7 @@ export class QuestionSelectFormComponent implements OnInit {
       } else {
         this.createSelectQuestion(data);
       }
-      this.dialogRef.closeAll();
+      this.dialogRef.close(true);
     } else {
       this.alertService.error(
         this.translateService.instant('assessmentBuilder.questions.select.optionsValidAnswerErrors')
