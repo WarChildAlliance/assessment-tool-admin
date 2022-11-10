@@ -8,6 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "start-pwa": "ng build && http-server -p 8080 -c-1 dist/admin-dashboard",
     "build:azure": "ng build --configuration=azure"
   },
   "private": true,
@@ -22,6 +23,7 @@
     "@angular/platform-browser": "14",
     "@angular/platform-browser-dynamic": "14",
     "@angular/router": "14",
+    "@angular/service-worker": "14.2.8",
     "@ngx-translate/core": "^13.0.0",
     "@ngx-translate/http-loader": "^6.0.0",
     "chart.js": "^2.9.3",
