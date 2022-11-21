@@ -14,6 +14,7 @@
     "choose": "اختر {{type}}",
     "clone": "استنساخ",
     "confirm": "يتأكد",
+    "continue": "يكمل",
     "country": "الدولة",
     "create": "خلق",
     "createNew": "إنشاء {{type}} جديد",
@@ -31,6 +32,7 @@
     "groupsOverview": "نظرة عامة على المجموعات",
     "language": "اللغة",
     "lastLogin": "آخر تسجيل دخول",
+    "left": "اليسار",
     "logout": "تسجيل خروج",
     "logoutPrompt": "هل تريد حقًا تسجيل الخروج؟",
     "name": "اسم",
@@ -45,6 +47,7 @@
     "questionsNumber": "عدد الأسئلة",
     "questionType": "نوع السؤال",
     "type": "يكتب",
+    "right": "الصحيح",
     "save": "يحفظ",
     "selected": "تم الاختيار",
     "selQuestion": "سؤال التعلم الاجتماعي والعاطفي",
@@ -120,6 +123,9 @@
     "order": "ترتيب",
     "praise": "مديح",
     "questions": {
+      "titlePlaceholder": "سؤال مع تعليمات للطالب",
+      "typeStep": "حدد نوع السؤال",
+      "mediaStep": "أضف وسائط إضافية",
       "areaSelector": {
         "area": "منطقة",
         "areaName": "اسم المنطقة",
@@ -138,7 +144,35 @@
         "item": "العنصر",
         "noCorrectArea": "العناصر القابلة للسحب بدون المنطقة الصحيحة:",
         "noCorrectDragOption": "لا يوجد خيار سحب صحيح لهذه المنطقة",
-        "questionAttachments": "مرفقات السؤال"
+        "questionAttachments": "مرفقات السؤال",
+        "formTitle": "السحب والإفلات",
+        "sideValue": "{{side}} عدد العناصر في",
+        "itemsSide": "{{side}} العناصر الموجودة في",
+        "itemType": "نوع العنصر",
+        "selectType": "حدد نوع العنصر",
+        "type": {
+          "normal": "طبيعي",
+          "customized": "حسب الطلب"
+        },
+        "itemShapes": {
+          "pencil": "قلم",
+          "fruit": "فاكهة",
+          "ballon": "بالون",
+          "button": "زر",
+          "socks": "جوارب",
+          "paint": "رسم"
+        },
+        "colors": {
+          "red": "أحمر",
+          "lightGreen": "اخضر فاتح",
+          "darkGreen": "أخضر غامق",
+          "yellow": "الأصفر",
+          "orange": "البرتقالي",
+          "lightBlue": "أزرق فاتح",
+          "darkBlue": "أزرق غامق",
+          "pink": "لون القرنفل",
+          "purple": "أرجواني"
+        }
       },
       "errorAudio": "لا يمكن تشغيل الصوت في متصفحك",
       "imageAttachment": "مرفق الصورة",
@@ -172,17 +206,16 @@
         "aLotLikeMe": "كثيرا مثلي"
       },
       "domino": {
-        "leftSideValue": "قيمة الجانب الأيسر",
-        "rightSideValue": "قيمة الجانب الأيمن"
+        "sideValue": "قيمة جانبية {{side}}" 
       },
       "calcul": {
         "firstNumber": "الرقم الأول",
         "secondNumber": "الرقم الثاني",
         "operator": "المشغل أو العامل",
-        "addition": "إضافة",
-        "substraction": "الطرح",
-        "division": "قسم",
-        "multiplication": "عمليه الضرب",
+        "addition": "( + ) إضافة",
+        "substraction": "( - ) الطرح",
+        "division": "( ÷ ) قسم",
+        "multiplication": "( × ) عمليه الضرب",
         "calculError": "يجب أن تكون نتيجة الحساب عددًا صحيحًا موجبًا."
       }
     },

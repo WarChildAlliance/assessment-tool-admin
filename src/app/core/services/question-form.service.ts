@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from 'src/environments/environment';
 import { AlertService } from './alert.service';
@@ -8,6 +9,42 @@ import { AssessmentService } from './assessment.service';
   providedIn: 'root'
 })
 export class QuestionFormService {
+  public validateCalcul = (form: FormGroup): any => {
+    const firstValue = form.get('first_value');
+    const secondValue = form.get('second_value');
+    const operator = form.get('operator');
+
+    if (!firstValue.value || !secondValue.value) {
+      return;
+    }
+    if (operator.value) {
+      let answer = 0;
+      if (operator.value === 'ADDITION') {
+        answer = firstValue.value + secondValue.value;
+      } else if (operator.value === 'SUBTRACTION') {
+        answer = firstValue.value - secondValue.value;
+      } else if (operator.value === 'DIVISION') {
+        answer = firstValue.value / secondValue.value;
+      } else {
+        answer = firstValue.value * secondValue.value;
+      }
+
+      if (!Number.isInteger(answer) || answer < 0) {
+        firstValue.setErrors({ invalidCalcul: true });
+        secondValue.setErrors({ invalidCalcul: true });
+      } else {
+        firstValue.setErrors(null);
+        secondValue.setErrors(null);
+      }
+    }
+  };
+
+  public operatorTypes = [
+    { id: 'ADDITION', path: 'addition' },
+    { id: 'SUBTRACTION', path: 'substraction' },
+    { id: 'DIVISION', path: 'division' },
+    { id: 'MULTIPLICATION', path: 'multiplication' }
+  ];
 
   private fileAttachment: File;
   private alertMessage = '';

@@ -78,11 +78,11 @@
                     [formGroupName]="i">
                     <div class="sides">
                         <mat-form-field appearance="outline" class="form-group" color="accent">
-                            <mat-label>{{ "assessmentBuilder.questions.domino.leftSideValue" | translate }}</mat-label>
+                            <mat-label>{{ "assessmentBuilder.questions.domino.sideValue" | translate: { side: ("general.left" | translate) } }}</mat-label>
                             <input type="number" matInput formControlName="left_side_value" min="1" max="6">
                         </mat-form-field>
                         <mat-form-field appearance="outline" class="form-group" color="accent">
-                            <mat-label>{{ "assessmentBuilder.questions.domino.rightSideValue" | translate }}</mat-label>
+                            <mat-label>{{ "assessmentBuilder.questions.domino.sideValue" | translate: { side: ("general.right" | translate) } }}</mat-label>
                             <input type="number" matInput formControlName="right_side_value" min="1" max="6">
                         </mat-form-field>
                     </div>
