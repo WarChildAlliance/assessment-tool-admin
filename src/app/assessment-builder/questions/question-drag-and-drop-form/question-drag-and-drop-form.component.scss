@@ -6,71 +6,27 @@
     margin: 10px !important;
 }
 
-.validate-drag {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 10px;
-}
-
 .container {
     overflow: auto;
     max-height: 85vh;
     min-width: 85vh;
+
+    h1 {
+        font-weight: 500;
+        font-size: 23px;
+    }
 
     .drag-and-drop-form {
         display: flex;
         justify-content: center;
         align-items: center;
         flex-wrap: wrap;
-    }
-
-    .drop-areas-button {
-        display: flex;
-        margin-top: 20px;
-        margin-bottom: 10px;
         flex-direction: column;
-        align-items: center;
-        .notifier {
-            margin-top: 1em;
-            color: red;
+
+        .title {
+            min-width: -webkit-fill-available;
+            margin: 10px 10px 0px 10px !important;
         }
-    }
-}
-
-.area-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-
-    p {
-        font-weight: bold;
-    }
-
-    .left {
-        .area {
-            display: flex;
-            flex-direction: column;
-
-            .items-container {
-                display: flex;
-                align-items: center;
-            }
-        }
-
-        .without-area {
-            flex-direction: column;
-            padding-top: 1em;
-
-            .list {
-                display: flex;
-                align-items: center;
-            }
-        }
-    }
-
-    .items-selectors {
-        display: flex;
-        flex-direction: column;
     }
 }
 
