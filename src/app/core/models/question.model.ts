@@ -30,6 +30,16 @@ export interface QuestionCalcul extends Question {
   second_value: number;
   operator: string;
 }
+
+export interface QuestionCustomizedDragAndDrop extends Question {
+  first_value: number;
+  first_color: string;
+  second_value: number;
+  second_color: string;
+  operator: string;
+  item: string;
+}
+
 export interface QuestionDomino extends Question {
   expected_value: number;
   options: DominoOption[];
@@ -86,6 +96,7 @@ enum QuestionTypeEnum {
   Sort = 'SORT',
   NumberLine = 'NUMBER_LINE',
   DragAndDrop = 'DRAG_AND_DROP',
+  CustomizedDragAndDrop = 'CUSTOMIZED_DRAG_AND_DROP',
   Domino = 'DOMINO',
   Calcul = 'CALCUL',
 }

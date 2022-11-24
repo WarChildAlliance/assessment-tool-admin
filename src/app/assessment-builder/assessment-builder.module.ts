@@ -39,6 +39,9 @@ import { MatStepperModule } from '@angular/material/stepper';
 import {
   NormalDragAndDropFormComponent
 } from './questions/question-drag-and-drop-form/normal-drag-and-drop-form/normal-drag-and-drop-form.component';
+import {
+  CustomizedDragAndDropFormComponent
+} from './questions/question-drag-and-drop-form/customized-drag-and-drop-form/customized-drag-and-drop-form.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +61,8 @@ import {
     QuestionSelFormComponent,
     QuestionDominoFormComponent,
     QuestionCalculFormComponent,
-    NormalDragAndDropFormComponent
+    NormalDragAndDropFormComponent,
+    CustomizedDragAndDropFormComponent
   ],
   imports: [
     CommonModule,

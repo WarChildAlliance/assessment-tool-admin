@@ -148,6 +148,8 @@
         "noCorrectArea": "Draggable items without correct area:",
         "noCorrectDragOption": "No correct drag option for this area",
         "questionAttachments": "Add Question attachments",
+        "numberLimitError": "The number of items must be between 1 and 10.",
+        "answerLimitError": "The answer must be between 1 and 10.",
         "formTitle": "Drag & Drop",
         "sideValue": "Number of items on the {{side}}",
         "itemsSide": "Items on the {{side}}",
@@ -157,22 +159,39 @@
           "normal": "Normal",
           "customized": "Customized"
         },
-        "itemShapes": {
+        "shapes": {
           "pencil": "Pencil",
           "fruit": "Fruit",
           "ballon": "Ballon",
           "button": "Button",
           "socks": "Socks",
-          "paint": "Paint"
+          "paint": "Paint",
+          "bug": "Bug"
         },
+        "bug": "Bug",
+        "bugs": {
+          "caterpillar": "Caterpillar",
+          "ant": "Ant",
+          "butterfly": "Butterfly",
+          "centipede": "Centipede",
+          "fly": "Fly"
+        } ,
+        "fruit": "Fruit",
+        "fruits": {
+          "apple": "Apple",
+          "banana": "Banana",
+          "watermelon": "Watermelon",
+          "orange": "Orange"
+        },
+        "color": "Color",
         "colors": {
           "red": "Red",
-          "lightGreen": "Light Green",
-          "darkGreen": "Dark Green",
+          "light_green": "Light Green",
+          "dark_green": "Dark Green",
           "yellow": "Yellow",
           "orange": "Orange",
-          "lightBlue": "Light Blue",
-          "darkBlue": "Dark Blue",
+          "light_blue": "Light Blue",
+          "dark_blue": "Dark Blue",
           "pink": "Pink",
           "purple": "Purple"
         }

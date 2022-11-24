@@ -49,15 +49,8 @@ export class QuestionDragAndDropFormComponent implements OnInit {
 
   public questionType: string;
   public dragAndDropType = ['NORMAL', 'CUSTOMIZED'];
-  public itemShapes = [
-    { type: 'pencil', color: true },
-    { type: 'fruit', color: false },
-    { type: 'ballon', color: true },
-    { type: 'button', color: true },
-    { type: 'socks', color: true },
-    { type: 'paint', color: true }
-  ];
 
+  // To dynamically change the steps orientation layout based on the viewport
   public stepperOrientation: Observable<StepperOrientation>;
 
   public createDraggableOptions$ = new BehaviorSubject<any>(null);
@@ -158,6 +151,12 @@ export class QuestionDragAndDropFormComponent implements OnInit {
       title: new FormControl(this.dragAndDropForm.controls.title.value),
       learning_objective: new FormControl(this.dragAndDropForm.controls.learning_objective.value),
       order: new FormControl(this.dragAndDropForm.controls.order.value),
+      first_value: new FormControl(this.questionDetails.controls.first_value.value),
+      first_style: new FormControl(this.questionDetails.controls.first_style.value),
+      second_value: new FormControl(this.questionDetails.controls.second_value.value),
+      second_style: new FormControl(this.questionDetails.controls.second_style.value),
+      operator: new FormControl(this.questionDetails.controls.operator.value),
+      shape: new FormControl(this.questionDetails.controls.shape.value)
     });
   }
 

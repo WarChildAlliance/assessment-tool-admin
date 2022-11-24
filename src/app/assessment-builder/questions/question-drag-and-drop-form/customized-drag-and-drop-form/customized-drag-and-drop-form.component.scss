@@ -1,0 +1,38 @@
+h3 {
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 32px;
+    letter-spacing: 0.25px;
+    margin: 5px 0 5px;
+}
+
+.type {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .mat-form-field {
+        min-width: 45%;
+    }
+}
+
+.items {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .left,
+    .right {
+        display: flex;
+        flex-direction: column;
+        min-width: 45%;
+
+        .mat-form-field {
+            min-width: 45%;
+        }
+    }
+}
+
+.notifier {
+    color: red;
+}

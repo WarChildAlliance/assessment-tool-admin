@@ -17,7 +17,6 @@ export class NormalDragAndDropFormComponent implements OnInit {
 
   @Input() assessmentId: string;
   @Input() topicId: string;
-  @Input() order: any;
   @Input() question: any;
   @Input() toClone: boolean;
   @Input() createDraggableOptions$: Observable<any>;
