@@ -1,0 +1,17 @@
+<div class="table-actions">
+    <div class="search-bar-container">
+        <mat-form-field class="table-actions__searchbox" appearance="fill" color="accent" *ngIf="!hideSearchBar">
+            <mat-label>{{ "shared.table.search" | translate }}</mat-label>
+            <input matInput (keyup)="applySearchFilter($event)" [placeholder]="'shared.table.hintSearchColumn' | translate">
+            <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+    </div>
+
+    <ng-container *ngFor="let filter of filtersData">
+        <app-table-filter
+            [filter]="filter"
+            [filterType]="filter.displayType ?? 'chip'"
+            (filtersChangedEvent)="filtersChangedEvent.emit($event)"
+        ></app-table-filter>
+    </ng-container>
+</div>

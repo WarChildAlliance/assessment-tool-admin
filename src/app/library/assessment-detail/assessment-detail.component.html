@@ -1,6 +1,6 @@
 <div class="main-board">
   <div class="main-board__top-container">
-    <app-previous-button path="/assessments"></app-previous-button>
+    <app-previous-button path="/library"></app-previous-button>
     <h1 *ngIf="currentAssessment">{{ currentAssessment.title }} ({{ topicsDataSource.data.length }})
       <span>{{ "general.grade" | translate }} {{ currentAssessment.grade }}, {{currentAssessment.subject }},
         {{ currentAssessment.language_name }}</span>

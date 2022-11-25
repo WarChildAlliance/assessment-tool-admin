@@ -283,7 +283,11 @@ export class TopicAccessesBuilderComponent implements OnInit {
 
   private loadStudentsList(): void {
     this.userService.getStudentsList().subscribe(studentsList => {
-      this.studentsList = studentsList;
+      this.studentsList = studentsList.filter(student =>
+        student.country_name === this.assessment.country_name &&
+        student.language_name === this.assessment.language_name &&
+        student.assessments_count === 0
+      );
       this.generateStudentsForm();
     });
   }

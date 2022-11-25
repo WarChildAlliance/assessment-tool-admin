@@ -1,87 +1,238 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { TableFilter } from '../core/models/table-filter.model';
+import { Assessment } from '../core/models/assessment.model';
 import { AssessmentService } from '../core/services/assessment.service';
-import { Subtopic } from '../core/models/question.model';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
+import { TableColumn } from '../core/models/table-column.model';
+import { TableFilter } from '../core/models/table-filter.model';
+import { TopicAccessesBuilderComponent } from '../shared/topic-accesses-builder/topic-accesses-builder.component';
+import { Topic } from '../core/models/topic.models';
 
 @Component({
   selector: 'app-library',
   templateUrl: './library.component.html',
   styleUrls: ['./library.component.scss']
 })
-export class LibraryComponent implements OnInit {
+export class LibraryComponent implements OnInit, AfterViewInit {
 
+  @ViewChild('createAssessmentDialog') createAssessmentDialog: TemplateRef<any>;
+
+  public displayedColumns: TableColumn[] = [
+    { key: 'icon', name: ' ', type: 'image' },
+    { key: 'title', name: 'assessments.title' },
+    { key: 'expand', name: ' ', type: 'expand' },
+    { key: 'invites', name: 'assessments.invites' },
+    { key: 'plays', name: 'assessments.plays' },
+    { key: 'score', name: 'assessments.score', type: 'score' },
+    { key: 'button', name: ' ', type: 'button', label: 'library.assign', icon: 'event_started' }
+  ];
+
+  public assessmentsDataSource: MatTableDataSource<Assessment> = new MatTableDataSource([]);
   public tableFilters: TableFilter[];
-  public subjectsList = ['MATH', 'LITERACY'];
-  public subtopicsList: Subtopic[] = [];
-  public topicsList: any[] = [];
+  public isAssessmentPrivate = false;
 
-  public assessments: any;
+  public createNewAssessmentForm: FormGroup = new FormGroup({
+    title: new FormControl('', [Validators.required]),
+    grade: new FormControl('', [Validators.required]),
+    subject: new FormControl('', [Validators.required]),
+    language: new FormControl('', [Validators.required]),
+    country: new FormControl('', [Validators.required]),
+    private: new FormControl('')
+  });
 
-  private filtersData = { subject: '', topic: '', subtopic: '' };
+  private tableFiltersData = { grade: '', subject: '', question_types: [], subtopic: '', learning_objectives: [] };
 
   constructor(
     private assessmentService: AssessmentService,
-    private translateService: TranslateService
-  ) { }
+    private router: Router,
+    private translateService: TranslateService,
+    private dialog: MatDialog
+  ) {
+    this.displayedColumns.forEach(col => {
+      this.translateService.stream(col.name).subscribe(translated => col.name = translated);
+    });
+  }
 
   ngOnInit(): void {
-    this.getAssessments();
-    this.getTopics();
-    this.getSubtopics();
-  }
-
-  public applySelectFilters(key: string | number, value: any): void {
-    this.filtersData[key] = value;
-    this.getAssessments(this.filtersData);
-  }
-
-  private getAssessments(params?: object): void {
-    this.assessmentService.getAssessmentsList(params).subscribe(assessmentsList => {
-      this.assessments = assessmentsList.filter(assessment => !assessment.archived);
-    });
-  }
-
-  private getTopics(): void {
-    this.assessmentService.getAssessmentTopicsList().subscribe(topics => {
-      this.topicsList = topics.filter(
-        topic => this.assessments.find(assessment => assessment.id === topic.assessment_id)
-      );
-      this.setUpFilters();
-    });
-  }
-
-  private getSubtopics(): void {
-    this.assessmentService.getSubtopics().subscribe(subtopics => {
-      this.subtopicsList = subtopics;
-      this.setUpFilters();
-    });
-  }
-
-  private setUpFilters(): void {
     this.tableFilters = [
+      {
+        key: 'grade',
+        name: 'general.grade',
+        type: 'select',
+        displayType: 'chip',
+        options: ['1','2','3'].map(grade => ({ key: `Grade ${grade}`, value: grade  }))
+      },
       {
         key: 'subject',
         name: 'general.subject',
         type: 'select',
-        options: [{ key: '', value: 'All' }].concat(this.subjectsList.map(item => ({ key: item, value: item })))
+        displayType: 'chip',
+        options: ['Math', 'Literacy'].map(subject => ({ key: subject, value: subject.toUpperCase() }))
       },
       {
-        key: 'topic',
-        name: 'general.topics',
-        type: 'select',
-        options: [{ key: '', value: 'All' }].concat(this.topicsList.map(topic => ({ key: topic.id, value: topic.name })))
-      },
-      {
-        key: 'subtopic',
-        name: 'assessmentBuilder.subtopic',
-        type: 'select',
-        options: [{ key: '', value: 'All' }].concat(this.subtopicsList.map(
-          subtopic => ({ key: subtopic.id.toString(), value: subtopic.name })))
+        key: 'question_types',
+        name: 'library.questionType',
+        type: 'multipleSelect',
+        displayType: 'dropdown',
+        options: [
+          { key: 'Social and Emotional Learning', value: 'SEL' },
+          { key: 'Select', value: 'SELECT' },
+          { key: 'Input', value: 'INPUT' },
+          { key: 'Number line', value: 'NUMBER_LINE' },
+          { key: 'Drag and Drop', value: 'DRAG_AND_DROP' },
+          { key: 'Domino', value: 'DOMINO' },
+          { key: 'Calcul', value: 'CALCUL' }
+        ]
       },
     ];
     this.tableFilters.forEach(filter => {
       this.translateService.stream(filter.name).subscribe(translated => filter.name = translated);
+    });
+    this.assessmentService.getAssessmentsList().subscribe((assessmentsList) => {
+      assessmentsList = assessmentsList.filter((assessment) => assessment.archived !== true);
+      this.assessmentsDataSource = new MatTableDataSource(assessmentsList);
+    });
+  }
+
+  ngAfterViewInit() {
+    const arrows = document.querySelectorAll<HTMLElement>(
+      '.mat-sort-header-arrow'
+    );
+    arrows.forEach((arrow) => (arrow.style.color = '#fff'));
+  }
+
+  public async onTableFiltersChange(data: { key: string | number; value: any }): Promise<void> {
+    this.tableFiltersData[data.key] = !!data.value ? data.value: '';
+    this.assessmentService.getAssessmentsList(this.tableFiltersData).subscribe((assessmentsList) => {
+      assessmentsList = assessmentsList.filter((assessment) => assessment.archived !== true);
+      assessmentsList.map(assessment => {
+        this.assessmentService.getAssessmentTopics(assessment.id).subscribe((topics: Topic[]) => assessment.topics = topics);
+      });
+      this.assessmentsDataSource = new MatTableDataSource(assessmentsList);
+    });
+    if (this.tableFiltersData?.subject === 'MATH' || data.key === 'subject') {
+      if (data.key === 'subject' || data.key === 'learning_objectives') {
+        this.updateSubtopicsFilter(this.tableFiltersData.subject, this.tableFiltersData.learning_objectives);
+      }
+      if (data.key === 'grade' || data.key === 'subject') {
+        await this.updateNumberRangesFilter(
+          this.tableFiltersData.grade,
+          this.tableFiltersData.subject
+        );
+      }
+      if (data.key === 'grade' || data.key === 'subject' || data.key === 'subtopic') {
+        this.updateLearningObjectivesFilter(
+          this.tableFiltersData.grade,
+          this.tableFiltersData.subject,
+          this.tableFiltersData.subtopic
+        );
+      }
+    }
+  }
+
+  public onOpenDetails(id: string): void {
+    this.router.navigate([`/library/${id}`]);
+  }
+
+  public togglePrivate(event: { checked: boolean }): void {
+    this.isAssessmentPrivate = event.checked;
+  }
+
+  public deleteSelection(): void {
+    console.log('DEL');
+  }
+
+  public downloadData(): void {
+    console.log('Work In Progress');
+  }
+
+  public openAssignTopicDialog(assessment: Assessment): void {
+    this.dialog.open(TopicAccessesBuilderComponent, {
+      data: { assessment }
+    });
+  }
+
+  private updateSubtopicsFilter(subject: string, learningObjectives: string[]): void {
+    const subtopicFilterIndex = this.tableFilters.findIndex(filter => filter.key === 'subtopic');
+    if (!subject) {
+      if (subtopicFilterIndex !== -1) {
+        this.tableFilters.splice(subtopicFilterIndex, 1);
+      }
+      return;
+    }
+    this.assessmentService.getSubtopics(subject, learningObjectives).subscribe((subtopics) => {
+      if (subtopics?.length > 0) {
+        this.tableFilters.splice(
+          subtopicFilterIndex === -1 ? 3 : subtopicFilterIndex,
+          subtopicFilterIndex === -1 ? 0 : 1,
+          {
+            key: 'subtopic',
+            name: 'assessmentBuilder.subtopic',
+            type: 'select',
+            displayType: 'chip',
+            options: subtopics.map(subtopic => ({ key: subtopic.name, value: subtopic.id }))
+          }
+        );
+        return;
+      }
+      this.tableFilters = this.tableFilters.filter(filter => filter.key !== 'subtopic');
+    });
+  }
+
+  private async updateNumberRangesFilter(grade: string, subject: string): Promise<void> {
+    const numberRangesFilterIndex = this.tableFilters.findIndex(filter => filter.key === 'number_range');
+    if (!grade || subject !== 'MATH') {
+      if (numberRangesFilterIndex !== -1) {
+        this.tableFilters.splice(numberRangesFilterIndex, 1);
+      }
+      return;
+    }
+    const numberRanges = await this.assessmentService.getNumberRanges(grade).toPromise();
+    if (numberRanges?.length > 1) {
+      this.tableFilters.splice(
+        numberRangesFilterIndex === -1 ? 4 : numberRangesFilterIndex,
+        numberRangesFilterIndex === -1 ? 0 : 1,
+        {
+          key: 'number_range',
+          name: 'library.numberRanges',
+          type: 'select',
+          displayType: 'chip',
+          options: numberRanges.map(numberRange => ({ key: numberRange.handle, value: numberRange.id }))
+        }
+      );
+      return;
+    }
+    this.tableFilters = this.tableFilters.filter(filter => filter.key !== 'number_range');
+  }
+
+  private updateLearningObjectivesFilter(grade: string, subject: string, subtopic: string): void {
+    const loFilterIndex = this.tableFilters.findIndex(filter => filter.key === 'learning_objectives');
+    if (subject !== 'MATH') {
+      if (loFilterIndex !== -1) {
+        this.tableFilters.splice(loFilterIndex, 1);
+      }
+      return;
+    }
+    const filteringParams = { grade, subject, subtopic };
+    this.assessmentService.getLearningObjectives(filteringParams).subscribe((learningObjectives) => {
+      if (learningObjectives?.length > 0) {
+        this.tableFilters.splice(
+          loFilterIndex === -1 ? this.tableFilters.length : loFilterIndex,
+          loFilterIndex === -1 ? 0 : 1,
+          {
+            key: 'learning_objectives',
+            name: 'assessmentBuilder.learningObjective',
+            type: 'multipleSelect',
+            displayType: 'dropdown',
+            options: learningObjectives.map(lo => ({ key: lo.name_eng, value: lo.code }))
+          }
+        );
+        return;
+      }
+      this.tableFilters = this.tableFilters.filter(filter => filter.key !== 'learning_objective');
     });
   }
 }

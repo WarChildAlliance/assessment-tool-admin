@@ -1,0 +1,21 @@
+.score-ring {
+  display: flex;
+  position: relative;
+  width: 33px;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  border: 2px solid;
+
+  span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 13px;
+  }
+  p {
+    margin: auto;
+    font-size: large;
+  }
+}

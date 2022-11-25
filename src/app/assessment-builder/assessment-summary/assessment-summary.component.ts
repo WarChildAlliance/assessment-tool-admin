@@ -13,7 +13,7 @@ import { Topic } from 'src/app/core/models/topic.models';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { ConfirmModalComponent } from 'src/app/shared/confirm-modal/confirm-modal.component';
-import { TopicAccessesBuilderComponent } from 'src/app/students/topic-accesses-builder/topic-accesses-builder.component';
+import { TopicAccessesBuilderComponent } from 'src/app/shared/topic-accesses-builder/topic-accesses-builder.component';
 import { environment } from 'src/environments/environment';
 import { AssessmentFormDialogComponent } from '../assessment-form-dialog/assessment-form-dialog.component';
 import { TopicFormDialogComponent } from '../topic-form-dialog/topic-form-dialog.component';

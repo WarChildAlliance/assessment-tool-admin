@@ -64,7 +64,7 @@ export class AssessmentDetailComponent implements OnInit {
   }
 
   public onOpenDetails(id: string): void {
-    this.router.navigate([`/assessments/${this.currentAssessment.id}/topics/${id}`]);
+    this.router.navigate([`/library/${this.currentAssessment.id}/topics/${id}`]);
   }
 
   public downloadData(): void {

@@ -176,15 +176,25 @@ export class AssessmentService {
     return this.http.get<any>(`${environment.API_URL}/assessments/${assessmentId}/topics/${topicId}/questions/${questionId}/draggable/`);
   }
 
-  public getSubtopics(subject: string = null): Observable<any> {
-    const queryParams = subject ? `?subject=${subject}` : '';
-    return this.http.get<any>(`${environment.API_URL}/assessments/subtopics/${queryParams}`);
+  public getSubtopics(subject: string = null, learningObjectives: string[] = null): Observable<any> {
+    const filteringParams = {
+      subject,
+      learning_objectives: learningObjectives
+    };
+    const initialUrl = `${environment.API_URL}/assessments/subtopics/`;
+    const finalUrl = filteringParams ? this.utilitiesService.urlBuilder(initialUrl, filteringParams) : initialUrl;
+    return this.http.get<any>(finalUrl);
   }
 
   public getLearningObjectives(filteringParams?: object): Observable<any> {
     const initialUrl = `${environment.API_URL}/assessments/learning-objectives/`;
     const finalUrl = filteringParams ? this.utilitiesService.urlBuilder(initialUrl, filteringParams) : initialUrl;
     return this.http.get<any>(finalUrl);
+  }
+
+  public getNumberRanges(grade: string = null): Observable<any> {
+    const queryParams = grade ? `?grade=${grade}` : '';
+    return this.http.get<any>(`${environment.API_URL}/assessments/number-ranges/${queryParams}`);
   }
 
   private openPDF(data: HttpResponse<Blob>): void {
