@@ -1,0 +1,26 @@
+.chip-list {
+  display: flex;
+
+  input[type="radio"] {
+    display: none;
+  }
+  label {
+    display: block;
+    cursor: pointer;
+    min-width: 40px;
+    text-align: center;
+    color: #4AA0DB;
+    border: 1px solid #4AA0DB;
+    background-color: #fff;
+    border-radius: 16px;
+    padding: 5px 10px;
+    user-select: none;
+  }
+  input[type="radio"]:checked + label {
+    background-color: #4AA0DB;
+    color: #fff;
+  }
+  .chip-option + .chip-option {
+    margin-left: 8px;
+  }
+}

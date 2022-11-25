@@ -1,27 +1,48 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LibraryComponent } from './library.component';
-import { LibraryRoutingModule } from './library-routing.module';
-import { CustomButtonModule } from '../shared/button/button.module';
-import { SharedModule } from '../shared/shared.module';
-import { MatCardModule } from '@angular/material/card';
-import { AssessmentBuilderModule } from '../assessment-builder/assessment-builder.module';
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
+import { MatCardModule } from '@angular/material/card';
+import { SharedModule } from '../shared/shared.module';
+import { AssessmentDetailComponent } from './assessment-detail/assessment-detail.component';
+import { LibraryRoutingModule } from './library-routing.module';
+import { LibraryComponent } from './library.component';
+import { QuestionDetailComponent } from './question-detail/question-detail.component';
+import { QuestionsListComponent } from './questions-list/questions-list.component';
+import { PreviousButtonModule } from '../shared/previous-button/previous-button.module';
 
 @NgModule({
   declarations: [
-    LibraryComponent
+    LibraryComponent,
+    AssessmentDetailComponent,
+    QuestionsListComponent,
+    QuestionDetailComponent
   ],
   imports: [
     CommonModule,
     LibraryRoutingModule,
-    CustomButtonModule,
-    SharedModule,
-    MatCardModule,
-    AssessmentBuilderModule,
+    MatTableModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatDialogModule,
     MatFormFieldModule,
     MatSelectModule,
+    MatInputModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatSortModule,
+    MatIconModule,
+    SharedModule,
+    MatCardModule,
+    PreviousButtonModule
   ]
 })
 export class LibraryModule { }

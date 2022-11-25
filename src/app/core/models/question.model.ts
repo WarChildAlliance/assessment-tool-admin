@@ -4,7 +4,8 @@ export interface Question {
   title: string;
   order: number;
   question_type: QuestionTypeEnum;
-  learning_objective: LearningObjective | number;
+  learning_objective: LearningObjective;
+  number_range?: NumberRange | number;
   hint: Hint;
   attachments: [];
 }
@@ -81,6 +82,7 @@ export interface SortOption {
 }
 
 enum QuestionTypeEnum {
+  Sel = 'SEL',
   Input = 'INPUT',
   Select = 'SELECT',
   Sort = 'SORT',
@@ -104,7 +106,14 @@ export interface Subtopic {
 export interface LearningObjective {
   code: string;
   grade: number;
-  subtopic: Subtopic | number;
+  subtopic: Subtopic;
   name_eng: string;
   name_ara: string;
+}
+
+export interface NumberRange {
+  id: number;
+  min: number;
+  max: number;
+  handle: string;
 }
