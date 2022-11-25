@@ -11,7 +11,7 @@ export class UtilitiesService {
 
     // This loop removes empty properties from the object
     for (const param of Object.keys(filteringParams)) {
-      if (!filteringParams[param]) {
+      if (!filteringParams[param] || (Array.isArray(filteringParams[param]) && filteringParams[param].length === 0)) {
         delete filteringParams[param];
       }
     }

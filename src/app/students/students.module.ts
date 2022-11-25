@@ -21,7 +21,6 @@ import { AnswersModule } from '../answers/answers.module';
 import { StudentDetailComponent } from './student-detail/student-detail.component';
 import { StudentsRoutingModule } from './students-routing.module';
 import { StudentsComponent } from './students.component';
-import { TopicAccessesBuilderComponent } from './topic-accesses-builder/topic-accesses-builder.component';
 import { StudentDialogComponent } from './student-dialog/student-dialog.component';
 import { CustomButtonModule } from '../shared/button/button.module';
 import { TopicAccessModalComponent } from './topic-access-modal/topic-access-modal.component';
@@ -33,7 +32,6 @@ import { GroupDialogModule } from '../groups/group-dialog/group-dialog.module';
   declarations: [
     StudentsComponent,
     StudentDetailComponent,
-    TopicAccessesBuilderComponent,
     StudentDialogComponent,
     TopicAccessModalComponent
   ],

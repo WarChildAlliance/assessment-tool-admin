@@ -19,3 +19,65 @@
     margin-left: -20px;
   }
 }
+
+.library {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+
+  .mat-toolbar {
+    background: transparent;
+    color: rgba(0, 0, 0, 0.87);
+    max-width: 30em;
+  }
+
+  .mat-toolbar-single-row {
+    white-space: normal !important;
+  }
+
+  div {
+    right: 65%;
+    position: relative;
+    font-size: 1.2em;
+    bottom: 20%;
+    ;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  span {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .first-line {
+    white-space: pre-wrap;
+  }
+
+  .title {
+    font-weight: bold;
+  }
+
+  .assessment-title {
+    background-color: #FF5722;
+    color: #FFFFFF;
+  }
+}
+
+@media (min-width: 1600px) {
+  .library {
+    div {
+      right: 60vh;
+    }
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1100px) {
+  .library {
+    div {
+      right: 19%;
+    }
+  }
+}

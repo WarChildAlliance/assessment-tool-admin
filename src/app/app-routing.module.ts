@@ -43,17 +43,6 @@ const routes: Routes = [
     },
   },
   {
-    path: 'assessments',
-    loadChildren: () => import('./assessments/assessments.module')
-      .then(m => m.AssessmentsModule),
-    canLoad: [AuthGuard],
-    data: {
-      breadcrumb: [
-        { label: 'general.assessmentsOverview', url: '' }
-      ]
-    },
-  },
-  {
     path: 'library',
     loadChildren: () => import('./library/library.module')
       .then(m => m.LibraryModule),

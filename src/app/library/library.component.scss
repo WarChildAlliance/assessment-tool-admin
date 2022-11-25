@@ -1,9 +1,16 @@
-.filters {
-    margin-top: 24px;
-    display: flex;
-    flex-wrap: wrap;
-
-    mat-form-field {
-        padding-right: 10px;
+::ng-deep table {
+  .mat-column-button {
+    app-custom-button {
+      position: absolute;
+      right: 1em;
+      top: 50%;
+      transform: translateY(-50%);
     }
+  }
+  .mat-column-title {
+    width: 40%;
+  }
+  .mat-column-icon {
+    width: 10%;
+  }
 }

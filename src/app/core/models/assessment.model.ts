@@ -1,3 +1,4 @@
+import { Topic } from './topic.models';
 
 export interface Assessment {
   id: number;
@@ -7,6 +8,7 @@ export interface Assessment {
   language_name?: string;
   country_name?: string;
   private: boolean;
+  topics?: Topic[];
 }
 
 enum Subjects {

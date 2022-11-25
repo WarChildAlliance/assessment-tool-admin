@@ -1,24 +1,8 @@
-<div class="table-actions">
-  <ng-container *ngFor="let filter of filtersData">
-      <mat-form-field appearance="fill" color="accent">
-        <mat-label>{{ filter.name }}</mat-label>
-        <mat-select (selectionChange)="applySelectFilters(filter.key, $event.value)" [multiple]="filter.type === 'multipleSelect'">
-          <mat-option *ngFor="let option of filter.options" [value]="option.key">{{option.value}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-  </ng-container>
+<app-table-actions [filtersData]="filtersData" (searchChangedEvent)="applySearchFilter($event)" (filtersChangedEvent)="filtersChangedEvent.emit($event)"></app-table-actions>
 
-  <mat-form-field class="table-actions__searchbox" appearance="fill" color="accent" *ngIf="!hideSearchBar">
-    <mat-label>{{ "shared.table.search" | translate }}</mat-label>
-    <input matInput (keyup)="applyFilter($event)" [placeholder]="'shared.table.hintSearchColumn' | translate">
-    <mat-icon matSuffix>search</mat-icon>
-  </mat-form-field>
-</div>
-
-
-<table mat-table matSort [dataSource]="tableData">
+<table mat-table matSort [dataSource]="tableData" multiTemplateDataRows>
   <ng-container *ngIf="isSelectable" matColumnDef="select">
-    <th mat-header-cell *matHeaderCellDef>
+    <th mat-header-cell *matHeaderCellDef [style]="'background-color:' + accentColor">
       <mat-checkbox color="accent" (change)="masterToggle()" [checked]=" !selection.isEmpty() && isAllSelected()"
         [indeterminate]="!selection.isEmpty() && !isAllSelected()">
       </mat-checkbox>
@@ -30,9 +14,21 @@
     </td>
   </ng-container>
 
+  <ng-container matColumnDef="expandedDetail" stickyEnd>
+    <td mat-cell *matCellDef="let row" [attr.colspan]="displayedColumns.length">
+      <div class="row-expanded-detail" [@detailExpand]="expandedRowData === row ? 'expanded' : 'collapsed'"
+        [style.visibility]="expandedRowData === row ? 'visible' : 'hidden'"
+      >
+        <app-table-row-details [data]="row" [config]="pageConfig"></app-table-row-details>
+      </div>
+    </td>
+  </ng-container>
+
   <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column.key" [ngSwitch]="column.type">
 
-    <th mat-header-cell mat-sort-header *matHeaderCellDef>{{ column.name }}</th>
+    <th mat-header-cell mat-sort-header [disabled]="isHeaderSortingDisabled(column.name)" *matHeaderCellDef [style]="'background-color:' + accentColor">
+      {{ column.name }}
+    </th>
 
     <ng-container *ngSwitchCase="'date'">
       <td mat-cell *matCellDef="let element">{{ element[column.key] | date:'mediumDate' }}</td>
@@ -50,6 +46,14 @@
 
     <ng-container *ngSwitchCase="'icon'">
       <td mat-cell *matCellDef="let element"><mat-icon matListIcon>{{ element[column.key] }}</mat-icon></td>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'expand'">
+      <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation(); toggleExpandRow(element)">
+        <mat-icon matListIcon [class.flip-vertically]="element === expandedRowData">
+          arrow_drop_down
+        </mat-icon>
+      </td>
     </ng-container>
 
     <ng-container *ngSwitchCase="'circle'">
@@ -75,21 +79,44 @@
     </ng-container>
 
     <ng-container *ngSwitchCase="'action'">
-      <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation(); customAction(element);"><mat-icon [style.color]="'darkgray'">{{ column.key }}</mat-icon></td>
+      <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation(); customAction(element);"><mat-icon [style.color]="'#666666'">{{ column.key }}</mat-icon></td>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'button'">
+      <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation(); buttonClicked(element);">
+        <app-custom-button [icon]="column.icon" category="tertiary" variant="primary">
+          {{ column.label | translate }}
+          </app-custom-button>
+      </td>
     </ng-container>
 
     <ng-container *ngSwitchCase="'boolean'">
       <td mat-cell *matCellDef="let element">{{ element[column.key] ? ("general.yes" | translate) :("general.no" | translate) }}</td>
     </ng-container>
 
+    <ng-container *ngSwitchCase="'score'">
+      <td mat-cell *matCellDef="let element">
+        <app-score-indicator [score]="element[column.key]" [borderColor]="accentColor"></app-score-indicator>
+      </td>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'image'">
+      <td mat-cell *matCellDef="let element" class="image">
+          <img [src]="getSource(element[column.key])" alt="image">
+      </td>
+    </ng-container>
+
     <ng-container *ngSwitchDefault>
-      <td  mat-cell *matCellDef="let element">{{ element[column.key] }}</td>
+      <td  mat-cell *matCellDef="let element">{{ element[column.key]}}</td>
     </ng-container>
 
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="getDisplayedColumnsKeys()"></tr>
-  <tr mat-row *matRowDef="let row; columns: getDisplayedColumnsKeys();" (click)="openElementDetails(row.id)"></tr>
+
+  <tr mat-row *matRowDef="let row; columns: getDisplayedColumnsKeys();" (click)="openElementDetails(row.id)" class="element-row"></tr>
+
+  <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
 
   <tr class="mat-row" *matNoDataRow>
     <td class="mat-cell" [attr.colspan]="getDisplayedColumnsKeys().length">
@@ -99,3 +126,7 @@
 </table>
 
 <mat-paginator [pageSizeOptions]="[20, 50, 100]" showFirstLastButtons></mat-paginator>
+
+<ng-template #expandedRow>
+
+</ng-template>

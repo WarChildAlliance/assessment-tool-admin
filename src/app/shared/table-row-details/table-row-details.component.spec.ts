@@ -1,0 +1,23 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { TableRowDetailsComponent } from './table-row-details.component';
+
+describe('TableRowDetailsComponent', () => {
+  let component: TableRowDetailsComponent;
+  let fixture: ComponentFixture<TableRowDetailsComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [ TableRowDetailsComponent ]
+    })
+    .compileComponents();
+
+    fixture = TestBed.createComponent(TableRowDetailsComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});
