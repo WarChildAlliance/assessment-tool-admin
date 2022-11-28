@@ -121,7 +121,8 @@ export class TopicDetailsComponent implements OnInit {
   }
 
   public openQuestionDialog(question?: any, clone?: boolean, type?: string): void {
-    const questionType = question ? question.question_type : type;
+    let questionType = question ? question.question_type : type;
+    if (questionType === 'CUSTOMIZED_DRAG_AND_DROP') { questionType = 'DRAG_AND_DROP'; }
     // Use question array to open the dialog corresponding to the question type, using the component attribute
     const questionDialog = this.dialog.open(this.questionsArray.find(x => (questionType === x.type)).component, {
       data: {

@@ -29,6 +29,7 @@ import { QuestionSelComponent } from './questions/question-sel/question-sel.comp
 import { QuestionDominoComponent } from './questions/question-domino/question-domino.component';
 import { QuestionCalculComponent } from './questions/question-calcul/question-calcul.component';
 import { ShapesComponent } from './questions/shapes/shapes.component';
+import { CustomizedDragAndDropComponent } from './questions/customized-drag-and-drop/customized-drag-and-drop.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { ShapesComponent } from './questions/shapes/shapes.component';
     QuestionSelComponent,
     QuestionDominoComponent,
     QuestionCalculComponent,
-    ShapesComponent
+    ShapesComponent,
+    CustomizedDragAndDropComponent
   ],
   imports: [
     CommonModule,
@@ -78,6 +80,7 @@ import { ShapesComponent } from './questions/shapes/shapes.component';
     QuestionSelComponent,
     QuestionDominoComponent,
     QuestionCalculComponent,
+    CustomizedDragAndDropComponent,
     ShapesComponent
   ]
 })

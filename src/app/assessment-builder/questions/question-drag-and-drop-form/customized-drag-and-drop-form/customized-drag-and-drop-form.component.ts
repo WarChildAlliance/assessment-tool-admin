@@ -85,6 +85,7 @@ export class CustomizedDragAndDropFormComponent implements OnInit {
 
   private async setForm(question: any): Promise<void> {
     this.question = question;
+    this.onSetShape(this.question.shape);
 
     this.customizedDragAndDropForm.setValue({
       first_value: this.question.first_value,
@@ -94,6 +95,8 @@ export class CustomizedDragAndDropFormComponent implements OnInit {
       operator: this.question.operator,
       shape: this.question.shape,
     });
+
+    this.operator = this.operatorSymbols.find(operator => operator.id === question.operator).symbol;
 
     if (this.toClone) {
       this.customizedDragAndDropForm.markAsDirty();

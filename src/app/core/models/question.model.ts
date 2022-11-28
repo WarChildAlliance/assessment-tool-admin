@@ -33,11 +33,11 @@ export interface QuestionCalcul extends Question {
 
 export interface QuestionCustomizedDragAndDrop extends Question {
   first_value: number;
-  first_color: string;
+  first_style: string;
   second_value: number;
-  second_color: string;
+  second_style: string;
   operator: string;
-  item: string;
+  shape: string;
 }
 
 export interface QuestionDomino extends Question {

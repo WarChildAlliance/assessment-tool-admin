@@ -9,6 +9,7 @@ export class ShapesComponent implements OnInit, OnChanges {
   @Input() shape: string;
   @Input() style: string;
   @Input() quantity: number;
+  @Input() svgSize: string;
 
   // Default color is red
   public color = '#CC0E2F';

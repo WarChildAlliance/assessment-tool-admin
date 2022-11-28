@@ -8,7 +8,7 @@
     </ng-container>
 
     <ng-container *ngIf="shape === 'BALLON'">
-        <svg class="svg" *ngFor="let item of [].constructor(quantity)" width="75" height="101" viewBox="0 0 75 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg class="svg" [style.width]="svgSize ?? '28px'" [style.height]="svgSize ?? '28px'" *ngFor="let item of [].constructor(quantity)" width="75" height="101" viewBox="0 0 75 101" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M36.5 100.5V93.5" stroke="black" stroke-linecap="round"/>
             <path d="M74.5 45C74.5 69.6659 57.8531 89.5 37.5 89.5C17.1469 89.5 0.5 69.6659 0.5 45C0.5 20.3341 17.1469 0.5 37.5 0.5C57.8531 0.5 74.5 20.3341 74.5 45Z" [style.fill]="color" stroke="black"/>
             <path d="M32 93.5L33 89.5H41L41.5 94.5L36.5 93.5H32Z" [style.fill]="color" stroke="black" stroke-linecap="round"/>
@@ -17,7 +17,7 @@
     </ng-container>
 
     <ng-container *ngIf="shape === 'BUTTON'">
-        <svg class="svg" *ngFor="let item of [].constructor(quantity)" width="92" height="92" viewBox="0 0 92 92" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg class="svg" [style.width]="svgSize ?? '28px'" [style.height]="svgSize ?? '28px'" *ngFor="let item of [].constructor(quantity)" width="92" height="92" viewBox="0 0 92 92" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="46" cy="46" r="45" [style.fill]="color"/>
             <circle cx="46" cy="46" r="45" [style.stroke]="color" stroke-width="2"/>
             <circle cx="46" cy="46" r="45" stroke="black" stroke-opacity="0.2" stroke-width="2"/>
@@ -33,7 +33,7 @@
     </ng-container>
 
     <ng-container *ngIf="shape === 'SOCKS'">
-        <svg class="svg" *ngFor="let item of [].constructor(quantity)" width="118" height="121" viewBox="0 0 118 121" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg class="svg" [style.width]="svgSize ?? '28px'" [style.height]="svgSize ?? '28px'" *ngFor="let item of [].constructor(quantity)" width="118" height="121" viewBox="0 0 118 121" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M31.5019 0.016595C49.3519 1.0866 52.4519 0.096595 55.6919 0.016595C58.9419 -0.063405 58.7919 1.40659 58.7919 3.1166L59.2319 43.4966C59.2319 44.1566 59.3619 44.9066 59.5719 45.7166L55.6569 58.2066L51.7419 70.6966C50.4319 71.3466 49.7619 71.7866 49.0719 72.3066C47.9719 73.1266 26.2719 93.2666 23.2519 96.2066C20.2319 99.1366 9.94192 103.287 3.20192 95.1066C-2.56808 88.1066 0.751921 79.0266 3.20192 76.1566C5.65192 73.2766 27.3719 49.5966 28.7419 45.3866C29.8719 41.9266 28.7119 12.4266 28.4119 3.19659C28.3519 1.45659 28.1619 -0.183405 31.5019 0.016595Z" [style.fill]="color"/>
             <path d="M63.632 59.8672C64.092 53.4472 60.112 48.6272 59.332 44.6172C56.192 47.0872 49.962 50.9472 45.982 52.9572C44.622 53.6472 44.192 55.3472 44.722 56.7872C46.082 60.5072 48.882 66.8072 51.242 70.9472C51.242 70.9472 52.792 69.9772 55.352 69.0772C57.912 68.1672 63.212 65.7772 63.632 59.8672Z" [style.fill]="color"/>
             <path d="M63.6321 59.8672C64.0921 53.4472 60.1121 48.6272 59.3321 44.6172C56.1921 47.0872 49.9621 50.9472 45.9821 52.9572C44.6221 53.6472 44.1921 55.3472 44.7221 56.7872C46.0821 60.5072 48.8821 66.8072 51.2421 70.9472C51.2421 70.9472 52.7921 69.9772 55.3521 69.0772C57.9121 68.1672 63.2121 65.7772 63.6321 59.8672ZM1.36214 79.3172C-0.337857 83.4072 -1.13786 89.8372 3.20214 95.0972C8.47214 101.487 15.9021 100.357 20.3421 98.1572C20.3421 98.1572 20.0321 92.7872 14.5321 86.2872C9.04214 79.7772 1.36214 79.3172 1.36214 79.3172Z" fill="black" fill-opacity="0.2"/>
@@ -46,7 +46,7 @@
     </ng-container>
     
     <ng-container *ngIf="shape === 'PAINT'">
-        <svg class="svg" *ngFor="let item of [].constructor(quantity)" width="120" height="124" viewBox="0 0 120 124" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg class="svg" [style.width]="svgSize ?? '28px'" [style.height]="svgSize ?? '28px'" *ngFor="let item of [].constructor(quantity)" width="120" height="124" viewBox="0 0 120 124" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M17.0196 21.6319C9.51957 28.1319 12.4265 40.154 27.5196 50.6319C20.1775 50.2546 16.2364 50.387 9.51957 53.1319C2.77528 57.9739 0.775185 61.3782 1.01957 70.1319C2.06845 84.9473 8.5 90.5 24 90.5C33.4804 88.5 38.5196 87.1319 42.5196 89.1319C46.5196 91.1319 42.5196 101.5 46.5196 116.132C49.2636 122.527 52.2963 123.78 59.5196 123.132C71.7272 119.761 75.5682 115.1 78.0196 103.132C80.6019 81.3552 79.5 79.5 83.0196 75.1319C84.5 72 110 79 116.02 70.1319C116.02 70.1319 118.301 64.0376 118.52 56.6319C118.738 49.2262 113.02 38.1319 87.5196 38.1319C83.8257 9.54467 79.8017 -0.283751 66.5196 1.1319C54.3346 2.77013 49.4951 8.62444 44.5196 28.1319C33.8343 16.0532 21 16 17.0196 21.6319Z" [style.fill]="color" stroke="black" stroke-linecap="round"/>
             <path d="M69.6215 14.1882C69.6215 14.1882 64.1215 10.1882 65.1215 7.68817C66.1215 5.18817 75.6216 10.1918 76.6215 11.6882C77.6215 13.1845 77.7925 23.9336 76.6215 26.1882C75.4506 28.4428 74.55 28.91 72.6215 28.6882L69.6215 14.1882Z" fill="white" fill-opacity="0.4"/>
             <path d="M32.4143 27.5391C32.4143 27.5391 18.7129 27.9022 17.4141 25.5436C16.1152 23.185 26.123 23.882 27.9141 24.0577C29.7052 24.2335 39.003 26.5445 40.0037 28.8796C41.0044 31.2148 41.3981 30.6837 40.0037 32.0341L32.4143 27.5391Z" fill="white" fill-opacity="0.4"/>
@@ -57,7 +57,7 @@
     </ng-container>
 
     <ng-container *ngIf="(shape === 'FRUIT' || shape === 'BUG') && style">
-        <img *ngFor="let item of [].constructor(quantity)" 
+        <img *ngFor="let item of [].constructor(quantity)" [style.width]="svgSize ?? '28px'" [style.height]="svgSize ?? '28px'"
             [src]="'assets/shapes/' + shape.toLowerCase() + '/' + style.toLowerCase() + '.svg'">
     </ng-container>
 </div>
