@@ -28,6 +28,7 @@ import { CustomButtonModule } from './button/button.module';
 import { QuestionSelComponent } from './questions/question-sel/question-sel.component';
 import { QuestionDominoComponent } from './questions/question-domino/question-domino.component';
 import { QuestionCalculComponent } from './questions/question-calcul/question-calcul.component';
+import { ShapesComponent } from './questions/shapes/shapes.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { QuestionCalculComponent } from './questions/question-calcul/question-ca
     HorizontalScrollArrowsComponent,
     QuestionSelComponent,
     QuestionDominoComponent,
-    QuestionCalculComponent
+    QuestionCalculComponent,
+    ShapesComponent
   ],
   imports: [
     CommonModule,
@@ -75,7 +77,8 @@ import { QuestionCalculComponent } from './questions/question-calcul/question-ca
     HorizontalScrollArrowsComponent,
     QuestionSelComponent,
     QuestionDominoComponent,
-    QuestionCalculComponent
+    QuestionCalculComponent,
+    ShapesComponent
   ]
 })
 

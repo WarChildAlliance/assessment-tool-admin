@@ -36,13 +36,21 @@ export class CustomizedDragAndDropFormComponent implements OnInit {
   public stylesList = this.styles.color;
 
   public customizedDragAndDropForm: FormGroup = new FormGroup({
-    first_value: new FormControl('', [Validators.required, Validators.min(1), Validators.max(10)]),
-    first_style: new FormControl('', Validators.required),
-    second_value: new FormControl('', [Validators.required, Validators.min(1), Validators.max(10)]),
-    second_style: new FormControl('', Validators.required),
-    operator: new FormControl('', [Validators.required]),
-    shape: new FormControl('', [Validators.required]),
+    first_value: new FormControl(null, [Validators.required, Validators.min(1), Validators.max(10)]),
+    first_style: new FormControl(null, Validators.required),
+    second_value: new FormControl(null, [Validators.required, Validators.min(1), Validators.max(10)]),
+    second_style: new FormControl(null, Validators.required),
+    operator: new FormControl(null, [Validators.required]),
+    shape: new FormControl(null, [Validators.required]),
   }, this.questionFormService.validateCalcul);
+
+  public operator: string;
+  private operatorSymbols = [
+    { id: 'ADDITION', symbol: '+' },
+    { id: 'SUBTRACTION', symbol: '-' },
+    { id: 'DIVISION', symbol: '÷' },
+    { id: 'MULTIPLICATION', symbol: '×' }
+  ];
 
   constructor(
     public questionFormService: QuestionFormService,
@@ -52,6 +60,10 @@ export class CustomizedDragAndDropFormComponent implements OnInit {
     if (this.question) {
       this.setForm(this.question);
     }
+
+    this.customizedDragAndDropForm.controls.operator.valueChanges.subscribe(value => {
+      this.operator = this.operatorSymbols.find(operator => operator.id === value).symbol;
+    });
   }
 
   public onSetShape(selected: any): void {

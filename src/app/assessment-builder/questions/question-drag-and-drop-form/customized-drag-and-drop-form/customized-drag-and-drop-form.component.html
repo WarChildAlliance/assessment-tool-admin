@@ -38,6 +38,14 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
+
+                <app-shapes [shape]="customizedDragAndDropForm.controls.shape.value"
+                [style]="customizedDragAndDropForm.controls.first_style.value"
+                [quantity]="customizedDragAndDropForm.controls.first_value.value < 10 ? customizedDragAndDropForm.controls.first_value.value : 10">
+                </app-shapes>
+            </div>
+            <div class="operator">
+                <p> {{operator}} </p>
             </div>
             <div class="right">
                 <h3>{{ "assessmentBuilder.questions.dragAndDrop.itemsSide" | translate: { side: ("general.right" |
@@ -55,6 +63,11 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
+
+                <app-shapes [shape]="customizedDragAndDropForm.controls.shape.value"
+                    [style]="customizedDragAndDropForm.controls.second_style.value"
+                    [quantity]="customizedDragAndDropForm.controls.second_value.value < 10 ? customizedDragAndDropForm.controls.second_value.value : 10">
+                </app-shapes>
             </div>
         </div>
     </div>

@@ -56,14 +56,14 @@
             <mat-step [editable]="questionDetails ? questionDetails?.invalid : true">
                 <ng-template matStepLabel>{{ "assessmentBuilder.questions.typeStep" | translate }}</ng-template>
 
-                <ng-container *ngIf="this.dragAndDropForm.controls.type.value === 'NORMAL'">
+                <ng-container *ngIf="dragAndDropForm.controls.type.value === 'NORMAL'">
                     <app-normal-drag-and-drop-form  [assessmentId]="assessmentId" [topicId]="topicId"
                         [question]="question" [toClone]="toClone" [createDraggableOptions$]="createDraggableOptions$"
                         (dragAndDropDetailsForm)="questionDetails = $event" (changedBackgroundImage)="changedBackgroundImage = $event">
                     </app-normal-drag-and-drop-form>
                 </ng-container>
 
-                <ng-container *ngIf="this.dragAndDropForm.controls.type.value === 'CUSTOMIZED'">
+                <ng-container *ngIf="dragAndDropForm.controls.type.value === 'CUSTOMIZED'">
                     <app-customized-drag-and-drop-form [question]="question" [toClone]="toClone"
                         (dragAndDropDetailsForm)="questionDetails = $event">
                     </app-customized-drag-and-drop-form>
