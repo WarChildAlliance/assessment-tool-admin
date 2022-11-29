@@ -26,4 +26,17 @@ $assessment-tool-palette: (
     green : rgb(187, 226, 190),
     grey : rgb(194, 194, 194),
     light-grey: rgb(223, 223, 223)
-)
+);
+
+.img-attachment {
+    width: 15vw;
+    @media (max-width: 780px) {
+        width: 20vw;
+    }
+    img {
+        height: auto;
+        width: 100%;
+        display:block;
+        margin:auto;           
+    }
+}
