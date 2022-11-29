@@ -21,6 +21,26 @@ interface DialogData {
   subtopicId?: number;
 }
 
+const validateUniqueAnswer = (form: FormGroup): any => {
+  const dominoes = form.get('options');
+  const answer = form.get('expected_value');
+
+  if (answer.value) {
+    const countCorrect = dominoes.value.filter(domino => {
+      if (domino.left_side_value && domino.right_side_value) {
+        return domino.left_side_value + domino.right_side_value === answer.value;
+      }
+      return false;
+    }).length;
+
+    if (countCorrect > 1) {
+      dominoes.setErrors({ multipleAnswers: true });
+    } else {
+      dominoes.setErrors(null);
+    }
+  }
+};
+
 @Component({
   selector: 'app-question-domino-form',
   templateUrl: './question-domino-form.component.html',
@@ -58,7 +78,7 @@ export class QuestionDominoFormComponent implements OnInit {
     expected_value: new FormControl('', [Validators.required]),
     on_popup: new FormControl(false),
     options: new FormArray([]),
-  });
+  }, validateUniqueAnswer);
 
   private optionsForm: FormArray;
 

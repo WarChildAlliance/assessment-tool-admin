@@ -173,7 +173,8 @@
       },
       "domino": {
         "leftSideValue": "قيمة الجانب الأيسر",
-        "rightSideValue": "قيمة الجانب الأيمن"
+        "rightSideValue": "قيمة الجانب الأيمن",
+        "multipleAnswersErrors": "يجب أن يكون هناك دومينو واحد مع الإجابة الصحيحة"
       },
       "calcul": {
         "firstNumber": "الرقم الأول",
