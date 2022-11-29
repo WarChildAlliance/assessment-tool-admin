@@ -8,14 +8,18 @@
 
 <div class="container" *ngIf="question">
     <div class="shapes">
-        <app-shapes [shape]="question.shape" [style]="question.first_style" [quantity]="question.first_value" [svgSize]="'50px'"></app-shapes>
-        <app-shapes [shape]="question.shape" [style]="question.second_style" [quantity]="question.second_value" [svgSize]="'50px'"></app-shapes>
+        <app-shapes [shape]="question.shape" [style]="question.first_style" [quantity]="question.first_value"
+            [svgSize]="'50px'" (colorEvent)="firstColor = $event">
+        </app-shapes>
+        <app-shapes [shape]="question.shape" [style]="question.second_style" [quantity]="question.second_value"
+            [svgSize]="'50px'" (colorEvent)="secondColor = $event">
+        </app-shapes>
     </div>    
 
     <div class="calc">
-        <p> {{question.first_value}} </p>
+        <p [style.border-color]="firstColor"> {{question.first_value}} </p>
         <p> {{operatorSymbol}} </p>
-        <p> {{question.second_value}} </p>
+        <p [style.border-color]="secondColor"> {{question.second_value}} </p>
         <p> = </p>
         <p> {{answerNumber}} </p>
     </div>

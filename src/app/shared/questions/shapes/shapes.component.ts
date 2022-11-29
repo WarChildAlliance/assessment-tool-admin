@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-shapes',
@@ -10,6 +10,8 @@ export class ShapesComponent implements OnInit, OnChanges {
   @Input() style: string;
   @Input() quantity: number;
   @Input() svgSize: string;
+
+  @Output() colorEvent = new EventEmitter<string>();
 
   // Default color is red
   public color = '#CC0E2F';
@@ -29,7 +31,9 @@ export class ShapesComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.style && changes.style.previousValue !== changes.style.currentValue) {
-      this.color = this.colors.find(color => color.name === changes.style.currentValue)?.hex ?? '#CC0E2F';
+      const findColor = this.colors.find(color => color.name === changes.style.currentValue)?.hex;
+      this.color = findColor ?? '#CC0E2F';
+      this.colorEvent.emit(findColor);
     }
   }
 

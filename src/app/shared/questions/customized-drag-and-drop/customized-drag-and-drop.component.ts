@@ -14,6 +14,8 @@ export class CustomizedDragAndDropComponent implements OnInit {
 
   public operatorSymbol: string;
   public answerNumber: number;
+  public firstColor: string;
+  public secondColor: string;
   public imageAttachment = null;
   public audioAttachment = null;
 

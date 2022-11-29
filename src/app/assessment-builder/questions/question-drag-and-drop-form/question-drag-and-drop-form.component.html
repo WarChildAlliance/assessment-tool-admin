@@ -23,7 +23,7 @@
                 <mat-label>{{ "general.title" | translate }}</mat-label>
                 <input matInput required type="text" formControlName="title" [placeholder]="'assessmentBuilder.questions.titlePlaceholder' | translate">
             </mat-form-field>
-            <span>
+            <div>
                 <mat-form-field *ngIf="learningObjectives?.length" appearance="outline" color="accent">
                     <mat-label>{{ "assessmentBuilder.learningObjective" | translate }}</mat-label>
                     <mat-select #learningObjectiveSelect required formControlName="learning_objective">
@@ -50,10 +50,10 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-            </span>
+            </div>
         </div>
         <mat-stepper [orientation]="(stepperOrientation | async)!">
-            <mat-step [editable]="questionDetails ? questionDetails?.invalid : true">
+            <mat-step [editable]="questionDetails ? questionDetails?.invalid : true" [completed]="false">
                 <ng-template matStepLabel>{{ "assessmentBuilder.questions.typeStep" | translate }}</ng-template>
 
                 <ng-container *ngIf="dragAndDropForm.controls.type.value === 'NORMAL'">
@@ -70,7 +70,7 @@
                 </ng-container>
             </mat-step>
 
-            <mat-step>
+            <mat-step [completed]="false">
                 <ng-template matStepLabel>{{ "assessmentBuilder.questions.mediaStep" | translate }}</ng-template>
                 <h2>{{ "assessmentBuilder.questions.dragAndDrop.questionAttachments" | translate }}</h2>
                 <div class="attachments-container">

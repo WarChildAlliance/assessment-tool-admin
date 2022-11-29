@@ -104,7 +104,7 @@ export class QuestionDragAndDropFormComponent implements OnInit {
     } else {
       this.selectQuestion = true;
       this.dragAndDropForm.controls.order.setValue(this.order);
-      await this.questionFormService.getQuestionsTypeList('DRAG_AND_DROP').then(res => {
+      await this.questionFormService.getQuestionsTypeList('DRAG_AND_DROP,CUSTOMIZED_DRAG_AND_DROP').then(res => {
         this.questionsList = res;
       });
     }
