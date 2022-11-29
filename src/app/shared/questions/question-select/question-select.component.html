@@ -1,7 +1,7 @@
 <div class="question-header" *ngIf="evaluated">
     <h2>Q{{ question.order }}</h2>
     <h2>{{ question.title }}</h2>
-    <img *ngIf="imageAttachment" [src]="getSource(imageAttachment.file)" alt="">
+    <img *ngIf="imageAttachment" [src]="getSource(imageAttachment.file)" alt="" class="img-attachment">
     <mat-icon class="play-audio" (click)="playAudio(audioAttachment.file)" *ngIf="audioAttachment">volume_up</mat-icon>
 </div>
 <!-- Options with only one choice -->
