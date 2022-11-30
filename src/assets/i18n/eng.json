@@ -216,7 +216,8 @@
       },
       "domino": {
         "leftSideValue": "Left Side Value",
-        "rightSideValue": "Right Side Value"
+        "rightSideValue": "Right Side Value",
+        "multipleAnswersErrors": "There should only be one domino with the correct answer."
       },
       "calcul": {
         "firstNumber": "First number",
