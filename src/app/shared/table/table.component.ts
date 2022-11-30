@@ -1,5 +1,6 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
@@ -7,11 +8,24 @@ import { TranslateService } from '@ngx-translate/core';
 import { TableColumn } from 'src/app/core/models/table-column.model';
 import { TableFilter } from 'src/app/core/models/table-filter.model';
 import { AlertService } from 'src/app/core/services/alert.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss']
+  styleUrls: ['./table.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({
+        height: '0px',
+        minHeight: '0'
+      })),
+      state('expanded', style({
+        height: '*',
+      })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ]
 })
 export class TableComponent implements OnInit, OnChanges {
 
@@ -21,6 +35,7 @@ export class TableComponent implements OnInit, OnChanges {
   @Input() isSelectable: boolean;
   @Input() searchableColumns: string[];
   @Input() hideSearchBar: boolean;
+  @Input() pageConfig: 'library' | 'students';
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -30,13 +45,23 @@ export class TableComponent implements OnInit, OnChanges {
   @Output() filtersChangedEvent = new EventEmitter<{ key: string | number; value: any}>(true);
   @Output() openDetailsEvent = new EventEmitter<string>();
   @Output() customActionEvent = new EventEmitter<any>();
+  @Output() buttonClickedEvent = new EventEmitter<any>(true);
 
   public selection: SelectionModel<any> = new SelectionModel<any>(true, []);
+  public expandedRowData: any = null;
 
   constructor(
     private translateService: TranslateService,
     private alertService: AlertService
   ) {}
+
+  public get accentColor() {
+    switch (this.pageConfig) {
+      case 'library': return '#FF5722';
+      case 'students': return '#00BCD4';
+      default: return '#53A8E2';
+    }
+  }
 
   ngOnInit(): void {
     this.selection.changed.subscribe(() => {
@@ -99,11 +124,18 @@ export class TableComponent implements OnInit, OnChanges {
     }
   }
 
+  // Remove when filter component done
   public applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.tableData.filter = filterValue.trim().toLowerCase();
   }
 
+  // put it directly in the HTML like did with (filtersChangedEvent)?
+  public applySearchFilter(tableDataFilter: string): void {
+    this.tableData.filter = tableDataFilter;
+  }
+
+  // Remove when filter component done
   public applySelectFilters(key: string | number, value: any): void {
     this.filtersChangedEvent.emit({ key, value });
   }
@@ -120,6 +152,22 @@ export class TableComponent implements OnInit, OnChanges {
   // The element object is the row on wich the user triggered the action.
   public customAction(element: any): void {
     this.customActionEvent.emit(element);
+  }
+
+  public buttonClicked(element: any): void {
+    this.buttonClickedEvent.emit(element);
+  }
+
+  public getSource(path: string): string {
+    return `${environment.API_URL}${path}`;
+  }
+
+  public isHeaderSortingDisabled(str: string): boolean {
+    return !str || /^\s*$/.test(str);
+  }
+
+  public toggleExpandRow(data: any): void {
+    this.expandedRowData = this.expandedRowData === data ? null : data;
   }
 
   // Verify if all the filtered results are selected

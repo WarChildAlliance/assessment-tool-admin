@@ -3,8 +3,8 @@
 
   <button mat-button class="header-toolbar__menu-button" aria-label="Access account settings"
     [matMenuTriggerFor]="accountMenu">
-    <mat-icon>account_circle</mat-icon>
     <span>{{ selfName }}</span>
+    <mat-icon>account_circle</mat-icon>
   </button>
   <mat-menu #accountMenu="matMenu" xPosition="before">
     <button mat-menu-item [matMenuTriggerFor]="langMenu" class="menu-button">
@@ -47,12 +47,8 @@
         <mat-icon matListIcon>group</mat-icon>
         {{ "general.groups" | translate }}
       </a>
-      <a mat-list-item routerLink="assessments" routerLinkActive="list-item-active" (click)="showSubmenu = false">
-        <mat-icon matListIcon>quiz</mat-icon>
-        {{ "general.assessments" | translate }}
-      </a>
       <a mat-list-item routerLink="library" routerLinkActive="list-item-active" (click)="showSubmenu = false">
-        <mat-icon matListIcon>library_books</mat-icon>
+        <mat-icon matListIcon>insert_drive_file</mat-icon>
         {{ "general.library" | translate }}
       </a>
       <mat-divider *ngIf="showSubmenu"></mat-divider>

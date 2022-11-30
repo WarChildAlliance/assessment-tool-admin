@@ -53,9 +53,8 @@
                 <span class="header">
                     {{ "students.topicAccessesBuilder.topicAvailability" | translate }}
                 </span>
-
                 <ng-container formArrayName="access">
-                    <div class="topic-accesses-builder__list__set-dates" *ngIf="topicControls.length">
+                    <div class="topic-accesses-builder__list__set-dates" *ngIf="topicControls && topicControls.length">
                         <mat-form-field color="accent" appearance="outline">
                             <mat-date-range-input [rangePicker]="setUpDateForAll" [min]="minDate">
                                 <input (dateInput)="onDateInput('start_date', $event.value)" matStartDate [placeholder]="'students.topicAccessesBuilder.startDate' | translate">

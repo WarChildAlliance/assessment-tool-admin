@@ -68,7 +68,8 @@
     "yes": "نعم",
     "createNewOne": "قم بإنشاء واحدة جديدة",
     "selectItem": "حدد {{item}}",
-    "yourAssessments": "تقييمك (تقييماتك)"
+    "yourAssessments": "تقييمك (تقييماتك)",
+    "numbers": "أعداد"
   },
   "answers": {
     "assessmentAnswers": {
@@ -210,13 +211,12 @@
         "attachments": "المرفقات",
         "display": "عرض",
         "isCorrectAnswer": "هل الجواب الصحيح؟",
-        "isMultipleChoice": "هو الاختيار من متعدد؟",
         "onPopup": "عرض السؤال على المنبثقة؟",
         "option": "اختيار",
         "options": "خيارات",
         "optionsValidAnswerErrors": "يمكن أن يكون للأسئلة إجابة واحدة صحيحة."
       },
-      "sel" : {
+      "sel": {
         "mathSelfEfficacy": "الكفاءة الذاتية للرياضيات",
         "readSelfEfficacy": "اقرأ الفعالية الذاتية",
         "growthMindset": "عقلية النمو",
@@ -225,7 +225,8 @@
         "aLotLikeMe": "كثيرا مثلي"
       },
       "domino": {
-        "sideValue": "قيمة جانبية {{side}}" 
+        "sideValue": "قيمة جانبية {{side}}",
+        "multipleAnswersErrors": "يجب أن يكون هناك دومينو واحد مع الإجابة الصحيحة"
       },
       "calcul": {
         "firstNumber": "الرقم الأول",
@@ -273,7 +274,11 @@
     },
     "selected": "تم الاختيار",
     "studentsLinkedToAssessment": "عدد الطلاب المرتبطين حاليًا بهذا التقييم",
-    "topicsNumber": "عدد المواضيع"
+    "topicsNumber": "عدد المواضيع",
+    "invites": "يدعو",
+    "plays": "يلعب",
+    "score": "نتيجة",
+    "title": "عنوان التقييم"
   },
   "auth": {
     "login": {
@@ -338,7 +343,8 @@
     "table": {
       "copySuccess": "تم النسخ بنجاح!",
       "hintSearchColumn": "يمكنك البحث في أي عمود!",
-      "search": "بحث..."
+      "search": "بحث...",
+      "all": "الجميع"
     }
   },
   "students": {
@@ -396,6 +402,47 @@
       "removeTopicAccess": "حذف الوصول إلى الموضوع",
       "removeTopicAccessPrompt": "'<b>{{topicTitle}}</b>' ?",
       "topicsUpdated": "تم تحديث المواضيع التي تم الوصول إليها بنجاح!"
+    },
+    "studentLoginURL": "URL تسجيل الدخول"
+  },
+  "filter": {
+    "grade1": "الصف 1",
+    "leraningObjectives": {
+      "grade1": {
+        "addition": {
+          "1-ACP-04": "يمثل",
+          "1-ACP-05": "انظر إلى المراهقين على أنهم مكتملون 10 وبعضهم الآخر",
+          "1-ACP-01": "العد وإضافة المزيد",
+          "1-ACP-03": "جزء جزء كامل نموذج (2)",
+          "1-ACP-02": "جزء جزء كامل نموذج (1)"
+        }
+      },
+      "title": "أهداف Leraning"
+    },
+    "maths": "رياضيات",
+    "reading": "قراءة",
+    "grade2": "الصف 2",
+    "grade3": "الصف 3",
+    "topic": {
+      "addition": "إضافة",
+      "division": "قسم",
+      "multiplication ": "عمليه الضرب",
+      "subtraction": "الطرح"
     }
+  },
+  "header": {
+    "libraryHeader": "مكتبة",
+    "libraryHeaderPt1": "أهلاً! هذا ال",
+    "libraryHeaderPt2": "مع كل"
+  },
+  "library": {
+    "assign": "تعيين",
+    "invites": "يدعو",
+    "libraryAssessmentsHeader": "التقييمات",
+    "libraryAssessmentsHeaderPt3": "يمكنك تصفح واختيار وتعيين واستنساخ (لتحرير) هذه لمجموعتك (مجموعاتك).",
+    "numberRanges": "أعداد",
+    "plays": "يلعب",
+    "questionType": "نوع السؤال",
+    "score": "نتيجة"
   }
 }

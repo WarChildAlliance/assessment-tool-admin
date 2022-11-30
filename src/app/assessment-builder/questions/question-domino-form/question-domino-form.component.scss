@@ -104,6 +104,11 @@
     }
 }
 
-.notifier {
-    color: red;
+.errors {
+    display: flex;
+    flex-direction: column;
+
+    .notifier {
+        color: red;
+    }
 }

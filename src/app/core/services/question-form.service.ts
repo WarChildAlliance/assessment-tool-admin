@@ -9,44 +9,6 @@ import { AssessmentService } from './assessment.service';
   providedIn: 'root'
 })
 export class QuestionFormService {
-  public validateCalcul = (form: FormGroup): any => {
-    const firstValue = form.get('first_value');
-    const secondValue = form.get('second_value');
-    const operator = form.get('operator');
-    const dragAndDropShape = form.get('shape');
-    if (!firstValue.value || !secondValue.value) {
-      return;
-    }
-    if (operator.value) {
-      let answer = 0;
-      if (operator.value === 'ADDITION') {
-        answer = firstValue.value + secondValue.value;
-      } else if (operator.value === 'SUBTRACTION') {
-        answer = firstValue.value - secondValue.value;
-      } else if (operator.value === 'DIVISION') {
-        answer = firstValue.value / secondValue.value;
-      } else {
-        answer = firstValue.value * secondValue.value;
-      }
-
-      firstValue.setErrors(null);
-      secondValue.setErrors(null);
-
-      // If customized drag and drop
-      if (dragAndDropShape) {
-        if (firstValue.value > 10 || secondValue.value > 10){
-          firstValue.setErrors({ maxNumberLimit: true });
-          secondValue.setErrors({ maxNumberLimit: true });
-        } if (answer === 0 || answer > 10) {
-          firstValue.setErrors({ answer: true });
-          secondValue.setErrors({ answer: true });
-        }
-      } if (!Number.isInteger(answer) || answer < 0) {
-        firstValue.setErrors({ invalidCalcul: true });
-        secondValue.setErrors({ invalidCalcul: true });
-      }
-    }
-  };
 
   public operatorTypes = [
     { id: 'ADDITION', path: 'addition' },
@@ -90,6 +52,45 @@ export class QuestionFormService {
     this.audioAttachmentFile = event;
     this.changedAudio = true;
   }
+
+  public validateCalcul = (form: FormGroup): any => {
+    const firstValue = form.get('first_value');
+    const secondValue = form.get('second_value');
+    const operator = form.get('operator');
+    const dragAndDropShape = form.get('shape');
+    if (!firstValue.value || !secondValue.value) {
+      return;
+    }
+    if (operator.value) {
+      let answer = 0;
+      if (operator.value === 'ADDITION') {
+        answer = firstValue.value + secondValue.value;
+      } else if (operator.value === 'SUBTRACTION') {
+        answer = firstValue.value - secondValue.value;
+      } else if (operator.value === 'DIVISION') {
+        answer = firstValue.value / secondValue.value;
+      } else {
+        answer = firstValue.value * secondValue.value;
+      }
+
+      firstValue.setErrors(null);
+      secondValue.setErrors(null);
+
+      // If customized drag and drop
+      if (dragAndDropShape) {
+        if (firstValue.value > 10 || secondValue.value > 10){
+          firstValue.setErrors({ maxNumberLimit: true });
+          secondValue.setErrors({ maxNumberLimit: true });
+        } if (answer === 0 || answer > 10) {
+          firstValue.setErrors({ answer: true });
+          secondValue.setErrors({ answer: true });
+        }
+      } if (!Number.isInteger(answer) || answer < 0) {
+        firstValue.setErrors({ invalidCalcul: true });
+        secondValue.setErrors({ invalidCalcul: true });
+      }
+    }
+  };
 
   // Convert attachments objects retrieved from the back-end to files
   public async objectToFile(attachment): Promise<File> {

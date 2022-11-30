@@ -25,8 +25,13 @@
   tr>td:first-of-type {
     padding-left: 16px;
   }
+  .mat-header-cell {
+    color: #fff;
+    width: inherit;
+  }
   .mat-cell,
   .mat-header-cell {
+    position: relative;
     padding: 0 8px;
   }
   .mat-row {
@@ -35,6 +40,9 @@
     &>.mat-cell:not(:first-child):hover {
       cursor: pointer;
     }
+  }
+  img {
+    height: 40px;
   }
   .circle-container {
     cursor: default !important;
@@ -50,6 +58,19 @@
     .mat-sort-header-container {
       justify-content: center;
     }
+  }
+  tr.detail-row {
+    height: 0;
+  }
+  td.row-expanded-detail {
+    overflow: hidden;
+    width: 100%;
+  }
+  .element-row td {
+    border-bottom-width: 0;
+  }
+  .flip-vertically {
+    transform: scaleY(-1);
   }
 }
 .mat-paginator {

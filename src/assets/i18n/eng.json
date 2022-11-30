@@ -37,6 +37,7 @@
     "logoutPrompt": "Do you really want to logout?",
     "name": "Name",
     "no": "No",
+    "numbers": "Numbers",
     "noData": "No data to display",
     "order": "Order",
     "preview": "Preview",
@@ -89,6 +90,46 @@
       "assessmentName": "Assessment Name",
       "lastSubmission": "Last submission",
       "triesNumber": "Number of tries"
+    }
+  },
+  "library" : {
+    "assign": "Assign",
+    "invites": "Invites",
+    "plays": "Plays",
+    "score": "Score",
+    "questionType": "Question type",
+    "libraryAssessmentsHeader": "assessments",
+    "libraryAssessmentsHeaderPt3": "You can browse, choose, assign and clone (to edit) these for your group(s).",
+    "numberRanges": "Numbers"
+  },
+  "header": {
+    "libraryHeader": "LIBRARY",
+    "libraryHeaderPt1": "Hi! This is the",
+    "libraryHeaderPt2": "with all the"
+  },
+  "filter": {
+    "grade1": "Grade 1",
+    "grade2": "Grade 2",
+    "grade3": "Grade 3",
+    "maths": "Maths",
+    "reading": "Reading",
+    "leraningObjectives": {
+      "title": "Leraning Objectives",
+      "grade1": {
+        "addition": {
+          "1-ACP-01": "Counting and adding more",
+          "1-ACP-02": "Part part whole model (1)",
+          "1-ACP-03": "Part part whole model (2)",
+          "1-ACP-04": "Represent & use no. bonds within 10",
+          "1-ACP-05": "See teens as complete 10 and some more"
+        }
+      }
+    },
+    "topic": {
+      "addition": "Addition",
+      "subtraction": "Subtraction",
+      "multiplication ": "Multiplication ",
+      "division": "Division"
     }
   },
   "assessmentBuilder": {
@@ -227,7 +268,8 @@
         "aLotLikeMe": "A lot like me"
       },
       "domino": {
-        "sideValue": "{{side}} Side Value"
+        "sideValue": "{{side}} Side Value",
+        "multipleAnswersErrors": "There should only be one domino with the correct answer."
       },
       "calcul": {
         "firstNumber": "First number",
@@ -272,7 +314,11 @@
     },
     "selected": "selected",
     "studentsLinkedToAssessment": "Number of students currently linked to this assessment",
-    "topicsNumber": "Number of topics"
+    "topicsNumber": "Number of topics",
+    "invites": "Invites",
+    "plays": "Plays",
+    "score": "Score",
+    "title": "Assessment Title"
   },
   "auth": {
     "login": {
@@ -335,6 +381,7 @@
       "noTopics": "No topic available"
     },
     "table": {
+      "all": "All",
       "copySuccess": "Successfully copied!",
       "hintSearchColumn": "You can search on any column!",
       "search": "Search..."

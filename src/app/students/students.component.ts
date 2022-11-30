@@ -14,7 +14,7 @@ import { TableColumn } from '../core/models/table-column.model';
 import { TableFilter } from '../core/models/table-filter.model';
 import { AlertService } from '../core/services/alert.service';
 import { UserService } from '../core/services/user.service';
-import { TopicAccessesBuilderComponent } from './topic-accesses-builder/topic-accesses-builder.component';
+import { TopicAccessesBuilderComponent } from '../shared/topic-accesses-builder/topic-accesses-builder.component';
 import { StudentDialogComponent } from './student-dialog/student-dialog.component';
 import { ConfirmModalComponent } from 'src/app/shared/confirm-modal/confirm-modal.component';
 import {environment} from '../../environments/environment';
@@ -87,7 +87,7 @@ export class StudentsComponent implements OnInit {
           key: 'country',
           name: 'general.country',
           type: 'select',
-          options: [{ key: '', value: 'All' }].concat(
+          options: [{ key: 'All', value: 'All' }].concat(
             countries.map((country) => ({
               key: country.code,
               value: country.name_en,
@@ -98,7 +98,7 @@ export class StudentsComponent implements OnInit {
           key: 'language',
           name: 'general.language',
           type: 'select',
-          options: [{ key: '', value: 'All' }].concat(
+          options: [{ key: 'All', value: 'All' }].concat(
             languages.map((language) => ({
               key: language.code,
               value: language.name_en,
@@ -109,7 +109,7 @@ export class StudentsComponent implements OnInit {
           key: 'group',
           name: 'general.group',
           type: 'select',
-          options: [{ key: '', value: 'All' }].concat(
+          options: [{ key: 'All', value: 'All' }].concat(
             groups.map((group) => ({
               key: group.id.toString(),
               value: group.name,
