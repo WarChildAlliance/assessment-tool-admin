@@ -152,6 +152,11 @@
         <mat-icon cdkDragHandle [ngClass]="reorder ? 'drag-hover' : ''">drag_indicator</mat-icon>
         <app-question-calcul [question]="questionDetails" [index]="1" [evaluated]="true"></app-question-calcul>
       </mat-card>
+
+      <mat-card *ngIf="questionDetails && questionDetails.question_type === 'CUSTOMIZED_DRAG_AND_DROP'">
+        <mat-icon cdkDragHandle [ngClass]="reorder ? 'drag-hover' : ''">drag_indicator</mat-icon>
+        <app-customized-drag-and-drop [question]="questionDetails" [index]="1" [evaluated]="true"></app-customized-drag-and-drop>        
+      </mat-card>
     </div>
   </div>
 </div>

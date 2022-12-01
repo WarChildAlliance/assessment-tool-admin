@@ -1,15 +1,15 @@
 <div class="question-header" *ngIf="evaluated" [class.small]="shrinkBackgroundImage">
     <h2>Q{{ question.order }}: {{ question.title }}</h2>
-    <img *ngIf="imageAttachment" [src]="getSource(imageAttachment.file)" alt="" [class.img-small]="shrinkBackgroundImage">
-    <mat-icon class="play-audio" (click)="playAudio(audioAttachment.file)" *ngIf="audioAttachment">volume_up</mat-icon>
+    <img *ngIf="imageAttachment" [src]="utilitiesService.getSource(imageAttachment.file)" alt="" [class.img-small]="shrinkBackgroundImage" class="img-attachment">
+    <mat-icon class="play-audio" (click)="playAudio(utilitiesService.getSource(audioAttachment.file))" *ngIf="audioAttachment">volume_up</mat-icon>
 </div>
 
 <div #backgroundEl class="background" [class.small]="shrinkBackgroundImage">
     <div class="img-overlay-wrap" *ngIf="evaluated && backgroundImage"
     [style.transform]="getBackgroundImageTransform(backgroundEl)"
     >
-        <img  [src]="getSource(backgroundImage.file)" width="600" height="500" id="myImg" #myImage draggable="false">
-        <svg width="600" height="500" viewBox="0 0 600 500" #draw id="draw" xmlns="http://www.w3.org/2000/svg">
+        <img  [src]="utilitiesService.getSource(backgroundImage.file)" width="600" height="500" id="myImg" #myImage draggable="false">
+        <svg width="600" height="500" viewBox="0 0 600 500" #draw id="draw" xmlns="https://www.w3.org/2000/svg">
             <rect #rectangle id="rectangle" x="0" y="0" width="150" height="150" />
             <g id="rectanglesList" #rectanglesList></g>
         </svg>
@@ -33,7 +33,7 @@
                             <div *ngIf="option.area_option === area.id">
                                 <span class="option">
                                     {{option.attachments[0]?.file.substring(option.attachments[0].file.lastIndexOf('/')+1)}}
-                                    <img [src]="getSource(option.attachments[0]?.file)" class="option-img" draggable="false">
+                                    <img [src]="utilitiesService.getSource(option.attachments[0]?.file)" class="option-img" draggable="false">
                                 </span>
                             </div>
                         </div>
@@ -52,7 +52,7 @@
         <div #withoutOptions class="scrollable">
             <div class="options" #without_areas *ngFor="let option of optionsWithoutArea">
                 {{option.attachments[0].file.substring(option.attachments[0].file.lastIndexOf('/')+1)}}
-                <img [src]="getSource(option.attachments[0].file)" class="option-img" draggable="false">
+                <img [src]="utilitiesService.getSource(option.attachments[0].file)" class="option-img" draggable="false">
             </div>
         </div>
         <app-horizontal-scroll-arrows
@@ -73,7 +73,7 @@
                         [ngClass]="areaAnswer.selected_draggable_option.area_option === areaAnswer.area.id ? 'valid' : 'student'"
                     >
                         {{areaAnswer.selected_draggable_option.attachments[0].file.substring(areaAnswer.selected_draggable_option.attachments[0].file.lastIndexOf('/')+1)}}
-                        <img [src]="getSource(areaAnswer.selected_draggable_option.attachments[0].file)" class="option-img" draggable="false">
+                        <img [src]="utilitiesService.getSource(areaAnswer.selected_draggable_option.attachments[0].file)" class="option-img" draggable="false">
                     </span>
                 </div>
                 <ng-template #noAnswer>

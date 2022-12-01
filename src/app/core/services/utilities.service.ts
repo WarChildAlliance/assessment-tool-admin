@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -44,6 +45,13 @@ export class UtilitiesService {
     if (day.length < 2) { day = '0' + day; }
 
     return [year, month, day].join('-');
+  }
+
+  // To fix Mixed content and use only  HTTPS connection (if localhost, uses http path)
+  public getSource(path: string): string {
+    return (path.slice(0, 5) === 'http:')
+      ? (path.includes('localhost') ? path : path.substring(0, 4) + 's' + path.substring(4))
+      : environment.API_URL + path;
   }
 
   // this method unwraps an array into a query string

@@ -73,6 +73,11 @@
           <app-question-calcul [question]="answerDetails.question" [index]="index" [answer]="answerDetails.value"
             [evaluated]="evaluated"></app-question-calcul>
         </ng-container>
+
+        <ng-container *ngIf="answerDetails.question.question_type === 'CUSTOMIZED_DRAG_AND_DROP'">
+          <app-customized-drag-and-drop [question]="answerDetails.question" [index]="index" [answer]="answerDetails.value"
+          [evaluated]="evaluated"></app-customized-drag-and-drop>
+        </ng-container>
       </div>
     </ng-container>
     <ng-template #selectionNoData>
