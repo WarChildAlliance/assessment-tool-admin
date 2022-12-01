@@ -7,7 +7,7 @@ import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { Language } from 'src/app/core/models/language.model';
 import { Country } from 'src/app/core/models/country.model';
-import { environment } from 'src/environments/environment';
+import { UtilitiesService } from 'src/app/core/services/utilities.service';
 
 interface DialogData {
   edit?: boolean;
@@ -60,7 +60,8 @@ export class AssessmentFormDialogComponent implements OnInit {
     private translateService: TranslateService,
     private assessmentService: AssessmentService,
     private userService: UserService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private utilitiesService: UtilitiesService
     ) {}
 
   ngOnInit(): void {
@@ -175,7 +176,7 @@ export class AssessmentFormDialogComponent implements OnInit {
   private async iconToFile(icon): Promise<void> {
     const fileName = icon.split('/').at(-1);
 
-    await fetch((icon?.slice(0, 5) === 'http:') ? icon : environment.API_URL + icon)
+    await fetch(this.utilitiesService.getSource(icon))
       .then((res) => res.arrayBuffer())
       .then((buf) =>  new File([buf], fileName, {type: 'IMAGE'}))
       .then((file) => {

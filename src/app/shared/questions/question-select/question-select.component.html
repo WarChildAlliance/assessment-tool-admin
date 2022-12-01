@@ -1,8 +1,8 @@
 <div class="question-header" *ngIf="evaluated">
     <h2>Q{{ question.order }}</h2>
     <h2>{{ question.title }}</h2>
-    <img *ngIf="imageAttachment" [src]="getSource(imageAttachment.file)" alt="" class="img-attachment">
-    <mat-icon class="play-audio" (click)="playAudio(audioAttachment.file)" *ngIf="audioAttachment">volume_up</mat-icon>
+    <img *ngIf="imageAttachment" [src]="utilitiesService.getSource(imageAttachment.file)" alt="" class="img-attachment">
+    <mat-icon class="play-audio" (click)="playAudio(utilitiesService.getSource(audioAttachment.file))" *ngIf="audioAttachment">volume_up</mat-icon>
 </div>
 <!-- Options with only one choice -->
 <section *ngIf="!question.multiple">
@@ -13,7 +13,7 @@
                 <mat-card>
                     <mat-card-content>
                         <div *ngFor="let attachment of option.attachments">
-                            <img *ngIf="attachment.attachment_type === 'IMAGE'" [src]="getSource(attachment.file)" alt="">
+                            <img *ngIf="attachment.attachment_type === 'IMAGE'" [src]="utilitiesService.getSource(attachment.file)" alt="">
                         </div>
                     </mat-card-content>
                     <mat-card-actions>
@@ -44,7 +44,7 @@
             <mat-card>
                 <mat-card-content>
                     <div *ngFor="let attachment of option.attachments">
-                        <img *ngIf="attachment.attachment_type === 'IMAGE'" [src]="getSource(attachment.file)" alt="">
+                        <img *ngIf="attachment.attachment_type === 'IMAGE'" [src]="utilitiesService.getSource(attachment.file)" alt="">
                     </div>
                 </mat-card-content>
                 <mat-card-actions>
