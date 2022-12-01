@@ -32,6 +32,8 @@ import { CustomButtonModule } from './button/button.module';
 import { QuestionSelComponent } from './questions/question-sel/question-sel.component';
 import { QuestionDominoComponent } from './questions/question-domino/question-domino.component';
 import { QuestionCalculComponent } from './questions/question-calcul/question-calcul.component';
+import { ShapesComponent } from './questions/shapes/shapes.component';
+import { CustomizedDragAndDropComponent } from './questions/customized-drag-and-drop/customized-drag-and-drop.component';
 import { TableActionsComponent } from './table-actions/table-actions.component';
 import { TableFilterComponent } from './table-filter/table-filter.component';
 import { ChipListComponent } from './table-filter/chip-list/chip-list.component';
@@ -52,6 +54,8 @@ import { TopicAccessesBuilderComponent } from './topic-accesses-builder/topic-ac
     QuestionSelComponent,
     QuestionDominoComponent,
     QuestionCalculComponent,
+    ShapesComponent,
+    CustomizedDragAndDropComponent,
     TableActionsComponent,
     TableFilterComponent,
     ChipListComponent,
@@ -97,6 +101,8 @@ import { TopicAccessesBuilderComponent } from './topic-accesses-builder/topic-ac
     QuestionSelComponent,
     QuestionDominoComponent,
     QuestionCalculComponent,
+    CustomizedDragAndDropComponent,
+    ShapesComponent,
     TableActionsComponent,
     TopicAccessesBuilderComponent
   ]

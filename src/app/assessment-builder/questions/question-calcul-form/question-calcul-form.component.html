@@ -45,7 +45,7 @@
             <mat-form-field appearance="outline" color="accent">
                 <mat-label>{{ "assessmentBuilder.questions.calcul.operator" | translate }}</mat-label>
                 <mat-select formControlName="operator">
-                    <mat-option *ngFor="let type of operatorTypes" [value]="type.id">
+                    <mat-option *ngFor="let type of questionFormService.operatorTypes" [value]="type.id">
                         {{ "assessmentBuilder.questions.calcul." + type.path | translate }}
                     </mat-option>
                 </mat-select>

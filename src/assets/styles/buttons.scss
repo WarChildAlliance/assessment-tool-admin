@@ -21,10 +21,15 @@
   column-gap: 16px;
 
   &__cancel {
-    background-color: rgb(240, 240, 240);
+    color: #FF5252;
+    background-color: transparent;
+    letter-spacing: 1.25px;
+    font-weight: 500;
     padding: 1px 20px;
   }
   &__submit {
+    letter-spacing: 1.25px;
+    font-weight: 500;
     padding: 1px 20px;
   }
 }
