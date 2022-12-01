@@ -19,36 +19,6 @@ interface DialogData {
   subtopicId?: number;
 }
 
-const validateCalcul = (form: FormGroup): any => {
-  const firstValue = form.get('first_value');
-  const secondValue = form.get('second_value');
-  const operator = form.get('operator');
-
-  if (!firstValue.value || !secondValue.value) {
-    return;
-  }
-  if (operator.value) {
-    let answer = 0;
-    if (operator.value === 'ADDITION') {
-      answer = firstValue.value + secondValue.value;
-    } else if (operator.value === 'SUBTRACTION') {
-      answer = firstValue.value - secondValue.value;
-    } else if (operator.value === 'DIVISION') {
-      answer = firstValue.value / secondValue.value;
-    } else {
-      answer = firstValue.value * secondValue.value;
-    }
-
-    if (!Number.isInteger(answer) || answer < 0) {
-      firstValue.setErrors({ invalidCalcul: true });
-      secondValue.setErrors({ invalidCalcul: true });
-    } else {
-      firstValue.setErrors(null);
-      secondValue.setErrors(null);
-    }
-  }
-};
-
 @Component({
   selector: 'app-question-calcul-form',
   templateUrl: './question-calcul-form.component.html',
@@ -74,13 +44,6 @@ export class QuestionCalculFormComponent implements OnInit {
 
   public attachmentsResetSubject$ = new Subject<void>();
 
-  public operatorTypes = [
-    { id: 'ADDITION', path: 'addition' },
-    { id: 'SUBTRACTION', path: 'substraction' },
-    { id: 'DIVISION', path: 'division' },
-    { id: 'MULTIPLICATION', path: 'multiplication' }
-  ];
-
   public selectQuestionForm: FormGroup = new FormGroup({
     question: new FormControl(null)
   });
@@ -94,7 +57,7 @@ export class QuestionCalculFormComponent implements OnInit {
     second_value: new FormControl('', [Validators.required, Validators.min(0)]),
     operator: new FormControl('', [Validators.required]),
     on_popup: new FormControl(false)
-  }, validateCalcul);
+  }, this.questionFormService.validateCalcul);
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,

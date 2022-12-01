@@ -14,6 +14,7 @@
     "choose": "Choose {{type}}",
     "clone": "Clone",
     "confirm": "Confirm",
+    "continue": "Continue",
     "country": "Country",
     "create": "Create",
     "createNew": "Create a new {{type}}",
@@ -31,6 +32,7 @@
     "groupsOverview": "Groups Overview",
     "language": "Language",
     "lastLogin": "Last login",
+    "left": "Left",
     "logout": "Logout",
     "logoutPrompt": "Do you really want to logout?",
     "name": "Name",
@@ -47,6 +49,7 @@
     "questionsNumber": "Number of questions",
     "questionType": "Question type",
     "type": "Type",
+    "right": "Right",
     "save": "Save",
     "selected": "selected",
     "selQuestion": "SEL Question",
@@ -164,6 +167,9 @@
     "order": "Order",
     "praise": "Praise",
     "questions": {
+      "titlePlaceholder": "Question with instructions for the student",
+      "typeStep": "Select type of question",
+      "mediaStep": "Add Extra Media",
       "areaSelector": {
         "area": "Area",
         "areaName": "Area name",
@@ -182,7 +188,54 @@
         "item": "item",
         "noCorrectArea": "Draggable items without correct area:",
         "noCorrectDragOption": "No correct drag option for this area",
-        "questionAttachments": "Question attachments"
+        "questionAttachments": "Add Question attachments",
+        "numberLimitError": "The number of items must be between 1 and 10.",
+        "answerLimitError": "The answer must be between 1 and 10.",
+        "formTitle": "Drag & Drop",
+        "sideValue": "Number of items on the {{side}}",
+        "itemsSide": "Items on the {{side}}",
+        "itemType": "Item type",
+        "selectType": "Select item type",
+        "type": {
+          "normal": "Normal",
+          "customized": "Customized"
+        },
+        "shapes": {
+          "pencil": "Pencil",
+          "fruit": "Fruit",
+          "ballon": "Ballon",
+          "button": "Button",
+          "socks": "Socks",
+          "paint": "Paint",
+          "bug": "Bug"
+        },
+        "bug": "Bug",
+        "bugs": {
+          "caterpillar": "Caterpillar",
+          "ant": "Ant",
+          "butterfly": "Butterfly",
+          "centipede": "Centipede",
+          "fly": "Fly"
+        } ,
+        "fruit": "Fruit",
+        "fruits": {
+          "apple": "Apple",
+          "banana": "Banana",
+          "watermelon": "Watermelon",
+          "orange": "Orange"
+        },
+        "color": "Color",
+        "colors": {
+          "red": "Red",
+          "light_green": "Light Green",
+          "dark_green": "Dark Green",
+          "yellow": "Yellow",
+          "orange": "Orange",
+          "light_blue": "Light Blue",
+          "dark_blue": "Dark Blue",
+          "pink": "Pink",
+          "purple": "Purple"
+        }
       },
       "errorAudio": "Can not play audio in your browser",
       "imageAttachment": "Image attachment",
@@ -215,18 +268,17 @@
         "aLotLikeMe": "A lot like me"
       },
       "domino": {
-        "leftSideValue": "Left Side Value",
-        "rightSideValue": "Right Side Value",
+        "sideValue": "{{side}} Side Value",
         "multipleAnswersErrors": "There should only be one domino with the correct answer."
       },
       "calcul": {
         "firstNumber": "First number",
         "secondNumber": "Second number",
         "operator": "Operator",
-        "addition": "Addition",
-        "substraction": "Subtraction",
-        "division": "Division",
-        "multiplication": "Multiplication",
+        "addition": "Addition ( + )",
+        "substraction": "Subtraction ( - )",
+        "division": "Division ( ÷ )",
+        "multiplication": "Multiplication ( × )",
         "calculError": "The calculation result must be a positive integer."
       }
     },

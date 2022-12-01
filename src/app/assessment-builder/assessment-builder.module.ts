@@ -35,6 +35,13 @@ import { QuestionDominoFormComponent } from './questions/question-domino-form/qu
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { QuestionCalculFormComponent } from './questions/question-calcul-form/question-calcul-form.component';
+import { MatStepperModule } from '@angular/material/stepper';
+import {
+  NormalDragAndDropFormComponent
+} from './questions/question-drag-and-drop-form/normal-drag-and-drop-form/normal-drag-and-drop-form.component';
+import {
+  CustomizedDragAndDropFormComponent
+} from './questions/question-drag-and-drop-form/customized-drag-and-drop-form/customized-drag-and-drop-form.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +60,9 @@ import { QuestionCalculFormComponent } from './questions/question-calcul-form/qu
     AreaSelectorComponent,
     QuestionSelFormComponent,
     QuestionDominoFormComponent,
-    QuestionCalculFormComponent
+    QuestionCalculFormComponent,
+    NormalDragAndDropFormComponent,
+    CustomizedDragAndDropFormComponent
   ],
   imports: [
     CommonModule,
@@ -76,7 +85,8 @@ import { QuestionCalculFormComponent } from './questions/question-calcul-form/qu
     DragDropModule,
     CustomSpinnerModule,
     MatNativeDateModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatStepperModule
   ],
   exports: [
     AssessmentSummaryComponent

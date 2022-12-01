@@ -55,6 +55,10 @@
         <ng-container *ngIf="questionDetails.question_type === 'CALCUL'">
           <app-question-calcul [question]="questionDetails" [index]="index" [evaluated]="true"></app-question-calcul>
         </ng-container>
+
+        <ng-container *ngIf="questionDetails.question_type === 'CUSTOMIZED_DRAG_AND_DROP'">
+          <app-customized-drag-and-drop [question]="questionDetails" [index]="index" [evaluated]="true"></app-customized-drag-and-drop>
+        </ng-container>
       </div>
     </ng-container>
     <ng-template #selectionNoData>

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertService } from './alert.service';
 import { AssessmentService } from './assessment.service';
@@ -9,10 +10,17 @@ import { UtilitiesService } from './utilities.service';
 })
 export class QuestionFormService {
 
+  public operatorTypes = [
+    { id: 'ADDITION', path: 'addition' },
+    { id: 'SUBTRACTION', path: 'substraction' },
+    { id: 'DIVISION', path: 'division' },
+    { id: 'MULTIPLICATION', path: 'multiplication' }
+  ];
+
   private fileAttachment: File;
   private alertMessage = '';
 
-  // Making sure that we dont store an new attachment on editQuestion, if attachment didnt change
+  // Making sure that we dont store an new attachment on editQuestion, if attachment didn't change
   private changedAudio = false;
   private changedImage = false;
 
@@ -45,6 +53,45 @@ export class QuestionFormService {
     this.audioAttachmentFile = event;
     this.changedAudio = true;
   }
+
+  public validateCalcul = (form: FormGroup): any => {
+    const firstValue = form.get('first_value');
+    const secondValue = form.get('second_value');
+    const operator = form.get('operator');
+    const dragAndDropShape = form.get('shape');
+    if (!firstValue.value || !secondValue.value) {
+      return;
+    }
+    if (operator.value) {
+      let answer = 0;
+      if (operator.value === 'ADDITION') {
+        answer = firstValue.value + secondValue.value;
+      } else if (operator.value === 'SUBTRACTION') {
+        answer = firstValue.value - secondValue.value;
+      } else if (operator.value === 'DIVISION') {
+        answer = firstValue.value / secondValue.value;
+      } else {
+        answer = firstValue.value * secondValue.value;
+      }
+
+      firstValue.setErrors(null);
+      secondValue.setErrors(null);
+
+      // If customized drag and drop
+      if (dragAndDropShape) {
+        if (firstValue.value > 10 || secondValue.value > 10){
+          firstValue.setErrors({ maxNumberLimit: true });
+          secondValue.setErrors({ maxNumberLimit: true });
+        } if (answer === 0 || answer > 10) {
+          firstValue.setErrors({ answer: true });
+          secondValue.setErrors({ answer: true });
+        }
+      } if (!Number.isInteger(answer) || answer < 0) {
+        firstValue.setErrors({ invalidCalcul: true });
+        secondValue.setErrors({ invalidCalcul: true });
+      }
+    }
+  };
 
   // Convert attachments objects retrieved from the back-end to files
   public async objectToFile(attachment): Promise<File> {
