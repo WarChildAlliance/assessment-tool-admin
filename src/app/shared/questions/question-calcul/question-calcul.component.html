@@ -1,8 +1,8 @@
 <div class="question-header">
     <h2>Q{{ question.order }}</h2>
     <h2>{{ question.title }}</h2>
-    <img *ngIf="imageAttachment" [src]="getSource(imageAttachment.file)" alt="" class="img-attachment">
-    <mat-icon class="play-audio" (click)="playAudio(getSource(audioAttachment.file))" *ngIf="audioAttachment">volume_up
+    <img *ngIf="imageAttachment" [src]="utilitiesService.getSource(imageAttachment.file)" alt="" class="img-attachment">
+    <mat-icon class="play-audio" (click)="playAudio(utilitiesService.getSource(audioAttachment.file))" *ngIf="audioAttachment">volume_up
     </mat-icon>
 </div>
 
