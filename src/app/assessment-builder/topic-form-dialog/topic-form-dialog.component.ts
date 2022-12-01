@@ -190,7 +190,7 @@ export class TopicFormDialogComponent implements OnInit {
       icon: this.icon,
       archived: topic.archived
     });
-    if (this.topic.questions_count > 0) {
+    if (this.topic && this.topic.questions_count > 0) {
       this.createNewTopicForm.controls.subtopic.disable();
     }
     this.getSubtopics();
