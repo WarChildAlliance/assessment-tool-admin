@@ -76,7 +76,6 @@ export class QuestionDominoFormComponent implements OnInit {
     learning_objective: new FormControl(null),
     order: new FormControl('', [Validators.required]),
     expected_value: new FormControl('', [Validators.required]),
-    on_popup: new FormControl(false),
     options: new FormArray([]),
   }, validateUniqueAnswer);
 
@@ -249,7 +248,6 @@ export class QuestionDominoFormComponent implements OnInit {
       learning_objective: question.learning_objective?.code ?? null,
       expected_value: q.expected_value,
       order: this.toClone ? this.order : q.order,
-      on_popup: q.on_popup,
       options,
     });
 

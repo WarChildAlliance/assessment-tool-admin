@@ -254,7 +254,6 @@
         "attachments": "Attachments",
         "display": "Display",
         "isCorrectAnswer": "Is correct answer?",
-        "onPopup": "Display question on popup?",
         "option": "option",
         "options": "Options",
         "optionsValidAnswerErrors": "Questions can only have one correct answer."
