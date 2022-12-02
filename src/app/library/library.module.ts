@@ -12,6 +12,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { SharedModule } from '../shared/shared.module';
+import { CustomButtonModule } from '../shared/button/button.module';
 import { AssessmentDetailComponent } from './assessment-detail/assessment-detail.component';
 import { LibraryRoutingModule } from './library-routing.module';
 import { LibraryComponent } from './library.component';
@@ -42,7 +43,8 @@ import { PreviousButtonModule } from '../shared/previous-button/previous-button.
     MatIconModule,
     SharedModule,
     MatCardModule,
-    PreviousButtonModule
+    PreviousButtonModule,
+    CustomButtonModule
   ]
 })
 export class LibraryModule { }

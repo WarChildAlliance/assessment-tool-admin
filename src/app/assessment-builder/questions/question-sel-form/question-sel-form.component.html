@@ -19,20 +19,6 @@
         <mat-label>{{ "general.title" | translate }}</mat-label>
         <input matInput required type="text" formControlName="title">
     </mat-form-field>
-    <mat-form-field *ngIf="learningObjectives?.length" appearance="outline" color="accent">
-        <mat-label>{{ "assessmentBuilder.learningObjective" | translate }}</mat-label>
-        <mat-select #learningObjectiveSelect required formControlName="learning_objective">
-            <mat-option *ngFor="let learningObjective of learningObjectives" [value]="learningObjective.code"
-            [matTooltip]="languageService.getLanguageCode() === 'eng' ? learningObjective.name_eng : learningObjective.name_ara"
-            matTooltipShowDelay="1000"
-            >
-                <span style="font-weight: 500; margin-right: 10px;">{{ learningObjective.code }}</span>
-                <ng-container *ngIf="learningObjectiveSelect.panelOpen">
-                    {{ languageService.getLanguageCode() === 'eng' ? learningObjective.name_eng : learningObjective.name_ara }}
-                </ng-container>
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
     <mat-form-field appearance="outline" color="accent">
         <mat-label>{{ "general.type" | translate }}</mat-label>
         <mat-select required formControlName="sel_type">

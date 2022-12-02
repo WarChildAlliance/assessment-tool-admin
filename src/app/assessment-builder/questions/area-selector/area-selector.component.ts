@@ -1,6 +1,5 @@
 import { Component, ElementRef, AfterViewInit, ViewChild, Renderer2, NgZone, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
 import { AreaOption } from 'src/app/core/models/question.model';
 import { Subject } from 'rxjs';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
