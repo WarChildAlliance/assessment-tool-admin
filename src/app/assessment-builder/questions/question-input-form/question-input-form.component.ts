@@ -53,8 +53,7 @@ export class QuestionInputFormComponent implements OnInit {
     title: new FormControl('', [Validators.required]),
     learning_objective: new FormControl(null),
     order: new FormControl('', [Validators.required]),
-    valid_answer: new FormControl('', [Validators.required]),
-    on_popup: new FormControl(false)
+    valid_answer: new FormControl('', [Validators.required])
   });
 
   constructor(
@@ -173,7 +172,6 @@ export class QuestionInputFormComponent implements OnInit {
       learning_objective: question.learning_objective?.code ?? null,
       order: this.toClone ? this.order : question.order,
       valid_answer: question.valid_answer,
-      on_popup: question.on_popup,
     });
 
     await this.questionFormService.setExistingAttachments(this.question, this.toClone).then(res => {

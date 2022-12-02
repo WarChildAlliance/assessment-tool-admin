@@ -51,8 +51,7 @@ export class QuestionSelFormComponent implements OnInit {
     title: new FormControl('', [Validators.required]),
     learning_objective: new FormControl(null),
     order: new FormControl('', [Validators.required]),
-    sel_type: new FormControl('', [Validators.required]),
-    on_popup: new FormControl(false)
+    sel_type: new FormControl('', [Validators.required])
   });
 
   constructor(
@@ -157,8 +156,7 @@ export class QuestionSelFormComponent implements OnInit {
       title: question.title,
       learning_objective: question.learning_objective?.code ?? null,
       order: this.toClone ? this.selQuestionOrder : question.order,
-      sel_type: question.sel_type,
-      on_popup: question.on_popup
+      sel_type: question.sel_type
     });
 
     if (this.toClone) {

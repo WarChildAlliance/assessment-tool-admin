@@ -68,7 +68,6 @@ export class QuestionSelectFormComponent implements OnInit {
     value: new FormControl('', [Validators.required]),
     order: new FormControl('', [Validators.required]),
     // display: new FormControl('Grid', [Validators.required]),
-    on_popup: new FormControl(false),
     options: new FormArray([
       this.formBuilder.group({
         title: new FormControl(''),
@@ -125,7 +124,6 @@ export class QuestionSelectFormComponent implements OnInit {
         value: '',
         title: '',
         order: this.order, //  display: 'Grid',
-        on_popup: false,
         options: [{ title: '', valid: false, value: '' }],
       });
       this.optionsAtt.push({ attachments: [] });
@@ -307,7 +305,6 @@ export class QuestionSelectFormComponent implements OnInit {
         title: q.title,
         order: this.toClone ? this.order : this.question.order,
         // display: q.display_type ? this.displayTypeFormat(q.display_type) : 'Grid',
-        on_popup: this.question.on_popup,
         options,
       });
 
@@ -389,7 +386,6 @@ export class QuestionSelectFormComponent implements OnInit {
       value: '',
       title: '',
       order: this.order, // display: 'Grid',
-      on_popup: false,
       options: [{ title: '', valid: false, value: '' }],
     });
 

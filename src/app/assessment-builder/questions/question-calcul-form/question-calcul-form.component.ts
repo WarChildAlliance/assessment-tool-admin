@@ -55,8 +55,7 @@ export class QuestionCalculFormComponent implements OnInit {
     order: new FormControl('', [Validators.required]),
     first_value: new FormControl('', [Validators.required, Validators.min(0)]),
     second_value: new FormControl('', [Validators.required, Validators.min(0)]),
-    operator: new FormControl('', [Validators.required]),
-    on_popup: new FormControl(false)
+    operator: new FormControl('', [Validators.required])
   }, this.questionFormService.validateCalcul);
 
   constructor(
@@ -150,7 +149,6 @@ export class QuestionCalculFormComponent implements OnInit {
       first_value: question.first_value,
       second_value: question.second_value,
       operator: question.operator,
-      on_popup: question.on_popup,
     });
 
     await this.questionFormService.setExistingAttachments(this.question, this.toClone).then(res => {
