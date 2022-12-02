@@ -1,10 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subtopic } from 'src/app/core/models/question.model';
+import { UtilitiesService } from 'src/app/core/services/utilities.service';
 
 interface DialogData {
   edit?: boolean;
@@ -62,9 +62,9 @@ export class TopicFormDialogComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    private translateService: TranslateService,
     private assessmentService: AssessmentService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private utilitiesService: UtilitiesService
     ) {}
 
   ngOnInit(): void {
@@ -200,7 +200,7 @@ export class TopicFormDialogComponent implements OnInit {
   private async iconToFile(icon): Promise<void> {
     const fileName = icon.split('/').at(-1);
 
-    await fetch(icon)
+    await fetch(this.utilitiesService.getSource(icon))
       .then((res) => res.arrayBuffer())
       .then((buf) =>  new File([buf], fileName, {type: 'IMAGE'}))
       .then((file) => {
