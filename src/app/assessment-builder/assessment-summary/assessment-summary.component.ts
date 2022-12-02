@@ -61,7 +61,9 @@ export class AssessmentSummaryComponent implements OnInit {
       data: {
         assessmentId: this.assessmentId,
         order: this.assessment.topics.length + 1,
-        subject: this.assessment.subject.toUpperCase()
+        subject: this.assessment.subject.toUpperCase(),
+        grade: this.assessment.grade,
+        subtopicId: this.assessment.subtopic?.id ?? null,
       }
     });
 

@@ -257,6 +257,7 @@
     "value": "قيمة",
     "gradeTooltip": "المستوى المدرسي المقصود",
     "learningObjective": "هدف التعلم",
+    "learningObjectiveCode": "",
     "subtopic": "موضوع فرعي"
   },
   "assessments": {
@@ -442,6 +443,7 @@
     "numberRanges": "أعداد",
     "plays": "يلعب",
     "questionType": "نوع السؤال",
-    "score": "نتيجة"
+    "score": "نتيجة",
+    "resetFilters": "إعادة تعيين المرشحات"
   }
 }

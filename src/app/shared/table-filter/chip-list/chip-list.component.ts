@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit} from '@angular/core';
+import { Subject } from 'rxjs';
 
 interface Option {
   key: string | number;
@@ -9,14 +10,21 @@ interface Option {
   templateUrl: './chip-list.component.html',
   styleUrls: ['./chip-list.component.scss']
 })
-export class ChipListComponent {
+export class ChipListComponent implements OnInit {
   @Input() options: Option[];
   @Input() key: string;
   @Input() applySelectFilters: (key: string | number, value: any) => void;
+  @Input() filterReset$: Subject<void>;
 
   public checkedId: string = null;
 
   constructor() { }
+
+  ngOnInit(): void {
+    this.filterReset$.subscribe(() => {
+      this.checkedId = null;
+    });
+  }
 
   applyFilterSelectionChange(event: any, key: string | number, value: any): void {
     if (event.target.id === this.checkedId) {

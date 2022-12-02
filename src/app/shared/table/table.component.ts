@@ -9,6 +9,7 @@ import { TableColumn } from 'src/app/core/models/table-column.model';
 import { TableFilter } from 'src/app/core/models/table-filter.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { environment } from 'src/environments/environment';
+import { Subject} from 'rxjs';
 
 @Component({
   selector: 'app-table',
@@ -36,6 +37,7 @@ export class TableComponent implements OnInit, OnChanges {
   @Input() searchableColumns: string[];
   @Input() hideSearchBar: boolean;
   @Input() pageConfig: 'library' | 'students';
+  @Input() filtersReset$: Subject<void>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

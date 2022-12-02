@@ -5,7 +5,6 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { QuestionFormService } from 'src/app/core/services/question-form.service';
 import { LanguageService } from 'src/app/core/services/language.service';
-import { LearningObjective } from 'src/app/core/models/question.model';
 import { StepperOrientation } from '@angular/cdk/stepper';
 import { map } from 'rxjs/operators';
 import { BreakpointObserver } from '@angular/cdk/layout';
@@ -17,9 +16,6 @@ interface DialogData {
   toClone?: boolean;
   assessmentId?: string;
   selQuestionOrder?: any;
-  subject?: 'MATH' | 'LITERACY';
-  grade?: '1' | '2' | '3';
-  subtopicId?: number;
 }
 
 @Component({
@@ -30,7 +26,6 @@ interface DialogData {
 export class QuestionDragAndDropFormComponent implements OnInit {
   public questionsList: any;
   public selectQuestion: boolean;
-  public learningObjectives: LearningObjective[];
 
   public assessmentId: string;
   public topicId: string;
@@ -38,9 +33,6 @@ export class QuestionDragAndDropFormComponent implements OnInit {
   public question: any;
   public toClone: boolean;
   public selQuestionOrder: any;
-  public grade: string;
-  public subject: string;
-  public subtopicId: number;
 
   public imageAttachment = this.questionFormService.imageAttachment;
   public audioAttachment = this.questionFormService.audioAttachment;
@@ -62,7 +54,6 @@ export class QuestionDragAndDropFormComponent implements OnInit {
 
   public dragAndDropForm: FormGroup = new FormGroup({
     title: new FormControl('', Validators.required),
-    learning_objective: new FormControl(null),
     order: new FormControl('', Validators.required),
     type: new FormControl('NORMAL', Validators.required)
   });
@@ -92,12 +83,6 @@ export class QuestionDragAndDropFormComponent implements OnInit {
     if (this.data?.selQuestionOrder) {
       this.selQuestionOrder = this.data.selQuestionOrder + 1;
       this.dragAndDropForm.controls.order.setValidators([Validators.required, Validators.min(this.selQuestionOrder)]);
-    }
-    if (this.data?.subject) { this.subject = this.data.subject; }
-    if (this.data?.grade) { this.grade = this.data.grade; }
-    if (this.data?.subtopicId) {
-      this.subtopicId = this.data.subtopicId;
-      this.getLearningObjectives();
     }
     if (this.question) {
       this.setForm(this.question);
@@ -139,7 +124,6 @@ export class QuestionDragAndDropFormComponent implements OnInit {
     return new FormGroup({
       question_type: new FormControl('DRAG_AND_DROP'),
       title: new FormControl(this.dragAndDropForm.controls.title.value),
-      learning_objective: new FormControl(this.dragAndDropForm.controls.learning_objective.value),
       order: new FormControl(this.dragAndDropForm.controls.order.value),
       drop_areas: new FormControl(this.questionDetails.controls.drop_areas.value)
     });
@@ -157,29 +141,6 @@ export class QuestionDragAndDropFormComponent implements OnInit {
       second_style: new FormControl(this.questionDetails.controls.second_style.value),
       operator: new FormControl(this.questionDetails.controls.operator.value),
       shape: new FormControl(this.questionDetails.controls.shape.value)
-    });
-  }
-
-  private getLearningObjectives(): void {
-    const filteringParams = {
-      grade: this.grade,
-      subject: this.subject,
-      subtopic: this.subtopicId,
-    };
-    this.assessmentService.getLearningObjectives(filteringParams).subscribe((objectives: LearningObjective[]) => {
-      this.learningObjectives = objectives;
-
-      if (this.learningObjectives.length) {
-        this.dragAndDropForm.controls.learning_objective.setValidators([Validators.required]);
-      } else {
-        this.dragAndDropForm.controls.learning_objective.clearValidators();
-      }
-      this.dragAndDropForm.controls.learning_objective.updateValueAndValidity();
-
-      const currentObjective = this.dragAndDropForm.controls.learning_objective.value;
-      if (currentObjective && !this.learningObjectives.find(el => el.code === currentObjective)) {
-        this.dragAndDropForm.controls.learning_objective.setValue(null);
-      }
     });
   }
 
@@ -219,7 +180,6 @@ export class QuestionDragAndDropFormComponent implements OnInit {
     this.questionType = this.question.question_type === 'DRAG_AND_DROP' ? 'NORMAL' : 'CUSTOMIZED';
 
     this.dragAndDropForm.setValue({
-      learning_objective: question.learning_objective?.code ?? null,
       title: this.question.title,
       order: this.toClone ? this.order : this.question.order,
       type: this.questionType

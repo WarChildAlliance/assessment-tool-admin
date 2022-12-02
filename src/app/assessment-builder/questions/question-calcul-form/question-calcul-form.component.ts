@@ -3,8 +3,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { QuestionFormService } from 'src/app/core/services/question-form.service';
-import { LearningObjective } from 'src/app/core/models/question.model';
-import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { LanguageService } from 'src/app/core/services/language.service';
 
 interface DialogData {
@@ -14,9 +12,6 @@ interface DialogData {
   toClone?: boolean;
   assessmentId?: string;
   selQuestionOrder?: any;
-  subject?: 'MATH' | 'LITERACY';
-  grade?: '1' | '2' | '3';
-  subtopicId?: number;
 }
 
 @Component({
@@ -28,16 +23,12 @@ export class QuestionCalculFormComponent implements OnInit {
   public questionsList: any;
   public selectQuestion: boolean;
   public selQuestionOrder: any;
-  public learningObjectives: LearningObjective[];
 
   public assessmentId: string;
   public topicId: string;
   public order: any;
   public question: any;
   public toClone: boolean;
-  public grade: string;
-  public subject: string;
-  public subtopicId: number;
 
   public imageAttachment = this.questionFormService.imageAttachment;
   public audioAttachment = this.questionFormService.audioAttachment;
@@ -51,7 +42,6 @@ export class QuestionCalculFormComponent implements OnInit {
   public calculForm: FormGroup = new FormGroup({
     question_type: new FormControl('CALCUL'),
     title: new FormControl('', [Validators.required]),
-    learning_objective: new FormControl(null),
     order: new FormControl('', [Validators.required]),
     first_value: new FormControl('', [Validators.required, Validators.min(0)]),
     second_value: new FormControl('', [Validators.required, Validators.min(0)]),
@@ -62,7 +52,6 @@ export class QuestionCalculFormComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public questionFormService: QuestionFormService,
     public languageService: LanguageService,
-    private assessmentService: AssessmentService
   ) {
     this.attachmentsResetSubject$.subscribe(() => this.questionFormService.resetAttachments());
   }
@@ -76,12 +65,6 @@ export class QuestionCalculFormComponent implements OnInit {
     if (this.data?.selQuestionOrder) {
       this.selQuestionOrder = this.data.selQuestionOrder + 1;
       this.calculForm.controls.order.setValidators([Validators.required, Validators.min(this.selQuestionOrder)]);
-    }
-    if (this.data?.subject) { this.subject = this.data.subject; }
-    if (this.data?.grade) { this.grade = this.data.grade; }
-    if (this.data?.subtopicId) {
-      this.subtopicId = this.data.subtopicId;
-      this.getLearningObjectives();
     }
     if (this.question) {
       this.setForm(this.question);
@@ -142,7 +125,6 @@ export class QuestionCalculFormComponent implements OnInit {
     this.selectQuestion = false;
     this.question = question;
     this.calculForm.setValue({
-      learning_objective: question.learning_objective?.code ?? null,
       question_type: 'CALCUL',
       title: question.title,
       order: this.toClone ? this.order : question.order,
@@ -159,28 +141,5 @@ export class QuestionCalculFormComponent implements OnInit {
     if (this.toClone) {
       this.calculForm.markAsDirty();
     }
-  }
-
-  private getLearningObjectives(): void {
-    const filteringParams = {
-      grade: this.grade,
-      subject: this.subject,
-      subtopic: this.subtopicId,
-    };
-    this.assessmentService.getLearningObjectives(filteringParams).subscribe((objectives: LearningObjective[]) => {
-      this.learningObjectives = objectives;
-
-      if (this.learningObjectives.length) {
-        this.calculForm.controls.learning_objective.setValidators([Validators.required]);
-      } else {
-        this.calculForm.controls.learning_objective.clearValidators();
-      }
-      this.calculForm.controls.learning_objective.updateValueAndValidity();
-
-      const currentObjective = this.calculForm.controls.learning_objective.value;
-      if (currentObjective && !this.learningObjectives.find(el => el.code === currentObjective)) {
-        this.calculForm.controls.learning_objective.setValue(null);
-      }
-    });
   }
 }

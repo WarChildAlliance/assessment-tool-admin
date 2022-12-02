@@ -3,8 +3,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Subtopic } from 'src/app/core/models/question.model';
+import { LearningObjective } from 'src/app/core/models/learning-objective.model';
 import { UtilitiesService } from 'src/app/core/services/utilities.service';
+import { LanguageService } from 'src/app/core/services/language.service';
 
 interface DialogData {
   edit?: boolean;
@@ -12,6 +13,8 @@ interface DialogData {
   assessmentId?: any;
   order?: string;
   subject?: string;
+  grade?: '1' | '2' | '3';
+  subtopicId?: number | null;
 }
 
 @Component({
@@ -23,6 +26,7 @@ export class TopicFormDialogComponent implements OnInit {
 
   public topicsList: any;
   public selectTopic: boolean;
+  public learningObjectives: LearningObjective[];
 
   public assessmentId: string;
   public topic: any;
@@ -37,7 +41,6 @@ export class TopicFormDialogComponent implements OnInit {
   public iconOptions = ['flower_green.svg', 'flower_purple.svg', 'flower_cyan.svg'];
 
   public feedbacks = [{id: 0, name: 'Never'}, {id: 1, name: 'Always'}, {id: 2, name: 'Second attempt'}];
-  public subtopics: Subtopic[];
 
   public selectTopicForm: FormGroup = new FormGroup({
     topic: new FormControl(null)
@@ -46,8 +49,8 @@ export class TopicFormDialogComponent implements OnInit {
   public createNewTopicForm: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required]),
     description: new FormControl('', [Validators.required]),
+    learning_objective: new FormControl(''),
     show_feedback: new FormControl(0, [Validators.required]),
-    subtopic: new FormControl(''),
     allow_skip: new FormControl(false, [Validators.required]),
     evaluated: new FormControl(true, [Validators.required]),
     praise: new FormControl(0, [Validators.required]),
@@ -59,9 +62,12 @@ export class TopicFormDialogComponent implements OnInit {
 
   private toClone: boolean;
   private subject: string;
+  private grade: string;
+  private subtopicId: number;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    public languageService: LanguageService,
     private assessmentService: AssessmentService,
     private alertService: AlertService,
     private utilitiesService: UtilitiesService
@@ -73,11 +79,15 @@ export class TopicFormDialogComponent implements OnInit {
     if (this.data?.edit) { this.edit = this.data?.edit; }
     if (this.data?.order) { this.order = this.data?.order; }
     if (this.data?.subject) { this.subject = this.data?.subject; }
+    if (this.data?.grade) { this.grade = this.data.grade; }
+    if (this.data?.subtopicId) {
+      this.subtopicId = this.data.subtopicId;
+      this.getLearningObjectives();
+    }
     if (this.topic) {
       this.setForm(this.topic);
     } else {
       this.getTopics();
-      this.getSubtopics();
       this.selectTopic = true;
       this.createNewTopicForm.controls.order.setValue(this.order);
     }
@@ -123,17 +133,6 @@ export class TopicFormDialogComponent implements OnInit {
     });
   }
 
-  private getSubtopics(): void {
-    this.assessmentService.getSubtopics(this.subject).subscribe(subtopics => {
-      this.subtopics = subtopics;
-
-      if (this.subtopics?.length) {
-        this.createNewTopicForm.controls.subtopic.setValidators([Validators.required]);
-        this.createNewTopicForm.controls.subtopic.updateValueAndValidity();
-      }
-    });
-  }
-
   private async formGroupToFormData(): Promise<FormData> {
     // if user upload an icon
     if (this.icon) {
@@ -146,8 +145,8 @@ export class TopicFormDialogComponent implements OnInit {
 
     this.formData.append('name', this.createNewTopicForm.value.name);
     this.formData.append('description', this.createNewTopicForm.value.description);
+    this.formData.append('learning_objective', this.createNewTopicForm.value.learning_objective);
     this.formData.append('show_feedback', this.createNewTopicForm.value.show_feedback);
-    this.formData.append('subtopic', this.createNewTopicForm.value.subtopic);
     this.formData.append('allow_skip', this.createNewTopicForm.value.allow_skip);
     this.formData.append('evaluated', this.createNewTopicForm.value.evaluated);
     this.formData.append('praise', this.createNewTopicForm.value.praise);
@@ -180,8 +179,8 @@ export class TopicFormDialogComponent implements OnInit {
     this.createNewTopicForm.setValue({
       name: topic.name,
       description: topic.description,
+      learning_objective: topic.learning_objective?.code ?? '',
       show_feedback: topic.show_feedback,
-      subtopic: topic.subtopic?.id,
       allow_skip: topic.allow_skip,
       evaluated: topic.evaluated,
       praise: topic.praise,
@@ -190,10 +189,7 @@ export class TopicFormDialogComponent implements OnInit {
       icon: this.icon,
       archived: topic.archived
     });
-    if (this.topic.questions_count > 0) {
-      this.createNewTopicForm.controls.subtopic.disable();
-    }
-    this.getSubtopics();
+    // this.getLearningObjectives();
   }
 
   // When creating a new topic based on an existing one: convert object from icon to file
@@ -207,5 +203,28 @@ export class TopicFormDialogComponent implements OnInit {
         this.icon = file;
       }
     );
+  }
+
+  private getLearningObjectives(): void {
+    const filteringParams = {
+      grade: this.grade,
+      subject: this.subject,
+      subtopic: this.subtopicId,
+    };
+    this.assessmentService.getLearningObjectives(filteringParams).subscribe((objectives: LearningObjective[]) => {
+      this.learningObjectives = objectives;
+
+      if (this.learningObjectives?.length) {
+        this.createNewTopicForm.controls.learning_objective.setValidators([Validators.required]);
+      } else {
+        this.createNewTopicForm.controls.learning_objective.clearValidators();
+      }
+      this.createNewTopicForm.controls.learning_objective.updateValueAndValidity();
+
+      const currentObjective = this.createNewTopicForm.controls.learning_objective.value;
+      if (currentObjective && !this.learningObjectives.find(el => el.code === currentObjective)) {
+        this.createNewTopicForm.controls.learning_objective.setValue('');
+      }
+    });
   }
 }

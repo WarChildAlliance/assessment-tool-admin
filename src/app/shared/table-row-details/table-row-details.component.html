@@ -10,9 +10,9 @@
       <p>{{ 'general.subject' | translate }}:</p>
       <p>{{ data.subject ?? '--' }}</p>
       <p>{{ 'assessmentBuilder.subtopic' | translate }}:</p>
-      <p>{{ topics[topicIndex]?.questions[questionIndex]?.learning_objective?.subtopic?.name ?? '--' }}</p>
+      <p>{{ data.subtopic?.name ?? '--' }}</p>
       <p>{{ 'assessmentBuilder.learningObjective' | translate }}:</p>
-      <p>{{ topics[topicIndex]?.questions[questionIndex]?.learning_objective?.name_eng ?? '--' }}</p>
+      <p>{{ topics[topicIndex]?.learning_objective?.name_eng ?? '--' }}</p>
       <p>{{ 'general.grade' | translate }}:</p>
       <p>{{ data.grade ?? '--' }}</p>
     </div>
