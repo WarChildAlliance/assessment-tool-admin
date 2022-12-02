@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  API_URL: 'https://glmt-api.development.humanitarian.tech',
-  STUDENT_PORTAL_LOGIN_URL: 'https://glmt-main.development.humanitarian.tech/auth'
+  API_URL: 'https://api.gobee-education.org',
+  STUDENT_PORTAL_LOGIN_URL: 'https://play.gobee-education.org/auth'
 };
