@@ -28,7 +28,7 @@ export class TopicDetailsComponent implements OnInit {
   public topicId: string;
   public assessmentType: string;
   public topic: any;
-
+  public learningObj: any;
   public isDownloadable = false;
   public isAnswered = false;
 
@@ -106,14 +106,17 @@ export class TopicDetailsComponent implements OnInit {
 
   public openEditTopicDialog(topic): void {
     this.topic = topic;
-    const createTopicDialog = this.dialog.open(TopicFormDialogComponent, {
+    const editTopicDialog = this.dialog.open(TopicFormDialogComponent, {
       data: {
         assessmentId: this.assessmentId,
         edit: true,
-        topic: this.topic
+        topic: this.topic,
+        subject: this.assessment.subject.toUpperCase(),
+        grade: this.assessment.grade.toString(),
+        subtopicId: this.assessment.subtopic?.id ?? null
       }
     });
-    createTopicDialog.afterClosed().subscribe((value) => {
+    editTopicDialog.afterClosed().subscribe((value) => {
       if (value) {
         this.getTopicDetails();
       }
@@ -131,10 +134,7 @@ export class TopicDetailsComponent implements OnInit {
         question: question ?? null,
         toClone: clone ? true : false,
         assessmentId: this.assessmentId,
-        selQuestionOrder: this.selQuestionsCount,
-        subject: this.assessment.subject.toUpperCase(),
-        grade: this.assessment.grade,
-        subtopicId: this.topicDetails.subtopic?.id
+        selQuestionOrder: this.selQuestionsCount
       }
     });
     questionDialog.afterClosed().subscribe((value) => {
@@ -266,7 +266,9 @@ export class TopicDetailsComponent implements OnInit {
 
   private getTopicDetails(initComponent?: boolean): void {
     this.assessmentService.getTopicDetails(this.assessmentId, this.topicId).subscribe(topicDetails => {
+      const savedLanguage = localStorage.getItem('la-language') || 'eng';
       this.topicDetails = topicDetails;
+      this.learningObj = this.topicDetails.learning_objective[`name_${savedLanguage}`];
       if (initComponent && this.topicDetails.sel_question) {
         // Adds SEL Question type to the 'Add a question' section
         this.questionsArray.unshift(this.questionSEL);

@@ -43,6 +43,14 @@
         <p>{{ topicDetails.description}} </p>
       </div>
       <div class="detail">
+        <p>{{ "assessmentBuilder.learningObjectiveCode" | translate }}</p>
+        <p>{{ topicDetails.learning_objective.code }} </p>
+      </div>
+      <div class="detail">
+        <p>{{ "assessmentBuilder.learningObjective" | translate }}</p>
+        <p>{{ learningObj }} </p>
+      </div>
+      <div class="detail">
         <p>{{ "assessmentBuilder.order" | translate }}</p>
         <p>{{ topicDetails.order}} </p>
       </div>
@@ -50,7 +58,7 @@
         <p>{{ "assessmentBuilder.evaluated" | translate }}</p>
         <p>{{ topicDetails.evaluated}} </p>
       </div>
-      <div class="detail">
+      <!-- <div class="detail">
         <p>{{ "assessmentBuilder.allowSkip" | translate }}</p>
         <p>{{ topicDetails.allow_skip}} </p>
       </div>
@@ -61,7 +69,7 @@
       <div class="detail">
         <p>{{ "assessmentBuilder.praise" | translate }}</p>
         <p>{{ topicDetails.praise }} </p>
-      </div>
+      </div> -->
       <div class="detail">
         <p>{{ "assessmentBuilder.show" | translate: {type: "assessmentBuilder.topicDetails.feedback" | translate} }}</p>
         <p>{{ topicDetails.show_feedback }} </p>

@@ -1,4 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Subject } from 'rxjs';
+import { MatSelect } from '@angular/material/select';
 import { TableFilter } from 'src/app/core/models/table-filter.model';
 
 @Component({
@@ -9,12 +11,22 @@ import { TableFilter } from 'src/app/core/models/table-filter.model';
 export class TableFilterComponent implements OnInit {
   @Input() filter: TableFilter;
   @Input() filterType: 'chip' | 'dropdown';
+  @Input() filterReset$: Subject<void>;
 
   @Output() filtersChangedEvent = new EventEmitter<{ key: string | number; value: any}>(true);
+
+  @ViewChild('selectFilter') selectRef: MatSelect;
 
   constructor() { }
 
   ngOnInit(): void {
+    this.filterReset$.subscribe(() => {
+      this.selectRef?.options.forEach(option => {
+        if (option.selected) {
+          option.deselect();
+        }
+      });;
+    });
   }
 
   // select filters

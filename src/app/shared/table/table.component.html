@@ -1,4 +1,4 @@
-<app-table-actions [filtersData]="filtersData" (searchChangedEvent)="applySearchFilter($event)" (filtersChangedEvent)="filtersChangedEvent.emit($event)"></app-table-actions>
+<app-table-actions [filtersData]="filtersData" [filtersReset$]="filtersReset$" (searchChangedEvent)="applySearchFilter($event)" (filtersChangedEvent)="filtersChangedEvent.emit($event)"></app-table-actions>
 
 <table mat-table matSort [dataSource]="tableData" multiTemplateDataRows>
   <ng-container *ngIf="isSelectable" matColumnDef="select">
