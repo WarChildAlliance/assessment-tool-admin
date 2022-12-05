@@ -9,6 +9,7 @@ import { TableColumn } from 'src/app/core/models/table-column.model';
 import { TableFilter } from 'src/app/core/models/table-filter.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { environment } from 'src/environments/environment';
+import { TableActionButtons } from 'src/app/core/models/table-actions-buttons.model';
 
 @Component({
   selector: 'app-table',
@@ -35,7 +36,9 @@ export class TableComponent implements OnInit, OnChanges {
   @Input() isSelectable: boolean;
   @Input() searchableColumns: string[];
   @Input() hideSearchBar: boolean;
-  @Input() pageConfig: 'library' | 'students';
+  @Input() pageConfig: string;
+  @Input() scoreListLength: number;
+  @Input() actionsButtons: TableActionButtons[];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -46,6 +49,8 @@ export class TableComponent implements OnInit, OnChanges {
   @Output() openDetailsEvent = new EventEmitter<string>();
   @Output() customActionEvent = new EventEmitter<any>();
   @Output() buttonClickedEvent = new EventEmitter<any>(true);
+  @Output() subMenuEvent = new EventEmitter<any>();
+  @Output() actionButtonEvent = new EventEmitter<any>();
 
   public selection: SelectionModel<any> = new SelectionModel<any>(true, []);
   public expandedRowData: any = null;
@@ -59,6 +64,7 @@ export class TableComponent implements OnInit, OnChanges {
     switch (this.pageConfig) {
       case 'library': return '#FF5722';
       case 'students': return '#00BCD4';
+      case 'groups': return '#3F51B5';
       default: return '#53A8E2';
     }
   }
@@ -156,6 +162,16 @@ export class TableComponent implements OnInit, OnChanges {
 
   public buttonClicked(element: any): void {
     this.buttonClickedEvent.emit(element);
+  }
+
+  public subMenuClicked(element: any, action: string): void {
+    this.selection.setSelection(element);
+    this.subMenuEvent.emit({element, action});
+  }
+
+  // TableActionsComponent button clicked
+  public actionButtonClicked(action: any): void {
+    this.actionButtonEvent.emit(action);
   }
 
   public getSource(path: string): string {

@@ -1,29 +1,7 @@
 <div class="main-board">
-  <div class="main-board__top-container">
-    <h1> 
-      {{ "general.groups" | translate }} ({{ groupsDataSource.data.length }}) 
-      <span *ngIf="selectedGroups.length"> ({{ selectedGroups.length }} {{ "general.selected" | translate }})</span>
-    </h1>
-    
-    <div class="main-board__top-container__actions">
-      <app-custom-button icon="group_add" category="secondary" variant="primary" (click)="onCreate()">
-        {{ "general.add" | translate: { type: ("general.group" | translate | lowercase) } }}
-      </app-custom-button>
-      <app-custom-button icon="edit_outline" category="secondary" variant="primary" (click)="onEdit()"
-        [disabled]="!selectedGroups.length || selectedGroups.length > 1">
-        {{ "general.edit" | translate: { type: ("general.group" | translate | lowercase) } }}
-      </app-custom-button>
-      <app-custom-button icon="delete" category="secondary" variant="primary" (click)="onDelete()"
-        [disabled]="!selectedGroups.length">
-        {{ "general.delete" | translate: {
-          type: !selectedGroups.length ? ("groups.groupOneOrMany" | translate) :
-            (selectedGroups.length == 1 ? "general.group" : "general.groups") | translate | lowercase
-        } }}
-      </app-custom-button>
-    </div>
-  </div>
-
-  <app-table [tableData]="groupsDataSource" [displayedColumns]="displayedColumns"
-    (selectionChangedEvent)="onSelectionChange($event)" [isSelectable]="true"
-    (openDetailsEvent)="onOpenDetails($event)"></app-table>
+  <app-table [pageConfig]="'groups'" [tableData]="groupsDataSource" [displayedColumns]="displayedColumns"
+    [scoreListLength]="scoreListLength" [isSelectable]="true" [actionsButtons]="buttons"
+    (selectionChangedEvent)="onSelectionChange($event)" (openDetailsEvent)="onOpenDetails($event)"
+    (subMenuEvent)="subMenuAction($event)" (actionButtonEvent)="actionButton($event)">
+  </app-table>
 </div>

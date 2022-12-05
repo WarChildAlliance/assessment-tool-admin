@@ -3,6 +3,7 @@
     "add": "أضف {{type}}",
     "adminDashboard": "لوحة تحكم المسؤول",
     "answer": "إجابه",
+    "average": "متوسط",
     "archived": "مؤرشف {{type}}",
     "assessmentBuilder": "منشئ التقييم",
     "assessments": "التقييمات",
@@ -30,6 +31,7 @@
     "group": "مجموعة",
     "groups": "مجموعات",
     "groupsOverview": "نظرة عامة على المجموعات",
+    "honey": "عسل",
     "language": "اللغة",
     "lastLogin": "آخر تسجيل دخول",
     "left": "اليسار",
@@ -324,7 +326,12 @@
     "groupStudents": "طلاب المجموعة",
     "numberStudents": "عدد الطلاب",
     "requiredField": "يتطلب حقلا",
-    "supervisor": "مشرف"
+    "supervisor": "مشرف",
+    "speed": "سرعة",
+    "amountTasks" : "كمية المهام",
+    "seeStudents": "رؤية الطلاب",
+    "compare": "قارن",
+    "assignAssessment": "تعيين التقييم"
   },
   "shared": {
     "audioRecorder": {

@@ -1,10 +1,24 @@
 <div class="table-actions">
-    <div class="search-bar-container">
-        <mat-form-field class="table-actions__searchbox" appearance="fill" color="accent" *ngIf="!hideSearchBar">
-            <mat-label>{{ "shared.table.search" | translate }}</mat-label>
-            <input matInput (keyup)="applySearchFilter($event)" [placeholder]="'shared.table.hintSearchColumn' | translate">
-            <mat-icon matSuffix>search</mat-icon>
-        </mat-form-field>
+    <div class="seach-and-button-container">
+        <div class="search-bar-container content">
+            <mat-form-field class="table-actions__searchbox" appearance="fill" color="accent" *ngIf="!hideSearchBar">
+                <mat-label>{{ "shared.table.search" | translate }}</mat-label>
+                <input matInput (keyup)="applySearchFilter($event)" [placeholder]="'shared.table.hintSearchColumn' | translate">
+                <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+        </div>
+    
+        <ng-container *ngIf="buttons" >
+            <ng-container *ngFor="let button of buttons">
+              <app-custom-button *ngIf="button.nameType" class="content" [icon]="button.icon" [category]="button.category" [variant]="button.variant" (click)="buttonClicked(button.action)">
+                  {{ button.name | translate: { type: (button.nameType| translate | lowercase) } }}
+              </app-custom-button>
+      
+              <app-custom-button *ngIf="!button.nameType" class="content" [icon]="button.icon" [category]="button.category" [variant]="button.variant" (click)="buttonClicked(button.action)">
+                  {{ button.name | translate }}
+              </app-custom-button>
+            </ng-container>
+        </ng-container>
     </div>
 
     <ng-container *ngFor="let filter of filtersData">

@@ -14,6 +14,7 @@ import { ConfirmModalComponent } from 'src/app/shared/confirm-modal/confirm-moda
 
 interface DialogData {
   studentsList?: any[];
+  groupsList?: any[];
   assessment?: any;
 }
 
@@ -250,10 +251,17 @@ export class TopicAccessesBuilderComponent implements OnInit {
     const groupForm = this.assignGroupForm.get('groups') as FormArray;
     groupForm.clear();
 
+    let selectedGroups = false;
+    if (this.data?.groupsList && this.data?.groupsList.length) {
+      selectedGroups = true;
+    }
+
     this.groupsList.forEach((group: Group, i: number) => {
       const groupAccess = this.formBuilder.group({
         group: new FormControl(group),
-        selected: new FormControl(false),
+        selected: new FormControl(
+          selectedGroups ? this.data?.groupsList.includes(group.id) : false
+        ),
         name: new FormControl(group.name),
       });
       groupForm.push(groupAccess);

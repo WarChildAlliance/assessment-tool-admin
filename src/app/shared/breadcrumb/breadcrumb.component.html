@@ -1,4 +1,4 @@
-<div *ngIf="breadcrumb.length" [ngClass]="breadcrumb[0].label ==='general.library' ? 'library' : 'breadcrumb'">
+<div *ngIf="breadcrumb.length && breadcrumb[0].label !=='general.groupsOverview'" [ngClass]="breadcrumb[0].label ==='general.library' ? 'library' : 'breadcrumb'">
     <!-- TEMPORARY: redo when all headers design done and finished to generalize header logic -->
     <mat-toolbar [ngSwitch]="breadcrumb[0].label ==='general.library'">
         <div *ngSwitchCase="true">
