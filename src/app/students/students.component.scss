@@ -4,3 +4,8 @@
     justify-content: center;
     margin-top: 20px;
 }
+
+::ng-deep .mat-nav-list .list-item-active {
+    color: #00BCD4;
+    border-left-color: #00BCD4;
+  }

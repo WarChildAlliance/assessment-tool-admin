@@ -22,3 +22,8 @@
     right: 1%;
   }
 }
+
+::ng-deep .mat-nav-list .list-item-active {
+  color: #FF5722;
+  border-left-color: #FF5722;
+}
