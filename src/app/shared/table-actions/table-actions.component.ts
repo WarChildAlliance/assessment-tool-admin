@@ -25,9 +25,11 @@ export class TableActionsComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.filtersReset$.subscribe(() => {
-      this.searchInput.nativeElement.value = '';
-    });
+    if (this.filtersReset$){
+      this.filtersReset$.subscribe(() => {
+        this.searchInput.nativeElement.value = '';
+      });
+    }
   }
 
   // search bar

@@ -44,7 +44,7 @@
       </div>
       <div class="detail">
         <p>{{ "assessmentBuilder.learningObjectiveCode" | translate }}</p>
-        <p>{{ topicDetails.learning_objective.code }} </p>
+        <p>{{ topicDetails.learning_objective ? topicDetails.learning_objective.code : '' }}</p>
       </div>
       <div class="detail">
         <p>{{ "assessmentBuilder.learningObjective" | translate }}</p>
