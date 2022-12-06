@@ -10,7 +10,7 @@ import { AssessmentService } from '../../core/services/assessment.service';
 })
 export class TableRowDetailsComponent implements OnInit {
 
-  @Input() config: 'library' | 'students';
+  @Input() config: string;
   @Input() data: Assessment;
 
   public topics: Topic[];

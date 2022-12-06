@@ -9,7 +9,7 @@ export interface TableColumn {
     /* Only needed in case type = 'link' | 'button' */
     label?: string;
 
-    /* Only needed in case type = 'button' */
+    /* Only needed in case type = 'button' or type = 'customized-icon'*/
     icon?: string;
 
     // Those are all the available types for a column. Different structures, styling and
@@ -17,7 +17,7 @@ export interface TableColumn {
     // The 'action' type is a bit different, in that there is no precise value to retrieve,
     //  so the 'key' property is used as the Material icon name
     type?: null | 'boolean' | 'percentage' | 'date' | 'duration' | 'copy' | 'action' | 'circle' | 'link' | 'score' | 'icon' | 'image' |
-     'button' | 'expand';
+     'button' | 'expand' | 'customized-icon' | 'menu' | 'score-list' ;
 
     // This property allows for default sorting on a column
     sorting?: 'asc' | 'desc';

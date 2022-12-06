@@ -5,10 +5,11 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { TableColumn } from '../core/models/table-column.model';
 import { UserService } from '../core/services/user.service';
-import { GroupTableData } from '../core/models/group-table-data.model';
+import { GroupTableData, GroupSubMenuTableData, GroupActionsButtonsTableData } from '../core/models/group-table-data.model';
 import { GroupDialogComponent } from './group-dialog/group-dialog.component';
 import { AlertService } from '../core/services/alert.service';
 import { ConfirmModalComponent } from '../shared/confirm-modal/confirm-modal.component';
+import { TopicAccessesBuilderComponent } from '../shared/topic-accesses-builder/topic-accesses-builder.component';
 
 @Component({
   selector: 'app-groups',
@@ -17,10 +18,18 @@ import { ConfirmModalComponent } from '../shared/confirm-modal/confirm-modal.com
 })
 export class GroupsComponent implements OnInit {
   public selectedGroups = [];
+  public scoreListLength: number;
+  public buttons = GroupActionsButtonsTableData;
 
   public displayedColumns: TableColumn[] = [
-    { key: 'name', name: 'groups.groupName' },
-    { key: 'number_students', name: 'groups.numberStudents' }
+    { key: 'name', name: 'general.group' },
+    { key: 'students_count', name: 'groups.numberStudents' },
+    { key: 'assessments_average', name: 'general.assessments', type: 'score-list' },
+    { key: 'average', name: 'general.average', type: 'score' },
+    { key: 'questions_count', name: 'groups.amountTasks' },
+    { key: 'speed', name: 'groups.speed', type: 'duration' },
+    { key: 'honey', name: 'general.honey', type: 'customized-icon', icon: 'assets/icons/honey-pot.svg' },
+    { key: 'subMenu', name: ' ', type: 'menu' }
   ];
 
   public groupsDataSource: MatTableDataSource<GroupTableData> =
@@ -73,9 +82,10 @@ export class GroupsComponent implements OnInit {
     });
   }
 
-  public onOpenDetails(groupId: string): void {
+  public onOpenDetails(groupId?: string): void {
+    const id = groupId ?? this.selectedGroups[0].id;
     this.router.navigate(
-      [`/groups/${groupId}`]
+      [`/groups/${id}`]
     );
   }
 
@@ -115,12 +125,36 @@ export class GroupsComponent implements OnInit {
     });
   }
 
+  public subMenuAction(selected: any): void {
+    this.selectedGroups = [selected.element];
+    this[selected.action]();
+  }
+
+  public actionButton(action: any): void {
+    this[action]();
+  }
+
+  public onAssignAssessment(): void {
+    const groupsList = this.selectedGroups.map(group => group.id);
+    this.dialog.open(TopicAccessesBuilderComponent, {
+      data: { groupsList }
+    });
+  }
+
+  public onCompare(): void {
+    console.log('Compare');
+  }
+
   private getGroups(): void {
-    this.userService.getGroups().subscribe(groups => {
+    this.userService.getGroupsDetails().subscribe(groups => {
       const tableData = [];
 
+      this.scoreListLength = Math.max(
+        ...groups.map(group => group.assessments_average?.length).filter(group => group != null)
+      );
+
       groups.forEach(group => {
-        tableData.push({ id: group.id, name: group.name, number_students: group.students.length });
+        tableData.push({ ...group, subMenu: GroupSubMenuTableData });
       });
 
       this.groupsDataSource = new MatTableDataSource(tableData);

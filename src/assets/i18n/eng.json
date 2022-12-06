@@ -3,6 +3,7 @@
     "add": "Add {{type}}",
     "adminDashboard": "AdminDashboard",
     "answer": "Answer",
+    "average": "Average",
     "archived": "Archived {{type}}",
     "assessmentBuilder": "Assessment Builder",
     "assessments": "Assessments",
@@ -30,6 +31,7 @@
     "group": "Group",
     "groups": "Groups",
     "groupsOverview": "Groups Overview",
+    "honey": "Honey",
     "language": "Language",
     "lastLogin": "Last login",
     "left": "Left",
@@ -365,7 +367,12 @@
     "groupStudents": "Students of the group",
     "numberStudents": "Number of students",
     "requiredField": "Required field",
-    "supervisor": "Supervisor"
+    "supervisor": "Supervisor",
+    "speed": "Speed",
+    "amountTasks" : "Amount of tasks",
+    "seeStudents": "See students",
+    "compare": "Compare",
+    "assignAssessment": "Assign assessment"
   },
   "shared": {
     "audioRecorder": {
