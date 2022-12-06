@@ -1,5 +1,5 @@
 <app-table-actions [filtersData]="filtersData" (searchChangedEvent)="applySearchFilter($event)" [buttons]="actionsButtons"
-  (filtersChangedEvent)="filtersChangedEvent.emit($event)" (buttonClickedEvent)="actionButtonClicked($event)" [filtersReset$]="filtersReset$">
+  (filtersChangedEvent)="filtersChangedEvent.emit($event)" (buttonClickedEvent)="actionButtonClicked($event)" [filtersReset$]="filtersReset$ ?? null">
 </app-table-actions>
 
 <table mat-table matSort [dataSource]="tableData" multiTemplateDataRows>
