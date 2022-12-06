@@ -14,6 +14,10 @@
                 <p>{{ assessment.subject }}</p>
             </div>
             <div class="infos">
+                <p>{{ "general.topic" | translate }}</p>
+                <p>{{ assessment.subtopic.name }}</p>
+            </div>
+            <div class="infos">
                 <p>{{ "general.language" | translate }}</p>
                 <p>{{ assessment.language_code }}</p>
             </div>
@@ -21,10 +25,10 @@
                 <p>{{ "general.country" | translate }}</p>
                 <p>{{ assessment.country_code }}</p>
             </div>
-            <div class="infos">
+            <!-- <div class="infos">
                 <p>{{ "general.private" | translate }}</p>
                 <p>{{ assessment.private }}</p>
-            </div>
+            </div> -->
             <div class="infos">
                 <p>{{ "general.selQuestion" | translate }}</p>
                 <p>{{ assessment.sel_question }}</p>

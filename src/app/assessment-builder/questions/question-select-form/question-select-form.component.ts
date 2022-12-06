@@ -5,9 +5,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { QuestionFormService } from 'src/app/core/services/question-form.service';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { TranslateService } from '@ngx-translate/core';
-import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { LanguageService } from 'src/app/core/services/language.service';
-import { LearningObjective } from 'src/app/core/models/question.model';
 
 interface DialogData {
   topicId?: string;
@@ -16,9 +14,6 @@ interface DialogData {
   toClone?: boolean;
   assessmentId?: string;
   selQuestionOrder?: any;
-  subject?: 'MATH' | 'LITERACY';
-  grade?: '1' | '2' | '3';
-  subtopicId?: number;
 }
 
 @Component({
@@ -32,7 +27,6 @@ export class QuestionSelectFormComponent implements OnInit {
 
   public questionsList: any;
   public selectQuestion: boolean;
-  public learningObjectives: LearningObjective[];
 
   public assessmentId: string;
   public topicId: string;
@@ -40,9 +34,6 @@ export class QuestionSelectFormComponent implements OnInit {
   public question: any;
   public toClone: boolean;
   public selQuestionOrder: any;
-  public grade: string;
-  public subject: string;
-  public subtopicId: number;
 
 
   public options = [];
@@ -62,13 +53,11 @@ export class QuestionSelectFormComponent implements OnInit {
 
   // In case of using display_type again: uncomment all occurences of selectForm.controls.display for this component
   public selectForm: FormGroup = new FormGroup({
-    learning_objective: new FormControl(null),
     question_type: new FormControl('SELECT'),
     title: new FormControl(''),
     value: new FormControl('', [Validators.required]),
     order: new FormControl('', [Validators.required]),
     // display: new FormControl('Grid', [Validators.required]),
-    on_popup: new FormControl(false),
     options: new FormArray([
       this.formBuilder.group({
         title: new FormControl(''),
@@ -84,7 +73,6 @@ export class QuestionSelectFormComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private formBuilder: FormBuilder,
-    private assessmentService: AssessmentService,
     public questionFormService: QuestionFormService,
     public languageService: LanguageService,
     private alertService: AlertService,
@@ -108,24 +96,16 @@ export class QuestionSelectFormComponent implements OnInit {
       this.selQuestionOrder = this.data.selQuestionOrder + 1;
       this.selectForm.controls.order.setValidators([Validators.required, Validators.min(this.selQuestionOrder)]);
     }
-    if (this.data?.subject) { this.subject = this.data.subject; }
-    if (this.data?.grade) { this.grade = this.data.grade; }
-    if (this.data?.subtopicId) {
-      this.subtopicId = this.data.subtopicId;
-      this.getLearningObjectives();
-    }
     this.optionsForm = this.selectForm.get('options') as FormArray;
     if (this.question) {
       this.setForm(this.question);
     } else {
       this.selectQuestion = true;
       this.selectForm.setValue({
-        learning_objective: null,
         question_type: 'SELECT',
         value: '',
         title: '',
         order: this.order, //  display: 'Grid',
-        on_popup: false,
         options: [{ title: '', valid: false, value: '' }],
       });
       this.optionsAtt.push({ attachments: [] });
@@ -301,13 +281,11 @@ export class QuestionSelectFormComponent implements OnInit {
 
     const q = this.question;
     this.selectForm.setValue({
-        learning_objective: q.learning_objective?.code ?? null,
         question_type: 'SELECT',
         value: q.value,
         title: q.title,
         order: this.toClone ? this.order : this.question.order,
         // display: q.display_type ? this.displayTypeFormat(q.display_type) : 'Grid',
-        on_popup: this.question.on_popup,
         options,
       });
 
@@ -316,29 +294,6 @@ export class QuestionSelectFormComponent implements OnInit {
     if (this.toClone) {
       this.selectForm.markAsDirty();
     }
-  }
-
-  private getLearningObjectives(): void {
-    const filteringParams = {
-      grade: this.grade,
-      subject: this.subject,
-      subtopic: this.subtopicId,
-    };
-    this.assessmentService.getLearningObjectives(filteringParams).subscribe((objectives: LearningObjective[]) => {
-      this.learningObjectives = objectives;
-
-      if (this.learningObjectives.length) {
-        this.selectForm.controls.learning_objective.setValidators([Validators.required]);
-      } else {
-        this.selectForm.controls.learning_objective.clearValidators();
-      }
-      this.selectForm.controls.learning_objective.updateValueAndValidity();
-
-      const currentObjective = this.selectForm.controls.learning_objective.value;
-      if (currentObjective && !this.learningObjectives.find(el => el.code === currentObjective)) {
-        this.selectForm.controls.learning_objective.setValue(null);
-      }
-    });
   }
 
   private createSelectQuestion(data?: any): void {
@@ -383,13 +338,11 @@ export class QuestionSelectFormComponent implements OnInit {
   }
 
   private resetForm(): void {
-    this.selectForm.setValue({
-      learning_objective: null,
+    this.selectForm.patchValue({
       question_type: 'SELECT',
       value: '',
       title: '',
       order: this.order, // display: 'Grid',
-      on_popup: false,
       options: [{ title: '', valid: false, value: '' }],
     });
 
@@ -399,7 +352,6 @@ export class QuestionSelectFormComponent implements OnInit {
     this.saveOptions = false;
     this.selectForm.controls.order.setValue(this.order + 1, [Validators.required]);
     // this.selectForm.controls.display.setValue('Grid', [Validators.required]);
-    this.selectForm.controls.question_type.setValue('SELECT');
 
     this.attachmentsResetSubject$.next();
 

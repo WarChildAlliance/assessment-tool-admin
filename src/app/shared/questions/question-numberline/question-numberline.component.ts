@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { environment } from 'src/environments/environment';
+import { UtilitiesService } from 'src/app/core/services/utilities.service';
 
 @Component({
   selector: 'app-question-numberline',
@@ -17,16 +17,11 @@ export class QuestionNumberlineComponent implements OnChanges {
   public imageAttachment = null;
   public audioAttachment = null;
 
-  constructor() { }
+  constructor(public utilitiesService: UtilitiesService) { }
 
   ngOnChanges(): void {
     this.setAttachments();
     this.setQuestionItems();
-  }
-
-  public getSource(path: string): string {
-    // TODO find out why we get two different paths here!
-    return (path.slice(0, 5) === 'http:') ? path : environment.API_URL + path;
   }
 
   public playAudio(file): void {

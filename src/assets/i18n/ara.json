@@ -213,7 +213,6 @@
         "attachments": "المرفقات",
         "display": "عرض",
         "isCorrectAnswer": "هل الجواب الصحيح؟",
-        "onPopup": "عرض السؤال على المنبثقة؟",
         "option": "اختيار",
         "options": "خيارات",
         "optionsValidAnswerErrors": "يمكن أن يكون للأسئلة إجابة واحدة صحيحة."
@@ -260,6 +259,7 @@
     "value": "قيمة",
     "gradeTooltip": "المستوى المدرسي المقصود",
     "learningObjective": "هدف التعلم",
+    "learningObjectiveCode": "",
     "subtopic": "موضوع فرعي"
   },
   "assessments": {
@@ -450,6 +450,7 @@
     "numberRanges": "أعداد",
     "plays": "يلعب",
     "questionType": "نوع السؤال",
-    "score": "نتيجة"
+    "score": "نتيجة",
+    "resetFilters": "إعادة تعيين المرشحات"
   }
 }

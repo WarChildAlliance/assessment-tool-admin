@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { environment } from 'src/environments/environment';
+import { UtilitiesService } from 'src/app/core/services/utilities.service';
 
 @Component({
   selector: 'app-customized-drag-and-drop',
@@ -26,7 +26,9 @@ export class CustomizedDragAndDropComponent implements OnInit {
     { id: 'MULTIPLICATION', symbol: '×' }
   ];
 
-  constructor() { }
+  constructor(
+    public utilitiesService: UtilitiesService
+  ) { }
 
   ngOnInit(): void {
     this.setAttachments();
@@ -43,11 +45,6 @@ export class CustomizedDragAndDropComponent implements OnInit {
         this.answerNumber = this.question.first_value * this.question.second_value;
       }
     }
-  }
-
-  public getSource(path: string): string {
-    // TODO find out why we get two different paths here!
-    return (path.slice(0, 5) === 'http:') ? path : environment.API_URL + path;
   }
 
   public playAudio(file): void {

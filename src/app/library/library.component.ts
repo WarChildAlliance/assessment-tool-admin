@@ -10,6 +10,7 @@ import { TableColumn } from '../core/models/table-column.model';
 import { TableFilter } from '../core/models/table-filter.model';
 import { TopicAccessesBuilderComponent } from '../shared/topic-accesses-builder/topic-accesses-builder.component';
 import { Topic } from '../core/models/topic.models';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-library',
@@ -33,6 +34,7 @@ export class LibraryComponent implements OnInit, AfterViewInit {
   public assessmentsDataSource: MatTableDataSource<Assessment> = new MatTableDataSource([]);
   public tableFilters: TableFilter[];
   public isAssessmentPrivate = false;
+  public filtersReset$ = new Subject<void>();
 
   public createNewAssessmentForm: FormGroup = new FormGroup({
     title: new FormControl('', [Validators.required]),
@@ -106,16 +108,9 @@ export class LibraryComponent implements OnInit, AfterViewInit {
 
   public async onTableFiltersChange(data: { key: string | number; value: any }): Promise<void> {
     this.tableFiltersData[data.key] = !!data.value ? data.value: '';
-    this.assessmentService.getAssessmentsList(this.tableFiltersData).subscribe((assessmentsList) => {
-      assessmentsList = assessmentsList.filter((assessment) => assessment.archived !== true);
-      assessmentsList.map(assessment => {
-        this.assessmentService.getAssessmentTopics(assessment.id).subscribe((topics: Topic[]) => assessment.topics = topics);
-      });
-      this.assessmentsDataSource = new MatTableDataSource(assessmentsList);
-    });
-    if (this.tableFiltersData?.subject === 'MATH' || data.key === 'subject') {
-      if (data.key === 'subject' || data.key === 'learning_objectives') {
-        this.updateSubtopicsFilter(this.tableFiltersData.subject, this.tableFiltersData.learning_objectives);
+    if (this.tableFiltersData?.subject || data.key === 'subject') {
+      if (data.key === 'subject') {
+        this.updateSubtopicsFilter(this.tableFiltersData.subject);
       }
       if (data.key === 'grade' || data.key === 'subject') {
         await this.updateNumberRangesFilter(
@@ -131,6 +126,13 @@ export class LibraryComponent implements OnInit, AfterViewInit {
         );
       }
     }
+    this.assessmentService.getAssessmentsList(this.tableFiltersData).subscribe((assessmentsList) => {
+      assessmentsList = assessmentsList.filter((assessment) => assessment.archived !== true);
+      assessmentsList.map(assessment => {
+        this.assessmentService.getAssessmentTopics(assessment.id).subscribe((topics: Topic[]) => assessment.topics = topics);
+      });
+      this.assessmentsDataSource = new MatTableDataSource(assessmentsList);
+    });
   }
 
   public onOpenDetails(id: string): void {
@@ -155,15 +157,28 @@ export class LibraryComponent implements OnInit, AfterViewInit {
     });
   }
 
-  private updateSubtopicsFilter(subject: string, learningObjectives: string[]): void {
+  public resetFilters(): void {
+    this.filtersReset$.next();
+    const nestedFilters = ['subtopic', 'learning_objectives', 'number_range'];
+    this.tableFilters = this.tableFilters.filter(item => !nestedFilters.includes(item.key));
+    this.tableFiltersData = { grade: '', subject: '', question_types: [], subtopic: '', learning_objectives: [] };
+    this.assessmentService.getAssessmentsList().subscribe((assessmentsList) => {
+      assessmentsList = assessmentsList.filter((assessment) => assessment.archived !== true);
+      this.assessmentsDataSource = new MatTableDataSource(assessmentsList);
+    });
+  }
+
+
+  private updateSubtopicsFilter(subject: string): void {
     const subtopicFilterIndex = this.tableFilters.findIndex(filter => filter.key === 'subtopic');
-    if (!subject) {
+    if (!subject || subject !== 'MATH') {
       if (subtopicFilterIndex !== -1) {
         this.tableFilters.splice(subtopicFilterIndex, 1);
+        this.tableFiltersData.subtopic = '';
       }
       return;
     }
-    this.assessmentService.getSubtopics(subject, learningObjectives).subscribe((subtopics) => {
+    this.assessmentService.getSubtopics(subject).subscribe((subtopics) => {
       if (subtopics?.length > 0) {
         this.tableFilters.splice(
           subtopicFilterIndex === -1 ? 3 : subtopicFilterIndex,
@@ -210,9 +225,10 @@ export class LibraryComponent implements OnInit, AfterViewInit {
 
   private updateLearningObjectivesFilter(grade: string, subject: string, subtopic: string): void {
     const loFilterIndex = this.tableFilters.findIndex(filter => filter.key === 'learning_objectives');
-    if (subject !== 'MATH') {
+    if (subject !== 'MATH' || !subtopic) {
       if (loFilterIndex !== -1) {
         this.tableFilters.splice(loFilterIndex, 1);
+        this.tableFiltersData.learning_objectives = [];
       }
       return;
     }

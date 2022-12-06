@@ -1,5 +1,5 @@
 <app-table-actions [filtersData]="filtersData" (searchChangedEvent)="applySearchFilter($event)" [buttons]="actionsButtons"
-  (filtersChangedEvent)="filtersChangedEvent.emit($event)" (buttonClickedEvent)="actionButtonClicked($event)">
+  (filtersChangedEvent)="filtersChangedEvent.emit($event)" (buttonClickedEvent)="actionButtonClicked($event)" [filtersReset$]="filtersReset$">
 </app-table-actions>
 
 <table mat-table matSort [dataSource]="tableData" multiTemplateDataRows>
@@ -112,7 +112,7 @@
 
     <ng-container *ngSwitchCase="'score'">
       <td mat-cell *matCellDef="let element">
-        <app-score-indicator [score]="element[column.key]" [borderColor]="accentColor"></app-score-indicator>
+        <app-score-indicator class="flex-centered" [score]="element[column.key]" [borderColor]="accentColor"></app-score-indicator>
       </td>
     </ng-container>
 
@@ -132,8 +132,9 @@
     </ng-container>
 
     <ng-container *ngSwitchCase="'customized-icon'">
-      <td mat-cell *matCellDef="let element"  class="customized-icon">
-          {{element[column.key]}} <img [src]="column.icon" alt="image">
+      <td mat-cell *matCellDef="let element" class="customized-icon">
+          <span>{{element[column.key]}} </span>
+          <img [src]="column.icon" alt="image">
       </td>
     </ng-container>
 

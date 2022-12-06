@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, AfterViewInit, OnChanges, ViewChild, ElementRef, SimpleChanges } from '@angular/core';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
-import { environment } from 'src/environments/environment';
+import { UtilitiesService } from 'src/app/core/services/utilities.service';
 
 @Component({
   selector: 'app-question-drag-and-drop',
@@ -30,7 +30,10 @@ export class QuestionDragAndDropComponent implements OnInit, AfterViewInit, OnCh
 
   private svgStyle: CSSStyleDeclaration;
 
-  constructor(private assessmentService: AssessmentService) { }
+  constructor(
+    private assessmentService: AssessmentService,
+    public utilitiesService: UtilitiesService
+  ) { }
 
   ngOnInit(): void {
     this.imageAttachment = this.question.attachments.find( i => i.attachment_type === 'IMAGE' && i.background_image === false);
@@ -57,10 +60,6 @@ export class QuestionDragAndDropComponent implements OnInit, AfterViewInit, OnCh
       this.svgStyle.setProperty('visibility', 'hidden');
       this.reDraw();
     }
-  }
-
-  public getSource(path: string): string {
-    return (path?.slice(0, 5) === 'http:') ? path : environment.API_URL + path;
   }
 
   public playAudio(file): void {

@@ -14,3 +14,11 @@
     width: 10%;
   }
 }
+
+.main-board {
+  position: relative;
+  .main-board__top-container__actions {
+    position: absolute;
+    right: 1%;
+  }
+}

@@ -102,7 +102,8 @@
     "questionType": "Question type",
     "libraryAssessmentsHeader": "assessments",
     "libraryAssessmentsHeaderPt3": "You can browse, choose, assign and clone (to edit) these for your group(s).",
-    "numberRanges": "Numbers"
+    "numberRanges": "Numbers",
+    "resetFilters": "Reset filters"
   },
   "header": {
     "libraryHeader": "LIBRARY",
@@ -137,6 +138,7 @@
   "assessmentBuilder": {
     "allowSkip": "Allow skip",
     "learningObjective": "Learning objective",
+    "learningObjectiveCode": "Learning objective code",
     "subtopic": "Subtopic",
     "gradeTooltip": "Intended school level",
     "selQuestions": "Contains SEL questions",
@@ -256,7 +258,6 @@
         "attachments": "Attachments",
         "display": "Display",
         "isCorrectAnswer": "Is correct answer?",
-        "onPopup": "Display question on popup?",
         "option": "option",
         "options": "Options",
         "optionsValidAnswerErrors": "Questions can only have one correct answer."

@@ -7,7 +7,8 @@ import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { Language } from 'src/app/core/models/language.model';
 import { Country } from 'src/app/core/models/country.model';
-import { environment } from 'src/environments/environment';
+import { Subtopic } from 'src/app/core/models/subtopic.model';
+import { UtilitiesService } from 'src/app/core/services/utilities.service';
 
 interface DialogData {
   edit?: boolean;
@@ -34,6 +35,7 @@ export class AssessmentFormDialogComponent implements OnInit {
   public languages: Language[];
   public countries: Country[];
   public subjects = ['MATH', 'LITERACY'];
+  public subtopics: Subtopic[];
   public formData: FormData = new FormData();
 
   public iconOptions = ['flower_green.svg', 'flower_purple.svg', 'flower_cyan.svg'];
@@ -48,6 +50,7 @@ export class AssessmentFormDialogComponent implements OnInit {
     subject: new FormControl('', [Validators.required]),
     language: new FormControl('', [Validators.required]),
     country: new FormControl('', [Validators.required]),
+    subtopic: new FormControl(''),
     private: new FormControl(false, [Validators.required]),
     icon: new FormControl(null),
     archived: new FormControl(false),
@@ -60,7 +63,8 @@ export class AssessmentFormDialogComponent implements OnInit {
     private translateService: TranslateService,
     private assessmentService: AssessmentService,
     private userService: UserService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private utilitiesService: UtilitiesService
     ) {}
 
   ngOnInit(): void {
@@ -73,6 +77,9 @@ export class AssessmentFormDialogComponent implements OnInit {
     if (this.edit || this.clone) {
       this.setForm(this.assessment);
     }
+    this.assessmentForm.controls.subject.valueChanges.subscribe(() => {
+      this.getSubtopics();
+    });
   }
 
   public async saveAssessment(): Promise<void> {
@@ -116,6 +123,7 @@ export class AssessmentFormDialogComponent implements OnInit {
     this.formData.append('subject', this.assessmentForm.value.subject);
     this.formData.append('language', this.assessmentForm.value.language);
     this.formData.append('country', this.assessmentForm.value.country);
+    this.formData.append('subtopic', this.assessmentForm.value.subtopic);
     this.formData.append('private', this.assessmentForm.value.private);
     this.formData.append('archived', this.assessmentForm.value.archived);
     this.formData.append('downloadable', this.assessmentForm.value.downloadable);
@@ -159,6 +167,7 @@ export class AssessmentFormDialogComponent implements OnInit {
       subject: assessment.subject.toUpperCase(),
       language: assessment.language_code,
       country: assessment.country_code,
+      subtopic: assessment.subtopic?.id ?? '',
       private: assessment.private,
       icon: this.icon,
       archived: assessment.archived,
@@ -168,19 +177,36 @@ export class AssessmentFormDialogComponent implements OnInit {
     if (this.assessment.topics_count > 0) {
       this.assessmentForm.controls.grade.disable();
       this.assessmentForm.controls.subject.disable();
+      this.assessmentForm.controls.subtopic.disable();
     }
+    this.getSubtopics();
   }
 
   // When creating a new assessment based on an existing one: convert object from icon to file
   private async iconToFile(icon): Promise<void> {
     const fileName = icon.split('/').at(-1);
 
-    await fetch((icon?.slice(0, 5) === 'http:') ? icon : environment.API_URL + icon)
+    await fetch(this.utilitiesService.getSource(icon))
       .then((res) => res.arrayBuffer())
       .then((buf) =>  new File([buf], fileName, {type: 'IMAGE'}))
       .then((file) => {
         this.icon = file;
       }
     );
+  }
+
+  private getSubtopics(): void {
+    const subject = this.assessmentForm.controls.subject.value ?? null;
+    this.assessmentService.getSubtopics(subject).subscribe(subtopics => {
+      this.subtopics = subtopics;
+
+      if (this.subtopics?.length) {
+        this.assessmentForm.controls.subtopic.setValidators([Validators.required]);
+      } else {
+        this.assessmentForm.controls.subtopic.setValue('');
+        this.assessmentForm.controls.subtopic.clearValidators();
+      }
+      this.assessmentForm.controls.subtopic.updateValueAndValidity();
+    });
   }
 }

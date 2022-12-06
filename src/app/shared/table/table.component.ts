@@ -10,6 +10,7 @@ import { TableFilter } from 'src/app/core/models/table-filter.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { environment } from 'src/environments/environment';
 import { TableActionButtons } from 'src/app/core/models/table-actions-buttons.model';
+import { Subject} from 'rxjs';
 
 @Component({
   selector: 'app-table',
@@ -39,6 +40,7 @@ export class TableComponent implements OnInit, OnChanges {
   @Input() pageConfig: string;
   @Input() scoreListLength: number;
   @Input() actionsButtons: TableActionButtons[];
+  @Input() filtersReset$: Subject<void>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

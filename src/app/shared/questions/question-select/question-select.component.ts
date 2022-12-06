@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { environment } from 'src/environments/environment';
+import { UtilitiesService } from 'src/app/core/services/utilities.service';
 
 @Component({
   selector: 'app-question-select',
@@ -16,7 +16,7 @@ export class QuestionSelectComponent implements OnInit {
   public imageAttachment = null;
   public audioAttachment = null;
 
-  constructor() { }
+  constructor(public utilitiesService: UtilitiesService) { }
 
   ngOnInit(): void {
     this.imageAttachment = this.question.attachments.find( i => i.attachment_type === 'IMAGE');
@@ -35,10 +35,6 @@ export class QuestionSelectComponent implements OnInit {
 
   public hasImageAttached(option): boolean {
     return option.attachments.some((attachment) => attachment.attachment_type === 'IMAGE');
-  }
-
-  public getSource(path: string): string {
-    return (path.slice(0, 5) === 'http:') ? path : environment.API_URL + path;
   }
 
   public playAudio(file): void {

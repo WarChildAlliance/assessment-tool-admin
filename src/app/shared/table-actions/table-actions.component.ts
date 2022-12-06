@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ElementRef } from '@angular/core';
+import { Subject} from 'rxjs';
 import { TableFilter } from 'src/app/core/models/table-filter.model';
 import { TableActionButtons } from 'src/app/core/models/table-actions-buttons.model';
 
@@ -12,15 +13,21 @@ export class TableActionsComponent implements OnInit {
   @Input() filtersData: TableFilter[];
   @Input() hideSearchBar: boolean;
   @Input() buttons: TableActionButtons[];
+  @Input() filtersReset$: Subject<void>;
 
   @Output() filtersChangedEvent = new EventEmitter<{ key: string | number; value: any}>(true);
   @Output() searchChangedEvent = new EventEmitter<string>();
   @Output() customActionEvent = new EventEmitter<any>();
   @Output() buttonClickedEvent = new EventEmitter<any>();
 
+  @ViewChild('searchInput') searchInput: ElementRef;
+
   constructor() { }
 
   ngOnInit(): void {
+    this.filtersReset$.subscribe(() => {
+      this.searchInput.nativeElement.value = '';
+    });
   }
 
   // search bar

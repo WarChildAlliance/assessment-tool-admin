@@ -21,6 +21,12 @@
   .mat-header-row {
     border-radius: 4px 4px 0 0;
   }
+
+  .mat-sort-header {
+    ::ng-deep .mat-sort-header-container {
+      justify-content: center;
+    }
+  }
   tr>th:first-of-type,
   tr>td:first-of-type {
     padding-left: 16px;
@@ -62,6 +68,9 @@
   tr.detail-row {
     height: 0;
   }
+  td {
+    text-align: center;
+  }
   td.row-expanded-detail {
     overflow: hidden;
     width: 100%;
@@ -78,16 +87,16 @@
 }
 .customized-icon {
   display: flex;
-  flex-direction: row;
-  place-self: center;
-  contain: content;
-  place-content: end;
-  margin: 0.6em 1em 0.4em 1em;
-
+  justify-content: center;
   img {
     height: 20px;
     padding-left: 0.5rem;
   }
+}
+
+.flex-centered {
+  display: flex;
+  justify-content: center;
 }
 
 .menu {

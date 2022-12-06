@@ -1,3 +1,4 @@
+import { LearningObjective } from './learning-objective.model';
 
 export interface Question {
   id: number;
@@ -107,19 +108,6 @@ export interface Hint {
   id: number;
   text: string;
   attachments: [];
-}
-
-export interface Subtopic {
-  id: number;
-  name: string;
-}
-
-export interface LearningObjective {
-  code: string;
-  grade: number;
-  subtopic: Subtopic;
-  name_eng: string;
-  name_ara: string;
 }
 
 export interface NumberRange {

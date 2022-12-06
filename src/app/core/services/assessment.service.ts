@@ -176,11 +176,8 @@ export class AssessmentService {
     return this.http.get<any>(`${environment.API_URL}/assessments/${assessmentId}/topics/${topicId}/questions/${questionId}/draggable/`);
   }
 
-  public getSubtopics(subject: string = null, learningObjectives: string[] = null): Observable<any> {
-    const filteringParams = {
-      subject,
-      learning_objectives: learningObjectives
-    };
+  public getSubtopics(subject: string = null): Observable<any> {
+    const filteringParams = { subject };
     const initialUrl = `${environment.API_URL}/assessments/subtopics/`;
     const finalUrl = filteringParams ? this.utilitiesService.urlBuilder(initialUrl, filteringParams) : initialUrl;
     return this.http.get<any>(finalUrl);
