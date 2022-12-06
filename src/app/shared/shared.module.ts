@@ -40,6 +40,7 @@ import { ChipListComponent } from './table-filter/chip-list/chip-list.component'
 import { TableRowDetailsComponent } from './table-row-details/table-row-details.component';
 import { ScoreIndicatorComponent } from './score-indicator/score-indicator.component';
 import { TopicAccessesBuilderComponent } from './topic-accesses-builder/topic-accesses-builder.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -86,7 +87,8 @@ import { TopicAccessesBuilderComponent } from './topic-accesses-builder/topic-ac
     ClipboardModule,
     TranslateModule,
     MatDividerModule,
-    CustomButtonModule
+    CustomButtonModule,
+    MatMenuModule
   ],
   exports: [
     TableComponent,

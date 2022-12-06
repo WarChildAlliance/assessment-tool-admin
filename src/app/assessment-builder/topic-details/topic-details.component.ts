@@ -213,8 +213,8 @@ export class TopicDetailsComponent implements OnInit {
         // If has SEL questions checks if they are at the beginning
         if (this.topicDetails.sel_question) {
           const breakCondition = this.questionsList.some((question, index) =>
-            (question.question_type === 'SEL' && index > this.selQuestionsCount)
-            || (question.question_type !== 'SEL' && index < this.selQuestionsCount)
+            (question && question.question_type === 'SEL' && index > this.selQuestionsCount)
+            || (question && question.question_type !== 'SEL' && index < this.selQuestionsCount)
           );
 
           if (breakCondition) {
@@ -268,7 +268,7 @@ export class TopicDetailsComponent implements OnInit {
     this.assessmentService.getTopicDetails(this.assessmentId, this.topicId).subscribe(topicDetails => {
       const savedLanguage = localStorage.getItem('la-language') || 'eng';
       this.topicDetails = topicDetails;
-      this.learningObj = this.topicDetails.learning_objective[`name_${savedLanguage}`];
+      this.learningObj = this.topicDetails.learning_objective ? this.topicDetails.learning_objective[`name_${savedLanguage}`] : '';
       if (initComponent && this.topicDetails.sel_question) {
         // Adds SEL Question type to the 'Add a question' section
         this.questionsArray.unshift(this.questionSEL);

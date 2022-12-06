@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { Language } from 'src/app/core/models/language.model';
 import { User } from 'src/app/core/models/user.model';
@@ -44,12 +44,13 @@ export class StudentsComponent implements OnInit {
     new MatTableDataSource([]);
   public selectedUsers = [];
   public studentToEdit: any;
+  public filtersReset$ = new Subject<void>();
 
   public countries: Country[] = [];
   public languages: Language[] = [];
   public groups: Group[] = [];
 
-  public filters: TableFilter[];
+  public filters: TableFilter[] = [];
 
   public createNewStudentForm: FormGroup = new FormGroup({
     first_name: new FormControl('', [Validators.required]),

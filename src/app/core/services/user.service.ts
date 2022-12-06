@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { AnswerDetails } from '../models/answer-details.model';
 import { BatchTopicAccesses } from '../models/batch-topic-accesses.model';
 import { Country } from '../models/country.model';
+import { GroupTableData } from '../models/group-table-data.model';
 import { Group } from '../models/group.model';
 import { Language } from '../models/language.model';
 import { StudentTableData } from '../models/student-table-data.model';
@@ -81,6 +82,10 @@ export class UserService {
 
   public getCountries(): Observable<Country[]> {
     return this.http.get<Country[]>(`${environment.API_URL}/users/countries`);
+  }
+
+  public getGroupsDetails(): Observable<GroupTableData[]> {
+    return this.http.get<GroupTableData[]>(`${environment.API_URL}/visualization/groups/`);
   }
 
   public getGroups(): Observable<Group[]> {

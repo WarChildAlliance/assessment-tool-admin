@@ -38,45 +38,47 @@
         </ul>
       </div>
       <div class="question-details" *ngIf="answerDetails">
-        <ng-container *ngIf="answerDetails.question.question_type === 'SELECT'">
-          <app-question-select [question]="answerDetails.question" [index]="index" [answer]="answerDetails"
-            [evaluated]="evaluated"></app-question-select>
-        </ng-container>
+        <ng-container *ngIf="answerDetails.question">
+          <ng-container *ngIf="answerDetails.question.question_type === 'SELECT'">
+            <app-question-select [question]="answerDetails.question" [index]="index" [answer]="answerDetails"
+              [evaluated]="evaluated"></app-question-select>
+          </ng-container>
 
-        <ng-container *ngIf="answerDetails.question.question_type === 'INPUT'">
-          <app-question-input [question]="answerDetails.question" [index]="index" [answer]="answerDetails.value"
-            [evaluated]="evaluated"></app-question-input>
-        </ng-container>
+          <ng-container *ngIf="answerDetails.question.question_type === 'INPUT'">
+            <app-question-input [question]="answerDetails.question" [index]="index" [answer]="answerDetails.value"
+              [evaluated]="evaluated"></app-question-input>
+          </ng-container>
 
-        <ng-container *ngIf="answerDetails.question.question_type === 'SORT'">
-          <app-question-sort [question]="answerDetails.question" [index]="index" [answer]="answerDetails.value"
-            [evaluated]="evaluated"></app-question-sort>
-        </ng-container>
+          <ng-container *ngIf="answerDetails.question.question_type === 'SORT'">
+            <app-question-sort [question]="answerDetails.question" [index]="index" [answer]="answerDetails.value"
+              [evaluated]="evaluated"></app-question-sort>
+          </ng-container>
 
-        <ng-container *ngIf="answerDetails && answerDetails.question.question_type === 'NUMBER_LINE'">
-          <app-question-numberline [question]="answerDetails.question" [index]="index" [answer]="answerDetails.value"
-            [evaluated]="evaluated"></app-question-numberline>
-        </ng-container>
+          <ng-container *ngIf="answerDetails.question.question_type === 'NUMBER_LINE'">
+            <app-question-numberline [question]="answerDetails.question" [index]="index" [answer]="answerDetails.value"
+              [evaluated]="evaluated"></app-question-numberline>
+          </ng-container>
 
-        <ng-container *ngIf="answerDetails && answerDetails.question.question_type === 'DRAG_AND_DROP'">
-          <app-question-drag-and-drop [question]="answerDetails.question" [assessmentId]="assessmentId" [topicId]="topicId"
-            [index]="index" [answer]="answerDetails" [evaluated]="evaluated" [shrinkBackgroundImage]="true">
-          </app-question-drag-and-drop>
-        </ng-container>
+          <ng-container *ngIf="answerDetails.question.question_type === 'DRAG_AND_DROP'">
+            <app-question-drag-and-drop [question]="answerDetails.question" [assessmentId]="assessmentId" [topicId]="topicId"
+              [index]="index" [answer]="answerDetails" [evaluated]="evaluated" [shrinkBackgroundImage]="true">
+            </app-question-drag-and-drop>
+          </ng-container>
 
-        <ng-container *ngIf="answerDetails.question.question_type === 'DOMINO'">
-          <app-question-domino [question]="answerDetails.question" [index]="index" [answer]="answerDetails"
-            [evaluated]="evaluated"></app-question-domino>
-        </ng-container>
+          <ng-container *ngIf="answerDetails.question.question_type === 'DOMINO'">
+            <app-question-domino [question]="answerDetails.question" [index]="index" [answer]="answerDetails"
+              [evaluated]="evaluated"></app-question-domino>
+          </ng-container>
 
-        <ng-container *ngIf="answerDetails.question.question_type === 'CALCUL'">
-          <app-question-calcul [question]="answerDetails.question" [index]="index" [answer]="answerDetails.value"
-            [evaluated]="evaluated"></app-question-calcul>
-        </ng-container>
+          <ng-container *ngIf="answerDetails.question.question_type === 'CALCUL'">
+            <app-question-calcul [question]="answerDetails.question" [index]="index" [answer]="answerDetails.value"
+              [evaluated]="evaluated"></app-question-calcul>
+          </ng-container>
 
-        <ng-container *ngIf="answerDetails.question.question_type === 'CUSTOMIZED_DRAG_AND_DROP'">
-          <app-customized-drag-and-drop [question]="answerDetails.question" [index]="index" [answer]="answerDetails.value"
-          [evaluated]="evaluated"></app-customized-drag-and-drop>
+          <ng-container *ngIf="answerDetails.question.question_type === 'CUSTOMIZED_DRAG_AND_DROP'">
+            <app-customized-drag-and-drop [question]="answerDetails.question" [index]="index" [answer]="answerDetails.value"
+            [evaluated]="evaluated"></app-customized-drag-and-drop>
+          </ng-container>
         </ng-container>
       </div>
     </ng-container>

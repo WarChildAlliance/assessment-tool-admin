@@ -11,7 +11,6 @@
     }
     &__searchbox {
         width: 100%;
-        max-width: 650px;
     }
     ::ng-deep mat-form-field {
         .mat-form-field-wrapper {
@@ -44,6 +43,17 @@
                 }
             }
         }
+    }
+}
+
+.seach-and-button-container {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+
+    .content:not(:last-child) {
+        margin-right: 1em;
     }
 }
 
