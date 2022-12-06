@@ -11,7 +11,7 @@ import { AssessmentService } from '../../core/services/assessment.service';
 export class TableRowDetailsComponent implements OnInit {
 
   @Input() config: string;
-  @Input() data: Assessment;
+  @Input() data: any;
 
   public topics: Topic[];
   public topicIndex = 0;

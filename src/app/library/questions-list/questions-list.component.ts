@@ -18,13 +18,14 @@ export class QuestionsListComponent implements OnInit {
   public topicId: string;
 
   public displayedColumns: TableColumn[] = [
-    { key: 'title', name: 'general.title' },
-    { key: 'question_type', name: 'general.questionType' },
-    { key: 'order', name: 'general.order', sorting: 'asc' },
-    { key: 'has_attachment', name: 'assessments.questionsList.attachment', type: 'boolean' },
-    { key: 'correct_answers_percentage_first', name: 'assessments.questionsList.correctAnswersFirstTry', type: 'percentage' },
-    { key: 'correct_answers_percentage_last', name: 'assessments.questionsList.correctAnswersLastTry', type: 'percentage' },
-    { key: 'remove_red_eye', name: 'general.preview', type: 'action' }
+    { key: 'title', name: 'assessments.questionsList.questionName' },
+    { key: 'expand', name: ' ', type: 'expand' },
+    { key: 'learning_objective', name: 'general.id' },
+    { key: 'plays', name: 'assessments.plays' },
+    { key: 'invites', name: 'library.invites' },
+    { key: 'speed', name: 'groups.speed', type: 'duration' },
+    { key: 'score', name: 'library.score', type: 'score' },
+    { key: 'created_at', name: 'general.created', type: 'date' },
   ];
 
   public questionsDataSource: MatTableDataSource<QuestionTableData> = new MatTableDataSource([]);
@@ -55,6 +56,9 @@ export class QuestionsListComponent implements OnInit {
         return this.assessmentService.getTopicQuestions(this.assessmentId, this.topicId);
       })
     ).subscribe((questionsList) => {
+      questionsList.forEach(question => {
+        question.learning_objective = question.learning_objective.name_eng;
+      });
       this.questionsDataSource = new MatTableDataSource(questionsList);
     });
   }
@@ -72,7 +76,8 @@ export class QuestionsListComponent implements OnInit {
     console.log('Work In Progress');
   }
 
-  public onCustomAction(element: any): void {
+  // For preview button (not being used)
+  public onPreviewQuestion(element: any): void {
     this.assessmentService.getQuestionDetails(this.assessmentId, this.topicId, element.id).subscribe(details => {
       this.questionDetails = details;
       this.showQuestionPreview = true;

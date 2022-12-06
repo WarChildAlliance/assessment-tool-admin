@@ -17,4 +17,18 @@
       <p>{{ data.grade ?? '--' }}</p>
     </div>
   </ng-container>
+
+  <ng-container *ngIf="config === 'questions'">
+    <div class="question-preview-nav section"></div>
+    <div class="question-data section">
+      <p>{{ 'general.subject' | translate }}:</p>
+      <p>{{ data.subject ?? '--' }}</p>
+      <p>{{ 'general.topic' | translate }}:</p>
+      <p>{{ data.topic ?? '--' }}</p>
+      <p>{{ 'general.type' | translate }}:</p>
+      <p>{{ data.subtopic?.name ?? '--' }}</p>
+      <p>{{ 'general.grade' | translate }}:</p>
+      <p>{{ data.grade ?? '--' }}</p>
+    </div>
+  </ng-container>
 </div>

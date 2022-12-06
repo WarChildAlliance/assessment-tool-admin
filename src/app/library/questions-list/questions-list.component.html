@@ -1,21 +1,9 @@
 <div class="main-board">
-  <div class="main-board__top-container">
-    <app-previous-button [path]="previousPageUrl"></app-previous-button>
-    <h1>{{ "assessments.questionsList.questions" | translate }} ({{ questionsDataSource.data.length }})
-      <span *ngIf="selectedQuestions.length">({{
-        selectedQuestions.length }} {{ "assessments.selected" | translate }})</span>
-    </h1>
-    <div class="main-board__top-container__actions">
-<!--       <button mat-flat-button color="primary" (click)="downloadData()" [disabled]="true">
-        <mat-icon>get_app</mat-icon><span>Download</span>
-      </button> -->
-    </div>
-  </div>
-
-  <app-table [tableData]="questionsDataSource" [displayedColumns]="displayedColumns"
+  <app-table [tableData]="questionsDataSource" [displayedColumns]="displayedColumns" [pageConfig]="'questions'"
     [isSelectable]="true" (selectionChangedEvent)="onSelectionChange($event)"
-    (openDetailsEvent)="onOpenDetails($event)" (customActionEvent)="onCustomAction($event)"></app-table>
+    (openDetailsEvent)="onOpenDetails($event)"></app-table>
 
+  <!-- For preview button (not being used) -->
   <div *ngIf="showQuestionPreview && questionDetails">
     <mat-card *ngIf="questionDetails.question_type === 'SEL'">
       <app-question-sel [question]="questionDetails"></app-question-sel>
