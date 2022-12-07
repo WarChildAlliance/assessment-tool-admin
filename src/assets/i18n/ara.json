@@ -148,8 +148,6 @@
         "noCorrectArea": "العناصر القابلة للسحب بدون المنطقة الصحيحة:",
         "noCorrectDragOption": "لا يوجد خيار سحب صحيح لهذه المنطقة",
         "questionAttachments": "مرفقات السؤال",
-        "numberLimitError": "يجب أن يكون عدد العناصر بين 1 و 10",
-        "answerLimitError": "يجب أن تكون الإجابة بين 1 و 10",
         "formTitle": "السحب والإفلات",
         "sideValue": "{{side}} عدد العناصر في",
         "itemsSide": "{{side}} العناصر الموجودة في",

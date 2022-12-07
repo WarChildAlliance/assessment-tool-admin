@@ -58,7 +58,6 @@ export class QuestionFormService {
     const firstValue = form.get('first_value');
     const secondValue = form.get('second_value');
     const operator = form.get('operator');
-    const dragAndDropShape = form.get('shape');
     if (!firstValue.value || !secondValue.value) {
       return;
     }
@@ -77,16 +76,7 @@ export class QuestionFormService {
       firstValue.setErrors(null);
       secondValue.setErrors(null);
 
-      // If customized drag and drop
-      if (dragAndDropShape) {
-        if (firstValue.value > 10 || secondValue.value > 10){
-          firstValue.setErrors({ maxNumberLimit: true });
-          secondValue.setErrors({ maxNumberLimit: true });
-        } if (answer === 0 || answer > 10) {
-          firstValue.setErrors({ answer: true });
-          secondValue.setErrors({ answer: true });
-        }
-      } if (!Number.isInteger(answer) || answer < 0) {
+      if (!Number.isInteger(answer) || answer < 0) {
         firstValue.setErrors({ invalidCalcul: true });
         secondValue.setErrors({ invalidCalcul: true });
       }
