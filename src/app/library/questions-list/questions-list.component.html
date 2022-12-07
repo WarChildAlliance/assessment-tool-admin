@@ -1,10 +1,14 @@
 <div class="main-board">
-  <app-table [tableData]="questionsDataSource" [displayedColumns]="displayedColumns" [pageConfig]="'questions'"
-    [isSelectable]="true" (selectionChangedEvent)="onSelectionChange($event)"
-    (openDetailsEvent)="onOpenDetails($event)"></app-table>
+  <app-table [tableData]="questionsDataSource" [displayedColumns]="displayedColumns"
+    [isSelectable]="true" [libraryFilters]="true" [pageConfig]="'questions'"
+    (selectionChangedEvent)="onSelectionChange($event)"
+    (filtersChangedEvent)="onTableFiltersChange($event)"
+    (openDetailsEvent)="onOpenDetails($event)"
+    (resetFiltersEvent)="resetFilters()">
+  </app-table>
 
   <!-- For preview button (not being used) -->
-  <div *ngIf="showQuestionPreview && questionDetails">
+  <!-- <div *ngIf="showQuestionPreview && questionDetails">
     <mat-card *ngIf="questionDetails.question_type === 'SEL'">
       <app-question-sel [question]="questionDetails"></app-question-sel>
     </mat-card>
@@ -41,6 +45,5 @@
     <mat-card *ngIf="questionDetails.question_type === 'CUSTOMIZED_DRAG_AND_DROP'">
       <app-customized-drag-and-drop [question]="questionDetails" [evaluated]="true"></app-customized-drag-and-drop>
     </mat-card>
-
-  </div>
+  </div> -->
 </div>

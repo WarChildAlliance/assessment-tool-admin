@@ -17,7 +17,7 @@ export interface TableColumn {
     // The 'action' type is a bit different, in that there is no precise value to retrieve,
     //  so the 'key' property is used as the Material icon name
     type?: null | 'boolean' | 'percentage' | 'date' | 'duration' | 'copy' | 'action' | 'circle' | 'link' | 'score' | 'icon' | 'image' |
-     'button' | 'expand' | 'customized-icon' | 'menu' | 'score-list' ;
+     'button' | 'expand' | 'customized-icon' | 'menu' | 'score-list' | 'title';
 
     // This property allows for default sorting on a column
     sorting?: 'asc' | 'desc';

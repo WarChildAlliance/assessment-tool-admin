@@ -6,6 +6,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { QuestionTableData } from 'src/app/core/models/question-table-data.model';
 import { TableColumn } from 'src/app/core/models/table-column.model';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
+import { Observable } from 'rxjs';
+import { TableFilterLibraryData } from 'src/app/core/models/table-filter.model';
 
 @Component({
   selector: 'app-question-list',
@@ -18,7 +20,7 @@ export class QuestionsListComponent implements OnInit {
   public topicId: string;
 
   public displayedColumns: TableColumn[] = [
-    { key: 'title', name: 'assessments.questionsList.questionName' },
+    { key: 'title', name: 'assessments.questionsList.questionName', type: 'title' },
     { key: 'expand', name: ' ', type: 'expand' },
     { key: 'learning_objective', name: 'general.id' },
     { key: 'plays', name: 'assessments.plays' },
@@ -53,13 +55,10 @@ export class QuestionsListComponent implements OnInit {
         this.assessmentId = params.get('assessment_id');
         this.topicId = params.get('topic_id');
 
-        return this.assessmentService.getTopicQuestions(this.assessmentId, this.topicId);
+        return this.getTopicQuestions();
       })
     ).subscribe((questionsList) => {
-      questionsList.forEach(question => {
-        question.learning_objective = question.learning_objective.name_eng;
-      });
-      this.questionsDataSource = new MatTableDataSource(questionsList);
+      this.setupTableData(questionsList);
     });
   }
 
@@ -82,5 +81,28 @@ export class QuestionsListComponent implements OnInit {
       this.questionDetails = details;
       this.showQuestionPreview = true;
     });
+  }
+
+  public onTableFiltersChange(tableFiltersData: TableFilterLibraryData): void {
+    this.getTopicQuestions(tableFiltersData).subscribe(questions => {
+      this.setupTableData(questions);
+    });
+  }
+
+  public resetFilters(): void {
+    this.getTopicQuestions().subscribe(questions => {
+      this.setupTableData(questions);
+    });
+  }
+
+  private getTopicQuestions(filteringParams?: object): Observable<any[]> {
+    return this.assessmentService.getTopicQuestions(this.assessmentId, this.topicId, filteringParams);
+  }
+
+  private setupTableData(questionsList: any[]): void {
+    questionsList.forEach(question => {
+      question.learning_objective = question.learning_objective.name_eng;
+    });
+    this.questionsDataSource = new MatTableDataSource(questionsList);
   }
 }

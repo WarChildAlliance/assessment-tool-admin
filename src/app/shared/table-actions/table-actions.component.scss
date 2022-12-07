@@ -64,3 +64,13 @@
 app-table-filter:not(:last-of-type) {
     margin-right: 32px;
 }
+
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+
+    app-custom-button  {
+        align-self: center;
+        margin-left: 1em;
+    }
+}

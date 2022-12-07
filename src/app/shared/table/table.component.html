@@ -1,5 +1,5 @@
-<app-table-actions [filtersData]="filtersData" (searchChangedEvent)="applySearchFilter($event)" [buttons]="actionsButtons"
-  (filtersChangedEvent)="filtersChangedEvent.emit($event)" (buttonClickedEvent)="actionButtonClicked($event)" [filtersReset$]="filtersReset$ ?? null">
+<app-table-actions [filtersData]="filtersData" (searchChangedEvent)="applySearchFilter($event)" [buttons]="actionsButtons" [libraryFilters]="libraryFilters"
+  (filtersChangedEvent)="filtersChangedEvent.emit($event)" (buttonClickedEvent)="actionButtonClicked($event)" (resetFiltersEvent)="resetFiltersEvent.emit(true)">
 </app-table-actions>
 
 <table mat-table matSort [dataSource]="tableData" multiTemplateDataRows>
@@ -137,6 +137,10 @@
           <span>{{element[column.key]}} </span>
           <img [src]="column.icon" alt="image">
       </td>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'title'">
+      <td  mat-cell class="title" *matCellDef="let element">{{ element[column.key]}}</td>
     </ng-container>
 
     <ng-container *ngSwitchDefault>
