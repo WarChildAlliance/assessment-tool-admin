@@ -28,6 +28,6 @@
   </div>
 
   <app-table [tableData]="studentsDataSource" [filtersData]="filters" [displayedColumns]="displayedColumns"
-    [isSelectable]="true" (selectionChangedEvent)="onSelectionChange($event)" [filtersReset$]="filtersReset$"
-    (filtersChangedEvent)="onFiltersChange($event)" (openDetailsEvent)="onOpenDetails($event)"></app-table>
+    [isSelectable]="true" (selectionChangedEvent)="onSelectionChange($event)" (resetFiltersEvent)="getStudentTableList(true)"
+    (filtersChangedEvent)="onFiltersChange($event)" (openDetailsEvent)="onOpenDetails($event)"></app-table> 
 </div>
