@@ -49,12 +49,14 @@
         <div class="attachments-container">
             <div style="margin-right: 20px;">
                 <app-image-selector [reset$]="attachmentsResetSubject$.asObservable()"
-                    (newImageEvent)="questionFormService.imageAttachment = $event" [imageAttachment]="imageAttachment">
+                    (newImageEvent)="questionFormService.imageAttachment = $event; calculForm.markAsDirty()"
+                    [imageAttachment]="imageAttachment">
                 </app-image-selector>
             </div>
             <div>
                 <app-audio-selector [isRecorderEnabled]="true" [reset$]="attachmentsResetSubject$.asObservable()"
-                    (newAudioEvent)="questionFormService.audioAttachment = $event" [audioAttachment]="audioAttachment">
+                    (newAudioEvent)="questionFormService.audioAttachment = $event; calculForm.markAsDirty()"
+                    [audioAttachment]="audioAttachment">
                 </app-audio-selector>
             </div>
         </div>

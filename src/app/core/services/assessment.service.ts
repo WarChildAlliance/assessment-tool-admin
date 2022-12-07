@@ -151,6 +151,10 @@ export class AssessmentService {
     return this.http.put<any[]>(`${environment.API_URL}/assessments/${assessmentId}/attachments/${attachmentId}/`, formData);
   }
 
+  public deleteAttachments(assessmentId: string, attachmentId: number): Observable<any[]> {
+    return this.http.delete<any[]>(`${environment.API_URL}/assessments/${assessmentId}/attachments/${attachmentId}/`);
+  }
+
   public getAllData(): Observable<any[]>  {
     return this.http.get<any[]>(`${environment.API_URL}/export/answers/`);
   }

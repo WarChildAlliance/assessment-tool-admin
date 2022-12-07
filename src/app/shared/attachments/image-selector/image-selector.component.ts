@@ -10,6 +10,7 @@ export class ImageSelectorComponent implements OnInit {
   @Input() reset$: Observable<void> = null;
   @Input() imageAttachment: File;
   @Input() showLabel = true;
+  @Input() draggableAttachment: boolean;
 
   @Output() newImageEvent = new EventEmitter<File>();
 
@@ -26,5 +27,10 @@ export class ImageSelectorComponent implements OnInit {
   public handleFileInput(event): void {
     this.imageAttachment = event.target.files[0];
     this.newImageEvent.emit(this.imageAttachment);
+  }
+
+  public deleteFile(): void {
+    this.imageAttachment = null;
+    this.newImageEvent.emit(null);
   }
 }

@@ -38,10 +38,10 @@
                 <h2>{{ "assessmentBuilder.questions.select.attachments" | translate }}</h2>
                 <div class="attachments-options">
                     <app-image-selector [reset$]="attachmentsResetSubject$.asObservable()"
-                        (newImageEvent)="questionFormService.imageAttachment = $event"
+                        (newImageEvent)="questionFormService.imageAttachment = $event; dominoForm.markAsDirty()"
                         [imageAttachment]="imageAttachment"></app-image-selector>
                     <app-audio-selector [isRecorderEnabled]="true" [reset$]="attachmentsResetSubject$.asObservable()"
-                        (newAudioEvent)="questionFormService.audioAttachment = $event"
+                        (newAudioEvent)="questionFormService.audioAttachment = $event; dominoForm.markAsDirty()"
                         [audioAttachment]="audioAttachment"></app-audio-selector>
                 </div>
             </div>

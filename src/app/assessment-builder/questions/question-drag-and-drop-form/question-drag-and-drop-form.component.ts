@@ -133,7 +133,7 @@ export class QuestionDragAndDropFormComponent implements OnInit {
     return new FormGroup({
       question_type: new FormControl('CUSTOMIZED_DRAG_AND_DROP'),
       title: new FormControl(this.dragAndDropForm.controls.title.value),
-      learning_objective: new FormControl(this.dragAndDropForm.controls.learning_objective.value),
+      learning_objective: new FormControl(this.dragAndDropForm.controls.learning_objective?.value),
       order: new FormControl(this.dragAndDropForm.controls.order.value),
       first_value: new FormControl(this.questionDetails.controls.first_value.value),
       first_style: new FormControl(this.questionDetails.controls.first_style.value),

@@ -165,11 +165,15 @@ export class QuestionSelectFormComponent implements OnInit {
         : i;
       if (image) {
         const index = this.optionsAtt[i].attachments.indexOf(image);
-        this.optionsAtt[i].attachments[index] = {
-          attachment_type: type,
-          file: event,
-          id,
-        };
+        if (event) {
+          this.optionsAtt[i].attachments[index] = {
+            attachment_type: type,
+            file: event,
+            id,
+          };
+        } else {
+          this.optionsAtt[i].attachments.splice(index, 1);
+        }
       }
     }
     const audio = this.optionsAtt[i].attachments.find(att => att.attachment_type === 'AUDIO');
@@ -179,11 +183,15 @@ export class QuestionSelectFormComponent implements OnInit {
         : i;
       if (audio) {
         const index = this.optionsAtt[i].attachments.indexOf(audio);
-        this.optionsAtt[i].attachments[index] = {
-          attachment_type: type,
-          file: event,
-          id
-        };
+        if (event) {
+          this.optionsAtt[i].attachments[index] = {
+            attachment_type: type,
+            file: event,
+            id
+          };
+        } else {
+          this.optionsAtt[i].attachments.splice(index, 1);
+        }
       }
     }
     if ((!audio && type === 'AUDIO') || (!image && type === 'IMAGE')) {
@@ -193,7 +201,7 @@ export class QuestionSelectFormComponent implements OnInit {
         id
       });
     }
-    this.optionsAttachment = true;
+    this.optionsAttachment = this.optionsAtt.some(op => op.attachments.length);
   }
 
   public async setExistingOptionsAttachments(): Promise<void> {
