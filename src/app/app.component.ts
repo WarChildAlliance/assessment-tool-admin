@@ -8,6 +8,9 @@ import { LanguageService } from './core/services/language.service';
 import { UserService } from './core/services/user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmModalComponent } from 'src/app/shared/confirm-modal/confirm-modal.component';
+import { NavigationEnd, Router } from '@angular/router';
+import { Navigation } from 'selenium-webdriver';
+import { filter } from 'rxjs/operators';
 
 
 @Component({
@@ -18,7 +21,8 @@ import { ConfirmModalComponent } from 'src/app/shared/confirm-modal/confirm-moda
 export class AppComponent implements OnInit {
 
   public selfName = '';
-  public showSubmenu = false;
+  public showABSubmenu = false;
+  public showLSubmenu = false;
 
   public languageCode: string = this.languageService.getLanguageCode();
   public languages: Language[] = this.languageService.getLanguages();
@@ -29,7 +33,8 @@ export class AppComponent implements OnInit {
     private dialog: MatDialog,
     private authService: AuthService,
     private userService: UserService,
-    private languageService: LanguageService
+    private languageService: LanguageService,
+    public router: Router
     ) {
       this.translateService.stream('general.adminDashboard').subscribe((translated) => {
         this.titleService.setTitle(translated);
@@ -41,6 +46,12 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Keep submenu active if library or assessment builder is opened
+    // might be better with location
+    this.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe((navEnd: NavigationEnd) => {
+      this.showABSubmenu = navEnd.urlAfterRedirects.indexOf('assessment-builder') >= 0;
+      this.showLSubmenu = navEnd.urlAfterRedirects.indexOf('library') >= 0;
+    });
     this.authService.currentAuthentication.subscribe( authenticated => {
       if (authenticated) {
         this.userService.getSelf().subscribe(res => {
