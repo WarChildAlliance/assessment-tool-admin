@@ -11,10 +11,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { TopicFormDialogComponent } from './topic-form-dialog/topic-form-dialog.component';
+import { QuestionSetFormDialogComponent } from './question-set-form-dialog/question-set-form-dialog.component';
 import { AssessmentSummaryComponent } from './assessment-summary/assessment-summary.component';
 import { AssessmentFormDialogComponent } from './assessment-form-dialog/assessment-form-dialog.component';
-import { TopicDetailsComponent } from './topic-details/topic-details.component';
+import { QuestionSetDetailsComponent } from './question-set-details/question-set-details.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { QuestionInputFormComponent } from './questions/question-input-form/question-input-form.component';
 import { QuestionNumberlineFormComponent } from './questions/question-numberline-form/question-numberline-form.component';
@@ -46,10 +46,10 @@ import {
 @NgModule({
   declarations: [
     AssessmentBuilderComponent,
-    TopicFormDialogComponent,
+    QuestionSetFormDialogComponent,
     AssessmentSummaryComponent,
     AssessmentFormDialogComponent,
-    TopicDetailsComponent,
+    QuestionSetDetailsComponent,
     QuestionInputFormComponent,
     QuestionNumberlineFormComponent,
     QuestionSelectFormComponent,

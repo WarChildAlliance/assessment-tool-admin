@@ -23,7 +23,7 @@ import { StudentsRoutingModule } from './students-routing.module';
 import { StudentsComponent } from './students.component';
 import { StudentDialogComponent } from './student-dialog/student-dialog.component';
 import { CustomButtonModule } from '../shared/button/button.module';
-import { TopicAccessModalComponent } from './topic-access-modal/topic-access-modal.component';
+import { QuestionSetAccessModalComponent } from './question-set-access-modal/question-set-access-modal.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { PreviousButtonModule } from '../shared/previous-button/previous-button.module';
 import { GroupDialogModule } from '../groups/group-dialog/group-dialog.module';
@@ -33,7 +33,7 @@ import { GroupDialogModule } from '../groups/group-dialog/group-dialog.module';
     StudentsComponent,
     StudentDetailComponent,
     StudentDialogComponent,
-    TopicAccessModalComponent
+    QuestionSetAccessModalComponent
   ],
   imports: [
     CommonModule,

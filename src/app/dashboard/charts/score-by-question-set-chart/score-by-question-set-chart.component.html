@@ -1,0 +1,35 @@
+<mat-card>
+  <mat-card-title>{{ "dashboard.scoreByQuestionSetChart.comparisonAverage" | translate }}</mat-card-title>
+  <mat-card-subtitle>{{ "dashboard.firstTry" | translate }}</mat-card-subtitle>
+  <mat-card-content *ngIf="hasData">
+    <div class="left-column">
+      <app-select-assessment (assessmentSelection)="selectChartAssessment($event)" [questionSetSelectionEnabled]="false"
+        [multiple]="false" [displayNonEvaluated]="false"></app-select-assessment>
+      <app-select-group
+        (groupsSelection)="onGroupsSelection($event)"
+        [multiple]="true"
+      ></app-select-group>
+      <h3>
+        {{ "dashboard.scoreByQuestionSetChart.assessmentTitle" | translate }}
+      </h3>
+      <mat-radio-group class="radio-group">
+        <ng-container *ngFor="let student of studentsListChart">
+          <ul>
+            <li>
+              <mat-radio-button [value]="student" [checked]="student === selectedStudent ? true : false"
+                (change)="selectStudent(student)">{{ student.label }}</mat-radio-button>
+            </li>
+          </ul>
+        </ng-container>
+      </mat-radio-group>
+    </div>
+
+    <app-spinner style="margin: auto;" *ngIf="loading" size="large" [variant]="'default'"></app-spinner>
+
+    <div class="main-board__charts-container__chart" [hidden]="!selectionHasData || loading">
+      <canvas id="currentChart"></canvas>
+    </div>
+    <p *ngIf="!selectionHasData && !loading" class="selection-no-data">{{ "general.noData" | translate }}</p>
+  </mat-card-content>
+  <p *ngIf="!hasData" style="text-align: center;">{{ "general.noData" | translate }}</p>
+</mat-card>

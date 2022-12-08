@@ -16,29 +16,29 @@ const routes: Routes = [
     data: {
       breadcrumb: [
         { label: 'general.assessmentsOverview', url: '/assessments' },
-        { label: 'general.topics', url: '' }
+        { label: 'general.questionSets', url: '' }
       ]
     },
   },
   {
-    path: ':assessment_id/topics/:topic_id',
+    path: ':assessment_id/question-sets/:question_set_id',
     component: QuestionsListComponent,
     data: {
       breadcrumb: [
         { label: 'general.assessmentsOverview', url: '/assessments' },
-        { label: 'general.topics', url: '/library/:assessment_id' },
+        { label: 'general.questionSets', url: '/library/:assessment_id' },
         { label: 'general.questions', url: '' }
       ]
     },
   },
   {
-    path: ':assessment_id/topics/:topic_id/questions/:question_id',
+    path: ':assessment_id/question-sets/:question_set_id/questions/:question_id',
     component: QuestionDetailComponent,
     data: {
       breadcrumb: [
         { label: 'general.assessmentsOverview', url: '/library' },
-        { label: 'general.topics', url: '/library/:assessment_id' },
-        { label: 'general.questions', url: '/library/:assessment_id/topics/:topic_id' },
+        { label: 'general.questionSets', url: '/library/:assessment_id' },
+        { label: 'general.questions', url: '/library/:assessment_id/question-sets/:question_set_id' },
         { label: 'general.questionDetails', url: '' }
       ]
     },

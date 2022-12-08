@@ -16,7 +16,7 @@ export class NormalDragAndDropFormComponent implements OnInit {
   @ViewChild('dragItems') dragItemsElement: ElementRef;
 
   @Input() assessmentId: string;
-  @Input() topicId: string;
+  @Input() questionSetId: string;
   @Input() question: any;
   @Input() toClone: boolean;
   @Input() createDraggableOptions$: Observable<any>;
@@ -172,7 +172,7 @@ export class NormalDragAndDropFormComponent implements OnInit {
         });
 
         this.assessmentService.addDraggableOption(
-          this.assessmentId.toString(), this.topicId.toString(), question.id,
+          this.assessmentId.toString(), this.questionSetId.toString(), question.id,
           { area_option: areaId, question_drag_and_drop: question.id }
         ).subscribe(dragOptionCreated => {
           this.questionFormService.saveAttachments(
@@ -185,7 +185,7 @@ export class NormalDragAndDropFormComponent implements OnInit {
   }
 
   private async getDraggableOptions(): Promise<any> {
-    this.assessmentService.getDraggableOptions(this.assessmentId.toString(), this.topicId.toString(), this.question.id)
+    this.assessmentService.getDraggableOptions(this.assessmentId.toString(), this.questionSetId.toString(), this.question.id)
       .subscribe(async dragOptions => {
         await dragOptions.forEach(async element => {
           // Convert the drag options images objects retrieved from the back-end to files

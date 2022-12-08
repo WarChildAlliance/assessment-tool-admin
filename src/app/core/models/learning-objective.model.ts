@@ -1,9 +1,9 @@
-import { Subtopic } from './subtopic.model';
+import { Topic } from './topic.model';
 
 export interface LearningObjective {
   code: string;
   grade: number;
-  subtopic: Subtopic;
+  topic: Topic;
   name_eng: string;
   name_ara: string;
 }

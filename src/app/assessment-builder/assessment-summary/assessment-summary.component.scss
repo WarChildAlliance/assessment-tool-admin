@@ -34,10 +34,10 @@
         }
     }
 
-    .topics-container {
+    .question-sets-container {
         position: relative;
 
-        .topics {
+        .question-sets {
             position: relative;
             display: flex;
             flex-direction: row;
@@ -50,12 +50,12 @@
             scroll-padding: 50px;
             padding: 10px;
 
-            .add-topic {
+            .add-question-set {
                 height: 10rem;
                 cursor: pointer;
                 text-align: center;
                 position: relative;
-                .add-topic-text {
+                .add-question-set-text {
                     display: flex;
                     align-items: center;
                     margin: 0;
@@ -65,7 +65,7 @@
                     transform: translate(-50%, -50%);
                 }
             }
-            .topic-buttons {
+            .question-set-buttons {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
@@ -92,7 +92,7 @@
                     position: absolute;
                     top: 10px;
                 }
-                .topic-title {
+                .question-set-title {
                     margin-top: 4px;
                     font-weight: 500;
                 }
@@ -110,7 +110,7 @@
                     font-size: 12px;
                     color: rgb(86, 86, 86);
                 }
-                .topic-counter {
+                .question-set-counter {
                     position: absolute;
                     top: 0;
                     right: 0;
@@ -129,7 +129,7 @@
             .assessment-details {
                 background-color: #f2f2f2;
             }
-            .topics {
+            .question-sets {
                 mat-card {
                     background-color: #f2f2f2;
                 }
@@ -153,7 +153,7 @@
         top: 10px;
     }
 
-    .topic-title {
+    .question-set-title {
         margin-top: 4px;
         font-weight: 500;
     }
@@ -174,7 +174,7 @@
         color: rgb(86, 86, 86);
     }
 
-    .topic-buttons {
+    .question-set-buttons {
         display: flex;
         justify-content: space-between;
         align-items: center;

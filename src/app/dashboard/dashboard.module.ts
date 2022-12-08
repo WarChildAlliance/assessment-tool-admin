@@ -11,8 +11,8 @@ import { MatCardModule } from '@angular/material/card';
 import { ChartsModule } from 'ng2-charts';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { QuestionsOverviewChartComponent } from './charts/questions-overview-chart/questions-overview-chart.component';
-import { ScoreByTopicChartComponent } from './charts/score-by-topic-chart/score-by-topic-chart.component';
-import { ScoreByTopicTableComponent } from './charts/score-by-topic-table/score-by-topic-table.component';
+import { ScoreByQuestionSetChartComponent } from './charts/score-by-question-set-chart/score-by-question-set-chart.component';
+import { ScoreByQuestionSetTableComponent } from './charts/score-by-question-set-table/score-by-question-set-table.component';
 import { AnswersOverviewComponent } from './charts/answers-overview/answers-overview.component';
 import { SelectGroupComponent } from './select-group/select-group.component';
 import { CustomSpinnerModule } from '../shared/spinner/spinner.module';
@@ -21,8 +21,8 @@ import { CustomSpinnerModule } from '../shared/spinner/spinner.module';
   declarations: [
     DashboardComponent,
     QuestionsOverviewChartComponent,
-    ScoreByTopicChartComponent,
-    ScoreByTopicTableComponent,
+    ScoreByQuestionSetChartComponent,
+    ScoreByQuestionSetTableComponent,
     AnswersOverviewComponent,
     SelectGroupComponent
   ],

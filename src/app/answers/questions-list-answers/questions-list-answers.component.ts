@@ -11,7 +11,7 @@ import { AnswerService } from 'src/app/core/services/answer.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { StudentTableData } from 'src/app/core/models/student-table-data.model';
-import { TopicTableData } from 'src/app/core/models/topic-table-data.model';
+import { QuestionSetTableData } from 'src/app/core/models/question-set-table-data.model';
 
 @Component({
   selector: 'app-questions-list-answers',
@@ -24,11 +24,11 @@ export class QuestionsListAnswersComponent implements OnInit {
 
   public currentStudentId: string;
   public assessmentId: string;
-  public topicId: string;
+  public questionSetId: string;
 
   public questionsAnswersDataSource: MatTableDataSource<QuestionTableData> = new MatTableDataSource([]);
   public currentStudent: StudentTableData;
-  public currentTopic: TopicTableData;
+  public currentQuestionSet: QuestionSetTableData;
 
   public displayedColumns: TableColumn[] = [
     { key: 'title', name: 'answers.questionsListAnswers.questionTitle' },
@@ -61,18 +61,19 @@ export class QuestionsListAnswersComponent implements OnInit {
     forkJoin({
       param1: this.route.params.subscribe(params => { this.currentStudentId = params.student_id; }),
       param2: this.route.params.subscribe(params => { this.assessmentId = params.assessment_id; }),
-      param3: this.route.params.subscribe(params => { this.topicId = params.topic_id; })
+      param3: this.route.params.subscribe(params => { this.questionSetId = params.question_set_id; })
 
     }).pipe(
       catchError(error => of(error))
     ).subscribe(() => {
-      this.answerService.getQuestionsAnwsers(this.currentStudentId, this.assessmentId, this.topicId)
+      this.answerService.getQuestionsAnwsers(this.currentStudentId, this.assessmentId, this.questionSetId)
         .subscribe(questions => {
           this.questionsAnswersDataSource = new MatTableDataSource(questions);
         });
 
-      this.answerService.getTopicsAnswersDetails(this.currentStudentId, this.assessmentId, this.topicId).subscribe(topic => {
-          this.currentTopic = topic;
+      this.answerService.getQuestionSetsAnswersDetails(this.currentStudentId,
+        this.assessmentId, this.questionSetId).subscribe(questionSet => {
+          this.currentQuestionSet = questionSet;
         });
 
       this.userService.getStudentDetails(this.currentStudentId).subscribe(student => {
@@ -84,12 +85,12 @@ export class QuestionsListAnswersComponent implements OnInit {
   public onOpenDetails(questionId: string): void {
     /*
     this.router.navigate([`students/${this.currentStudentId}/assessments/
-      ${this.assessmentId}/topics/${this.topicId}/questions/${questionId}`]);
+      ${this.assessmentId}question-sets/${this.questionSetId}/questions/${questionId}`]);
     */
   }
 
   public onCustomAction(element: any): void {
-    this.assessmentService.getQuestionDetails(this.assessmentId, this.topicId, element.id).subscribe(details => {
+    this.assessmentService.getQuestionDetails(this.assessmentId, this.questionSetId, element.id).subscribe(details => {
       this.questionDetails = details;
 
       // To add scroll in the dialog because the drag and drop component has a height that can cause problems

@@ -9,7 +9,7 @@ import { GroupTableData, GroupSubMenuTableData, GroupActionsButtonsTableData } f
 import { GroupDialogComponent } from './group-dialog/group-dialog.component';
 import { AlertService } from '../core/services/alert.service';
 import { ConfirmModalComponent } from '../shared/confirm-modal/confirm-modal.component';
-import { TopicAccessesBuilderComponent } from '../shared/topic-accesses-builder/topic-accesses-builder.component';
+import { QuestionSetAccessesBuilderComponent } from '../shared/question-set-accesses-builder/question-set-accesses-builder.component';
 
 @Component({
   selector: 'app-groups',
@@ -136,7 +136,7 @@ export class GroupsComponent implements OnInit {
 
   public onAssignAssessment(): void {
     const groupsList = this.selectedGroups.map(group => group.id);
-    this.dialog.open(TopicAccessesBuilderComponent, {
+    this.dialog.open(QuestionSetAccessesBuilderComponent, {
       data: { groupsList }
     });
   }
