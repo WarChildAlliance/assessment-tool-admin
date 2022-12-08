@@ -37,6 +37,11 @@ export class AudioSelectorComponent implements OnInit {
     this.newAudioEvent.emit(this.audioAttachment);
   }
 
+  public deleteFile(): void {
+    this.audioAttachment = null;
+    this.newAudioEvent.emit(null);
+  }
+
   private blobToFile = (theBlob: Blob, fileName: string): File => new File([theBlob], fileName, {
       lastModified: new Date().getTime(),
       type: theBlob.type,

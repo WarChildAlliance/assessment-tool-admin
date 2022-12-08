@@ -32,7 +32,7 @@
             <div style="margin-right: 20px;">
                 <app-image-selector
                     [reset$]="attachmentsResetSubject$.asObservable()"
-                    (newImageEvent)="questionFormService.imageAttachment = $event"
+                    (newImageEvent)="questionFormService.imageAttachment = $event; inputForm.markAsDirty()"
                     [imageAttachment]="imageAttachment"
                 ></app-image-selector>
             </div>
@@ -40,7 +40,7 @@
                 <app-audio-selector
                     [isRecorderEnabled]="true"
                     [reset$]="attachmentsResetSubject$.asObservable()"
-                    (newAudioEvent)="questionFormService.audioAttachment = $event"
+                    (newAudioEvent)="questionFormService.audioAttachment = $event; inputForm.markAsDirty()"
                     [audioAttachment]="audioAttachment"
                 ></app-audio-selector>
             </div>

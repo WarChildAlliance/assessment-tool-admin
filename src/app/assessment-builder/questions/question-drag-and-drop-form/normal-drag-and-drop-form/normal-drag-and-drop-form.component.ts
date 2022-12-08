@@ -25,6 +25,7 @@ export class NormalDragAndDropFormComponent implements OnInit {
   @Output() changedBackgroundImage = new EventEmitter<boolean>();
 
   public attachmentsResetSubject$ = new Subject<void>();
+  public draggableAttachment = true;
 
   public selection: SelectionModel<any> = new SelectionModel<any>(true, []);
 

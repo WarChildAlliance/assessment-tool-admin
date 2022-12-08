@@ -41,7 +41,7 @@ export class QuestionFormService {
 
   set imageAttachment(event: File) {
     this.imageAttachmentFile = event;
-    this.changedImage = true;
+    this.changedImage = event ? true : false;
   }
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
@@ -51,7 +51,7 @@ export class QuestionFormService {
 
   set audioAttachment(event: File) {
     this.audioAttachmentFile = event;
-    this.changedAudio = true;
+    this.changedAudio = event ? true : false;
   }
 
   public validateCalcul = (form: FormGroup): any => {
@@ -169,19 +169,29 @@ export class QuestionFormService {
     return new Promise (resolve => {
       this.assessmentService.editQuestion(data.assessmentId, data.questionSetId, data.question.id, data.formGroup)
       .subscribe(res => {
-        if (this.imageAttachment && this.changedImage) {
-          this.updateAttachments(
-            data.assessmentId, 'IMAGE',
-            {name: 'question', value: res.id},
-            this.imageAttachment, false, null, data.question
-          );
+        if (this.changedImage) {
+           if (this.imageAttachment) {
+             this.updateAttachments(
+               data.assessmentId, 'IMAGE',
+               {name: 'question', value: res.id},
+               this.imageAttachment, false, null, data.question
+             );
+           } else {
+              const attachment = data.question.attachments.find(a => a.attachment_type === 'IMAGE' && a.background_image === false);
+              this.assessmentService.deleteAttachments(data.assessmentId, attachment.id).subscribe();
+           }
         }
-        if (this.audioAttachment && this.changedAudio) {
-          this.updateAttachments(
-            data.assessmentId, 'AUDIO',
-            {name: 'question', value: res.id},
-            this.audioAttachment, false, null, data.question
-          );
+        if (this.changedAudio) {
+          if (this.audioAttachment) {
+            this.updateAttachments(
+              data.assessmentId, 'AUDIO',
+              {name: 'question', value: res.id},
+              this.audioAttachment, false, null, data.question
+            );
+          } else {
+            const attachment = data.question.attachments.find(a => a.attachment_type === 'AUDIO' && a.background_image === false);
+            this.assessmentService.deleteAttachments(data.assessmentId, attachment.id).subscribe();
+          }
         }
         resolve(res);
       });
