@@ -155,7 +155,7 @@ export class QuestionFormService {
   // Creates question, saves image and audio attachments and return question created
   public createQuestion(data: any): Promise<any> {
     return new Promise(resolve => {
-      this.assessmentService.createQuestion(data.formGroup, data.topicId, data.assessmentId)
+      this.assessmentService.createQuestion(data.formGroup, data.questionSetId, data.assessmentId)
       .subscribe((res) => {
         if (this.imageAttachment) {
           this.saveAttachments(
@@ -177,7 +177,7 @@ export class QuestionFormService {
   // Edits question, saves image and audio attachments (if changed) and return question edited
   public editQuestion(data: any): Promise<any> {
     return new Promise (resolve => {
-      this.assessmentService.editQuestion(data.assessmentId, data.topicId, data.question.id, data.formGroup)
+      this.assessmentService.editQuestion(data.assessmentId, data.questionSetId, data.question.id, data.formGroup)
       .subscribe(res => {
         if (this.imageAttachment && this.changedImage) {
           this.updateAttachments(

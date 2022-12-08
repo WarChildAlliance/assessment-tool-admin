@@ -1,16 +1,16 @@
-import { Topic } from './topic.models';
-import { Subtopic } from './subtopic.model';
+import { QuestionSet } from './question-set.model';
+import { Topic } from './topic.model';
 
 export interface Assessment {
   id: number;
   title: string;
   grade: number;
   subject: Subjects;
-  subtopic?: Subtopic;
+  topic?: Topic;
   language_name?: string;
   country_name?: string;
   private: boolean;
-  topics?: Topic[];
+  question_sets?: QuestionSet[];
 }
 
 enum Subjects {

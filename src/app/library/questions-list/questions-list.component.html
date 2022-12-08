@@ -37,8 +37,8 @@
       <app-question-numberline [question]="questionDetails" [evaluated]="true"></app-question-numberline>
     </mat-card>
 
-    <mat-card *ngIf="questionDetails.question_type === 'DRAG_AND_DROP'">
-      <app-question-drag-and-drop [question]="questionDetails" [evaluated]="true" [assessmentId]="assessmentId" [topicId]="topicId">
+    <mat-card *ngIf="questionDetails && questionDetails.question_type === 'DRAG_AND_DROP'">
+      <app-question-drag-and-drop [question]="questionDetails" [evaluated]="true" [assessmentId]="assessmentId" [questionSetId]="questionSetId">
       </app-question-drag-and-drop>
     </mat-card>
 

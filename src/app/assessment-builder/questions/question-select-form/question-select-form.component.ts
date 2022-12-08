@@ -8,7 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { LanguageService } from 'src/app/core/services/language.service';
 
 interface DialogData {
-  topicId?: string;
+  questionSetId?: string;
   order?: any;
   question?: any;
   toClone?: boolean;
@@ -29,7 +29,7 @@ export class QuestionSelectFormComponent implements OnInit {
   public selectQuestion: boolean;
 
   public assessmentId: string;
-  public topicId: string;
+  public questionSetId: string;
   public order: any;
   public question: any;
   public toClone: boolean;
@@ -88,7 +88,7 @@ export class QuestionSelectFormComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     if (this.data?.assessmentId) { this.assessmentId = this.data.assessmentId; }
-    if (this.data?.topicId) { this.topicId = this.data.topicId; }
+    if (this.data?.questionSetId) { this.questionSetId = this.data.questionSetId; }
     if (this.data?.order) { this.order = this.data.order; }
     if (this.data?.question) { this.question = this.data.question; }
     if (this.data?.toClone) { this.toClone = this.data.toClone; }
@@ -136,7 +136,7 @@ export class QuestionSelectFormComponent implements OnInit {
     const data = {
       toClone: this.toClone,
       formGroup: this.selectForm.value,
-      topicId: this.topicId.toString(),
+      questionSetId: this.questionSetId.toString(),
       assessmentId: this.assessmentId.toString(),
       question: this.question
     };

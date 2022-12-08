@@ -1,8 +1,8 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { AnswerDetails } from 'src/app/core/models/answer-details.model';
-import { TopicAccessStudents } from 'src/app/core/models/topic-access-students.model';
-import { TopicAnswer } from 'src/app/core/models/topic-answer.model';
-import { TopicDashboard } from 'src/app/core/models/topic-dashboard.model';
+import { QuestionSetAccessStudents } from 'src/app/core/models/question-set-access-students.model';
+import { QuestionSetAnswer } from 'src/app/core/models/question-set-answer.model';
+import { QuestionSetDashboard } from 'src/app/core/models/question-set-dashboard.model';
 import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
@@ -12,11 +12,11 @@ import { UserService } from 'src/app/core/services/user.service';
 })
 export class AnswersOverviewComponent implements OnInit {
 
-  public studentsList: TopicAccessStudents[];
+  public studentsList: QuestionSetAccessStudents[];
   public assessmentId: string;
-  public topicId: string;
-  public assessmentTopicAnswer: string;
-  public studentTopicAnswers: TopicAnswer[];
+  public questionSetId: string;
+  public assessmentQuestionSetAnswer: string;
+  public studentQuestionSetAnswers: QuestionSetAnswer[];
 
   public answerDetails: AnswerDetails;
 
@@ -24,7 +24,7 @@ export class AnswersOverviewComponent implements OnInit {
 
   public index = 0;
 
-  public selectedStudent: TopicAccessStudents;
+  public selectedStudent: QuestionSetAccessStudents;
 
   public hasData = true;
   public loading = true;
@@ -35,14 +35,14 @@ export class AnswersOverviewComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  public getStudentListForTopic(groupID?: number[]): void {
+  public getStudentListForQuestionSet(groupID?: number[]): void {
     this.loading = true;
     const filteringParams = groupID?.length ? { groups: groupID } : null;
 
-    this.userService.getStudentsListForATopic(this.topicId, filteringParams)
+    this.userService.getStudentsListForAQuestionSet(this.questionSetId, filteringParams)
     .subscribe(studentsList => {
       this.studentsList = studentsList;
-      this.selectedStudent = this.studentsList.find(s => s.topic_first_try !== null);
+      this.selectedStudent = this.studentsList.find(s => s.question_set_first_try !== null);
       if (this.selectedStudent) {
         this.selectStudent(this.selectedStudent);
       }
@@ -50,34 +50,34 @@ export class AnswersOverviewComponent implements OnInit {
     });
   }
 
-  public onTopicSelection(assessmentTopicInfos: {assessmentId: string; topic: TopicDashboard}): void {
+  public onQuestionSetSelection(assessmentQuestionSetInfos: {assessmentId: string; questionSet: QuestionSetDashboard}): void {
     this.loading = true;
-    if (assessmentTopicInfos && assessmentTopicInfos.topic.started) {
-      this.assessmentId = assessmentTopicInfos.assessmentId;
-      this.topicId = assessmentTopicInfos.topic.id;
-      this.evaluated = assessmentTopicInfos.topic.evaluated;
-      this.getStudentListForTopic();
+    if (assessmentQuestionSetInfos && assessmentQuestionSetInfos.questionSet.started) {
+      this.assessmentId = assessmentQuestionSetInfos.assessmentId;
+      this.questionSetId = assessmentQuestionSetInfos.questionSet.id;
+      this.evaluated = assessmentQuestionSetInfos.questionSet.evaluated;
+      this.getStudentListForQuestionSet();
     } else {
       this.hasData = false;
       this.loading = false;
     }
   }
 
-  public selectStudent(student: TopicAccessStudents): void {
+  public selectStudent(student: QuestionSetAccessStudents): void {
     this.loading = true;
     this.selectedStudent = student;
-    if (student.topic_first_try) {
-      this.assessmentTopicAnswer = student.topic_first_try.id;
-      this.userService.getStudentTopicAnswers(this.topicId, student.topic_first_try.id).subscribe(topicAnswers => {
-        this.studentTopicAnswers = topicAnswers;
-        this.displayAnswerDetails(this.studentTopicAnswers[0]);
+    if (student.question_set_first_try) {
+      this.assessmentQuestionSetAnswer = student.question_set_first_try.id;
+      this.userService.getStudentQuestionSetAnswers(this.questionSetId, student.question_set_first_try.id).subscribe(questionSetAnswers => {
+        this.studentQuestionSetAnswers = questionSetAnswers;
+        this.displayAnswerDetails(this.studentQuestionSetAnswers[0]);
       });
     }
     this.loading = false;
   }
 
-  public displayAnswerDetails(answer: TopicAnswer): void {
-    this.userService.getAnswerDetails(this.topicId, this.assessmentTopicAnswer, answer.id).subscribe(answerDetails => {
+  public displayAnswerDetails(answer: QuestionSetAnswer): void {
+    this.userService.getAnswerDetails(this.questionSetId, this.assessmentQuestionSetAnswer, answer.id).subscribe(answerDetails => {
       this.answerDetails = answerDetails;
       this.cdr.detectChanges();
     });

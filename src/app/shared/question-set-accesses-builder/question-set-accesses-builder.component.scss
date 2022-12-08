@@ -1,0 +1,130 @@
+.dialog-container {
+    position: relative;
+
+    h1 {
+        display: inline-flex;;
+    }
+    .close-dialog-button {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 2px;
+        border-radius: 9999px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: rgb(223, 223, 223);
+            transition-property: background-color;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 150ms;
+        }
+        mat-icon {
+            display: block;
+            scale: .8;
+        }
+    }
+}
+.question-set-accesses-builder {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 30px;
+    height: 420px;
+    overflow-y: auto;
+    min-width: 60vw;
+
+    &__list {
+        min-width: 12vw;
+        padding: 0 12px;
+
+        &.-students {
+            mat-icon {
+                margin-right: 8px;
+            }
+        }
+
+        & > .header {
+            display: flex;
+            margin-bottom: 32px;
+            font-size: 16px;
+            font-weight: 500;
+            justify-content: space-evenly;
+        }
+
+        &__set-dates {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+
+            .apply-all {
+                margin-top: 5px;
+                margin-left: 13px;
+            }
+        }
+    }
+
+    &__list-row {
+        min-height: 34px;
+        display: flex !important;
+        align-items: center;
+        margin-bottom: 12px;
+
+        &.-assessment {
+            ::ng-deep .mat-radio-label-content {
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+
+        &.-question-set-access {
+            justify-content: space-between;
+        }
+
+    }
+
+    &__submit{
+        margin-left: 6px;
+        margin-right: 10px;
+        padding: 1px 20px;
+    }
+
+    &__cancel{
+        background-color: rgb(240, 240, 240);
+        padding: 1px 20px;
+    }
+
+    ::ng-deep mat-form-field {
+        margin-left: 12px;
+
+        .mat-form-field-wrapper {
+            margin: 0 !important;
+            padding: 0;
+
+            & > .mat-form-field-flex {
+                align-items: flex-end;
+
+                & > .mat-form-field-infix {
+                    width: 170px !important;
+                    padding: 0.4em 0px !important;
+                    border-top: none !important;
+
+                    .mat-date-range-input-container {
+                        align-items: normal !important;
+                    }
+                }
+
+                .mat-form-field-suffix .mat-icon-button {
+                    width: auto !important;
+                    height: 38px !important;
+                }
+            }
+        }
+    }
+}
+
+.notifier {
+    color: red;
+}
+
+.dialog-buttons {
+    align-items: center;
+}
