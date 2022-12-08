@@ -1,7 +1,6 @@
 <div class="main-board">
   <app-table [tableData]="assessmentsDataSource" [displayedColumns]="displayedColumns"
-    [isSelectable]="false" (openDetailsEvent)="onOpenDetails($event)"
-    [pageConfig]="'library'" [libraryFilters]="true"
+    [isSelectable]="false" [pageConfig]="'library'" [libraryFilters]="true"
     (filtersChangedEvent)="onTableFiltersChange($event)"
     (buttonClickedEvent)="openAssignTopicDialog($event)"
     (resetFiltersEvent)="resetFilters()">

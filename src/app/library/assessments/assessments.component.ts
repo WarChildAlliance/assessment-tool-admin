@@ -1,22 +1,21 @@
 import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { Assessment } from '../core/models/assessment.model';
-import { AssessmentService } from '../core/services/assessment.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { TableColumn } from '../core/models/table-column.model';
-import { TableFilterLibraryData } from '../core/models/table-filter.model';
-import { TopicAccessesBuilderComponent } from '../shared/topic-accesses-builder/topic-accesses-builder.component';
-import { Topic } from '../core/models/topic.models';
+import { Assessment } from 'src/app/core/models/assessment.model';
+import { TableColumn } from 'src/app/core/models/table-column.model';
+import { AssessmentService } from 'src/app/core/services/assessment.service';
+import { TopicAccessesBuilderComponent } from 'src/app/shared/topic-accesses-builder/topic-accesses-builder.component';
+import { Topic } from 'src/app/core/models/topic.models';
+import { TableFilterLibraryData } from 'src/app/core/models/table-filter.model';
 
 @Component({
   selector: 'app-library',
-  templateUrl: './library.component.html',
-  styleUrls: ['./library.component.scss']
+  templateUrl: './assessments.component.html',
+  styleUrls: ['./assessments.component.scss']
 })
-export class LibraryComponent implements OnInit, AfterViewInit {
+export class AssessmentsComponent implements OnInit, AfterViewInit {
 
   @ViewChild('createAssessmentDialog') createAssessmentDialog: TemplateRef<any>;
 
@@ -44,7 +43,6 @@ export class LibraryComponent implements OnInit, AfterViewInit {
 
   constructor(
     private assessmentService: AssessmentService,
-    private router: Router,
     private translateService: TranslateService,
     private dialog: MatDialog
   ) {
@@ -75,10 +73,6 @@ export class LibraryComponent implements OnInit, AfterViewInit {
       });
       this.assessmentsDataSource = new MatTableDataSource(assessmentsList);
     });
-  }
-
-  public onOpenDetails(id: string): void {
-    this.router.navigate([`/library/${id}`]);
   }
 
   public togglePrivate(event: { checked: boolean }): void {
