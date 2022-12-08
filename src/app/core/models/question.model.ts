@@ -49,6 +49,7 @@ export interface QuestionDomino extends Question {
 
 export interface QuestionSelect extends Question {
   options: SelectOption[];
+  show_options_value: boolean;
 }
 
 export interface QuestionSort extends Question {

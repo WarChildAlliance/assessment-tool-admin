@@ -57,6 +57,7 @@ export class QuestionSelectFormComponent implements OnInit {
     title: new FormControl(''),
     value: new FormControl('', [Validators.required]),
     order: new FormControl('', [Validators.required]),
+    show_options_value: new FormControl('', [Validators.required]),
     // display: new FormControl('Grid', [Validators.required]),
     options: new FormArray([
       this.formBuilder.group({
@@ -105,6 +106,7 @@ export class QuestionSelectFormComponent implements OnInit {
         question_type: 'SELECT',
         value: '',
         title: '',
+        show_options_value: false,
         order: this.order, //  display: 'Grid',
         options: [{ title: '', valid: false, value: '' }],
       });
@@ -293,6 +295,7 @@ export class QuestionSelectFormComponent implements OnInit {
         value: q.value,
         title: q.title,
         order: this.toClone ? this.order : this.question.order,
+        show_options_value: q.show_options_value,
         // display: q.display_type ? this.displayTypeFormat(q.display_type) : 'Grid',
         options,
       });
@@ -351,6 +354,7 @@ export class QuestionSelectFormComponent implements OnInit {
       value: '',
       title: '',
       order: this.order, // display: 'Grid',
+      show_options_value: false,
       options: [{ title: '', valid: false, value: '' }],
     });
 

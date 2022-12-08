@@ -21,6 +21,7 @@
                         <ng-container *ngFor="let attachment of option.attachments">
                             <mat-icon (click)="playAudio(attachment.file)" *ngIf="attachment.attachment_type === 'AUDIO'">volume_up</mat-icon>
                         </ng-container>
+                        <p *ngIf="question.show_options_value">{{ option.value }}</p>
                     </mat-card-actions>
                 </mat-card>
             </div>
@@ -30,6 +31,7 @@
                         <ng-container *ngFor="let attachment of option.attachments">
                             <mat-icon (click)="playAudio(attachment.file)" *ngIf="attachment.attachment_type === 'AUDIO'">volume_up</mat-icon>
                         </ng-container>
+                        <p *ngIf="question.show_options_value">{{ option.value }}</p>
                 </div>
             </ng-template>
         </ng-container>
@@ -56,6 +58,7 @@
                     <ng-container *ngFor="let attachment of option.attachments">
                         <mat-icon (click)="playAudio(attachment.file)" *ngIf="attachment.attachment_type === 'AUDIO'">volume_up</mat-icon>
                     </ng-container>
+                    <p *ngIf="question.show_options_value">{{ option.value }}</p>
                 </mat-card-actions>
             </mat-card>
         </div>
@@ -69,6 +72,7 @@
                 <ng-container *ngFor="let attachment of option.attachments">
                     <mat-icon (click)="playAudio(attachment.file)" *ngIf="attachment.attachment_type === 'AUDIO'">volume_up</mat-icon>
                 </ng-container>
+                <p *ngIf="question.show_options_value">{{ option.value }}</p>
             </div>
         </ng-template>
     </ng-container>

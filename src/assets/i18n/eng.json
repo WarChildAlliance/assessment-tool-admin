@@ -232,7 +232,8 @@
         "isCorrectAnswer": "Is correct answer?",
         "option": "option",
         "options": "Options",
-        "optionsValidAnswerErrors": "Questions can only have one correct answer."
+        "optionsValidAnswerErrors": "Questions can only have one correct answer.",
+        "showOptionsValue": "Show options value"
       },
       "sel" : {
         "mathSelfEfficacy": "Math Self-Efficacy",
