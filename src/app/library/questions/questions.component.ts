@@ -1,20 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { QuestionTableData } from 'src/app/core/models/question-table-data.model';
 import { TableColumn } from 'src/app/core/models/table-column.model';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
-import { Observable } from 'rxjs';
 import { TableFilterLibraryData } from 'src/app/core/models/table-filter.model';
 
 @Component({
   selector: 'app-question-list',
-  templateUrl: './questions-list.component.html',
-  styleUrls: ['./questions-list.component.scss']
+  templateUrl: './questions.component.html',
+  styleUrls: ['./questions.component.scss']
 })
-export class QuestionsListComponent implements OnInit {
+export class QuestionsComponent implements OnInit {
 
   public assessmentId: string;
   public topicId: string;
@@ -34,13 +31,10 @@ export class QuestionsListComponent implements OnInit {
   public selectedQuestions: any[] = [];
   public questionDetails: any;
   public showQuestionPreview = false;
-  public previousPageUrl = '';
 
   constructor(
     private assessmentService: AssessmentService,
-    private route: ActivatedRoute,
-    private translateService: TranslateService,
-    private router: Router
+    private translateService: TranslateService
   ) {
     this.displayedColumns.forEach(col => {
       this.translateService.stream(col.name).subscribe(translated => col.name = translated);
@@ -48,18 +42,7 @@ export class QuestionsListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const idUrl = this.route.snapshot.paramMap.get('topic_id') || '';
-    this.previousPageUrl = this.router.url.replace(`topics/${idUrl}`, '');
-    this.route.paramMap.pipe(
-      switchMap((params) => {
-        this.assessmentId = params.get('assessment_id');
-        this.topicId = params.get('topic_id');
-
-        return this.getTopicQuestions();
-      })
-    ).subscribe((questionsList) => {
-      this.setupTableData(questionsList);
-    });
+    this.getQuestions();
   }
 
   // This eventReceiver triggers a thousand times when user does "select all". We should find a way to improve this. (debouncer ?)
@@ -83,26 +66,16 @@ export class QuestionsListComponent implements OnInit {
     });
   }
 
-  public onTableFiltersChange(tableFiltersData: TableFilterLibraryData): void {
-    this.getTopicQuestions(tableFiltersData).subscribe(questions => {
-      this.setupTableData(questions);
-    });
+  public onTableFiltersChange(tableFiltersData?: TableFilterLibraryData): void {
+    this.getQuestions(tableFiltersData);
   }
 
-  public resetFilters(): void {
-    this.getTopicQuestions().subscribe(questions => {
-      this.setupTableData(questions);
+  private getQuestions(filteringParams?: object): void {
+    this.assessmentService.getAllQuestionsList(filteringParams).subscribe(questionsList => {
+      questionsList.forEach(question => {
+        question.learning_objective = question.learning_objective.name_eng;
+      });
+      this.questionsDataSource = new MatTableDataSource(questionsList);
     });
-  }
-
-  private getTopicQuestions(filteringParams?: object): Observable<any[]> {
-    return this.assessmentService.getTopicQuestions(this.assessmentId, this.topicId, filteringParams);
-  }
-
-  private setupTableData(questionsList: any[]): void {
-    questionsList.forEach(question => {
-      question.learning_objective = question.learning_objective.name_eng;
-    });
-    this.questionsDataSource = new MatTableDataSource(questionsList);
   }
 }
