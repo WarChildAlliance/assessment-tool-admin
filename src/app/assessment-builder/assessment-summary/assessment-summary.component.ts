@@ -51,7 +51,6 @@ export class AssessmentSummaryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.orderQuestionSets();
   }
 
   public openQuestionSetFormDialog(assessment: any): void {
@@ -127,20 +126,6 @@ export class AssessmentSummaryComponent implements OnInit {
           this.getAssessmentDetails(assessmentId);
         });
       }
-    });
-  }
-
-  public archiveQuestionSet(event: MouseEvent, assessmentId, questionSetId, archived): void {
-    event.stopPropagation();
-
-    const formData: FormData = new FormData();
-    formData.append('archived', archived);
-
-    this.assessmentService.editQuestionSet(assessmentId.toString(), questionSetId, formData).subscribe(() => {
-      this.alertService.success(this.translateService.instant('general.editSuccess', {
-        type: this.translateService.instant('general.questionSet')
-      }));
-      this.getAssessmentDetails(assessmentId);
     });
   }
 
@@ -257,25 +242,10 @@ export class AssessmentSummaryComponent implements OnInit {
     });
   }
 
-  private orderQuestionSets(): void {
-    // To order and display unarchived question set cards first
-    this.assessment.question_sets.sort((a, b) => {
-      if (a.archived > b.archived) {
-        return 1;
-      }
-      if (a.archived < b.archived) {
-        return -1;
-      }
-
-      return 0;
-    });
-  }
-
   private getAssessmentDetails(assessmentId: string): void {
     this.assessmentService.getAssessmentQuestionSets(assessmentId).subscribe(() => {
       this.assessmentService.getAssessmentDetails(assessmentId).subscribe(assessmentDetails => {
         this.assessment = assessmentDetails;
-        this.orderQuestionSets();
       });
     });
   }

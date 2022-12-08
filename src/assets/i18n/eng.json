@@ -114,7 +114,6 @@
     "libraryHeaderPt2": "with all the"
   },
   "assessmentBuilder": {
-    "allowSkip": "Allow skip",
     "learningObjective": "Learning objective",
     "learningObjectiveCode": "Learning objective code",
     "gradeTooltip": "Intended school level",
@@ -143,10 +142,8 @@
     "evaluated": "Evaluated",
     "file": "file",
     "icon": "Icon",
-    "maxWrongAnswers": "Max wrong answers",
     "noFileChosen": "No file chosen",
     "order": "Order",
-    "praise": "Praise",
     "questions": {
       "titlePlaceholder": "Question with instructions for the student",
       "typeStep": "Select type of question",
@@ -261,20 +258,16 @@
       }
     },
     "saveSuccess": "{{type}} successfully saved",
-    "show": "Show {{type}}",
     "questionSetDetails": {
       "fiveSelQuestionsMessage": "Only up to 5 SEL Questions can be created by assessment.",
       "selQuestionsOrder": "SEL Questions must be at the beginning of the set of questions.",
       "aQuestion": "a question",
-      "feedback": "feedback",
       "numberLineButton": "Number line",
       "selectButton": "(Multi-) Select"
     },
     "questionSetFormDialog": {
       "changeFile": "Change File",
-      "createQuestionSet": "Create a set of questions",
-      "praiseTooltip": "Praise occurencies",
-      "whenToShowFeedbacks": "When to show feedbacks ?"
+      "createQuestionSet": "Create a set of questions"
     },
     "value": "Value"
   },

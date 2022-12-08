@@ -62,22 +62,6 @@
         <p>{{ "assessmentBuilder.evaluated" | translate }}</p>
         <p>{{ questionSetDetails.evaluated}} </p>
       </div>
-      <!-- <div class="detail">
-        <p>{{ "assessmentBuilder.allowSkip" | translate }}</p>
-        <p>{{ questionSetDetails.allow_skip}} </p>
-      </div>
-      <div class="detail">
-        <p>{{ "assessmentBuilder.maxWrongAnswers" | translate }}</p>
-        <p>{{ questionSetDetails.max_wrong_answers}} </p>
-      </div>
-      <div class="detail">
-        <p>{{ "assessmentBuilder.praise" | translate }}</p>
-        <p>{{ questionSetDetails.praise }} </p>
-      </div> -->
-      <div class="detail">
-        <p>{{ "assessmentBuilder.show" | translate: {type: "assessmentBuilder.questionSetDetails.feedback" | translate} }}</p>
-        <p>{{ questionSetDetails.show_feedback }} </p>
-      </div>
       <div *ngIf="questionSetDetails.topic" class="detail">
         <p>{{ "general.topic" | translate }}</p>
         <p>{{ questionSetDetails.topic.name }} </p>
