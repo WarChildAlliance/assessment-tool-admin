@@ -1,0 +1,27 @@
+<app-previous-button [path]="'students/' + currentStudentId">
+</app-previous-button>
+<div class="main-board__details" *ngIf="!!currentAssessment && !!currentStudent">
+    <div class="main-board__details__element">
+        <span class="title">{{ "general.studentName" | translate }}</span>
+        <span class="value">{{ currentStudent.full_name }}</span>
+    </div>
+    <div class="main-board__details__element">
+        <span class="title">{{ "answers.questionSetListAnswers.assessmentName" | translate }}</span>
+        <span class="value">{{ currentAssessment.title }}</span>
+    </div>
+    <div class="main-board__details__element">
+        <span class="title">{{ "answers.questionSetListAnswers.accessibleQuestionSets" | translate }}</span>
+        <span class="value">{{ currentAssessment.accessible_question_sets_count }}</span>
+    </div>
+    <div class="main-board__details__element">
+        <span class="title">{{ "general.totalCompletedQuestionSets" | translate }}</span>
+        <span class="value">{{ currentAssessment.completed_question_sets_count }}</span>
+    </div>
+    <div class="main-board__details__element">
+        <span class="title">{{ "general.lastLogin" | translate }}</span>
+        <span class="value">{{ currentAssessment.last_session | date:'mediumDate' }}</span>
+    </div>
+</div>
+
+<app-table [tableData]="questionSetsAnswersDataSource" [displayedColumns]="displayedColumns" [isSelectable]="false"
+    [searchableColumns]="searchableColumns" (openDetailsEvent)="onOpenDetails($event)"></app-table>

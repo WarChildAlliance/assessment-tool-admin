@@ -11,7 +11,7 @@ export class QuestionDragAndDropComponent implements OnInit, AfterViewInit, OnCh
 
   @Input() question: any;
   @Input() assessmentId: any;
-  @Input() topicId: any;
+  @Input() questionSetId: any;
   @Input() answer: any;
   @Input() evaluated: boolean;
   @Input() index: number;
@@ -85,7 +85,7 @@ export class QuestionDragAndDropComponent implements OnInit, AfterViewInit, OnCh
 
   private getDraggableOptions(): void {
     this.assessmentService.getDraggableOptions(
-      this.assessmentId.toString(), this.topicId || this.question.assessment_topic.toString(), this.question.id
+      this.assessmentId.toString(), this.questionSetId || this.question.question_set.toString(), this.question.id
       ).subscribe(dragOptions => {
         this.draggableOptions = dragOptions.filter(item => item.area_option !== null);
         this.optionsWithoutArea = dragOptions.filter(item => item.area_option === null);

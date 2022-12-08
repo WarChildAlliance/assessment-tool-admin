@@ -21,15 +21,15 @@ export class AssessmentDetailComponent implements OnInit {
     { key: 'questions_count', name: 'general.questionsNumber' }
   ];
 
-  public topicsDataSource: MatTableDataSource<any> = new MatTableDataSource([]);
+  public questionSetsDataSource: MatTableDataSource<any> = new MatTableDataSource([]);
 
   public isAssessmentPrivate = false;
 
-  public selectedTopics: any[] = [];
+  public selectedQuestionSets: any[] = [];
 
   public currentAssessment: any;
 
-  public createNewTopicForm: FormGroup = new FormGroup({
+  public createNewQuestionSetForm: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required])
   });
 
@@ -48,8 +48,8 @@ export class AssessmentDetailComponent implements OnInit {
     this.route.params.subscribe(params => {
       const assessmentId = params.id;
 
-      this.assessmentService.getAssessmentTopics(assessmentId).subscribe((topicsList) => {
-        this.topicsDataSource = new MatTableDataSource(topicsList);
+      this.assessmentService.getAssessmentQuestionSets(assessmentId).subscribe((questionSetsList) => {
+        this.questionSetsDataSource = new MatTableDataSource(questionSetsList);
       });
 
       this.assessmentService.getAssessmentDetails(assessmentId).subscribe(assessment => {
@@ -60,11 +60,11 @@ export class AssessmentDetailComponent implements OnInit {
 
   // This eventReceiver triggers a thousand times when user does "select all". We should find a way to improve this. (debouncer ?)
   public onSelectionChange(newSelection: any[]): void {
-    this.selectedTopics = newSelection;
+    this.selectedQuestionSets = newSelection;
   }
 
   public onOpenDetails(id: string): void {
-    this.router.navigate([`/library/${this.currentAssessment.id}/topics/${id}`]);
+    this.router.navigate([`/library/${this.currentAssessment.id}question-sets/${id}`]);
   }
 
   public downloadData(): void {

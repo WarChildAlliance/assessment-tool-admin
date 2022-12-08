@@ -50,6 +50,8 @@
     "questionDetails": "Question details",
     "questions": "Questions",
     "questionsNumber": "Number of questions",
+    "questionSet": "Set of questions",
+    "questionSets": "Sets of questions",
     "questionType": "Question type",
     "type": "Type",
     "right": "Right",
@@ -67,7 +69,7 @@
     "to": "to",
     "topics": "Topics",
     "topic": "Topic",
-    "totalCompletedTopics": "Total completed topics",
+    "totalCompletedQuestionSets": "Total completed sets of questions",
     "workInProgress": "Work in progress... Available soon",
     "yes": "Yes",
     "createNewOne": "Create a new one",
@@ -76,18 +78,18 @@
   },
   "answers": {
     "assessmentAnswers": {
-      "completedTopicsNumber": "Number of completed topics",
-      "linkedTopicsNumber": "Number of linked topics"
+      "completedQuestionSetsNumber": "Number of completed sets of questions",
+      "linkedQuestionSetsNumber": "Number of linked sets of questions"
     },
     "questionsListAnswers": {
       "averageTimeAnswer": "Average time to answer",
       "correctOnFirstTry": "Correct on first try",
       "correctOnLastTry": "Correct on last try",
       "questionTitle": "Question title",
-      "topicName": "Topic Name"
+      "questionSetName": "Set of questions' name"
     },
-    "topicListAnswers": {
-      "accessibleTopics": "Accessible topics",
+    "questionSetListAnswers": {
+      "accessibleQuestionSets": "Accessible sets of questions",
       "answeredCorrectlyFirstTry": "Answered correctly on first try",
       "answeredCorrectlyLastTry": "Answered correctly on last try",
       "assessmentName": "Assessment Name",
@@ -111,36 +113,10 @@
     "libraryHeaderPt1": "Hi! This is the",
     "libraryHeaderPt2": "with all the"
   },
-  "filter": {
-    "grade1": "Grade 1",
-    "grade2": "Grade 2",
-    "grade3": "Grade 3",
-    "maths": "Maths",
-    "reading": "Reading",
-    "leraningObjectives": {
-      "title": "Leraning Objectives",
-      "grade1": {
-        "addition": {
-          "1-ACP-01": "Counting and adding more",
-          "1-ACP-02": "Part part whole model (1)",
-          "1-ACP-03": "Part part whole model (2)",
-          "1-ACP-04": "Represent & use no. bonds within 10",
-          "1-ACP-05": "See teens as complete 10 and some more"
-        }
-      }
-    },
-    "topic": {
-      "addition": "Addition",
-      "subtraction": "Subtraction",
-      "multiplication ": "Multiplication ",
-      "division": "Division"
-    }
-  },
   "assessmentBuilder": {
     "allowSkip": "Allow skip",
     "learningObjective": "Learning objective",
     "learningObjectiveCode": "Learning objective code",
-    "subtopic": "Subtopic",
     "gradeTooltip": "Intended school level",
     "selQuestions": "Contains SEL questions",
     "assessmentFormDialog": {
@@ -148,7 +124,7 @@
     },
     "assessmentSummary": {
       "archive": "Archive {{type}}",
-      "aTopic": "a topic",
+      "aQuestionSet": "a set of questions",
       "fileDownloadNotice": "The file you are about to download can be<br>used for reproduction purposes only, not selling.",
       "fileDownloadNoticeTitle": "Please note",
       "orderChanged": "Order changed successfully",
@@ -194,8 +170,6 @@
         "noCorrectArea": "Draggable items without correct area:",
         "noCorrectDragOption": "No correct drag option for this area",
         "questionAttachments": "Add Question attachments",
-        "numberLimitError": "The number of items must be between 1 and 10.",
-        "answerLimitError": "The answer must be between 1 and 10.",
         "formTitle": "Drag & Drop",
         "sideValue": "Number of items on the {{side}}",
         "itemsSide": "Items on the {{side}}",
@@ -288,17 +262,17 @@
     },
     "saveSuccess": "{{type}} successfully saved",
     "show": "Show {{type}}",
-    "topicDetails": {
+    "questionSetDetails": {
       "fiveSelQuestionsMessage": "Only up to 5 SEL Questions can be created by assessment.",
-      "selQuestionsOrder": "SEL Questions must be at the beginning of the topic.",
+      "selQuestionsOrder": "SEL Questions must be at the beginning of the set of questions.",
       "aQuestion": "a question",
       "feedback": "feedback",
       "numberLineButton": "Number line",
       "selectButton": "(Multi-) Select"
     },
-    "topicFormDialog": {
+    "questionSetFormDialog": {
       "changeFile": "Change File",
-      "createTopic": "Create a topic",
+      "createQuestionSet": "Create a set of questions",
       "praiseTooltip": "Praise occurencies",
       "whenToShowFeedbacks": "When to show feedbacks ?"
     },
@@ -318,7 +292,6 @@
     },
     "selected": "selected",
     "studentsLinkedToAssessment": "Number of students currently linked to this assessment",
-    "topicsNumber": "Number of topics",
     "invites": "Invites",
     "plays": "Plays",
     "score": "Score",
@@ -345,18 +318,18 @@
     "questionsOverview": {
       "groupResults": "Group Results"
     },
-    "scoreByTopicChart": {
+    "scoreByQuestionSetChart": {
       "assessmentTitle": "Assessment title",
       "comparisonAverage": "Comparison to average"
     },
-    "scoreByTopicTable": {
+    "scoreByQuestionSetTable": {
       "41correct": "Below 41% of correct answers",
       "70correct": "Over 70% of correct answers",
       "95correct": "Over 95% of correct answers",
       "4171correct": "Between 41% and 70% of correct answers",
       "chartLegend": "Chart Legend",
-      "studentNotLinked": "The student is not linked to this topic",
-      "studentNotStarted": "The student has not started this topic yet"
+      "studentNotLinked": "The student is not linked to this set of questions",
+      "studentNotStarted": "The student has not started this set of questions yet"
     }
   },
   "groups": {
@@ -386,8 +359,8 @@
     },
     "selectAssessment": {
       "anAssessment": "an assessment",
-      "hintNoStudent": "If a topic is grayed out, it means that  no student has started it yet.",
-      "noTopics": "No topic available"
+      "hintNoStudent": "If a set of questions is grayed out, it means that  no student has started it yet.",
+      "noQuestionSets": "No set of questions available"
     },
     "table": {
       "all": "All",
@@ -399,8 +372,8 @@
   "students": {
     "active": "Active",
     "activeAssessmentsNumber": "Number of active assessments",
-    "assignTopic": "Assign a topic",
-    "completedTopicsNumber": "Number of completed topics",
+    "assignQuestionSet": "Assign a set of questions",
+    "completedQuestionSetsNumber": "Number of completed sets of questions",
     "createStudentDialog": {
       "duplicateName": "Student with the same name, country and language already exists",
       "firstName": "First name",
@@ -411,47 +384,47 @@
       "studentCreateSuccess": "Student {{name}} with ID {{username}} was successfully created",
       "studentEditSuccess": "{{name}}'s information have been edited successfully "
     },
-    "incompatibleLanguageError": "You can only give access to a topic to students with the same country and language.",
+    "incompatibleLanguageError": "You can only give access to a set of questions to students with the same country and language.",
     "statusError": "Students can only be deleted after one year of inactivity",
     "studentCode": "Student code",
     "studentLoginURL": "Login URL",
     "studentDetail": {
       "activeAccess": "Active access",
-      "linkedTopics": "linked topic(s)",
+      "linkedQuestionSets": "linked set(s) of questions",
       "noActiveAccess": "No active access",
       "numberAssessments": "Number of assessments",
       "studentAssessments": "Student's assessments",
       "studentNotLinkedAssessment": "This student is currently not linked to any assessment.",
-      "topicAccesses": "topic accesses"
+      "questionSetAccesses": "set of questions accesses"
     },
     "studentDetails": "Student details",
     "studentOneOrMany": "student(s)",
-    "topicAccessesBuilder": {
-      "accessesSet": "The new topic accesses have been successfully set !",
-      "applySameDatesAllTopics": "Apply the same dates to all the topics ?",
+    "questionSetAccessesBuilder": {
+      "accessesSet": "The new set of questions accesses have been successfully set !",
+      "applySameDatesAllQuestionSets": "Apply the same dates to all the sets of questions?",
       "assessment": "Assessment",
       "endDate": "End date",
-      "errorOnSubmit": "There was an error during the submission of the topic accesses",
+      "errorOnSubmit": "There was an error during the submission of the set of questions accesses",
       "groupsInfo": "Only groups with enrolled students are displayed",
       "noGroups": "You don't have groups with students.",
-      "notifier": "You need to select student(s) or group(s) and set a start date and an end date for each selected topic.",
+      "notifier": "You need to select student(s) or group(s) and set a start date and an end date for each selected set of questions.",
       "startDate": "Start date",
-      "topicAvailability": "Assessment topic(s) availability",
+      "questionSetAvailability": "Assessment set(s) of questions availability",
       "replaceAsssessmentAccess": "Do you want to replace <b>{{previousAssessment}}</b> with <b>{{newAssessment}}</b>?",
       "studentAssessmentPrompt": "Student {{studentName}} already has an assessment assigned",
       "newAssessment": "a new assessment",
       "studentAssessmentIncompletePrompt": "This student has not finished the current assessment <b>{{currentAssessment}}</b>, are you sure you want to continue?"
     },
-    "topicAccessesEdit": {
-      "accessEdited": "The topic access have been successfully deleted!",
-      "allTopicsAccessesDeleted": "All topics accesses of this assessment have been deleted",
-      "editTopicsAccess": "Edit topic accesses",
-      "errorOnDeletion": "There was an error during the submission of the topic access deletion",
-      "errorOnEdit": "There was an error during the submission of the topic accesses update",
-      "missingDates": "You need to set a start date and an end date for each topic",
-      "removeTopicAccess": "Remove topic access",
-      "removeTopicAccessPrompt": "Do you really want to remove access to the topic '<b>{{topicTitle}}</b>' ?",
-      "topicsUpdated": "The topic(s) accesses have been successfully updated!"
+    "questionSetAccessesEdit": {
+      "accessEdited": "The set of questions access have been successfully deleted!",
+      "allQuestionSetsAccessesDeleted": "All set of questions accesses of this assessment have been deleted",
+      "editQuestionSetsAccess": "Edit set of questions accesses",
+      "errorOnDeletion": "There was an error during the submission of the set of questions access deletion",
+      "errorOnEdit": "There was an error during the submission of the set of questions accesses update",
+      "missingDates": "You need to set a start date and an end date for each set of questions",
+      "removeQuestionSetAccess": "Remove set of questions access",
+      "removeQuestionSetAccessPrompt": "Do you really want to remove access to the set of questions '<b>{{questionSetTitle}}</b>' ?",
+      "questionSetsUpdated": "The set(s) of questions accesses have been successfully updated!"
     }
   }
 }

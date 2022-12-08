@@ -58,7 +58,6 @@ export class QuestionFormService {
     const firstValue = form.get('first_value');
     const secondValue = form.get('second_value');
     const operator = form.get('operator');
-    const dragAndDropShape = form.get('shape');
     if (!firstValue.value || !secondValue.value) {
       return;
     }
@@ -77,16 +76,7 @@ export class QuestionFormService {
       firstValue.setErrors(null);
       secondValue.setErrors(null);
 
-      // If customized drag and drop
-      if (dragAndDropShape) {
-        if (firstValue.value > 10 || secondValue.value > 10){
-          firstValue.setErrors({ maxNumberLimit: true });
-          secondValue.setErrors({ maxNumberLimit: true });
-        } if (answer === 0 || answer > 10) {
-          firstValue.setErrors({ answer: true });
-          secondValue.setErrors({ answer: true });
-        }
-      } if (!Number.isInteger(answer) || answer < 0) {
+      if (!Number.isInteger(answer) || answer < 0) {
         firstValue.setErrors({ invalidCalcul: true });
         secondValue.setErrors({ invalidCalcul: true });
       }
@@ -155,7 +145,7 @@ export class QuestionFormService {
   // Creates question, saves image and audio attachments and return question created
   public createQuestion(data: any): Promise<any> {
     return new Promise(resolve => {
-      this.assessmentService.createQuestion(data.formGroup, data.topicId, data.assessmentId)
+      this.assessmentService.createQuestion(data.formGroup, data.questionSetId, data.assessmentId)
       .subscribe((res) => {
         if (this.imageAttachment) {
           this.saveAttachments(
@@ -177,7 +167,7 @@ export class QuestionFormService {
   // Edits question, saves image and audio attachments (if changed) and return question edited
   public editQuestion(data: any): Promise<any> {
     return new Promise (resolve => {
-      this.assessmentService.editQuestion(data.assessmentId, data.topicId, data.question.id, data.formGroup)
+      this.assessmentService.editQuestion(data.assessmentId, data.questionSetId, data.question.id, data.formGroup)
       .subscribe(res => {
         if (this.changedImage) {
            if (this.imageAttachment) {

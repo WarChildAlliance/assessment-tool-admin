@@ -36,9 +36,9 @@ export class CustomizedDragAndDropFormComponent implements OnInit {
   public stylesList = this.styles.color;
 
   public customizedDragAndDropForm: FormGroup = new FormGroup({
-    first_value: new FormControl(null, [Validators.required, Validators.min(1), Validators.max(10)]),
+    first_value: new FormControl(null, [Validators.required, Validators.min(1)]),
     first_style: new FormControl(null, Validators.required),
-    second_value: new FormControl(null, [Validators.required, Validators.min(1), Validators.max(10)]),
+    second_value: new FormControl(null, [Validators.required, Validators.min(1)]),
     second_style: new FormControl(null, Validators.required),
     operator: new FormControl(null, [Validators.required]),
     shape: new FormControl(null, [Validators.required]),

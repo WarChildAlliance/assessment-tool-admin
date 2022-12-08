@@ -18,8 +18,8 @@
           (selectedUsers.length == 1 ? "general.student" : "general.students") | translate | lowercase
       } }}
       </app-custom-button>
-      <app-custom-button icon="event_available" category="secondary" variant="primary" (click)="openAssignTopicDialog()">
-      {{ "students.assignTopic" | translate }}
+      <app-custom-button icon="event_available" category="secondary" variant="primary" (click)="openAssignQuestionSetDialog()">
+      {{ "students.assignQuestionSet" | translate }}
       </app-custom-button>
 <!--       <button mat-flat-button [disabled]="true" color="primary" (click)="downloadData()">
         <mat-icon>get_app</mat-icon><span>Export</span>

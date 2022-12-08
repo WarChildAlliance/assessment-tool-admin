@@ -9,7 +9,7 @@
             </mat-form-field>
             <app-spinner *ngIf="!questionsList" size="medium" [variant]="'primary'"></app-spinner>
         </form>
-    
+
         <app-custom-button category="secondary" variant="neutral" icon="add" (click)="selectQuestion = false">
             {{ 'general.createNewOne' | translate }}
         </app-custom-button>
@@ -103,7 +103,7 @@
     </form>
 
     <div class="dialog-buttons">
-        <span class="notifier" *ngIf="selectForm.controls.order.errors">{{ "assessmentBuilder.topicDetails.selQuestionsOrder" | translate }}</span>
+        <span class="notifier" *ngIf="selectForm.controls.order.errors">{{ "assessmentBuilder.questionSetDetails.selQuestionsOrder" | translate }}</span>
         <button mat-flat-button mat-dialog-close class="dialog-buttons__cancel" color="secondary">
             {{ "general.cancel" | translate }}
         </button>

@@ -1,0 +1,88 @@
+<h2>{{ edit ? ("general.edit" | translate: { type: '' }) : ("assessmentBuilder.questionSetFormDialog.createQuestionSet" | translate) }}</h2>
+
+<div *ngIf="selectQuestionSet" class="select">
+    <form class="form-primary" [formGroup]="selectQuestionSetForm">
+        <mat-form-field appearance="outline" color="accent">
+            <mat-label>{{ 'general.selectItem' | translate:{ item: ('general.questionSet' | translate)} }}</mat-label>
+            <mat-select formControlName="questionSet" (selectionChange)="onSelectQuestionSet()">
+                <mat-option *ngFor="let questionSet of questionSetsList" [value]="questionSet">{{ questionSet.name }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </form>
+
+    <app-custom-button category="secondary" variant="neutral" icon="add" (click)="selectQuestionSet = false">
+        {{ 'general.createNewOne' | translate }}
+    </app-custom-button>
+</div>
+
+<form *ngIf="!selectQuestionSet" class="form-primary" [formGroup]="createNewQuestionSetForm">
+    <div class="form-primary__flex-container">
+        <mat-form-field appearance="outline" color="accent">
+            <mat-label>{{ "general.title" | translate }}</mat-label>
+            <input matInput type="text" required formControlName="name">
+        </mat-form-field>
+        <mat-form-field appearance="outline" color="accent">
+            <mat-label>{{ "assessmentBuilder.description" | translate }}</mat-label>
+            <input matInput type="text" required formControlName="description">
+        </mat-form-field>
+        <mat-form-field *ngIf="learningObjectives?.length" appearance="outline" color="accent">
+            <mat-label>{{ "assessmentBuilder.learningObjective" | translate }}</mat-label>
+            <mat-select #learningObjectiveSelect required formControlName="learning_objective">
+                <mat-option *ngFor="let learningObjective of learningObjectives" [value]="learningObjective.code"
+                [matTooltip]="languageService.getLanguageCode() === 'eng' ? learningObjective.name_eng : learningObjective.name_ara"
+                matTooltipShowDelay="1000"
+                >
+                    <span style="font-weight: 500; margin-right: 10px;">{{ learningObjective.code }}</span>
+                    <ng-container *ngIf="learningObjectiveSelect.panelOpen">
+                        {{ languageService.getLanguageCode() === 'eng' ? learningObjective.name_eng : learningObjective.name_ara }}
+                    </ng-container>
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" color="accent">
+            <mat-label>{{ "assessmentBuilder.questionSetFormDialog.whenToShowFeedbacks" | translate }}</mat-label>
+            <mat-select formControlName="show_feedback">
+                <mat-option *ngFor="let feedback of feedbacks" [value]="feedback.id">{{ feedback.name }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" color="accent">
+            <mat-label>{{ "assessmentBuilder.praise" | translate }}</mat-label>
+            <input matInput formControlName="praise" type="number" min="0" step="1" [matTooltip]="'assessmentBuilder.questionSetFormDialog.praiseTooltip' | translate">
+        </mat-form-field>
+        <mat-form-field appearance="outline" color="accent">
+            <mat-label>{{ "assessmentBuilder.maxWrongAnswers" | translate }}</mat-label>
+            <input matInput type="number" formControlName="max_wrong_answers">
+        </mat-form-field>
+        <mat-form-field appearance="outline" color="accent">
+            <mat-label>{{ "assessmentBuilder.order" | translate }}</mat-label>
+            <input matInput type="number" min="1" formControlName="order" [readonly]="order">
+        </mat-form-field>
+    </div>
+    <div class="form-primary__flex-container">
+        <mat-checkbox formControlName="evaluated">
+            {{ "assessmentBuilder.evaluated" | translate }}
+        </mat-checkbox>
+        <mat-checkbox formControlName="allow_skip">
+            {{ "assessmentBuilder.allowSkip" | translate }}
+        </mat-checkbox>
+        <mat-checkbox formControlName="archived">
+            {{ "general.archived" |  translate: {type: ''} }}
+        </mat-checkbox>
+        <div>
+            <h3>{{ "assessmentBuilder.icon" |  translate }}</h3>
+            <app-image-selector
+                [showLabel]="false"
+                (newImageEvent)="handleFileInput($event)"
+                [imageAttachment]="icon"
+            ></app-image-selector>
+        </div>
+    </div>
+    <mat-divider></mat-divider>
+</form>
+
+<div class="dialog-buttons buttons-margin">
+    <button mat-button class="dialog-buttons__cancel" color="secondary" mat-dialog-close>{{ "general.cancel" | translate }}</button>
+    <button mat-flat-button class="dialog-buttons__submit" color="accent" type="submit"
+    [mat-dialog-close]="createNewQuestionSetForm.value" (click)="onSubmit()"
+    [disabled]="createNewQuestionSetForm.invalid || !createNewQuestionSetForm.dirty">{{ questionSet ? ("general.save" | translate) : ("general.create" | translate) }}</button>
+</div>

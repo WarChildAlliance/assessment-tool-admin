@@ -25,7 +25,7 @@ export class TableActionsComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    if (this.filtersReset$){
+    if (this.filtersReset$) {
       this.filtersReset$.subscribe(() => {
         this.searchInput.nativeElement.value = '';
       });

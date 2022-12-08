@@ -15,7 +15,7 @@
             </div>
             <div class="infos">
                 <p>{{ "general.topic" | translate }}</p>
-                <p>{{ assessment.subtopic ? assessment.subtopic.name : '' }}</p>
+                <p>{{ assessment.topic ? assessment.topic.name : '' }}</p>
             </div>
             <div class="infos">
                 <p>{{ "general.language" | translate }}</p>
@@ -32,10 +32,10 @@
         </div>
         <div class="buttons">
             <app-custom-button *ngIf="canEdit && !assessment.archived"
-             matTooltip="{{ 'assessmentBuilder.assessmentSummary.reorderTooltip' | translate:{ item: ('general.topics' | translate)} }}"
-                matTooltipPosition="above" [category]="reorder ? 'secondary' : 'tertiary'" variant="primary" icon="linear_scale" (click)="reorderTopics(reorder, assessment.id)">
+             matTooltip="{{ 'assessmentBuilder.assessmentSummary.reorderTooltip' | translate:{ item: ('general.questionSets' | translate)} }}"
+                matTooltipPosition="above" [category]="reorder ? 'secondary' : 'tertiary'" variant="primary" icon="linear_scale" (click)="reorderQuestionSets(reorder, assessment.id)">
                 {{ reorder ? ("assessmentBuilder.assessmentSummary.saveOrder" | translate)
-                : ("assessmentBuilder.assessmentSummary.reorderItems" | translate: { item: ("general.topics" | translate)}) }}
+                : ("assessmentBuilder.assessmentSummary.reorderItems" | translate: { item: ("general.questionSets" | translate | lowercase)}) }}
             </app-custom-button>
             <span *ngIf="!reorder">
                 <app-custom-button *ngIf="canEdit && !assessment.archived" category="tertiary" variant="primary" icon="edit" (click)="editAssessment(assessment)">
@@ -55,7 +55,7 @@
                 <app-custom-button *ngIf="!canEdit" category="tertiary" variant="primary" icon="control_point_duplicate" (click)="editAssessment(assessment, true)">
                     {{ "assessmentBuilder.assessmentSummary.copyAssessment" | translate }}
                 </app-custom-button>
-                <app-custom-button *ngIf="library" category="tertiary" variant="primary" icon="event_available" (click)="openAssignTopicDialog(assessment)">
+                <app-custom-button *ngIf="library" category="tertiary" variant="primary" icon="event_available" (click)="openAssignQuestionSetDialog(assessment)">
                     {{ "assessmentBuilder.assessmentSummary.assignAssessment" | translate }}
                 </app-custom-button>
             </span>
@@ -67,38 +67,38 @@
         </div>
     </div>
     <hr>
-    <div class="topics-container">
-        <div #topicsList class="topics" [cdkDropListData]="topicToOrder"
-        cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="dropTopic($event)">
-            <mat-card class="add-topic" (click)="openTopicFormDialog(assessment)" *ngIf="canEdit">
-                <div class="add-topic-text">
-                    {{ "general.add" | translate: { type: ("assessmentBuilder.assessmentSummary.aTopic" | translate) } }}
+    <div class="question-sets-container">
+        <div #questionSetsList class="question-sets" [cdkDropListData]="questionSetToOrder"
+        cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="dropQuestionSet($event)">
+            <mat-card class="add-question-set" (click)="openQuestionSetFormDialog(assessment)" *ngIf="canEdit">
+                <div class="add-question-set-text">
+                    {{ "general.add" | translate: { type: ("assessmentBuilder.assessmentSummary.aQuestionSet" | translate) } }}
                     <mat-icon>add</mat-icon>
                 </div>
             </mat-card>
-            <mat-card class="topic-card" *ngFor="let topic of assessment.topics; let i = index" [ngClass]="reorder ? 'drag-hover' : ''"
-            (click)="goToTopicDetails(assessment.id, topic.id)" cdkDrag [cdkDragDisabled]="topic.archived || !reorder">
-                <img *ngIf="topic.icon" [src]="getMediaSource(topic.icon)">
-                <span class="topic-title">{{ topic.title }}</span>
+            <mat-card class="question-set-card" *ngFor="let questionSet of assessment.question_sets; let i = index" [ngClass]="reorder ? 'drag-hover' : ''"
+            (click)="goToQuestionSetDetails(assessment.id, questionSet.id)" cdkDrag [cdkDragDisabled]="questionSet.archived || !reorder">
+                <img *ngIf="questionSet.icon" [src]="getMediaSource(questionSet.icon)">
+                <span class="question-set-title">{{ questionSet.title }}</span>
 
-                <span class="topic-counter">{{i + 1}}</span>
-                <p class="small-description">{{ topic.description }}</p>
-                <span class="question_count">({{ topic.questionsCount }} {{ "general.questions" | translate }})</span>
+                <span class="question-set-counter">{{i + 1}}</span>
+                <p class="small-description">{{ questionSet.description }}</p>
+                <span class="question_count">({{ questionSet.questionsCount }} {{ "general.questions" | translate }})</span>
 
-                <div *ngIf="canEdit" [ngSwitch]="topic.archived">
-                    <div class="topic-buttons" *ngSwitchCase="false">
+                <div *ngIf="canEdit" [ngSwitch]="questionSet.archived">
+                    <div class="question-set-buttons" *ngSwitchCase="false">
                         <app-custom-button
-                        matTooltip="{{ 'assessmentBuilder.assessmentSummary.archive' | translate: {type: 'general.topic' | translate | lowercase} }}"
+                        matTooltip="{{ 'assessmentBuilder.assessmentSummary.archive' | translate: {type: 'general.questionSet' | translate | lowercase} }}"
                         [isIcon]="true"
-                        icon="archive" (click)="archiveTopic($event, assessment.id, topic.id, true)">
+                        icon="archive" (click)="archiveQuestionSet($event, assessment.id, questionSet.id, true)">
                         </app-custom-button>
 
-                        <app-custom-button matTooltip="{{ 'general.delete' | translate: {type: 'general.topic' | translate | lowercase} }}"
-                        [isIcon]="true" icon="delete" (click)="deleteTopic($event, assessment.id, topic.id, topic.title)">
+                        <app-custom-button matTooltip="{{ 'general.delete' | translate: {type: 'general.questionSet' | translate | lowercase} }}"
+                        [isIcon]="true" icon="delete" (click)="deleteQuestionSet($event, assessment.id, questionSet.id, questionSet.title)">
                         </app-custom-button>
                     </div>
                     <div *ngSwitchCase="true">
-                        <app-custom-button category="tertiary" variant="neutral" (click)="archiveTopic($event, assessment.id, topic.id, false)">
+                        <app-custom-button category="tertiary" variant="neutral" (click)="archiveQuestionSet($event, assessment.id, questionSet.id, false)">
                             {{ "assessmentBuilder.assessmentSummary.unarchive" | translate }}
                         </app-custom-button>
                     </div>
@@ -106,7 +106,7 @@
             </mat-card>
         </div>
         <app-horizontal-scroll-arrows
-            [scrollableElement]="topicsList"
+            [scrollableElement]="questionSetsList"
             [pxScrollAmount]="600">
         </app-horizontal-scroll-arrows>
     </div>

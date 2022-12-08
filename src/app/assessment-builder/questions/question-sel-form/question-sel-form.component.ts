@@ -5,7 +5,7 @@ import { QuestionFormService } from 'src/app/core/services/question-form.service
 import { LanguageService } from 'src/app/core/services/language.service';
 
 interface DialogData {
-  topicId?: string;
+  questionSetId?: string;
   question?: any;
   toClone?: boolean;
   assessmentId?: string;
@@ -22,7 +22,7 @@ export class QuestionSelFormComponent implements OnInit {
   public selectQuestion: boolean;
 
   public assessmentId: string;
-  public topicId: string;
+  public questionSetId: string;
   public question: any;
   public toClone: boolean;
   public selQuestionOrder: any;
@@ -52,7 +52,7 @@ export class QuestionSelFormComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     if (this.data?.assessmentId) { this.assessmentId = this.data.assessmentId; }
-    if (this.data?.topicId) { this.topicId = this.data.topicId; }
+    if (this.data?.questionSetId) { this.questionSetId = this.data.questionSetId; }
     if (this.data?.question) { this.question = this.data.question; }
     if (this.data?.toClone) { this.toClone = this.data.toClone; }
     if (this.data?.selQuestionOrder !== undefined) {
@@ -69,7 +69,7 @@ export class QuestionSelFormComponent implements OnInit {
         this.questionsList = res;
       });
     }
-    // SEL questions must be at the beginning of the topic
+    // SEL questions must be at the beginning of the questionSet
     this.selForm.controls.order.setValidators([Validators.required, Validators.max(this.selQuestionOrder)]);
   }
 
@@ -83,7 +83,7 @@ export class QuestionSelFormComponent implements OnInit {
     const data = {
       toClone: this.toClone,
       formGroup: this.selForm.value,
-      topicId: this.topicId.toString(),
+      questionSetId: this.questionSetId.toString(),
       assessmentId: this.assessmentId.toString(),
       question: this.question
     };
