@@ -55,16 +55,13 @@
       </mat-list-item>
       <mat-divider *ngIf="showLSubmenu"></mat-divider>
       <div class="submenu" [ngClass]="{'expanded' : showLSubmenu}">
-        <!-- <a mat-list-item routerLink="library/assessments" routerLinkActive="library-active" (click)="showABSubmenu = false"> -->
-        <a mat-list-item routerLink="library" routerLinkActive="library-active" (click)="showABSubmenu = false">
+        <a mat-list-item routerLink="library/assessments" routerLinkActive="library-active" (click)="showABSubmenu = false">
           {{ "general.assessments" | translate }}
         </a>
-        <a mat-list-item routerLink="library" routerLinkActive="library-active" (click)="showABSubmenu = false">
-        <!-- <a mat-list-item routerLink="library/set-of-questions" routerLinkActive="library-active" (click)="showABSubmenu = false"> -->
-          {{ "general.library" | translate }}
+        <a mat-list-item routerLink="library/set-of-questions" routerLinkActive="library-active" (click)="showABSubmenu = false">
+          {{ "general.setOfQuestions" | translate }}
         </a>
-        <!-- <a mat-list-item routerLink="library/questions" routerLinkActive="library-active" (click)="showABSubmenu = false"> -->
-          <a mat-list-item routerLink="library" routerLinkActive="library-active" (click)="showABSubmenu = false">
+        <a mat-list-item routerLink="library/questions" routerLinkActive="library-questions-active" (click)="showABSubmenu = false">
           {{ "general.questions" | translate }}
         </a>
       </div>

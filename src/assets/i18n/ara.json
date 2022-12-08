@@ -55,6 +55,7 @@
     "save": "يحفظ",
     "selected": "تم الاختيار",
     "selQuestion": "سؤال التعلم الاجتماعي والعاطفي",
+    "setOfQuestions": "مجموعة من الأسئلة",
     "simpleDeletePrompt": "هل تريد حقًا حذف {{type}} <b> {{name}} </b>؟",
     "student": "طالب علم",
     "studentName": "اسم الطالب",
@@ -441,15 +442,23 @@
     }
   },
   "header": {
-    "libraryHeader": "مكتبة",
-    "libraryHeaderPt1": "أهلاً! هذا ال",
-    "libraryHeaderPt2": "مع كل"
+    "library": {
+      "title": "مكتبة",
+      "headerPt1": "أهلاً! هذا ال",
+      "headerPt2": "مع كل",
+      "assessments": {
+        "section": "التقييمات",
+        "headerPt3": "يمكنك تصفح واختيار وتعيين واستنساخ (لتحرير) هذه لمجموعتك (مجموعاتك)."
+      },
+      "questions": {
+        "section": "مهام",
+        "headerPt3": "يمكنك التصفح والاختيار والاختيار."
+      }
+    }
   },
   "library": {
     "assign": "تعيين",
     "invites": "يدعو",
-    "libraryAssessmentsHeader": "التقييمات",
-    "libraryAssessmentsHeaderPt3": "يمكنك تصفح واختيار وتعيين واستنساخ (لتحرير) هذه لمجموعتك (مجموعاتك).",
     "numberRanges": "أعداد",
     "plays": "يلعب",
     "questionType": "نوع السؤال",

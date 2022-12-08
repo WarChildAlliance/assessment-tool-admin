@@ -43,13 +43,35 @@ const routes: Routes = [
     },
   },
   {
-    path: 'library',
-    loadChildren: () => import('./library/library.module')
-      .then(m => m.LibraryModule),
+    path: 'library/assessments',
+    loadChildren: () => import('./library/assessments/assessments.module')
+      .then(m => m.AssessmentsModule),
+    canLoad: [AuthGuard],
+    data: {
+      breadcrumb: [
+        { label: '', url: '', type: 'library', section: 'assessments' }
+      ]
+    },
+  },
+  {
+    path: 'library/set-of-questions',
+    loadChildren: () => import('./library/set-of-questions/set-of-questions.module')
+      .then(m => m.SetOfQuestionsModule),
     canLoad: [AuthGuard],
     data: {
       breadcrumb: [
         { label: 'general.library', url: '' }
+      ]
+    },
+  },
+  {
+    path: 'library/questions',
+    loadChildren: () => import('./library/questions/questions.module')
+      .then(m => m.QuestionsModule),
+    canLoad: [AuthGuard],
+    data: {
+      breadcrumb: [
+        { label: '', url: '', type: 'library', section: 'questions' }
       ]
     },
   },
