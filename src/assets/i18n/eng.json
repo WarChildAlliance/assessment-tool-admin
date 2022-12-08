@@ -169,8 +169,6 @@
         "noCorrectArea": "Draggable items without correct area:",
         "noCorrectDragOption": "No correct drag option for this area",
         "questionAttachments": "Add Question attachments",
-        "numberLimitError": "The number of items must be between 1 and 10.",
-        "answerLimitError": "The answer must be between 1 and 10.",
         "formTitle": "Drag & Drop",
         "sideValue": "Number of items on the {{side}}",
         "itemsSide": "Items on the {{side}}",
