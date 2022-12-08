@@ -27,9 +27,9 @@
     </div>
     <div class="main-board__details__element">
       <span class="title">
-        {{ "general.totalCompletedTopics" | translate }}
+        {{ "general.totalCompletedQuestionSets" | translate }}
       </span>
-      <span class="value">{{ student.completed_topics_count }}</span>
+      <span class="value">{{ student.completed_question_sets_count }}</span>
     </div>
     <div class="main-board__details__element">
       <span class="title">
@@ -71,28 +71,28 @@
           <mat-panel-title>
             <div>
               <span class="assessment-title">{{ assessment.title }} </span>
-              <span class="linked-topics">({{ assessment.topic_access.length }}
-                {{ "students.studentDetail.linkedTopics" | translate }})
+              <span class="linked-question-sets">({{ assessment.question_set_access.length }}
+                {{ "students.studentDetail.linkedQuestionSets" | translate }})
               </span>
             </div>
-            <app-custom-button icon="event_available" category="tertiary" (click)="editTopicsAccesses(assessment)">
-              {{ 'general.edit' | translate: { type: 'students.studentDetail.topicAccesses' | translate } }}
+            <app-custom-button icon="event_available" category="tertiary" (click)="editQuestionSetsAccesses(assessment)">
+              {{ 'general.edit' | translate: { type: 'students.studentDetail.questionSetAccesses' | translate } }}
             </app-custom-button>
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <div class="main-board__accordions-container__topic" *ngFor="let topic of assessment.topic_access">
-          <div class="main-board__accordions-container__topic__infos">
-            <p>{{ topic.topic_name }}</p>
+        <div class="main-board__accordions-container__question-set" *ngFor="let questionSet of assessment.question_set_access">
+          <div class="main-board__accordions-container__question-set__infos">
+            <p>{{ questionSet.question_set_name }}</p>
           </div>
-          <div class="main-board__accordions-container__topic__infos" *ngIf="topic.start_date">
-            <p>{{ "general.from" | translate }} {{ topic.start_date }}
-              {{ "general.to" | translate }} {{ topic.end_date }}</p>
+          <div class="main-board__accordions-container__question-set__infos" *ngIf="questionSet.start_date">
+            <p>{{ "general.from" | translate }} {{ questionSet.start_date }}
+              {{ "general.to" | translate }} {{ questionSet.end_date }}</p>
           </div>
-          <div class="main-board__accordions-container__topic__infos">
-            <p *ngIf="topic.hasAccess">
+          <div class="main-board__accordions-container__question-set__infos">
+            <p *ngIf="questionSet.hasAccess">
               {{ "students.studentDetail.activeAccess" | translate }}
              </p>
-              <p *ngIf="!topic.hasAccess">
+              <p *ngIf="!questionSet.hasAccess">
                 {{ "students.studentDetail.noActiveAccess" | translate }}
                  </p>
           </div>

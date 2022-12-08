@@ -15,7 +15,7 @@ import { AssessmentService } from 'src/app/core/services/assessment.service';
 export class QuestionsListComponent implements OnInit {
 
   public assessmentId: string;
-  public topicId: string;
+  public questionSetId: string;
 
   public displayedColumns: TableColumn[] = [
     { key: 'title', name: 'general.title' },
@@ -45,14 +45,14 @@ export class QuestionsListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const idUrl = this.route.snapshot.paramMap.get('topic_id') || '';
-    this.previousPageUrl = this.router.url.replace(`topics/${idUrl}`, '');
+    const idUrl = this.route.snapshot.paramMap.get('question_set_id') || '';
+    this.previousPageUrl = this.router.url.replace(`question-sets/${idUrl}`, '');
     this.route.paramMap.pipe(
       switchMap((params) => {
         this.assessmentId = params.get('assessment_id');
-        this.topicId = params.get('topic_id');
+        this.questionSetId = params.get('question_set_id');
 
-        return this.assessmentService.getTopicQuestions(this.assessmentId, this.topicId);
+        return this.assessmentService.getQuestionSetQuestions(this.assessmentId, this.questionSetId);
       })
     ).subscribe((questionsList) => {
       this.questionsDataSource = new MatTableDataSource(questionsList);
@@ -65,7 +65,7 @@ export class QuestionsListComponent implements OnInit {
   }
 
   public onOpenDetails(id: string): void {
-    // this.router.navigate([`/assessments/${this.assessmentId}/topics/${this.topicId}/questions/${id}`]);
+    // this.router.navigate([`/assessments/${this.assessmentId}/question-sets/${this.questionSetId}/questions/${id}`]);
   }
 
   public downloadData(): void {
@@ -73,7 +73,7 @@ export class QuestionsListComponent implements OnInit {
   }
 
   public onCustomAction(element: any): void {
-    this.assessmentService.getQuestionDetails(this.assessmentId, this.topicId, element.id).subscribe(details => {
+    this.assessmentService.getQuestionDetails(this.assessmentId, this.questionSetId, element.id).subscribe(details => {
       this.questionDetails = details;
       this.showQuestionPreview = true;
     });

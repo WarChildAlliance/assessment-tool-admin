@@ -64,29 +64,31 @@
     "to": "إلى",
     "topic": "عنوان",
     "topics": "المواضيع",
-    "totalCompletedTopics": "إجمالي المواضيع المكتملة",
+    "totalCompletedQuestionSets": "إجمالي المواضيع المكتملة",
     "workInProgress": "جاري العمل ... متاح قريبًا",
     "no": "لا",
     "yes": "نعم",
     "createNewOne": "قم بإنشاء واحدة جديدة",
     "selectItem": "حدد {{item}}",
     "yourAssessments": "تقييمك (تقييماتك)",
-    "numbers": "أعداد"
+    "numbers": "أعداد",
+    "questionSet": "مجموعة من الأسئلة",
+    "questionSets": "مجموعات من الأسئلة"
   },
   "answers": {
     "assessmentAnswers": {
-      "completedTopicsNumber": "عدد المواضيع المكتملة",
-      "linkedTopicsNumber": "عدد الموضوعات المرتبطة"
+      "completedQuestionSetsNumber": "عدد المواضيع المكتملة",
+      "linkedQuestionSetsNumber": "عدد الموضوعات المرتبطة"
     },
     "questionsListAnswers": {
       "averageTimeAnswer": "متوسط الوقت للرد",
       "correctOnFirstTry": "صحيح من المحاولة الأولى",
       "correctOnLastTry": "صحيح في المحاولة الأخيرة",
       "questionTitle": "عنوان السؤال",
-      "topicName": "اسم الموضوع"
+      "questionSetName": "اسم الموضوع"
     },
-    "topicListAnswers": {
-      "accessibleTopics": "موضوعات يسهل الوصول إليها",
+    "questionSetListAnswers": {
+      "accessibleQuestionSets": "موضوعات يسهل الوصول إليها",
       "answeredCorrectlyFirstTry": "أجاب بشكل صحيح في المحاولة الأولى",
       "answeredCorrectlyLastTry": "تمت الإجابة بشكل صحيح في المحاولة الأخيرة",
       "assessmentName": "اسم التقييم",
@@ -102,7 +104,6 @@
     },
     "assessmentSummary": {
       "archive": "أرشفة {{type}}",
-      "aTopic": "موضوع",
       "fileDownloadNotice": "يمكن استخدام الملف الذي توشك على تنزيله <br> لأغراض النسخ فقط ، وليس البيع.",
       "fileDownloadNoticeTitle": "يرجى الملاحظة",
       "reorderItems": "إعادة ترتيب {{item}}",
@@ -111,7 +112,8 @@
       "orderChanged": "تم تغيير الطلب بنجاح",
       "copyAssessment": "قم بإنشاء نسخة",
       "unarchive": "أخرج من الأرشيف",
-      "assignAssessment": "تعيين التقييم"
+      "assignAssessment": "تعيين التقييم",
+      "aQuestionSet": "مجموعة من الأسئلة"
     },
     "blocked": "تم بالفعل الرد على {{type}} ولا يمكن تعديله",
     "changeFile": "تغيير الملف",
@@ -173,7 +175,7 @@
           "butterfly": "فراشة",
           "centipede": "حريش",
           "fly": "يطير"
-        } ,
+        },
         "fruit": "فاكهة",
         "fruits": {
           "apple": "تفاحة",
@@ -240,7 +242,7 @@
     },
     "saveSuccess": "تم حفظ {{type}} بنجاح",
     "show": "إظهار {{type}}",
-    "topicDetails": {
+    "questionSetDetails": {
       "fiveSelQuestionsMessage": "يمكن فقط إنشاء ما يصل إلى خمسة أسئلة تعلم اجتماعية وعاطفية عن طريق التقييم.",
       "selQuestionsOrder": "يجب أن تكون أسئلة التعلم الاجتماعي والعاطفي في بداية الموضوع.",
       "aQuestion": "سؤال",
@@ -248,17 +250,16 @@
       "numberLineButton": "رقم الخط",
       "selectButton": "(تحديد متعدد"
     },
-    "topicFormDialog": {
+    "questionSetFormDialog": {
       "changeFile": "تغيير الملف",
-      "createTopic": "قم بإنشاء موضوع",
+      "createQuestionSet": "قم بإنشاء موضوع",
       "praiseTooltip": "حالات الحمد",
       "whenToShowFeedbacks": "متى تظهر التقيمات؟"
     },
     "value": "قيمة",
     "gradeTooltip": "المستوى المدرسي المقصود",
     "learningObjective": "هدف التعلم",
-    "learningObjectiveCode": "",
-    "subtopic": "موضوع فرعي"
+    "learningObjectiveCode": "تعلم كود الهدف"
   },
   "assessments": {
     "assessmentDetail": {
@@ -274,7 +275,6 @@
     },
     "selected": "تم الاختيار",
     "studentsLinkedToAssessment": "عدد الطلاب المرتبطين حاليًا بهذا التقييم",
-    "topicsNumber": "عدد المواضيع",
     "invites": "يدعو",
     "plays": "يلعب",
     "score": "نتيجة",
@@ -301,11 +301,11 @@
     "questionsOverview": {
       "groupResults": "نتائج المجموعة"
     },
-    "scoreByTopicChart": {
+    "scoreByQuestionSetChart": {
       "assessmentTitle": "تقييم",
       "comparisonAverage": "مقارنة بالمتوسط"
     },
-    "scoreByTopicTable": {
+    "scoreByQuestionSetTable": {
       "41correct": "< 41%: صحيح",
       "70correct": "> 70%: صحيح",
       "95correct": "> 95%: صحيح",
@@ -343,7 +343,7 @@
     "selectAssessment": {
       "anAssessment": "تقييم",
       "hintNoStudent": "إذا كان الموضوع باللون الرمادي، فلا يوجد أي طالب قد بدأه",
-      "noTopics": "لا يوجد موضوع متاح"
+      "noQuestionSets": "لا يوجد موضوع متاح"
     },
     "table": {
       "copySuccess": "تم النسخ بنجاح!",
@@ -355,8 +355,8 @@
   "students": {
     "active": "نشيط",
     "activeAssessmentsNumber": "عدد التقييمات النشطة",
-    "assignTopic": "قم بتعيين موضوع",
-    "completedTopicsNumber": "عدد المواضيع المكتملة",
+    "assignQuestionSet": "قم بتعيين موضوع",
+    "completedQuestionSetsNumber": "عدد المواضيع المكتملة",
     "createStudentDialog": {
       "duplicateName": "يوجد طالب يحمل نفس الاسم والبلد واللغة بالفعل",
       "firstName": "الاسم الأول",
@@ -372,18 +372,18 @@
     "studentCode": "كود طالب",
     "studentDetail": {
       "activeAccess": "وصول نشط",
-      "linkedTopics": "موضوع (مواضيع) مرتبطة",
+      "linkedQuestionSets": "موضوع (مواضيع) مرتبطة",
       "noActiveAccess": "لا يوجد وصول نشط",
       "numberAssessments": "عدد التقييمات",
       "studentAssessments": "تقييمات الطلاب",
       "studentNotLinkedAssessment": "هذا الطالب حالياً غير مرتبط بأي تقييم",
-      "topicAccesses": "الوصول إلى الموضوع"
+      "questionSetAccesses": "الوصول إلى الموضوع"
     },
     "studentDetails": "تفاصيل الطالب",
     "studentOneOrMany": "الطلاب)",
-    "topicAccessesBuilder": {
+    "questionSetAccessesBuilder": {
       "accessesSet": "تم تعيين الوصول إلى الموضوع الجديد بنجاح!",
-      "applySameDatesAllTopics": "تطبيق نفس التواريخ على جميع المواضيع؟",
+      "applySameDatesAllQuestionSets": "تطبيق نفس التواريخ على جميع المواضيع؟",
       "assessment": "تقييم",
       "endDate": "تاريخ الانتهاء",
       "errorOnSubmit": "حدث خطأ أثناء تقديم وصول الموضوع",
@@ -391,49 +391,24 @@
       "noGroups": "ليس لديك مجموعات مع الطلاب.",
       "notifier": "تحتاج إلى تحديد الطالب (الطلاب) أو المجموعة (المجموعات) وتعيين تاريخ البدء وتاريخ الانتهاء لكل موضوع محدد",
       "startDate": "تاريخ البدء",
-      "topicAvailability": "مدى توفر موضوع (مواضيع) التقييم",
+      "questionSetAvailability": "مدى توفر موضوع (مواضيع) التقييم",
       "replaceAsssessmentAccess": "هل تريد استبدال <b> {{previousAssessment}} </b> بـ <b> {{newAssessment}} </b>؟",
       "studentAssessmentPrompt": "الطالب {{studentName}} لديه تقييم معين بالفعل",
       "newAssessment": "تقييم جديد",
       "studentAssessmentIncompletePrompt": "لم ينته هذا الطالب من التقييم الحالي <b> {{currentAssessment}} </b> ، هل أنت متأكد من أنك تريد المتابعة؟"
     },
-    "topicAccessesEdit": {
+    "questionSetAccessesEdit": {
       "accessEdited": "تم حذف الوصول إلى الموضوع بنجاح!",
-      "allTopicsAccessesDeleted": "تم حذف كافة المواضيع التي يتم الوصول إليها من هذا التقييم",
-      "editTopicsAccess": "تحرير الوصول إلى موضوع (مواضيع) التقييم",
+      "allQuestionSetsAccessesDeleted": "تم حذف كافة المواضيع التي يتم الوصول إليها من هذا التقييم",
+      "editQuestionSetsAccess": "تحرير الوصول إلى موضوع (مواضيع) التقييم",
       "errorOnDeletion": "حدث خطأ أثناء إرسال حذف الوصول للموضوع",
       "errorOnEdit": "حدث خطأ أثناء تقديم موضوع الوصول إلى التحديث",
       "missingDates": "تحتاج إلى تحديد تاريخ بدء وتاريخ انتهاء لكل موضوع",
-      "removeTopicAccess": "حذف الوصول إلى الموضوع",
-      "removeTopicAccessPrompt": "'<b>{{topicTitle}}</b>' ?",
-      "topicsUpdated": "تم تحديث المواضيع التي تم الوصول إليها بنجاح!"
+      "removeQuestionSetAccess": "حذف الوصول إلى الموضوع",
+      "removeQuestionSetAccessPrompt": "'<b>{{questionSetTitle}}</b>' ?",
+      "questionSetsUpdated": "تم تحديث المواضيع التي تم الوصول إليها بنجاح!"
     },
     "studentLoginURL": "URL تسجيل الدخول"
-  },
-  "filter": {
-    "grade1": "الصف 1",
-    "leraningObjectives": {
-      "grade1": {
-        "addition": {
-          "1-ACP-04": "يمثل",
-          "1-ACP-05": "انظر إلى المراهقين على أنهم مكتملون 10 وبعضهم الآخر",
-          "1-ACP-01": "العد وإضافة المزيد",
-          "1-ACP-03": "جزء جزء كامل نموذج (2)",
-          "1-ACP-02": "جزء جزء كامل نموذج (1)"
-        }
-      },
-      "title": "أهداف Leraning"
-    },
-    "maths": "رياضيات",
-    "reading": "قراءة",
-    "grade2": "الصف 2",
-    "grade3": "الصف 3",
-    "topic": {
-      "addition": "إضافة",
-      "division": "قسم",
-      "multiplication ": "عمليه الضرب",
-      "subtraction": "الطرح"
-    }
   },
   "header": {
     "libraryHeader": "مكتبة",

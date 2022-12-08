@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as Chart from 'chart.js';
 import { ChartData } from 'chart.js';
-import { TopicDashboard } from 'src/app/core/models/topic-dashboard.model';
+import { QuestionSetDashboard } from 'src/app/core/models/question-set-dashboard.model';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 
 @Component({
@@ -12,7 +12,7 @@ import { AssessmentService } from 'src/app/core/services/assessment.service';
 export class QuestionsOverviewChartComponent implements OnInit {
 
   public assessmentId: string;
-  public topicId: string;
+  public questionSetId: string;
 
   public questionDetails: any;
 
@@ -35,11 +35,11 @@ export class QuestionsOverviewChartComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public onTopicSelection(assessmentTopicInfos: {assessmentId: string; topic: TopicDashboard}): void {
+  public onQuestionSetSelection(assessmentQuestionSetInfos: {assessmentId: string; questionSet: QuestionSetDashboard}): void {
     this.loading = true;
-    this.assessmentId = assessmentTopicInfos?.assessmentId;
+    this.assessmentId = assessmentQuestionSetInfos?.assessmentId;
 
-    if (assessmentTopicInfos?.topic.started) {
+    if (assessmentQuestionSetInfos?.questionSet.started) {
       this.barChart = new Chart('barChart', {
         type: 'horizontalBar',
         data: this.barChartData,
@@ -65,7 +65,7 @@ export class QuestionsOverviewChartComponent implements OnInit {
           }
         },
       });
-      this.topicId = assessmentTopicInfos.topic.id;
+      this.questionSetId = assessmentQuestionSetInfos.questionSet.id;
       this.getQuestionsOverview();
     } else {
       this.hasData = false;
@@ -75,7 +75,7 @@ export class QuestionsOverviewChartComponent implements OnInit {
   public getQuestionsOverview(groupID?: number[]): void {
     this.loading = true;
     const filteringParams = groupID?.length ? { groups: groupID } : null;
-    this.assessmentService.getQuestionsOverview(this.assessmentId, this.topicId, filteringParams)
+    this.assessmentService.getQuestionsOverview(this.assessmentId, this.questionSetId, filteringParams)
     .subscribe(data => {
       this.getBarChartData(data);
     });
@@ -115,7 +115,7 @@ export class QuestionsOverviewChartComponent implements OnInit {
 
   private getQuestionDetails(index): any {
     this.index = index + 1;
-    this.assessmentService.getQuestionDetails(this.assessmentId, this.topicId, this.questionData[index].id).subscribe(details => {
+    this.assessmentService.getQuestionDetails(this.assessmentId, this.questionSetId, this.questionData[index].id).subscribe(details => {
       this.questionDetails = details;
       this.loading = false;
     });

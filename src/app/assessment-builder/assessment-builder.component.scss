@@ -14,24 +14,24 @@
     }
 }
 
-.topics {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-
-    .add-topic {
-        cursor: pointer;
-        text-align: center;
-        mat-icon{
-            font-size:50px;
-        }
-    }
-
-    mat-card{
-        width: 20%;
-        height: 100px;
-    }
-}
+// .question-sets {
+//     display: flex;
+//     flex-direction: row;
+//     justify-content: space-between;
+//
+//     .add-question-set {
+//         cursor: pointer;
+//         text-align: center;
+//         mat-icon{
+//             font-size:50px;
+//         }
+//     }
+//
+//     mat-card{
+//         width: 20%;
+//         height: 100px;
+//     }
+// }
 
 app-custom-button {
     position: absolute;
