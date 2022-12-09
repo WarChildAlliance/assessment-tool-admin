@@ -1,17 +1,17 @@
-<app-previous-button [path]="'students/' + currentStudentId + '/assessments/' + assessmentId + '/topics'">
+<app-previous-button [path]="'students/' + currentStudentId + '/assessments/' + assessmentId + '/question_sets'">
 </app-previous-button>
-<div class="main-board__details" *ngIf="!!currentTopic && !!currentStudent">
+<div class="main-board__details" *ngIf="!!currentQuestionSet && !!currentStudent">
   <div class="main-board__details__element">
       <span class="title">{{ "general.studentName" | translate }}</span>
       <span class="value">{{ currentStudent.full_name }}</span>
   </div>
   <div class="main-board__details__element">
-      <span class="title">{{ "answers.questionsListAnswers.topicName" | translate }}</span>
-      <span class="value">{{ currentTopic.name }}</span>
+      <span class="title">{{ "answers.questionsListAnswers.questionSetName" | translate }}</span>
+      <span class="value">{{ currentQuestionSet.name }}</span>
   </div>
   <div class="main-board__details__element">
       <span class="title">{{ "general.numberOf" | translate: {type: "general.questions" | translate | lowercase} }}</span>
-      <span class="value">{{ currentTopic.questions_count }}</span>
+      <span class="value">{{ currentQuestionSet.questions_count }}</span>
   </div>
 </div>
 
@@ -42,7 +42,7 @@
   </ng-container>
 
   <ng-container *ngIf="questionDetails && questionDetails.question_type === 'DRAG_AND_DROP'">
-    <app-question-drag-and-drop [question]="questionDetails" [evaluated]="true" [assessmentId]="assessmentId" [topicId]="topicId">
+    <app-question-drag-and-drop [question]="questionDetails" [evaluated]="true" [assessmentId]="assessmentId" [questionSetId]="questionSetId">
     </app-question-drag-and-drop>
   </ng-container>
 

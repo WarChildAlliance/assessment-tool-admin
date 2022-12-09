@@ -20,11 +20,15 @@ export class SetOfQuestionsComponent implements OnInit {
     { key: 'questions_count', name: 'general.questionsNumber' }
   ];
 
-  public topicsDataSource: MatTableDataSource<any> = new MatTableDataSource([]);
+  public questionSetsDataSource: MatTableDataSource<any> = new MatTableDataSource([]);
 
-  public selectedTopics: any[] = [];
+  public isAssessmentPrivate = false;
 
-  public createNewTopicForm: FormGroup = new FormGroup({
+  public selectedQuestionSets: any[] = [];
+
+  public currentAssessment: any;
+
+  public createNewQuestionSetForm: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required])
   });
 
@@ -38,14 +42,14 @@ export class SetOfQuestionsComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    this.assessmentService.getAssessmentTopicsList().subscribe((topicsList) => {
-      this.topicsDataSource = new MatTableDataSource(topicsList);
+    this.assessmentService.getAssessmentQuestionSetsList().subscribe((topicsList) => {
+      this.questionSetsDataSource = new MatTableDataSource(topicsList);
     });
   }
 
   // This eventReceiver triggers a thousand times when user does "select all". We should find a way to improve this. (debouncer ?)
   public onSelectionChange(newSelection: any[]): void {
-    this.selectedTopics = newSelection;
+    this.selectedQuestionSets = newSelection;
   }
 
   public downloadData(): void {

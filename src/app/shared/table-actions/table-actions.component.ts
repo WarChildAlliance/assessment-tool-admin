@@ -104,7 +104,7 @@ export class TableActionsComponent implements OnInit {
       }
       return;
     }
-    this.assessmentService.getSubtopics(subject).subscribe((subtopics) => {
+    this.assessmentService.getTopics(subject).subscribe((subtopics) => {
       if (subtopics?.length > 0) {
         this.filtersData.splice(
           subtopicFilterIndex === -1 ? 3 : subtopicFilterIndex,

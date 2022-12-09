@@ -6,8 +6,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Assessment } from 'src/app/core/models/assessment.model';
 import { TableColumn } from 'src/app/core/models/table-column.model';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
-import { TopicAccessesBuilderComponent } from 'src/app/shared/topic-accesses-builder/topic-accesses-builder.component';
-import { Topic } from 'src/app/core/models/topic.models';
+import { QuestionSetAccessesBuilderComponent } from 'src/app/shared/question-set-accesses-builder/question-set-accesses-builder.component';
+import { QuestionSet } from '../../core/models/question-set.model';
 import { TableFilterLibraryData } from 'src/app/core/models/table-filter.model';
 
 @Component({
@@ -69,7 +69,7 @@ export class AssessmentsComponent implements OnInit, AfterViewInit {
     this.assessmentService.getAssessmentsList(tableFiltersData).subscribe((assessmentsList) => {
       assessmentsList = assessmentsList.filter((assessment) => assessment.archived !== true);
       assessmentsList.map(assessment => {
-        this.assessmentService.getAssessmentTopics(assessment.id).subscribe((topics: Topic[]) => assessment.topics = topics);
+        this.assessmentService.getAssessmentQuestionSets(assessment.id).subscribe((topics: QuestionSet[]) => assessment.topics = topics);
       });
       this.assessmentsDataSource = new MatTableDataSource(assessmentsList);
     });
@@ -88,7 +88,7 @@ export class AssessmentsComponent implements OnInit, AfterViewInit {
   }
 
   public openAssignTopicDialog(assessment: Assessment): void {
-    this.dialog.open(TopicAccessesBuilderComponent, {
+    this.dialog.open(QuestionSetAccessesBuilderComponent, {
       data: { assessment }
     });
   }

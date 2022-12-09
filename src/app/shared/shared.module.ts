@@ -39,7 +39,7 @@ import { TableFilterComponent } from './table-filter/table-filter.component';
 import { ChipListComponent } from './table-filter/chip-list/chip-list.component';
 import { TableRowDetailsComponent } from './table-row-details/table-row-details.component';
 import { ScoreIndicatorComponent } from './score-indicator/score-indicator.component';
-import { TopicAccessesBuilderComponent } from './topic-accesses-builder/topic-accesses-builder.component';
+import { QuestionSetAccessesBuilderComponent } from './question-set-accesses-builder/question-set-accesses-builder.component';
 import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
@@ -62,7 +62,7 @@ import { MatMenuModule } from '@angular/material/menu';
     ChipListComponent,
     TableRowDetailsComponent,
     ScoreIndicatorComponent,
-    TopicAccessesBuilderComponent
+    QuestionSetAccessesBuilderComponent
   ],
   imports: [
     CommonModule,
@@ -106,7 +106,7 @@ import { MatMenuModule } from '@angular/material/menu';
     CustomizedDragAndDropComponent,
     ShapesComponent,
     TableActionsComponent,
-    TopicAccessesBuilderComponent
+    QuestionSetAccessesBuilderComponent
   ]
 })
 

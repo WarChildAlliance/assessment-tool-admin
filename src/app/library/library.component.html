@@ -1,0 +1,14 @@
+<div class="main-board">
+  <div class="main-board__top-container__actions">
+    <app-custom-button icon="restart_alt_outline" category="tertiary" variant="primary" (click)="resetFilters()">
+      {{ "library.resetFilters" | translate }}
+    </app-custom-button>
+  </div>
+  <app-table [tableData]="assessmentsDataSource" [filtersData]="tableFilters" [displayedColumns]="displayedColumns"
+    [isSelectable]="false" (openDetailsEvent)="onOpenDetails($event)"
+    [pageConfig]="'library'"
+    [filtersReset$]="filtersReset$"
+    (filtersChangedEvent)="onTableFiltersChange($event)"
+    (buttonClickedEvent)="openAssignQuestionSetDialog($event)">
+  </app-table>
+</div>

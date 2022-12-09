@@ -28,7 +28,7 @@
                 <mat-form-field appearance="outline" class="form-group" color="accent">
                     <mat-label>{{ "assessmentBuilder.questions.dragAndDrop.itemsSide" | translate: { side:
                         ("general.left" | translate).toLowerCase() } }}</mat-label>
-                    <input required type="number" matInput formControlName="first_value" min="1" max="10">
+                    <input required type="number" matInput formControlName="first_value" min="1">
                 </mat-form-field>
                 <mat-form-field appearance="outline" color="accent">
                     <mat-label>{{ "assessmentBuilder.questions.dragAndDrop." + selectedStyle | translate }}</mat-label>
@@ -41,7 +41,7 @@
 
                 <app-shapes [shape]="customizedDragAndDropForm.controls.shape.value"
                     [style]="customizedDragAndDropForm.controls.first_style.value"
-                    [quantity]="customizedDragAndDropForm.controls.first_value.value < 10 ? customizedDragAndDropForm.controls.first_value.value : 10">
+                    [quantity]="customizedDragAndDropForm.controls.first_value.value">
                 </app-shapes>
             </div>
             <div class="operator">
@@ -53,7 +53,7 @@
                 <mat-form-field appearance="outline" class="form-group" color="accent">
                     <mat-label>{{ "assessmentBuilder.questions.dragAndDrop.itemsSide" | translate: { side:
                         ("general.right" | translate).toLowerCase() } }}</mat-label>
-                    <input required type="number" matInput formControlName="second_value" min="1" max="10">
+                    <input required type="number" matInput formControlName="second_value" min="1">
                 </mat-form-field>
                 <mat-form-field appearance="outline" color="accent">
                     <mat-label>{{ "assessmentBuilder.questions.dragAndDrop." + selectedStyle | translate }}</mat-label>
@@ -66,7 +66,7 @@
 
                 <app-shapes [shape]="customizedDragAndDropForm.controls.shape.value"
                     [style]="customizedDragAndDropForm.controls.second_style.value"
-                    [quantity]="customizedDragAndDropForm.controls.second_value.value < 10 ? customizedDragAndDropForm.controls.second_value.value : 10">
+                    [quantity]="customizedDragAndDropForm.controls.second_value.value">
                 </app-shapes>
             </div>
         </div>
@@ -76,14 +76,6 @@
         <span class="notifier"
             *ngIf="customizedDragAndDropForm.get('first_value').hasError('invalidCalcul') || customizedDragAndDropForm.get('second_value').hasError('invalidCalcul')">
             {{ "assessmentBuilder.questions.calcul.calculError" | translate }}
-        </span>
-        <span class="notifier"
-            *ngIf="customizedDragAndDropForm.get('first_value').hasError('maxNumberLimit') || customizedDragAndDropForm.get('second_value').hasError('maxNumberLimit')">
-            {{ "assessmentBuilder.questions.dragAndDrop.numberLimitError" | translate }}
-        </span>
-        <span class="notifier"
-            *ngIf="customizedDragAndDropForm.get('first_value').hasError('answer') || customizedDragAndDropForm.get('second_value').hasError('answer')">
-            {{ "assessmentBuilder.questions.dragAndDrop.answerLimitError" | translate }}
         </span>
 
         <button mat-flat-button mat-dialog-close class="dialog-buttons__cancel" color="secondary">

@@ -9,7 +9,7 @@
             </mat-form-field>
             <app-spinner *ngIf="!questionsList" size="medium" [variant]="'primary'"></app-spinner>
         </form>
-    
+
         <app-custom-button category="secondary" variant="neutral" icon="add" (click)="selectQuestion = false">
             {{ 'general.createNewOne' | translate }}
         </app-custom-button>
@@ -31,6 +31,9 @@
                     <mat-label for="order">{{ "general.order" | translate }}</mat-label>
                     <input matInput type="number" formControlName="order">
                 </mat-form-field>
+                <mat-checkbox formControlName="show_options_value">
+                    {{ "assessmentBuilder.questions.select.showOptionsValue" | translate }}
+                </mat-checkbox>
                 <!-- In case of using display_type again: uncomment the following mat-form-field attribute -->
                 <!--
                 <mat-form-field appearance="outline" class="form-group" color="accent">
@@ -47,13 +50,13 @@
                 <h2>{{ "assessmentBuilder.questions.select.attachments" | translate }}</h2>
                 <app-image-selector
                     [reset$]="attachmentsResetSubject$.asObservable()"
-                    (newImageEvent)="questionFormService.imageAttachment = $event"
+                    (newImageEvent)="questionFormService.imageAttachment = $event; selectForm.markAsDirty()"
                     [imageAttachment]="imageAttachment"
                 ></app-image-selector>
                 <app-audio-selector
                     [isRecorderEnabled]="true"
                     [reset$]="attachmentsResetSubject$.asObservable()"
-                    (newAudioEvent)="questionFormService.audioAttachment = $event"
+                    (newAudioEvent)="questionFormService.audioAttachment = $event; selectForm.markAsDirty()"
                     [audioAttachment]="audioAttachment"
                 ></app-audio-selector>
             </div>
@@ -103,7 +106,7 @@
     </form>
 
     <div class="dialog-buttons">
-        <span class="notifier" *ngIf="selectForm.controls.order.errors">{{ "assessmentBuilder.topicDetails.selQuestionsOrder" | translate }}</span>
+        <span class="notifier" *ngIf="selectForm.controls.order.errors">{{ "assessmentBuilder.questionSetDetails.selQuestionsOrder" | translate }}</span>
         <button mat-flat-button mat-dialog-close class="dialog-buttons__cancel" color="secondary">
             {{ "general.cancel" | translate }}
         </button>

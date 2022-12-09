@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Assessment } from '../models/assessment.model';
-import { Topic } from '../models/topic.models';
+import { QuestionSet } from '../models/question-set.model';
 import { AssessmentDashboard } from '../models/assessment-dashboard.model';
 import { UtilitiesService } from './utilities.service';
 
@@ -37,20 +37,22 @@ export class AssessmentService {
     return this.http.delete<any>(`${environment.API_URL}/assessments/${id}/`);
   }
 
-  public deleteTopic(assessmentId: string, topicId: string): Observable<any> {
-    return this.http.delete<any>(`${environment.API_URL}/assessments/${assessmentId}/topics/${topicId}/`);
+  public deleteQuestionSet(assessmentId: string, questionSetId: string): Observable<any> {
+    return this.http.delete<any>(`${environment.API_URL}/assessments/${assessmentId}/question-sets/${questionSetId}/`);
   }
 
-  public deleteQuestion(assessmentId: string, topicId: string, questionId: string): Observable<any> {
-    return this.http.delete<any>(`${environment.API_URL}/assessments/${assessmentId}/topics/${topicId}/questions/${questionId}/`);
+  public deleteQuestion(assessmentId: string, questionSetId: string, questionId: string): Observable<any> {
+    return this.http.delete<any>(
+      `${environment.API_URL}/assessments/${assessmentId}/question-sets/${questionSetId}/questions/${questionId}/`
+    );
   }
 
-  public getAssessmentTopics(id: string): Observable<any[]> {
-    return this.http.get<any[]>(`${environment.API_URL}/visualization/assessments/${id}/topics/`);
+  public getAssessmentQuestionSets(id: string): Observable<any[]> {
+    return this.http.get<any[]>(`${environment.API_URL}/visualization/assessments/${id}/question-sets/`);
   }
 
-  public getAssessmentTopicsList(): Observable<any[]> {
-    return this.http.get<any[]>(`${environment.API_URL}/visualization/topics/all/`);
+  public getAssessmentQuestionSetsList(): Observable<any[]> {
+    return this.http.get<any[]>(`${environment.API_URL}/visualization/question-sets/all/`);
   }
 
   public getAllQuestionsList(filteringParams?: object): Observable<any[]> {
@@ -63,8 +65,8 @@ export class AssessmentService {
     return this.http.get<any>(`${environment.API_URL}/assessments/questions/all/?type=${questionType}`);
   }
 
-  public getTopicQuestions(assessmentId: string, topicId: string, filteringParams?: object): Observable<any[]> {
-    const initialUrl = `${environment.API_URL}/visualization/assessments/${assessmentId}/topics/${topicId}/questions/`;
+  public getQuestionSetQuestions(assessmentId: string, questionSetId: string, filteringParams?: object): Observable<any[]> {
+    const initialUrl = `${environment.API_URL}/visualization/assessments/${assessmentId}/topics/${questionSetId}/questions/`;
     const finalUrl = filteringParams ? this.utilitiesService.urlBuilder(initialUrl, filteringParams) : initialUrl;
     return this.http.get<any[]>(finalUrl);
   }
@@ -77,43 +79,46 @@ export class AssessmentService {
     return this.http.put<Assessment>(`${environment.API_URL}/assessments/${assessmentId}/`, assessment);
   }
 
-  public createTopic(id: string, topic: FormData): Observable<Topic> {
-    return this.http.post<Topic>(`${environment.API_URL}/assessments/${id}/topics/`, topic);
+  public createQuestionSet(id: string, questionSet: FormData): Observable<QuestionSet> {
+    return this.http.post<QuestionSet>(`${environment.API_URL}/assessments/${id}/question-sets/`, questionSet);
   }
 
-  public createQuestion(question: any, topicId: string, assessmentId: string): Observable<any> {
-    return this.http.post<any>(`${environment.API_URL}/assessments/${assessmentId}/topics/${topicId}/questions/`, question);
+  public createQuestion(question: any, questionSetId: string, assessmentId: string): Observable<any> {
+    return this.http.post<any>(`${environment.API_URL}/assessments/${assessmentId}/question-sets/${questionSetId}/questions/`, question);
   }
 
-  public editTopic(assessmentId: string, topicId: string, topic: any): Observable<any> {
-    return this.http.put<any>(`${environment.API_URL}/assessments/${assessmentId}/topics/${topicId}/`, topic);
+  public editQuestionSet(assessmentId: string, questionSetId: string, questionSet: any): Observable<any> {
+    return this.http.put<any>(`${environment.API_URL}/assessments/${assessmentId}/question-sets/${questionSetId}/`, questionSet);
   }
 
-  public reorderTopics(assessmentId: string, data: any): Observable<any> {
-    return this.http.put<any>(`${environment.API_URL}/assessments/${assessmentId}/topics/reorder/`, data);
+  public reorderQuestionSets(assessmentId: string, data: any): Observable<any> {
+    return this.http.put<any>(`${environment.API_URL}/assessments/${assessmentId}/question-sets/reorder/`, data);
   }
 
-  public editQuestion(assessmentId: string, topicId: string, questionId: string, question: any): Observable<any> {
-    return this.http.put<any>(`${environment.API_URL}/assessments/${assessmentId}/topics/${topicId}/questions/${questionId}/`, question);
+  public editQuestion(assessmentId: string, questionSetId: string, questionId: string, question: any): Observable<any> {
+    return this.http.put<any>(
+      `${environment.API_URL}/assessments/${assessmentId}/question-sets/${questionSetId}/questions/${questionId}/`,
+      question
+    );
   }
 
-  public reorderQuestions(assessmentId: string, topicId: string, data: any): Observable<any> {
-    return this.http.put<any>(`${environment.API_URL}/assessments/${assessmentId}/topics/${topicId}/questions/reorder/`, data);
+  public reorderQuestions(assessmentId: string, questionSetId: string, data: any): Observable<any> {
+    return this.http.put<any>(`${environment.API_URL}/assessments/${assessmentId}/question-sets/${questionSetId}/questions/reorder/`, data);
   }
 
   public getStudentAssessments(studentId: number): Observable<any[]> {
     return this.http.get<any[]>(`${environment.API_URL}/visualization/students_assessments/${studentId}/`);
   }
 
-  public getQuestionsOverview(assessmentId: string, topicId: string, filteringParams?: object): Observable<any[]> {
-    const initialUrl = `${environment.API_URL}/visualization/charts/assessments/${assessmentId}/topics/${topicId}/questions/`;
+  public getQuestionsOverview(assessmentId: string, questionSetId: string, filteringParams?: object): Observable<any[]> {
+    const initialUrl = `${environment.API_URL}/visualization/charts/assessments/${assessmentId}/question-sets/${questionSetId}/questions/`;
     const finalUrl = filteringParams ? this.utilitiesService.urlBuilder(initialUrl, filteringParams) : initialUrl;
     return this.http.get<any[]>(finalUrl);
   }
 
-  public getQuestionDetails(assessmentId, topicId, questionId): Observable<any[]> {
+  public getQuestionDetails(assessmentId, questionSetId, questionId): Observable<any[]> {
     return this.http.get<any[]>(`
-    ${environment.API_URL}/visualization/assessments/${assessmentId}/topics/${topicId}/questions/${questionId}/`
+    ${environment.API_URL}/visualization/assessments/${assessmentId}/question-sets/${questionSetId}/questions/${questionId}/`
     );
   }
 
@@ -121,16 +126,16 @@ export class AssessmentService {
     return this.http.get<AssessmentDashboard[]>(`${environment.API_URL}/visualization/charts/assessments/`);
   }
 
-  public getTopicsListForDashboard(assessmentId: string): Observable<any[]> {
-    return this.http.get<any[]>(`${environment.API_URL}/visualization/charts/assessments/${assessmentId}/topics/`);
+  public getQuestionSetsListForDashboard(assessmentId: string): Observable<any[]> {
+    return this.http.get<any[]>(`${environment.API_URL}/visualization/charts/assessments/${assessmentId}/question-sets/`);
   }
 
-  public getTopicDetails(assessmentId: string, topicId: string): Observable<any[]> {
-    return this.http.get<any[]>(`${environment.API_URL}/assessments/${assessmentId}/topics/${topicId}`);
+  public getQuestionSetDetails(assessmentId: string, questionSetId: string): Observable<any[]> {
+    return this.http.get<any[]>(`${environment.API_URL}/assessments/${assessmentId}/question-sets/${questionSetId}`);
   }
 
-  public getQuestionsList(assessmentId: string, topicId: string): Observable<any[]> {
-    return this.http.get<any[]>(`${environment.API_URL}/assessments/${assessmentId}/topics/${topicId}/questions`);
+  public getQuestionsList(assessmentId: string, questionSetId: string): Observable<any[]> {
+    return this.http.get<any[]>(`${environment.API_URL}/assessments/${assessmentId}/question-sets/${questionSetId}/questions`);
   }
 
   public updateAssessmentsList(assessments: AssessmentDashboard[]): void {
@@ -159,12 +164,16 @@ export class AssessmentService {
     return this.http.put<any[]>(`${environment.API_URL}/assessments/${assessmentId}/attachments/${attachmentId}/`, formData);
   }
 
+  public deleteAttachments(assessmentId: string, attachmentId: number): Observable<any[]> {
+    return this.http.delete<any[]>(`${environment.API_URL}/assessments/${assessmentId}/attachments/${attachmentId}/`);
+  }
+
   public getAllData(): Observable<any[]>  {
     return this.http.get<any[]>(`${environment.API_URL}/export/answers/`);
   }
 
-  public downloadPDF(assessmentId: string, topicId?: string, questionId?: string): void {
-    const url = `${environment.API_URL}/export/assessments/${assessmentId}/` + `${ topicId ? `topics/${topicId}/` : '' }`
+  public downloadPDF(assessmentId: string, questionSetId?: string, questionId?: string): void {
+    const url = `${environment.API_URL}/export/assessments/${assessmentId}/` + `${ questionSetId ? `question-sets/${questionSetId}/` : '' }`
      + `${ questionId ? `questions/${questionId}/` : '' }`;
     this.http.get(url, {
         responseType: 'blob', observe: 'response'
@@ -174,19 +183,21 @@ export class AssessmentService {
     });
   }
 
-  public addDraggableOption(assessmentId: string, topicId: string, questionId: string, data): Observable<any> {
+  public addDraggableOption(assessmentId: string, questionSetId: string, questionId: string, data): Observable<any> {
     return this.http.post<any>(
-      `${environment.API_URL}/assessments/${assessmentId}/topics/${topicId}/questions/${questionId}/draggable/`, data
+      `${environment.API_URL}/assessments/${assessmentId}/question-sets/${questionSetId}/questions/${questionId}/draggable/`, data
     );
   }
 
-  public getDraggableOptions(assessmentId: string, topicId: string, questionId: string): Observable<any> {
-    return this.http.get<any>(`${environment.API_URL}/assessments/${assessmentId}/topics/${topicId}/questions/${questionId}/draggable/`);
+  public getDraggableOptions(assessmentId: string, questionSetId: string, questionId: string): Observable<any> {
+    return this.http.get<any>(
+      `${environment.API_URL}/assessments/${assessmentId}/question-sets/${questionSetId}/questions/${questionId}/draggable/`
+    );
   }
 
-  public getSubtopics(subject: string = null): Observable<any> {
+  public getTopics(subject: string = null): Observable<any> {
     const filteringParams = { subject };
-    const initialUrl = `${environment.API_URL}/assessments/subtopics/`;
+    const initialUrl = `${environment.API_URL}/assessments/topics/`;
     const finalUrl = filteringParams ? this.utilitiesService.urlBuilder(initialUrl, filteringParams) : initialUrl;
     return this.http.get<any>(finalUrl);
   }

@@ -1,0 +1,160 @@
+<div class="question-list-container" *ngIf="questionSetDetails">
+  <div class="question-set-header">
+    <div>
+      <app-previous-button path="/assessment-builder/{{ assessmentType }}"></app-previous-button>
+      <img *ngIf="questionSetDetails?.icon" [src]="questionSetDetails.icon">
+      <h1>{{ questionSetDetails.name }}</h1>
+    </div>
+    <div>
+      <app-custom-button *ngIf="questionSetDetails.can_edit && !questionSetDetails.archived"
+        matTooltip="{{ 'assessmentBuilder.assessmentSummary.reorderTooltip' | translate:{ item: ('general.questions' | translate)} }}"
+        matTooltipPosition="above" [category]="reorder ? 'secondary' : 'tertiary'" variant="primary" icon="reorder" (click)="reorderQuestions(reorder)">
+          {{ reorder ? ("assessmentBuilder.assessmentSummary.saveOrder" | translate)
+          : ("assessmentBuilder.assessmentSummary.reorderItems" | translate: { item: ("general.questions" | translate)}) }}
+      </app-custom-button>
+      <span *ngIf="!reorder">
+        <span matTooltip="{{ 'assessmentBuilder.blocked' | translate: { type: ('general.questionSet' | translate | lowercase) } }}"
+          matTooltipPosition="above"
+          [matTooltipDisabled]="!isAnswered"
+        >
+          <app-custom-button *ngIf="questionSetDetails.can_edit && !questionSetDetails.archived" category="tertiary" variant="primary"
+            icon="edit" (click)="openEditQuestionSetDialog(questionSetDetails)" [disabled]="isAnswered">
+          {{ "general.edit" | translate: {type: ''} }}
+          </app-custom-button>
+        </span>
+        <app-custom-button *ngIf="questionSetDetails.can_edit" category="tertiary" variant="primary" icon="delete" (click)="deleteQuestionSet()">
+          {{ "general.delete" | translate: {type: ''} }}
+        </app-custom-button>
+        <app-custom-button *ngIf="isDownloadable" category="tertiary" variant="primary" icon="download" (click)="downloadPDF(assessmentId, questionSetId)">
+          {{ "assessmentBuilder.download" | translate }}
+        </app-custom-button>
+      </span>
+      <span *ngIf="reorder">
+        <app-custom-button *ngIf="questionSetDetails.can_edit" category="tertiary" variant="danger" icon="close" (click)="cancelReorder()">
+          {{ "general.cancel" | translate }}
+        </app-custom-button>
+      </span>
+    </div>
+  </div>
+  <mat-card>
+    <div class="question-set-infos" *ngIf="questionSetDetails">
+      <div class="detail">
+        <p>{{ "assessmentBuilder.description" | translate }}</p>
+        <p>{{ questionSetDetails.description}} </p>
+      </div>
+      <ng-container *ngIf="learningObj">
+        <div class="detail">
+          <p>{{ "assessmentBuilder.learningObjectiveCode" | translate }}</p>
+          <p>{{ learningObj.code }} </p>
+        </div>
+        <div *ngIf="learningObj" class="detail">
+          <p>{{ "assessmentBuilder.learningObjective" | translate }}</p>
+          <p>{{ learningObj }} </p>
+        </div>
+      </ng-container>
+
+
+      <div class="detail">
+        <p>{{ "assessmentBuilder.order" | translate }}</p>
+        <p>{{ questionSetDetails.order}} </p>
+      </div>
+      <div class="detail">
+        <p>{{ "assessmentBuilder.evaluated" | translate }}</p>
+        <p>{{ questionSetDetails.evaluated}} </p>
+      </div>
+      <div *ngIf="questionSetDetails.topic" class="detail">
+        <p>{{ "general.topic" | translate }}</p>
+        <p>{{ questionSetDetails.topic.name }} </p>
+      </div>
+    </div>
+  </mat-card>
+  <div class="question" cdkDropList cdkDropListOrientation="vertical" [cdkDropListData]="questionsToOrder" (cdkDropListDropped)="dropQuestion($event)">
+    <app-spinner style="text-align: -webkit-center;" *ngIf="!questionsList" size="large" [variant]="'primary'"></app-spinner>
+
+    <mat-card *ngIf="questionSetDetails.can_edit && questionsList">
+      <h2>
+        {{ "general.add" | translate: { type: ("assessmentBuilder.questionSetDetails.aQuestion" | translate) } }}
+      </h2>
+      <div class="question-options-button"
+        matTooltip="{{ 'assessmentBuilder.questionSetDetails.fiveSelQuestionsMessage' | translate }}"
+        matTooltipPosition="above" [matTooltipDisabled]="!(selQuestionsCount === 5)"
+      >
+        <app-custom-button *ngFor="let question of questionsArray" category="tertiary" variant="primary"
+        (click)="openQuestionDialog(null, false, question.type)" variant="default"
+        [disabled]="(question.type === 'SEL') && (selQuestionsCount === 5)"
+        >
+          {{ question.text }}
+        </app-custom-button>
+      </div>
+    </mat-card>
+    <div class="question-details" *ngFor="let questionDetails of questionsList" cdkDrag [cdkDragDisabled]="!reorder">
+      <span matTooltip="{{ 'assessmentBuilder.blocked' | translate: { type: ('general.question' | translate | lowercase) } }}"
+        [matTooltipDisabled]="!questionDetails.answered" matTooltipPosition="above">
+        <app-custom-button *ngIf="questionSetDetails.can_edit" [disabled]="questionDetails.answered" category="tertiary" variant="neutral"
+          (click)="openQuestionDialog(questionDetails)">
+          {{ "general.edit" | translate: {type: ''} }}
+        </app-custom-button>
+      </span>
+      <app-custom-button *ngIf="questionSetDetails.can_edit" category="tertiary" variant="neutral" (click)="deleteQuestion(questionDetails.id, questionDetails.title)">
+        {{ "general.delete" | translate: {type: ''} }}
+      </app-custom-button>
+      <span matTooltip="{{ 'assessmentBuilder.questionSetDetails.fiveSelQuestionsMessage' | translate }}" matTooltipPosition="above"
+      [matTooltipDisabled]="(questionDetails.question_type !== 'SEL') || (!(selQuestionsCount === 5) && questionDetails.question_type === 'SEL')">
+        <app-custom-button *ngIf="questionSetDetails.can_edit" category="tertiary" variant="neutral" (click)="openQuestionDialog(questionDetails, true)"
+        [disabled]="(questionDetails.question_type === 'SEL') && (selQuestionsCount === 5)">
+          {{ "general.clone" | translate }}
+        </app-custom-button>
+      </span>
+      <app-custom-button *ngIf="isDownloadable" category="tertiary" variant="neutral" (click)="downloadPDF(assessmentId, questionSetId, questionDetails.id)">
+        {{ "assessmentBuilder.download" | translate }}
+      </app-custom-button>
+
+      <mat-card *ngIf="questionDetails && questionDetails.question_type === 'SEL'">
+        <mat-icon cdkDragHandle [ngClass]="reorder ? 'drag-hover' : ''">drag_indicator</mat-icon>
+        <app-question-sel [question]="questionDetails" [index]="1"></app-question-sel>
+      </mat-card>
+
+      <mat-card *ngIf="questionDetails && questionDetails.question_type === 'SELECT'">
+        <mat-icon cdkDragHandle [ngClass]="reorder ? 'drag-hover' : ''">drag_indicator</mat-icon>
+        <app-question-select [question]="questionDetails" [index]="1" [evaluated]="true"></app-question-select>
+      </mat-card>
+
+      <mat-card *ngIf="questionDetails && questionDetails.question_type === 'INPUT'">
+        <mat-icon cdkDragHandle [ngClass]="reorder ? 'drag-hover' : ''">drag_indicator</mat-icon>
+        <app-question-input [question]="questionDetails" [index]="1" [evaluated]="true"></app-question-input>
+      </mat-card>
+
+      <mat-card *ngIf="questionDetails && questionDetails.question_type === 'SORT'">
+        <mat-icon cdkDragHandle [ngClass]="reorder ? 'drag-hover' : ''">drag_indicator</mat-icon>
+        <app-question-sort [question]="questionDetails" [index]="1" [evaluated]="true"></app-question-sort>
+      </mat-card>
+
+      <mat-card *ngIf="questionDetails && questionDetails.question_type === 'NUMBER_LINE'">
+        <mat-icon cdkDragHandle [ngClass]="reorder ? 'drag-hover' : ''">drag_indicator</mat-icon>
+        <app-question-numberline [question]="questionDetails" [index]="1" [evaluated]="true">
+        </app-question-numberline>
+      </mat-card>
+
+      <mat-card *ngIf="questionDetails && questionDetails.question_type === 'DRAG_AND_DROP'">
+        <mat-icon cdkDragHandle [ngClass]="reorder ? 'drag-hover' : ''">drag_indicator</mat-icon>
+        <app-question-drag-and-drop [question]="questionDetails" [index]="1" [evaluated]="true" [assessmentId]="assessmentId">
+        </app-question-drag-and-drop>
+      </mat-card>
+
+      <mat-card *ngIf="questionDetails && questionDetails.question_type === 'DOMINO'">
+        <mat-icon cdkDragHandle [ngClass]="reorder ? 'drag-hover' : ''">drag_indicator</mat-icon>
+        <app-question-domino [question]="questionDetails" [index]="1" [evaluated]="true"></app-question-domino>
+      </mat-card>
+
+      <mat-card *ngIf="questionDetails && questionDetails.question_type === 'CALCUL'">
+        <mat-icon cdkDragHandle [ngClass]="reorder ? 'drag-hover' : ''">drag_indicator</mat-icon>
+        <app-question-calcul [question]="questionDetails" [index]="1" [evaluated]="true"></app-question-calcul>
+      </mat-card>
+
+      <mat-card *ngIf="questionDetails && questionDetails.question_type === 'CUSTOMIZED_DRAG_AND_DROP'">
+        <mat-icon cdkDragHandle [ngClass]="reorder ? 'drag-hover' : ''">drag_indicator</mat-icon>
+        <app-customized-drag-and-drop [question]="questionDetails" [index]="1" [evaluated]="true"></app-customized-drag-and-drop>
+      </mat-card>
+    </div>
+  </div>
+</div>

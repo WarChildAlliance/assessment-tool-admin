@@ -14,7 +14,7 @@ import { TableFilterLibraryData } from 'src/app/core/models/table-filter.model';
 export class QuestionsComponent implements OnInit {
 
   public assessmentId: string;
-  public topicId: string;
+  public questionSetId: string;
 
   public displayedColumns: TableColumn[] = [
     { key: 'title', name: 'assessments.questionsList.questionName', type: 'title' },
@@ -51,7 +51,7 @@ export class QuestionsComponent implements OnInit {
   }
 
   public onOpenDetails(id: string): void {
-    // this.router.navigate([`/assessments/${this.assessmentId}/topics/${this.topicId}/questions/${id}`]);
+    // this.router.navigate([`/assessments/${this.assessmentId}/question-sets/${this.questionSetId}/questions/${id}`]);
   }
 
   public downloadData(): void {
@@ -60,7 +60,7 @@ export class QuestionsComponent implements OnInit {
 
   // For preview button (not being used)
   public onPreviewQuestion(element: any): void {
-    this.assessmentService.getQuestionDetails(this.assessmentId, this.topicId, element.id).subscribe(details => {
+    this.assessmentService.getQuestionDetails(this.assessmentId, this.questionSetId, element.id).subscribe(details => {
       this.questionDetails = details;
       this.showQuestionPreview = true;
     });

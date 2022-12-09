@@ -14,7 +14,7 @@ import { TableColumn } from '../core/models/table-column.model';
 import { TableFilter } from '../core/models/table-filter.model';
 import { AlertService } from '../core/services/alert.service';
 import { UserService } from '../core/services/user.service';
-import { TopicAccessesBuilderComponent } from '../shared/topic-accesses-builder/topic-accesses-builder.component';
+import { QuestionSetAccessesBuilderComponent } from '../shared/question-set-accesses-builder/question-set-accesses-builder.component';
 import { StudentDialogComponent } from './student-dialog/student-dialog.component';
 import { ConfirmModalComponent } from 'src/app/shared/confirm-modal/confirm-modal.component';
 import {environment} from '../../environments/environment';
@@ -33,7 +33,7 @@ export class StudentsComponent implements OnInit {
     { key: 'grade', name: 'general.grade' },
     { key: 'login_url', name: 'students.studentLoginURL', label: 'username', type: 'link' },
     { key: 'assessments_count', name: 'students.activeAssessmentsNumber' },
-    { key: 'completed_topics_count', name: 'students.completedTopicsNumber' },
+    { key: 'completed_question_sets_count', name: 'students.completedQuestionSetsNumber' },
     { key: 'last_session', name: 'general.lastLogin', type: 'date' },
     { key: 'language_name', name: 'general.language' },
     { key: 'country_name', name: 'general.country' },
@@ -179,7 +179,7 @@ export class StudentsComponent implements OnInit {
     }
   }
 
-  public openAssignTopicDialog(): void {
+  public openAssignQuestionSetDialog(): void {
     // Check if all students share the same language and country
     if (
       this.selectedUsers.every(
@@ -188,7 +188,7 @@ export class StudentsComponent implements OnInit {
           student.language_code === this.selectedUsers[0].language_code
       )
     ) {
-      this.dialog.open(TopicAccessesBuilderComponent, {
+      this.dialog.open(QuestionSetAccessesBuilderComponent, {
         data: {
           studentsList: this.selectedUsers
         }

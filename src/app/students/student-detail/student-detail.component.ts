@@ -7,7 +7,7 @@ import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { StudentDialogComponent } from '../student-dialog/student-dialog.component';
-import { TopicAccessModalComponent } from '../topic-access-modal/topic-access-modal.component';
+import { QuestionSetAccessModalComponent } from '../question-set-access-modal/question-set-access-modal.component';
 import { ConfirmModalComponent } from 'src/app/shared/confirm-modal/confirm-modal.component';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertService } from 'src/app/core/services/alert.service';
@@ -61,16 +61,16 @@ export class StudentDetailComponent implements OnInit {
     });
   }
 
-  public editTopicsAccesses(assessment): void {
+  public editQuestionSetsAccesses(assessment): void {
     this.assessment = assessment;
-    const editAssignTopicDialog = this.dialog.open(TopicAccessModalComponent, {
+    const editAssignQuestionSetDialog = this.dialog.open(QuestionSetAccessModalComponent, {
       data: {
         assessment: [this.assessment],
         studentId: this.student.id
       }
     });
 
-    editAssignTopicDialog.afterClosed().subscribe((value) => {
+    editAssignQuestionSetDialog.afterClosed().subscribe((value) => {
       if (value) {
         this.getStudentAssessments(this.student.id);
       }
@@ -123,10 +123,10 @@ export class StudentDetailComponent implements OnInit {
     this.assessmentService.getStudentAssessments(studentId).subscribe(
       (assessments) => {
         assessments.forEach((assessment) => {
-          assessment.topic_access.forEach((topic) => {
-            topic.hasAccess = moment(
+          assessment.question_set_access.forEach((questionSet) => {
+            questionSet.hasAccess = moment(
               formatDate(new Date(), 'yyyy-MM-dd', 'en')
-            ).isBetween(topic.start_date, topic.end_date, null, '[]');
+            ).isBetween(questionSet.start_date, questionSet.end_date, null, '[]');
           });
         });
         this.studentAssessments = assessments;
