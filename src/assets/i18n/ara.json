@@ -213,7 +213,8 @@
         "isCorrectAnswer": "هل الجواب الصحيح؟",
         "option": "اختيار",
         "options": "خيارات",
-        "optionsValidAnswerErrors": "يمكن أن يكون للأسئلة إجابة واحدة صحيحة."
+        "optionsValidAnswerErrors": "يمكن أن يكون للأسئلة إجابة واحدة صحيحة.",
+        "showOptionsValue": "إظهار قيمة الخيارات"
       },
       "sel": {
         "mathSelfEfficacy": "الكفاءة الذاتية للرياضيات",

@@ -26,6 +26,7 @@
       text-align: center;
       display: flex;
       flex-direction: column;
+      justify-content: center;
   
       mat-checkbox {
         span {
@@ -66,4 +67,9 @@
 }
 .play-audio {
   cursor: pointer;
+}
+
+// option value
+p {
+  color: grey;
 }
