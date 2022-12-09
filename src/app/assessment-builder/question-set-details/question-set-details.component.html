@@ -85,7 +85,9 @@
     </div>
   </mat-card>
   <div class="question" cdkDropList cdkDropListOrientation="vertical" [cdkDropListData]="questionsToOrder" (cdkDropListDropped)="dropQuestion($event)">
-    <mat-card *ngIf="questionSetDetails.can_edit">
+    <app-spinner style="text-align: -webkit-center;" *ngIf="!questionsList" size="large" [variant]="'primary'"></app-spinner>
+
+    <mat-card *ngIf="questionSetDetails.can_edit && questionsList">
       <h2>
         {{ "general.add" | translate: { type: ("assessmentBuilder.questionSetDetails.aQuestion" | translate) } }}
       </h2>
