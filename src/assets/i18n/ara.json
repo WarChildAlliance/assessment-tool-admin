@@ -98,7 +98,6 @@
     }
   },
   "assessmentBuilder": {
-    "allowSkip": "السماح بالتخطي",
     "selQuestions": "يحتوي على أسئلة التعلم الاجتماعي والعاطفي",
     "assessmentFormDialog": {
       "gradeTooltip": "المستوى المدرسي المقصود"
@@ -124,10 +123,8 @@
     "evaluated": "مقيمة",
     "file": "ملف",
     "icon": "أيقونة",
-    "maxWrongAnswers": "ماكس إجابات خاطئة",
     "noFileChosen": "لم تقم باختيار ملف",
     "order": "ترتيب",
-    "praise": "مديح",
     "questions": {
       "titlePlaceholder": "سؤال مع تعليمات للطالب",
       "typeStep": "حدد نوع السؤال",
@@ -242,20 +239,16 @@
       }
     },
     "saveSuccess": "تم حفظ {{type}} بنجاح",
-    "show": "إظهار {{type}}",
     "questionSetDetails": {
       "fiveSelQuestionsMessage": "يمكن فقط إنشاء ما يصل إلى خمسة أسئلة تعلم اجتماعية وعاطفية عن طريق التقييم.",
       "selQuestionsOrder": "يجب أن تكون أسئلة التعلم الاجتماعي والعاطفي في بداية الموضوع.",
       "aQuestion": "سؤال",
-      "feedback": "استجابة",
       "numberLineButton": "رقم الخط",
       "selectButton": "(تحديد متعدد"
     },
     "questionSetFormDialog": {
       "changeFile": "تغيير الملف",
-      "createQuestionSet": "قم بإنشاء موضوع",
-      "praiseTooltip": "حالات الحمد",
-      "whenToShowFeedbacks": "متى تظهر التقيمات؟"
+      "createQuestionSet": "قم بإنشاء موضوع"
     },
     "value": "قيمة",
     "gradeTooltip": "المستوى المدرسي المقصود",

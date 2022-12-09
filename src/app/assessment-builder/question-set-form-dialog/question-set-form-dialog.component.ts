@@ -39,8 +39,6 @@ export class QuestionSetFormDialogComponent implements OnInit {
 
   public iconOptions = ['flower_green.svg', 'flower_purple.svg', 'flower_cyan.svg'];
 
-  public feedbacks = [{id: 0, name: 'Never'}, {id: 1, name: 'Always'}, {id: 2, name: 'Second attempt'}];
-
   public selectQuestionSetForm: FormGroup = new FormGroup({
     questionSet: new FormControl(null)
   });
@@ -49,14 +47,9 @@ export class QuestionSetFormDialogComponent implements OnInit {
     name: new FormControl('', [Validators.required]),
     description: new FormControl('', [Validators.required]),
     learning_objective: new FormControl(''),
-    show_feedback: new FormControl(0, [Validators.required]),
-    allow_skip: new FormControl(false, [Validators.required]),
     evaluated: new FormControl(true, [Validators.required]),
-    praise: new FormControl(0, [Validators.required]),
-    max_wrong_answers: new FormControl(0, [Validators.required]),
     order: new FormControl(0, [Validators.required]),
-    icon: new FormControl(null),
-    archived: new FormControl(false)
+    icon: new FormControl(null)
   });
 
   private toClone: boolean;
@@ -145,13 +138,8 @@ export class QuestionSetFormDialogComponent implements OnInit {
     this.formData.append('name', this.createNewQuestionSetForm.value.name);
     this.formData.append('description', this.createNewQuestionSetForm.value.description);
     this.formData.append('learning_objective', this.createNewQuestionSetForm.value.learning_objective);
-    this.formData.append('show_feedback', this.createNewQuestionSetForm.value.show_feedback);
-    this.formData.append('allow_skip', this.createNewQuestionSetForm.value.allow_skip);
     this.formData.append('evaluated', this.createNewQuestionSetForm.value.evaluated);
-    this.formData.append('praise', this.createNewQuestionSetForm.value.praise);
-    this.formData.append('max_wrong_answers', this.createNewQuestionSetForm.value.max_wrong_answers);
     this.formData.append('order', this.createNewQuestionSetForm.value.order);
-    this.formData.append('archived', this.createNewQuestionSetForm.value.archived);
 
     return this.formData;
   }
@@ -179,14 +167,9 @@ export class QuestionSetFormDialogComponent implements OnInit {
       name: questionSet.name,
       description: questionSet.description,
       learning_objective: questionSet.learning_objective?.code ?? '',
-      show_feedback: questionSet.show_feedback,
-      allow_skip: questionSet.allow_skip,
       evaluated: questionSet.evaluated,
-      praise: questionSet.praise,
-      max_wrong_answers: questionSet.max_wrong_answers,
       order: this.toClone ? this.order : questionSet.order,
-      icon: this.icon,
-      archived: questionSet.archived
+      icon: this.icon
     });
   }
 

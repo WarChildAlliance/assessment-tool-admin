@@ -40,20 +40,6 @@
             </mat-select>
         </mat-form-field>
         <mat-form-field appearance="outline" color="accent">
-            <mat-label>{{ "assessmentBuilder.questionSetFormDialog.whenToShowFeedbacks" | translate }}</mat-label>
-            <mat-select formControlName="show_feedback">
-                <mat-option *ngFor="let feedback of feedbacks" [value]="feedback.id">{{ feedback.name }}</mat-option>
-            </mat-select>
-        </mat-form-field>
-        <mat-form-field appearance="outline" color="accent">
-            <mat-label>{{ "assessmentBuilder.praise" | translate }}</mat-label>
-            <input matInput formControlName="praise" type="number" min="0" step="1" [matTooltip]="'assessmentBuilder.questionSetFormDialog.praiseTooltip' | translate">
-        </mat-form-field>
-        <mat-form-field appearance="outline" color="accent">
-            <mat-label>{{ "assessmentBuilder.maxWrongAnswers" | translate }}</mat-label>
-            <input matInput type="number" formControlName="max_wrong_answers">
-        </mat-form-field>
-        <mat-form-field appearance="outline" color="accent">
             <mat-label>{{ "assessmentBuilder.order" | translate }}</mat-label>
             <input matInput type="number" min="1" formControlName="order" [readonly]="order">
         </mat-form-field>
@@ -61,12 +47,6 @@
     <div class="form-primary__flex-container">
         <mat-checkbox formControlName="evaluated">
             {{ "assessmentBuilder.evaluated" | translate }}
-        </mat-checkbox>
-        <mat-checkbox formControlName="allow_skip">
-            {{ "assessmentBuilder.allowSkip" | translate }}
-        </mat-checkbox>
-        <mat-checkbox formControlName="archived">
-            {{ "general.archived" |  translate: {type: ''} }}
         </mat-checkbox>
         <div>
             <h3>{{ "assessmentBuilder.icon" |  translate }}</h3>

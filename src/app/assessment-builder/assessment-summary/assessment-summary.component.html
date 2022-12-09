@@ -77,7 +77,7 @@
                 </div>
             </mat-card>
             <mat-card class="question-set-card" *ngFor="let questionSet of assessment.question_sets; let i = index" [ngClass]="reorder ? 'drag-hover' : ''"
-            (click)="goToQuestionSetDetails(assessment.id, questionSet.id)" cdkDrag [cdkDragDisabled]="questionSet.archived || !reorder">
+            (click)="goToQuestionSetDetails(assessment.id, questionSet.id)" cdkDrag [cdkDragDisabled]="!reorder">
                 <img *ngIf="questionSet.icon" [src]="getMediaSource(questionSet.icon)">
                 <span class="question-set-title">{{ questionSet.title }}</span>
 
@@ -85,23 +85,10 @@
                 <p class="small-description">{{ questionSet.description }}</p>
                 <span class="question_count">({{ questionSet.questionsCount }} {{ "general.questions" | translate }})</span>
 
-                <div *ngIf="canEdit" [ngSwitch]="questionSet.archived">
-                    <div class="question-set-buttons" *ngSwitchCase="false">
-                        <app-custom-button
-                        matTooltip="{{ 'assessmentBuilder.assessmentSummary.archive' | translate: {type: 'general.questionSet' | translate | lowercase} }}"
-                        [isIcon]="true"
-                        icon="archive" (click)="archiveQuestionSet($event, assessment.id, questionSet.id, true)">
-                        </app-custom-button>
-
-                        <app-custom-button matTooltip="{{ 'general.delete' | translate: {type: 'general.questionSet' | translate | lowercase} }}"
+                <div *ngIf="canEdit">
+                    <app-custom-button matTooltip="{{ 'general.delete' | translate: {type: 'general.questionSet' | translate | lowercase} }}"
                         [isIcon]="true" icon="delete" (click)="deleteQuestionSet($event, assessment.id, questionSet.id, questionSet.title)">
-                        </app-custom-button>
-                    </div>
-                    <div *ngSwitchCase="true">
-                        <app-custom-button category="tertiary" variant="neutral" (click)="archiveQuestionSet($event, assessment.id, questionSet.id, false)">
-                            {{ "assessmentBuilder.assessmentSummary.unarchive" | translate }}
-                        </app-custom-button>
-                    </div>
+                    </app-custom-button>
                 </div>
             </mat-card>
         </div>
