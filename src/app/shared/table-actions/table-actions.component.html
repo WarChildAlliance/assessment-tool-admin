@@ -21,12 +21,18 @@
         </ng-container>
     </div>
 
-    <ng-container *ngFor="let filter of filtersData">
-        <app-table-filter
-            [filter]="filter"
-            [filterType]="filter.displayType ?? 'chip'"
-            [filterReset$]="filtersReset$"
-            (filtersChangedEvent)="filtersChangedEvent.emit($event)"
-        ></app-table-filter>
-    </ng-container>
+    <div class="filters">
+        <ng-container *ngFor="let filter of filtersData">
+            <app-table-filter
+                [filter]="filter"
+                [filterType]="filter.displayType ?? 'chip'"
+                [filterReset$]="filtersReset$"
+                (filtersChangedEvent)="libraryFilters ? onTableFiltersChange($event) : filtersChangedEvent.emit($event)"
+            ></app-table-filter>
+        </ng-container>
+
+        <app-custom-button *ngIf="filtersData" icon="restart_alt_outline" category="tertiary" variant="primary" (click)="resetFilters()">
+          {{ "library.resetFilters" | translate }}
+        </app-custom-button>
+    </div>
 </div>

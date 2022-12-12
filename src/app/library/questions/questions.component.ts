@@ -1,43 +1,40 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { QuestionTableData } from 'src/app/core/models/question-table-data.model';
 import { TableColumn } from 'src/app/core/models/table-column.model';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
+import { TableFilterLibraryData } from 'src/app/core/models/table-filter.model';
 
 @Component({
   selector: 'app-question-list',
-  templateUrl: './questions-list.component.html',
-  styleUrls: ['./questions-list.component.scss']
+  templateUrl: './questions.component.html',
+  styleUrls: ['./questions.component.scss']
 })
-export class QuestionsListComponent implements OnInit {
+export class QuestionsComponent implements OnInit {
 
   public assessmentId: string;
   public questionSetId: string;
 
   public displayedColumns: TableColumn[] = [
-    { key: 'title', name: 'general.title' },
-    { key: 'question_type', name: 'general.questionType' },
-    { key: 'order', name: 'general.order', sorting: 'asc' },
-    { key: 'has_attachment', name: 'assessments.questionsList.attachment', type: 'boolean' },
-    { key: 'correct_answers_percentage_first', name: 'assessments.questionsList.correctAnswersFirstTry', type: 'percentage' },
-    { key: 'correct_answers_percentage_last', name: 'assessments.questionsList.correctAnswersLastTry', type: 'percentage' },
-    { key: 'remove_red_eye', name: 'general.preview', type: 'action' }
+    { key: 'title', name: 'assessments.questionsList.questionName', type: 'title' },
+    { key: 'expand', name: ' ', type: 'expand' },
+    { key: 'learning_objective', name: 'general.id' },
+    { key: 'plays', name: 'assessments.plays' },
+    { key: 'invites', name: 'library.invites' },
+    { key: 'speed', name: 'groups.speed', type: 'duration' },
+    { key: 'score', name: 'library.score', type: 'score' },
+    { key: 'created_at', name: 'general.created', type: 'date' },
   ];
 
   public questionsDataSource: MatTableDataSource<QuestionTableData> = new MatTableDataSource([]);
   public selectedQuestions: any[] = [];
   public questionDetails: any;
   public showQuestionPreview = false;
-  public previousPageUrl = '';
 
   constructor(
     private assessmentService: AssessmentService,
-    private route: ActivatedRoute,
-    private translateService: TranslateService,
-    private router: Router
+    private translateService: TranslateService
   ) {
     this.displayedColumns.forEach(col => {
       this.translateService.stream(col.name).subscribe(translated => col.name = translated);
@@ -45,18 +42,7 @@ export class QuestionsListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const idUrl = this.route.snapshot.paramMap.get('question_set_id') || '';
-    this.previousPageUrl = this.router.url.replace(`question-sets/${idUrl}`, '');
-    this.route.paramMap.pipe(
-      switchMap((params) => {
-        this.assessmentId = params.get('assessment_id');
-        this.questionSetId = params.get('question_set_id');
-
-        return this.assessmentService.getQuestionSetQuestions(this.assessmentId, this.questionSetId);
-      })
-    ).subscribe((questionsList) => {
-      this.questionsDataSource = new MatTableDataSource(questionsList);
-    });
+    this.getQuestions();
   }
 
   // This eventReceiver triggers a thousand times when user does "select all". We should find a way to improve this. (debouncer ?)
@@ -72,10 +58,27 @@ export class QuestionsListComponent implements OnInit {
     console.log('Work In Progress');
   }
 
-  public onCustomAction(element: any): void {
+  // For preview button (not being used)
+  public onPreviewQuestion(element: any): void {
     this.assessmentService.getQuestionDetails(this.assessmentId, this.questionSetId, element.id).subscribe(details => {
       this.questionDetails = details;
       this.showQuestionPreview = true;
+    });
+  }
+
+  public onTableFiltersChange(tableFiltersData?: TableFilterLibraryData): void {
+    this.getQuestions(tableFiltersData);
+  }
+
+  private getQuestions(filteringParams?: object): void {
+    this.assessmentService.getAllQuestionsList(filteringParams).subscribe(questionsList => {
+      // TODO: Check how to get learning_objective from the set of question parent
+      questionsList.forEach(question => {
+        if (question.learning_objective) {
+          question.learning_objective = question.learning_objective.name_eng;
+        }
+      });
+      this.questionsDataSource = new MatTableDataSource(questionsList);
     });
   }
 }

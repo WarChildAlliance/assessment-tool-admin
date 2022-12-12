@@ -55,14 +55,20 @@ export class AssessmentService {
     return this.http.get<any[]>(`${environment.API_URL}/visualization/question-sets/all/`);
   }
 
+  public getAllQuestionsList(filteringParams?: object): Observable<any[]> {
+    const initialUrl = `${environment.API_URL}/visualization/questions/all/`;
+    const finalUrl = filteringParams ? this.utilitiesService.urlBuilder(initialUrl, filteringParams) : initialUrl;
+    return this.http.get<any[]>(finalUrl);
+  }
+
   public getQuestionsTypeList(questionType: string): Observable<any> {
     return this.http.get<any>(`${environment.API_URL}/assessments/questions/all/?type=${questionType}`);
   }
 
-  public getQuestionSetQuestions(assessmentId: string, questionSetId: string): Observable<any[]> {
-    return this.http.get<any[]>(
-      `${environment.API_URL}/visualization/assessments/${assessmentId}/question-sets/${questionSetId}/questions/`
-    );
+  public getQuestionSetQuestions(assessmentId: string, questionSetId: string, filteringParams?: object): Observable<any[]> {
+    const initialUrl = `${environment.API_URL}/visualization/assessments/${assessmentId}/question-sets/${questionSetId}/questions/`;
+    const finalUrl = filteringParams ? this.utilitiesService.urlBuilder(initialUrl, filteringParams) : initialUrl;
+    return this.http.get<any[]>(finalUrl);
   }
 
   public createAssessment(assessment: FormData): Observable<Assessment> {

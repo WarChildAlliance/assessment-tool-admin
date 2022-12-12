@@ -11,25 +11,18 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
-import { SharedModule } from '../shared/shared.module';
-import { CustomButtonModule } from '../shared/button/button.module';
-import { AssessmentDetailComponent } from './assessment-detail/assessment-detail.component';
-import { LibraryRoutingModule } from './library-routing.module';
-import { LibraryComponent } from './library.component';
-import { QuestionDetailComponent } from './question-detail/question-detail.component';
-import { QuestionsListComponent } from './questions-list/questions-list.component';
-import { PreviousButtonModule } from '../shared/previous-button/previous-button.module';
+import { SetOfQuestionsRoutingModule } from './set-of-questions-routing.module';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { CustomButtonModule } from 'src/app/shared/button/button.module';
+import { SetOfQuestionsComponent } from './set-of-questions.component';
 
 @NgModule({
   declarations: [
-    LibraryComponent,
-    AssessmentDetailComponent,
-    QuestionsListComponent,
-    QuestionDetailComponent
+    SetOfQuestionsComponent
   ],
   imports: [
     CommonModule,
-    LibraryRoutingModule,
+    SetOfQuestionsRoutingModule,
     MatTableModule,
     FormsModule,
     ReactiveFormsModule,
@@ -43,8 +36,7 @@ import { PreviousButtonModule } from '../shared/previous-button/previous-button.
     MatIconModule,
     SharedModule,
     MatCardModule,
-    PreviousButtonModule,
     CustomButtonModule
   ]
 })
-export class LibraryModule { }
+export class SetOfQuestionsModule { }

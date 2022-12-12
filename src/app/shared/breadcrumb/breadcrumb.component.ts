@@ -24,6 +24,14 @@ export class CustomBreadcrumbComponent {
     this.breadCrumbData();
   }
 
+  public sectionColor(section: string): string {
+    switch (section) {
+      case 'assessments': return '#FF5722';
+      case 'questions': return '#FFEB3B';
+      default: return '#FF5722';
+    }
+  }
+
   private breadCrumbData(): void {
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))

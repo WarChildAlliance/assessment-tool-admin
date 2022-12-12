@@ -19,6 +19,7 @@
     "continue": "Continue",
     "country": "Country",
     "create": "Create",
+    "created": "Created",
     "createNew": "Create a new {{type}}",
     "createSuccess": "{{type}} successfully created",
     "dashboard": "Dashboard",
@@ -33,6 +34,7 @@
     "groups": "Groups",
     "groupsOverview": "Groups Overview",
     "honey": "Honey",
+    "id": "ID",
     "language": "Language",
     "lastLogin": "Last login",
     "left": "Left",
@@ -58,6 +60,7 @@
     "save": "Save",
     "selected": "selected",
     "selQuestion": "SEL Question",
+    "setOfQuestions": "Set Of Questions",
     "simpleDeletePrompt": "Do you really want to delete the {{type}} <b>{{name}}</b> ?",
     "student": "Student",
     "studentName": "Student name",
@@ -103,15 +106,23 @@
     "plays": "Plays",
     "score": "Score",
     "questionType": "Question type",
-    "libraryAssessmentsHeader": "assessments",
-    "libraryAssessmentsHeaderPt3": "You can browse, choose, assign and clone (to edit) these for your group(s).",
     "numberRanges": "Numbers",
     "resetFilters": "Reset filters"
   },
   "header": {
-    "libraryHeader": "LIBRARY",
-    "libraryHeaderPt1": "Hi! This is the",
-    "libraryHeaderPt2": "with all the"
+    "library": {
+      "title": "LIBRARY",
+      "headerPt1": "Hi! This is the",
+      "headerPt2": "with all the",
+      "assessments": {
+        "section": "assessments",
+        "headerPt3": "You can browse, choose, assign and clone (to edit) these for your group(s)."
+      },
+      "questions": {
+        "section": "tasks",
+        "headerPt3": "You can browse, select and choose."
+      }
+    }
   },
   "assessmentBuilder": {
     "learningObjective": "Learning objective",
@@ -282,7 +293,8 @@
       "attachment": "Attachment",
       "correctAnswersFirstTry": "Total correct answers on students' first try",
       "correctAnswersLastTry": "Total correct answers on students' last try",
-      "questions": "Questions"
+      "questions": "Questions",
+      "questionName": "Question name"
     },
     "selected": "selected",
     "studentsLinkedToAssessment": "Number of students currently linked to this assessment",

@@ -1,22 +1,14 @@
 <div class="main-board">
-  <div class="main-board__top-container">
-    <app-previous-button [path]="previousPageUrl"></app-previous-button>
-    <h1>{{ "assessments.questionsList.questions" | translate }} ({{ questionsDataSource.data.length }})
-      <span *ngIf="selectedQuestions.length">({{
-        selectedQuestions.length }} {{ "assessments.selected" | translate }})</span>
-    </h1>
-    <div class="main-board__top-container__actions">
-<!--       <button mat-flat-button color="primary" (click)="downloadData()" [disabled]="true">
-        <mat-icon>get_app</mat-icon><span>Download</span>
-      </button> -->
-    </div>
-  </div>
-
   <app-table [tableData]="questionsDataSource" [displayedColumns]="displayedColumns"
-    [isSelectable]="true" (selectionChangedEvent)="onSelectionChange($event)"
-    (openDetailsEvent)="onOpenDetails($event)" (customActionEvent)="onCustomAction($event)"></app-table>
+    [isSelectable]="true" [libraryFilters]="true" [pageConfig]="'questions'"
+    (selectionChangedEvent)="onSelectionChange($event)"
+    (filtersChangedEvent)="onTableFiltersChange($event)"
+    (openDetailsEvent)="onOpenDetails($event)"
+    (resetFiltersEvent)="onTableFiltersChange()">
+  </app-table>
 
-  <div *ngIf="showQuestionPreview && questionDetails">
+  <!-- For preview button (not being used) -->
+  <!-- <div *ngIf="showQuestionPreview && questionDetails">
     <mat-card *ngIf="questionDetails.question_type === 'SEL'">
       <app-question-sel [question]="questionDetails"></app-question-sel>
     </mat-card>
@@ -53,6 +45,5 @@
     <mat-card *ngIf="questionDetails.question_type === 'CUSTOMIZED_DRAG_AND_DROP'">
       <app-customized-drag-and-drop [question]="questionDetails" [evaluated]="true"></app-customized-drag-and-drop>
     </mat-card>
-
-  </div>
+  </div> -->
 </div>

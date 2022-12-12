@@ -19,6 +19,7 @@
     "continue": "يكمل",
     "country": "الدولة",
     "create": "خلق",
+    "created": "مخلوق",
     "createNew": "إنشاء {{type}} جديد",
     "createSuccess": "تم إنشاء {{type}} بنجاح",
     "dashboard": "لوحة القيادة",
@@ -33,6 +34,7 @@
     "groups": "مجموعات",
     "groupsOverview": "نظرة عامة على المجموعات",
     "honey": "عسل",
+    "id": "المعرف",
     "language": "اللغة",
     "lastLogin": "آخر تسجيل دخول",
     "left": "اليسار",
@@ -54,6 +56,7 @@
     "save": "يحفظ",
     "selected": "تم الاختيار",
     "selQuestion": "سؤال التعلم الاجتماعي والعاطفي",
+    "setOfQuestions": "مجموعة من الأسئلة",
     "simpleDeletePrompt": "هل تريد حقًا حذف {{type}} <b> {{name}} </b>؟",
     "student": "طالب علم",
     "studentName": "اسم الطالب",
@@ -266,7 +269,8 @@
       "attachment": "المرفق",
       "correctAnswersFirstTry": "مجموع الإجابات الصحيحة في المحاولة الأولى للطلاب",
       "correctAnswersLastTry": "مجموع الإجابات الصحيحة في المحاولة الأخيرة للطلاب",
-      "questions": "أسئلة"
+      "questions": "أسئلة",
+      "questionName": "اسم السؤال"
     },
     "selected": "تم الاختيار",
     "studentsLinkedToAssessment": "عدد الطلاب المرتبطين حاليًا بهذا التقييم",
@@ -406,15 +410,23 @@
     "studentLoginURL": "URL تسجيل الدخول"
   },
   "header": {
-    "libraryHeader": "مكتبة",
-    "libraryHeaderPt1": "أهلاً! هذا ال",
-    "libraryHeaderPt2": "مع كل"
+    "library": {
+      "title": "مكتبة",
+      "headerPt1": "أهلاً! هذا ال",
+      "headerPt2": "مع كل",
+      "assessments": {
+        "section": "التقييمات",
+        "headerPt3": "يمكنك تصفح واختيار وتعيين واستنساخ (لتحرير) هذه لمجموعتك (مجموعاتك)."
+      },
+      "questions": {
+        "section": "مهام",
+        "headerPt3": "يمكنك التصفح والاختيار والاختيار."
+      }
+    }
   },
   "library": {
     "assign": "تعيين",
     "invites": "يدعو",
-    "libraryAssessmentsHeader": "التقييمات",
-    "libraryAssessmentsHeaderPt3": "يمكنك تصفح واختيار وتعيين واستنساخ (لتحرير) هذه لمجموعتك (مجموعاتك).",
     "numberRanges": "أعداد",
     "plays": "يلعب",
     "questionType": "نوع السؤال",

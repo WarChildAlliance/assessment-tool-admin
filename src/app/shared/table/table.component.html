@@ -1,5 +1,5 @@
-<app-table-actions [filtersData]="filtersData" (searchChangedEvent)="applySearchFilter($event)" [buttons]="actionsButtons"
-  (filtersChangedEvent)="filtersChangedEvent.emit($event)" (buttonClickedEvent)="actionButtonClicked($event)" [filtersReset$]="filtersReset$ ?? null">
+<app-table-actions [filtersData]="filtersData" (searchChangedEvent)="applySearchFilter($event)" [buttons]="actionsButtons" [libraryFilters]="libraryFilters"
+  (filtersChangedEvent)="filtersChangedEvent.emit($event)" (buttonClickedEvent)="actionButtonClicked($event)" (resetFiltersEvent)="resetFiltersEvent.emit(true)">
 </app-table-actions>
 
 <table mat-table matSort [dataSource]="tableData" multiTemplateDataRows>
@@ -28,7 +28,8 @@
 
   <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column.key" [ngSwitch]="column.type">
 
-    <th mat-header-cell mat-sort-header [disabled]="isHeaderSortingDisabled(column.name)" *matHeaderCellDef [style]="'background-color:' + accentColor">
+    <th mat-header-cell mat-sort-header [disabled]="isHeaderSortingDisabled(column.name)" *matHeaderCellDef
+      [style]="'background-color:' + accentColor" [style.color]="textHeaderColor">
       {{ column.name }}
     </th>
 
@@ -136,6 +137,10 @@
           <span>{{element[column.key]}} </span>
           <img [src]="column.icon" alt="image">
       </td>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'title'">
+      <td  mat-cell class="title" *matCellDef="let element">{{ element[column.key]}}</td>
     </ng-container>
 
     <ng-container *ngSwitchDefault>
