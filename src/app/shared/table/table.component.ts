@@ -10,7 +10,6 @@ import { TableFilter } from 'src/app/core/models/table-filter.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { environment } from 'src/environments/environment';
 import { TableActionButtons } from 'src/app/core/models/table-actions-buttons.model';
-import { Subject} from 'rxjs';
 
 @Component({
   selector: 'app-table',
@@ -34,25 +33,26 @@ export class TableComponent implements OnInit, OnChanges {
   @Input() displayedColumns: TableColumn[];
   @Input() tableData: MatTableDataSource<any>;
   @Input() filtersData: TableFilter[];
+  @Input() pageConfig: string;
   @Input() isSelectable: boolean;
   @Input() searchableColumns: string[];
   @Input() hideSearchBar: boolean;
-  @Input() pageConfig: string;
+  @Input() libraryFilters: boolean;
   @Input() scoreListLength: number;
   @Input() actionsButtons: TableActionButtons[];
-  @Input() filtersReset$: Subject<void>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   // Notice here that the eventEmitter constructor accepts a "true" argument, which makes it asynchronous and prevents NG0100
   @Output() selectionChangedEvent = new EventEmitter<any[]>(true);
-  @Output() filtersChangedEvent = new EventEmitter<{ key: string | number; value: any}>(true);
+  @Output() filtersChangedEvent = new EventEmitter<any>(true);
   @Output() openDetailsEvent = new EventEmitter<string>();
   @Output() customActionEvent = new EventEmitter<any>();
   @Output() buttonClickedEvent = new EventEmitter<any>(true);
   @Output() subMenuEvent = new EventEmitter<any>();
   @Output() actionButtonEvent = new EventEmitter<any>();
+  @Output() resetFiltersEvent = new EventEmitter<boolean>(true);
 
   public selection: SelectionModel<any> = new SelectionModel<any>(true, []);
   public expandedRowData: any = null;
@@ -67,7 +67,15 @@ export class TableComponent implements OnInit, OnChanges {
       case 'library': return '#FF5722';
       case 'students': return '#00BCD4';
       case 'groups': return '#3F51B5';
+      case 'questions': return '#FFEB3B';
       default: return '#53A8E2';
+    }
+  }
+
+  public get textHeaderColor() {
+    switch (this.pageConfig) {
+      case 'questions': return '#666666';
+      default: return '#fff';
     }
   }
 

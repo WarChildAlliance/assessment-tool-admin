@@ -14,7 +14,7 @@ import { TableColumn } from '../core/models/table-column.model';
 import { TableFilter } from '../core/models/table-filter.model';
 import { AlertService } from '../core/services/alert.service';
 import { UserService } from '../core/services/user.service';
-import { TopicAccessesBuilderComponent } from '../shared/topic-accesses-builder/topic-accesses-builder.component';
+import { QuestionSetAccessesBuilderComponent } from '../shared/question-set-accesses-builder/question-set-accesses-builder.component';
 import { StudentDialogComponent } from './student-dialog/student-dialog.component';
 import { ConfirmModalComponent } from 'src/app/shared/confirm-modal/confirm-modal.component';
 import {environment} from '../../environments/environment';
@@ -33,7 +33,7 @@ export class StudentsComponent implements OnInit {
     { key: 'grade', name: 'general.grade' },
     { key: 'login_url', name: 'students.studentLoginURL', label: 'username', type: 'link' },
     { key: 'assessments_count', name: 'students.activeAssessmentsNumber' },
-    { key: 'completed_topics_count', name: 'students.completedTopicsNumber' },
+    { key: 'completed_question_sets_count', name: 'students.completedQuestionSetsNumber' },
     { key: 'last_session', name: 'general.lastLogin', type: 'date' },
     { key: 'language_name', name: 'general.language' },
     { key: 'country_name', name: 'general.country' },
@@ -44,7 +44,6 @@ export class StudentsComponent implements OnInit {
     new MatTableDataSource([]);
   public selectedUsers = [];
   public studentToEdit: any;
-  public filtersReset$ = new Subject<void>();
 
   public countries: Country[] = [];
   public languages: Language[] = [];
@@ -88,47 +87,41 @@ export class StudentsComponent implements OnInit {
           key: 'country',
           name: 'general.country',
           type: 'select',
-          options: [{ key: 'All', value: 'All' }].concat(
-            countries.map((country) => ({
-              key: country.code,
-              value: country.name_en,
-            }))
-          ),
+          options: countries.map((country) => ({
+            value: country.code,
+            key: country.name_en,
+          })),
         },
         {
           key: 'language',
           name: 'general.language',
           type: 'select',
-          options: [{ key: 'All', value: 'All' }].concat(
-            languages.map((language) => ({
-              key: language.code,
-              value: language.name_en,
-            }))
-          ),
+          options: languages.map((language) => ({
+            value: language.code,
+            key: language.name_en,
+          })),
         },
         {
           key: 'group',
           name: 'general.group',
           type: 'select',
-          options: [{ key: 'All', value: 'All' }].concat(
-            groups.map((group) => ({
-              key: group.id.toString(),
-              value: group.name,
-            }))
-          ),
+          options: groups.map((group) => ({
+            value: group.id.toString(),
+            key: group.name,
+          })),
         },
       ];
       this.filters.forEach(filter => {
         this.translateService.stream(filter.name).subscribe(translated => filter.name = translated);
       });
     });
-    this.getStudentTableList(this.filtersData);
+    this.getStudentTableList(false, this.filtersData);
   }
 
   public onFiltersChange(data: { key: string | number; value: any }): void {
     this.filtersData[data.key] = data.value;
 
-    this.getStudentTableList(this.filtersData);
+    this.getStudentTableList(false, this.filtersData);
   }
 
   // This eventReceiver triggers a thousand times when user does "select all". We should find a way to improve this. (debouncer ?)
@@ -171,7 +164,7 @@ export class StudentsComponent implements OnInit {
             this.alertService.success(this.translateService.instant('general.deleteSuccess', {
               type: studentTranslation
             }));
-            this.getStudentTableList(this.filtersData);
+            this.getStudentTableList(false, this.filtersData);
           };
 
           if (toDelete.length === 1) {
@@ -186,7 +179,7 @@ export class StudentsComponent implements OnInit {
     }
   }
 
-  public openAssignTopicDialog(): void {
+  public openAssignQuestionSetDialog(): void {
     // Check if all students share the same language and country
     if (
       this.selectedUsers.every(
@@ -195,7 +188,7 @@ export class StudentsComponent implements OnInit {
           student.language_code === this.selectedUsers[0].language_code
       )
     ) {
-      this.dialog.open(TopicAccessesBuilderComponent, {
+      this.dialog.open(QuestionSetAccessesBuilderComponent, {
         data: {
           studentsList: this.selectedUsers
         }
@@ -211,7 +204,7 @@ export class StudentsComponent implements OnInit {
     const createStudentDialog = this.dialog.open(StudentDialogComponent);
     createStudentDialog.afterClosed().subscribe((value) => {
       if (value) {
-        this.getStudentTableList(this.filtersData);
+        this.getStudentTableList(false, this.filtersData);
       }
     });
   }
@@ -229,7 +222,7 @@ export class StudentsComponent implements OnInit {
     });
     editStudentDialog.afterClosed().subscribe((value) => {
       if (value) {
-        this.getStudentTableList(this.filtersData);
+        this.getStudentTableList(false, this.filtersData);
       }
       this.studentToEdit = null;
     });
@@ -239,7 +232,10 @@ export class StudentsComponent implements OnInit {
     console.log('Work In Progress');
   }
 
-  private getStudentTableList(filtersData?): void {
+  public getStudentTableList(resetFilters?: boolean, filtersData?: object): void {
+    if (resetFilters) {
+      this.filtersData = { country: '', language: '', group: '', ordering: '-id' };
+    }
     this.userService
       .getStudentsList(filtersData)
       .subscribe((studentsList: StudentTableData[]) => {

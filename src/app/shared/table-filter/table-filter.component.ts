@@ -20,13 +20,15 @@ export class TableFilterComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.filterReset$.subscribe(() => {
-      this.selectRef?.options.forEach(option => {
-        if (option.selected) {
-          option.deselect();
-        }
-      });;
-    });
+    if (this.filterReset$) {
+      this.filterReset$.subscribe(() => {
+        this.selectRef?.options.forEach(option => {
+          if (option.selected) {
+            option.deselect();
+          }
+        });;
+      });
+    }
   }
 
   // select filters

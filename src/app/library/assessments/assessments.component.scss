@@ -1,0 +1,16 @@
+::ng-deep table {
+  .mat-column-button {
+    app-custom-button {
+      position: absolute;
+      right: 1em;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+  .mat-column-title {
+    width: 40%;
+  }
+  .mat-column-icon {
+    width: 10%;
+  }
+}

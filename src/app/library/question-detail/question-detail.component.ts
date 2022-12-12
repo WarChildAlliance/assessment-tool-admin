@@ -22,15 +22,14 @@ export class QuestionDetailComponent implements OnInit {
   public selectedQuestions: any[] = [];
 
   private assessmentId: string = this.route.snapshot.paramMap.get('assessment_id');
-  private topicId: string = this.route.snapshot.paramMap.get('topic_id');
+  private questionSetId: string = this.route.snapshot.paramMap.get('question_set_id');
 
   constructor(private assessmentService: AssessmentService,
               private route: ActivatedRoute,
               private router: Router) { }
 
   ngOnInit(): void {
-
-    this.assessmentService.getTopicQuestions(this.assessmentId, this.topicId).subscribe((questionsList) => {
+    this.assessmentService.getQuestionSetQuestions(this.assessmentId, this.questionSetId).subscribe((questionsList) => {
       this.questionsDataSource = new MatTableDataSource(questionsList);
     });
   }
@@ -41,7 +40,7 @@ export class QuestionDetailComponent implements OnInit {
   }
 
   public onOpenDetails(id: string): void {
-    this.router.navigate([`/assessments/${this.assessmentId}/topics/${this.topicId}/questions/${id}`]);
+    this.router.navigate([`/assessments/${this.assessmentId}question-sets/${this.questionSetId}/questions/${id}`]);
   }
 
   public deleteSelection(): void {

@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
 import { BreakpointObserver } from '@angular/cdk/layout';
 
 interface DialogData {
-  topicId?: string;
+  questionSetId?: string;
   order?: any;
   question?: any;
   toClone?: boolean;
@@ -28,7 +28,7 @@ export class QuestionDragAndDropFormComponent implements OnInit {
   public selectQuestion: boolean;
 
   public assessmentId: string;
-  public topicId: string;
+  public questionSetId: string;
   public order: any;
   public question: any;
   public toClone: boolean;
@@ -76,7 +76,7 @@ export class QuestionDragAndDropFormComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     if (this.data?.assessmentId) { this.assessmentId = this.data.assessmentId; }
-    if (this.data?.topicId) { this.topicId = this.data.topicId; }
+    if (this.data?.questionSetId) { this.questionSetId = this.data.questionSetId; }
     if (this.data?.order) { this.order = this.data.order; }
     if (this.data?.question) { this.question = this.data.question; }
     if (this.data?.toClone) { this.toClone = this.data.toClone; }
@@ -102,7 +102,7 @@ export class QuestionDragAndDropFormComponent implements OnInit {
       formGroup: this.dragAndDropForm.controls.type.value === 'NORMAL'
         ? this.createNormalQuestionForm().value
         : this.createCustomizedQuestionForm().value,
-      topicId: this.topicId.toString(),
+        questionSetId: this.questionSetId.toString(),
       assessmentId: this.assessmentId.toString(),
       question: this.question
     };
@@ -133,7 +133,6 @@ export class QuestionDragAndDropFormComponent implements OnInit {
     return new FormGroup({
       question_type: new FormControl('CUSTOMIZED_DRAG_AND_DROP'),
       title: new FormControl(this.dragAndDropForm.controls.title.value),
-      learning_objective: new FormControl(this.dragAndDropForm.controls.learning_objective.value),
       order: new FormControl(this.dragAndDropForm.controls.order.value),
       first_value: new FormControl(this.questionDetails.controls.first_value.value),
       first_style: new FormControl(this.questionDetails.controls.first_style.value),

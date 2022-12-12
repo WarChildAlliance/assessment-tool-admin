@@ -24,18 +24,18 @@
   </mat-form-field>
 </div>
 
-<div class="main-board__charts-container__select" *ngIf="topicSelectionEnabled">
+<div class="main-board__charts-container__select" *ngIf="questionSetSelectionEnabled">
   <mat-form-field appearance="outline" color="accent">
     <mat-label>
-      {{ "general.choose" | translate: { type: "general.topic" | translate | lowercase } }}
+      {{ "general.choose" | translate: { type: "general.questionSet" | translate | lowercase } }}
     </mat-label>
-    <mat-select [(value)]="selectedTopic">
-      <mat-option>{{ "shared.selectAssessment.noTopics" | translate }}</mat-option>
-      <mat-option *ngFor="let topic of topicsList"
-        [value]="topic"
-        (click)="selectTopic(topic)"
-        [disabled]="!topic.started">
-          {{ topic.name }}
+    <mat-select [(value)]="selectedQuestionSet">
+      <mat-option>{{ "shared.selectAssessment.noQuestionSets" | translate }}</mat-option>
+      <mat-option *ngFor="let questionSet of questionSetsList"
+        [value]="questionSet"
+        (click)="selectQuestionSet(questionSet)"
+        [disabled]="!questionSet.started">
+          {{ questionSet.name }}
       </mat-option>
     </mat-select>
     <mat-hint>

@@ -8,7 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { LanguageService } from 'src/app/core/services/language.service';
 
 interface DialogData {
-  topicId?: string;
+  questionSetId?: string;
   order?: any;
   question?: any;
   toClone?: boolean;
@@ -29,7 +29,7 @@ export class QuestionSelectFormComponent implements OnInit {
   public selectQuestion: boolean;
 
   public assessmentId: string;
-  public topicId: string;
+  public questionSetId: string;
   public order: any;
   public question: any;
   public toClone: boolean;
@@ -57,6 +57,7 @@ export class QuestionSelectFormComponent implements OnInit {
     title: new FormControl(''),
     value: new FormControl('', [Validators.required]),
     order: new FormControl('', [Validators.required]),
+    show_options_value: new FormControl('', [Validators.required]),
     // display: new FormControl('Grid', [Validators.required]),
     options: new FormArray([
       this.formBuilder.group({
@@ -88,7 +89,7 @@ export class QuestionSelectFormComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     if (this.data?.assessmentId) { this.assessmentId = this.data.assessmentId; }
-    if (this.data?.topicId) { this.topicId = this.data.topicId; }
+    if (this.data?.questionSetId) { this.questionSetId = this.data.questionSetId; }
     if (this.data?.order) { this.order = this.data.order; }
     if (this.data?.question) { this.question = this.data.question; }
     if (this.data?.toClone) { this.toClone = this.data.toClone; }
@@ -105,6 +106,7 @@ export class QuestionSelectFormComponent implements OnInit {
         question_type: 'SELECT',
         value: '',
         title: '',
+        show_options_value: false,
         order: this.order, //  display: 'Grid',
         options: [{ title: '', valid: false, value: '' }],
       });
@@ -136,7 +138,7 @@ export class QuestionSelectFormComponent implements OnInit {
     const data = {
       toClone: this.toClone,
       formGroup: this.selectForm.value,
-      topicId: this.topicId.toString(),
+      questionSetId: this.questionSetId.toString(),
       assessmentId: this.assessmentId.toString(),
       question: this.question
     };
@@ -165,11 +167,15 @@ export class QuestionSelectFormComponent implements OnInit {
         : i;
       if (image) {
         const index = this.optionsAtt[i].attachments.indexOf(image);
-        this.optionsAtt[i].attachments[index] = {
-          attachment_type: type,
-          file: event,
-          id,
-        };
+        if (event) {
+          this.optionsAtt[i].attachments[index] = {
+            attachment_type: type,
+            file: event,
+            id,
+          };
+        } else {
+          this.optionsAtt[i].attachments.splice(index, 1);
+        }
       }
     }
     const audio = this.optionsAtt[i].attachments.find(att => att.attachment_type === 'AUDIO');
@@ -179,11 +185,15 @@ export class QuestionSelectFormComponent implements OnInit {
         : i;
       if (audio) {
         const index = this.optionsAtt[i].attachments.indexOf(audio);
-        this.optionsAtt[i].attachments[index] = {
-          attachment_type: type,
-          file: event,
-          id
-        };
+        if (event) {
+          this.optionsAtt[i].attachments[index] = {
+            attachment_type: type,
+            file: event,
+            id
+          };
+        } else {
+          this.optionsAtt[i].attachments.splice(index, 1);
+        }
       }
     }
     if ((!audio && type === 'AUDIO') || (!image && type === 'IMAGE')) {
@@ -193,7 +203,7 @@ export class QuestionSelectFormComponent implements OnInit {
         id
       });
     }
-    this.optionsAttachment = true;
+    this.optionsAttachment = this.optionsAtt.some(op => op.attachments.length);
   }
 
   public async setExistingOptionsAttachments(): Promise<void> {
@@ -285,6 +295,7 @@ export class QuestionSelectFormComponent implements OnInit {
         value: q.value,
         title: q.title,
         order: this.toClone ? this.order : this.question.order,
+        show_options_value: q.show_options_value,
         // display: q.display_type ? this.displayTypeFormat(q.display_type) : 'Grid',
         options,
       });
@@ -343,6 +354,7 @@ export class QuestionSelectFormComponent implements OnInit {
       value: '',
       title: '',
       order: this.order, // display: 'Grid',
+      show_options_value: false,
       options: [{ title: '', valid: false, value: '' }],
     });
 

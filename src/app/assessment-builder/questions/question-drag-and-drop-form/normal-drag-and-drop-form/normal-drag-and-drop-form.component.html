@@ -44,7 +44,7 @@
     </div>
 
     <div class="items-selectors">
-        <app-image-selector [reset$]="attachmentsResetSubject$.asObservable()"
+        <app-image-selector [reset$]="attachmentsResetSubject$.asObservable()" [draggableAttachment]="draggableAttachment"
             (newImageEvent)="handleFileInputOptions($event, 'IMAGE', selection.selected)"></app-image-selector>
     </div>
 </div>

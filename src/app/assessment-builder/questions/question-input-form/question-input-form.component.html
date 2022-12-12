@@ -32,7 +32,7 @@
             <div style="margin-right: 20px;">
                 <app-image-selector
                     [reset$]="attachmentsResetSubject$.asObservable()"
-                    (newImageEvent)="questionFormService.imageAttachment = $event"
+                    (newImageEvent)="questionFormService.imageAttachment = $event; inputForm.markAsDirty()"
                     [imageAttachment]="imageAttachment"
                 ></app-image-selector>
             </div>
@@ -40,16 +40,16 @@
                 <app-audio-selector
                     [isRecorderEnabled]="true"
                     [reset$]="attachmentsResetSubject$.asObservable()"
-                    (newAudioEvent)="questionFormService.audioAttachment = $event"
+                    (newAudioEvent)="questionFormService.audioAttachment = $event; inputForm.markAsDirty()"
                     [audioAttachment]="audioAttachment"
                 ></app-audio-selector>
             </div>
         </div>
-       
+
 </form>
 
 <div class="dialog-buttons">
-    <span class="notifier" *ngIf="inputForm.controls.order.errors">{{ "assessmentBuilder.topicDetails.selQuestionsOrder" | translate }}</span>
+    <span class="notifier" *ngIf="inputForm.controls.order.errors">{{ "assessmentBuilder.questionSetDetails.selQuestionsOrder" | translate }}</span>
     <button mat-flat-button mat-dialog-close class="dialog-buttons__cancel" color="secondary">
         {{ "general.cancel" | translate }}
     </button>

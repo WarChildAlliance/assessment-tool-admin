@@ -1,0 +1,49 @@
+<div class="main-board">
+  <app-table [tableData]="questionsDataSource" [displayedColumns]="displayedColumns"
+    [isSelectable]="true" [libraryFilters]="true" [pageConfig]="'questions'"
+    (selectionChangedEvent)="onSelectionChange($event)"
+    (filtersChangedEvent)="onTableFiltersChange($event)"
+    (openDetailsEvent)="onOpenDetails($event)"
+    (resetFiltersEvent)="onTableFiltersChange()">
+  </app-table>
+
+  <!-- For preview button (not being used) -->
+  <!-- <div *ngIf="showQuestionPreview && questionDetails">
+    <mat-card *ngIf="questionDetails.question_type === 'SEL'">
+      <app-question-sel [question]="questionDetails"></app-question-sel>
+    </mat-card>
+
+    <mat-card *ngIf="questionDetails.question_type === 'SELECT'">
+      <app-question-select [question]="questionDetails" [evaluated]="true"></app-question-select>
+    </mat-card>
+  
+    <mat-card *ngIf="questionDetails.question_type === 'INPUT'">
+      <app-question-input [question]="questionDetails" [evaluated]="true"></app-question-input>
+    </mat-card>
+  
+    <mat-card *ngIf="questionDetails.question_type === 'SORT'">
+      <app-question-sort [question]="questionDetails" [evaluated]="true"></app-question-sort>
+    </mat-card>
+  
+    <mat-card *ngIf="questionDetails.question_type === 'NUMBER_LINE'">
+      <app-question-numberline [question]="questionDetails" [evaluated]="true"></app-question-numberline>
+    </mat-card>
+
+    <mat-card *ngIf="questionDetails && questionDetails.question_type === 'DRAG_AND_DROP'">
+      <app-question-drag-and-drop [question]="questionDetails" [evaluated]="true" [assessmentId]="assessmentId" [questionSetId]="questionSetId">
+      </app-question-drag-and-drop>
+    </mat-card>
+
+    <mat-card *ngIf="questionDetails.question_type === 'DOMINO'">
+      <app-question-domino [question]="questionDetails" [evaluated]="true"></app-question-domino>
+    </mat-card>
+
+    <mat-card *ngIf="questionDetails.question_type === 'CALCUL'">
+      <app-question-calcul [question]="questionDetails" [evaluated]="true"></app-question-calcul>
+    </mat-card>
+
+    <mat-card *ngIf="questionDetails.question_type === 'CUSTOMIZED_DRAG_AND_DROP'">
+      <app-customized-drag-and-drop [question]="questionDetails" [evaluated]="true"></app-customized-drag-and-drop>
+    </mat-card>
+  </div> -->
+</div>

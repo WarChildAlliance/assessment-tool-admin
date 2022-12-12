@@ -1,36 +1,21 @@
-<div *ngIf="breadcrumb.length && breadcrumb[0].label !=='general.groupsOverview'" [ngClass]="breadcrumb[0].label ==='general.library' ? 'library' : 'breadcrumb'">
-    <!-- TEMPORARY: redo when all headers design done and finished to generalize header logic -->
-    <mat-toolbar [ngSwitch]="breadcrumb[0].label ==='general.library'">
-        <div *ngSwitchCase="true">
-            <span class="first-line">
-                <p>
-                    {{ 'header.libraryHeaderPt1' | translate }}
-                </p>
-               <p class="title">
-                   {{ 'header.libraryHeader' | translate }}
-               </p>
-               <p>
-                   {{ 'header.libraryHeaderPt2' | translate }}
-               </p>
-               <p class="assessment-title">
-                   {{ 'library.libraryAssessmentsHeader' | translate }}
-               </p>.
-            </span>
-            <span>
-                {{ 'library.libraryAssessmentsHeaderPt3' | translate }}
-            </span>
-        </div>
-    
-          <mat-list class="breadcrumb__list" *ngSwitchCase="false">
-                <mat-list-item>
-                    <span class="breadcrumb__spacer">
-                        <span *ngFor="let item of breadcrumb; let i = index">
-                            <a *ngIf="item?.url" [routerLink]="item?.url" class="breadcrumb__list__item">{{ item.label | translate }}</a>
-                            <span *ngIf="!item?.url" class="breadcrumb__list__last-item">{{ item.label | translate }}</span>
-                            <span *ngIf="breadcrumb.length !== i+1">{{symbol}}</span>
-                        </span>
-                    </span>
-                </mat-list-item>
-          </mat-list>
-    </mat-toolbar> 
+<div *ngIf="breadcrumb.length && breadcrumb[0].type === 'library'" class="header">
+    <div *ngFor="let item of breadcrumb">
+        <span class="first-line">
+            <p>
+                {{ 'header.library.headerPt1' | translate }}
+            </p>
+            <p class="title">
+                {{ 'header.library.title' | translate }}
+            </p>
+            <p>
+                {{ 'header.library.headerPt2' | translate }}
+            </p>
+            <p class="section" [style.background-color]="sectionColor(item.section)">
+                {{ 'header.library.'+ item.section + '.section' | translate }}
+            </p>.
+        </span>
+        <span class="final-text">
+            {{ 'header.library.'+ item.section + '.headerPt3' | translate }}
+        </span>
+    </div>
 </div>

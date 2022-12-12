@@ -4,10 +4,10 @@
 
   <mat-card-content *ngIf="hasData">
     <div class="left-column">
-      <app-select-assessment (topicSelection)="onTopicSelection($event)" [topicSelectionEnabled]="true" [multiple]="false"
+      <app-select-assessment (questionSetSelection)="onQuestionSetSelection($event)" [questionSetSelectionEnabled]="true" [multiple]="false"
         [displayNonEvaluated]="true"></app-select-assessment>
       <app-select-group style="margin-top: 15px"
-        (groupsSelection)="getStudentListForTopic($event)"
+        (groupsSelection)="getStudentListForQuestionSet($event)"
         [multiple]="true">
       </app-select-group>
       <div class="main-board__charts-container__options">
@@ -15,7 +15,7 @@
           <ng-container *ngFor="let student of studentsList">
             <ul>
               <li>
-                <mat-radio-button *ngIf="student.topic_first_try" [value]="student"
+                <mat-radio-button *ngIf="student.question_set_first_try" [value]="student"
                   [checked]="student === selectedStudent ? true : false" (change)="selectStudent(student)">{{
                   student.student.full_name }}</mat-radio-button>
               </li>
@@ -28,9 +28,9 @@
     <app-spinner style="margin: auto;" *ngIf="loading" size="large" [variant]="'default'"></app-spinner>
 
     <ng-container *ngIf="hasData && !loading; else selectionNoData">
-      <div class="answers-list" *ngIf="studentTopicAnswers">
+      <div class="answers-list" *ngIf="studentQuestionSetAnswers">
         <ul>
-          <li *ngFor="let answer of studentTopicAnswers; let i = index" (click)="displayAnswerDetails(answer)">Q{{ i + 1
+          <li *ngFor="let answer of studentQuestionSetAnswers; let i = index" (click)="displayAnswerDetails(answer)">Q{{ i + 1
             }}<span>
               <mat-icon *ngIf="evaluated" [style.color]="answer.color">stop</mat-icon>
               <p *ngIf="!evaluated">{{answer.question.title}}</p>
@@ -59,8 +59,8 @@
               [evaluated]="evaluated"></app-question-numberline>
           </ng-container>
 
-          <ng-container *ngIf="answerDetails.question.question_type === 'DRAG_AND_DROP'">
-            <app-question-drag-and-drop [question]="answerDetails.question" [assessmentId]="assessmentId" [topicId]="topicId"
+          <ng-container *ngIf="answerDetails && answerDetails.question.question_type === 'DRAG_AND_DROP'">
+            <app-question-drag-and-drop [question]="answerDetails.question" [assessmentId]="assessmentId" [questionSetId]="questionSetId"
               [index]="index" [answer]="answerDetails" [evaluated]="evaluated" [shrinkBackgroundImage]="true">
             </app-question-drag-and-drop>
           </ng-container>

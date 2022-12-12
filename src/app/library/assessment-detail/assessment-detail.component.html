@@ -1,10 +1,10 @@
 <div class="main-board">
   <div class="main-board__top-container">
     <app-previous-button path="/library"></app-previous-button>
-    <h1 *ngIf="currentAssessment">{{ currentAssessment.title }} ({{ topicsDataSource.data.length }})
+    <h1 *ngIf="currentAssessment">{{ currentAssessment.title }} ({{ questionSetsDataSource.data.length }})
       <span>{{ "general.grade" | translate }} {{ currentAssessment.grade }}, {{currentAssessment.subject }},
         {{ currentAssessment.language_name }}</span>
-      <span *ngIf="selectedTopics.length">{{ selectedTopics.length }} {{ "assessments.selected" | translate }}</span>
+      <span *ngIf="selectedQuestionSets.length">{{ selectedQuestionSets.length }} {{ "assessments.selected" | translate }}</span>
     </h1>
 
 <!--     <div class="main-board__top-container__actions">
@@ -14,7 +14,7 @@
     </div> -->
   </div>
 
-  <app-table [tableData]="topicsDataSource" [displayedColumns]="displayedColumns"
+  <app-table [tableData]="questionSetsDataSource" [displayedColumns]="displayedColumns"
     [isSelectable]="true" (selectionChangedEvent)="onSelectionChange($event)"
     (openDetailsEvent)="onOpenDetails($event)"></app-table>
 

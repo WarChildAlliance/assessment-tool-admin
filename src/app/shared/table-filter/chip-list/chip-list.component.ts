@@ -21,9 +21,11 @@ export class ChipListComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.filterReset$.subscribe(() => {
-      this.checkedId = null;
-    });
+    if (this.filterReset$) {
+      this.filterReset$.subscribe(() => {
+        this.checkedId = null;
+      });
+    }
   }
 
   applyFilterSelectionChange(event: any, key: string | number, value: any): void {

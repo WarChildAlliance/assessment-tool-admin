@@ -43,7 +43,7 @@
                 <ng-template matStepLabel>{{ "assessmentBuilder.questions.typeStep" | translate }}</ng-template>
 
                 <ng-container *ngIf="dragAndDropForm.controls.type.value === 'NORMAL'">
-                    <app-normal-drag-and-drop-form  [assessmentId]="assessmentId" [topicId]="topicId"
+                    <app-normal-drag-and-drop-form  [assessmentId]="assessmentId" [questionSetId]="questionSetId"
                         [question]="question" [toClone]="toClone" [createDraggableOptions$]="createDraggableOptions$"
                         (dragAndDropDetailsForm)="questionDetails = $event" (changedBackgroundImage)="changedBackgroundImage = $event">
                     </app-normal-drag-and-drop-form>
@@ -60,15 +60,15 @@
                 <ng-template matStepLabel>{{ "assessmentBuilder.questions.mediaStep" | translate }}</ng-template>
                 <h2>{{ "assessmentBuilder.questions.dragAndDrop.questionAttachments" | translate }}</h2>
                 <div class="attachments-container">
-                    <app-image-selector 
+                    <app-image-selector
                         [reset$]="attachmentsResetSubject$.asObservable()"
-                        (newImageEvent)="questionFormService.imageAttachment = $event"
+                        (newImageEvent)="questionFormService.imageAttachment = $event; dragAndDropForm.markAsDirty()"
                         [imageAttachment]="imageAttachment">
                     </app-image-selector>
                     <app-audio-selector
                         [isRecorderEnabled]="true"
                         [reset$]="attachmentsResetSubject$.asObservable()"
-                        (newAudioEvent)="questionFormService.audioAttachment = $event"
+                        (newAudioEvent)="questionFormService.audioAttachment = $event; dragAndDropForm.markAsDirty()"
                         [audioAttachment]="audioAttachment">
                     </app-audio-selector>
                 </div>
@@ -77,8 +77,8 @@
                     <button mat-flat-button mat-dialog-close class="dialog-buttons__cancel" color="secondary">
                         {{ "general.cancel" | translate }}
                     </button>
-                    <button mat-flat-button [mat-dialog-close]="true" color="accent" class="dialog-buttons__submit"
-                        [disabled]="dragAndDropForm.invalid || (questionDetails ? questionDetails?.invalid : true)" (click)="onSubmit()">
+                    <button mat-flat-button [mat-dialog-close]="true" color="accent" class="dialog-buttons__submit" (click)="onSubmit()"
+                        [disabled]="dragAndDropForm.invalid || !dragAndDropForm.dirty || (questionDetails ? questionDetails?.invalid : true)">
                         {{ question ? toClone ? ("general.clone" | translate) : ("general.save" | translate) : ("general.create" |
                         translate) }}
                     </button>
@@ -86,6 +86,6 @@
             </mat-step>
         </mat-stepper>
 
-        <span class="notifier" *ngIf="dragAndDropForm.controls.order.errors">{{ "assessmentBuilder.topicDetails.selQuestionsOrder" | translate }}</span>
+        <span class="notifier" *ngIf="dragAndDropForm.controls.order.errors">{{ "assessmentBuilder.questionSetDetails.selQuestionsOrder" | translate }}</span>
     </form>
 </div>

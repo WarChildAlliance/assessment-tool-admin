@@ -112,3 +112,11 @@
   margin: 1em;
   place-content: space-between;
 }
+
+.title {
+  width: 300px;
+  overflow: hidden;
+  display: inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

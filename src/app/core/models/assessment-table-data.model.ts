@@ -4,6 +4,6 @@ export interface AssessmentTableData {
     title: string;
     subject: string;
     last_session: Date;
-    accessible_topics_count: number;
-    completed_topics_count: number;
+    accessible_question_sets_count: number;
+    completed_question_sets_count: number;
 }

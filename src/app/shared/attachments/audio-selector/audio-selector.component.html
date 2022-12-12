@@ -1,10 +1,15 @@
 <h3><b>{{ "assessmentBuilder.questions.audioAttachment" | translate }}</b></h3>
 <input hidden accept="audio/*" (change)="handleFileInput($event)" #audioAttachmentInput type="file">
-<app-custom-button class="file_input" category="secondary" variant="neutral" (click)="audioAttachmentInput.click()">
-  {{ "general.choose" | translate: { type: "assessmentBuilder.file" | translate } }}
-</app-custom-button>
-<p class="file-name">{{ audioAttachment ? audioAttachment.name : ("assessmentBuilder.noFileChosen" | translate) }}</p>
-<p><b>{{ "assessmentBuilder.questions.or" | translate }}</b></p>
-<div *ngIf="isRecorderEnabled">
-  <app-audio-recorder [reset$]="recorderResetSubject$.asObservable()" (newAudioRecordingEvent)="onNewAudioRecordingEvent($event)"></app-audio-recorder>
+<div class="buttons">
+  <app-custom-button *ngIf="audioAttachment" style="margin-bottom: 1em;" class="file_input" category="secondary" variant="danger" (click)="deleteFile()">
+    {{ "general.delete" | translate: {type: "general.attachment" | translate } }}
+  </app-custom-button>
+  <app-custom-button class="file_input" category="secondary" variant="neutral" (click)="audioAttachmentInput.click()">
+    {{ "general.choose" | translate: { type: "assessmentBuilder.file" | translate } }}
+  </app-custom-button>
+  <p class="file-name">{{ audioAttachment ? audioAttachment.name : ("assessmentBuilder.noFileChosen" | translate) }}</p>
+  <p><b>{{ "assessmentBuilder.questions.or" | translate }}</b></p>
+  <div *ngIf="isRecorderEnabled">
+    <app-audio-recorder [reset$]="recorderResetSubject$.asObservable()" (newAudioRecordingEvent)="onNewAudioRecordingEvent($event)"></app-audio-recorder>
+  </div>
 </div>
