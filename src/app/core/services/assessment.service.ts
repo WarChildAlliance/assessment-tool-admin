@@ -66,7 +66,7 @@ export class AssessmentService {
   }
 
   public getQuestionSetQuestions(assessmentId: string, questionSetId: string, filteringParams?: object): Observable<any[]> {
-    const initialUrl = `${environment.API_URL}/visualization/assessments/${assessmentId}/topics/${questionSetId}/questions/`;
+    const initialUrl = `${environment.API_URL}/visualization/assessments/${assessmentId}/question-sets/${questionSetId}/questions/`;
     const finalUrl = filteringParams ? this.utilitiesService.urlBuilder(initialUrl, filteringParams) : initialUrl;
     return this.http.get<any[]>(finalUrl);
   }

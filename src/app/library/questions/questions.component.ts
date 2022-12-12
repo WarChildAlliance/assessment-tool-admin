@@ -72,8 +72,11 @@ export class QuestionsComponent implements OnInit {
 
   private getQuestions(filteringParams?: object): void {
     this.assessmentService.getAllQuestionsList(filteringParams).subscribe(questionsList => {
+      // TODO: Check how to get learning_objective from the set of question parent
       questionsList.forEach(question => {
-        question.learning_objective = question.learning_objective.name_eng;
+        if (question.learning_objective) {
+          question.learning_objective = question.learning_objective.name_eng;
+        }
       });
       this.questionsDataSource = new MatTableDataSource(questionsList);
     });
