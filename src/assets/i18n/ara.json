@@ -217,7 +217,7 @@
         "option": "اختيار",
         "options": "خيارات",
         "optionsValidAnswerErrors": "يمكن أن يكون للأسئلة إجابة واحدة صحيحة.",
-        "showOptionsValue": "إظهار قيمة الخيارات"
+        "showOptionsTitle": "إظهار عنوان الخيارات"
       },
       "sel": {
         "mathSelfEfficacy": "الكفاءة الذاتية للرياضيات",
