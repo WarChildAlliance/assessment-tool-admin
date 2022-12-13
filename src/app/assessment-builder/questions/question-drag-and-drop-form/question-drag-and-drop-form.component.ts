@@ -1,13 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { AssessmentService } from 'src/app/core/services/assessment.service';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { QuestionFormService } from 'src/app/core/services/question-form.service';
 import { LanguageService } from 'src/app/core/services/language.service';
-import { StepperOrientation } from '@angular/cdk/stepper';
-import { map } from 'rxjs/operators';
-import { BreakpointObserver } from '@angular/cdk/layout';
 
 interface DialogData {
   questionSetId?: string;
@@ -42,9 +38,6 @@ export class QuestionDragAndDropFormComponent implements OnInit {
   public questionType: string;
   public dragAndDropType = ['NORMAL', 'CUSTOMIZED'];
 
-  // To dynamically change the steps orientation layout based on the viewport
-  public stepperOrientation: Observable<StepperOrientation>;
-
   public createDraggableOptions$ = new BehaviorSubject<any>(null);
   public attachmentsResetSubject$ = new Subject<void>();
 
@@ -63,15 +56,10 @@ export class QuestionDragAndDropFormComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    private assessmentService: AssessmentService,
     public languageService: LanguageService,
-    public questionFormService: QuestionFormService,
-    public breakpointObserver: BreakpointObserver
+    public questionFormService: QuestionFormService
   ) {
     this.attachmentsResetSubject$.subscribe(() => this.questionFormService.resetAttachments());
-    this.stepperOrientation = this.breakpointObserver
-      .observe('(min-width: 800px)')
-      .pipe(map(({matches}) => (matches ? 'horizontal' : 'vertical')));
   }
 
   async ngOnInit(): Promise<void> {

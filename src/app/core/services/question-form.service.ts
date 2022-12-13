@@ -1,6 +1,10 @@
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { StepperOrientation } from '@angular/cdk/stepper';
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { AlertService } from './alert.service';
 import { AssessmentService } from './assessment.service';
 import { UtilitiesService } from './utilities.service';
@@ -17,6 +21,9 @@ export class QuestionFormService {
     { id: 'MULTIPLICATION', path: 'multiplication' }
   ];
 
+  // To dynamically change the steps orientation layout based on the viewport
+  public stepperOrientation: Observable<StepperOrientation>;
+
   private fileAttachment: File;
   private alertMessage = '';
 
@@ -32,8 +39,13 @@ export class QuestionFormService {
     private assessmentService: AssessmentService,
     private alertService: AlertService,
     private translateService: TranslateService,
-    private utilitiesService: UtilitiesService
-  ) { }
+    private utilitiesService: UtilitiesService,
+    public breakpointObserver: BreakpointObserver
+  ) {
+    this.stepperOrientation = this.breakpointObserver
+      .observe('(min-width: 800px)')
+      .pipe(map(({matches}) => (matches ? 'horizontal' : 'vertical')));
+  }
 
   get imageAttachment(): File {
     return this.imageAttachmentFile;
