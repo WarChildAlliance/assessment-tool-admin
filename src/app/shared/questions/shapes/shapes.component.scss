@@ -1,0 +1,12 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    min-height: 60px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+svg {
+    max-height: 114px;
+}

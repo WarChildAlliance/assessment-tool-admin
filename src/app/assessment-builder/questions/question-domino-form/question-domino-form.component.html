@@ -23,21 +23,6 @@
                     <input matInput formControlName="title">
                 </mat-form-field>
 
-                <mat-form-field *ngIf="learningObjectives?.length" appearance="outline" color="accent">
-                    <mat-label>{{ "assessmentBuilder.learningObjective" | translate }}</mat-label>
-                    <mat-select #learningObjectiveSelect required formControlName="learning_objective">
-                        <mat-option *ngFor="let learningObjective of learningObjectives" [value]="learningObjective.code"
-                        [matTooltip]="languageService.getLanguageCode() === 'eng' ? learningObjective.name_eng : learningObjective.name_ara"
-                        matTooltipShowDelay="1000"
-                        >
-                            <span style="font-weight: 500; margin-right: 10px;">{{ learningObjective.code }}</span>
-                            <ng-container *ngIf="learningObjectiveSelect.panelOpen">
-                                {{ languageService.getLanguageCode() === 'eng' ? learningObjective.name_eng : learningObjective.name_ara }}
-                            </ng-container>
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-
                 <mat-form-field appearance="outline" class="form-group" color="accent">
                     <mat-label>{{ "assessmentBuilder.questions.numberline.expectedValue" | translate }}</mat-label>
                     <input type="number" matInput formControlName="expected_value" min="1">
@@ -47,21 +32,16 @@
                     <mat-label for="order">{{ "general.order" | translate }}</mat-label>
                     <input matInput type="number" formControlName="order">
                 </mat-form-field>
-
-                <br>
-                <mat-checkbox formControlName="on_popup">
-                    <mat-label for="on_popup">{{ "assessmentBuilder.questions.select.onPopup" | translate }}</mat-label>
-                </mat-checkbox>
             </div>
 
             <div class="attachments-container">
                 <h2>{{ "assessmentBuilder.questions.select.attachments" | translate }}</h2>
                 <div class="attachments-options">
                     <app-image-selector [reset$]="attachmentsResetSubject$.asObservable()"
-                        (newImageEvent)="questionFormService.imageAttachment = $event"
+                        (newImageEvent)="questionFormService.imageAttachment = $event; dominoForm.markAsDirty()"
                         [imageAttachment]="imageAttachment"></app-image-selector>
                     <app-audio-selector [isRecorderEnabled]="true" [reset$]="attachmentsResetSubject$.asObservable()"
-                        (newAudioEvent)="questionFormService.audioAttachment = $event"
+                        (newAudioEvent)="questionFormService.audioAttachment = $event; dominoForm.markAsDirty()"
                         [audioAttachment]="audioAttachment"></app-audio-selector>
                 </div>
             </div>
@@ -78,11 +58,11 @@
                     [formGroupName]="i">
                     <div class="sides">
                         <mat-form-field appearance="outline" class="form-group" color="accent">
-                            <mat-label>{{ "assessmentBuilder.questions.domino.leftSideValue" | translate }}</mat-label>
+                            <mat-label>{{ "assessmentBuilder.questions.domino.sideValue" | translate: { side: ("general.left" | translate) } }}</mat-label>
                             <input type="number" matInput formControlName="left_side_value" min="1" max="6">
                         </mat-form-field>
                         <mat-form-field appearance="outline" class="form-group" color="accent">
-                            <mat-label>{{ "assessmentBuilder.questions.domino.rightSideValue" | translate }}</mat-label>
+                            <mat-label>{{ "assessmentBuilder.questions.domino.sideValue" | translate: { side: ("general.right" | translate) } }}</mat-label>
                             <input type="number" matInput formControlName="right_side_value" min="1" max="6">
                         </mat-form-field>
                     </div>
@@ -96,8 +76,14 @@
     </form>
 
     <div class="dialog-buttons">
-        <span class="notifier" *ngIf="dominoForm.controls.order.errors">{{
-            "assessmentBuilder.topicDetails.selQuestionsOrder" | translate }}</span>
+        <div class="errors">
+            <span class="notifier" *ngIf="dominoForm.get('options').hasError('multipleAnswers')">
+                {{ "assessmentBuilder.questions.domino.multipleAnswersErrors" | translate }}
+            </span>
+            <span class="notifier" *ngIf="dominoForm.controls.order.errors">
+                {{"assessmentBuilder.questionSetDetails.selQuestionsOrder" | translate }}
+            </span>
+        </div>
         <button mat-flat-button mat-dialog-close class="dialog-buttons__cancel" color="secondary">
             {{ "general.cancel" | translate }}
         </button>

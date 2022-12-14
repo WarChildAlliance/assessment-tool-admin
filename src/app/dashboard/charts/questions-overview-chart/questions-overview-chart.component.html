@@ -7,8 +7,8 @@
   <mat-card-content *ngIf="hasData">
     <div class="left-column">
       <app-select-assessment
-        (topicSelection)="onTopicSelection($event)"
-        [topicSelectionEnabled]="true"
+        (questionSetSelection)="onQuestionSetSelection($event)"
+        [questionSetSelectionEnabled]="true"
         [multiple]="false"
         [displayNonEvaluated]="false">
       </app-select-assessment>
@@ -44,7 +44,7 @@
         </ng-container>
 
         <ng-container *ngIf="questionDetails.question_type === 'DRAG_AND_DROP'">
-          <app-question-drag-and-drop [question]="questionDetails" [assessmentId]="assessmentId" [topicId]="topicId"
+          <app-question-drag-and-drop [question]="questionDetails" [assessmentId]="assessmentId" [questionSetId]="questionSetId"
             [index]="index" [evaluated]="true" [shrinkBackgroundImage]="true"></app-question-drag-and-drop>
         </ng-container>
 
@@ -54,6 +54,10 @@
 
         <ng-container *ngIf="questionDetails.question_type === 'CALCUL'">
           <app-question-calcul [question]="questionDetails" [index]="index" [evaluated]="true"></app-question-calcul>
+        </ng-container>
+
+        <ng-container *ngIf="questionDetails.question_type === 'CUSTOMIZED_DRAG_AND_DROP'">
+          <app-customized-drag-and-drop [question]="questionDetails" [index]="index" [evaluated]="true"></app-customized-drag-and-drop>
         </ng-container>
       </div>
     </ng-container>

@@ -1,16 +1,21 @@
 .header-toolbar {
   display: flex;
-  justify-content: space-between;
-  padding: 16px;
+  justify-content: flex-end;
   -webkit-box-shadow: 0px 2px 4px 1px rgba(200, 200, 200, 0.5);
   box-shadow: 0px 2px 4px 1px rgba(200, 200, 200, 0.5);
   z-index: 10;
   position: relative;
-  background-color: white;
+
+  background: url('/assets/images/headerBackgroundImage.png');
+  background-size: cover;
+  background-position-x: center;
+  height: 25vh;
 
   &__menu-button {
+    color: #666666;
+    top: -30%;
     .mat-icon {
-      margin-right: 10px;
+      margin-left: 10px;
     }
   }
 }
@@ -21,7 +26,8 @@
 }
 
 .mat-sidenav-container {
-  height: calc(100vh - 64px); // Height of the toolbar
+  background-color: #F4FDFF;
+  height: 75vh;
   width: 100vw;
 
   & > .mat-sidenav-content {
@@ -37,5 +43,35 @@
 }
 
 .submenu.expanded {
-  height: 20em;
+  height: 100%;
+}
+
+.dashboard-active {
+  color: red;
+  border-left-color: red;
+}
+
+.students-active {
+  color: #00BCD4!important;
+  border-left-color: #00BCD4!important;
+}
+
+.groups-active {
+  color: #3F51B5!important;
+  border-left-color: #3F51B5!important;
+}
+
+.library-active {
+  color: #FF5722!important;
+  border-left-color: #FF5722!important;
+}
+
+.library-questions-active {
+  color: #FFEB3B!important;
+  border-left-color: #FFEB3B!important;
+}
+
+.list-item-active {
+  color: green;
+  border-left-color: green;
 }

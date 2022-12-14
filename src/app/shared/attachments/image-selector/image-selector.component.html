@@ -2,7 +2,12 @@
     <h3><b>{{ "assessmentBuilder.questions.imageAttachment" | translate }}</b></h3>
 </ng-container>
 <input hidden accept="image/*" (change)="handleFileInput($event)" #imageAttachmentInput type="file">
-<app-custom-button class="file_input" category="secondary" variant="neutral" (click)="imageAttachmentInput.click()">
-    {{ imageAttachment ? ("assessmentBuilder.changeFile" | translate) : ("general.choose" | translate: {type: "assessmentBuilder.file" | translate }) }}
-</app-custom-button>
-<p class="file-name">{{ imageAttachment ? imageAttachment.name : ("assessmentBuilder.noFileChosen" | translate) }}</p>
+<div class="buttons">
+    <app-custom-button *ngIf="imageAttachment && !draggableAttachment" style="margin-bottom: 1em;" class="file_input" category="secondary" variant="danger" (click)="deleteFile()">
+        {{ "general.delete" | translate: {type: "general.attachment" | translate } }}
+    </app-custom-button>
+    <app-custom-button class="file_input" category="secondary" variant="neutral" (click)="imageAttachmentInput.click()">
+        {{ imageAttachment ? ("assessmentBuilder.changeFile" | translate) : ("general.choose" | translate: {type: "assessmentBuilder.file" | translate }) }}
+    </app-custom-button>
+    <p class="file-name">{{ imageAttachment ? imageAttachment.name : ("assessmentBuilder.noFileChosen" | translate) }}</p>
+</div>

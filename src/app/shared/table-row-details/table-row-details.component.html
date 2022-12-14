@@ -1,0 +1,34 @@
+<div class="container">
+  <ng-container *ngIf="config === 'library'">
+    <div class="question-set-scores section">
+      <ng-container *ngFor="let questionSet of questionSets">
+        <app-score-indicator [score]="questionSet?.score"></app-score-indicator>
+      </ng-container>
+    </div>
+    <div class="question-preview-nav section"></div>
+    <div *ngIf="questionSets[questionSetIndex]?.questions" class="question-data section">
+      <p>{{ 'general.subject' | translate }}:</p>
+      <p>{{ data.subject ?? '--' }}</p>
+      <p>{{ 'general.topic' | translate }}:</p>
+      <p>{{ data.topic?.name ?? '--' }}</p>
+      <p>{{ 'assessmentBuilder.learningObjective' | translate }}:</p>
+      <p>{{ questionSets[questionSetIndex]?.learning_objective?.name_eng ?? '--' }}</p>
+      <p>{{ 'general.grade' | translate }}:</p>
+      <p>{{ data.grade ?? '--' }}</p>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="config === 'questions'">
+    <div class="question-preview-nav section"></div>
+    <div class="question-data section">
+      <p>{{ 'general.subject' | translate }}:</p>
+      <p>{{ data.subject ?? '--' }}</p>
+      <p>{{ 'general.topic' | translate }}:</p>
+      <p>{{ data.topic ?? '--' }}</p>
+      <p>{{ 'general.type' | translate }}:</p>
+      <p>{{ data.subtopic?.name ?? '--' }}</p>
+      <p>{{ 'general.grade' | translate }}:</p>
+      <p>{{ data.grade ?? '--' }}</p>
+    </div>
+  </ng-container>
+</div>

@@ -1,0 +1,17 @@
+<div class="chip-list">
+  <div 
+    *ngFor="let option of options"
+    class="chip-option"
+  >
+    <input
+      type="radio"
+      [id]="key+option.key"
+      [name]="key"
+      [checked]="checkedId === key+option.key"
+      (click)="applyFilterSelectionChange($event, key, option.value)"
+    >
+    <label [for]="key+option.key">
+      {{option.key}}
+    </label>
+  </div>
+</div>

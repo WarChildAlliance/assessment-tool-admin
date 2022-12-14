@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { first } from 'rxjs/operators';
 import { AssessmentDashboard } from 'src/app/core/models/assessment-dashboard.model';
-import { TopicDashboard } from 'src/app/core/models/topic-dashboard.model';
+import { QuestionSetDashboard } from 'src/app/core/models/question-set-dashboard.model';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 
 @Component({
@@ -11,23 +11,23 @@ import { AssessmentService } from 'src/app/core/services/assessment.service';
 })
 export class SelectAssessmentComponent implements OnInit {
 
-  @Input() topicSelectionEnabled: boolean;
+  @Input() questionSetSelectionEnabled: boolean;
   @Input() multiple: boolean;
   @Input() displayNonEvaluated: boolean;
 
   @Output() assessmentSelection = new EventEmitter<AssessmentDashboard>();
-  @Output() topicSelection = new EventEmitter<{assessmentId: string; topic: TopicDashboard}>();
+  @Output() questionSetSelection = new EventEmitter<{assessmentId: string; questionSet: QuestionSetDashboard}>();
 
   public assessmentsList: AssessmentDashboard[];
-  public topicsList: TopicDashboard[];
+  public questionSetsList: QuestionSetDashboard[];
 
   public selectedAssessment: AssessmentDashboard;
   public selectedAssessmentArr: AssessmentDashboard[];
   public selected: AssessmentDashboard[] = [];
-  public selectedTopic: TopicDashboard;
+  public selectedQuestionSet: QuestionSetDashboard;
 
   private assessmentId: string;
-  private firstTopicRequest = true;
+  private firstQuestionSetRequest = true;
 
   constructor(private assessmentService: AssessmentService) { }
 
@@ -37,12 +37,12 @@ export class SelectAssessmentComponent implements OnInit {
       this.selectedAssessment = this.assessmentsList.find(el => el.started);
       this.selectedAssessmentArr = this.assessmentsList.filter(el => el.started).slice(0, 1);
 
-      if (this.topicSelectionEnabled) {
+      if (this.questionSetSelectionEnabled) {
         if (this.selectedAssessment){
           this.assessmentId = this.selectedAssessment.id;
-          this.getTopics(this.assessmentId);
+          this.getQuestionSets(this.assessmentId);
         } else {
-          this.topicSelection.emit(null);
+          this.questionSetSelection.emit(null);
         }
       } else {
         this.assessmentSelection.emit(this.selectedAssessment);
@@ -52,27 +52,27 @@ export class SelectAssessmentComponent implements OnInit {
 
   public selectAssessment(assessment: AssessmentDashboard): void {
     this.selectedAssessment = assessment;
-    if (this.topicSelectionEnabled) {
+    if (this.questionSetSelectionEnabled) {
       this.assessmentId = assessment.id;
-      this.getTopics(assessment.id);
+      this.getQuestionSets(assessment.id);
     } else {
       this.assessmentSelection.emit(assessment);
     }
   }
 
-  public selectTopic(topic: TopicDashboard): void {
-    this.selectedTopic = topic;
-    this.topicSelection.emit({assessmentId: this.assessmentId, topic});
+  public selectQuestionSet(questionSet: QuestionSetDashboard): void {
+    this.selectedQuestionSet = questionSet;
+    this.questionSetSelection.emit({assessmentId: this.assessmentId, questionSet});
   }
 
-  private getTopics(assessmentId: string): void{
-    this.assessmentService.getTopicsListForDashboard(assessmentId).subscribe(topics => {
-      this.topicsList = topics;
+  private getQuestionSets(assessmentId: string): void{
+    this.assessmentService.getQuestionSetsListForDashboard(assessmentId).subscribe(questionSets => {
+      this.questionSetsList = questionSets;
 
-      if (this.firstTopicRequest) {
-        this.selectedTopic = this.topicsList.find(el => el.started);
-        this.topicSelection.emit({assessmentId: this.assessmentId, topic: this.selectedTopic});
-        this.firstTopicRequest = false;
+      if (this.firstQuestionSetRequest) {
+        this.selectedQuestionSet = this.questionSetsList.find(el => el.started);
+        this.questionSetSelection.emit({assessmentId: this.assessmentId, questionSet: this.selectedQuestionSet});
+        this.firstQuestionSetRequest = false;
       }
     });
   }

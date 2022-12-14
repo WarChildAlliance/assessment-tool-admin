@@ -37,6 +37,12 @@
                 <mat-option *ngFor="let subject of subjects" [value]="subject">{{ subject }}</mat-option>
             </mat-select>
         </mat-form-field>
+        <mat-form-field *ngIf="topics?.length" appearance="outline" color="accent">
+            <mat-label>{{ "general.topic" | translate }}</mat-label>
+            <mat-select formControlName="topic">
+                <mat-option *ngFor="let topic of topics" [value]="topic.id">{{ topic.name }}</mat-option>
+            </mat-select>
+        </mat-form-field>
         <mat-form-field appearance="outline" color="accent">
             <mat-label>{{ "general.language" | translate }}</mat-label>
             <mat-select formControlName="language">

@@ -5,21 +5,37 @@ import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { QuestionFormService } from 'src/app/core/services/question-form.service';
-import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { LanguageService } from 'src/app/core/services/language.service';
-import { LearningObjective } from 'src/app/core/models/question.model';
+
 
 interface DialogData {
-  topicId?: string;
+  questionSetId?: string;
   order?: any;
   question?: any;
   toClone?: boolean;
   assessmentId?: string;
   selQuestionOrder?: any;
-  subject?: 'MATH' | 'LITERACY';
-  grade?: '1' | '2' | '3';
-  subtopicId?: number;
 }
+
+const validateUniqueAnswer = (form: FormGroup): any => {
+  const dominoes = form.get('options');
+  const answer = form.get('expected_value');
+
+  if (answer.value) {
+    const countCorrect = dominoes.value.filter(domino => {
+      if (domino.left_side_value && domino.right_side_value) {
+        return domino.left_side_value + domino.right_side_value === answer.value;
+      }
+      return false;
+    }).length;
+
+    if (countCorrect > 1) {
+      dominoes.setErrors({ multipleAnswers: true });
+    } else {
+      dominoes.setErrors(null);
+    }
+  }
+};
 
 @Component({
   selector: 'app-question-domino-form',
@@ -30,17 +46,16 @@ export class QuestionDominoFormComponent implements OnInit {
   public questionsList: any;
   public selectQuestion: boolean;
   public selectedOption = -1;
-  public learningObjectives: LearningObjective[];
 
   public assessmentId: string;
-  public topicId: string;
+  public questionSetId: string;
   public order: any;
   public question: any;
   public toClone: boolean;
   public selQuestionOrder: any;
   public grade: string;
   public subject: string;
-  public subtopicId: number;
+  public topicId: number;
 
   public imageAttachment = this.questionFormService.imageAttachment;
   public audioAttachment = this.questionFormService.audioAttachment;
@@ -53,12 +68,10 @@ export class QuestionDominoFormComponent implements OnInit {
   public dominoForm: FormGroup = new FormGroup({
     question_type: new FormControl('DOMINO'),
     title: new FormControl(''),
-    learning_objective: new FormControl(null),
     order: new FormControl('', [Validators.required]),
     expected_value: new FormControl('', [Validators.required]),
-    on_popup: new FormControl(false),
     options: new FormArray([]),
-  });
+  }, validateUniqueAnswer);
 
   private optionsForm: FormArray;
 
@@ -66,7 +79,6 @@ export class QuestionDominoFormComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public questionFormService: QuestionFormService,
     public languageService: LanguageService,
-    private assessmentService: AssessmentService,
     private translateService: TranslateService,
     private alertService: AlertService,
     private formBuilder: FormBuilder,
@@ -81,19 +93,13 @@ export class QuestionDominoFormComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     if (this.data?.assessmentId) { this.assessmentId = this.data.assessmentId; }
-    if (this.data?.topicId) { this.topicId = this.data.topicId; }
+    if (this.data?.questionSetId) { this.questionSetId = this.data.questionSetId; }
     if (this.data?.order) { this.order = this.data.order; }
     if (this.data?.question) { this.question = this.data.question; }
     if (this.data?.toClone) { this.toClone = this.data.toClone; }
     if (this.data?.selQuestionOrder) {
       this.selQuestionOrder = this.data.selQuestionOrder + 1;
       this.dominoForm.controls.order.setValidators([Validators.required, Validators.min(this.selQuestionOrder)]);
-    }
-    if (this.data?.subject) { this.subject = this.data.subject; }
-    if (this.data?.grade) { this.grade = this.data.grade; }
-    if (this.data?.subtopicId) {
-      this.subtopicId = this.data.subtopicId;
-      this.getLearningObjectives();
     }
     this.optionsForm = this.dominoForm.get('options') as FormArray;
     this.createDominoOptions();
@@ -132,7 +138,7 @@ export class QuestionDominoFormComponent implements OnInit {
     const data = {
       toClone: this.toClone,
       formGroup: this.dominoForm.value,
-      topicId: this.topicId.toString(),
+      questionSetId: this.questionSetId.toString(),
       assessmentId: this.assessmentId.toString(),
       question: this.question
     };
@@ -149,29 +155,6 @@ export class QuestionDominoFormComponent implements OnInit {
         this.translateService.instant('assessmentBuilder.questions.select.optionsValidAnswerErros')
       );
     }
-  }
-
-  private getLearningObjectives(): void {
-    const filteringParams = {
-      grade: this.grade,
-      subject: this.subject,
-      subtopic: this.subtopicId,
-    };
-    this.assessmentService.getLearningObjectives(filteringParams).subscribe((objectives: LearningObjective[]) => {
-      this.learningObjectives = objectives;
-
-      if (this.learningObjectives.length) {
-        this.dominoForm.controls.learning_objective.setValidators([Validators.required]);
-      } else {
-        this.dominoForm.controls.learning_objective.clearValidators();
-      }
-      this.dominoForm.controls.learning_objective.updateValueAndValidity();
-
-      const currentObjective = this.dominoForm.controls.learning_objective.value;
-      if (currentObjective && !this.learningObjectives.find(el => el.code === currentObjective)) {
-        this.dominoForm.controls.learning_objective.setValue(null);
-      }
-    });
   }
 
   private createDominoQuestion(data?: any): void {
@@ -226,10 +209,8 @@ export class QuestionDominoFormComponent implements OnInit {
     this.dominoForm.setValue({
       question_type: 'DOMINO',
       title: q.title,
-      learning_objective: question.learning_objective?.code ?? null,
       expected_value: q.expected_value,
       order: this.toClone ? this.order : q.order,
-      on_popup: q.on_popup,
       options,
     });
 

@@ -1,18 +1,26 @@
 import { Injectable } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { environment } from 'src/environments/environment';
 import { AlertService } from './alert.service';
 import { AssessmentService } from './assessment.service';
+import { UtilitiesService } from './utilities.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuestionFormService {
 
+  public operatorTypes = [
+    { id: 'ADDITION', path: 'addition' },
+    { id: 'SUBTRACTION', path: 'substraction' },
+    { id: 'DIVISION', path: 'division' },
+    { id: 'MULTIPLICATION', path: 'multiplication' }
+  ];
+
   private fileAttachment: File;
   private alertMessage = '';
 
-  // Making sure that we dont store an new attachment on editQuestion, if attachment didnt change
+  // Making sure that we dont store an new attachment on editQuestion, if attachment didn't change
   private changedAudio = false;
   private changedImage = false;
 
@@ -23,7 +31,8 @@ export class QuestionFormService {
   constructor(
     private assessmentService: AssessmentService,
     private alertService: AlertService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private utilitiesService: UtilitiesService
   ) { }
 
   get imageAttachment(): File {
@@ -32,7 +41,7 @@ export class QuestionFormService {
 
   set imageAttachment(event: File) {
     this.imageAttachmentFile = event;
-    this.changedImage = true;
+    this.changedImage = event ? true : false;
   }
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
@@ -42,15 +51,44 @@ export class QuestionFormService {
 
   set audioAttachment(event: File) {
     this.audioAttachmentFile = event;
-    this.changedAudio = true;
+    this.changedAudio = event ? true : false;
   }
+
+  public validateCalcul = (form: FormGroup): any => {
+    const firstValue = form.get('first_value');
+    const secondValue = form.get('second_value');
+    const operator = form.get('operator');
+    if (!firstValue.value || !secondValue.value) {
+      return;
+    }
+    if (operator.value) {
+      let answer = 0;
+      if (operator.value === 'ADDITION') {
+        answer = firstValue.value + secondValue.value;
+      } else if (operator.value === 'SUBTRACTION') {
+        answer = firstValue.value - secondValue.value;
+      } else if (operator.value === 'DIVISION') {
+        answer = firstValue.value / secondValue.value;
+      } else {
+        answer = firstValue.value * secondValue.value;
+      }
+
+      firstValue.setErrors(null);
+      secondValue.setErrors(null);
+
+      if (!Number.isInteger(answer) || answer < 0) {
+        firstValue.setErrors({ invalidCalcul: true });
+        secondValue.setErrors({ invalidCalcul: true });
+      }
+    }
+  };
 
   // Convert attachments objects retrieved from the back-end to files
   public async objectToFile(attachment): Promise<File> {
     const fileType = attachment.attachment_type === 'IMAGE' ? 'image/png' : 'audio/wav';
     const fileName = attachment.file.split('/').at(-1);
 
-    await fetch((attachment.file?.slice(0, 5) === 'http:') ? attachment.file : environment.API_URL + attachment.file)
+    await fetch(this.utilitiesService.getSource(attachment.file))
       .then((res) => res.arrayBuffer())
       .then((buf) =>  new File([buf], fileName, {type: fileType}))
       .then((file) => {
@@ -107,7 +145,7 @@ export class QuestionFormService {
   // Creates question, saves image and audio attachments and return question created
   public createQuestion(data: any): Promise<any> {
     return new Promise(resolve => {
-      this.assessmentService.createQuestion(data.formGroup, data.topicId, data.assessmentId)
+      this.assessmentService.createQuestion(data.formGroup, data.questionSetId, data.assessmentId)
       .subscribe((res) => {
         if (this.imageAttachment) {
           this.saveAttachments(
@@ -129,21 +167,31 @@ export class QuestionFormService {
   // Edits question, saves image and audio attachments (if changed) and return question edited
   public editQuestion(data: any): Promise<any> {
     return new Promise (resolve => {
-      this.assessmentService.editQuestion(data.assessmentId, data.topicId, data.question.id, data.formGroup)
+      this.assessmentService.editQuestion(data.assessmentId, data.questionSetId, data.question.id, data.formGroup)
       .subscribe(res => {
-        if (this.imageAttachment && this.changedImage) {
-          this.updateAttachments(
-            data.assessmentId, 'IMAGE',
-            {name: 'question', value: res.id},
-            this.imageAttachment, false, null, data.question
-          );
+        if (this.changedImage) {
+           if (this.imageAttachment) {
+             this.updateAttachments(
+               data.assessmentId, 'IMAGE',
+               {name: 'question', value: res.id},
+               this.imageAttachment, false, null, data.question
+             );
+           } else {
+              const attachment = data.question.attachments.find(a => a.attachment_type === 'IMAGE' && a.background_image === false);
+              this.assessmentService.deleteAttachments(data.assessmentId, attachment.id).subscribe();
+           }
         }
-        if (this.audioAttachment && this.changedAudio) {
-          this.updateAttachments(
-            data.assessmentId, 'AUDIO',
-            {name: 'question', value: res.id},
-            this.audioAttachment, false, null, data.question
-          );
+        if (this.changedAudio) {
+          if (this.audioAttachment) {
+            this.updateAttachments(
+              data.assessmentId, 'AUDIO',
+              {name: 'question', value: res.id},
+              this.audioAttachment, false, null, data.question
+            );
+          } else {
+            const attachment = data.question.attachments.find(a => a.attachment_type === 'AUDIO' && a.background_image === false);
+            this.assessmentService.deleteAttachments(data.assessmentId, attachment.id).subscribe();
+          }
         }
         resolve(res);
       });

@@ -21,12 +21,23 @@
   .mat-header-row {
     border-radius: 4px 4px 0 0;
   }
+
+  .mat-sort-header {
+    ::ng-deep .mat-sort-header-container {
+      justify-content: center;
+    }
+  }
   tr>th:first-of-type,
   tr>td:first-of-type {
     padding-left: 16px;
   }
+  .mat-header-cell {
+    color: #fff;
+    width: inherit;
+  }
   .mat-cell,
   .mat-header-cell {
+    position: relative;
     padding: 0 8px;
   }
   .mat-row {
@@ -35,6 +46,9 @@
     &>.mat-cell:not(:first-child):hover {
       cursor: pointer;
     }
+  }
+  img {
+    height: 40px;
   }
   .circle-container {
     cursor: default !important;
@@ -51,7 +65,58 @@
       justify-content: center;
     }
   }
+  tr.detail-row {
+    height: 0;
+  }
+  td {
+    text-align: center;
+  }
+  td.row-expanded-detail {
+    overflow: hidden;
+    width: 100%;
+  }
+  .element-row td {
+    border-bottom-width: 0;
+  }
+  .flip-vertically {
+    transform: scaleY(-1);
+  }
 }
 .mat-paginator {
   border-radius: 0 0 4px 4px;
+}
+.customized-icon {
+  display: flex;
+  justify-content: center;
+  img {
+    height: 20px;
+    padding-left: 0.5rem;
+  }
+}
+
+.flex-centered {
+  display: flex;
+  justify-content: center;
+}
+
+.menu {
+  ::ng-deep button {
+    border: none;
+  }
+}
+
+.score-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 1em;
+  place-content: space-between;
+}
+
+.title {
+  width: 300px;
+  overflow: hidden;
+  display: inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

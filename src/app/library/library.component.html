@@ -1,22 +1,14 @@
-<div style="position:relative">
-    <h1>{{ "general.library" | translate }}</h1>
-
-    <div class="filters">
-        <ng-container *ngFor="let filter of tableFilters">
-            <mat-form-field appearance="fill" color="accent">
-              <mat-label>{{ filter.name }}</mat-label>
-              <mat-select (selectionChange)="applySelectFilters(filter.key, $event.value)" [multiple]="filter.type === 'multipleSelect'">
-                <mat-option *ngFor="let option of filter.options" [value]="option.key">{{option.value}}</mat-option>
-              </mat-select>
-            </mat-form-field>
-        </ng-container>
-    </div>
-
-    <ng-container *ngFor="let assessment of assessments">
-        <app-assessment-summary [assessment]="assessment" [canEdit]="false" [library]="true"></app-assessment-summary>
-    </ng-container>
-
-    <div *ngIf="assessments && assessments.length === 0">
-      {{ "general.noData" | translate }}
-    </div>
+<div class="main-board">
+  <div class="main-board__top-container__actions">
+    <app-custom-button icon="restart_alt_outline" category="tertiary" variant="primary" (click)="resetFilters()">
+      {{ "library.resetFilters" | translate }}
+    </app-custom-button>
+  </div>
+  <app-table [tableData]="assessmentsDataSource" [filtersData]="tableFilters" [displayedColumns]="displayedColumns"
+    [isSelectable]="false" (openDetailsEvent)="onOpenDetails($event)"
+    [pageConfig]="'library'"
+    [filtersReset$]="filtersReset$"
+    (filtersChangedEvent)="onTableFiltersChange($event)"
+    (buttonClickedEvent)="openAssignQuestionSetDialog($event)">
+  </app-table>
 </div>

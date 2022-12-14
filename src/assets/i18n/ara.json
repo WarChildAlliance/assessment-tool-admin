@@ -3,6 +3,8 @@
     "add": "أضف {{type}}",
     "adminDashboard": "لوحة تحكم المسؤول",
     "answer": "إجابه",
+    "attachment": "المرفق",
+    "average": "متوسط",
     "archived": "مؤرشف {{type}}",
     "assessmentBuilder": "منشئ التقييم",
     "assessments": "التقييمات",
@@ -14,8 +16,10 @@
     "choose": "اختر {{type}}",
     "clone": "استنساخ",
     "confirm": "يتأكد",
+    "continue": "يكمل",
     "country": "الدولة",
     "create": "خلق",
+    "created": "مخلوق",
     "createNew": "إنشاء {{type}} جديد",
     "createSuccess": "تم إنشاء {{type}} بنجاح",
     "dashboard": "لوحة القيادة",
@@ -29,8 +33,11 @@
     "group": "مجموعة",
     "groups": "مجموعات",
     "groupsOverview": "نظرة عامة على المجموعات",
+    "honey": "عسل",
+    "id": "المعرف",
     "language": "اللغة",
     "lastLogin": "آخر تسجيل دخول",
+    "left": "اليسار",
     "logout": "تسجيل خروج",
     "logoutPrompt": "هل تريد حقًا تسجيل الخروج؟",
     "name": "اسم",
@@ -45,9 +52,11 @@
     "questionsNumber": "عدد الأسئلة",
     "questionType": "نوع السؤال",
     "type": "يكتب",
+    "right": "الصحيح",
     "save": "يحفظ",
     "selected": "تم الاختيار",
     "selQuestion": "سؤال التعلم الاجتماعي والعاطفي",
+    "setOfQuestions": "مجموعة من الأسئلة",
     "simpleDeletePrompt": "هل تريد حقًا حذف {{type}} <b> {{name}} </b>؟",
     "student": "طالب علم",
     "studentName": "اسم الطالب",
@@ -59,28 +68,31 @@
     "to": "إلى",
     "topic": "عنوان",
     "topics": "المواضيع",
-    "totalCompletedTopics": "إجمالي المواضيع المكتملة",
+    "totalCompletedQuestionSets": "إجمالي المواضيع المكتملة",
     "workInProgress": "جاري العمل ... متاح قريبًا",
     "no": "لا",
     "yes": "نعم",
     "createNewOne": "قم بإنشاء واحدة جديدة",
     "selectItem": "حدد {{item}}",
-    "yourAssessments": "تقييمك (تقييماتك)"
+    "yourAssessments": "تقييمك (تقييماتك)",
+    "numbers": "أعداد",
+    "questionSet": "مجموعة من الأسئلة",
+    "questionSets": "مجموعات من الأسئلة"
   },
   "answers": {
     "assessmentAnswers": {
-      "completedTopicsNumber": "عدد المواضيع المكتملة",
-      "linkedTopicsNumber": "عدد الموضوعات المرتبطة"
+      "completedQuestionSetsNumber": "عدد المواضيع المكتملة",
+      "linkedQuestionSetsNumber": "عدد الموضوعات المرتبطة"
     },
     "questionsListAnswers": {
       "averageTimeAnswer": "متوسط الوقت للرد",
       "correctOnFirstTry": "صحيح من المحاولة الأولى",
       "correctOnLastTry": "صحيح في المحاولة الأخيرة",
       "questionTitle": "عنوان السؤال",
-      "topicName": "اسم الموضوع"
+      "questionSetName": "اسم الموضوع"
     },
-    "topicListAnswers": {
-      "accessibleTopics": "موضوعات يسهل الوصول إليها",
+    "questionSetListAnswers": {
+      "accessibleQuestionSets": "موضوعات يسهل الوصول إليها",
       "answeredCorrectlyFirstTry": "أجاب بشكل صحيح في المحاولة الأولى",
       "answeredCorrectlyLastTry": "تمت الإجابة بشكل صحيح في المحاولة الأخيرة",
       "assessmentName": "اسم التقييم",
@@ -89,14 +101,12 @@
     }
   },
   "assessmentBuilder": {
-    "allowSkip": "السماح بالتخطي",
     "selQuestions": "يحتوي على أسئلة التعلم الاجتماعي والعاطفي",
     "assessmentFormDialog": {
       "gradeTooltip": "المستوى المدرسي المقصود"
     },
     "assessmentSummary": {
       "archive": "أرشفة {{type}}",
-      "aTopic": "موضوع",
       "fileDownloadNotice": "يمكن استخدام الملف الذي توشك على تنزيله <br> لأغراض النسخ فقط ، وليس البيع.",
       "fileDownloadNoticeTitle": "يرجى الملاحظة",
       "reorderItems": "إعادة ترتيب {{item}}",
@@ -105,7 +115,8 @@
       "orderChanged": "تم تغيير الطلب بنجاح",
       "copyAssessment": "قم بإنشاء نسخة",
       "unarchive": "أخرج من الأرشيف",
-      "assignAssessment": "تعيين التقييم"
+      "assignAssessment": "تعيين التقييم",
+      "aQuestionSet": "مجموعة من الأسئلة"
     },
     "blocked": "تم بالفعل الرد على {{type}} ولا يمكن تعديله",
     "changeFile": "تغيير الملف",
@@ -115,11 +126,12 @@
     "evaluated": "مقيمة",
     "file": "ملف",
     "icon": "أيقونة",
-    "maxWrongAnswers": "ماكس إجابات خاطئة",
     "noFileChosen": "لم تقم باختيار ملف",
     "order": "ترتيب",
-    "praise": "مديح",
     "questions": {
+      "titlePlaceholder": "سؤال مع تعليمات للطالب",
+      "typeStep": "حدد نوع السؤال",
+      "mediaStep": "أضف وسائط إضافية",
       "areaSelector": {
         "area": "منطقة",
         "areaName": "اسم المنطقة",
@@ -138,7 +150,52 @@
         "item": "العنصر",
         "noCorrectArea": "العناصر القابلة للسحب بدون المنطقة الصحيحة:",
         "noCorrectDragOption": "لا يوجد خيار سحب صحيح لهذه المنطقة",
-        "questionAttachments": "مرفقات السؤال"
+        "questionAttachments": "مرفقات السؤال",
+        "formTitle": "السحب والإفلات",
+        "sideValue": "{{side}} عدد العناصر في",
+        "itemsSide": "{{side}} العناصر الموجودة في",
+        "itemType": "نوع العنصر",
+        "selectType": "حدد نوع العنصر",
+        "type": {
+          "normal": "طبيعي",
+          "customized": "حسب الطلب"
+        },
+        "shapes": {
+          "pencil": "قلم",
+          "fruit": "فاكهة",
+          "ballon": "بالون",
+          "button": "زر",
+          "socks": "جوارب",
+          "paint": "رسم",
+          "bug": "حشرة"
+        },
+        "bug": "حشرة",
+        "bugs": {
+          "caterpillar": "يرقة",
+          "ant": "النملة",
+          "butterfly": "فراشة",
+          "centipede": "حريش",
+          "fly": "يطير"
+        },
+        "fruit": "فاكهة",
+        "fruits": {
+          "apple": "تفاحة",
+          "banana": "موز",
+          "watermelon": "بطيخ",
+          "orange": "البرتقالي"
+        },
+        "color": "اللون",
+        "colors": {
+          "red": "أحمر",
+          "light_green": "اخضر فاتح",
+          "dark_green": "أخضر غامق",
+          "yellow": "الأصفر",
+          "orange": "البرتقالي",
+          "light_blue": "أزرق فاتح",
+          "dark_blue": "أزرق غامق",
+          "pink": "لون القرنفل",
+          "purple": "أرجواني"
+        }
       },
       "errorAudio": "لا يمكن تشغيل الصوت في متصفحك",
       "imageAttachment": "مرفق الصورة",
@@ -157,13 +214,12 @@
         "attachments": "المرفقات",
         "display": "عرض",
         "isCorrectAnswer": "هل الجواب الصحيح؟",
-        "isMultipleChoice": "هو الاختيار من متعدد؟",
-        "onPopup": "عرض السؤال على المنبثقة؟",
         "option": "اختيار",
         "options": "خيارات",
-        "optionsValidAnswerErrors": "يمكن أن يكون للأسئلة إجابة واحدة صحيحة."
+        "optionsValidAnswerErrors": "يمكن أن يكون للأسئلة إجابة واحدة صحيحة.",
+        "showOptionsValue": "إظهار قيمة الخيارات"
       },
-      "sel" : {
+      "sel": {
         "mathSelfEfficacy": "الكفاءة الذاتية للرياضيات",
         "readSelfEfficacy": "اقرأ الفعالية الذاتية",
         "growthMindset": "عقلية النمو",
@@ -172,40 +228,36 @@
         "aLotLikeMe": "كثيرا مثلي"
       },
       "domino": {
-        "leftSideValue": "قيمة الجانب الأيسر",
-        "rightSideValue": "قيمة الجانب الأيمن"
+        "sideValue": "قيمة جانبية {{side}}",
+        "multipleAnswersErrors": "يجب أن يكون هناك دومينو واحد مع الإجابة الصحيحة"
       },
       "calcul": {
         "firstNumber": "الرقم الأول",
         "secondNumber": "الرقم الثاني",
         "operator": "المشغل أو العامل",
-        "addition": "إضافة",
-        "substraction": "الطرح",
-        "division": "قسم",
-        "multiplication": "عمليه الضرب",
+        "addition": "( + ) إضافة",
+        "substraction": "( - ) الطرح",
+        "division": "( ÷ ) قسم",
+        "multiplication": "( × ) عمليه الضرب",
         "calculError": "يجب أن تكون نتيجة الحساب عددًا صحيحًا موجبًا."
       }
     },
     "saveSuccess": "تم حفظ {{type}} بنجاح",
-    "show": "إظهار {{type}}",
-    "topicDetails": {
+    "questionSetDetails": {
       "fiveSelQuestionsMessage": "يمكن فقط إنشاء ما يصل إلى خمسة أسئلة تعلم اجتماعية وعاطفية عن طريق التقييم.",
       "selQuestionsOrder": "يجب أن تكون أسئلة التعلم الاجتماعي والعاطفي في بداية الموضوع.",
       "aQuestion": "سؤال",
-      "feedback": "استجابة",
       "numberLineButton": "رقم الخط",
       "selectButton": "(تحديد متعدد"
     },
-    "topicFormDialog": {
+    "questionSetFormDialog": {
       "changeFile": "تغيير الملف",
-      "createTopic": "قم بإنشاء موضوع",
-      "praiseTooltip": "حالات الحمد",
-      "whenToShowFeedbacks": "متى تظهر التقيمات؟"
+      "createQuestionSet": "قم بإنشاء موضوع"
     },
     "value": "قيمة",
     "gradeTooltip": "المستوى المدرسي المقصود",
     "learningObjective": "هدف التعلم",
-    "subtopic": "موضوع فرعي"
+    "learningObjectiveCode": "تعلم كود الهدف"
   },
   "assessments": {
     "assessmentDetail": {
@@ -217,11 +269,15 @@
       "attachment": "المرفق",
       "correctAnswersFirstTry": "مجموع الإجابات الصحيحة في المحاولة الأولى للطلاب",
       "correctAnswersLastTry": "مجموع الإجابات الصحيحة في المحاولة الأخيرة للطلاب",
-      "questions": "أسئلة"
+      "questions": "أسئلة",
+      "questionName": "اسم السؤال"
     },
     "selected": "تم الاختيار",
     "studentsLinkedToAssessment": "عدد الطلاب المرتبطين حاليًا بهذا التقييم",
-    "topicsNumber": "عدد المواضيع"
+    "invites": "يدعو",
+    "plays": "يلعب",
+    "score": "نتيجة",
+    "title": "عنوان التقييم"
   },
   "auth": {
     "login": {
@@ -244,11 +300,11 @@
     "questionsOverview": {
       "groupResults": "نتائج المجموعة"
     },
-    "scoreByTopicChart": {
+    "scoreByQuestionSetChart": {
       "assessmentTitle": "تقييم",
       "comparisonAverage": "مقارنة بالمتوسط"
     },
-    "scoreByTopicTable": {
+    "scoreByQuestionSetTable": {
       "41correct": "< 41%: صحيح",
       "70correct": "> 70%: صحيح",
       "95correct": "> 95%: صحيح",
@@ -267,7 +323,12 @@
     "groupStudents": "طلاب المجموعة",
     "numberStudents": "عدد الطلاب",
     "requiredField": "يتطلب حقلا",
-    "supervisor": "مشرف"
+    "supervisor": "مشرف",
+    "speed": "سرعة",
+    "amountTasks" : "كمية المهام",
+    "seeStudents": "رؤية الطلاب",
+    "compare": "قارن",
+    "assignAssessment": "تعيين التقييم"
   },
   "shared": {
     "audioRecorder": {
@@ -281,19 +342,20 @@
     "selectAssessment": {
       "anAssessment": "تقييم",
       "hintNoStudent": "إذا كان الموضوع باللون الرمادي، فلا يوجد أي طالب قد بدأه",
-      "noTopics": "لا يوجد موضوع متاح"
+      "noQuestionSets": "لا يوجد موضوع متاح"
     },
     "table": {
       "copySuccess": "تم النسخ بنجاح!",
       "hintSearchColumn": "يمكنك البحث في أي عمود!",
-      "search": "بحث..."
+      "search": "بحث...",
+      "all": "الجميع"
     }
   },
   "students": {
     "active": "نشيط",
     "activeAssessmentsNumber": "عدد التقييمات النشطة",
-    "assignTopic": "قم بتعيين موضوع",
-    "completedTopicsNumber": "عدد المواضيع المكتملة",
+    "assignQuestionSet": "قم بتعيين موضوع",
+    "completedQuestionSetsNumber": "عدد المواضيع المكتملة",
     "createStudentDialog": {
       "duplicateName": "يوجد طالب يحمل نفس الاسم والبلد واللغة بالفعل",
       "firstName": "الاسم الأول",
@@ -309,18 +371,18 @@
     "studentCode": "كود طالب",
     "studentDetail": {
       "activeAccess": "وصول نشط",
-      "linkedTopics": "موضوع (مواضيع) مرتبطة",
+      "linkedQuestionSets": "موضوع (مواضيع) مرتبطة",
       "noActiveAccess": "لا يوجد وصول نشط",
       "numberAssessments": "عدد التقييمات",
       "studentAssessments": "تقييمات الطلاب",
       "studentNotLinkedAssessment": "هذا الطالب حالياً غير مرتبط بأي تقييم",
-      "topicAccesses": "الوصول إلى الموضوع"
+      "questionSetAccesses": "الوصول إلى الموضوع"
     },
     "studentDetails": "تفاصيل الطالب",
     "studentOneOrMany": "الطلاب)",
-    "topicAccessesBuilder": {
+    "questionSetAccessesBuilder": {
       "accessesSet": "تم تعيين الوصول إلى الموضوع الجديد بنجاح!",
-      "applySameDatesAllTopics": "تطبيق نفس التواريخ على جميع المواضيع؟",
+      "applySameDatesAllQuestionSets": "تطبيق نفس التواريخ على جميع المواضيع؟",
       "assessment": "تقييم",
       "endDate": "تاريخ الانتهاء",
       "errorOnSubmit": "حدث خطأ أثناء تقديم وصول الموضوع",
@@ -328,22 +390,47 @@
       "noGroups": "ليس لديك مجموعات مع الطلاب.",
       "notifier": "تحتاج إلى تحديد الطالب (الطلاب) أو المجموعة (المجموعات) وتعيين تاريخ البدء وتاريخ الانتهاء لكل موضوع محدد",
       "startDate": "تاريخ البدء",
-      "topicAvailability": "مدى توفر موضوع (مواضيع) التقييم",
+      "questionSetAvailability": "مدى توفر موضوع (مواضيع) التقييم",
       "replaceAsssessmentAccess": "هل تريد استبدال <b> {{previousAssessment}} </b> بـ <b> {{newAssessment}} </b>؟",
       "studentAssessmentPrompt": "الطالب {{studentName}} لديه تقييم معين بالفعل",
       "newAssessment": "تقييم جديد",
       "studentAssessmentIncompletePrompt": "لم ينته هذا الطالب من التقييم الحالي <b> {{currentAssessment}} </b> ، هل أنت متأكد من أنك تريد المتابعة؟"
     },
-    "topicAccessesEdit": {
+    "questionSetAccessesEdit": {
       "accessEdited": "تم حذف الوصول إلى الموضوع بنجاح!",
-      "allTopicsAccessesDeleted": "تم حذف كافة المواضيع التي يتم الوصول إليها من هذا التقييم",
-      "editTopicsAccess": "تحرير الوصول إلى موضوع (مواضيع) التقييم",
+      "allQuestionSetsAccessesDeleted": "تم حذف كافة المواضيع التي يتم الوصول إليها من هذا التقييم",
+      "editQuestionSetsAccess": "تحرير الوصول إلى موضوع (مواضيع) التقييم",
       "errorOnDeletion": "حدث خطأ أثناء إرسال حذف الوصول للموضوع",
       "errorOnEdit": "حدث خطأ أثناء تقديم موضوع الوصول إلى التحديث",
       "missingDates": "تحتاج إلى تحديد تاريخ بدء وتاريخ انتهاء لكل موضوع",
-      "removeTopicAccess": "حذف الوصول إلى الموضوع",
-      "removeTopicAccessPrompt": "'<b>{{topicTitle}}</b>' ?",
-      "topicsUpdated": "تم تحديث المواضيع التي تم الوصول إليها بنجاح!"
+      "removeQuestionSetAccess": "حذف الوصول إلى الموضوع",
+      "removeQuestionSetAccessPrompt": "'<b>{{questionSetTitle}}</b>' ?",
+      "questionSetsUpdated": "تم تحديث المواضيع التي تم الوصول إليها بنجاح!"
+    },
+    "studentLoginURL": "URL تسجيل الدخول"
+  },
+  "header": {
+    "library": {
+      "title": "مكتبة",
+      "headerPt1": "أهلاً! هذا ال",
+      "headerPt2": "مع كل",
+      "assessments": {
+        "section": "التقييمات",
+        "headerPt3": "يمكنك تصفح واختيار وتعيين واستنساخ (لتحرير) هذه لمجموعتك (مجموعاتك)."
+      },
+      "questions": {
+        "section": "مهام",
+        "headerPt3": "يمكنك التصفح والاختيار والاختيار."
+      }
     }
+  },
+  "library": {
+    "assign": "تعيين",
+    "invites": "يدعو",
+    "numberRanges": "أعداد",
+    "plays": "يلعب",
+    "questionType": "نوع السؤال",
+    "score": "نتيجة",
+    "resetFilters": "إعادة تعيين المرشحات"
   }
 }

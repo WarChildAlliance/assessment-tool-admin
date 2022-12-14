@@ -4,4 +4,11 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  align-self: center;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
 }

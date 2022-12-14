@@ -3,6 +3,8 @@
     "add": "Add {{type}}",
     "adminDashboard": "AdminDashboard",
     "answer": "Answer",
+    "attachment": "Attachment",
+    "average": "Average",
     "archived": "Archived {{type}}",
     "assessmentBuilder": "Assessment Builder",
     "assessments": "Assessments",
@@ -14,8 +16,10 @@
     "choose": "Choose {{type}}",
     "clone": "Clone",
     "confirm": "Confirm",
+    "continue": "Continue",
     "country": "Country",
     "create": "Create",
+    "created": "Created",
     "createNew": "Create a new {{type}}",
     "createSuccess": "{{type}} successfully created",
     "dashboard": "Dashboard",
@@ -29,12 +33,16 @@
     "group": "Group",
     "groups": "Groups",
     "groupsOverview": "Groups Overview",
+    "honey": "Honey",
+    "id": "ID",
     "language": "Language",
     "lastLogin": "Last login",
+    "left": "Left",
     "logout": "Logout",
     "logoutPrompt": "Do you really want to logout?",
     "name": "Name",
     "no": "No",
+    "numbers": "Numbers",
     "noData": "No data to display",
     "order": "Order",
     "preview": "Preview",
@@ -44,11 +52,15 @@
     "questionDetails": "Question details",
     "questions": "Questions",
     "questionsNumber": "Number of questions",
+    "questionSet": "Set of questions",
+    "questionSets": "Sets of questions",
     "questionType": "Question type",
     "type": "Type",
+    "right": "Right",
     "save": "Save",
     "selected": "selected",
     "selQuestion": "SEL Question",
+    "setOfQuestions": "Set Of Questions",
     "simpleDeletePrompt": "Do you really want to delete the {{type}} <b>{{name}}</b> ?",
     "student": "Student",
     "studentName": "Student name",
@@ -60,7 +72,7 @@
     "to": "to",
     "topics": "Topics",
     "topic": "Topic",
-    "totalCompletedTopics": "Total completed topics",
+    "totalCompletedQuestionSets": "Total completed sets of questions",
     "workInProgress": "Work in progress... Available soon",
     "yes": "Yes",
     "createNewOne": "Create a new one",
@@ -69,18 +81,18 @@
   },
   "answers": {
     "assessmentAnswers": {
-      "completedTopicsNumber": "Number of completed topics",
-      "linkedTopicsNumber": "Number of linked topics"
+      "completedQuestionSetsNumber": "Number of completed sets of questions",
+      "linkedQuestionSetsNumber": "Number of linked sets of questions"
     },
     "questionsListAnswers": {
       "averageTimeAnswer": "Average time to answer",
       "correctOnFirstTry": "Correct on first try",
       "correctOnLastTry": "Correct on last try",
       "questionTitle": "Question title",
-      "topicName": "Topic Name"
+      "questionSetName": "Set of questions' name"
     },
-    "topicListAnswers": {
-      "accessibleTopics": "Accessible topics",
+    "questionSetListAnswers": {
+      "accessibleQuestionSets": "Accessible sets of questions",
       "answeredCorrectlyFirstTry": "Answered correctly on first try",
       "answeredCorrectlyLastTry": "Answered correctly on last try",
       "assessmentName": "Assessment Name",
@@ -88,10 +100,33 @@
       "triesNumber": "Number of tries"
     }
   },
+  "library" : {
+    "assign": "Assign",
+    "invites": "Invites",
+    "plays": "Plays",
+    "score": "Score",
+    "questionType": "Question type",
+    "numberRanges": "Numbers",
+    "resetFilters": "Reset filters"
+  },
+  "header": {
+    "library": {
+      "title": "LIBRARY",
+      "headerPt1": "Hi! This is the",
+      "headerPt2": "with all the",
+      "assessments": {
+        "section": "assessments",
+        "headerPt3": "You can browse, choose, assign and clone (to edit) these for your group(s)."
+      },
+      "questions": {
+        "section": "tasks",
+        "headerPt3": "You can browse, select and choose."
+      }
+    }
+  },
   "assessmentBuilder": {
-    "allowSkip": "Allow skip",
     "learningObjective": "Learning objective",
-    "subtopic": "Subtopic",
+    "learningObjectiveCode": "Learning objective code",
     "gradeTooltip": "Intended school level",
     "selQuestions": "Contains SEL questions",
     "assessmentFormDialog": {
@@ -99,7 +134,7 @@
     },
     "assessmentSummary": {
       "archive": "Archive {{type}}",
-      "aTopic": "a topic",
+      "aQuestionSet": "a set of questions",
       "fileDownloadNotice": "The file you are about to download can be<br>used for reproduction purposes only, not selling.",
       "fileDownloadNoticeTitle": "Please note",
       "orderChanged": "Order changed successfully",
@@ -118,11 +153,12 @@
     "evaluated": "Evaluated",
     "file": "file",
     "icon": "Icon",
-    "maxWrongAnswers": "Max wrong answers",
     "noFileChosen": "No file chosen",
     "order": "Order",
-    "praise": "Praise",
     "questions": {
+      "titlePlaceholder": "Question with instructions for the student",
+      "typeStep": "Select type of question",
+      "mediaStep": "Add Extra Media",
       "areaSelector": {
         "area": "Area",
         "areaName": "Area name",
@@ -141,7 +177,52 @@
         "item": "item",
         "noCorrectArea": "Draggable items without correct area:",
         "noCorrectDragOption": "No correct drag option for this area",
-        "questionAttachments": "Question attachments"
+        "questionAttachments": "Add Question attachments",
+        "formTitle": "Drag & Drop",
+        "sideValue": "Number of items on the {{side}}",
+        "itemsSide": "Items on the {{side}}",
+        "itemType": "Item type",
+        "selectType": "Select item type",
+        "type": {
+          "normal": "Normal",
+          "customized": "Customized"
+        },
+        "shapes": {
+          "pencil": "Pencil",
+          "fruit": "Fruit",
+          "ballon": "Ballon",
+          "button": "Button",
+          "socks": "Socks",
+          "paint": "Paint",
+          "bug": "Bug"
+        },
+        "bug": "Bug",
+        "bugs": {
+          "caterpillar": "Caterpillar",
+          "ant": "Ant",
+          "butterfly": "Butterfly",
+          "centipede": "Centipede",
+          "fly": "Fly"
+        } ,
+        "fruit": "Fruit",
+        "fruits": {
+          "apple": "Apple",
+          "banana": "Banana",
+          "watermelon": "Watermelon",
+          "orange": "Orange"
+        },
+        "color": "Color",
+        "colors": {
+          "red": "Red",
+          "light_green": "Light Green",
+          "dark_green": "Dark Green",
+          "yellow": "Yellow",
+          "orange": "Orange",
+          "light_blue": "Light Blue",
+          "dark_blue": "Dark Blue",
+          "pink": "Pink",
+          "purple": "Purple"
+        }
       },
       "errorAudio": "Can not play audio in your browser",
       "imageAttachment": "Image attachment",
@@ -160,10 +241,10 @@
         "attachments": "Attachments",
         "display": "Display",
         "isCorrectAnswer": "Is correct answer?",
-        "onPopup": "Display question on popup?",
         "option": "option",
         "options": "Options",
-        "optionsValidAnswerErrors": "Questions can only have one correct answer."
+        "optionsValidAnswerErrors": "Questions can only have one correct answer.",
+        "showOptionsValue": "Show options value"
       },
       "sel" : {
         "mathSelfEfficacy": "Math Self-Efficacy",
@@ -174,35 +255,31 @@
         "aLotLikeMe": "A lot like me"
       },
       "domino": {
-        "leftSideValue": "Left Side Value",
-        "rightSideValue": "Right Side Value"
+        "sideValue": "{{side}} Side Value",
+        "multipleAnswersErrors": "There should only be one domino with the correct answer."
       },
       "calcul": {
         "firstNumber": "First number",
         "secondNumber": "Second number",
         "operator": "Operator",
-        "addition": "Addition",
-        "substraction": "Subtraction",
-        "division": "Division",
-        "multiplication": "Multiplication",
+        "addition": "Addition ( + )",
+        "substraction": "Subtraction ( - )",
+        "division": "Division ( ÷ )",
+        "multiplication": "Multiplication ( × )",
         "calculError": "The calculation result must be a positive integer."
       }
     },
     "saveSuccess": "{{type}} successfully saved",
-    "show": "Show {{type}}",
-    "topicDetails": {
+    "questionSetDetails": {
       "fiveSelQuestionsMessage": "Only up to 5 SEL Questions can be created by assessment.",
-      "selQuestionsOrder": "SEL Questions must be at the beginning of the topic.",
+      "selQuestionsOrder": "SEL Questions must be at the beginning of the set of questions.",
       "aQuestion": "a question",
-      "feedback": "feedback",
       "numberLineButton": "Number line",
       "selectButton": "(Multi-) Select"
     },
-    "topicFormDialog": {
+    "questionSetFormDialog": {
       "changeFile": "Change File",
-      "createTopic": "Create a topic",
-      "praiseTooltip": "Praise occurencies",
-      "whenToShowFeedbacks": "When to show feedbacks ?"
+      "createQuestionSet": "Create a set of questions"
     },
     "value": "Value"
   },
@@ -216,11 +293,15 @@
       "attachment": "Attachment",
       "correctAnswersFirstTry": "Total correct answers on students' first try",
       "correctAnswersLastTry": "Total correct answers on students' last try",
-      "questions": "Questions"
+      "questions": "Questions",
+      "questionName": "Question name"
     },
     "selected": "selected",
     "studentsLinkedToAssessment": "Number of students currently linked to this assessment",
-    "topicsNumber": "Number of topics"
+    "invites": "Invites",
+    "plays": "Plays",
+    "score": "Score",
+    "title": "Assessment Title"
   },
   "auth": {
     "login": {
@@ -243,18 +324,18 @@
     "questionsOverview": {
       "groupResults": "Group Results"
     },
-    "scoreByTopicChart": {
+    "scoreByQuestionSetChart": {
       "assessmentTitle": "Assessment title",
       "comparisonAverage": "Comparison to average"
     },
-    "scoreByTopicTable": {
+    "scoreByQuestionSetTable": {
       "41correct": "Below 41% of correct answers",
       "70correct": "Over 70% of correct answers",
       "95correct": "Over 95% of correct answers",
       "4171correct": "Between 41% and 70% of correct answers",
       "chartLegend": "Chart Legend",
-      "studentNotLinked": "The student is not linked to this topic",
-      "studentNotStarted": "The student has not started this topic yet"
+      "studentNotLinked": "The student is not linked to this set of questions",
+      "studentNotStarted": "The student has not started this set of questions yet"
     }
   },
   "groups": {
@@ -266,7 +347,12 @@
     "groupStudents": "Students of the group",
     "numberStudents": "Number of students",
     "requiredField": "Required field",
-    "supervisor": "Supervisor"
+    "supervisor": "Supervisor",
+    "speed": "Speed",
+    "amountTasks" : "Amount of tasks",
+    "seeStudents": "See students",
+    "compare": "Compare",
+    "assignAssessment": "Assign assessment"
   },
   "shared": {
     "audioRecorder": {
@@ -279,10 +365,11 @@
     },
     "selectAssessment": {
       "anAssessment": "an assessment",
-      "hintNoStudent": "If a topic is grayed out, it means that  no student has started it yet.",
-      "noTopics": "No topic available"
+      "hintNoStudent": "If a set of questions is grayed out, it means that  no student has started it yet.",
+      "noQuestionSets": "No set of questions available"
     },
     "table": {
+      "all": "All",
       "copySuccess": "Successfully copied!",
       "hintSearchColumn": "You can search on any column!",
       "search": "Search..."
@@ -291,8 +378,8 @@
   "students": {
     "active": "Active",
     "activeAssessmentsNumber": "Number of active assessments",
-    "assignTopic": "Assign a topic",
-    "completedTopicsNumber": "Number of completed topics",
+    "assignQuestionSet": "Assign a set of questions",
+    "completedQuestionSetsNumber": "Number of completed sets of questions",
     "createStudentDialog": {
       "duplicateName": "Student with the same name, country and language already exists",
       "firstName": "First name",
@@ -303,47 +390,47 @@
       "studentCreateSuccess": "Student {{name}} with ID {{username}} was successfully created",
       "studentEditSuccess": "{{name}}'s information have been edited successfully "
     },
-    "incompatibleLanguageError": "You can only give access to a topic to students with the same country and language.",
+    "incompatibleLanguageError": "You can only give access to a set of questions to students with the same country and language.",
     "statusError": "Students can only be deleted after one year of inactivity",
     "studentCode": "Student code",
     "studentLoginURL": "Login URL",
     "studentDetail": {
       "activeAccess": "Active access",
-      "linkedTopics": "linked topic(s)",
+      "linkedQuestionSets": "linked set(s) of questions",
       "noActiveAccess": "No active access",
       "numberAssessments": "Number of assessments",
       "studentAssessments": "Student's assessments",
       "studentNotLinkedAssessment": "This student is currently not linked to any assessment.",
-      "topicAccesses": "topic accesses"
+      "questionSetAccesses": "set of questions accesses"
     },
     "studentDetails": "Student details",
     "studentOneOrMany": "student(s)",
-    "topicAccessesBuilder": {
-      "accessesSet": "The new topic accesses have been successfully set !",
-      "applySameDatesAllTopics": "Apply the same dates to all the topics ?",
+    "questionSetAccessesBuilder": {
+      "accessesSet": "The new set of questions accesses have been successfully set !",
+      "applySameDatesAllQuestionSets": "Apply the same dates to all the sets of questions?",
       "assessment": "Assessment",
       "endDate": "End date",
-      "errorOnSubmit": "There was an error during the submission of the topic accesses",
+      "errorOnSubmit": "There was an error during the submission of the set of questions accesses",
       "groupsInfo": "Only groups with enrolled students are displayed",
       "noGroups": "You don't have groups with students.",
-      "notifier": "You need to select student(s) or group(s) and set a start date and an end date for each selected topic.",
+      "notifier": "You need to select student(s) or group(s) and set a start date and an end date for each selected set of questions.",
       "startDate": "Start date",
-      "topicAvailability": "Assessment topic(s) availability",
+      "questionSetAvailability": "Assessment set(s) of questions availability",
       "replaceAsssessmentAccess": "Do you want to replace <b>{{previousAssessment}}</b> with <b>{{newAssessment}}</b>?",
       "studentAssessmentPrompt": "Student {{studentName}} already has an assessment assigned",
       "newAssessment": "a new assessment",
       "studentAssessmentIncompletePrompt": "This student has not finished the current assessment <b>{{currentAssessment}}</b>, are you sure you want to continue?"
     },
-    "topicAccessesEdit": {
-      "accessEdited": "The topic access have been successfully deleted!",
-      "allTopicsAccessesDeleted": "All topics accesses of this assessment have been deleted",
-      "editTopicsAccess": "Edit topic accesses",
-      "errorOnDeletion": "There was an error during the submission of the topic access deletion",
-      "errorOnEdit": "There was an error during the submission of the topic accesses update",
-      "missingDates": "You need to set a start date and an end date for each topic",
-      "removeTopicAccess": "Remove topic access",
-      "removeTopicAccessPrompt": "Do you really want to remove access to the topic '<b>{{topicTitle}}</b>' ?",
-      "topicsUpdated": "The topic(s) accesses have been successfully updated!"
+    "questionSetAccessesEdit": {
+      "accessEdited": "The set of questions access have been successfully deleted!",
+      "allQuestionSetsAccessesDeleted": "All set of questions accesses of this assessment have been deleted",
+      "editQuestionSetsAccess": "Edit set of questions accesses",
+      "errorOnDeletion": "There was an error during the submission of the set of questions access deletion",
+      "errorOnEdit": "There was an error during the submission of the set of questions accesses update",
+      "missingDates": "You need to set a start date and an end date for each set of questions",
+      "removeQuestionSetAccess": "Remove set of questions access",
+      "removeQuestionSetAccessPrompt": "Do you really want to remove access to the set of questions '<b>{{questionSetTitle}}</b>' ?",
+      "questionSetsUpdated": "The set(s) of questions accesses have been successfully updated!"
     }
   }
 }

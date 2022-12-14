@@ -3,51 +3,16 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { QuestionFormService } from 'src/app/core/services/question-form.service';
-import { LearningObjective } from 'src/app/core/models/question.model';
-import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { LanguageService } from 'src/app/core/services/language.service';
 
 interface DialogData {
-  topicId?: string;
+  questionSetId?: string;
   order?: any;
   question?: any;
   toClone?: boolean;
   assessmentId?: string;
   selQuestionOrder?: any;
-  subject?: 'MATH' | 'LITERACY';
-  grade?: '1' | '2' | '3';
-  subtopicId?: number;
 }
-
-const validateCalcul = (form: FormGroup): any => {
-  const firstValue = form.get('first_value');
-  const secondValue = form.get('second_value');
-  const operator = form.get('operator');
-
-  if (!firstValue.value || !secondValue.value) {
-    return;
-  }
-  if (operator.value) {
-    let answer = 0;
-    if (operator.value === 'ADDITION') {
-      answer = firstValue.value + secondValue.value;
-    } else if (operator.value === 'SUBTRACTION') {
-      answer = firstValue.value - secondValue.value;
-    } else if (operator.value === 'DIVISION') {
-      answer = firstValue.value / secondValue.value;
-    } else {
-      answer = firstValue.value * secondValue.value;
-    }
-
-    if (!Number.isInteger(answer) || answer < 0) {
-      firstValue.setErrors({ invalidCalcul: true });
-      secondValue.setErrors({ invalidCalcul: true });
-    } else {
-      firstValue.setErrors(null);
-      secondValue.setErrors(null);
-    }
-  }
-};
 
 @Component({
   selector: 'app-question-calcul-form',
@@ -58,28 +23,17 @@ export class QuestionCalculFormComponent implements OnInit {
   public questionsList: any;
   public selectQuestion: boolean;
   public selQuestionOrder: any;
-  public learningObjectives: LearningObjective[];
 
   public assessmentId: string;
-  public topicId: string;
+  public questionSetId: string;
   public order: any;
   public question: any;
   public toClone: boolean;
-  public grade: string;
-  public subject: string;
-  public subtopicId: number;
 
   public imageAttachment = this.questionFormService.imageAttachment;
   public audioAttachment = this.questionFormService.audioAttachment;
 
   public attachmentsResetSubject$ = new Subject<void>();
-
-  public operatorTypes = [
-    { id: 'ADDITION', path: 'addition' },
-    { id: 'SUBTRACTION', path: 'substraction' },
-    { id: 'DIVISION', path: 'division' },
-    { id: 'MULTIPLICATION', path: 'multiplication' }
-  ];
 
   public selectQuestionForm: FormGroup = new FormGroup({
     question: new FormControl(null)
@@ -88,38 +42,29 @@ export class QuestionCalculFormComponent implements OnInit {
   public calculForm: FormGroup = new FormGroup({
     question_type: new FormControl('CALCUL'),
     title: new FormControl('', [Validators.required]),
-    learning_objective: new FormControl(null),
     order: new FormControl('', [Validators.required]),
     first_value: new FormControl('', [Validators.required, Validators.min(0)]),
     second_value: new FormControl('', [Validators.required, Validators.min(0)]),
-    operator: new FormControl('', [Validators.required]),
-    on_popup: new FormControl(false)
-  }, validateCalcul);
+    operator: new FormControl('', [Validators.required])
+  }, this.questionFormService.validateCalcul);
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public questionFormService: QuestionFormService,
     public languageService: LanguageService,
-    private assessmentService: AssessmentService
   ) {
     this.attachmentsResetSubject$.subscribe(() => this.questionFormService.resetAttachments());
   }
 
   async ngOnInit(): Promise<void> {
     if (this.data?.assessmentId) { this.assessmentId = this.data.assessmentId; }
-    if (this.data?.topicId) { this.topicId = this.data.topicId; }
+    if (this.data?.questionSetId) { this.questionSetId = this.data.questionSetId; }
     if (this.data?.order) { this.order = this.data.order; }
     if (this.data?.question) { this.question = this.data.question; }
     if (this.data?.toClone) { this.toClone = this.data.toClone; }
     if (this.data?.selQuestionOrder) {
       this.selQuestionOrder = this.data.selQuestionOrder + 1;
       this.calculForm.controls.order.setValidators([Validators.required, Validators.min(this.selQuestionOrder)]);
-    }
-    if (this.data?.subject) { this.subject = this.data.subject; }
-    if (this.data?.grade) { this.grade = this.data.grade; }
-    if (this.data?.subtopicId) {
-      this.subtopicId = this.data.subtopicId;
-      this.getLearningObjectives();
     }
     if (this.question) {
       this.setForm(this.question);
@@ -143,7 +88,7 @@ export class QuestionCalculFormComponent implements OnInit {
     const data = {
       toClone: this.toClone,
       formGroup: this.calculForm.value,
-      topicId: this.topicId.toString(),
+      questionSetId: this.questionSetId.toString(),
       assessmentId: this.assessmentId.toString(),
       question: this.question
     };
@@ -180,14 +125,12 @@ export class QuestionCalculFormComponent implements OnInit {
     this.selectQuestion = false;
     this.question = question;
     this.calculForm.setValue({
-      learning_objective: question.learning_objective?.code ?? null,
       question_type: 'CALCUL',
       title: question.title,
       order: this.toClone ? this.order : question.order,
       first_value: question.first_value,
       second_value: question.second_value,
       operator: question.operator,
-      on_popup: question.on_popup,
     });
 
     await this.questionFormService.setExistingAttachments(this.question, this.toClone).then(res => {
@@ -198,28 +141,5 @@ export class QuestionCalculFormComponent implements OnInit {
     if (this.toClone) {
       this.calculForm.markAsDirty();
     }
-  }
-
-  private getLearningObjectives(): void {
-    const filteringParams = {
-      grade: this.grade,
-      subject: this.subject,
-      subtopic: this.subtopicId,
-    };
-    this.assessmentService.getLearningObjectives(filteringParams).subscribe((objectives: LearningObjective[]) => {
-      this.learningObjectives = objectives;
-
-      if (this.learningObjectives.length) {
-        this.calculForm.controls.learning_objective.setValidators([Validators.required]);
-      } else {
-        this.calculForm.controls.learning_objective.clearValidators();
-      }
-      this.calculForm.controls.learning_objective.updateValueAndValidity();
-
-      const currentObjective = this.calculForm.controls.learning_objective.value;
-      if (currentObjective && !this.learningObjectives.find(el => el.code === currentObjective)) {
-        this.calculForm.controls.learning_objective.setValue(null);
-      }
-    });
   }
 }

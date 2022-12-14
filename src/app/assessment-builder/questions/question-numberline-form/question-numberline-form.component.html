@@ -21,20 +21,7 @@
                 <mat-label>{{ "general.title" | translate }} </mat-label>
                 <input type="text" matInput formControlName="title">
             </mat-form-field>
-            <mat-form-field *ngIf="learningObjectives?.length" appearance="outline" color="accent">
-                <mat-label>{{ "assessmentBuilder.learningObjective" | translate }}</mat-label>
-                <mat-select #learningObjectiveSelect required formControlName="learning_objective">
-                    <mat-option *ngFor="let learningObjective of learningObjectives" [value]="learningObjective.code"
-                    [matTooltip]="languageService.getLanguageCode() === 'eng' ? learningObjective.name_eng : learningObjective.name_ara"
-                    matTooltipShowDelay="1000"
-                    >
-                        <span style="font-weight: 500; margin-right: 10px;">{{ learningObjective.code }}</span>
-                        <ng-container *ngIf="learningObjectiveSelect.panelOpen">
-                            {{ languageService.getLanguageCode() === 'eng' ? learningObjective.name_eng : learningObjective.name_ara }}
-                        </ng-container>
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
+
             <mat-form-field appearance="outline" class="form-group" color="accent">
                 <mat-label>{{ "general.order" | translate }}</mat-label>
                 <input type="number" matInput formControlName="order">
@@ -77,16 +64,12 @@
             <mat-checkbox formControlName="shuffle">
                 <mat-label for="shuffle">{{ "assessmentBuilder.questions.numberline.shuffle" | translate }}</mat-label>
             </mat-checkbox>
-
-            <mat-checkbox formControlName="on_popup">
-                <mat-label for="on_popup">{{ "assessmentBuilder.questions.select.onPopup" | translate }}</mat-label>
-            </mat-checkbox>
         </div>
         <div class="attachments-container">
             <div style="margin-right: 20px;">
                 <app-image-selector
                     [reset$]="attachmentsResetSubject$.asObservable()"
-                    (newImageEvent)="questionFormService.imageAttachment = $event"
+                    (newImageEvent)="questionFormService.imageAttachment = $event; numberLineForm.markAsDirty()"
                     [imageAttachment]="imageAttachment"
                 ></app-image-selector>
             </div>
@@ -94,7 +77,7 @@
                 <app-audio-selector
                     [isRecorderEnabled]="true"
                     [reset$]="attachmentsResetSubject$.asObservable()"
-                    (newAudioEvent)="questionFormService.audioAttachment = $event"
+                    (newAudioEvent)="questionFormService.audioAttachment = $event; numberLineForm.markAsDirty()"
                     [audioAttachment]="audioAttachment"
                 ></app-audio-selector>
             </div>
@@ -103,7 +86,7 @@
 </form>
 
 <div class="dialog-buttons">
-    <span class="notifier" *ngIf="numberLineForm.controls.order.errors">{{ "assessmentBuilder.topicDetails.selQuestionsOrder" | translate }}</span>
+    <span class="notifier" *ngIf="numberLineForm.controls.order.errors">{{ "assessmentBuilder.questionSetDetails.selQuestionsOrder" | translate }}</span>
     <button mat-flat-button mat-dialog-close class="dialog-buttons__cancel" color="secondary">
         {{ "general.cancel" | translate }}
     </button>

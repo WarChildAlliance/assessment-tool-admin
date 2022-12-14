@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AssessmentTableData } from '../models/assessment-table-data.model';
 import { QuestionTableData } from '../models/question-table-data.model';
-import { TopicTableData } from '../models/topic-table-data.model';
+import { QuestionSetTableData } from '../models/question-set-table-data.model';
 
 @Injectable({
   providedIn: 'root'
@@ -21,17 +21,20 @@ export class AnswerService {
     return this.http.get<any>(`${environment.API_URL}/visualization/student_answers/${studentId}/assessments/${assessmentId}`);
   }
 
-  public getTopicsAnswers(studentId: string, assessmentId: string): Observable<TopicTableData[]> {
-    return this.http.get<any[]>(`${environment.API_URL}/visualization/student_answers/${studentId}/assessments/${assessmentId}/topics`);
+  public getQuestionSetsAnswers(studentId: string, assessmentId: string): Observable<QuestionSetTableData[]> {
+    return this.http.get<any[]>(
+      `${environment.API_URL}/visualization/student_answers/${studentId}/assessments/${assessmentId}question-sets`);
   }
 
-  public getTopicsAnswersDetails(studentId: string, assessmentId: string, topicId: string): Observable<TopicTableData> {
+  public getQuestionSetsAnswersDetails(studentId: string, assessmentId: string, questionSetId: string): Observable<QuestionSetTableData> {
     return this.http.get<any>
-    (`${environment.API_URL}/visualization/student_answers/${studentId}/assessments/${assessmentId}/topics/${topicId}`);
+    (`${environment.API_URL}/visualization/student_answers/${studentId}/assessments/${assessmentId}question-sets/${questionSetId}`);
   }
 
-  public getQuestionsAnwsers(studentId: string, assessmentId: string, topicId: string): Observable<QuestionTableData[]> {
-    return this.http.get<any[]>
-    (`${environment.API_URL}/visualization/student_answers/${studentId}/assessments/${assessmentId}/topics/${topicId}/questions`);
+  public getQuestionsAnwsers(studentId: string, assessmentId: string, questionSetId: string): Observable<QuestionTableData[]> {
+    return this.http.get<any[]>(
+      `${environment.API_URL}/visualization/student_answers/${studentId}/\
+        assessments/${assessmentId}question-sets/${questionSetId}/questions`
+    );
   }
 }

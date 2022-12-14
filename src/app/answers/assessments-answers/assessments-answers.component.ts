@@ -19,8 +19,8 @@ export class AssessmentsAnswersComponent implements OnInit {
   public displayedColumns: TableColumn[] = [
     { key: 'title', name: 'general.title' },
     { key: 'subject', name: 'general.subject' },
-    { key: 'accessible_topics_count', name: 'answers.assessmentAnswers.linkedTopicsNumber' },
-    { key: 'completed_topics_count', name: 'answers.assessmentAnswers.completedTopicsNumber' },
+    { key: 'accessible_question_sets_count', name: 'answers.assessmentAnswers.linkedQuestionSetsNumber' },
+    { key: 'completed_question_sets_count', name: 'answers.assessmentAnswers.completedQuestionSetsNumber' },
     {
       key: 'last_session', name: 'general.lastLogin',
       type: 'date', sorting: 'desc'
@@ -56,7 +56,7 @@ export class AssessmentsAnswersComponent implements OnInit {
 
   public onOpenDetails(assessmentId: string): void {
     this.router.navigate(
-      [`students/${this.currentStudentId}/assessments/${assessmentId}/topics`]
+      [`students/${this.currentStudentId}/assessments/${assessmentId}question-sets`]
     );
   }
 }

@@ -9,14 +9,14 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { Topic } from 'src/app/core/models/topic.models';
+import { QuestionSet } from 'src/app/core/models/question-set.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AssessmentService } from 'src/app/core/services/assessment.service';
 import { ConfirmModalComponent } from 'src/app/shared/confirm-modal/confirm-modal.component';
-import { TopicAccessesBuilderComponent } from 'src/app/students/topic-accesses-builder/topic-accesses-builder.component';
+import { QuestionSetAccessesBuilderComponent } from 'src/app/shared/question-set-accesses-builder/question-set-accesses-builder.component';
 import { environment } from 'src/environments/environment';
 import { AssessmentFormDialogComponent } from '../assessment-form-dialog/assessment-form-dialog.component';
-import { TopicFormDialogComponent } from '../topic-form-dialog/topic-form-dialog.component';
+import { QuestionSetFormDialogComponent } from '../question-set-form-dialog/question-set-form-dialog.component';
 
 @Component({
   selector: 'app-assessment-summary',
@@ -39,7 +39,7 @@ export class AssessmentSummaryComponent implements OnInit {
   public rightScrollEnabled = true;
   public reorder = false;
   public changedOrder = false;
-  public topicToOrder: Topic[] = [];
+  public questionSetToOrder: QuestionSet[] = [];
 
   constructor(
     private dialog: MatDialog,
@@ -51,21 +51,22 @@ export class AssessmentSummaryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.orderTopics();
   }
 
-  public openTopicFormDialog(assessment: any): void {
+  public openQuestionSetFormDialog(assessment: any): void {
     this.assessmentId = assessment.id;
 
-    const topicFormDialog = this.dialog.open(TopicFormDialogComponent, {
+    const questionSetFormDialog = this.dialog.open(QuestionSetFormDialogComponent, {
       data: {
         assessmentId: this.assessmentId,
-        order: this.assessment.topics.length + 1,
-        subject: this.assessment.subject.toUpperCase()
+        order: this.assessment.question_sets.length + 1,
+        subject: this.assessment.subject.toUpperCase(),
+        grade: this.assessment.grade,
+        topicId: this.assessment.topic?.id ?? null,
       }
     });
 
-    topicFormDialog.afterClosed().subscribe((value) => {
+    questionSetFormDialog.afterClosed().subscribe((value) => {
       if (value) {
         this.getAssessmentDetails(this.assessmentId);
       }
@@ -99,17 +100,17 @@ export class AssessmentSummaryComponent implements OnInit {
     });
   }
 
-  public deleteTopic(event: MouseEvent, assessmentId: string, topicId: string, topicTitle: string): void {
+  public deleteQuestionSet(event: MouseEvent, assessmentId: string, questionSetId: string, questionSetTitle: string): void {
     event.stopPropagation();
 
     const confirmDialog = this.dialog.open(ConfirmModalComponent, {
       data: {
         title: this.translateService.instant('general.delete', {
-          type: this.translateService.instant('general.topic').toLocaleLowerCase()
+          type: this.translateService.instant('general.questionSet').toLocaleLowerCase()
         }),
         content: this.translateService.instant('general.simpleDeletePrompt', {
-          type: this.translateService.instant('general.topic').toLocaleLowerCase(),
-          name: topicTitle
+          type: this.translateService.instant('general.questionSet').toLocaleLowerCase(),
+          name: questionSetTitle
         }),
         contentType: 'innerHTML',
         confirmColor: 'warn'
@@ -118,27 +119,13 @@ export class AssessmentSummaryComponent implements OnInit {
 
     confirmDialog.afterClosed().subscribe((res) => {
       if (res) {
-        this.assessmentService.deleteTopic(assessmentId, topicId).subscribe(() => {
+        this.assessmentService.deleteQuestionSet(assessmentId, questionSetId).subscribe(() => {
           this.alertService.success(this.translateService.instant('general.deleteSuccess', {
-            type:  this.translateService.instant('general.topic')
+            type:  this.translateService.instant('general.questionSet')
           }));
           this.getAssessmentDetails(assessmentId);
         });
       }
-    });
-  }
-
-  public archiveTopic(event: MouseEvent, assessmentId, topicId, archived): void {
-    event.stopPropagation();
-
-    const formData: FormData = new FormData();
-    formData.append('archived', archived);
-
-    this.assessmentService.editTopic(assessmentId.toString(), topicId, formData).subscribe(() => {
-      this.alertService.success(this.translateService.instant('general.editSuccess', {
-        type: this.translateService.instant('general.topic')
-      }));
-      this.getAssessmentDetails(assessmentId);
     });
   }
 
@@ -176,8 +163,8 @@ export class AssessmentSummaryComponent implements OnInit {
     });
   }
 
-  public goToTopicDetails(assessmentId, topicId): void {
-    this.router.navigate([`${assessmentId}/topic/${topicId}`], { relativeTo: this.route });
+  public goToQuestionSetDetails(assessmentId, questionSetId): void {
+    this.router.navigate([`${assessmentId}/question_sets/${questionSetId}`], { relativeTo: this.route });
   }
 
   public getSource(path: string): string {
@@ -209,24 +196,23 @@ export class AssessmentSummaryComponent implements OnInit {
     });
   }
 
-  // Start and save reorder topics by drag&drop
-  public reorderTopics(save: boolean, assessmentId: string): void {
+  // Start and save reorder question sets by drag&drop
+  public reorderQuestionSets(save: boolean, assessmentId: string): void {
     if (!save) {
       this.reorder = true;
       // Deep copy to avoid modifying both arrays
-      this.topicToOrder = [...this.assessment.topics];
+      this.questionSetToOrder = [...this.assessment.question_sets];
     } else {
       if (this.changedOrder) {
         const data = {
-          topics: [],
+          question_sets: [],
           assessment_id: assessmentId
         };
-
-        this.assessment.topics.forEach(topic => {
-          data.topics.push(topic.id);
+        this.assessment.question_sets.forEach(questionSet => {
+          data.question_sets.push(questionSet.id);
         });
 
-        this.assessmentService.reorderTopics(assessmentId, data).subscribe(() => {
+        this.assessmentService.reorderQuestionSets(assessmentId, data).subscribe(() => {
           this.alertService.success(this.translateService.instant('assessmentBuilder.assessmentSummary.orderChanged'));
         });
       }
@@ -235,45 +221,30 @@ export class AssessmentSummaryComponent implements OnInit {
     }
   }
 
-  // To reorder the topics in the topics list after drop
-  public dropTopic(event: CdkDragDrop<object[]>): void {
-    moveItemInArray(this.assessment.topics, event.previousIndex, event.currentIndex);
+  // To reorder the question sets in the question set list after drop
+  public dropQuestionSet(event: CdkDragDrop<object[]>): void {
+    moveItemInArray(this.assessment.question_sets, event.previousIndex, event.currentIndex);
     this.changedOrder = true;
   }
 
   // Go back to previous order
   public cancelReorder(): void {
-    this.assessment.topics = this.topicToOrder;
+    this.assessment.question_sets = this.questionSetToOrder;
     this.reorder = false;
   }
 
-  public openAssignTopicDialog(assessment): void {
-    this.dialog.open(TopicAccessesBuilderComponent, {
+  public openAssignQuestionSetDialog(assessment): void {
+    this.dialog.open(QuestionSetAccessesBuilderComponent, {
       data: {
         assessment
       }
     });
   }
 
-  private orderTopics(): void {
-    // To order and display unarchived topic cards first
-    this.assessment.topics.sort((a, b) => {
-      if (a.archived > b.archived) {
-        return 1;
-      }
-      if (a.archived < b.archived) {
-        return -1;
-      }
-
-      return 0;
-    });
-  }
-
   private getAssessmentDetails(assessmentId: string): void {
-    this.assessmentService.getAssessmentTopics(assessmentId).subscribe(() => {
+    this.assessmentService.getAssessmentQuestionSets(assessmentId).subscribe(() => {
       this.assessmentService.getAssessmentDetails(assessmentId).subscribe(assessmentDetails => {
         this.assessment = assessmentDetails;
-        this.orderTopics();
       });
     });
   }

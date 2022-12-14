@@ -27,25 +27,10 @@
                 <input type="number" matInput formControlName="order">
             </mat-form-field>
 
-            <mat-form-field *ngIf="learningObjectives?.length" appearance="outline" color="accent">
-                <mat-label>{{ "assessmentBuilder.learningObjective" | translate }}</mat-label>
-                <mat-select #learningObjectiveSelect required formControlName="learning_objective">
-                    <mat-option *ngFor="let learningObjective of learningObjectives" [value]="learningObjective.code"
-                    [matTooltip]="languageService.getLanguageCode() === 'eng' ? learningObjective.name_eng : learningObjective.name_ara"
-                    matTooltipShowDelay="1000"
-                    >
-                        <span style="font-weight: 500; margin-right: 10px;">{{ learningObjective.code }}</span>
-                        <ng-container *ngIf="learningObjectiveSelect.panelOpen">
-                            {{ languageService.getLanguageCode() === 'eng' ? learningObjective.name_eng : learningObjective.name_ara }}
-                        </ng-container>
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-
             <mat-form-field appearance="outline" color="accent">
                 <mat-label>{{ "assessmentBuilder.questions.calcul.operator" | translate }}</mat-label>
                 <mat-select formControlName="operator">
-                    <mat-option *ngFor="let type of operatorTypes" [value]="type.id">
+                    <mat-option *ngFor="let type of questionFormService.operatorTypes" [value]="type.id">
                         {{ "assessmentBuilder.questions.calcul." + type.path | translate }}
                     </mat-option>
                 </mat-select>
@@ -60,20 +45,18 @@
                 <mat-label>{{ "assessmentBuilder.questions.calcul.secondNumber" | translate }}</mat-label>
                 <input type="number" matInput formControlName="second_value" min="0">
             </mat-form-field>
-
-            <mat-checkbox formControlName="on_popup">
-                <mat-label for="on_popup">{{ "assessmentBuilder.questions.select.onPopup" | translate }}</mat-label>
-            </mat-checkbox>
         </div>
         <div class="attachments-container">
             <div style="margin-right: 20px;">
                 <app-image-selector [reset$]="attachmentsResetSubject$.asObservable()"
-                    (newImageEvent)="questionFormService.imageAttachment = $event" [imageAttachment]="imageAttachment">
+                    (newImageEvent)="questionFormService.imageAttachment = $event; calculForm.markAsDirty()"
+                    [imageAttachment]="imageAttachment">
                 </app-image-selector>
             </div>
             <div>
                 <app-audio-selector [isRecorderEnabled]="true" [reset$]="attachmentsResetSubject$.asObservable()"
-                    (newAudioEvent)="questionFormService.audioAttachment = $event" [audioAttachment]="audioAttachment">
+                    (newAudioEvent)="questionFormService.audioAttachment = $event; calculForm.markAsDirty()"
+                    [audioAttachment]="audioAttachment">
                 </app-audio-selector>
             </div>
         </div>
@@ -87,7 +70,7 @@
             {{ "assessmentBuilder.questions.calcul.calculError" | translate }}
         </span>
         <span class="notifier" *ngIf="calculForm.controls.order.errors">
-            {{"assessmentBuilder.topicDetails.selQuestionsOrder" | translate }}
+            {{"assessmentBuilder.questionSetDetails.selQuestionsOrder" | translate }}
         </span>
     </div>
     <button mat-flat-button mat-dialog-close class="dialog-buttons__cancel" color="secondary">

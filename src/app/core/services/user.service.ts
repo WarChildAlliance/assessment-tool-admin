@@ -3,13 +3,14 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AnswerDetails } from '../models/answer-details.model';
-import { BatchTopicAccesses } from '../models/batch-topic-accesses.model';
+import { BatchQuestionSetAccesses } from '../models/batch-question-set-accesses.model';
 import { Country } from '../models/country.model';
+import { GroupTableData } from '../models/group-table-data.model';
 import { Group } from '../models/group.model';
 import { Language } from '../models/language.model';
 import { StudentTableData } from '../models/student-table-data.model';
-import { TopicAccessStudents } from '../models/topic-access-students.model';
-import { TopicAnswer } from '../models/topic-answer.model';
+import { QuestionSetAccessStudents } from '../models/question-set-access-students.model';
+import { QuestionSetAnswer } from '../models/question-set-answer.model';
 import { User } from '../models/user.model';
 import { UtilitiesService } from './utilities.service';
 
@@ -66,13 +67,14 @@ export class UserService {
     return this.http.delete<any>(`${environment.API_URL}/users/bulk_delete_students/`, reqOptions);
   }
 
-  public assignTopicsAccesses(batchTopicAccesses: BatchTopicAccesses, assessmentId: string): Observable<BatchTopicAccesses> {
-    return this.http.post<BatchTopicAccesses>(
-      `${environment.API_URL}/assessments/${assessmentId}/accesses/bulk_create/`, batchTopicAccesses);
+  public assignQuestionSetsAccesses(questionSetsAccesses: BatchQuestionSetAccesses,
+    assessmentId: string): Observable<BatchQuestionSetAccesses> {
+    return this.http.post<BatchQuestionSetAccesses>(
+      `${environment.API_URL}/assessments/${assessmentId}/accesses/bulk_create/`, questionSetsAccesses);
   }
 
-  public removeTopicAccess(assessmentId: string, topicAccessId: string): Observable<any> {
-    return this.http.delete<any>(`${environment.API_URL}/assessments/${assessmentId}/accesses/${topicAccessId}/`);
+  public removeQuestionSetAccess(assessmentId: string, questionSetAccessId: string): Observable<any> {
+    return this.http.delete<any>(`${environment.API_URL}/assessments/${assessmentId}/accesses/${questionSetAccessId}/`);
   }
 
   public getLanguages(): Observable<Language[]> {
@@ -81,6 +83,10 @@ export class UserService {
 
   public getCountries(): Observable<Country[]> {
     return this.http.get<Country[]>(`${environment.API_URL}/users/countries`);
+  }
+
+  public getGroupsDetails(): Observable<GroupTableData[]> {
+    return this.http.get<GroupTableData[]>(`${environment.API_URL}/visualization/groups/`);
   }
 
   public getGroups(): Observable<Group[]> {
@@ -113,34 +119,35 @@ export class UserService {
     return this.http.delete<any>(`${environment.API_URL}/users/groups/bulk_delete/`, reqOptions);
   }
 
-  public getStudentTopicsChart(assessmentId: string):
-  Observable<{full_name: string; topics: any[]; student_access: boolean; group: any[]}[]> {
-    return this.http.get<{full_name: string; topics: any[]; student_access: boolean; group: Group[]}[]>(
-      `${environment.API_URL}/visualization/charts/score_by_topic/${assessmentId}/`
+  public getStudentQuestionSetsChart(assessmentId: string):
+  Observable<{full_name: string; question_sets: any[]; student_access: boolean; group: any[]}[]> {
+    return this.http.get<{full_name: string; question_sets: any[]; student_access: boolean; group: Group[]}[]>(
+      `${environment.API_URL}/visualization/charts/score_by_question_set/${assessmentId}/`
       );
   }
 
-  public getGroupStudentsTopicsChart(assessmentId: string, groupId: string): Observable<
-    { full_name: string; topics: any[]; student_access: boolean; group: any[] }[] >
+  public getGroupStudentsQuestionSetsChart(assessmentId: string, groupId: string): Observable<
+    { full_name: string; questionSets: any[]; student_access: boolean; group: any[] }[] >
   {
-    return this.http.get<{full_name: string; topics: any[]; student_access: boolean; group: any[]}[]>(
-      `${environment.API_URL}/visualization/charts/score_by_topic/${assessmentId}/group/${groupId}/`
+    return this.http.get<{full_name: string; questionSets: any[]; student_access: boolean; group: any[]}[]>(
+      `${environment.API_URL}/visualization/charts/score_by_question_set/${assessmentId}/group/${groupId}/`
     );
   }
 
-  public getStudentsListForATopic(topicId: string, filteringParams?: object): Observable<TopicAccessStudents[]> {
-    const initialUrl = `${environment.API_URL}/visualization/charts/topic/${topicId}/students/`;
+  public getStudentsListForAQuestionSet(questionSetId: string, filteringParams?: object): Observable<QuestionSetAccessStudents[]> {
+    const initialUrl = `${environment.API_URL}/visualization/charts/question-set/${questionSetId}/students/`;
     const finalUrl = filteringParams ? this.utilitiesService.urlBuilder(initialUrl, filteringParams) : initialUrl;
-    return this.http.get<TopicAccessStudents[]>(finalUrl);
+    return this.http.get<QuestionSetAccessStudents[]>(finalUrl);
   }
 
-  public getStudentTopicAnswers(topicId: string, assessmentTopicAnswer: string): Observable<TopicAnswer[]> {
-    return this.http.get<TopicAnswer[]>
-    (`${environment.API_URL}/visualization/charts/topic/${topicId}/student/${assessmentTopicAnswer}/answers/`);
+  public getStudentQuestionSetAnswers(questionSetId: string, assessmentQuestionSetAnswer: string): Observable<QuestionSetAnswer[]> {
+    return this.http.get<QuestionSetAnswer[]>
+    (`${environment.API_URL}/visualization/charts/question-set/${questionSetId}/student/${assessmentQuestionSetAnswer}/answers/`);
   }
 
-  public getAnswerDetails(topicId: string, assessmentTopicAnswer: string, answerId: string): Observable<AnswerDetails> {
-    return this.http.get<AnswerDetails>
-    (`${environment.API_URL}/visualization/charts/topic/${topicId}/student/${assessmentTopicAnswer}/answers/${answerId}`);
+  public getAnswerDetails(questionSetId: string, assessmentQuestionSetAnswer: string, answerId: string): Observable<AnswerDetails> {
+    return this.http.get<AnswerDetails>(
+      `${environment.API_URL}/visualization/charts/question-set/${questionSetId}/student/${assessmentQuestionSetAnswer}/answers/${answerId}`
+    );
   }
 }

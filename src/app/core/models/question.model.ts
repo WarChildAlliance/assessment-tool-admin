@@ -1,10 +1,12 @@
+import { LearningObjective } from './learning-objective.model';
 
 export interface Question {
   id: number;
   title: string;
   order: number;
   question_type: QuestionTypeEnum;
-  learning_objective: LearningObjective | number;
+  learning_objective: LearningObjective;
+  number_range?: NumberRange | number;
   hint: Hint;
   attachments: [];
 }
@@ -30,6 +32,16 @@ export interface QuestionCalcul extends Question {
   second_value: number;
   operator: string;
 }
+
+export interface QuestionCustomizedDragAndDrop extends Question {
+  first_value: number;
+  first_style: string;
+  second_value: number;
+  second_style: string;
+  operator: string;
+  shape: string;
+}
+
 export interface QuestionDomino extends Question {
   expected_value: number;
   options: DominoOption[];
@@ -37,6 +49,7 @@ export interface QuestionDomino extends Question {
 
 export interface QuestionSelect extends Question {
   options: SelectOption[];
+  show_options_value: boolean;
 }
 
 export interface QuestionSort extends Question {
@@ -81,11 +94,13 @@ export interface SortOption {
 }
 
 enum QuestionTypeEnum {
+  Sel = 'SEL',
   Input = 'INPUT',
   Select = 'SELECT',
   Sort = 'SORT',
   NumberLine = 'NUMBER_LINE',
   DragAndDrop = 'DRAG_AND_DROP',
+  CustomizedDragAndDrop = 'CUSTOMIZED_DRAG_AND_DROP',
   Domino = 'DOMINO',
   Calcul = 'CALCUL',
 }
@@ -96,15 +111,9 @@ export interface Hint {
   attachments: [];
 }
 
-export interface Subtopic {
+export interface NumberRange {
   id: number;
-  name: string;
-}
-
-export interface LearningObjective {
-  code: string;
-  grade: number;
-  subtopic: Subtopic | number;
-  name_eng: string;
-  name_ara: string;
+  min: number;
+  max: number;
+  handle: string;
 }

@@ -1,0 +1,76 @@
+.table-actions {
+    margin-top: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5em 0;
+    margin-bottom: 1em;
+
+    >.mat-form-field:not(:last-of-type) {
+        margin-right: 10px;
+        flex: 1;
+    }
+    &__searchbox {
+        width: 100%;
+    }
+    ::ng-deep mat-form-field {
+        .mat-form-field-wrapper {
+            margin: 0 !important;
+            padding: 0;
+
+            & > .mat-form-field-flex {
+                align-items: flex-end;
+                padding: 0.4em 0.5em !important;
+                border: 1px solid #EEEEEE;
+                min-width: 30vw;
+
+                & > .mat-form-field-infix {
+                    // weird but some padding gets added to the form-field when this border is removed
+                    border: 0px;
+                    padding: 0.2em 0px !important;
+
+                    span {
+                        display: flex;
+                        label {
+                            margin: auto 0;
+                        }
+                    }
+                }
+                .mat-select-arrow-wrapper {
+                    position: absolute;
+                    right: 0;
+                    top: 50%;
+                    transform: translateY(-50%);
+                }
+            }
+        }
+    }
+}
+
+.seach-and-button-container {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+
+    .content:not(:last-child) {
+        margin-right: 1em;
+    }
+}
+
+.search-bar-container {
+    flex-basis: 100%;
+}
+
+app-table-filter:not(:last-of-type) {
+    margin-right: 32px;
+}
+
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+
+    app-custom-button  {
+        align-self: center;
+        margin-left: 1em;
+    }
+}

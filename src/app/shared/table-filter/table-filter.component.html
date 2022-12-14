@@ -1,0 +1,20 @@
+<div class="table-filter">
+  <p>{{filter.name | translate }}</p>
+  <mat-form-field *ngIf="filterType !== 'chip'" appearance="fill" color="accent">
+    <mat-select #selectFilter
+      [placeholder]="'shared.table.all' | translate"
+      (selectionChange)="applySelectFilters(filter.key, $event.value)"
+      [multiple]="filter.type === 'multipleSelect'"
+    >
+      <mat-option *ngFor="let option of filter.options" [value]="option.value">{{option.key}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <app-chip-list
+    *ngIf="filterType === 'chip'"
+    [key]="filter.key"
+    [options]="filter.options"
+    [applySelectFilters]="applySelectFilters.bind(this)"
+    [filterReset$]="filterReset$"
+  ></app-chip-list>
+</div>

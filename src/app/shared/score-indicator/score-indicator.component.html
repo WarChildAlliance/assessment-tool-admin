@@ -1,0 +1,11 @@
+<div *ngIf="score; else noScoreTemplate" class="score-ring"
+  [style.background]="getIndicatorColor(score)"
+  [style.border-color]="borderColor"
+>
+  <span>{{ score }}</span>
+</div>
+<ng-template #noScoreTemplate>
+  <span class="score-ring" [style.border-color]="borderColor">
+    <p></p>
+  </span>
+</ng-template>

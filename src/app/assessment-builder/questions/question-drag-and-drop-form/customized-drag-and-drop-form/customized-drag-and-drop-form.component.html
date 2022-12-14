@@ -1,0 +1,88 @@
+<form [formGroup]="customizedDragAndDropForm">
+    <div class="form-container">
+        <h3>{{ "assessmentBuilder.questions.dragAndDrop.selectType" | translate }}</h3>
+        <div class="type">
+            <mat-form-field appearance="outline" color="accent">
+                <mat-label>{{ "assessmentBuilder.questions.dragAndDrop.itemType" | translate }}</mat-label>
+                <mat-select required formControlName="shape" (selectionChange)="onSetShape($event.value)">
+                    <mat-option *ngFor="let shape of shapes" [value]="shape.type.toUpperCase()">
+                        {{ "assessmentBuilder.questions.dragAndDrop.shapes." + shape.type | translate }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" color="accent">
+                <mat-label>{{ "assessmentBuilder.questions.calcul.operator" | translate }}</mat-label>
+                <mat-select required formControlName="operator">
+                    <mat-option *ngFor="let type of questionFormService.operatorTypes" [value]="type.id">
+                        {{ "assessmentBuilder.questions.calcul." + type.path | translate }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="items">
+            <div class="left">
+                <h3>{{ "assessmentBuilder.questions.dragAndDrop.itemsSide" | translate: { side: ("general.left" |
+                    translate).toLowerCase() } }}</h3>
+                <mat-form-field appearance="outline" class="form-group" color="accent">
+                    <mat-label>{{ "assessmentBuilder.questions.dragAndDrop.itemsSide" | translate: { side:
+                        ("general.left" | translate).toLowerCase() } }}</mat-label>
+                    <input required type="number" matInput formControlName="first_value" min="1">
+                </mat-form-field>
+                <mat-form-field appearance="outline" color="accent">
+                    <mat-label>{{ "assessmentBuilder.questions.dragAndDrop." + selectedStyle | translate }}</mat-label>
+                    <mat-select required formControlName="first_style">
+                        <mat-option *ngFor="let style of stylesList" [value]="style.toUpperCase()">
+                            {{ "assessmentBuilder.questions.dragAndDrop." + selectedStyle + 's.' + style | translate }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <app-shapes [shape]="customizedDragAndDropForm.controls.shape.value"
+                    [style]="customizedDragAndDropForm.controls.first_style.value"
+                    [quantity]="customizedDragAndDropForm.controls.first_value.value">
+                </app-shapes>
+            </div>
+            <div class="operator">
+                <p> {{operator}} </p>
+            </div>
+            <div class="right">
+                <h3>{{ "assessmentBuilder.questions.dragAndDrop.itemsSide" | translate: { side: ("general.right" |
+                    translate).toLowerCase() } }}</h3>
+                <mat-form-field appearance="outline" class="form-group" color="accent">
+                    <mat-label>{{ "assessmentBuilder.questions.dragAndDrop.itemsSide" | translate: { side:
+                        ("general.right" | translate).toLowerCase() } }}</mat-label>
+                    <input required type="number" matInput formControlName="second_value" min="1">
+                </mat-form-field>
+                <mat-form-field appearance="outline" color="accent">
+                    <mat-label>{{ "assessmentBuilder.questions.dragAndDrop." + selectedStyle | translate }}</mat-label>
+                    <mat-select required formControlName="second_style">
+                        <mat-option *ngFor="let style of stylesList" [value]="style.toUpperCase()">
+                            {{ "assessmentBuilder.questions.dragAndDrop." + selectedStyle + 's.' + style | translate }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <app-shapes [shape]="customizedDragAndDropForm.controls.shape.value"
+                    [style]="customizedDragAndDropForm.controls.second_style.value"
+                    [quantity]="customizedDragAndDropForm.controls.second_value.value">
+                </app-shapes>
+            </div>
+        </div>
+    </div>
+
+    <div class="dialog-buttons">
+        <span class="notifier"
+            *ngIf="customizedDragAndDropForm.get('first_value').hasError('invalidCalcul') || customizedDragAndDropForm.get('second_value').hasError('invalidCalcul')">
+            {{ "assessmentBuilder.questions.calcul.calculError" | translate }}
+        </span>
+
+        <button mat-flat-button mat-dialog-close class="dialog-buttons__cancel" color="secondary">
+            {{ "general.cancel" | translate }}
+        </button>
+        <button mat-flat-button matStepperNext color="accent" class="dialog-buttons__submit" (click)="onContinue()">
+            {{ "general.continue" | translate }}
+        </button>
+    </div>
+</form>
