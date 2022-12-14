@@ -208,8 +208,7 @@ export class AssessmentSummaryComponent implements OnInit {
           question_sets: [],
           assessment_id: assessmentId
         };
-
-        this.assessment.questionSets.forEach(questionSet => {
+        this.assessment.question_sets.forEach(questionSet => {
           data.question_sets.push(questionSet.id);
         });
 
