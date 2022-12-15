@@ -8,6 +8,7 @@
   [class.custom-button-neutral]="variant === 'neutral'"
   [color]="color"
   [class.mat-icon-button]="isIcon"
+  [class.no-border]="noBorder"
   [disabled]="disabled"
   (click)="emittedEventSubject.next('click')"
 >
