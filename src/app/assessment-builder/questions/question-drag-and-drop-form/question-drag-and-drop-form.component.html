@@ -45,13 +45,13 @@
                 <ng-container *ngIf="dragAndDropForm.controls.type.value === 'NORMAL'">
                     <app-normal-drag-and-drop-form  [assessmentId]="assessmentId" [questionSetId]="questionSetId"
                         [question]="question" [toClone]="toClone" [createDraggableOptions$]="createDraggableOptions$"
-                        (dragAndDropDetailsForm)="questionDetails = $event" (changedBackgroundImage)="changedBackgroundImage = $event">
+                        (dragAndDropDetailsForm)="questionDetails = $event; dragAndDropForm.markAsDirty()" (changedBackgroundImage)="changedBackgroundImage = $event">
                     </app-normal-drag-and-drop-form>
                 </ng-container>
 
                 <ng-container *ngIf="dragAndDropForm.controls.type.value === 'CUSTOMIZED'">
                     <app-customized-drag-and-drop-form [question]="question" [toClone]="toClone"
-                        (dragAndDropDetailsForm)="questionDetails = $event">
+                        (dragAndDropDetailsForm)="questionDetails = $event; dragAndDropForm.markAsDirty()">
                     </app-customized-drag-and-drop-form>
                 </ng-container>
             </mat-step>
