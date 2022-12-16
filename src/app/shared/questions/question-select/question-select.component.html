@@ -1,8 +1,10 @@
 <div class="question-header" *ngIf="evaluated">
     <h2>Q{{ question.order }}</h2>
     <h2>{{ question.title }}</h2>
-    <img *ngIf="imageAttachment" [src]="utilitiesService.getSource(imageAttachment.file)" alt="" class="img-attachment">
-    <mat-icon class="play-audio" (click)="playAudio(utilitiesService.getSource(audioAttachment.file))" *ngIf="audioAttachment">volume_up</mat-icon>
+    <img *ngIf="imageAttachment"  alt="" class="img-attachment"
+        [src]="question.newFile ? imagePreview : utilitiesService.getSource(preview ? imageAttachment.file.file : imageAttachment.file)">
+    <mat-icon class="play-audio" (click)="preview ? '' : playAudio(utilitiesService.getSource(audioAttachment.file))" 
+        *ngIf="audioAttachment">volume_up</mat-icon>
 </div>
 <!-- Options with only one choice -->
 <section *ngIf="!question.multiple">
@@ -13,11 +15,14 @@
                 <mat-card>
                     <mat-card-content>
                         <div *ngFor="let attachment of option.attachments">
-                            <img *ngIf="attachment.attachment_type === 'IMAGE'" [src]="utilitiesService.getSource(attachment.file)" alt="">
+                            <img *ngIf="attachment.attachment_type === 'IMAGE'"  alt=""
+                            [src]="option.newFile ? attachment.newFile : utilitiesService.getSource(preview && attachment.newFile ? '/media/attachments/' + attachment.newFile?.name : attachment.file)">
                         </div>
                     </mat-card-content>
                     <mat-card-actions>
+                        <span *ngIf="question.show_options_title">
                             {{ option.title }}
+                        </span>
                         <ng-container *ngFor="let attachment of option.attachments">
                             <mat-icon (click)="playAudio(attachment.file)" *ngIf="attachment.attachment_type === 'AUDIO'">volume_up</mat-icon>
                         </ng-container>
@@ -26,9 +31,11 @@
             </div>
             <ng-template #noImageAttached>
                 <div [class]="getAnswerBackgroundStyle(option)" class="option">
-                        {{ option.title }}
+                        <span *ngIf="question.show_options_title">
+                            {{ option.title }}
+                        </span>
                         <ng-container *ngFor="let attachment of option.attachments">
-                            <mat-icon (click)="playAudio(attachment.file)" *ngIf="attachment.attachment_type === 'AUDIO'">volume_up</mat-icon>
+                            <mat-icon (click)="preview ? '' : playAudio(attachment.file)" *ngIf="attachment.attachment_type === 'AUDIO'">volume_up</mat-icon>
                         </ng-container>
                 </div>
             </ng-template>
@@ -44,17 +51,18 @@
             <mat-card>
                 <mat-card-content>
                     <div *ngFor="let attachment of option.attachments">
-                        <img *ngIf="attachment.attachment_type === 'IMAGE'" [src]="utilitiesService.getSource(attachment.file)" alt="">
+                        <img *ngIf="attachment.attachment_type === 'IMAGE'"  alt=""
+                        [src]="option.newFile ? attachment.newFile : utilitiesService.getSource(preview && attachment.newFile ? '/media/attachments/' + attachment.newFile?.name : attachment.file)">
                     </div>
                 </mat-card-content>
                 <mat-card-actions>
                     <mat-checkbox disabled>
-                        <span>
+                        <span *ngIf="question.show_options_title">
                             {{ option.title }}
                         </span>
                     </mat-checkbox>
                     <ng-container *ngFor="let attachment of option.attachments">
-                        <mat-icon (click)="playAudio(attachment.file)" *ngIf="attachment.attachment_type === 'AUDIO'">volume_up</mat-icon>
+                        <mat-icon (click)="preview ? '' : playAudio(attachment.file)" *ngIf="attachment.attachment_type === 'AUDIO'">volume_up</mat-icon>
                     </ng-container>
                 </mat-card-actions>
             </mat-card>
@@ -62,12 +70,12 @@
         <ng-template #noImageAttachmentOption>
             <div [class]="getAnswerBackgroundStyle(option)" class="option">
                 <mat-checkbox disabled>
-                    <span>
+                    <span *ngIf="question.show_options_title">
                         {{ option.title }}
                     </span>
                 </mat-checkbox>
                 <ng-container *ngFor="let attachment of option.attachments">
-                    <mat-icon (click)="playAudio(attachment.file)" *ngIf="attachment.attachment_type === 'AUDIO'">volume_up</mat-icon>
+                    <mat-icon (click)="preview ? '' : playAudio(attachment.file)" *ngIf="attachment.attachment_type === 'AUDIO'">volume_up</mat-icon>
                 </ng-container>
             </div>
         </ng-template>

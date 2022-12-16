@@ -129,6 +129,7 @@
     "noFileChosen": "لم تقم باختيار ملف",
     "order": "ترتيب",
     "questions": {
+      "questionTitle": "سؤال (بما في ذلك التعليمات) قاله جوبي",
       "titlePlaceholder": "سؤال مع تعليمات للطالب",
       "typeStep": "حدد نوع السؤال",
       "mediaStep": "أضف وسائط إضافية",
@@ -139,6 +140,7 @@
         "nameNotifier": "تحتاج إلى تعيين اسم المنطقة أولاً."
       },
       "audioAttachment": "مرفق صوتي",
+      "questionAttachments": "إضافة أسئلة مرفقة",
       "dragAndDrop": {
         "areas": "المناطق:",
         "bgImageAndDropAreas": "صورة الخلفية ومناطق الإسقاط",
@@ -150,7 +152,6 @@
         "item": "العنصر",
         "noCorrectArea": "العناصر القابلة للسحب بدون المنطقة الصحيحة:",
         "noCorrectDragOption": "لا يوجد خيار سحب صحيح لهذه المنطقة",
-        "questionAttachments": "مرفقات السؤال",
         "formTitle": "السحب والإفلات",
         "sideValue": "{{side}} عدد العناصر في",
         "itemsSide": "{{side}} العناصر الموجودة في",
@@ -217,7 +218,11 @@
         "option": "اختيار",
         "options": "خيارات",
         "optionsValidAnswerErrors": "يمكن أن يكون للأسئلة إجابة واحدة صحيحة.",
-        "showOptionsTitle": "إظهار عنوان الخيارات"
+        "showOptionsTitle": "إظهار عنوان الخيارات",
+        "optionsStep": "أضف خيارات",
+        "formTitle": "قم بإنشاء سؤال تحديد (متعدد)",
+        "optionsTitle": "أضف خيارات وحدد الإجابة الصحيحة",
+        "shuffleAnswers": "خلط الإجابات"
       },
       "sel": {
         "mathSelfEfficacy": "الكفاءة الذاتية للرياضيات",

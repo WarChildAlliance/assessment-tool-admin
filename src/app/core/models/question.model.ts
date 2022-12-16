@@ -9,6 +9,7 @@ export interface Question {
   number_range?: NumberRange | number;
   hint: Hint;
   attachments: [];
+  shuffle: boolean;
 }
 
 export interface QuestionSEL extends Question {
@@ -24,7 +25,6 @@ export interface QuestionNumberLine extends Question {
   end: number;
   step: number;
   expected_value: number;
-  shuffle: boolean;
 }
 
 export interface QuestionCalcul extends Question {

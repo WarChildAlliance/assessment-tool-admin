@@ -35,7 +35,6 @@ export class QuestionSelectFormComponent implements OnInit {
   public toClone: boolean;
   public selQuestionOrder: any;
 
-
   public options = [];
 
   public imageAttachment = this.questionFormService.imageAttachment;
@@ -47,6 +46,8 @@ export class QuestionSelectFormComponent implements OnInit {
   public saveOptions = false;
   public attachmentsResetSubject$ = new Subject<void>();
 
+  public questionPreview: any;
+
   public selectQuestionForm: FormGroup = new FormGroup({
     question: new FormControl(null)
   });
@@ -55,15 +56,14 @@ export class QuestionSelectFormComponent implements OnInit {
   public selectForm: FormGroup = new FormGroup({
     question_type: new FormControl('SELECT'),
     title: new FormControl(''),
-    value: new FormControl('', [Validators.required]),
     order: new FormControl('', [Validators.required]),
     show_options_title: new FormControl(true, [Validators.required]),
+    shuffle: new FormControl(false, [Validators.required]),
     // display: new FormControl('Grid', [Validators.required]),
     options: new FormArray([
       this.formBuilder.group({
         title: new FormControl(''),
         valid: new FormControl(false),
-        value: new FormControl('', [Validators.required]),
       }),
     ]),
   });
@@ -81,6 +81,11 @@ export class QuestionSelectFormComponent implements OnInit {
     public dialogRef: MatDialogRef<QuestionSelectFormComponent>
   ) {
     this.attachmentsResetSubject$.subscribe(() => this.questionFormService.resetAttachments());
+  }
+
+  public get optionsLength(): number {
+    const formArray = this.selectForm.controls.options as FormArray;
+    return formArray.length;
   }
 
   private get checkValidAnswer(): boolean {
@@ -104,11 +109,11 @@ export class QuestionSelectFormComponent implements OnInit {
       this.selectQuestion = true;
       this.selectForm.setValue({
         question_type: 'SELECT',
-        value: '',
         title: '',
         show_options_title: true,
+        shuffle: false,
         order: this.order, //  display: 'Grid',
-        options: [{ title: '', valid: false, value: '' }],
+        options: [{ title: '', valid: false }],
       });
       this.optionsAtt.push({ attachments: [] });
 
@@ -120,6 +125,10 @@ export class QuestionSelectFormComponent implements OnInit {
       this.options = data;
     });
 
+    this.selectForm.valueChanges.subscribe(() => {
+      this.setQuestionPreview();
+    });
+
     await this.questionFormService.resetAttachments().then(() => this.attachmentsResetSubject$.next());
   }
 
@@ -128,10 +137,15 @@ export class QuestionSelectFormComponent implements OnInit {
     const formGroup: FormGroup = this.formBuilder.group({
       title: this.formBuilder.control(null),
       valid: this.formBuilder.control(false),
-      value: this.formBuilder.control(null),
     });
     (this.selectForm.controls.options as FormArray).push(formGroup);
     this.saveOptions = true;
+  }
+
+  public deleteOption(index: number): void{
+    this.optionsAtt.splice(index, 1);
+    const formArray = this.selectForm.controls.options as FormArray;
+    formArray.removeAt(index);
   }
 
   public onSubmit(): void {
@@ -204,6 +218,7 @@ export class QuestionSelectFormComponent implements OnInit {
       });
     }
     this.optionsAttachment = this.optionsAtt.some(op => op.attachments.length);
+    this.setQuestionPreview();
   }
 
   public async setExistingOptionsAttachments(): Promise<void> {
@@ -231,6 +246,7 @@ export class QuestionSelectFormComponent implements OnInit {
       }
     });
     this.optionsAttachment = true;
+    this.setQuestionPreview();
   }
 
   public onSelectQuestion(): void {
@@ -247,6 +263,40 @@ export class QuestionSelectFormComponent implements OnInit {
         }
       });
     }
+  }
+
+  public onAttachmentsChange(file: any, type: string): void{
+    this.selectForm.markAsDirty();
+    if (type === 'image') {
+      this.questionFormService.imageAttachment = file;
+    } else {
+      this.questionFormService.audioAttachment = file;
+    }
+  this.setQuestionPreview();
+  }
+
+  private setQuestionPreview(): void {
+    const attachments = [];
+    if (this.questionFormService.imageAttachment || this.imageAttachment) {
+      attachments.push({
+        file: this.questionFormService.imageAttachment ?? this.imageAttachment,
+        attachment_type: 'IMAGE'
+      });
+    }
+    if (this.questionFormService.audioAttachment || this.audioAttachment) {
+      attachments.push({
+        file: this.questionFormService.audioAttachment || this.audioAttachment,
+        attachment_type: 'AUDIO'
+      });
+    }
+
+    this.questionPreview = { ...this.selectForm.value, attachments };
+    // Deep clone options object (for some reason the {...} doesn't work)
+    this.questionPreview.options = JSON.parse(JSON.stringify(this.selectForm.value.options));
+
+    this.questionPreview.options.forEach((option, i) => {
+      option.attachments = this.optionsAtt[i].attachments;
+    });
   }
 
   private async setForm(question: any): Promise<void> {
@@ -272,7 +322,6 @@ export class QuestionSelectFormComponent implements OnInit {
       const optOject = {
         valid: element.valid,
         title: element.title,
-        value: element.value,
       };
       options.push(optOject);
       if (element.valid) {
@@ -284,7 +333,6 @@ export class QuestionSelectFormComponent implements OnInit {
       const optionsGroup = this.formBuilder.group({
         valid: new FormControl(null),
         title: new FormControl(null),
-        value: new FormControl(null),
       });
       this.optionsForm.push(optionsGroup);
     }
@@ -292,10 +340,10 @@ export class QuestionSelectFormComponent implements OnInit {
     const q = this.question;
     this.selectForm.setValue({
         question_type: 'SELECT',
-        value: q.value,
         title: q.title,
         order: this.toClone ? this.order : this.question.order,
         show_options_title: q.show_options_title,
+        shuffle: q.shuffle,
         // display: q.display_type ? this.displayTypeFormat(q.display_type) : 'Grid',
         options,
       });
@@ -351,11 +399,11 @@ export class QuestionSelectFormComponent implements OnInit {
   private resetForm(): void {
     this.selectForm.patchValue({
       question_type: 'SELECT',
-      value: '',
       title: '',
       order: this.order, // display: 'Grid',
       show_options_title: true,
-      options: [{ title: '', valid: false, value: '' }],
+      shuffle: false,
+      options: [{ title: '', valid: false }],
     });
 
     this.options = [];
