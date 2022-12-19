@@ -19,3 +19,24 @@
         </span>
     </div>
 </div>
+<div *ngIf="breadcrumb.length && breadcrumb[0].label === 'general.groupsOverview'" class="header">
+    <div *ngFor="let item of breadcrumb">
+        <span class="first-line">
+            <p>
+                {{ 'header.groups.headerPt1' | translate }}
+            </p>
+            <p class="title">
+                {{ 'header.groups.title' | translate }}
+            </p>
+            <p>
+                {{ 'header.groups.headerPt2' | translate }}
+            </p>
+            <p class="section" [style.background-color]="sectionColor('groups')">
+                {{ 'header.groups.overlineTitle' | translate }}
+            </p>.
+        </span>
+        <span class="final-text">
+            {{ 'header.groups.headerPt3' | translate }}
+        </span>
+    </div>
+</div>
