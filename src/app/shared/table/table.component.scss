@@ -99,12 +99,6 @@
   justify-content: center;
 }
 
-.menu {
-  ::ng-deep button {
-    border: none;
-  }
-}
-
 .score-list {
   display: flex;
   flex-direction: row;

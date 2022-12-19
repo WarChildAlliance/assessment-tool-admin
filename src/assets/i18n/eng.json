@@ -156,6 +156,7 @@
     "noFileChosen": "No file chosen",
     "order": "Order",
     "questions": {
+      "questionTitle": "Question (including instruction) spoken by Gobee",
       "titlePlaceholder": "Question with instructions for the student",
       "typeStep": "Select type of question",
       "mediaStep": "Add Extra Media",
@@ -166,6 +167,7 @@
         "nameNotifier": "You need to set the area name first."
       },
       "audioAttachment": "Audio attachment",
+      "questionAttachments": "Add Question attachments",
       "dragAndDrop": {
         "areas": "Areas:",
         "bgImageAndDropAreas": "background image and the drop areas",
@@ -177,7 +179,6 @@
         "item": "item",
         "noCorrectArea": "Draggable items without correct area:",
         "noCorrectDragOption": "No correct drag option for this area",
-        "questionAttachments": "Add Question attachments",
         "formTitle": "Drag & Drop",
         "sideValue": "Number of items on the {{side}}",
         "itemsSide": "Items on the {{side}}",
@@ -240,11 +241,15 @@
       "select": {
         "attachments": "Attachments",
         "display": "Display",
-        "isCorrectAnswer": "Is correct answer?",
+        "isCorrectAnswer": "Correct answer?",
         "option": "option",
         "options": "Options",
         "optionsValidAnswerErrors": "Questions can only have one correct answer.",
-        "showOptionsValue": "Show options value"
+        "showOptionsTitle": "Show options title",
+        "optionsStep": "Add options",
+        "formTitle": "Create a (Multi) Select question",
+        "optionsTitle": "Add options and select the correct answer",
+        "shuffleAnswers": "Shuffle answers"
       },
       "sel" : {
         "mathSelfEfficacy": "Math Self-Efficacy",

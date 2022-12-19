@@ -33,6 +33,8 @@ export class CustomButtonComponent implements OnInit {
 
   @Input() icon = '';
 
+  @Input() noBorder = false;
+
   public emittedEventSubject: Subject<string> = new Subject();
 
   constructor() {}

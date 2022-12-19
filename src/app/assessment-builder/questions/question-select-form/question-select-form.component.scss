@@ -1,49 +1,64 @@
 .form-container {
     display: flex;
-    width: 100%;
-    justify-content: space-between;
+    flex-direction: column;
 
-    .select-details-container, .attachments-container {
-        flex: 1;
-
-        // In case of using display_type again: uncomment the following
-        mat-checkbox {
-            display: block;
+    .title {
+        ::ng-deep .mat-form-field-flex {
+            min-height: 90px;
         }
     }
 }
+
+::ng-deep .mat-form-field-label {
+    pointer-events: auto !important;
+}
+
 .question-form-button {
     margin-top: 20px;
     width: 50%;
     margin-left: 25%;
 }
-.file_input{
-    background-color: rgb(233, 233, 233);
-}
+
 .options-container {
     display: flex;
-    overflow-x: none;
+    flex-direction: column;
 
-    .option-forms-container{
+    .option-form {
         display: flex;
-        overflow-x: auto;
+        flex-direction: row;
+        min-width: 500px;
+        place-content: space-between;
+        place-items: center;
+
+        .option-input {
+            border-bottom: solid 1px #949494;
+            display: flex;
+            flex-direction: row;
+
+            .mat-form-field {
+                margin: 0;
+                width: 300px;
+            }
+
+            .mat-icon {
+                place-self: center;
+                max-height: 15px;
+            }
+
+            ::ng-deep * {
+                padding-bottom: 0;
+            }
+        }
     }
 }
-.mat-form-field{
+
+.mat-form-field {
     margin-right: 20px;
 }
 
-.options-header {
-    position: relative;
-    app-custom-button {
-        position: absolute;
-        top: 0;
-        right: 0;
-    }
-}
-
-.mat-checkbox {
-    margin: 0.5em;
+.mat-checkbox,
+.mat-slide-toggle {
+    margin-right: 0.5em;
 }
 
 .select {
@@ -68,4 +83,41 @@
 
 .notifier {
     color: red;
+}
+
+h1 {
+    font-weight: 500;
+    font-size: 23px;
+}
+
+h3 {
+    font-weight: 400;
+    line-height: 32px;
+    letter-spacing: 0.25px;
+}
+
+.options-features {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 1em;
+}
+
+mat-icon {
+    color: #4AA0DB;
+    font-size: 15px;
+    height: 15px;
+    width: 15px;
+}
+
+.icon-tip {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 0.5em;
+}
+
+.preview {
+    border: solid 1px #CCCCCC;
+    margin-top: 1em;
 }

@@ -38,7 +38,7 @@
                 </mat-form-field>
             </div>
         </div>
-        <mat-stepper [orientation]="(stepperOrientation | async)!">
+        <mat-stepper [orientation]="(questionFormService.stepperOrientation | async)!">
             <mat-step [editable]="questionDetails ? questionDetails?.invalid : true" [completed]="false">
                 <ng-template matStepLabel>{{ "assessmentBuilder.questions.typeStep" | translate }}</ng-template>
 
@@ -56,9 +56,9 @@
                 </ng-container>
             </mat-step>
 
-            <mat-step [completed]="false">
+            <mat-step [completed]="false" optional>
                 <ng-template matStepLabel>{{ "assessmentBuilder.questions.mediaStep" | translate }}</ng-template>
-                <h2>{{ "assessmentBuilder.questions.dragAndDrop.questionAttachments" | translate }}</h2>
+                <h2>{{ "assessmentBuilder.questions.questionAttachments" | translate }}</h2>
                 <div class="attachments-container">
                     <app-image-selector
                         [reset$]="attachmentsResetSubject$.asObservable()"
