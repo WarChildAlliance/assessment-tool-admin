@@ -113,7 +113,7 @@
                     <button mat-flat-button mat-dialog-close class="dialog-buttons__cancel" color="secondary">
                         {{ "general.cancel" | translate }}
                     </button>
-                    <button mat-flat-button matStepperNext color="accent" class="dialog-buttons__submit">
+                    <button [disabled]="!checkValidAnswer" mat-flat-button matStepperNext color="accent" class="dialog-buttons__submit">
                         {{ "general.continue" | translate }}
                     </button>
                 </div>

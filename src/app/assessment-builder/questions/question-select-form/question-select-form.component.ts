@@ -55,7 +55,7 @@ export class QuestionSelectFormComponent implements OnInit {
   // In case of using display_type again: uncomment all occurences of selectForm.controls.display for this component
   public selectForm: FormGroup = new FormGroup({
     question_type: new FormControl('SELECT'),
-    title: new FormControl(''),
+    title: new FormControl('', [Validators.required]),
     order: new FormControl('', [Validators.required]),
     show_options_title: new FormControl(true, [Validators.required]),
     shuffle: new FormControl(false, [Validators.required]),
@@ -65,7 +65,7 @@ export class QuestionSelectFormComponent implements OnInit {
         title: new FormControl(''),
         valid: new FormControl(false),
       }),
-    ]),
+    ], [Validators.required]),
   });
 
   private optionsAtt = [];
@@ -88,7 +88,7 @@ export class QuestionSelectFormComponent implements OnInit {
     return formArray.length;
   }
 
-  private get checkValidAnswer(): boolean {
+  public get checkValidAnswer(): boolean {
     return this.optionsForm.value.filter(options => options.valid).length === 1;
   }
 
