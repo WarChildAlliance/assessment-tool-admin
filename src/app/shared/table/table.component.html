@@ -94,8 +94,8 @@
     </ng-container>
 
     <ng-container *ngSwitchCase="'menu'">
-      <td mat-cell *matCellDef="let element" class="menu">
-        <app-custom-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()" [icon]="'more_vert'" [isIcon]="true" category="tertiary" variant="default">
+      <td mat-cell *matCellDef="let element">
+        <app-custom-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()" [icon]="'more_vert'" [isIcon]="true" [noBorder]="true" category="tertiary" variant="default">
         </app-custom-button>
         <mat-menu #menu="matMenu" xPosition="before">
           <ng-container *ngFor="let item of element[column.key]">

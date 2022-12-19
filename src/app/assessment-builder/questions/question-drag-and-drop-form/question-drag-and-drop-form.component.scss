@@ -59,13 +59,3 @@
 .notifier {
     color: red;
 }
-
-::ng-deep .mat-step-header .mat-step-icon-selected {
-    background-color: #4aa0db !important;
-    color: #fff !important;
-}
-
-::ng-deep .mat-step-header .mat-step-icon {
-    background-color: #E0E0E0;
-    color: #BDBDBD;
-}
