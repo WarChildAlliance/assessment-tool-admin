@@ -119,11 +119,11 @@ export class AssessmentFormDialogComponent implements OnInit {
     }
 
     this.formData.append('title', this.assessmentForm.value.title);
-    this.formData.append('grade', this.assessmentForm.value.grade);
-    this.formData.append('subject', this.assessmentForm.value.subject);
+    this.formData.append('grade', this.assessmentForm.getRawValue().grade);
+    this.formData.append('subject', this.assessmentForm.getRawValue().subject);
     this.formData.append('language', this.assessmentForm.value.language);
     this.formData.append('country', this.assessmentForm.value.country);
-    this.formData.append('topic', this.assessmentForm.value.topic);
+    this.formData.append('topic', this.assessmentForm.getRawValue().topic);
     this.formData.append('private', this.assessmentForm.value.private);
     this.formData.append('archived', this.assessmentForm.value.archived);
     this.formData.append('downloadable', this.assessmentForm.value.downloadable);
@@ -177,7 +177,9 @@ export class AssessmentFormDialogComponent implements OnInit {
     if (this.assessment.question_sets_count > 0) {
       this.assessmentForm.controls.grade.disable();
       this.assessmentForm.controls.subject.disable();
-      this.assessmentForm.controls.topic.disable();
+      if (assessment.topic) {
+        this.assessmentForm.controls.topic.disable();
+      }
     }
     this.getTopics();
   }

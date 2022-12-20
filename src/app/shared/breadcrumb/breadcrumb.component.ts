@@ -28,6 +28,7 @@ export class CustomBreadcrumbComponent {
     switch (section) {
       case 'assessments': return '#FF5722';
       case 'questions': return '#FFEB3B';
+      case 'groups': return '#3F51B5';
       default: return '#FF5722';
     }
   }

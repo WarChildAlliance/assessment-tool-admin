@@ -8,7 +8,6 @@
 
   background: url('/assets/images/headerBackgroundImage.png');
   background-size: cover;
-  background-position-x: center;
   height: 25vh;
 
   &__menu-button {
@@ -74,4 +73,14 @@
 .list-item-active {
   color: green;
   border-left-color: green;
+}
+
+::ng-deep .mat-step-header .mat-step-icon-selected {
+  background-color: #4aa0db !important;
+  color: #fff !important;
+}
+
+::ng-deep .mat-step-header .mat-step-icon {
+  background-color: #E0E0E0;
+  color: #BDBDBD;
 }

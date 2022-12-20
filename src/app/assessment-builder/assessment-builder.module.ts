@@ -42,6 +42,7 @@ import {
 import {
   CustomizedDragAndDropFormComponent
 } from './questions/question-drag-and-drop-form/customized-drag-and-drop-form/customized-drag-and-drop-form.component';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [
@@ -86,7 +87,8 @@ import {
     CustomSpinnerModule,
     MatNativeDateModule,
     MatDatepickerModule,
-    MatStepperModule
+    MatStepperModule,
+    MatSlideToggleModule
   ],
   exports: [
     AssessmentSummaryComponent

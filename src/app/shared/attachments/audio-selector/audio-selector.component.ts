@@ -10,10 +10,12 @@ export class AudioSelectorComponent implements OnInit {
   @Input() isRecorderEnabled: boolean;
   @Input() reset$: Observable<void> = null;
   @Input() audioAttachment;
+  @Input() isIcon = false;
 
   @Output() newAudioEvent = new EventEmitter<File>();
 
   public recorderResetSubject$ = new Subject<void>();
+  public showMenu = false;
 
   constructor() { }
 
