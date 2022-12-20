@@ -12,6 +12,7 @@ export class QuestionDominoComponent implements OnInit {
   @Input() answer: any;
   @Input() evaluated: boolean;
   @Input() index: number;
+  @Input() shrinkToPreview: boolean;
 
   public imageAttachment = null;
   public audioAttachment = null;

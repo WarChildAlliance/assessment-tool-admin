@@ -1,11 +1,17 @@
-<div class="container">
+<div class="container" *ngIf="!loading">
   <ng-container *ngIf="config === 'library'">
     <div class="question-set-scores section">
-      <ng-container *ngFor="let questionSet of questionSets">
-        <app-score-indicator [score]="questionSet?.score"></app-score-indicator>
+      <ng-container *ngFor="let questionSet of questionSets; let i = index">
+        <app-score-indicator [score]="questionSet?.score" [style.cursor]="questionSet.questions?.length ? 'pointer' : 'default'"
+          (click)="questionSet.questions?.length ? updateQuestionSetIndex(i) : ''" [borderColor]="'#FF5722'">
+        </app-score-indicator>
       </ng-container>
     </div>
-    <div class="question-preview-nav section"></div>
+    <div class="question-preview-nav section">
+      <ng-container *ngIf="questionSets[questionSetIndex]?.questions?.length">
+        <ng-template [ngTemplateOutlet]="questions"></ng-template>
+      </ng-container>
+    </div>
     <div *ngIf="questionSets[questionSetIndex]?.questions" class="question-data section">
       <p>{{ 'general.subject' | translate }}:</p>
       <p>{{ data.subject ?? '--' }}</p>
@@ -19,8 +25,12 @@
   </ng-container>
 
   <ng-container *ngIf="config === 'questions'">
-    <div class="question-preview-nav section"></div>
-    <div class="question-data section">
+    <div class="question-preview-nav question-section">
+      <ng-container *ngIf="questionSets[questionSetIndex]?.questions?.length">
+        <ng-template [ngTemplateOutlet]="questions"></ng-template>
+      </ng-container>
+    </div>
+    <div class="question-data question-info">
       <p>{{ 'general.subject' | translate }}:</p>
       <p>{{ data.subject ?? '--' }}</p>
       <p>{{ 'general.topic' | translate }}:</p>
@@ -32,3 +42,56 @@
     </div>
   </ng-container>
 </div>
+
+<app-spinner style="text-align: -webkit-center;" *ngIf="loading" size="medium" [variant]="'default'"></app-spinner>
+
+<ng-template #questions>
+  <app-custom-button (click)="updateQuestionIndex('before')" [icon]="'navigate_before'" [isIcon]="true"
+    [noBorder]="true" category="tertiary" variant="default" [style.visibility]="questionIndex - 1 >= 0  ? '' : 'hidden'">
+  </app-custom-button>
+
+  <div *ngIf="questionSets[questionSetIndex]?.questions[questionIndex] as question" class="question-preview">
+    <ng-container *ngIf="question.question_type === 'SEL'">
+      <app-question-sel [question]="question"></app-question-sel>
+    </ng-container>
+
+    <ng-container *ngIf="question.question_type === 'SELECT'">
+      <app-question-select [question]="question" [evaluated]="true"></app-question-select>
+    </ng-container>
+  
+    <ng-container *ngIf="question.question_type === 'INPUT'">
+      <app-question-input [question]="question" [evaluated]="true"></app-question-input>
+    </ng-container>
+  
+    <ng-container *ngIf="question.question_type === 'SORT'">
+      <app-question-sort [question]="question" [evaluated]="true"></app-question-sort>
+    </ng-container>
+  
+    <ng-container *ngIf="question.question_type === 'NUMBER_LINE'">
+      <app-question-numberline [question]="question" [evaluated]="true"></app-question-numberline>
+    </ng-container>
+
+    <ng-container *ngIf="question && question.question_type === 'DRAG_AND_DROP'">
+      <app-question-drag-and-drop [question]="question" [evaluated]="true" [assessmentId]="assessmentId"
+        [questionSetId]="questionSets[questionSetIndex].id" [shrinkBackgroundImage]="true">
+      </app-question-drag-and-drop>
+    </ng-container>
+
+    <ng-container *ngIf="question.question_type === 'DOMINO'">
+      <app-question-domino [question]="question" [evaluated]="true" [shrinkToPreview]="true"></app-question-domino>
+    </ng-container>
+
+    <ng-container *ngIf="question.question_type === 'CALCUL'">
+      <app-question-calcul [question]="question" [evaluated]="true" [shrinkToPreview]="true"></app-question-calcul>
+    </ng-container>
+
+    <ng-container *ngIf="question.question_type === 'CUSTOMIZED_DRAG_AND_DROP'">
+      <app-customized-drag-and-drop [question]="question" [evaluated]="true"></app-customized-drag-and-drop>
+    </ng-container>
+  </div>
+
+  <app-custom-button (click)="updateQuestionIndex('next')" [icon]="'navigate_next'"
+    [noBorder]="true" category="tertiary" variant="default" [isIcon]="true"
+    [style.visibility]="questionSets[questionSetIndex]?.questions.length > questionIndex + 1 ? '' : 'hidden'">
+  </app-custom-button>
+</ng-template>
