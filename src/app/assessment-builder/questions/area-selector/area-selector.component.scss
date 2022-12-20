@@ -12,6 +12,9 @@
             position: relative;
             z-index: 1;
             display: inline-block;
+            img {
+                object-fit: contain;
+            }
         }
 
         .img-overlay-wrap svg {

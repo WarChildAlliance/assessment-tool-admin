@@ -11,8 +11,11 @@ export class ImageSelectorComponent implements OnInit {
   @Input() imageAttachment: File;
   @Input() showLabel = true;
   @Input() draggableAttachment: boolean;
+  @Input() isIcon = false;
 
   @Output() newImageEvent = new EventEmitter<File>();
+
+  public showMenu = false;
 
   constructor() {}
 

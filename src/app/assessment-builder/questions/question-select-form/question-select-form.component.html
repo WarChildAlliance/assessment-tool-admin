@@ -16,102 +16,138 @@
     </div>
 
     <form *ngIf="!selectQuestion" [formGroup]="selectForm">
+        <h1>{{ "assessmentBuilder.questions.select.formTitle" | translate }}</h1>
+
         <div class="form-container">
-            <div class="select-details-container">
-                <mat-form-field appearance="outline" class="form-group" color="accent">
-                    <mat-label for="title">{{ "general.title" | translate }}</mat-label>
-                    <input matInput formControlName="title">
-                </mat-form-field>
-                <mat-form-field appearance="outline" class="form-group" color="accent">
-                    <mat-label>{{ "assessmentBuilder.value" | translate }}</mat-label>
-                    <input matInput formControlName="value">
-                </mat-form-field>
+            <mat-form-field appearance="outline" class="title" color="accent">
+                <mat-label for="title" matTooltip="test">
+                    {{ "assessmentBuilder.questions.questionTitle" | translate }}
+                    <mat-icon >help_outline</mat-icon>
+                </mat-label>
+                <textarea matInput formControlName="title" cdkTextareaAutosize></textarea>
+            </mat-form-field>
 
-                <mat-form-field appearance="outline" class="form-group" color="accent">
-                    <mat-label for="order">{{ "general.order" | translate }}</mat-label>
-                    <input matInput type="number" formControlName="order">
-                </mat-form-field>
-                <mat-checkbox formControlName="show_options_value">
-                    {{ "assessmentBuilder.questions.select.showOptionsValue" | translate }}
-                </mat-checkbox>
-                <!-- In case of using display_type again: uncomment the following mat-form-field attribute -->
-                <!--
-                <mat-form-field appearance="outline" class="form-group" color="accent">
-                    <mat-label for="display">{{ "assessmentBuilder.questions.select.display" | translate }}</mat-label>
-                    <mat-select formControlName="display">
-                        <mat-option *ngFor="let type of ['Grid', 'Vertical', 'Horizontal']" [value]="type">{{type}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-                -->
-            </div>
+            <mat-form-field appearance="outline" color="accent">
+                <mat-label for="order" matTooltip="test">
+                    {{ "general.order" | translate }}
+                    <mat-icon >help_outline</mat-icon>
+                </mat-label>
+                <input matInput type="number" formControlName="order">
+            </mat-form-field>
 
-            <div class="attachments-container">
-                <h2>{{ "assessmentBuilder.questions.select.attachments" | translate }}</h2>
-                <app-image-selector
-                    [reset$]="attachmentsResetSubject$.asObservable()"
-                    (newImageEvent)="questionFormService.imageAttachment = $event; selectForm.markAsDirty()"
-                    [imageAttachment]="imageAttachment"
-                ></app-image-selector>
-                <app-audio-selector
-                    [isRecorderEnabled]="true"
-                    [reset$]="attachmentsResetSubject$.asObservable()"
-                    (newAudioEvent)="questionFormService.audioAttachment = $event; selectForm.markAsDirty()"
-                    [audioAttachment]="audioAttachment"
-                ></app-audio-selector>
-            </div>
+            <!-- In case of using display_type again: uncomment the following mat-form-field attribute -->
+            <!--
+            <mat-form-field appearance="outline" class="form-group" color="accent">
+                <mat-label for="display">{{ "assessmentBuilder.questions.select.display" | translate }}</mat-label>
+                <mat-select formControlName="display">
+                    <mat-option *ngFor="let type of ['Grid', 'Vertical', 'Horizontal']" [value]="type">{{type}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            -->
         </div>
-        <mat-divider></mat-divider>
+        
+        <mat-stepper #stepper [orientation]="(questionFormService.stepperOrientation | async)!">
+            <mat-step [completed]="false">
+                <mat-divider></mat-divider>
+                <h3>{{ "assessmentBuilder.questions.select.optionsTitle" | translate }}</h3>
+                <ng-template matStepLabel>{{ "assessmentBuilder.questions.select.optionsStep" | translate }}</ng-template>
 
-        <div class="options-header">
-            <h2 style="margin-top: 20px;"> {{ "assessmentBuilder.questions.select.options" | translate }}</h2>
-            <app-custom-button class="file_input" icon="add" category="secondary" variant="neutral" (click)="addOptions()">
-                {{ "general.add" | translate: { type: ("assessmentBuilder.questions.select.option" | translate) } }}
-            </app-custom-button>
-        </div>
-        <div class="options-container">
-            <div class="option-forms-container" formArrayName="options">
-                <div class="option-form" *ngFor="let control of selectForm.controls.options['controls']; let i = index"
-                    [formGroupName]="i">
-                    <div>
-                        <mat-form-field appearance="outline" class="form-group" color="accent">
-                            <mat-label>{{ "general.title" | translate }}</mat-label>
-                            <input matInput formControlName="title">
-                        </mat-form-field>
-                    </div>
-                    <mat-form-field appearance="outline" class="form-group" color="accent">
-                        <mat-label>{{ "assessmentBuilder.value" | translate }}</mat-label>
-                        <input matInput formControlName="value">
-                    </mat-form-field>
-                    <br>
-                    <mat-checkbox formControlName="valid" [checked]="selectedOption === i" (change)="selectedOption = i; checkValid(i, $event.checked)">
-                        <mat-label>{{ "assessmentBuilder.questions.select.isCorrectAnswer" | translate }}</mat-label>
-                    </mat-checkbox>
+                <div class="options-container"formArrayName="options">
+                    <div class="option-form" *ngFor="let control of selectForm.controls.options['controls']; let i = index" [formGroupName]="i">
+                        <div class="option-input">
+                            <mat-icon matTooltip="test">help_outline</mat-icon>
+                            <mat-form-field appearance="fill" color="accent">
+                                <mat-label [style.display]="control.controls.title.value ? 'none' : ''">
+                                    {{ "assessmentBuilder.questions.select.option" | translate | titlecase}} {{' ' + (i + 1) + '*' }}
+                                </mat-label>
+                                <input matInput formControlName="title">
+                            </mat-form-field>
+                            
+                            <app-audio-selector [isIcon]="true"
+                                [isRecorderEnabled]="true"
+                                [reset$]="attachmentsResetSubject$.asObservable()"
+                                (newAudioEvent)="handleFileInputOptions($event, 'AUDIO', i)"
+                            ></app-audio-selector>
+                            <app-image-selector [isIcon]="true"
+                                [reset$]="attachmentsResetSubject$.asObservable()"
+                                (newImageEvent)="handleFileInputOptions($event, 'IMAGE', i)"
+                            ></app-image-selector>
+                        </div>
 
-                    <div class="attachments-container">
-                        <app-image-selector
-                            [reset$]="attachmentsResetSubject$.asObservable()"
-                            (newImageEvent)="handleFileInputOptions($event, 'IMAGE', i)"
-                        ></app-image-selector>
-                        <app-audio-selector
-                            [isRecorderEnabled]="true"
-                            [reset$]="attachmentsResetSubject$.asObservable()"
-                            (newAudioEvent)="handleFileInputOptions($event, 'AUDIO', i)"
-                        ></app-audio-selector>
+                        <div class="icon-tip">
+                            <mat-checkbox formControlName="valid" [checked]="selectedOption === i" (change)="selectedOption = i; checkValid(i, $event.checked)">
+                                <mat-label>{{ "assessmentBuilder.questions.select.isCorrectAnswer" | translate }}</mat-label>
+                            </mat-checkbox>
+                            <mat-icon matTooltip="test">help_outline</mat-icon>
+                        </div>
+                        
+                        <app-custom-button *ngIf="optionsLength > 1" (click)="deleteOption(i)" category="tertiary"
+                            variant="danger" icon="delete_outline" [isIcon]="true" [noBorder]="true">
+                        </app-custom-button>
                     </div>
                 </div>
-            </div>
-        </div>
 
-    </form>
+                <div class="options-features">
+                    <app-custom-button icon="add" category="tertiary" variant="primary" [noBorder]="true" (click)="addOptions()">
+                        {{ "general.add" | translate: { type: ("assessmentBuilder.questions.select.option" | translate) } }}
+                    </app-custom-button>
+                    
+                    <mat-slide-toggle formControlName="show_options_title">
+                        {{ "assessmentBuilder.questions.select.showOptionsTitle" | translate }}
+                    </mat-slide-toggle>
 
-    <div class="dialog-buttons">
+                    <div class="icon-tip">
+                        <mat-slide-toggle formControlName="shuffle">
+                            {{ "assessmentBuilder.questions.select.shuffleAnswers" | translate }}
+                        </mat-slide-toggle>
+                        <mat-icon matTooltip="test">help_outline</mat-icon>
+                    </div>
+                </div>
+
+                <div class="preview" *ngIf="questionPreview">
+                    <app-question-select [question]="questionPreview" [index]="1" [evaluated]="true" [preview]="true"></app-question-select>
+                </div>
+
+                <div class="dialog-buttons">
+                    <button mat-flat-button mat-dialog-close class="dialog-buttons__cancel" color="secondary">
+                        {{ "general.cancel" | translate }}
+                    </button>
+                    <button [disabled]="!checkValidAnswer" mat-flat-button matStepperNext color="accent" class="dialog-buttons__submit">
+                        {{ "general.continue" | translate }}
+                    </button>
+                </div>
+            </mat-step>
+
+            <mat-step [completed]="false" optional>
+                <ng-template matStepLabel>{{ "assessmentBuilder.questions.mediaStep" | translate }}</ng-template>
+                <h2>{{ "assessmentBuilder.questions.questionAttachments" | translate }}</h2>
+               
+                <div class="attachments-container">
+                    <app-image-selector
+                        [reset$]="attachmentsResetSubject$.asObservable()"
+                        (newImageEvent)="onAttachmentsChange($event, 'image')"
+                        [imageAttachment]="imageAttachment"
+                    ></app-image-selector>
+                    <app-audio-selector
+                        [isRecorderEnabled]="true"
+                        [reset$]="attachmentsResetSubject$.asObservable()"
+                        (newAudioEvent)="onAttachmentsChange($event, 'audio')"
+                        [audioAttachment]="audioAttachment"
+                    ></app-audio-selector>
+                </div>
+
+                <div class="dialog-buttons">
+                    <button mat-flat-button mat-dialog-close class="dialog-buttons__cancel" color="secondary">
+                        {{ "general.cancel" | translate }}
+                    </button>
+                    <button  mat-flat-button color="accent" [disabled]="selectForm.invalid || !selectForm.dirty" (click)="onSubmit()">
+                        {{ question ? toClone ? ("general.clone" | translate) : ("general.save" | translate) : ("general.create" | translate) }}
+                    </button>
+                </div>
+            </mat-step>
+        </mat-stepper>
+
         <span class="notifier" *ngIf="selectForm.controls.order.errors">{{ "assessmentBuilder.questionSetDetails.selQuestionsOrder" | translate }}</span>
-        <button mat-flat-button mat-dialog-close class="dialog-buttons__cancel" color="secondary">
-            {{ "general.cancel" | translate }}
-        </button>
-        <button mat-flat-button color="accent" [disabled]="selectForm.invalid || !selectForm.dirty" (click)="onSubmit()">
-            {{ question ? toClone ? ("general.clone" | translate) : ("general.save" | translate) : ("general.create" | translate) }}
-        </button>
-    </div>
+    </form>
 </mat-dialog-content>
