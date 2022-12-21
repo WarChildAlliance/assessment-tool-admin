@@ -16,7 +16,7 @@ const routes: Routes = [
     canLoad: [AuthGuard],
     data: {
       breadcrumb: [
-        { label: 'general.dashboard', url: '' }
+        { label: 'general.dashboard', url: '', type: 'dashboard' }
       ]
     },
   },

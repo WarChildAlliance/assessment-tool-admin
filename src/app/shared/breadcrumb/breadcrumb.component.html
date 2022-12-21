@@ -19,3 +19,12 @@
         </span>
     </div>
 </div>
+
+<div *ngIf="breadcrumb.length && breadcrumb[0].type === 'dashboard'" class="header" style="margin-right: 23rem;">
+    <p style="font-weight: bolder;">
+        {{ 'header.dashboard.hiTeacher' | translate }} {{selfName}}
+    </p>
+    <p class="text">
+        {{ 'header.dashboard.text' | translate }}
+    </p>
+</div>

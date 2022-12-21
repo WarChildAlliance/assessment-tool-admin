@@ -106,7 +106,8 @@ import { MatMenuModule } from '@angular/material/menu';
     CustomizedDragAndDropComponent,
     ShapesComponent,
     TableActionsComponent,
-    QuestionSetAccessesBuilderComponent
+    QuestionSetAccessesBuilderComponent,
+    ScoreIndicatorComponent
   ]
 })
 
