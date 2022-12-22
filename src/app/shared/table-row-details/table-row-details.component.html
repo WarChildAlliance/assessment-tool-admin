@@ -1,26 +1,26 @@
 <div class="container" *ngIf="!loading">
   <ng-container *ngIf="config === 'library'">
-    <div class="question-set-scores section">
+    <div class="question-set-scores" style="width:10%">
       <ng-container *ngFor="let questionSet of questionSets; let i = index">
         <app-score-indicator [score]="questionSet?.score" [style.cursor]="questionSet.questions?.length ? 'pointer' : 'default'"
           (click)="questionSet.questions?.length ? updateQuestionSetIndex(i) : ''" [borderColor]="'#FF5722'">
         </app-score-indicator>
       </ng-container>
     </div>
-    <div class="question-preview-nav section">
+    <div class="question-preview-nav larger-section">
       <ng-container *ngIf="questionSets[questionSetIndex]?.questions?.length">
         <ng-template [ngTemplateOutlet]="questions"></ng-template>
       </ng-container>
     </div>
     <div *ngIf="questionSets[questionSetIndex]?.questions" class="question-data section">
       <p>{{ 'general.subject' | translate }}:</p>
-      <p>{{ data.subject ?? '--' }}</p>
+      <p><b>{{ data.subject ?? '--' }}</b></p>
       <p>{{ 'general.topic' | translate }}:</p>
-      <p>{{ data.topic?.name ?? '--' }}</p>
+      <p><b>{{ data.topic?.name ?? '--' }}</b></p>
       <p>{{ 'assessmentBuilder.learningObjective' | translate }}:</p>
-      <p>{{ questionSets[questionSetIndex]?.learning_objective?.name_eng ?? '--' }}</p>
+      <p><b>{{ questionSets[questionSetIndex]?.learning_objective?.name_eng ?? '--' }}</b></p>
       <p>{{ 'general.grade' | translate }}:</p>
-      <p>{{ data.grade ?? '--' }}</p>
+      <p><b>{{ data.grade ?? '--' }}</b></p>
     </div>
   </ng-container>
 
@@ -32,13 +32,13 @@
     </div>
     <div class="question-data question-info">
       <p>{{ 'general.subject' | translate }}:</p>
-      <p>{{ data.subject ?? '--' }}</p>
+      <p><b>{{ data.subject ?? '--' }}</b></p>
       <p>{{ 'general.topic' | translate }}:</p>
-      <p>{{ data.topic ?? '--' }}</p>
+      <p><b>{{ data.topic ?? '--' }}</b></p>
       <p>{{ 'general.type' | translate }}:</p>
-      <p>{{ data.subtopic?.name ?? '--' }}</p>
+      <p><b>{{ data.subtopic?.name ?? '--' }}</b></p>
       <p>{{ 'general.grade' | translate }}:</p>
-      <p>{{ data.grade ?? '--' }}</p>
+      <p><b>{{ data.grade ?? '--' }}</b></p>
     </div>
   </ng-container>
 </div>
