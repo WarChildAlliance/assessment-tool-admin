@@ -1,27 +1,35 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Breadcrumb } from './breadcrumb.model';
 import { ActivatedRoute, Router, NavigationEnd, PRIMARY_OUTLET } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { map } from 'rxjs/internal/operators';
+import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
   selector: 'app-custom-breadcrumb',
   templateUrl: './breadcrumb.component.html',
   styleUrls: ['./breadcrumb.component.scss']
 })
-export class CustomBreadcrumbComponent {
+export class CustomBreadcrumbComponent implements OnInit {
 
   @Input() symbol = ' / ';
 
   public breadcrumb: Breadcrumb[] = [];
+  public selfName = '';
 
   private params: { [key: string]: any };
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
+    private userService: UserService
   ) {
     this.breadCrumbData();
+  }
+  ngOnInit(): void {
+    this.userService.getSelf().subscribe(res => {
+      this.selfName = res.first_name ? res.first_name : res.username;
+    });
   }
 
   public sectionColor(section: string): string {

@@ -9,6 +9,7 @@ export class ScoreIndicatorComponent {
 
   @Input() score: number;
   @Input() borderColor = '#EEEEEE';
+  @Input() showScore = true;
 
   constructor() { }
 
@@ -23,7 +24,10 @@ export class ScoreIndicatorComponent {
     if (score < 71) {
       return '#FFC107';
     }
-    return '#8BC34A';
+    if (score < 95 ) {
+      return '#8BC34A';
+    }
+    return '#1B5E20';
   }
 
 }

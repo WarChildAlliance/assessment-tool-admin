@@ -12,6 +12,7 @@ export class QuestionCalculComponent implements OnInit {
   @Input() answer: any;
   @Input() evaluated: boolean;
   @Input() index: number;
+  @Input() shrinkToPreview: boolean;
 
   public operatorSymbol: string;
   public answerNumber: number;

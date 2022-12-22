@@ -21,6 +21,7 @@ export class AssessmentsComponent implements OnInit, AfterViewInit {
 
   public displayedColumns: TableColumn[] = [
     { key: 'icon', name: ' ', type: 'image' },
+    { key: 'grade', name: 'grade' },
     { key: 'title', name: 'assessments.title' },
     { key: 'expand', name: ' ', type: 'expand' },
     { key: 'invites', name: 'assessments.invites' },
@@ -55,6 +56,7 @@ export class AssessmentsComponent implements OnInit, AfterViewInit {
     this.assessmentService.getAssessmentsList().subscribe((assessmentsList) => {
       assessmentsList = assessmentsList.filter((assessment) => assessment.archived !== true);
       this.assessmentsDataSource = new MatTableDataSource(assessmentsList);
+      console.log('this data = ', this.assessmentsDataSource);
     });
   }
 

@@ -10,6 +10,7 @@ export interface GroupTableData {
     assessments_average?: number[];
     speed?: any[];
     subMenu?: any;
+    navigate_to?: string;
 }
 
 export const GroupSubMenuTableData = [

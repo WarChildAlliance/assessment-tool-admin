@@ -10,6 +10,7 @@ import { TableFilter } from 'src/app/core/models/table-filter.model';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { environment } from 'src/environments/environment';
 import { TableActionButtons } from 'src/app/core/models/table-actions-buttons.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-table',
@@ -40,6 +41,7 @@ export class TableComponent implements OnInit, OnChanges {
   @Input() libraryFilters: boolean;
   @Input() scoreListLength: number;
   @Input() actionsButtons: TableActionButtons[];
+  @Input() hasFilters = true;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -56,10 +58,13 @@ export class TableComponent implements OnInit, OnChanges {
 
   public selection: SelectionModel<any> = new SelectionModel<any>(true, []);
   public expandedRowData: any = null;
+  public hasPaginator = true;
 
   constructor(
     private translateService: TranslateService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private router: Router
+
   ) {}
 
   public get accentColor() {
@@ -68,6 +73,7 @@ export class TableComponent implements OnInit, OnChanges {
       case 'students': return '#00BCD4';
       case 'groups': return '#3F51B5';
       case 'questions': return '#FFEB3B';
+      case 'dashboard': return '#009688';
       default: return '#53A8E2';
     }
   }
@@ -80,6 +86,9 @@ export class TableComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+    if (this.pageConfig === 'dashboard') {
+      this.hasPaginator = false;
+    }
     this.selection.changed.subscribe(() => {
       this.selectionChangedEvent.emit(this.selection.selected);
     });
@@ -95,7 +104,9 @@ export class TableComponent implements OnInit, OnChanges {
     if (this.sort) {
       this.loadInitialSorting();
     }
-    this.tableData.paginator = this.paginator;
+    if (this.hasPaginator) {
+      this.tableData.paginator = this.paginator;
+    }
   }
 
   // Return an array exclusively composed of the keys of the columns we want displayed
@@ -194,6 +205,10 @@ export class TableComponent implements OnInit, OnChanges {
 
   public toggleExpandRow(data: any): void {
     this.expandedRowData = this.expandedRowData === data ? null : data;
+  }
+
+  public navigateToPage(page: string): void {
+    this.router.navigate([page]);
   }
 
   // Verify if all the filtered results are selected

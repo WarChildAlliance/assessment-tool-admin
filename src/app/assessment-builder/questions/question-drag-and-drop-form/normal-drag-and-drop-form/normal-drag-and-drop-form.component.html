@@ -50,8 +50,8 @@
 </div>
 
 <div class="validate-drag" *ngIf="setDragItems">
-    <app-custom-button category="tertiary" variant="secondary" [disabled]="!confirmDraggable"
-        (click)="onSetDraggableItems()" variant="default">
+    <app-custom-button category="secondary" variant="primary" [disabled]="!confirmDraggable"
+        (click)="onSetDraggableItems()">
         {{ "assessmentBuilder.questions.dragAndDrop.dragItemsNotifier" | translate }}
     </app-custom-button>
 </div>
@@ -60,7 +60,7 @@
     <button mat-flat-button mat-dialog-close class="dialog-buttons__cancel" color="secondary">
         {{ "general.cancel" | translate }}
     </button>
-    <button mat-flat-button matStepperNext color="accent" (click)="onContinue()" class="dialog-buttons__submit">
+    <button [disabled]="normalDragAndDropForm.invalid" mat-flat-button matStepperNext color="accent" (click)="onContinue()" class="dialog-buttons__submit">
         {{ "general.continue" | translate }}
     </button>
 </div>
