@@ -127,6 +127,13 @@
     "dashboard": {
       "hiTeacher": "Hi Teacher ",
       "text": "Thanks for helping me collecting pollen from flowers globally to create tastefull honey, the more variety the better, mmmmh."
+    },
+    "groups": {
+      "title": "GROUPS PAGE.",
+      "headerPt1": "Hi! This is the",
+      "headerPt2": "Here you can see all your",
+      "overlineTitle": "groups",
+      "headerPt3": "performances, assign assessments to the whole group and adding new group"
     }
   },
   "assessmentBuilder": {

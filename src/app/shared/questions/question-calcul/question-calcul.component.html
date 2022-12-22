@@ -6,7 +6,7 @@
     </mat-icon>
 </div>
 
-<div class="calc-container">
+<div class="calc-container" [ngClass]="{'preview': shrinkToPreview}">
     <div class="calc">
         <p> {{question.first_value}} </p>
         <p> {{operatorSymbol}} </p>
