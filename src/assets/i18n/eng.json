@@ -122,6 +122,13 @@
         "section": "tasks",
         "headerPt3": "You can browse, select and choose."
       }
+    },
+    "groups": {
+      "title": "GROUPS PAGE.",
+      "headerPt1": "Hi! This is the",
+      "headerPt2": "Here you can see all your",
+      "overlineTitle": "groups",
+      "headerPt3": "performances, assign assessments to the whole group and adding new group"
     }
   },
   "assessmentBuilder": {
