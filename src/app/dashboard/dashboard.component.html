@@ -1,4 +1,42 @@
-  <app-score-by-question-set-table class="chart"></app-score-by-question-set-table>
-  <app-score-by-question-set-chart class="chart"></app-score-by-question-set-chart>
-  <app-questions-overview-chart class="chart"></app-questions-overview-chart>
-  <app-answers-overview class="chart"></app-answers-overview>
+<div class="main-board">
+  <app-table [pageConfig]="'dashboard'" [tableData]="groupsDataSource" [displayedColumns]="displayedColumns"
+    [scoreListLength]="scoreListLength" [hasFilters]="false">
+  </app-table>
+
+  <div class="legend">
+    <ng-container *ngFor="let item of legend">
+      <app-score-indicator [score]="item.value" [borderColor]="'#009688'" [showScore]="false"></app-score-indicator>
+      {{item.name}}
+    </ng-container>
+  </div>
+
+  <div class="presentations">
+    <div class="students">
+      <p>
+        {{ 'dashboard.presentation.textPt1' | translate }}
+        <b (click)="redirectToPage('students')">{{ "general.page" | translate: { type: ("general.students" | translate) } }}</b>
+        {{ 'dashboard.presentation.studentsPage.textPt2' | translate }}
+      </p>
+
+      <div class="infos">
+        <div *ngFor="let info of studentsPageInfo" class="info">
+          <img [src]="'assets/icons/' + info.icon + '.svg'">
+          <p>
+            {{ 'dashboard.presentation.studentsPage.' + info.name | translate }}
+          </p>
+        </div>
+      </div>
+
+    </div>
+    <div class="assessments">
+      <p>
+        {{ 'dashboard.presentation.textPt1' | translate }}
+        <b (click)="redirectToPage('/library/assessments')">{{ "general.page" | translate: { type: ("general.assessments" | translate) } }}</b>
+        {{ 'dashboard.presentation.assessmentsPage.textPt2' | translate }}
+      </p>
+      <p>{{ 'dashboard.presentation.assessmentsPage.textPt3' | translate }}</p>
+
+      <img [src]="'assets/images/students-platform.png'">
+    </div>
+  </div>
+</div>

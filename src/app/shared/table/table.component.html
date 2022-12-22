@@ -1,5 +1,6 @@
-<app-table-actions [filtersData]="filtersData" (searchChangedEvent)="applySearchFilter($event)" [buttons]="actionsButtons" [libraryFilters]="libraryFilters"
-  (filtersChangedEvent)="filtersChangedEvent.emit($event)" (buttonClickedEvent)="actionButtonClicked($event)" (resetFiltersEvent)="resetFiltersEvent.emit(true)">
+<app-table-actions *ngIf="hasFilters" [filtersData]="filtersData" (searchChangedEvent)="applySearchFilter($event)"
+  [buttons]="actionsButtons" [libraryFilters]="libraryFilters" (filtersChangedEvent)="filtersChangedEvent.emit($event)"
+  (buttonClickedEvent)="actionButtonClicked($event)" (resetFiltersEvent)="resetFiltersEvent.emit(true)">
 </app-table-actions>
 
 <table mat-table matSort [dataSource]="tableData" multiTemplateDataRows>
@@ -139,6 +140,10 @@
       </td>
     </ng-container>
 
+    <ng-container *ngSwitchCase="'navigate'">
+      <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation(); navigateToPage(element[column.key]);"><mat-icon matListIcon>keyboard_arrow_right</mat-icon></td>
+    </ng-container>
+
     <ng-container *ngSwitchCase="'title'">
       <td  mat-cell class="title" *matCellDef="let element">{{ element[column.key]}}</td>
     </ng-container>
@@ -162,7 +167,7 @@
   </tr>
 </table>
 
-<mat-paginator [pageSizeOptions]="[20, 50, 100]" showFirstLastButtons></mat-paginator>
+<mat-paginator *ngIf="hasPaginator" [pageSizeOptions]="[20, 50, 100]" showFirstLastButtons></mat-paginator>
 
 <ng-template #expandedRow>
 
