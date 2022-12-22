@@ -61,7 +61,8 @@
     "save": "Save",
     "selected": "selected",
     "selQuestion": "SEL Question",
-    "setOfQuestions": "Set Of Questions",
+    "setOfQuestions": "Set of questions",
+    "singleQuestions": "Single questions",
     "simpleDeletePrompt": "Do you really want to delete the {{type}} <b>{{name}}</b> ?",
     "student": "Student",
     "studentName": "Student name",
@@ -120,7 +121,7 @@
         "headerPt3": "You can browse, choose, assign and clone (to edit) these for your group(s)."
       },
       "questions": {
-        "section": "tasks",
+        "section": "questions",
         "headerPt3": "You can browse, select and choose."
       }
     },

@@ -58,6 +58,7 @@
     "selected": "تم الاختيار",
     "selQuestion": "سؤال التعلم الاجتماعي والعاطفي",
     "setOfQuestions": "مجموعة من الأسئلة",
+    "singleQuestions": "Single questions",
     "simpleDeletePrompt": "هل تريد حقًا حذف {{type}} <b> {{name}} </b>؟",
     "student": "طالب علم",
     "studentName": "اسم الطالب",
@@ -439,7 +440,7 @@
         "headerPt3": "يمكنك تصفح واختيار وتعيين واستنساخ (لتحرير) هذه لمجموعتك (مجموعاتك)."
       },
       "questions": {
-        "section": "مهام",
+        "section": "أسئلة",
         "headerPt3": "يمكنك التصفح والاختيار والاختيار."
       }
     },
