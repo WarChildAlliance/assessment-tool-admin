@@ -35,7 +35,7 @@
 <mat-sidenav-container autosize="true" [ngClass]="isAuthenticated ? '' : 'login'">
   <mat-sidenav #sidenav mode="side" [opened]="isAuthenticated">
     <mat-nav-list>
-      <a mat-list-item routerLink="dashboard" routerLinkActive="dashboard-active"(click)="showABSubmenu = false; showLSubmenu = false">
+      <a mat-list-item routerLink="dashboard" routerLinkActive="dashboard-active" (click)="showABSubmenu = false; showLSubmenu = false">
         <mat-icon matListIcon>space_dashboard</mat-icon>
         {{ "general.dashboard" | translate }}
       </a>
@@ -49,7 +49,7 @@
       </a>
       <!-- Submenu for Library -->
       <mat-divider *ngIf="showLSubmenu"></mat-divider>
-      <mat-list-item (click)="showABSubmenu = false; showLSubmenu = !showLSubmenu">
+      <mat-list-item (click)="showABSubmenu = false; showLSubmenu = !showLSubmenu" routerLink="library/assessments">
         <mat-icon matListIcon>insert_drive_file</mat-icon>
         {{ "general.library" | translate }}
       </mat-list-item>
@@ -67,7 +67,7 @@
       </div>
       <!-- Submenu for Assesment Builder -->
       <mat-divider *ngIf="showABSubmenu"></mat-divider>
-      <mat-list-item (click)="showLSubmenu = false; showABSubmenu = !showABSubmenu">
+      <mat-list-item (click)="showLSubmenu = false; showABSubmenu = !showABSubmenu" routerLink="assessment-builder/your-assessments">
         <mat-icon matListIcon>space_dashboard</mat-icon>
         {{ "general.assessmentBuilder" | translate }}
       </mat-list-item>

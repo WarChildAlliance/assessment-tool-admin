@@ -2,7 +2,7 @@
   [style.background]="getIndicatorColor(score)"
   [style.border-color]="borderColor"
 >
-  <span>{{ score }}</span>
+  <span *ngIf="showScore">{{ score }}</span>
 </div>
 <ng-template #noScoreTemplate>
   <span class="score-ring" [style.border-color]="borderColor">

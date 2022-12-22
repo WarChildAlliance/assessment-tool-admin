@@ -45,6 +45,7 @@
     "numbers": "Numbers",
     "noData": "No data to display",
     "order": "Order",
+    "page": "{{type}} page",
     "preview": "Preview",
     "private": "Private",
     "publicAssessments": "Public assessments",
@@ -122,6 +123,10 @@
         "section": "tasks",
         "headerPt3": "You can browse, select and choose."
       }
+    },
+    "dashboard": {
+      "hiTeacher": "Hi Teacher ",
+      "text": "Thanks for helping me collecting pollen from flowers globally to create tastefull honey, the more variety the better, mmmmh."
     },
     "groups": {
       "title": "GROUPS PAGE.",
@@ -329,6 +334,20 @@
     }
   },
   "dashboard": {
+    "averageSpeed": "Average speed",
+    "presentation": {
+      "textPt1": "On the ",
+      "studentsPage": {
+        "textPt2": " you can follow the progress of your students.",
+        "checkSel": "You can check their latest SEL scores.",
+        "checkScore": "You can check what assessments they have completed and what scores they got.",
+        "checkHoneypot": "You can follow how many honeypots they have won."
+      },
+      "assessmentsPage": {
+        "textPt2": " you can check the content of each assessment and the overall performance in each of them.",
+        "textPt3": "Each assessment is made up of three sets of questions, of five questions each. Which student will see as follows in the game:"
+      }
+    },
     "answersOverview": {
       "individualResults": "Individual Results"
     },

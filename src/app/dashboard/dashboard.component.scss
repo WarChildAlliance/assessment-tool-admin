@@ -1,3 +1,87 @@
-.chart {
-   margin: 30px;
+.legend {
+   display: flex;
+   max-width: 350px;
+   place-items: center;
+   flex-direction: row;
+   justify-content: space-between;
+   margin-top: 1em;
+
+   ::ng-deep .score-ring {
+      width: 24px;
+   }
+}
+
+.presentations {
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+   margin-top: 2em;
+
+   .students {
+      border: 2px solid #00BCD4;
+
+      b {
+         color: #00BCD4;
+      }
+
+      .infos {
+         display: flex;
+         flex-direction: row;
+         padding: 5em 0;
+         place-content: space-between;
+
+         .info {
+            display: flex;
+            flex-direction: column;
+            border: 2px solid #EEEEEE;
+            min-height: 170px;
+            padding: 1em;
+            justify-content: center;
+            max-width: 150px;
+
+            img {
+               height: 44px;
+               margin-bottom: 0.5em;
+            }
+         }
+      }
+   }
+
+   .assessments {
+      border: 2px solid #ff5722;
+      place-items: center;
+
+      b {
+         color: #ff5722;
+      }
+
+      img {
+         margin-top: 1em;
+      }
+   }
+
+   .assessments,
+   .students {
+      display: flex;
+      flex-direction: column;
+      border-radius: 4px;
+      padding: 1em;
+      width: 46%;
+
+      p {
+         margin: 0;
+         text-align: justify;
+      }
+
+      span {
+         display: flex;
+         flex-direction: row;
+         white-space: pre;
+      }
+
+      b {
+         cursor: pointer;
+         text-decoration: underline;
+      }
+   }
 }

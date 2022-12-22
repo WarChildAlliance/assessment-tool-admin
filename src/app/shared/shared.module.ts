@@ -108,7 +108,8 @@ import { CustomSpinnerModule } from './spinner/spinner.module';
     CustomizedDragAndDropComponent,
     ShapesComponent,
     TableActionsComponent,
-    QuestionSetAccessesBuilderComponent
+    QuestionSetAccessesBuilderComponent,
+    ScoreIndicatorComponent
   ]
 })
 
