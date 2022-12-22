@@ -109,3 +109,10 @@
         }
     }
 }
+
+.preview {
+    flex-direction: column;
+    .dominoes {
+        grid-template-columns: auto !important;
+    }
+}

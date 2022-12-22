@@ -41,6 +41,7 @@ import { TableRowDetailsComponent } from './table-row-details/table-row-details.
 import { ScoreIndicatorComponent } from './score-indicator/score-indicator.component';
 import { QuestionSetAccessesBuilderComponent } from './question-set-accesses-builder/question-set-accesses-builder.component';
 import { MatMenuModule } from '@angular/material/menu';
+import { CustomSpinnerModule } from './spinner/spinner.module';
 
 @NgModule({
   declarations: [
@@ -88,7 +89,8 @@ import { MatMenuModule } from '@angular/material/menu';
     TranslateModule,
     MatDividerModule,
     CustomButtonModule,
-    MatMenuModule
+    MatMenuModule,
+    CustomSpinnerModule
   ],
   exports: [
     TableComponent,
