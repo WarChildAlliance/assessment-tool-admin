@@ -30,7 +30,7 @@ export class QuestionSetDetailsComponent implements OnInit {
   public questionSet: any;
   public learningObj: any;
   public isDownloadable = false;
-  public isAnswered = false;
+  // public isAnswered = false;
 
   public reorder = false;
   public changedOrder = false;
@@ -259,7 +259,8 @@ export class QuestionSetDetailsComponent implements OnInit {
       this.order = questionList.length
         ? questionList.sort((a, b) => parseFloat(a.order) - parseFloat(b.order))[questionList.length - 1].order + 1
         : 1;
-      this.isAnswered = questionList.some(question => question.answered);
+       // In case of using the logic that prevents to edit if student already answered it again: uncomment the following line
+      // this.isAnswered = questionList.some(question => question.answered);
       this.selQuestionsCount = this.questionsList.filter(question => question.question_type === 'SEL').length;
     });
   }
