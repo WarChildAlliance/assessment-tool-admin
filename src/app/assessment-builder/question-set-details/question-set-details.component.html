@@ -13,15 +13,19 @@
           : ("assessmentBuilder.assessmentSummary.reorderItems" | translate: { item: ("general.questions" | translate)}) }}
       </app-custom-button>
       <span *ngIf="!reorder">
-        <span matTooltip="{{ 'assessmentBuilder.blocked' | translate: { type: ('general.questionSet' | translate | lowercase) } }}"
+        <!-- In case of using the logic that prevents to edit if student already answered it again
+          2. uncomment the <span matTooltip>
+          1. add to the <app-custom-button> : [disabled]="isAnswered" 
+        -->
+        <!-- <span matTooltip="{{ 'assessmentBuilder.blocked' | translate: { type: ('general.questionSet' | translate | lowercase) } }}"
           matTooltipPosition="above"
           [matTooltipDisabled]="!isAnswered"
-        >
+        > -->
           <app-custom-button *ngIf="questionSetDetails.can_edit && !questionSetDetails.archived" category="tertiary" variant="primary"
-            icon="edit" (click)="openEditQuestionSetDialog(questionSetDetails)" [disabled]="isAnswered">
+            icon="edit" (click)="openEditQuestionSetDialog(questionSetDetails)">
           {{ "general.edit" | translate: {type: ''} }}
           </app-custom-button>
-        </span>
+        <!-- </span> -->
         <app-custom-button *ngIf="questionSetDetails.can_edit" category="tertiary" variant="primary" icon="delete" (click)="deleteQuestionSet()">
           {{ "general.delete" | translate: {type: ''} }}
         </app-custom-button>
@@ -87,14 +91,18 @@
         </app-custom-button>
       </div>
     </mat-card>
+    <!-- In case of using the logic that prevents to edit if student already answered it again
+      2. uncomment the <span matTooltip>
+      1. add to the <app-custom-button> : [disabled]="questionDetails.answered" 
+    -->
     <div class="question-details" *ngFor="let questionDetails of questionsList" cdkDrag [cdkDragDisabled]="!reorder">
-      <span matTooltip="{{ 'assessmentBuilder.blocked' | translate: { type: ('general.question' | translate | lowercase) } }}"
-        [matTooltipDisabled]="!questionDetails.answered" matTooltipPosition="above">
-        <app-custom-button *ngIf="questionSetDetails.can_edit" [disabled]="questionDetails.answered" category="tertiary" variant="neutral"
+      <!-- <span matTooltip="{{ 'assessmentBuilder.blocked' | translate: { type: ('general.question' | translate | lowercase) } }}"
+        [matTooltipDisabled]="!questionDetails.answered" matTooltipPosition="above"> -->
+        <app-custom-button *ngIf="questionSetDetails.can_edit"  category="tertiary" variant="neutral"
           (click)="openQuestionDialog(questionDetails)">
           {{ "general.edit" | translate: {type: ''} }}
         </app-custom-button>
-      </span>
+      <!-- </span> -->
       <app-custom-button *ngIf="questionSetDetails.can_edit" category="tertiary" variant="neutral" (click)="deleteQuestion(questionDetails.id, questionDetails.title)">
         {{ "general.delete" | translate: {type: ''} }}
       </app-custom-button>
