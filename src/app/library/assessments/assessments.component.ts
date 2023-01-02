@@ -56,7 +56,6 @@ export class AssessmentsComponent implements OnInit, AfterViewInit {
     this.assessmentService.getAssessmentsList().subscribe((assessmentsList) => {
       assessmentsList = assessmentsList.filter((assessment) => assessment.archived !== true);
       this.assessmentsDataSource = new MatTableDataSource(assessmentsList);
-      console.log('this data = ', this.assessmentsDataSource);
     });
   }
 

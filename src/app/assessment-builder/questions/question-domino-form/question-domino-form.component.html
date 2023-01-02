@@ -30,7 +30,7 @@
 
                 <mat-form-field appearance="outline" class="form-group" color="accent">
                     <mat-label for="order">{{ "general.order" | translate }}</mat-label>
-                    <input matInput type="number" formControlName="order">
+                    <input matInput type="number" min="1" formControlName="order">
                 </mat-form-field>
             </div>
 

@@ -135,6 +135,7 @@ export class AssessmentFormDialogComponent implements OnInit {
   public handleFileInput(event: File): void {
     this.icon = event;
     this.assessmentForm.patchValue({icon: this.icon});
+    this.assessmentForm.markAsDirty();
   }
 
   public async setDefaultIcon(): Promise<void> {

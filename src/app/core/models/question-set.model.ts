@@ -10,4 +10,5 @@ export interface QuestionSet {
     assessment?: Assessment;
     questions?: any[];
     score?: number;
+    title?: string;
 }
