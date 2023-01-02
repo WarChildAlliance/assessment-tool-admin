@@ -10,7 +10,10 @@
   .mat-column-title {
     width: 40%;
   }
-  .mat-column-icon {
+  .mat-column-icon, .mat-column-score {
     width: 10%;
+  }
+  .mat-column-grade, .mat-column-plays, .mat-column-invites, .mat-column-expand {
+    width: 5%;
   }
 }
