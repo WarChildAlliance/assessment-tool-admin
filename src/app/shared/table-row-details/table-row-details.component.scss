@@ -17,8 +17,8 @@
     display: flex;
     align-items: flex-start;
     place-content: flex-start;
-    flex-wrap: wrap;
-    gap: 4px;
+    flex-direction: column;
+    gap: 10px;
   }
   .question-data {
     padding-top: 1em;
@@ -33,12 +33,13 @@
 }
 
 .question-preview-nav {
-  background-color: #F9F8D6;
+  background-color: #BFF09E;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-
+  border: 2px solid #4CAF50;
+  border-radius: 2%;
   app-custom-button {
     width: 10%;
   }
@@ -49,4 +50,23 @@
   display: flex;
   flex-direction: column;
   width: 80%;
+}
+
+.question-sets {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  app-score-indicator {
+    margin-right: 5px;
+  }
+}
+.selected {
+  ::before {
+    content: "|";
+    color: #FF5722;
+    background-color: #FF5722;
+    position: absolute;
+    left: -10px;
+  }
 }

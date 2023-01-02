@@ -21,7 +21,7 @@
         </mat-form-field>
         <mat-form-field appearance="outline" color="accent">
             <mat-label>{{ "general.order" | translate }}</mat-label>
-            <input matInput required type="number" formControlName="order">
+            <input matInput type="number" min="1" formControlName="order">
         </mat-form-field>
         <mat-form-field appearance="outline" color="accent">
             <mat-label>{{ "general.answer" | translate }}</mat-label>
