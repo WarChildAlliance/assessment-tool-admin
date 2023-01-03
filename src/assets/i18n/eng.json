@@ -44,6 +44,7 @@
     "no": "No",
     "numbers": "Numbers",
     "noData": "No data to display",
+    "optional": "(Optional)",
     "order": "Order",
     "page": "{{type}} page",
     "preview": "Preview",
@@ -169,6 +170,7 @@
     "noFileChosen": "No file chosen",
     "order": "Order",
     "questions": {
+      "createAQuestionType": "Create a {{type}} question",
       "questionTitle": "Question (including instruction) spoken by Gobee",
       "titlePlaceholder": "Question with instructions for the student",
       "typeStep": "Select type of question",
@@ -241,10 +243,11 @@
       "errorAudio": "Can not play audio in your browser",
       "imageAttachment": "Image attachment",
       "numberline": {
-        "endNumber": "End number",
+        "type": "Numberline",
+        "endNumber": "Last number on the line",
         "endError": "Must be strictly superior to the start number",
-        "expectedValue": "Expected value",
-        "startNumber": "Start number",
+        "correctAnswer": "Correct answer",
+        "startNumber": "First number on the line",
         "stepSize": "Step size",
         "stepError": "Must be strictly superior to the start number",
         "shuffle": "Shuffle"
@@ -252,6 +255,7 @@
       "or": "OR",
       "questionCloneSuccess": "Question successfully cloned",
       "select": {
+        "type": "(Multi) Select",
         "attachments": "Attachments",
         "display": "Display",
         "isCorrectAnswer": "Correct answer?",
@@ -260,7 +264,6 @@
         "optionsValidAnswerErrors": "Questions can only have one correct answer.",
         "showOptionsTitle": "Show options title",
         "optionsStep": "Add options",
-        "formTitle": "Create a (Multi) Select question",
         "optionsTitle": "Add options and select the correct answer",
         "shuffleAnswers": "Shuffle answers"
       },

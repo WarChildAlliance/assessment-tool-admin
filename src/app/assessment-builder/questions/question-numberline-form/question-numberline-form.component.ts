@@ -67,6 +67,7 @@ export class QuestionNumberlineFormComponent implements OnInit {
   public audioAttachment = this.questionFormService.audioAttachment;
 
   public attachmentsResetSubject$ = new Subject<void>();
+  public questionPreview: any;
 
   public selectQuestionForm: FormGroup = new FormGroup({
     question: new FormControl(null)
@@ -110,6 +111,11 @@ export class QuestionNumberlineFormComponent implements OnInit {
         this.questionsList = res;
       });
     }
+
+    this.numberLineForm.valueChanges.subscribe(() => {
+      this.setQuestionPreview();
+    });
+
     await this.questionFormService.resetAttachments().then(() => this.attachmentsResetSubject$.next());
   }
 
@@ -135,6 +141,16 @@ export class QuestionNumberlineFormComponent implements OnInit {
     this.setForm(question);
   }
 
+  public onAttachmentsChange(file: any, type: string): void{
+    this.numberLineForm.markAsDirty();
+    if (type === 'image') {
+      this.questionFormService.imageAttachment = file;
+    } else {
+      this.questionFormService.audioAttachment = file;
+    }
+  this.setQuestionPreview();
+  }
+
   private createNumberLineQuestion(data: any): void {
     this.questionFormService.createQuestion(data).then(() => {
       this.questionFormService.emitMessage(this.question === undefined, this.toClone);
@@ -156,6 +172,24 @@ export class QuestionNumberlineFormComponent implements OnInit {
     this.attachmentsResetSubject$.next();
   }
 
+  private setQuestionPreview(): void {
+    const attachments = [];
+    if (this.questionFormService.imageAttachment || this.imageAttachment) {
+      attachments.push({
+        file: this.questionFormService.imageAttachment ?? this.imageAttachment,
+        attachment_type: 'IMAGE'
+      });
+    }
+    if (this.questionFormService.audioAttachment || this.audioAttachment) {
+      attachments.push({
+        file: this.questionFormService.audioAttachment || this.audioAttachment,
+        attachment_type: 'AUDIO'
+      });
+    }
+
+    this.questionPreview = { ...this.numberLineForm.value, attachments };
+  }
+
   private async setForm(question: any): Promise<void> {
     this.selectQuestion = false;
     this.question = question;
@@ -174,6 +208,8 @@ export class QuestionNumberlineFormComponent implements OnInit {
       this.imageAttachment = res.image;
       this.audioAttachment = res.audio;
     });
+
+    this.setQuestionPreview();
 
     if (this.toClone) {
       this.numberLineForm.markAsDirty();

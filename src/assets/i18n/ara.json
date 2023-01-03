@@ -42,6 +42,7 @@
     "logoutPrompt": "هل تريد حقًا تسجيل الخروج؟",
     "name": "اسم",
     "noData": "لا توجد بيانات لعرضها",
+    "optional": "(اختياري)",
     "order": "طلب",
     "page": "{{type}} الصفحة",
     "preview": "معاينة",
@@ -131,6 +132,7 @@
     "noFileChosen": "لم تقم باختيار ملف",
     "order": "ترتيب",
     "questions": {
+      "createAQuestionType": "قم بإنشاء سؤال {{type}}",
       "questionTitle": "سؤال (بما في ذلك التعليمات) قاله جوبي",
       "titlePlaceholder": "سؤال مع تعليمات للطالب",
       "typeStep": "حدد نوع السؤال",
@@ -203,10 +205,11 @@
       "errorAudio": "لا يمكن تشغيل الصوت في متصفحك",
       "imageAttachment": "مرفق الصورة",
       "numberline": {
-        "endNumber": "رقم النهاية",
-        "startNumber": "رقم البداية",
+        "type": "رقم الخط",
+        "endNumber": "الرقم الأخير على الخط",
+        "startNumber": "الرقم الأول على الخط",
         "stepSize": "حجم الخطوة",
-        "expectedValue": "القيمة المتوقعة",
+        "correctAnswer": "اجابة صحيحة",
         "endError": "يجب أن يكون أعلى بشكل صارم من رقم البداية",
         "stepError": "يجب أن يكون أعلى بشكل صارم من رقم البداية",
         "shuffle": "خلط"
@@ -214,6 +217,7 @@
       "or": "أو",
       "questionCloneSuccess": "تم استنساخ السؤال بنجاح",
       "select": {
+        "type": "(متعدد) حدد",
         "attachments": "المرفقات",
         "display": "عرض",
         "isCorrectAnswer": "هل الجواب الصحيح؟",
@@ -222,7 +226,6 @@
         "optionsValidAnswerErrors": "يمكن أن يكون للأسئلة إجابة واحدة صحيحة.",
         "showOptionsTitle": "إظهار عنوان الخيارات",
         "optionsStep": "أضف خيارات",
-        "formTitle": "قم بإنشاء سؤال تحديد (متعدد)",
         "optionsTitle": "أضف خيارات وحدد الإجابة الصحيحة",
         "shuffleAnswers": "خلط الإجابات"
       },

@@ -1,7 +1,8 @@
 <div class="question-header">
     <h2>Q{{ question.order }}</h2>
     <h2>{{ question.title }}</h2>
-    <img *ngIf="imageAttachment" [src]="utilitiesService.getSource(imageAttachment.file)" alt="" class="img-attachment">
+    <img *ngIf="imageAttachment" alt="" class="img-attachment"
+        [src]="question.newFile ? imagePreview : utilitiesService.getSource(preview ? imageAttachment.file.file : imageAttachment.file)">
     <mat-icon class="play-audio" (click)="playAudio(utilitiesService.getSource(audioAttachment.file))" *ngIf="audioAttachment">volume_up</mat-icon>
 </div>
 <div class="number-line">

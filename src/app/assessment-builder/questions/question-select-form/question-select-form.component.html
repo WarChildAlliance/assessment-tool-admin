@@ -16,13 +16,13 @@
     </div>
 
     <form *ngIf="!selectQuestion" [formGroup]="selectForm">
-        <h1>{{ "assessmentBuilder.questions.select.formTitle" | translate }}</h1>
+        <h1>{{ "assessmentBuilder.questions.createAQuestionType" | translate:{ type: ('assessmentBuilder.questions.select.type' | translate)} }}</h1>
 
         <div class="form-container">
             <mat-form-field appearance="outline" class="title" color="accent">
                 <mat-label for="title" matTooltip="test">
                     {{ "assessmentBuilder.questions.questionTitle" | translate }}
-                    <mat-icon >help_outline</mat-icon>
+                    <mat-icon>help_outline</mat-icon>
                 </mat-label>
                 <textarea matInput formControlName="title" cdkTextareaAutosize></textarea>
             </mat-form-field>
