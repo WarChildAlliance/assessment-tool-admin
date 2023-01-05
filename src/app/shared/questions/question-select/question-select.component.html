@@ -16,7 +16,10 @@
                     <mat-card-content>
                         <div *ngFor="let attachment of option.attachments">
                             <img *ngIf="attachment.attachment_type === 'IMAGE'"  alt=""
-                            [src]="option.newFile ? attachment.newFile : utilitiesService.getSource(preview && attachment.newFile ? '/media/attachments/' + attachment.newFile?.name : attachment.file)">
+                            [src]="option.newFile && attachment.newFile ? attachment.newFile : utilitiesService.getSource(preview && attachment.newFile
+                                ? '/media/attachments/' + attachment.newFile?.name
+                                : (attachment.file.name ? ('/media/attachments/' + attachment.file.name) : attachment.file)
+                            )">
                         </div>
                     </mat-card-content>
                     <mat-card-actions>
@@ -52,7 +55,10 @@
                 <mat-card-content>
                     <div *ngFor="let attachment of option.attachments">
                         <img *ngIf="attachment.attachment_type === 'IMAGE'"  alt=""
-                        [src]="option.newFile ? attachment.newFile : utilitiesService.getSource(preview && attachment.newFile ? '/media/attachments/' + attachment.newFile?.name : attachment.file)">
+                        [src]="option.newFile && attachment.newFile ? attachment.newFile : utilitiesService.getSource(preview && attachment.newFile
+                            ? '/media/attachments/' + attachment.newFile?.name
+                            : (attachment.file.name ? ('/media/attachments/' + attachment.file.name) : attachment.file)
+                        )">
                     </div>
                 </mat-card-content>
                 <mat-card-actions>

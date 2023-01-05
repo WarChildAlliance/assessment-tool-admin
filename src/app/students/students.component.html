@@ -1,33 +1,24 @@
 <div class="main-board">
-  <div class="main-board__top-container">
-    <h1>{{ "general.students" | translate }} ({{ studentsDataSource.data.length }})
-      <span *ngIf="selectedUsers.length"> ({{ selectedUsers.length }} {{ "general.selected" | translate }})</span>
-    </h1>
-    <div class="main-board__top-container__actions">
-      <app-custom-button icon="add_circle_outline" category="secondary" variant="primary" (click)="openCreateStudentDialog()">
-        {{ "general.add" | translate: { type: ("general.student" | translate | lowercase) } }}
-      </app-custom-button>
-      <app-custom-button icon="edit_outline" category="secondary" variant="primary" (click)="openEditStudentDialog()"
-      [disabled]="!selectedUsers.length || selectedUsers.length > 1">
-      {{ "general.edit" | translate: { type: ("general.student" | translate | lowercase) } }}
-      </app-custom-button>
-      <app-custom-button icon="delete" category="secondary" variant="primary" (click)="deleteStudent()"
-      [disabled]="!selectedUsers.length">
-      {{ "general.delete" | translate: {
-        type: !selectedUsers.length ? ("students.studentOneOrMany" | translate) :
-          (selectedUsers.length == 1 ? "general.student" : "general.students") | translate | lowercase
-      } }}
-      </app-custom-button>
-      <app-custom-button icon="event_available" category="secondary" variant="primary" (click)="openAssignQuestionSetDialog()">
-      {{ "students.assignQuestionSet" | translate }}
-      </app-custom-button>
-<!--       <button mat-flat-button [disabled]="true" color="primary" (click)="downloadData()">
-        <mat-icon>get_app</mat-icon><span>Export</span>
-      </button> -->
-    </div>
+  <app-table [pageConfig]="'students'" [tableData]="studentsDataSource" [filtersData]="filters" [displayedColumns]="displayedColumns"
+    [isSelectable]="true" (selectionChangedEvent)="onSelectionChange($event)" [filtersReset$]="filtersReset$" [actionsButtons]="buttons"
+    (filtersChangedEvent)="onFiltersChange($event)" (subMenuEvent)="subMenuAction($event)" (actionButtonEvent)="actionButton($event)">
+  </app-table>
+</div>
+<div class="captions">
+  <div class="captions__item">
+    <div class="ring" style="background-color: #FF5722"></div>
+    <p>< 40%</p>
   </div>
-
-  <app-table [tableData]="studentsDataSource" [filtersData]="filters" [displayedColumns]="displayedColumns"
-    [isSelectable]="true" (selectionChangedEvent)="onSelectionChange($event)" (resetFiltersEvent)="getStudentTableList(true)"
-    (filtersChangedEvent)="onFiltersChange($event)" (openDetailsEvent)="onOpenDetails($event)"></app-table> 
+  <div class="captions__item">
+    <div class="ring" style="background-color: #FFC107"></div>
+    <p>41 - 70%</p>
+  </div>
+  <div class="captions__item">
+    <div class="ring" style="background-color: #8BC34A"></div>
+    <p>71 - 94%</p>
+  </div>
+  <div class="captions__item">
+    <div class="ring" style="background-color: #1B5E20"></div>
+    <p>> 95%</p>
+  </div>
 </div>

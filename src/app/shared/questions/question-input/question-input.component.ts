@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { UtilitiesService } from 'src/app/core/services/utilities.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { UtilitiesService } from 'src/app/core/services/utilities.service';
   templateUrl: './question-input.component.html',
   styleUrls: ['./question-input.component.scss']
 })
-export class QuestionInputComponent implements OnInit {
+export class QuestionInputComponent implements OnChanges {
 
   @Input() question: any;
   @Input() answer: any;
@@ -18,7 +18,7 @@ export class QuestionInputComponent implements OnInit {
 
   constructor(public utilitiesService: UtilitiesService) { }
 
-  ngOnInit(): void {
+  ngOnChanges(): void {
     this.setAttachments();
   }
 

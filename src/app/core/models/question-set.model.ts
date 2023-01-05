@@ -10,5 +10,6 @@ export interface QuestionSet {
     assessment?: Assessment;
     questions?: any[];
     score?: number;
+    icon?: string;
     title?: string;
 }

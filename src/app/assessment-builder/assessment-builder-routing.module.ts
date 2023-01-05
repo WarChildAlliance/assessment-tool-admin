@@ -11,12 +11,6 @@ const routes: Routes = [
   {
     path: ':assessment_id/question_sets/:question_set_id',
     component: QuestionSetDetailsComponent,
-    data: {
-      breadcrumb: [
-        { label: 'general.assessmentBuilder', url: '/assessment-builder' },
-        { label: 'general.question', url: '' }
-      ]
-    },
   }
 ];
 

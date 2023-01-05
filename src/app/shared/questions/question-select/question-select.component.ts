@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { UtilitiesService } from 'src/app/core/services/utilities.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { UtilitiesService } from 'src/app/core/services/utilities.service';
   templateUrl: './question-select.component.html',
   styleUrls: ['./question-select.component.scss']
 })
-export class QuestionSelectComponent implements OnInit, OnChanges {
+export class QuestionSelectComponent implements OnChanges {
 
   @Input() question: any;
   @Input() answer: any;
@@ -22,16 +22,10 @@ export class QuestionSelectComponent implements OnInit, OnChanges {
 
   constructor(public utilitiesService: UtilitiesService) { }
 
-  ngOnInit(): void {
+  ngOnChanges(): void {
     this.imageAttachment = this.question.attachments.find(i => i.attachment_type === 'IMAGE');
     this.audioAttachment = this.question.attachments.find(a => a.attachment_type === 'AUDIO');
 
-    if (this.preview) {
-      this.onPreviewQuestion();
-    }
-  }
-
-  ngOnChanges(): void {
     if (this.preview) {
       this.onPreviewQuestion();
     }
@@ -59,8 +53,6 @@ export class QuestionSelectComponent implements OnInit, OnChanges {
 
   private onPreviewQuestion(): void {
     // in preview mode an audio preview isn't available to be played, only the icon is shown
-    this.audioAttachment = this.question.attachments.find(a => a.attachment_type === 'AUDIO');
-    this.imageAttachment = this.question.attachments.find(i => i.attachment_type === 'IMAGE');
 
     if (this.imageAttachment) {
       if (!(this.imageAttachment.file instanceof File)) {

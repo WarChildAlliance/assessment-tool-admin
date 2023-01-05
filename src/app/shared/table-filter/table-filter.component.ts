@@ -26,7 +26,7 @@ export class TableFilterComponent implements OnInit {
           if (option.selected) {
             option.deselect();
           }
-        });;
+        });
       });
     }
   }

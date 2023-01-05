@@ -3,6 +3,7 @@ import { Breadcrumb } from './breadcrumb.model';
 import { ActivatedRoute, Router, NavigationEnd, PRIMARY_OUTLET } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { map } from 'rxjs/internal/operators';
+import { BreadcrumbService } from 'src/app/core/services/breadcrumb.service';
 import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
@@ -15,6 +16,7 @@ export class CustomBreadcrumbComponent implements OnInit {
   @Input() symbol = ' / ';
 
   public breadcrumb: Breadcrumb[] = [];
+  public componentData: any;
   public selfName = '';
 
   private params: { [key: string]: any };
@@ -22,9 +24,13 @@ export class CustomBreadcrumbComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
+    private breadcrumbService: BreadcrumbService,
     private userService: UserService
   ) {
     this.breadCrumbData();
+    this.breadcrumbService.componentData.subscribe((value: any) => {
+      this.componentData = value;
+    });
   }
   ngOnInit(): void {
     this.userService.getSelf().subscribe(res => {

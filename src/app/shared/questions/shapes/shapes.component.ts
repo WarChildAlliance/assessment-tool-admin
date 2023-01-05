@@ -1,11 +1,11 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-shapes',
   templateUrl: './shapes.component.html',
   styleUrls: ['./shapes.component.scss']
 })
-export class ShapesComponent implements OnInit, OnChanges {
+export class ShapesComponent implements OnChanges {
   @Input() shape: string;
   @Input() style: string;
   @Input() quantity: number;
@@ -35,8 +35,5 @@ export class ShapesComponent implements OnInit, OnChanges {
       this.color = findColor ?? '#CC0E2F';
       this.colorEvent.emit(findColor);
     }
-  }
-
-  ngOnInit(): void {
   }
 }
