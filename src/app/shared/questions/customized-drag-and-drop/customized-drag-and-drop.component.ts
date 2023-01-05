@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { UtilitiesService } from 'src/app/core/services/utilities.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { UtilitiesService } from 'src/app/core/services/utilities.service';
   templateUrl: './customized-drag-and-drop.component.html',
   styleUrls: ['./customized-drag-and-drop.component.scss']
 })
-export class CustomizedDragAndDropComponent implements OnInit {
+export class CustomizedDragAndDropComponent implements OnChanges {
   @Input() question: any;
   @Input() answer: any;
   @Input() evaluated: boolean;
@@ -30,27 +30,29 @@ export class CustomizedDragAndDropComponent implements OnInit {
     public utilitiesService: UtilitiesService
   ) { }
 
-  ngOnInit(): void {
+  ngOnChanges(): void {
     this.setAttachments();
-    if (this.question) {
-      const operator = this.operatorTypes.find(op => op.id === this.question.operator);
-      this.operatorSymbol = operator?.symbol;
-      if (operator.id === 'ADDITION') {
-        this.answerNumber = this.question.first_value + this.question.second_value;
-      } else if (operator.id === 'SUBTRACTION') {
-        this.answerNumber = this.question.first_value - this.question.second_value;
-      } else if (operator.id === 'DIVISION') {
-        this.answerNumber = this.question.first_value / this.question.second_value;
-      } else {
-        this.answerNumber = this.question.first_value * this.question.second_value;
-      }
-    }
+    this.calcAnswer();
   }
 
   public playAudio(file): void {
     const audio = new Audio(file);
     audio.load();
     audio.play();
+  }
+
+  private calcAnswer(): void {
+    const operator = this.operatorTypes.find(op => op.id === this.question.operator);
+    this.operatorSymbol = operator?.symbol;
+    if (operator.id === 'ADDITION') {
+      this.answerNumber = this.question.first_value + this.question.second_value;
+    } else if (operator.id === 'SUBTRACTION') {
+      this.answerNumber = this.question.first_value - this.question.second_value;
+    } else if (operator.id === 'DIVISION') {
+      this.answerNumber = this.question.first_value / this.question.second_value;
+    } else {
+      this.answerNumber = this.question.first_value * this.question.second_value;
+    }
   }
 
   private setAttachments(): void {
