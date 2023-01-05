@@ -1,5 +1,6 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
+import { Subject } from 'rxjs';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
@@ -34,6 +35,7 @@ export class TableComponent implements OnInit, OnChanges {
   @Input() displayedColumns: TableColumn[];
   @Input() tableData: MatTableDataSource<any>;
   @Input() filtersData: TableFilter[];
+  @Input() filtersReset$: Subject<void>;
   @Input() pageConfig: string;
   @Input() isSelectable: boolean;
   @Input() searchableColumns: string[];
@@ -57,14 +59,20 @@ export class TableComponent implements OnInit, OnChanges {
   @Output() resetFiltersEvent = new EventEmitter<boolean>(true);
 
   public selection: SelectionModel<any> = new SelectionModel<any>(true, []);
-  public expandedRowData: any = null;
+  public expandedRow: any = null;
+  public expandedData: any = null;
   public hasPaginator = true;
+
+  public selOptions = [
+    {id: 'NOT_REALLY', icon: 'notReallyLikeMe'},
+    {id: 'A_LITTLE', icon: 'aLittleLikeMe'},
+    {id: 'A_LOT', icon: 'aLotLikeMe'}
+  ];
 
   constructor(
     private translateService: TranslateService,
     private alertService: AlertService,
     private router: Router
-
   ) {}
 
   public get accentColor() {
@@ -107,6 +115,22 @@ export class TableComponent implements OnInit, OnChanges {
     if (this.hasPaginator) {
       this.tableData.paginator = this.paginator;
     }
+  }
+
+  public isInstance(value: any, type: string): boolean {
+    return typeof value === type;
+  }
+
+  public getSelOption(statement: string): any {
+    return this.selOptions.find(e => e.id === statement);
+  }
+
+  // Returns the appropriate icon to represent SEL progress
+  // SEL progress values can either be -1, 0 or 1
+  public getSelArrowIcon(progress: number): string {
+    return ['arrow_red_down', 'arrow_yellow_right', 'arrow_red_down'][
+      progress + 1
+    ];
   }
 
   // Return an array exclusively composed of the keys of the columns we want displayed
@@ -169,6 +193,12 @@ export class TableComponent implements OnInit, OnChanges {
 
   public openElementDetails(id): void {
     this.openDetailsEvent.emit(id.toString());
+
+    if (this.pageConfig === 'students') {
+      const student = this.tableData.data.find(e => e.id === id);
+      const firstAssessment = student.assessments[0] ?? null;
+      this.toggleExpandRow(student, firstAssessment);
+    }
   }
 
   public copyAlert(): void {
@@ -203,8 +233,25 @@ export class TableComponent implements OnInit, OnChanges {
     return !str || /^\s*$/.test(str);
   }
 
-  public toggleExpandRow(data: any): void {
-    this.expandedRowData = this.expandedRowData === data ? null : data;
+  public isRowExpanded(row): boolean {
+    return row === this.expandedRow;
+  }
+
+  public toggleExpandRow(row: any, data: any, expandedKey: string = null): void {
+    if (expandedKey) {
+      if (this.expandedRow === row && expandedKey === this.expandedData?.expandedKey) {
+        this.expandedData = null;
+      } else {
+        this.expandedData = { ...data, expandedKey };
+      }
+    } else {
+      this.expandedData = this.expandedData === data ? null : data;
+    }
+    if (!this.expandedData) {
+      this.expandedRow = this.expandedRow === row ? null : row;
+    } else {
+      this.expandedRow = row;
+    }
   }
 
   public navigateToPage(page: string): void {

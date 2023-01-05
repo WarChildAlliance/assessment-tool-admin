@@ -23,18 +23,26 @@ export class AnswerService {
 
   public getQuestionSetsAnswers(studentId: string, assessmentId: string): Observable<QuestionSetTableData[]> {
     return this.http.get<any[]>(
-      `${environment.API_URL}/visualization/student_answers/${studentId}/assessments/${assessmentId}question-sets`);
+      `${environment.API_URL}/visualization/student_answers/${studentId}/assessments/${assessmentId}/question-sets`);
   }
 
   public getQuestionSetsAnswersDetails(studentId: string, assessmentId: string, questionSetId: string): Observable<QuestionSetTableData> {
     return this.http.get<any>
-    (`${environment.API_URL}/visualization/student_answers/${studentId}/assessments/${assessmentId}question-sets/${questionSetId}`);
+    (`${environment.API_URL}/visualization/student_answers/${studentId}/assessments/${assessmentId}/question-sets/${questionSetId}`);
   }
 
-  public getQuestionsAnwsers(studentId: string, assessmentId: string, questionSetId: string): Observable<QuestionTableData[]> {
+  public getQuestionsAnswers(studentId: string, assessmentId: string, questionSetId: string): Observable<QuestionTableData[]> {
     return this.http.get<any[]>(
       `${environment.API_URL}/visualization/student_answers/${studentId}/\
-        assessments/${assessmentId}question-sets/${questionSetId}/questions`
+assessments/${assessmentId}/question-sets/${questionSetId}/questions`
+    );
+  }
+
+  public getQuestionsAnswersDetails(studentId: string, assessmentId: string,
+      questionSetId: string, questionId: string): Observable<QuestionTableData> {
+    return this.http.get<any>(
+      `${environment.API_URL}/visualization/student_answers/${studentId}/\
+assessments/${assessmentId}/question-sets/${questionSetId}/questions/${questionId}`
     );
   }
 }

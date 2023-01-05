@@ -44,14 +44,14 @@ export const GroupActionsButtonsTableData: TableActionButtons[] = [
         icon: 'group_add'
     },
     {
-        name: 'groups.assignAssessment',
+        name: 'general.assignAssessment',
         category: 'tertiary',
         variant: 'primary',
         action: 'onAssignAssessment',
         icon: 'event_available'
     },
     {
-        name: 'groups.compare',
+        name: 'general.compare',
         category: 'tertiary',
         variant: 'primary',
         action: 'onCompare',

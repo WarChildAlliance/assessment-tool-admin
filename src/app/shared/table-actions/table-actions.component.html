@@ -8,7 +8,7 @@
             </mat-form-field>
         </div>
     
-        <ng-container *ngIf="buttons" >
+        <ng-container *ngIf="buttons">
             <ng-container *ngFor="let button of buttons">
               <app-custom-button *ngIf="button.nameType" class="content" [icon]="button.icon" [category]="button.category" [variant]="button.variant" (click)="buttonClicked(button.action)">
                   {{ button.name | translate: { type: (button.nameType| translate | lowercase) } }}

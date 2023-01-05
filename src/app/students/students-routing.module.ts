@@ -14,48 +14,18 @@ const routes: Routes = [
   {
     path: ':student_id',
     component: StudentDetailComponent,
-    data: {
-      breadcrumb: [
-        { label: 'general.studentsOverview', url: '/students' },
-        { label: 'students.studentDetails', url: '' }
-      ]
-    },
   },
   {
     path: ':student_id/assessments/:assessment_id/question-sets',
     component: QuestionSetsListAnswersComponent,
-    data: {
-      breadcrumb: [
-        { label: 'general.studentsOverview', url: '/students' },
-        { label: 'students.studentDetails', url: '/students/:student_id' },
-        { label: 'general.questionSets', url: '' }
-      ]
-    },
   },
   {
     path: ':student_id/assessments/:assessment_id/question-sets/:question_set_id/questions',
     component: QuestionsListAnswersComponent,
-    data: {
-      breadcrumb: [
-        { label: 'general.studentsOverview', url: '/students' },
-        { label: 'students.studentDetails', url: '/students/:student_id' },
-        { label: 'general.questionSets', url: '/students/:student_id/assessments/:assessment_id/question-sets' },
-        { label: 'general.questions', url: '' }
-      ]
-    },
   },
   {
     path: ':student_id/assessments/:assessment_id/question-sets/:question_set_id/questions/:question_id',
     component: QuestionDetailAnswersComponent,
-    data: {
-      breadcrumb: [
-        { label: 'general.studentsOverview', url: '/students' },
-        { label: 'students.studentDetails', url: '/students/:student_id' },
-        { label: 'general.questionSets', url: '/students/:student_id/assessments/:assessment_id/question-sets' },
-        { label: 'general.questions', url: '/students/:student_id/assessments/:assessment_id/question-sets/:question_set_id/questions' },
-        { label: 'general.questionDetails', url: '' }
-      ]
-    },
   },
   {
     path: '**',

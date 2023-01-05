@@ -93,12 +93,15 @@
     padding-left: 0.5rem;
   }
 }
-
 .flex-centered {
   display: flex;
   justify-content: center;
 }
-
+// .menu {
+//   ::ng-deep button {
+//     border: none;
+//   }
+// }
 .score-list {
   display: flex;
   flex-direction: row;
@@ -106,7 +109,31 @@
   margin: 1em;
   place-content: space-between;
 }
+.details-expanded {
+  border-bottom: 4px solid #FF5722;
+  padding-bottom: 4px;
+}
+.sel-overview {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0 8px;
 
+  .no-data {
+    border-radius: 9999px;
+    border: 2px solid;
+    margin-right: 28px;
+  }
+  img:first-of-type, .no-data {
+    height: 33px;
+    width: 33px;
+  }
+  img:nth-of-type(2) {
+    height: 20px;
+    width: auto;
+  }
+}
 .title {
   width: 300px;
   overflow: hidden;

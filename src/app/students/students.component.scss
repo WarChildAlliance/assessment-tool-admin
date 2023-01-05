@@ -1,6 +1,22 @@
-.buttons {
+.captions {
+  display: flex;
+  gap: 0 16px;
+  margin-top: 16px;
+
+  &__item {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    margin-top: 20px;
+    gap: 0 8px;
+
+    .ring {
+      border: 2px solid #009688;
+      border-radius: 9999px;
+      height: 16px;
+      width: 16px;
+    }
+    p {
+      font-weight: 300;
+      font-size: 12px;
+      color: #666666;
+    }
+  }
 }

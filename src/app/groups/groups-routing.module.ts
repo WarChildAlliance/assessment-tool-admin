@@ -11,12 +11,6 @@ const routes: Routes = [
   {
     path: ':groupId',
     component: GroupDetailComponent,
-    data: {
-      breadcrumb: [
-        { label: 'Groups overview', url: '/groups' },
-        { label: 'Group details', url: '' }
-      ]
-    },
   },
   {
     path: '**',

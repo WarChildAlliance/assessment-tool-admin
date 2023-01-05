@@ -1,4 +1,5 @@
 <mat-toolbar class="header-toolbar" *ngIf="isAuthenticated">
+
   <app-custom-breadcrumb></app-custom-breadcrumb>
 
   <button mat-button class="header-toolbar__menu-button" aria-label="Access account settings"
@@ -58,9 +59,9 @@
         <a mat-list-item routerLink="library/assessments" routerLinkActive="library-active" (click)="showABSubmenu = false">
           {{ "general.assessments" | translate }}
         </a>
-        <a mat-list-item routerLink="library/set-of-questions" routerLinkActive="library-active" (click)="showABSubmenu = false">
+        <!-- <a mat-list-item routerLink="library/set-of-questions" routerLinkActive="library-active" (click)="showABSubmenu = false">
           {{ "general.setOfQuestions" | translate }}
-        </a>
+        </a> -->
         <a mat-list-item routerLink="library/questions" routerLinkActive="library-questions-active" (click)="showABSubmenu = false">
           {{ "general.singleQuestions" | translate }}
         </a>

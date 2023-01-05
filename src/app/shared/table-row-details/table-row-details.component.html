@@ -1,35 +1,36 @@
-<div class="container" *ngIf="!loading">
+<div class="container" [class.outline]="!!data" *ngIf="!loading">
+
   <ng-container *ngIf="config === 'library'">
     <div class="question-set-scores" style="width:15%">
       <ng-container *ngFor="let questionSet of questionSets; let i = index">
-        <div class="question-sets" [ngClass]="{'selected': questionSetIndex === i}">
+        <div class="library-question-sets" [ngClass]="{'selected': setIndex === i}">
           <app-score-indicator [score]="questionSet?.score" [style.cursor]="questionSet.questions?.length ? 'pointer' : 'default'"
-          (click)="questionSet.questions?.length ? updateQuestionSetIndex(i) : ''" [borderColor]="'#FF5722'">
+          (click)="questionSet.questions?.length ? updateItemSetIndex(i) : ''" [borderColor]="'#FF5722'">
           </app-score-indicator>
           <span>{{ questionSet.title }}</span>
         </div>
       </ng-container>
     </div>
     <div class="question-preview-nav larger-section">
-      <ng-container *ngIf="questionSets[questionSetIndex]?.questions?.length">
+      <ng-container *ngIf="questionSets[setIndex]?.questions?.length">
         <ng-template [ngTemplateOutlet]="questions"></ng-template>
       </ng-container>
     </div>
-    <div *ngIf="questionSets[questionSetIndex]?.questions" class="question-data section">
+    <div *ngIf="questionSets[setIndex]?.questions" class="question-data section">
       <p>{{ 'general.subject' | translate }}:</p>
       <p><b>{{ data.subject ?? '--' }}</b></p>
       <p>{{ 'general.topic' | translate }}:</p>
       <p><b>{{ data.topic?.name ?? '--' }}</b></p>
       <p>{{ 'assessmentBuilder.learningObjective' | translate }}:</p>
-      <p><b>{{ questionSets[questionSetIndex]?.learning_objective?.name_eng ?? '--' }}</b></p>
+      <p>{{ questionSets[setIndex]?.learning_objective?.name_eng ?? '--' }}</p>
       <p>{{ 'general.grade' | translate }}:</p>
       <p><b>{{ data.grade ?? '--' }}</b></p>
     </div>
   </ng-container>
 
   <ng-container *ngIf="config === 'questions'">
-    <div class="question-preview-nav question-section">
-      <ng-container *ngIf="questionSets[questionSetIndex]?.questions?.length">
+    <div class="item-nav question-section">
+      <ng-container *ngIf="questionSets[setIndex]?.questions?.length">
         <ng-template [ngTemplateOutlet]="questions"></ng-template>
       </ng-container>
     </div>
@@ -44,16 +45,133 @@
       <p><b>{{ data.grade ?? '--' }}</b></p>
     </div>
   </ng-container>
+
+  <ng-container *ngIf="config === 'students'">
+    <ng-container *ngIf="data; else noStudentDataTemplate">
+      <ng-container *ngIf="data.expandedKey === 'SEL'; else questionSetsTemplate">
+        <div class="item-sets-nav" *ngIf="assessments && assessments.length">
+          <h2>{{ 'general.assessments' | translate }}</h2>
+          <div *ngFor="let assessment of assessments; let i = index">
+            <input type="radio" name="assessment" [id]="'assessment_' + assessment.id" [checked]="setIndex === i">
+            <div class="input-content" (click)="updateItemSetIndex(i)">
+              <img *ngIf="assessment.icon" [src]="utilitiesService.getSource(assessment.icon)" />
+              <label [for]="assessment.id">{{ assessment.title }}</label>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <ng-template #questionSetsTemplate>
+        <div class="item-sets-nav" *ngIf="questionSets && questionSets.length">
+          <h2>{{ 'general.setOfQuestions' | translate }}</h2>
+          <div *ngFor="let questionSet of questionSets; let i = index" class="item-set">
+            <input type="radio" name="questionSet" [id]="'question_set_' + questionSet.id" [checked]="setIndex === i">
+            <div class="input-content" (click)="updateItemSetIndex(i)">
+              <img *ngIf="questionSet.icon" [src]="utilitiesService.getSource('/media/' + questionSet.icon)" />
+              <label [for]="questionSet.id">{{ questionSet.title }}</label>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+
+      <div class="item-preview-container larger-section">
+        <ng-container *ngIf="data.expandedKey === 'SEL'; else questionsTemplate">
+          <ng-container>
+            <h2>SEL</h2>
+            <div class="item-nav item-accent-color__sel">
+              <ng-container *ngFor="let answer of assessments[setIndex].answers; let i = index">
+                <input type="radio" name="answer" [id]="'answer_' + answer.id" [checked]="itemIndex === i">
+                <div (click)="itemIndex = i">
+                  <img [src]="getSELIcon(answer.statement)">
+                </div>
+              </ng-container>
+            </div>
+            <div *ngIf="assessments[setIndex]?.answers?.length" class="question-preview-nav">
+              <ng-template [ngTemplateOutlet]="questions"></ng-template>
+            </div>
+          </ng-container>
+        </ng-container>
+        <ng-template #questionsTemplate>
+          <h2>{{ 'general.questions' | translate }}</h2>
+          <div *ngIf="questionSets[setIndex].questions?.length; else noStudentDataTemplate" class="item-nav item-accent-color__question">
+            <ng-container *ngFor="let question of questionSets[setIndex].questions; let i = index">
+              <input type="radio" name="question" [id]="'question_' + question.id" [checked]="itemIndex === i">
+              <div class="ring-container">
+                <div class="ring" (click)="itemIndex = i">
+                  <div class="inner-ring" [style.background-color]="getIndicatorColor(question.score)"></div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+          <div *ngIf="questionSets[setIndex]?.questions?.length" class="question-preview-nav">
+            <ng-template [ngTemplateOutlet]="questions"></ng-template>
+          </div>
+        </ng-template>
+      </div>
+
+      <ng-container *ngIf="questionSets && questionSets[setIndex]?.questions">
+        <div *ngIf="questionSets[setIndex]?.questions[itemIndex] as question" class="students-question-data section">
+          <div *ngIf="question.speed" class="student-speed">
+            <h2>{{ 'general.speed' | translate }}</h2>
+            <img [src]="getSpeedIcon(question.speed, question.speeds?.slowest, question.speeds?.fastest)" />
+            <p class="value">{{ question.speed | date: 's,SS' }}</p>
+            <p class="label">{{ 'general.student' | translate | lowercase }}</p>
+          </div>
+          <div>
+            <div *ngIf="question.speeds" class="speeds outline">
+              <div class="speed">
+                <img src="assets/icons/cheetah.svg" />
+                <h3 class="value">{{ question.speeds?.fastest | date: 's,SS' }}</h3>
+                <p class="label"> {{ 'shared.tableRowDetails.fastest' | translate }}</p>
+              </div>
+              <div class="speed">
+                <img src="assets/icons/rabbit.svg" />
+                <h3 class="value">{{ question.speeds?.average | date: 's,SS' }}</h3>
+                <p class="label"> {{ 'shared.tableRowDetails.average' | translate }}</p>
+              </div>
+              <div class="speed">
+                <img src="assets/icons/snail.svg" />
+                <h3 class="value">{{ question.speeds?.slowest | date: 's,SS' }}</h3>
+                <p class="label"> {{ 'shared.tableRowDetails.slowest' | translate }}</p>
+              </div>
+            </div>
+            <p class="answers-count" [innerHTML]="'shared.tableRowDetails.answersCount' | translate: { count: question.plays }"></p>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <ng-template #noStudentDataTemplate>
+      <div class="no-data larger-section">
+        <p>{{ 'general.noData' | translate }}</p>
+      </div>
+    </ng-template>
+  </ng-container>
+</div>
+
+<div class="actions">
+  <ng-container *ngIf="config === 'students'">
+    <ng-container *ngIf="data">
+      <app-custom-button category="tertiary" variant="primary" icon="event_available" (click)="openAssignQuestionSetDialog()">
+        {{ 'shared.tableRowDetails.assignOther' | translate }}
+      </app-custom-button>
+      <app-custom-button category="secondary" variant="primary" icon="event_available" (click)="openAssignQuestionSetDialog(true)">
+        {{ 'shared.tableRowDetails.assignAgain' | translate }}
+      </app-custom-button>
+    </ng-container>
+    <app-custom-button class="stick-right" category="tertiary" variant="primary" icon="link" (click)="openStudentDetail()">
+      {{ 'shared.tableRowDetails.seeStudentDetail' | translate }}
+    </app-custom-button>
+  </ng-container>
 </div>
 
 <app-spinner style="text-align: -webkit-center;" *ngIf="loading" size="medium" [variant]="'default'"></app-spinner>
 
 <ng-template #questions>
-  <app-custom-button (click)="updateQuestionIndex('before')" [icon]="'navigate_before'" [isIcon]="true"
-    [noBorder]="true" category="tertiary" variant="default" [style.visibility]="questionIndex - 1 >= 0  ? '' : 'hidden'">
+  <app-custom-button (click)="updateItemIndex('before')" [icon]="'navigate_before'" [isIcon]="true"
+    [noBorder]="true" category="tertiary" variant="default" [style.visibility]="itemIndex - 1 >= 0  ? '' : 'hidden'">
   </app-custom-button>
 
-  <div *ngIf="questionSets[questionSetIndex]?.questions[questionIndex] as question" class="question-preview">
+  <div *ngIf="getPreviewedQuestion() as question" class="question-preview">
     <ng-container *ngIf="question.question_type === 'SEL'">
       <app-question-sel [question]="question"></app-question-sel>
     </ng-container>
@@ -76,7 +194,7 @@
 
     <ng-container *ngIf="question && question.question_type === 'DRAG_AND_DROP'">
       <app-question-drag-and-drop [question]="question" [evaluated]="true" [assessmentId]="assessmentId"
-        [questionSetId]="questionSets[questionSetIndex].id" [shrinkBackgroundImage]="true">
+        [questionSetId]="questionSets[setIndex].id" [shrinkBackgroundImage]="true">
       </app-question-drag-and-drop>
     </ng-container>
 
@@ -93,8 +211,8 @@
     </ng-container>
   </div>
 
-  <app-custom-button (click)="updateQuestionIndex('next')" [icon]="'navigate_next'"
+  <app-custom-button (click)="updateItemIndex('next')" [icon]="'navigate_next'"
     [noBorder]="true" category="tertiary" variant="default" [isIcon]="true"
-    [style.visibility]="questionSets[questionSetIndex]?.questions.length > questionIndex + 1 ? '' : 'hidden'">
+    [style.visibility]="items.length > itemIndex + 1 ? '' : 'hidden'">
   </app-custom-button>
 </ng-template>
