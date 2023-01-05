@@ -9,6 +9,13 @@ export interface Question {
   number_range?: NumberRange | number;
   hint: Hint;
   attachments: [];
+  score?: number;
+  speed: number;
+  speeds?: {
+    fastest: number;
+    average: number;
+    slowest: number;
+  };
   shuffle: boolean;
 }
 

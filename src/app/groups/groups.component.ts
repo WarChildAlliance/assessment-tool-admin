@@ -27,7 +27,7 @@ export class GroupsComponent implements OnInit {
     { key: 'assessments_average', name: 'general.assessments', type: 'score-list' },
     { key: 'average', name: 'general.average', type: 'score' },
     { key: 'questions_count', name: 'groups.amountTasks' },
-    { key: 'speed', name: 'groups.speed', type: 'duration' },
+    { key: 'speed', name: 'general.speed', type: 'duration' },
     { key: 'honey', name: 'general.honey', type: 'customized-icon', icon: 'assets/icons/honey-pot.svg' },
     { key: 'subMenu', name: ' ', type: 'menu' }
   ];

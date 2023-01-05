@@ -6,7 +6,7 @@ export interface QuestionTableData {
     question_type: string;
     has_attachment: boolean;
     topic?: string;
-    speed?: any;
+    student_speed?: any;
     grade?: string;
     created_at?: Date;
     invites?: number;

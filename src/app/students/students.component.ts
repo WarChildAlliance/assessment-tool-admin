@@ -1,54 +1,48 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
-import { forkJoin, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import { Language } from 'src/app/core/models/language.model';
 import { User } from 'src/app/core/models/user.model';
-import { Country } from '../core/models/country.model';
-import { Group } from '../core/models/group.model';
-import { StudentTableData } from '../core/models/student-table-data.model';
+import { GroupTableData } from '../core/models/group-table-data.model';
+import { StudentTableData, StudentSubMenuTableData, StudentActionsButtonsTableData } from '../core/models/student-table-data.model';
 import { TableColumn } from '../core/models/table-column.model';
 import { TableFilter } from '../core/models/table-filter.model';
 import { AlertService } from '../core/services/alert.service';
 import { UserService } from '../core/services/user.service';
+import { BreadcrumbService } from '../core/services/breadcrumb.service';
 import { QuestionSetAccessesBuilderComponent } from '../shared/question-set-accesses-builder/question-set-accesses-builder.component';
 import { StudentDialogComponent } from './student-dialog/student-dialog.component';
 import { ConfirmModalComponent } from 'src/app/shared/confirm-modal/confirm-modal.component';
-import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-students',
   templateUrl: './students.component.html',
   styleUrls: ['./students.component.scss'],
 })
-export class StudentsComponent implements OnInit {
+export class StudentsComponent implements OnInit, OnDestroy {
 
   public displayedColumns: TableColumn[] = [
+    { key: 'sel_overview', name: ' ', type: 'sel-overview' },
     { key: 'full_name', name: 'general.studentName' },
     { key: 'username', name: 'students.studentCode', type: 'copy' },
-    { key: 'group', name: 'general.group' },
-    { key: 'grade', name: 'general.grade' },
-    { key: 'login_url', name: 'students.studentLoginURL', label: 'username', type: 'link' },
-    { key: 'assessments_count', name: 'students.activeAssessmentsNumber' },
-    { key: 'completed_question_sets_count', name: 'students.completedQuestionSetsNumber' },
     { key: 'last_session', name: 'general.lastLogin', type: 'date' },
-    { key: 'language_name', name: 'general.language' },
-    { key: 'country_name', name: 'general.country' },
-    { key: 'is_active', name: 'students.active', type: 'boolean' }
+    { key: 'assessments', name: 'general.assessments', type: 'score-list' },
+    { key: 'average_score', name: 'general.average', type: 'score' },
+    { key: 'completed_questions_count', name: 'students.tasks' },
+    { key: 'speed', name: 'general.speed', type: 'duration' },
+    { key: 'honey', name: 'general.honey', type: 'customized-icon', icon: 'assets/icons/honey-pot.svg' },
+    { key: 'subMenu', name: ' ', type: 'menu' }
   ];
 
   public studentsDataSource: MatTableDataSource<StudentTableData> =
     new MatTableDataSource([]);
   public selectedUsers = [];
   public studentToEdit: any;
-
-  public countries: Country[] = [];
-  public languages: Language[] = [];
-  public groups: Group[] = [];
-
+  public filtersReset$ = new Subject<void>();
+  public buttons = StudentActionsButtonsTableData;
+  public groups: GroupTableData[] = [];
   public filters: TableFilter[] = [];
 
   public createNewStudentForm: FormGroup = new FormGroup({
@@ -58,14 +52,14 @@ export class StudentsComponent implements OnInit {
     language: new FormControl('', [Validators.required]),
   });
 
-  private filtersData = { country: '', language: '', group: '', ordering: '-id' };
+  private filtersData = { group: '', ordering: '-id' };
 
   constructor(
     private userService: UserService,
     private alertService: AlertService,
-    private router: Router,
     private dialog: MatDialog,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private breadcrumbService: BreadcrumbService
   ) {
     this.displayedColumns.forEach(col => {
       this.translateService.stream(col.name).subscribe(translated => col.name = translated);
@@ -73,44 +67,23 @@ export class StudentsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    forkJoin([
-      this.userService.getCountries(),
-      this.userService.getLanguages(),
-      this.userService.getGroups()
-    ]).subscribe(([countries, languages, groups]: [Country[], Language[], Group[]]) => {
-      this.countries = countries;
-      this.languages = languages;
+    this.userService.getGroupsDetails().subscribe((groups: GroupTableData[]) => {
       this.groups = groups;
 
-      this.filters = [
-        {
-          key: 'country',
-          name: 'general.country',
-          type: 'select',
-          options: countries.map((country) => ({
-            value: country.code,
-            key: country.name_en,
-          })),
-        },
-        {
-          key: 'language',
-          name: 'general.language',
-          type: 'select',
-          options: languages.map((language) => ({
-            value: language.code,
-            key: language.name_en,
-          })),
-        },
-        {
+      if (this.groups.length) {
+        const baseOpts = groups.length > 5 ? [{key: 'All', value: ''}] : [];
+
+        this.filters = [{
           key: 'group',
           name: 'general.group',
           type: 'select',
-          options: groups.map((group) => ({
-            value: group.id.toString(),
-            key: group.name,
-          })),
-        },
-      ];
+          options: baseOpts.concat(groups.map((group) => ({
+              key: group.name,
+              value: group.id.toString(),
+            }))
+          ),
+        }];
+      }
       this.filters.forEach(filter => {
         this.translateService.stream(filter.name).subscribe(translated => filter.name = translated);
       });
@@ -118,19 +91,20 @@ export class StudentsComponent implements OnInit {
     this.getStudentTableList(false, this.filtersData);
   }
 
-  public onFiltersChange(data: { key: string | number; value: any }): void {
+  public onFiltersChange(data: { key: string | number; value: string }): void {
     this.filtersData[data.key] = data.value;
-
     this.getStudentTableList(false, this.filtersData);
+
+    if (data.key === 'group') {
+      this.breadcrumbService.componentData = data.value ?
+        this.groups.find((group) => group.id === parseInt(data.value, 10)):
+        null;
+    }
   }
 
   // This eventReceiver triggers a thousand times when user does "select all". We should find a way to improve this. (debouncer ?)
   public onSelectionChange(newSelection: User[]): void {
     this.selectedUsers = newSelection;
-  }
-
-  public onOpenDetails(id: string): void {
-    this.router.navigate([`/students/${id}`]);
   }
 
   public deleteStudent(): void {
@@ -228,22 +202,39 @@ export class StudentsComponent implements OnInit {
     });
   }
 
+  public onCompare() {
+    console.log('Compare');
+  }
+
   public downloadData(): void {
     console.log('Work In Progress');
   }
 
+  public subMenuAction(selected: any): void {
+    this.selectedUsers = [selected.element];
+    this[selected.action]();
+  }
+
+  public actionButton(action: any): void {
+    this[action]();
+  }
+
   public getStudentTableList(resetFilters?: boolean, filtersData?: object): void {
     if (resetFilters) {
-      this.filtersData = { country: '', language: '', group: '', ordering: '-id' };
+      this.filtersData = { group: '', ordering: '-id' };
     }
     this.userService
       .getStudentsList(filtersData)
       .subscribe((studentsList: StudentTableData[]) => {
         const mappedStudentList = studentsList.map(student => ({
           ...student,
-          login_url: `${environment.STUDENT_PORTAL_LOGIN_URL}?code=${student.username}`
+          subMenu: StudentSubMenuTableData,
         }));
         this.studentsDataSource = new MatTableDataSource(mappedStudentList);
       });
+  }
+
+  ngOnDestroy(): void {
+    this.breadcrumbService.componentData = null;
   }
 }
