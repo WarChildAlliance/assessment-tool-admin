@@ -10,9 +10,11 @@
     "assessments": "Assessments",
     "assessment": "Assessment",
     "assessmentsOverview": "Assessments Overview",
+    "assignAssessment": "Assign assessment",
     "library": "Library",
     "assign": "Assign",
     "cancel": "Cancel",
+    "compare": "Compare",
     "choose": "Choose {{type}}",
     "clone": "Clone",
     "confirm": "Confirm",
@@ -36,7 +38,7 @@
     "honey": "Honey",
     "id": "ID",
     "language": "Language",
-    "lastLogin": "Last login",
+    "lastLogin": "Last Login",
     "left": "Left",
     "logout": "Logout",
     "logoutPrompt": "Do you really want to logout?",
@@ -64,8 +66,9 @@
     "setOfQuestions": "Set of questions",
     "singleQuestions": "Single questions",
     "simpleDeletePrompt": "Do you really want to delete the {{type}} <b>{{name}}</b> ?",
+    "speed": "Speed",
     "student": "Student",
-    "studentName": "Student name",
+    "studentName": "Student Name",
     "students": "Students",
     "studentsOverview": "Students Overview",
     "subject": "Subject",
@@ -112,6 +115,17 @@
     "resetFilters": "Reset filters"
   },
   "header": {
+    "default": {
+      "headerPt1": "<b>Hi,</b>",
+      "headerPt2": "I am there to <u>help</u>"
+    },
+    "students": {
+      "headerPt1": "Your group average overall score is:",
+      "headerPt2Below": "That is below average score:",
+      "headerPt2Equal": "Which equals the average score: ",
+      "headerPt2Above": "That is above average score!!!",
+      "seeMore": "See more"
+    },
     "library": {
       "title": "LIBRARY",
       "headerPt1": "Hi! This is the",
@@ -155,8 +169,7 @@
       "reorderTooltip": "Reorder {{item}} by dragging and dropping them",
       "saveOrder": "Save order",
       "copyAssessment": "Create a copy",
-      "unarchive": "Unarchive",
-      "assignAssessment": "Assign assessment"
+      "unarchive": "Unarchive"
     },
     "blocked": "The {{type}} has already been answered and cannot be edited",
     "changeFile": "Change File",
@@ -380,11 +393,8 @@
     "numberStudents": "Number of students",
     "requiredField": "Required field",
     "supervisor": "Supervisor",
-    "speed": "Speed",
     "amountTasks" : "Amount of tasks",
-    "seeStudents": "See students",
-    "compare": "Compare",
-    "assignAssessment": "Assign assessment"
+    "seeStudents": "See students"
   },
   "shared": {
     "audioRecorder": {
@@ -404,7 +414,17 @@
       "all": "All",
       "copySuccess": "Successfully copied!",
       "hintSearchColumn": "You can search on any column!",
-      "search": "Search..."
+      "search": "Search...",
+      "showSelDetails": "Show SEL details"
+    },
+    "tableRowDetails": {
+      "fastest": "fastest",
+      "slowest": "slowest",
+      "average": "average",
+      "answersCount": "(based on <u>{{count}} students</u> answers)",
+      "assignAgain": "Assign again",
+      "assignOther": "Assign to another other student",
+      "seeStudentDetail": "See student detail"
     }
   },
   "students": {
@@ -412,6 +432,7 @@
     "activeAssessmentsNumber": "Number of active assessments",
     "assignQuestionSet": "Assign a set of questions",
     "completedQuestionSetsNumber": "Number of completed sets of questions",
+    "tasks": "Tasks",
     "createStudentDialog": {
       "duplicateName": "Student with the same name, country and language already exists",
       "firstName": "First name",
@@ -424,7 +445,7 @@
     },
     "incompatibleLanguageError": "You can only give access to a set of questions to students with the same country and language.",
     "statusError": "Students can only be deleted after one year of inactivity",
-    "studentCode": "Student code",
+    "studentCode": "Code",
     "studentLoginURL": "Login URL",
     "studentDetail": {
       "activeAccess": "Active access",

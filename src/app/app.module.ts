@@ -19,11 +19,11 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
-import { CustomBreadcrumbModule } from './shared/breadcrumb/breadcrumb.module';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpLoaderFactory } from './core/factories/http-loader-translate.factory';
 import { ConfirmModalModule } from './shared/confirm-modal/confirm-modal.module';
 import { MatDividerModule } from '@angular/material/divider';
+import { CustomBreadcrumbModule } from './shared/breadcrumb/breadcrumb.module';
 
 @NgModule({
   declarations: [

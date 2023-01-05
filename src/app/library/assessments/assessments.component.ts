@@ -88,7 +88,7 @@ export class AssessmentsComponent implements OnInit, AfterViewInit {
     console.log('Work In Progress');
   }
 
-  public openAssignTopicDialog(assessment: Assessment): void {
+  public openAssignQuestionSetDialog(assessment: Assessment): void {
     this.dialog.open(QuestionSetAccessesBuilderComponent, {
       data: { assessment }
     });

@@ -66,7 +66,7 @@ export class QuestionsListAnswersComponent implements OnInit {
     }).pipe(
       catchError(error => of(error))
     ).subscribe(() => {
-      this.answerService.getQuestionsAnwsers(this.currentStudentId, this.assessmentId, this.questionSetId)
+      this.answerService.getQuestionsAnswers(this.currentStudentId, this.assessmentId, this.questionSetId)
         .subscribe(questions => {
           this.questionsAnswersDataSource = new MatTableDataSource(questions);
         });

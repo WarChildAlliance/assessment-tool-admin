@@ -28,7 +28,7 @@ export class TableActionsComponent implements OnInit {
   public filters: TableFilter[];
 
   // private tableFilters: TableFilter[];
-  private tableFiltersData = { grade: '', subject: '', question_types: [], subtopic: '', learning_objectives: [] };
+  private tableFiltersData = { grade: '', subject: '', question_types: [], topic: '', learning_objectives: [] };
 
   constructor(
     private translateService: TranslateService,
@@ -64,7 +64,7 @@ export class TableActionsComponent implements OnInit {
     this.tableFiltersData[data.key] = !!data.value ? data.value: '';
     if (this.tableFiltersData?.subject || data.key === 'subject') {
       if (data.key === 'subject') {
-        this.updateSubtopicsFilter(this.tableFiltersData.subject);
+        this.updateTopicsFilter(this.tableFiltersData.subject);
       }
       if (data.key === 'grade' || data.key === 'subject') {
         await this.updateNumberRangesFilter(
@@ -72,11 +72,11 @@ export class TableActionsComponent implements OnInit {
           this.tableFiltersData.subject
         );
       }
-      if (data.key === 'grade' || data.key === 'subject' || data.key === 'subtopic') {
+      if (data.key === 'grade' || data.key === 'subject' || data.key === 'topic') {
         this.updateLearningObjectivesFilter(
           this.tableFiltersData.grade,
           this.tableFiltersData.subject,
-          this.tableFiltersData.subtopic
+          this.tableFiltersData.topic
         );
       }
     }
@@ -89,37 +89,37 @@ export class TableActionsComponent implements OnInit {
     this.searchInput.nativeElement.value = '';
 
     if (this.libraryFilters) {
-      const nestedFilters = ['subtopic', 'learning_objectives', 'number_range'];
+      const nestedFilters = ['topic', 'learning_objectives', 'number_range'];
       this.filtersData = this.filtersData.filter(item => !nestedFilters.includes(item.key));
-      this.tableFiltersData = { grade: '', subject: '', question_types: [], subtopic: '', learning_objectives: [] };
+      this.tableFiltersData = { grade: '', subject: '', question_types: [], topic: '', learning_objectives: [] };
     }
   }
 
-  private updateSubtopicsFilter(subject: string): void {
-    const subtopicFilterIndex = this.filtersData.findIndex(filter => filter.key === 'subtopic');
+  private updateTopicsFilter(subject: string): void {
+    const topicFilterIndex = this.filtersData.findIndex(filter => filter.key === 'topic');
     if (!subject || subject !== 'MATH') {
-      if (subtopicFilterIndex !== -1) {
-        this.filtersData.splice(subtopicFilterIndex, 1);
-        this.tableFiltersData.subtopic = '';
+      if (topicFilterIndex !== -1) {
+        this.filtersData.splice(topicFilterIndex, 1);
+        this.tableFiltersData.topic = '';
       }
       return;
     }
-    this.assessmentService.getTopics(subject).subscribe((subtopics) => {
-      if (subtopics?.length > 0) {
+    this.assessmentService.getTopics(subject).subscribe((topics) => {
+      if (topics?.length > 0) {
         this.filtersData.splice(
-          subtopicFilterIndex === -1 ? 3 : subtopicFilterIndex,
-          subtopicFilterIndex === -1 ? 0 : 1,
+          topicFilterIndex === -1 ? 3 : topicFilterIndex,
+          topicFilterIndex === -1 ? 0 : 1,
           {
-            key: 'subtopic',
-            name: 'assessmentBuilder.subtopic',
+            key: 'topic',
+            name: 'general.topic',
             type: 'select',
             displayType: 'chip',
-            options: subtopics.map(subtopic => ({ key: subtopic.name, value: subtopic.id }))
+            options: topics.map(topic => ({ key: topic.name, value: topic.id }))
           }
         );
         return;
       }
-      this.filtersData = this.filtersData.filter(filter => filter.key !== 'subtopic');
+      this.filtersData = this.filtersData.filter(filter => filter.key !== 'topic');
     });
   }
 
@@ -149,16 +149,16 @@ export class TableActionsComponent implements OnInit {
     this.filtersData = this.filtersData.filter(filter => filter.key !== 'number_range');
   }
 
-  private updateLearningObjectivesFilter(grade: string, subject: string, subtopic: string): void {
+  private updateLearningObjectivesFilter(grade: string, subject: string, topic: string): void {
     const loFilterIndex = this.filtersData.findIndex(filter => filter.key === 'learning_objectives');
-    if (subject !== 'MATH' || !subtopic) {
+    if (subject !== 'MATH' || !topic) {
       if (loFilterIndex !== -1) {
         this.filtersData.splice(loFilterIndex, 1);
         this.tableFiltersData.learning_objectives = [];
       }
       return;
     }
-    const filteringParams = { grade, subject, subtopic };
+    const filteringParams = { grade, subject, topic };
     this.assessmentService.getLearningObjectives(filteringParams).subscribe((learningObjectives) => {
       if (learningObjectives?.length > 0) {
         this.filtersData.splice(

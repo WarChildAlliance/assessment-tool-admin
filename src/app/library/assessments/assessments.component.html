@@ -2,7 +2,7 @@
   <app-table [tableData]="assessmentsDataSource" [displayedColumns]="displayedColumns"
     [isSelectable]="false" [pageConfig]="'library'" [libraryFilters]="true"
     (filtersChangedEvent)="onTableFiltersChange($event)"
-    (buttonClickedEvent)="openAssignTopicDialog($event)"
+    (buttonClickedEvent)="openAssignQuestionSetDialog($event)"
     (resetFiltersEvent)="resetFilters()">
   </app-table>
 </div>

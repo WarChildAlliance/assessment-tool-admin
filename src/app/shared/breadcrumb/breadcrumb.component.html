@@ -1,34 +1,83 @@
-<div *ngIf="breadcrumb.length && breadcrumb[0].type === 'library'" class="header">
-    <div *ngFor="let item of breadcrumb">
-        <span class="first-line">
-            <p>
-                {{ 'header.library.headerPt1' | translate }}
-            </p>
-            <p class="title">
-                {{ 'header.library.title' | translate }}
-            </p>
-            <p>
-                {{ 'header.library.headerPt2' | translate }}
-            </p>
-            <p class="section" [style.background-color]="sectionColor(item.section)">
-                {{ 'header.library.'+ item.section + '.section' | translate }}
-            </p>.
-        </span>
-        <span class="final-text">
-            {{ 'header.library.'+ item.section + '.headerPt3' | translate }}
-        </span>
+<ng-container *ngIf="breadcrumb.length; else defaultHeaderTemplate">
+    <div *ngIf="breadcrumb.length && breadcrumb[0].type === 'dashboard'; else libraryHeaderTemplate" class="header" style="margin-right: 23rem;">
+        <p style="font-weight: bolder;">
+            {{ 'header.dashboard.hiTeacher' | translate }} {{selfName}}
+        </p>
+        <p class="text">
+            {{ 'header.dashboard.text' | translate }}
+        </p>
     </div>
-</div>
+    <ng-template #libraryHeaderTemplate>
+        <div *ngIf="breadcrumb[0].type === 'library'; else groupsHeaderTemplate" class="header">
+            <div *ngFor="let item of breadcrumb">
+                <span class="first-line">
+                    <p>
+                        {{ 'header.library.headerPt1' | translate }}
+                    </p>
+                    <p class="title">
+                        {{ 'header.library.title' | translate }}
+                    </p>
+                    <p>
+                        {{ 'header.library.headerPt2' | translate }}
+                    </p>
+                    <p class="section" [style.background-color]="sectionColor(item.section)">
+                        {{ 'header.library.'+ item.section + '.section' | translate }}
+                    </p>.
+                </span>
+                <span class="final-text">
+                    {{ 'header.library.'+ item.section + '.headerPt3' | translate }}
+                </span>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template #groupsHeaderTemplate>
+        <div *ngIf="breadcrumb[0].type === 'groups'; else studentsHeaderTemplate" class="header">
+            <div *ngFor="let item of breadcrumb">
+                <span class="first-line">
+                    <p>
+                        {{ 'header.groups.headerPt1' | translate }}
+                    </p>
+                    <p class="title">
+                        {{ 'header.groups.title' | translate }}
+                    </p>
+                    <p>
+                        {{ 'header.groups.headerPt2' | translate }}
+                    </p>
+                    <p class="section" [style.background-color]="sectionColor('groups')">
+                        {{ 'header.groups.overlineTitle' | translate }}
+                    </p>.
+                </span>
+                <span class="final-text">
+                    {{ 'header.groups.headerPt3' | translate }}
+                </span>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template #studentsHeaderTemplate>
+        <div *ngIf="breadcrumb[0].type === 'students' && componentData?.group_average; else defaultHeaderTemplate" class="header">
+            <div class="flex-col align-end">
+                <span class="students">
+                    <p>{{ 'header.students.headerPt1' | translate }}</p>
+                    <span class="flower">
+                        <p>{{ componentData.group_average }}</p>
+                        <img src="assets/shapes/flower_blue.svg">
+                    </span>
+                    <ng-container *ngIf="componentData.grade_average">
+                        <p>
+                            {{ (componentData.group_average > componentData.grade_average) ? ('header.students.headerPt2Above' | translate) :
+                            (componentData.group_average === componentData.grade_average ? ('header.students.headerPt2Equal' | translate) : ('header.students.headerPt2Below' | translate)) }}
+                        </p>
+                        <span class="flower">
+                            <p>{{ componentData.grade_average }}</p>
+                            <img src="assets/shapes/flower_yellow.svg">
+                        </span>
+                    </ng-container>
+                </span>
+                <a>{{ 'header.students.seeMore' | translate }}</a>
+            </div>
 
-<div *ngIf="breadcrumb.length && breadcrumb[0].type === 'dashboard'" class="header" style="margin-right: 23rem;">
-    <p style="font-weight: bolder;">
-        {{ 'header.dashboard.hiTeacher' | translate }} {{selfName}}
-    </p>
-    <p class="text">
-        {{ 'header.dashboard.text' | translate }}
-    </p>
-</div>
-<div *ngIf="breadcrumb.length && breadcrumb[0].label === 'general.groupsOverview'" class="header">
+        </div>
+        <div *ngIf="breadcrumb.length && breadcrumb[0].label === 'general.groupsOverview'" class="header">
     <div *ngFor="let item of breadcrumb">
         <span class="first-line">
             <p>
@@ -49,3 +98,11 @@
         </span>
     </div>
 </div>
+    </ng-template>
+</ng-container>
+<ng-template #defaultHeaderTemplate>
+    <div class="default-header">
+        <p class="title" [innerHTML]="'header.default.headerPt1' | translate"></p>
+        <p class="font-weight-light" [innerHTML]="'header.default.headerPt2' | translate"></p>
+    </div>
+</ng-template>
