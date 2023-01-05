@@ -61,12 +61,8 @@
     margin-right: 5px;
   }
 }
+
 .selected {
-  ::before {
-    content: "|";
-    color: #FF5722;
-    background-color: #FF5722;
-    position: absolute;
-    left: -10px;
-  }
+  border-left: 3px #FF5722 solid;
+  padding: 0px 5px;
 }

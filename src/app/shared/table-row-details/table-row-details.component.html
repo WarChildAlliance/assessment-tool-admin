@@ -3,6 +3,7 @@
     <div class="question-set-scores" style="width:15%">
       <ng-container *ngFor="let questionSet of questionSets; let i = index">
         <div class="question-sets" [ngClass]="{'selected': questionSetIndex === i}">
+          <!-- put a border left instead of before -->
           <app-score-indicator [score]="questionSet?.score" [style.cursor]="questionSet.questions?.length ? 'pointer' : 'default'"
           (click)="questionSet.questions?.length ? updateQuestionSetIndex(i) : ''" [borderColor]="'#FF5722'">
           </app-score-indicator>
