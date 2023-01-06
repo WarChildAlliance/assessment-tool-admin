@@ -17,6 +17,7 @@
     "compare": "Compare",
     "choose": "Choose {{type}}",
     "clone": "Clone",
+    "close": "close",
     "confirm": "Confirm",
     "continue": "Continue",
     "country": "Country",
@@ -435,8 +436,8 @@
     "tasks": "Tasks",
     "createStudentDialog": {
       "duplicateName": "Student with the same name, country and language already exists",
-      "firstName": "First name",
       "lastName": "Last name",
+      "firstName": "First name",
       "nameExists": "Name already exists",
       "noGroups": "No groups available",
       "similarName": "Student with the name <b>{{name}}</b> already exists but with different country/language (<b>{{country}}</b> / <b>{{language}}</b>). Create new student anyway?",

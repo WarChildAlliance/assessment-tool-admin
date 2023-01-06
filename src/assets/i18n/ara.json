@@ -16,6 +16,7 @@
     "cancel": "إلغاء",
     "choose": "اختر {{type}}",
     "clone": "استنساخ",
+    "close": "close",
     "compare": "قارن",
     "confirm": "يتأكد",
     "continue": "يكمل",
@@ -417,8 +418,8 @@
       "studentAssessmentIncompletePrompt": "لم ينته هذا الطالب من التقييم الحالي <b> {{currentAssessment}} </b> ، هل أنت متأكد من أنك تريد المتابعة؟"
     },
     "questionSetAccessesEdit": {
-      "accessEdited": "تم حذف الوصول إلى الموضوع بنجاح!",
       "allQuestionSetsAccessesDeleted": "تم حذف كافة المواضيع التي يتم الوصول إليها من هذا التقييم",
+      "accessEdited": "تم حذف الوصول إلى الموضوع بنجاح!",
       "editQuestionSetsAccess": "تحرير الوصول إلى موضوع (مواضيع) التقييم",
       "errorOnDeletion": "حدث خطأ أثناء إرسال حذف الوصول للموضوع",
       "errorOnEdit": "حدث خطأ أثناء تقديم موضوع الوصول إلى التحديث",

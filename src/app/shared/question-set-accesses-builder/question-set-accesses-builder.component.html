@@ -93,7 +93,7 @@
 <div class="dialog-buttons">
     <span class="notifier" *ngIf="disabledAssign"> {{ 'students.questionSetAccessesBuilder.notifier' | translate }} </span>
     <button mat-flat-button mat-dialog-close class="dialog-buttons__cancel" color="secondary">
-        {{ "general.cancel" | translate }}
+        {{ "general.close" | translate }}
     </button>
     <button mat-flat-button class="dialog-buttons__submit" [disabled]="!questionSetControls.length || assignQuestionSetForm.invalid || disabledAssign" color="accent"
     (click)="submitCreateQuestionSetAccesses()" mat-dialog-close>
