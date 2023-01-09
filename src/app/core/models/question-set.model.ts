@@ -12,4 +12,5 @@ export interface QuestionSet {
     score?: number;
     icon?: string;
     title?: string;
+    sel_average?: string;
 }

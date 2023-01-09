@@ -143,11 +143,8 @@ export class TableRowDetailsComponent implements OnInit, OnChanges {
 
   private async initLibraryData(): Promise<void> {
     if (this.data?.id) { this.assessmentId = this.data?.id; }
-    for await (const questionSet of this.data.question_sets) {
-      questionSet.questions = await this.assessmentService.getQuestionsList(
-        this.assessmentId?.toString(), questionSet.id.toString()).toPromise();
-    }
     this.itemSets = this.data.question_sets;
+    await this.getQuestionSetsQuestionAnswers(this.itemSets);
   }
 
   private async initQuestionsData(): Promise<void> {
@@ -184,7 +181,9 @@ export class TableRowDetailsComponent implements OnInit, OnChanges {
     await questionSets.forEach(async questionSet => {
       let questions = await this.assessmentService.getQuestionSetQuestions(
         this.data.id.toString(), questionSet.id.toString()).toPromise();
-      questions = questions.filter(q => q?.question_type !== 'Social and Emotional Learning');
+      if (this.config === 'students') {
+        questions = questions.filter(q => q?.question_type !== 'Social and Emotional Learning');
+      }
       questions = await Promise.all(questions.map(async question => {
         const questionDetails = await this.assessmentService.getQuestionDetails(
           this.data.id.toString(),
