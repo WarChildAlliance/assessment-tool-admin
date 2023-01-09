@@ -425,7 +425,8 @@
       "answersCount": "(based on <u>{{count}} students</u> answers)",
       "assignAgain": "Assign again",
       "assignOther": "Assign to another other student",
-      "seeStudentDetail": "See student detail"
+      "seeStudentDetail": "See student detail",
+      "median": "Median"
     }
   },
   "students": {

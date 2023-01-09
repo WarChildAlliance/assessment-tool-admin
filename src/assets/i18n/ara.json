@@ -348,7 +348,7 @@
     "numberStudents": "عدد الطلاب",
     "requiredField": "يتطلب حقلا",
     "supervisor": "مشرف",
-    "amountTasks" : "كمية المهام",
+    "amountTasks": "كمية المهام",
     "seeStudents": "رؤية الطلاب"
   },
   "shared": {
@@ -369,7 +369,18 @@
       "copySuccess": "تم النسخ بنجاح!",
       "hintSearchColumn": "يمكنك البحث في أي عمود!",
       "search": "بحث...",
-      "all": "الجميع"
+      "all": "الجميع",
+      "showSelDetails": "إظهار تفاصيل SEL"
+    },
+    "tableRowDetails": {
+      "assignOther": "حدد لطالب آخر",
+      "average": "معدل",
+      "fastest": "أسرع",
+      "median": "الوسيط",
+      "seeStudentDetail": "انظر تفاصيل الطالب",
+      "answersCount": "(بناءً على إجابات <u> {{count}} طلاب </ u>)",
+      "assignAgain": "التعيين مرة أخرى",
+      "slowest": "أبطأ"
     }
   },
   "students": {
@@ -428,7 +439,8 @@
       "removeQuestionSetAccessPrompt": "'<b>{{questionSetTitle}}</b>' ?",
       "questionSetsUpdated": "تم تحديث المواضيع التي تم الوصول إليها بنجاح!"
     },
-    "studentLoginURL": "URL تسجيل الدخول"
+    "studentLoginURL": "URL تسجيل الدخول",
+    "tasks": "مهام"
   },
   "header": {
     "library": {
@@ -454,7 +466,17 @@
       "headerPt2": "مع كل",
       "overlineTitle": "التقييمات",
       "headerPt3": "يمكنك تصفح واختيار وتعيين واستنساخ (لتحرير) هذه لمجموعتك (مجموعاتك)."
-      
+    },
+    "default": {
+      "headerPt1": "<b> مرحبًا </ b>",
+      "headerPt2": "أنا هناك <u> للمساعدة </ u>"
+    },
+    "students": {
+      "headerPt1": "متوسط النتيجة الإجمالية لمجموعتك هو:",
+      "headerPt2Above": "هذا أعلى من متوسط الدرجة !!!",
+      "headerPt2Below": "هذا أقل من متوسط الدرجة:",
+      "headerPt2Equal": "الذي يساوي متوسط الدرجة:",
+      "seeMore": "شاهد المزيد"
     }
   },
   "library": {
