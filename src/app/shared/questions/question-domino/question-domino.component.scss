@@ -111,8 +111,25 @@
 }
 
 .preview {
-    flex-direction: column;
+    .left-number {
+        font-size: 100px;
+    }
+
     .dominoes {
-        grid-template-columns: auto !important;
+        gap: 1em 1em;
+
+        .option {
+            min-width: 100px;
+
+            mat-card {
+                .half {
+                    .part {
+                        .dot {
+                            min-height: auto;
+                        }
+                    }
+                }
+            }
+        }
     }
 }

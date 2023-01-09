@@ -40,6 +40,7 @@
   padding-bottom: 1em;
 
   &.small {
+    padding: inherit;
     max-height: 320px;
 
     @media (max-width: 1024px) {
@@ -109,6 +110,11 @@
   margin: 0.5em;
   min-width: fit-content;
 
+  &.small {
+    inline-size: 150px;
+    overflow-wrap: anywhere;
+  }
+
   div {
     display: flex;
     flex-direction: column;
@@ -121,6 +127,11 @@
       margin-bottom: 0.5em;
       align-items: center;
       border-radius: 0.5rem;
+
+      &.small {
+        inline-size: 150px;
+        overflow-wrap: anywhere;
+      }
 
       // For students' correct answers
       &.valid {
@@ -141,5 +152,10 @@
   .option-img {
     max-width: 100px;
     max-height: 100px;
+
+    &.small {
+      max-width: 80px;
+      max-height: 80px;
+    }
   }
 }
