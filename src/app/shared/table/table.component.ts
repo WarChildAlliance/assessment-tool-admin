@@ -80,7 +80,7 @@ export class TableComponent implements OnInit, OnChanges {
       case 'library': return '#FF5722';
       case 'students': return '#00BCD4';
       case 'groups': return '#3F51B5';
-      case 'questions': return '#FFEB3B';
+      case 'questions': return '#FFC801';
       case 'dashboard': return '#009688';
       default: return '#53A8E2';
     }

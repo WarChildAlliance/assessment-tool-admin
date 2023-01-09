@@ -84,8 +84,13 @@
       <td mat-cell *matCellDef="let element">{{ element[column.key] }}<mat-icon matTooltip="Copy" (click)="$event.stopPropagation(); copyAlert();" [cdkCopyToClipboard]="element[column.key]" matListIcon style="margin-left: 12px;">content_copy</mat-icon></td>
     </ng-container>
 
+    <!-- To give link of Gobee's platform -->
     <ng-container *ngSwitchCase="'link'">
-      <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()"><a [href]="element[column.key]" target="_blank">{{ element[column.label] }}</a><mat-icon matTooltip="Copy" (click)="$event.stopPropagation(); copyAlert();" [cdkCopyToClipboard]="element[column.key]" matListIcon style="margin-left: 12px;">content_copy</mat-icon></td>
+      <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()">
+        <a [href]="element[column.key]" target="_blank">{{ element[column.label] }}</a>
+        <mat-icon matTooltip="Copy" (click)="$event.stopPropagation(); copyAlert();"
+         [cdkCopyToClipboard]="element[column.key]" matListIcon style="margin-left: 12px;">content_copy</mat-icon>
+      </td>
     </ng-container>
 
     <ng-container *ngSwitchCase="'action'">

@@ -22,7 +22,7 @@ export class QuestionsComponent implements OnInit {
     { key: 'learning_objective', name: 'general.id' },
     { key: 'plays', name: 'assessments.plays' },
     { key: 'invites', name: 'library.invites' },
-    { key: 'speed', name: 'groups.speed', type: 'duration' },
+    { key: 'speed', name: 'general.speed', type: 'duration' },
     { key: 'score', name: 'library.score', type: 'score' },
     { key: 'created_at', name: 'general.created', type: 'date' },
   ];
