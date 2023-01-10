@@ -25,6 +25,7 @@ export class AssessmentBuilderComponent implements OnInit {
 
   public edit = false;
   public type;
+  public loading = true;
 
   public createNewAssessmentForm: FormGroup = new FormGroup({
     title: new FormControl('', [Validators.required]),
@@ -44,6 +45,7 @@ export class AssessmentBuilderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.loading = true;
     this.route.params.subscribe(params => {
       this.type = params.type;
     });
@@ -53,8 +55,10 @@ export class AssessmentBuilderComponent implements OnInit {
   }
 
   public getAssessments(): void {
+    this.loading = true;
     this.assessmentService.getAssessmentsList().subscribe((assessmentsList) => {
       this.currentAssessments = assessmentsList;
+      this.loading = false;
     });
   }
 

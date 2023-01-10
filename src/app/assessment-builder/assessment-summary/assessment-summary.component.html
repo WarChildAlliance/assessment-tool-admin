@@ -1,4 +1,5 @@
-<mat-card  [class.-archived]="assessment.archived" class="assessment-container">
+<app-spinner style="text-align: -webkit-center;" *ngIf="loading" size="large" [variant]="'primary'"></app-spinner>
+<mat-card *ngIf="!loading" [class.-archived]="assessment.archived" class="assessment-container">
     <div class="assessment-details">
         <div class="general-information">
             <img *ngIf="assessment.icon" [src]="getSource(assessment.icon)">
@@ -33,12 +34,14 @@
         <div class="buttons">
             <app-custom-button *ngIf="canEdit && !assessment.archived"
              matTooltip="{{ 'assessmentBuilder.assessmentSummary.reorderTooltip' | translate:{ item: ('general.questionSets' | translate)} }}"
-                matTooltipPosition="above" [category]="reorder ? 'secondary' : 'tertiary'" variant="primary" icon="linear_scale" (click)="reorderQuestionSets(reorder, assessment.id)">
+                matTooltipPosition="above" [category]="reorder ? 'secondary' : 'tertiary'" variant="primary"
+                 icon="linear_scale" (click)="reorderQuestionSets(reorder, assessment.id)">
                 {{ reorder ? ("assessmentBuilder.assessmentSummary.saveOrder" | translate)
                 : ("assessmentBuilder.assessmentSummary.reorderItems" | translate: { item: ("general.questionSets" | translate | lowercase)}) }}
             </app-custom-button>
             <span *ngIf="!reorder">
-                <app-custom-button *ngIf="canEdit && !assessment.archived" category="tertiary" variant="primary" icon="edit" (click)="editAssessment(assessment)">
+                <app-custom-button *ngIf="canEdit && !assessment.archived" category="tertiary" variant="primary" icon="edit"
+                 (click)="editAssessment(assessment)">
                     {{ "general.edit" | translate: {type: ''} }}
                 </app-custom-button>
                 <app-custom-button *ngIf="canEdit" category="tertiary" variant="primary" [icon]="assessment.archived ? 'unarchive' : 'archive'"
@@ -46,28 +49,34 @@
                     {{ assessment.archived ? ("assessmentBuilder.assessmentSummary.unarchive" | translate)
                     : ("assessmentBuilder.assessmentSummary.archive" | translate: {type: ''}) }}
                 </app-custom-button>
-                <app-custom-button *ngIf="canEdit" category="tertiary" variant="primary" icon="delete" (click)="deleteAssessment(assessment.id, assessment.title)">
+                <app-custom-button *ngIf="canEdit" category="tertiary" variant="primary" icon="delete"
+                 (click)="deleteAssessment(assessment.id, assessment.title)">
                     {{ "general.delete" | translate: {type: ''} }}
                 </app-custom-button>
-                <app-custom-button *ngIf="assessment.downloadable" category="tertiary" variant="primary" icon="download" (click)="downloadPDF(assessment.id)">
+                <app-custom-button *ngIf="assessment.downloadable" category="tertiary" variant="primary" icon="download"
+                 (click)="downloadPDF(assessment.id)">
                     {{ "assessmentBuilder.download" | translate }}
                 </app-custom-button>
-                <app-custom-button *ngIf="!canEdit" category="tertiary" variant="primary" icon="control_point_duplicate" (click)="editAssessment(assessment, true)">
+                <app-custom-button *ngIf="!canEdit" category="tertiary" variant="primary" icon="control_point_duplicate"
+                 (click)="editAssessment(assessment, true)">
                     {{ "assessmentBuilder.assessmentSummary.copyAssessment" | translate }}
                 </app-custom-button>
-                <app-custom-button *ngIf="library" category="tertiary" variant="primary" icon="event_available" (click)="openAssignQuestionSetDialog(assessment)">
+                <app-custom-button *ngIf="library" category="tertiary" variant="primary" icon="event_available"
+                 (click)="openAssignQuestionSetDialog(assessment)">
                     {{ "general.assignAssessment" | translate }}
                 </app-custom-button>
             </span>
             <span *ngIf="reorder">
-                <app-custom-button *ngIf="canEdit && !assessment.archived" category="tertiary" variant="danger" icon="close" (click)="cancelReorder()">
+                <app-custom-button *ngIf="canEdit && !assessment.archived" category="tertiary" variant="danger"
+                 icon="close" (click)="cancelReorder()">
                     {{ "general.cancel" | translate }}
                 </app-custom-button>
             </span>
         </div>
     </div>
     <hr>
-    <div class="question-sets-container">
+    <app-spinner style="text-align: -webkit-center;" *ngIf="loadingQS" size="small" [variant]="'primary'"></app-spinner>
+    <div *ngIf="!loadingQS" class="question-sets-container">
         <div #questionSetsList class="question-sets" [cdkDropListData]="questionSetToOrder"
         cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="dropQuestionSet($event)">
             <mat-card class="add-question-set" (click)="openQuestionSetFormDialog(assessment)" *ngIf="canEdit">

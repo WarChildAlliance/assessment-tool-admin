@@ -33,178 +33,181 @@
       {{ column.name }}
     </th>
 
-    <ng-container *ngSwitchCase="'date'">
-      <td mat-cell *matCellDef="let element">{{ element[column.key] | date:'MM-dd-yyyy' }}</td>
-    </ng-container>
+    <ng-container *ngIf="!loading">
+      <ng-container *ngSwitchCase="'date'">
+        <td mat-cell *matCellDef="let element">{{ element[column.key] | date:'MM-dd-yyyy' }}</td>
+      </ng-container>
 
-    <ng-container *ngSwitchCase="'duration'">
-      <td mat-cell *matCellDef="let element">
-        <ng-container *ngIf="element[column.key]">
-          <ng-container *ngIf="element[column.key] * 1000 as durationMs">
-            <span *ngIf="element[column.key] / 60 >= 1">
-              {{ durationMs | date:'mm' }}m
-            </span>
-            {{ durationMs | date:'s.SS' }}s
+      <ng-container *ngSwitchCase="'duration'">
+        <td mat-cell *matCellDef="let element">
+          <ng-container *ngIf="element[column.key]">
+            <ng-container *ngIf="element[column.key] * 1000 as durationMs">
+              <span *ngIf="element[column.key] / 60 >= 1">
+                {{ durationMs | date:'mm' }}m
+              </span>
+              {{ durationMs | date:'s.SS' }}s
+            </ng-container>
           </ng-container>
-        </ng-container>
-      </td>
-    </ng-container>
+        </td>
+      </ng-container>
 
-    <ng-container *ngSwitchCase="'percentage'">
-      <td mat-cell *matCellDef="let element" [style.color]="getIndicatorColor(element[column.key])" >
-        {{ (element[column.key] || element[column.key] === 0) ? element[column.key] + '%' : 'N/A' }}
-      </td>
-    </ng-container>
+      <ng-container *ngSwitchCase="'percentage'">
+        <td mat-cell *matCellDef="let element" [style.color]="getIndicatorColor(element[column.key])" >
+          {{ (element[column.key] || element[column.key] === 0) ? element[column.key] + '%' : 'N/A' }}
+        </td>
+      </ng-container>
 
-    <ng-container *ngSwitchCase="'icon'">
-      <td mat-cell *matCellDef="let element"><mat-icon matListIcon>{{ element[column.key] }}</mat-icon></td>
-    </ng-container>
+      <ng-container *ngSwitchCase="'icon'">
+        <td mat-cell *matCellDef="let element"><mat-icon matListIcon>{{ element[column.key] }}</mat-icon></td>
+      </ng-container>
 
-    <ng-container *ngSwitchCase="'expand'">
-      <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation(); toggleExpandRow(element, element)">
-        <mat-icon matListIcon [class.flip-vertically]="element === expandedData">
-          arrow_drop_down
-        </mat-icon>
-      </td>
-    </ng-container>
+      <ng-container *ngSwitchCase="'expand'">
+        <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation(); toggleExpandRow(element, element)">
+          <mat-icon matListIcon [class.flip-vertically]="element === expandedData">
+            arrow_drop_down
+          </mat-icon>
+        </td>
+      </ng-container>
 
-    <ng-container *ngSwitchCase="'circle'">
-      <td mat-cell *matCellDef="let element" class="circle-container">
-        <ng-container *ngIf="element[column.key] === null">
-          <mat-icon [style.color]="'darkgrey'" matListIcon>close</mat-icon>
-        </ng-container>
-        <ng-container *ngIf="element[column.key] >= 0 && element[column.key] !== null">
-          <mat-icon matListIcon [style.color]="getIndicatorColor(element[column.key])">circle</mat-icon>
-        </ng-container>
-        <ng-container *ngIf="element[column.key] === 'not_started'">
-          <mat-icon matListIcon>radio_button_unchecked</mat-icon>
-        </ng-container>
-      </td>
-    </ng-container>
+      <ng-container *ngSwitchCase="'circle'">
+        <td mat-cell *matCellDef="let element" class="circle-container">
+          <ng-container *ngIf="element[column.key] === null">
+            <mat-icon [style.color]="'darkgrey'" matListIcon>close</mat-icon>
+          </ng-container>
+          <ng-container *ngIf="element[column.key] >= 0 && element[column.key] !== null">
+            <mat-icon matListIcon [style.color]="getIndicatorColor(element[column.key])">circle</mat-icon>
+          </ng-container>
+          <ng-container *ngIf="element[column.key] === 'not_started'">
+            <mat-icon matListIcon>radio_button_unchecked</mat-icon>
+          </ng-container>
+        </td>
+      </ng-container>
 
-    <ng-container *ngSwitchCase="'copy'">
-      <td mat-cell *matCellDef="let element">{{ element[column.key] }}<mat-icon matTooltip="Copy" (click)="$event.stopPropagation(); copyAlert();" [cdkCopyToClipboard]="element[column.key]" matListIcon style="margin-left: 12px;">content_copy</mat-icon></td>
-    </ng-container>
+      <ng-container *ngSwitchCase="'copy'">
+        <td mat-cell *matCellDef="let element">{{ element[column.key] }}<mat-icon matTooltip="Copy" (click)="$event.stopPropagation(); copyAlert();" [cdkCopyToClipboard]="element[column.key]" matListIcon style="margin-left: 12px;">content_copy</mat-icon></td>
+      </ng-container>
 
-    <!-- To give link of Gobee's platform -->
-    <ng-container *ngSwitchCase="'link'">
-      <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()">
-        <a [href]="element[column.key]" target="_blank">{{ element[column.label] }}</a>
-        <mat-icon matTooltip="Copy" (click)="$event.stopPropagation(); copyAlert();"
-         [cdkCopyToClipboard]="element[column.key]" matListIcon style="margin-left: 12px;">content_copy</mat-icon>
-      </td>
-    </ng-container>
+      <!-- To give link of Gobee's platform -->
+      <ng-container *ngSwitchCase="'link'">
+        <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()">
+          <a [href]="element[column.key]" target="_blank">{{ element[column.label] }}</a>
+          <mat-icon matTooltip="Copy" (click)="$event.stopPropagation(); copyAlert();"
+          [cdkCopyToClipboard]="element[column.key]" matListIcon style="margin-left: 12px;">content_copy</mat-icon>
+        </td>
+      </ng-container>
 
-    <ng-container *ngSwitchCase="'action'">
-      <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation(); customAction(element);"><mat-icon [style.color]="'#666666'">{{ column.key }}</mat-icon></td>
-    </ng-container>
+      <ng-container *ngSwitchCase="'action'">
+        <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation(); customAction(element);"><mat-icon [style.color]="'#666666'">{{ column.key }}</mat-icon></td>
+      </ng-container>
 
-    <ng-container *ngSwitchCase="'button'">
-      <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation(); buttonClicked(element);">
-        <app-custom-button [icon]="column.icon" category="tertiary" variant="primary">
-          {{ column.label | translate }}
+      <ng-container *ngSwitchCase="'button'">
+        <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation(); buttonClicked(element);">
+          <app-custom-button [icon]="column.icon" category="tertiary" variant="primary">
+            {{ column.label | translate }}
+            </app-custom-button>
+        </td>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'menu'">
+        <td mat-cell *matCellDef="let element">
+          <app-custom-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()" [icon]="'more_vert'" [isIcon]="true" [noBorder]="true" category="tertiary" variant="default">
           </app-custom-button>
-      </td>
-    </ng-container>
+          <mat-menu #menu="matMenu" xPosition="before">
+            <ng-container *ngFor="let item of element[column.key]">
+              <div mat-button mat-menu-item  [style.color]="item.color" (click)="$event.stopPropagation(); subMenuClicked(element, item.action);">
+                <mat-icon matListIcon [style.color]="item.color">{{item.icon}}</mat-icon> {{ item.name | translate: { type: '' } }}
+              </div>
+            </ng-container>
+          </mat-menu>
+        </td>
+      </ng-container>
 
-    <ng-container *ngSwitchCase="'menu'">
-      <td mat-cell *matCellDef="let element">
-        <app-custom-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()" [icon]="'more_vert'" [isIcon]="true" [noBorder]="true" category="tertiary" variant="default">
-        </app-custom-button>
-        <mat-menu #menu="matMenu" xPosition="before">
+      <ng-container *ngSwitchCase="'boolean'">
+        <td mat-cell *matCellDef="let element">{{ element[column.key] ? ("general.yes" | translate) :("general.no" | translate) }}</td>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'score'">
+        <td mat-cell *matCellDef="let element">
+          <app-score-indicator class="flex-centered" [score]="element[column.key]" [borderColor]="element[column.key] ? accentColor : '#EEEEEE'"></app-score-indicator>
+        </td>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'score-list'">
+        <td mat-cell *matCellDef="let element" class="score-list">
           <ng-container *ngFor="let item of element[column.key]">
-            <div mat-button mat-menu-item  [style.color]="item.color" (click)="$event.stopPropagation(); subMenuClicked(element, item.action);">
-              <mat-icon matListIcon [style.color]="item.color">{{item.icon}}</mat-icon> {{ item.name | translate: { type: '' } }}
-            </div>
+            <app-score-indicator *ngIf="isInstance(item, 'number'); else nestedScoreTemplate" [score]="item" [borderColor]="accentColor"></app-score-indicator>
+
+            <ng-template #nestedScoreTemplate>
+              <app-score-indicator *ngIf="item && (isInstance(item, 'object') || item.score)" [score]="item.score" [borderColor]="accentColor"
+                (click)="$event.stopPropagation(); toggleExpandRow(element, item)"
+                [ngClass]="{'details-expanded': expandedRow === element && expandedData === item}"
+              >
+              </app-score-indicator>
+            </ng-template>
+
+            <ng-container *ngIf="element[column.key]?.length < scoreListLength">
+              <app-score-indicator *ngFor="let item of [].constructor(scoreListLength - element[column.key]?.length ?? 0)" [borderColor]="accentColor"></app-score-indicator>
+            </ng-container>
           </ng-container>
-        </mat-menu>
-      </td>
-    </ng-container>
+        </td>
+      </ng-container>
 
-    <ng-container *ngSwitchCase="'boolean'">
-      <td mat-cell *matCellDef="let element">{{ element[column.key] ? ("general.yes" | translate) :("general.no" | translate) }}</td>
-    </ng-container>
+      <ng-container *ngSwitchCase="'image'">
+        <td mat-cell *matCellDef="let element" class="image">
+            <img [src]="getSource(element[column.key])" alt="image">
+        </td>
+      </ng-container>
 
-    <ng-container *ngSwitchCase="'score'">
-      <td mat-cell *matCellDef="let element">
-        <app-score-indicator class="flex-centered" [score]="element[column.key]" [borderColor]="element[column.key] ? accentColor : '#EEEEEE'"></app-score-indicator>
-      </td>
-    </ng-container>
+      <ng-container *ngSwitchCase="'customized-icon'">
+        <td mat-cell *matCellDef="let element">
+          <div class="customized-icon">
+            <span>{{element[column.key]}} </span>
+            <img [src]="column.icon" alt="image">
+          </div>
+        </td>
+      </ng-container>
 
-    <ng-container *ngSwitchCase="'score-list'">
-      <td mat-cell *matCellDef="let element" class="score-list">
-        <ng-container *ngFor="let item of element[column.key]">
-          <app-score-indicator *ngIf="isInstance(item, 'number'); else nestedScoreTemplate" [score]="item" [borderColor]="accentColor"></app-score-indicator>
-
-          <ng-template #nestedScoreTemplate>
-            <app-score-indicator *ngIf="item && (isInstance(item, 'object') || item.score)" [score]="item.score" [borderColor]="accentColor"
-              (click)="$event.stopPropagation(); toggleExpandRow(element, item)"
-              [ngClass]="{'details-expanded': expandedRow === element && expandedData === item}"
+      <ng-container *ngSwitchCase="'sel-overview'">
+        <td mat-cell *matCellDef="let element">
+          <div class="sel-overview">
+            <img *ngIf="getSelOption(element[column.key]?.average_statement) as selOption; else selNoDataTemplate"
+              (click)="$event.stopPropagation(); toggleExpandRow(element, element, 'SEL')"
+              [src]="'assets/icons/SEL_faces_' + selOption.icon + '.svg'" alt=""
+              [ngClass]="{'details-expanded': expandedRow === element && expandedData?.expandedKey === 'SEL'}"
+              matTooltip="{{ 'shared.table.showSelDetails' | translate }}"
             >
-            </app-score-indicator>
-          </ng-template>
+            <ng-template #selNoDataTemplate>
+              <div class="no-data" [style.border-color]="accentColor"></div>
+            </ng-template>
+            <img *ngIf="element[column.key].progress !== undefined" [src]="'assets/icons/' + getSelArrowIcon(element[column.key].progress) + '.svg'" alt="">
+          </div>
+        </td>
+      </ng-container>
 
-          <ng-container *ngIf="element[column.key]?.length < scoreListLength">
-            <app-score-indicator *ngFor="let item of [].constructor(scoreListLength - element[column.key]?.length ?? 0)" [borderColor]="accentColor"></app-score-indicator>
-          </ng-container>
-        </ng-container>
-      </td>
+      <ng-container *ngSwitchCase="'navigate'">
+        <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation(); navigateToPage(element[column.key]);"><mat-icon matListIcon>keyboard_arrow_right</mat-icon></td>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'title'">
+        <td  mat-cell class="title" *matCellDef="let element">{{ element[column.key]}}</td>
+      </ng-container>
+
+      <ng-container *ngSwitchDefault>
+        <td  mat-cell *matCellDef="let element">{{ element[column.key]}}</td>
+      </ng-container>
+
+      <ng-template #columnNoData>
+        <td mat-cell>{{ "general.noData" | translate }}</td>
+      </ng-template>
     </ng-container>
-
-    <ng-container *ngSwitchCase="'image'">
-      <td mat-cell *matCellDef="let element" class="image">
-          <img [src]="getSource(element[column.key])" alt="image">
-      </td>
-    </ng-container>
-
-    <ng-container *ngSwitchCase="'customized-icon'">
-      <td mat-cell *matCellDef="let element">
-        <div class="customized-icon">
-          <span>{{element[column.key]}} </span>
-          <img [src]="column.icon" alt="image">
-        </div>
-      </td>
-    </ng-container>
-
-    <ng-container *ngSwitchCase="'sel-overview'">
-      <td mat-cell *matCellDef="let element">
-        <div class="sel-overview">
-          <img *ngIf="getSelOption(element[column.key]?.average_statement) as selOption; else selNoDataTemplate"
-            (click)="$event.stopPropagation(); toggleExpandRow(element, element, 'SEL')"
-            [src]="'assets/icons/SEL_faces_' + selOption.icon + '.svg'" alt=""
-            [ngClass]="{'details-expanded': expandedRow === element && expandedData?.expandedKey === 'SEL'}"
-            matTooltip="{{ 'shared.table.showSelDetails' | translate }}"
-          >
-          <ng-template #selNoDataTemplate>
-            <div class="no-data" [style.border-color]="accentColor"></div>
-          </ng-template>
-          <img *ngIf="element[column.key].progress !== undefined" [src]="'assets/icons/' + getSelArrowIcon(element[column.key].progress) + '.svg'" alt="">
-        </div>
-      </td>
-    </ng-container>
-
-    <ng-container *ngSwitchCase="'navigate'">
-      <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation(); navigateToPage(element[column.key]);"><mat-icon matListIcon>keyboard_arrow_right</mat-icon></td>
-    </ng-container>
-
-    <ng-container *ngSwitchCase="'title'">
-      <td  mat-cell class="title" *matCellDef="let element">{{ element[column.key]}}</td>
-    </ng-container>
-
-    <ng-container *ngSwitchDefault>
-      <td  mat-cell *matCellDef="let element">{{ element[column.key]}}</td>
-    </ng-container>
-
-    <ng-template #columnNoData>
-      <td mat-cell>{{ "general.noData" | translate }}</td>
-    </ng-template>
   </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="getDisplayedColumnsKeys()"></tr>
+    <tr mat-header-row *matHeaderRowDef="getDisplayedColumnsKeys()"></tr>
 
-  <tr mat-row *matRowDef="let row; columns: getDisplayedColumnsKeys();" (click)="openElementDetails(row.id)" class="element-row"></tr>
+    <tr mat-row *matRowDef="let row; columns: getDisplayedColumnsKeys();" (click)="openElementDetails(row.id)" class="element-row"></tr>
 
-  <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
 </table>
+<app-spinner style="text-align: -webkit-center;" *ngIf="loading" size="large" [variant]="'primary'"></app-spinner>
 
 <mat-paginator *ngIf="hasPaginator" [pageSizeOptions]="[10, 25, 50]" showFirstLastButtons></mat-paginator>

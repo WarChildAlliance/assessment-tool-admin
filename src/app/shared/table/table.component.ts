@@ -62,6 +62,7 @@ export class TableComponent implements OnInit, OnChanges {
   public expandedRow: any = null;
   public expandedData: any = null;
   public hasPaginator = true;
+  public loading = true;
 
   public selOptions = [
     {id: 'NOT_REALLY', icon: 'notReallyLikeMe'},
@@ -266,6 +267,8 @@ export class TableComponent implements OnInit, OnChanges {
 
   // Sort the table on one of its elements at initialization
   private loadInitialSorting(): void {
+    console.log('initial = ');
+    this.loading = true;
     // Look for an element that should be used as initial sorting reference in the table data
     // Only one element can be used as such
     const initialSortTarget = this.displayedColumns.find((element) => element.sorting);
@@ -280,5 +283,8 @@ export class TableComponent implements OnInit, OnChanges {
       // Do an initial sorting matching these conditions
       this.tableData.sort.sort(initialSortElement);
     }
+    console.log('on set loadingà false');
+    this.loading = false;
+    console.log('loading = ', this.loading);
   }
 }
