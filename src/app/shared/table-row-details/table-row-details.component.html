@@ -3,10 +3,13 @@
   <ng-container *ngIf="config === 'library'">
     <div class="question-set-scores" style="width:15%">
       <ng-container *ngFor="let questionSet of questionSets; let i = index">
-        <div class="library-question-sets" [ngClass]="{'selected': setIndex === i}">
-          <app-score-indicator [score]="questionSet?.score" [style.cursor]="questionSet.questions?.length ? 'pointer' : 'default'"
-          (click)="questionSet.questions?.length ? updateItemSetIndex(i) : ''" [borderColor]="'#FF5722'">
+        <div class="library-question-sets" [ngClass]="{'selected': setIndex === i}" (click)="questionSet.questions?.length ? updateItemSetIndex(i) : ''">
+          <app-score-indicator *ngIf="!questionSet.sel_average; else librarySELIconTemplate" [score]="questionSet?.score" [style.cursor]="questionSet.questions?.length ? 'pointer' : 'default'"
+           [borderColor]="'#FF5722'">
           </app-score-indicator>
+          <ng-template #librarySELIconTemplate>
+            <img [src]="getSELIcon(questionSet.sel_average)">
+          </ng-template>
           <span>{{ questionSet.title }}</span>
         </div>
       </ng-container>
@@ -25,6 +28,10 @@
       <p>{{ questionSets[setIndex]?.learning_objective?.name_eng ?? '--' }}</p>
       <p>{{ 'general.grade' | translate }}:</p>
       <p><b>{{ data.grade ?? '--' }}</b></p>
+      <ng-container *ngIf="questionSets[setIndex].questions[itemIndex]?.median_statement as statement">
+        <p>{{ 'shared.tableRowDetails.median' | translate }}:</p>
+        <img [src]="getSELIcon(statement)">
+      </ng-container>
     </div>
   </ng-container>
 
@@ -43,6 +50,10 @@
       <p><b>{{ data.subtopic?.name ?? '--' }}</b></p>
       <p>{{ 'general.grade' | translate }}:</p>
       <p><b>{{ data.grade ?? '--' }}</b></p>
+      <ng-container *ngIf="questionSets[setIndex].questions[itemIndex]?.median_statement as statement">
+        <p>{{ 'shared.tableRowDetails.median' | translate }}:</p>
+        <img [src]="getSELIcon(statement)">
+      </ng-container>
     </div>
   </ng-container>
 

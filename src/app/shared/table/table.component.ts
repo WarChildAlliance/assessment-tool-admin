@@ -62,6 +62,7 @@ export class TableComponent implements OnInit, OnChanges {
   public expandedRow: any = null;
   public expandedData: any = null;
   public hasPaginator = true;
+  public loading = true;
 
   public selOptions = [
     {id: 'NOT_REALLY', icon: 'notReallyLikeMe'},
@@ -80,7 +81,7 @@ export class TableComponent implements OnInit, OnChanges {
       case 'library': return '#FF5722';
       case 'students': return '#00BCD4';
       case 'groups': return '#3F51B5';
-      case 'questions': return '#FFEB3B';
+      case 'questions': return '#FFC801';
       case 'dashboard': return '#009688';
       default: return '#53A8E2';
     }
@@ -198,6 +199,9 @@ export class TableComponent implements OnInit, OnChanges {
       const student = this.tableData.data.find(e => e.id === id);
       const firstAssessment = student.assessments[0] ?? null;
       this.toggleExpandRow(student, firstAssessment);
+    } else if (this.pageConfig === 'library' || this.pageConfig === 'questions') {
+      const element = this.tableData.data.find(e => e.id === id);
+      this.toggleExpandRow(element, element);
     }
   }
 
@@ -266,6 +270,7 @@ export class TableComponent implements OnInit, OnChanges {
 
   // Sort the table on one of its elements at initialization
   private loadInitialSorting(): void {
+    this.loading = true;
     // Look for an element that should be used as initial sorting reference in the table data
     // Only one element can be used as such
     const initialSortTarget = this.displayedColumns.find((element) => element.sorting);
@@ -280,5 +285,6 @@ export class TableComponent implements OnInit, OnChanges {
       // Do an initial sorting matching these conditions
       this.tableData.sort.sort(initialSortElement);
     }
+    this.loading = false;
   }
 }

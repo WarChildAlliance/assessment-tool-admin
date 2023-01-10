@@ -31,6 +31,7 @@ export class QuestionSetAccessesBuilderComponent implements OnInit {
 
   public minDate: Date = new Date();
   public studentsList: any[] = [];
+  public loadingStudents = true;
   public assessmentsList: Assessment[] = [] ;
   public assessment: Assessment;
   public startDate: Date;
@@ -280,6 +281,7 @@ export class QuestionSetAccessesBuilderComponent implements OnInit {
       });
       studentsForm.push(studentForm);
     });
+    this.loadingStudents = false;
   }
 
   private loadGroupsList(): void {
@@ -292,9 +294,7 @@ export class QuestionSetAccessesBuilderComponent implements OnInit {
   private loadStudentsList(): void {
     this.userService.getStudentsList().subscribe(studentsList => {
       this.studentsList = studentsList.filter(student =>
-        student.country_name === this.assessment.country_name &&
-        student.language_name === this.assessment.language_name &&
-        student.assessments_count === 0
+        student.grade === this.assessment.grade.toString()
       );
       this.generateStudentsForm();
     });
