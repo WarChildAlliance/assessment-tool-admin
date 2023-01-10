@@ -199,6 +199,9 @@ export class TableComponent implements OnInit, OnChanges {
       const student = this.tableData.data.find(e => e.id === id);
       const firstAssessment = student.assessments[0] ?? null;
       this.toggleExpandRow(student, firstAssessment);
+    } else if (this.pageConfig === 'library' || this.pageConfig === 'questions') {
+      const element = this.tableData.data.find(e => e.id === id);
+      this.toggleExpandRow(element, element);
     }
   }
 
