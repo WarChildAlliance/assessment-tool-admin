@@ -426,7 +426,8 @@
       "replaceAsssessmentAccess": "هل تريد استبدال <b> {{previousAssessment}} </b> بـ <b> {{newAssessment}} </b>؟",
       "studentAssessmentPrompt": "الطالب {{studentName}} لديه تقييم معين بالفعل",
       "newAssessment": "تقييم جديد",
-      "studentAssessmentIncompletePrompt": "لم ينته هذا الطالب من التقييم الحالي <b> {{currentAssessment}} </b> ، هل أنت متأكد من أنك تريد المتابعة؟"
+      "studentAssessmentIncompletePrompt": "لم ينته هذا الطالب من التقييم الحالي <b> {{currentAssessment}} </b> ، هل أنت متأكد من أنك تريد المتابعة؟",
+      "noStudentsGrades": "لا يوجد طلاب في الصف {{gradeNumber}}"
     },
     "questionSetAccessesEdit": {
       "allQuestionSetsAccessesDeleted": "تم حذف كافة المواضيع التي يتم الوصول إليها من هذا التقييم",
