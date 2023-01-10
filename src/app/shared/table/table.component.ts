@@ -267,7 +267,6 @@ export class TableComponent implements OnInit, OnChanges {
 
   // Sort the table on one of its elements at initialization
   private loadInitialSorting(): void {
-    console.log('initial = ');
     this.loading = true;
     // Look for an element that should be used as initial sorting reference in the table data
     // Only one element can be used as such
@@ -283,8 +282,6 @@ export class TableComponent implements OnInit, OnChanges {
       // Do an initial sorting matching these conditions
       this.tableData.sort.sort(initialSortElement);
     }
-    console.log('on set loadingà false');
     this.loading = false;
-    console.log('loading = ', this.loading);
   }
 }
