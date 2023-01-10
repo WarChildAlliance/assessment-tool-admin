@@ -20,7 +20,7 @@
 <div class="areas" *ngIf="draggableOptions && !answer">
     <div class="with-options">
         <div #withOptions class="scrollable">
-            <div class="options" #with_areas *ngFor="let area of question.drop_areas; let i = index">
+            <div class="options" [class.small]="shrinkBackgroundImage" #with_areas *ngFor="let area of question.drop_areas; let i = index">
                 <p>{{i+1}}: {{area.name}}</p>
                 <div [ngSwitch]="noOptions(area.id)">
 
@@ -31,9 +31,9 @@
                     <ng-container *ngSwitchCase="false">
                         <div *ngFor="let option of draggableOptions">
                             <div *ngIf="option.area_option === area.id">
-                                <span class="option">
+                                <span class="option" [class.small]="shrinkBackgroundImage">
                                     {{option.attachments[0]?.file.substring(option.attachments[0].file.lastIndexOf('/')+1)}}
-                                    <img [src]="utilitiesService.getSource(option.attachments[0]?.file)" class="option-img" draggable="false">
+                                    <img [src]="utilitiesService.getSource(option.attachments[0]?.file)" class="option-img" [class.small]="shrinkBackgroundImage" draggable="false">
                                 </span>
                             </div>
                         </div>
@@ -43,16 +43,16 @@
         </div>
         <app-horizontal-scroll-arrows
         [scrollableElement]="withOptions"
-        [pxScrollAmount]="600">
-        </app-horizontal-scroll-arrows>
+        [pxScrollAmount]="shrinkBackgroundImage ? 400 : 600">
+    </app-horizontal-scroll-arrows>
     </div>
 
     <span *ngIf="optionsWithoutArea.length" class="span-without">{{ "assessmentBuilder.questions.dragAndDrop.noCorrectArea" | translate }}</span>
     <div class="without-options" *ngIf="optionsWithoutArea.length">
         <div #withoutOptions class="scrollable">
-            <div class="options" #without_areas *ngFor="let option of optionsWithoutArea">
+            <div class="options" [class.small]="shrinkBackgroundImage" #without_areas *ngFor="let option of optionsWithoutArea">
                 {{option.attachments[0].file.substring(option.attachments[0].file.lastIndexOf('/')+1)}}
-                <img [src]="utilitiesService.getSource(option.attachments[0].file)" class="option-img" draggable="false">
+                <img [src]="utilitiesService.getSource(option.attachments[0].file)" class="option-img" [class.small]="shrinkBackgroundImage" draggable="false">
             </div>
         </div>
         <app-horizontal-scroll-arrows
@@ -66,14 +66,14 @@
 <div class="areas" *ngIf="answer">
     <div class="with-options">
         <div #withOptions class="scrollable">
-            <div class="options" #with_areas *ngFor="let area of question.drop_areas; let i = index">
+            <div class="options" [class.small]="shrinkBackgroundImage" #with_areas *ngFor="let area of question.drop_areas; let i = index">
                 <p>{{i+1}}: {{area.name}}</p>
                 <div *ngIf="getAreaAnswer(area.id) as areaAnswer; else noAnswer">
-                    <span class="option"
+                    <span class="option" [class.small]="shrinkBackgroundImage"
                         [ngClass]="areaAnswer.selected_draggable_option.area_option === areaAnswer.area.id ? 'valid' : 'student'"
                     >
                         {{areaAnswer.selected_draggable_option.attachments[0].file.substring(areaAnswer.selected_draggable_option.attachments[0].file.lastIndexOf('/')+1)}}
-                        <img [src]="utilitiesService.getSource(areaAnswer.selected_draggable_option.attachments[0].file)" class="option-img" draggable="false">
+                        <img [src]="utilitiesService.getSource(areaAnswer.selected_draggable_option.attachments[0].file)" class="option-img" [class.small]="shrinkBackgroundImage" draggable="false">
                     </span>
                 </div>
                 <ng-template #noAnswer>
@@ -90,7 +90,7 @@
         </div>
         <app-horizontal-scroll-arrows
         [scrollableElement]="withOptions"
-        [pxScrollAmount]="600">
+        [pxScrollAmount]="shrinkBackgroundImage ? 400 : 600">
         </app-horizontal-scroll-arrows>
     </div>
 </div>

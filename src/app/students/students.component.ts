@@ -27,6 +27,7 @@ export class StudentsComponent implements OnInit, OnDestroy {
     { key: 'sel_overview', name: ' ', type: 'sel-overview' },
     { key: 'full_name', name: 'general.studentName' },
     { key: 'username', name: 'students.studentCode', type: 'copy' },
+    { key: 'grade', name: 'general.grade' },
     { key: 'last_session', name: 'general.lastLogin', type: 'date' },
     { key: 'assessments', name: 'general.assessments', type: 'score-list' },
     { key: 'average_score', name: 'general.average', type: 'score' },

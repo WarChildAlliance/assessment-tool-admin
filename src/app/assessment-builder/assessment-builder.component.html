@@ -1,5 +1,6 @@
 
-<div style="position:relative">
+<app-spinner style="text-align: -webkit-center;" *ngIf="loading" size="large" [variant]="'primary'"></app-spinner>
+<div *ngIf="!loading" style="position:relative">
     <app-custom-button icon="add_circle_outline" category="secondary" variant="primary" (click)="openAssessmentFormDialog()">
     {{ "general.add" | translate: { type: ("general.assessments" | translate | lowercase) } }}
     </app-custom-button>

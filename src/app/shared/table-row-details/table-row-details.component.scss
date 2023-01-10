@@ -59,7 +59,7 @@
   }
   .item-preview-container {
     .item-accent-color {
-      &__question { --item-accent-color: #FFEB3B; }
+      &__question { --item-accent-color: #FFC801; }
       &__sel { --item-accent-color: #FF5722; }
     }
     .item-nav {
@@ -183,8 +183,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  app-score-indicator {
+  cursor: pointer;
+  app-score-indicator, img {
     margin-right: 5px;
+  }
+  img {
+    width: 33px;
+    height: auto;
+    border-radius: 9999px;
+    border: 2px solid #FF5722;
   }
 }
 
@@ -208,4 +215,8 @@
   padding-left: 50px;
   color: #666666;
   text-align: left;
+  img {
+    width: 30px;
+    height: auto;
+  }
 }

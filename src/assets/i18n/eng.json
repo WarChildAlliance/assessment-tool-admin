@@ -425,7 +425,8 @@
       "answersCount": "(based on <u>{{count}} students</u> answers)",
       "assignAgain": "Assign again",
       "assignOther": "Assign to another other student",
-      "seeStudentDetail": "See student detail"
+      "seeStudentDetail": "See student detail",
+      "median": "Median"
     }
   },
   "students": {
@@ -473,7 +474,8 @@
       "replaceAsssessmentAccess": "Do you want to replace <b>{{previousAssessment}}</b> with <b>{{newAssessment}}</b>?",
       "studentAssessmentPrompt": "Student {{studentName}} already has an assessment assigned",
       "newAssessment": "a new assessment",
-      "studentAssessmentIncompletePrompt": "This student has not finished the current assessment <b>{{currentAssessment}}</b>, are you sure you want to continue?"
+      "studentAssessmentIncompletePrompt": "This student has not finished the current assessment <b>{{currentAssessment}}</b>, are you sure you want to continue?",
+      "noStudentsGrades": "No students of grade {{gradeNumber}}"
     },
     "questionSetAccessesEdit": {
       "accessEdited": "The set of questions access have been successfully deleted!",

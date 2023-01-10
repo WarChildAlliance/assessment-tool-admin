@@ -40,6 +40,8 @@ export class AssessmentSummaryComponent implements OnInit {
   public reorder = false;
   public changedOrder = false;
   public questionSetToOrder: QuestionSet[] = [];
+  public loading = false;
+  public loadingQS = false;
 
   constructor(
     private dialog: MatDialog,
@@ -142,6 +144,7 @@ export class AssessmentSummaryComponent implements OnInit {
   }
 
   public editAssessment(assessment, clone?: boolean): void {
+    this.loading = true;
     this.edit = clone ? false : true;
     this.assessment = assessment;
 
@@ -158,6 +161,7 @@ export class AssessmentSummaryComponent implements OnInit {
         if (value.archived !== assessment.archived) {
           this.reloadAssessments.emit(true);
         }
+        this.loading = false;
         this.getAssessmentDetails(this.assessment.id);
       }
     });
@@ -242,9 +246,11 @@ export class AssessmentSummaryComponent implements OnInit {
   }
 
   private getAssessmentDetails(assessmentId: string): void {
+    this.loadingQS = true;
     this.assessmentService.getAssessmentQuestionSets(assessmentId).subscribe(() => {
       this.assessmentService.getAssessmentDetails(assessmentId).subscribe(assessmentDetails => {
         this.assessment = assessmentDetails;
+        this.loadingQS = false;
       });
     });
   }
