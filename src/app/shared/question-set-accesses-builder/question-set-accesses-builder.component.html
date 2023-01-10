@@ -5,7 +5,7 @@
             <mat-icon>close</mat-icon>
         </div>
         <div class="question-set-accesses-builder">
-            <div class="question-set-accesses-builder__list -students" *ngIf="studentsList.length">
+            <div class="question-set-accesses-builder__list -students" *ngIf="this.libraryAssessment || studentsList.length">
                 <span class="header">{{ "general.students" | translate }}</span>
                 <div *ngIf="!libraryAssessment">
                     <div class="question-set-accesses-builder__list-row" *ngFor="let student of studentsList">
@@ -15,6 +15,11 @@
                 </div>
                 <div *ngIf="libraryAssessment" [formGroup]="assignStudentsForm">
                     <ng-container formArrayName="students">
+                        <app-spinner *ngIf="loadingStudents" style="text-align: -webkit-center;" size="small" [variant]="'primary'"></app-spinner>
+                        <span class="notifier" *ngIf="!studentsList.length && !loadingStudents">
+                            {{ 'students.questionSetAccessesBuilder.noStudentsGrades' | translate: {gradeNumber: assessment.grade} }}
+                        </span>
+
                         <div *ngFor="let control of studentControls; let i=index;" [formGroupName]="i"
                             class="question-set-accesses-builder__list-row -question-set-access">
                             <mat-checkbox formControlName="selected" (change)="uniqueAssessmentCheck(control, $event.checked)">
