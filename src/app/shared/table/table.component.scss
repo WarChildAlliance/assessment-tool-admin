@@ -1,3 +1,6 @@
+:host {
+  --score-indicator-width: 37px;
+}
 .table-actions {
   margin-top: 24px;
   display: flex;
@@ -104,10 +107,12 @@
 // }
 .score-list {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
   margin: 1em;
   place-content: space-between;
+  flex-flow: nowrap;
+  overflow-x: auto;
+  // Limit for the number of score indicators to be displayed: 10
+  max-width: calc(10 * var(--score-indicator-width));
 }
 .details-expanded {
   border-bottom: 4px solid #FF5722;
