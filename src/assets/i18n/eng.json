@@ -50,6 +50,7 @@
     "order": "Order",
     "page": "{{type}} page",
     "preview": "Preview",
+    "previous": "Previous",
     "private": "Private",
     "publicAssessments": "Public assessments",
     "question": "Question",
