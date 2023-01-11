@@ -57,7 +57,7 @@ export class AssessmentBuilderComponent implements OnInit {
   public getAssessments(): void {
     this.loading = true;
     this.assessmentService.getAssessmentsList().subscribe((assessmentsList) => {
-      this.currentAssessments = assessmentsList;
+      this.currentAssessments = assessmentsList.sort((a, b) => a.title.localeCompare(b.title));
       this.loading = false;
     });
   }
