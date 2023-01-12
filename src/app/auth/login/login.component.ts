@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
     keepConnection: new FormControl(true, [Validators.required])
   });
 
+  public passwordType = 'password';
 
   constructor(
     private authService: AuthService
@@ -34,8 +35,8 @@ export class LoginComponent implements OnInit {
   }
 
   public showPassword(): void {
-    const newType = this.passwordElement.nativeElement.getAttribute('type') === 'password' ? 'text' : 'password';
-    this.passwordElement.nativeElement.setAttribute('type', newType);
+    this.passwordType = this.passwordElement.nativeElement.getAttribute('type') === 'password' ? 'text' : 'password';
+    this.passwordElement.nativeElement.setAttribute('type', this.passwordType);
   }
 
   public onSignup(): void {
