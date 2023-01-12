@@ -29,6 +29,10 @@
     </div>
 
     <div class="dialog-buttons">
+        <span class="notifier" *ngIf="groupForm.get('name').hasError('duplicatedName')">
+            {{ "header.groups.duplicatedGroupName" | translate }}
+        </span>
+
         <button mat-button color="secondary" class="dialog-buttons__cancel" mat-dialog-close>
             {{ "general.cancel" | translate }}
         </button>

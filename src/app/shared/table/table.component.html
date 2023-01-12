@@ -1,6 +1,6 @@
 <app-table-actions *ngIf="hasFilters" [filtersData]="filtersData" (searchChangedEvent)="applySearchFilter($event)"
   [buttons]="actionsButtons" [libraryFilters]="libraryFilters" (filtersChangedEvent)="filtersChangedEvent.emit($event)"
-  (buttonClickedEvent)="actionButtonClicked($event)" (resetFiltersEvent)="resetFiltersEvent.emit(true)">
+  (buttonClickedEvent)="actionButtonClicked($event)" (resetFiltersEvent)="resetFiltersEvent.emit(true)" [loading]="loading">
 </app-table-actions>
 
 <table mat-table matSort [dataSource]="tableData" multiTemplateDataRows>

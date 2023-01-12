@@ -150,7 +150,8 @@
       "headerPt1": "Hi! This is the",
       "headerPt2": "Here you can see all your",
       "overlineTitle": "groups",
-      "headerPt3": "performances, assign assessments to the whole group and adding new group"
+      "headerPt3": "performances, assign assessments to the whole group and adding new group",
+      "duplicatedGroupName": "You already have a group with this name."
     }
   },
   "assessmentBuilder": {

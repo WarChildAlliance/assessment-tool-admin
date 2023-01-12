@@ -8,6 +8,7 @@ import { Group } from 'src/app/core/models/group.model';
 
 interface DialogData {
   group?: Group;
+  groupsList?: Group[];
 }
 
 @Component({
@@ -18,6 +19,7 @@ interface DialogData {
 
 export class GroupDialogComponent implements OnInit {
   public group: Group;
+  public groupsList: Group[];
   public supervisorName: string;
 
   public groupForm: FormGroup = new FormGroup({
@@ -37,9 +39,18 @@ export class GroupDialogComponent implements OnInit {
 
     if (this.data?.group) {
       this.group = this.data.group;
-
       this.groupForm.patchValue({name: this.group.name});
     }
+    if (this.data?.groupsList) { this.groupsList = this.data?.groupsList; }
+
+    this.groupForm.controls.name.valueChanges.subscribe(value => {
+      const duplicated = this.groupsList.some(group => group.name === value);
+      if (duplicated) {
+        this.groupForm.controls.name.setErrors({ duplicatedName: true });
+      } else {
+        this.groupForm.controls.name.setErrors(null);
+      }
+    });
   }
 
   public onSubmit(): void {

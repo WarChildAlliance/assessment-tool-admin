@@ -18,6 +18,7 @@ import { QuestionSetAccessesBuilderComponent } from '../shared/question-set-acce
 })
 export class GroupsComponent implements OnInit {
   public selectedGroups = [];
+  public groupsList = [];
   public scoreListLength: number;
   public buttons = GroupActionsButtonsTableData;
 
@@ -56,7 +57,9 @@ export class GroupsComponent implements OnInit {
   }
 
   public onCreate(): void {
-    const createGroupDialog = this.dialog.open(GroupDialogComponent);
+    const createGroupDialog = this.dialog.open(GroupDialogComponent, {
+      data: { groupsList: this.groupsList }
+    });
     createGroupDialog.afterClosed().subscribe((value) => {
       if (value) {
         this.getGroups();
@@ -148,6 +151,7 @@ export class GroupsComponent implements OnInit {
   private getGroups(): void {
     this.userService.getGroupsDetails().subscribe(groups => {
       const tableData = [];
+      this.groupsList = groups;
 
       this.scoreListLength = Math.max(
         ...groups.map(group => group.assessments_average?.length).filter(group => group != null)

@@ -10,11 +10,13 @@
     
         <ng-container *ngIf="buttons">
             <ng-container *ngFor="let button of buttons">
-              <app-custom-button *ngIf="button.nameType" class="content" [icon]="button.icon" [category]="button.category" [variant]="button.variant" (click)="buttonClicked(button.action)">
+              <app-custom-button *ngIf="button.nameType" class="content" [icon]="button.icon" [category]="button.category"
+                [variant]="button.variant" (click)="buttonClicked(button.action)" [disabled]="loading">
                   {{ button.name | translate: { type: (button.nameType| translate | lowercase) } }}
               </app-custom-button>
       
-              <app-custom-button *ngIf="!button.nameType" class="content" [icon]="button.icon" [category]="button.category" [variant]="button.variant" (click)="buttonClicked(button.action)">
+              <app-custom-button *ngIf="!button.nameType" class="content" [icon]="button.icon" [category]="button.category"
+                [variant]="button.variant" (click)="buttonClicked(button.action)" [disabled]="loading">
                   {{ button.name | translate }}
               </app-custom-button>
             </ng-container>

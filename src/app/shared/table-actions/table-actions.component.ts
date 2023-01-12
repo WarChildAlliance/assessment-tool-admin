@@ -15,6 +15,7 @@ export class TableActionsComponent implements OnInit {
   @Input() filtersData: TableFilter[];
   @Input() libraryFilters: boolean;
   @Input() hideSearchBar: boolean;
+  @Input() loading: boolean;
   @Input() buttons: TableActionButtons[];
 
   @Output() filtersChangedEvent = new EventEmitter<any>(true);
