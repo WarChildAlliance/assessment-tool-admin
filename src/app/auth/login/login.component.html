@@ -11,6 +11,12 @@
       <mat-label>{{ "auth.login.password" | translate }}</mat-label>
       <input matInput #passwordElement name="passwordElement" type="password" autocomplete="current-password"
         formControlName="password">
+        <!-- <button matSuffix mat-icon-button aria-label="Show password" (click)="showPassword()">
+          <mat-icon class="password-visibility-icon">visibility</mat-icon>
+        </button> -->
+      <app-custom-button [isIcon]="true" matSuffix aria-label="Show password" (click)="showPassword()">
+        <mat-icon  class="password-visibility-icon">{{ this.passwordType === 'password' ? 'visibility' : 'visibility_off' }}</mat-icon>
+      </app-custom-button>
     </mat-form-field>
 
     <div class="questions">

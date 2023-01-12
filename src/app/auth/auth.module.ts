@@ -7,6 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { TranslateModule } from '@ngx-translate/core';
+import { CustomButtonModule } from '../shared/button/button.module';
 import { AuthRoutingModule } from './auth-routing.module';
 import { LoginComponent } from './login/login.component';
 
@@ -25,7 +26,8 @@ import { LoginComponent } from './login/login.component';
     MatInputModule,
     MatIconModule,
     MatCheckboxModule,
-    TranslateModule
+    TranslateModule,
+    CustomButtonModule
   ]
 })
 export class AuthModule { }
