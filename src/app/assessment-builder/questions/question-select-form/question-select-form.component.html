@@ -113,7 +113,7 @@
                     <button mat-flat-button mat-dialog-close class="dialog-buttons__cancel" color="secondary">
                         {{ "general.cancel" | translate }}
                     </button>
-                    <button [disabled]="!checkValidAnswer" mat-flat-button matStepperNext color="accent" class="dialog-buttons__submit">
+                    <button mat-flat-button matStepperNext color="accent" class="dialog-buttons__submit">
                         {{ "general.continue" | translate }}
                     </button>
                 </div>
@@ -136,14 +136,18 @@
                         [audioAttachment]="audioAttachment"
                     ></app-audio-selector>
                 </div>
-
-                <div class="dialog-buttons">
-                    <button mat-flat-button mat-dialog-close class="dialog-buttons__cancel" color="secondary">
-                        {{ "general.cancel" | translate }}
+                <div class="question-form-buttons">
+                    <button mat-flat-button matStepperPrevious color="accent" class="dialog-buttons__submit">
+                        {{ "general.previous" | translate }}
                     </button>
-                    <button  mat-flat-button color="accent" [disabled]="selectForm.invalid || !selectForm.dirty" (click)="onSubmit()">
-                        {{ question ? toClone ? ("general.clone" | translate) : ("general.save" | translate) : ("general.create" | translate) }}
-                    </button>
+                    <div class="dialog-buttons">
+                        <button mat-flat-button mat-dialog-close class="dialog-buttons__cancel" color="secondary">
+                            {{ "general.cancel" | translate }}
+                        </button>
+                        <button  mat-flat-button color="accent" [disabled]="selectForm.invalid || !selectForm.dirty" (click)="onSubmit()">
+                            {{ question ? toClone ? ("general.clone" | translate) : ("general.save" | translate) : ("general.create" | translate) }}
+                        </button>
+                    </div>
                 </div>
             </mat-step>
         </mat-stepper>
