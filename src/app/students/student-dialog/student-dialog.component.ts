@@ -36,12 +36,10 @@ export class StudentDialogComponent implements OnInit {
   public grades = ['1', '2', '3'];
 
   public studentForm: FormGroup = new FormGroup({
-    first_name: new FormControl('',
-     [Validators.required, Validators.pattern('^[A-Za-zÀ-ÖØ-öø-ÿ\u0621-\u064A]+(-[A-Za-zÀ-ÖØ-öø-ÿ\u0621-\u064A]+)?$')]),
-    last_name: new FormControl('',
-     [Validators.required, Validators.pattern('^[A-Za-zÀ-ÖØ-öø-ÿ\u0621-\u064A]+(-[A-Za-zÀ-ÖØ-öø-ÿ\u0621-\u064A]+)?$')]),
-    country: new FormControl('', [Validators.required]),
-    language: new FormControl('', [Validators.required]),
+    first_name: new FormControl('', Validators.required),
+    last_name: new FormControl('', Validators.required),
+    country: new FormControl('', Validators.required),
+    language: new FormControl('', Validators.required),
     group: new FormControl(''),
     grade: new FormControl(''),
     active: new FormControl(true)
