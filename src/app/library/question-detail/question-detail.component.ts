@@ -40,7 +40,7 @@ export class QuestionDetailComponent implements OnInit {
   }
 
   public onOpenDetails(id: string): void {
-    this.router.navigate([`/assessments/${this.assessmentId}question-sets/${this.questionSetId}/questions/${id}`]);
+    this.router.navigate([`/assessments/${this.assessmentId}/question-sets/${this.questionSetId}/questions/${id}`]);
   }
 
   public deleteSelection(): void {
