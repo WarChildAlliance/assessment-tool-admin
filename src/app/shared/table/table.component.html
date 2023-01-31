@@ -138,7 +138,7 @@
             <app-score-indicator *ngIf="isInstance(item, 'number') || item === null; else nestedScoreTemplate" [score]="item" [borderColor]="accentColor"></app-score-indicator>
 
             <ng-template #nestedScoreTemplate>
-              <app-score-indicator *ngIf="item && (isInstance(item, 'object') || item.score)" [score]="item.score" [borderColor]="accentColor"
+              <app-score-indicator *ngIf="item && (isInstance(item, 'object') || (item.score && isInstance(item.score, 'number')))" [score]="item.score" [borderColor]="accentColor"
                 (click)="$event.stopPropagation(); toggleExpandRow(element, item)"
                 [ngClass]="{'details-expanded': expandedRow === element && expandedData === item}"
               >

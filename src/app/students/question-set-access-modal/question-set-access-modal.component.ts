@@ -77,6 +77,7 @@ export class QuestionSetAccessModalComponent implements OnInit {
         end_date: value || i === 0 ? this.endDate : null
       });
     });
+    this.assignQuestionSetForm.markAsDirty();
   }
 
   public submitCreateQuestionSetAccesses(): void {

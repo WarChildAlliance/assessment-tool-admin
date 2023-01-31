@@ -270,7 +270,8 @@ export class QuestionSetDetailsComponent implements OnInit {
       const savedLanguage = localStorage.getItem('la-language') || 'eng';
       this.questionSetDetails = questionSetDetails;
       if (this.questionSetDetails.learning_objective) {
-        this.learningObj = this.questionSetDetails.learning_objective[`name_${savedLanguage}`];
+        this.learningObj = this.questionSetDetails.learning_objective;
+        this.learningObj.name = this.learningObj[`name_${savedLanguage}`];
       }
       if (initComponent && this.questionSetDetails.sel_question) {        // Adds SEL Question type to the 'Add a question' section
         this.questionsArray.unshift(this.questionSEL);

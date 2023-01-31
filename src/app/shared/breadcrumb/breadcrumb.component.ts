@@ -30,6 +30,10 @@ export class CustomBreadcrumbComponent implements OnInit {
     this.breadCrumbData();
     this.breadcrumbService.componentData.subscribe((value: any) => {
       this.componentData = value;
+      if (this.componentData?.group_average || this.componentData?.grade_average) {
+        this.componentData.group_average = Math.round(this.componentData.group_average);
+        this.componentData.grade_average = Math.round(this.componentData.grade_average);
+      }
     });
   }
   ngOnInit(): void {
