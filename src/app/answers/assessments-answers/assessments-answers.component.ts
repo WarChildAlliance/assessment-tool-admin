@@ -56,7 +56,7 @@ export class AssessmentsAnswersComponent implements OnInit {
 
   public onOpenDetails(assessmentId: string): void {
     this.router.navigate(
-      [`students/${this.currentStudentId}/assessments/${assessmentId}question-sets`]
+      [`students/${this.currentStudentId}/assessments/${assessmentId}/question-sets`]
     );
   }
 }
