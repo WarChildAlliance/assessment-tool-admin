@@ -21,7 +21,7 @@ export class AssessmentsComponent implements OnInit, AfterViewInit {
 
   public displayedColumns: TableColumn[] = [
     { key: 'icon', name: ' ', type: 'image' },
-    { key: 'grade', name: 'grade' },
+    { key: 'grade', name: 'general.grade' },
     { key: 'title', name: 'assessments.title' },
     { key: 'expand', name: ' ', type: 'expand' },
     { key: 'invites', name: 'assessments.invites' },

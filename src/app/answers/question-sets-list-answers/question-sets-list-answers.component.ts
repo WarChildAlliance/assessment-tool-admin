@@ -73,7 +73,7 @@ export class QuestionSetsListAnswersComponent implements OnInit {
 
   public onOpenDetails(questionSetId: string): void {
     this.router.navigate(
-      [`students/${this.currentStudentId}/assessments/${this.assessmentId}question-sets/${questionSetId}/questions`]
+      [`students/${this.currentStudentId}/assessments/${this.assessmentId}/question-sets/${questionSetId}/questions`]
     );
   }
 }

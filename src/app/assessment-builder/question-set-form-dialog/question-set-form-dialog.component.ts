@@ -155,6 +155,7 @@ export class QuestionSetFormDialogComponent implements OnInit {
 
   private async setForm(questionSet: any): Promise<void> {
     this.selectQuestionSet = false;
+    this.getLearningObjectives();
 
     if (this.toClone) {
       this.createNewQuestionSetForm.markAsDirty();
@@ -162,7 +163,6 @@ export class QuestionSetFormDialogComponent implements OnInit {
         await this.iconToFile(questionSet.icon);
       }
     }
-
     this.createNewQuestionSetForm.setValue({
       name: questionSet.name,
       description: questionSet.description,

@@ -1,4 +1,4 @@
-<div *ngIf="score; else noScoreTemplate" class="score-ring"
+<div *ngIf="score || score === 0; else noScoreTemplate" class="score-ring"
   [style.background]="getIndicatorColor(score)"
   [style.border-color]="borderColor"
 >
