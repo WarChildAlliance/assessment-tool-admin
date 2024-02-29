@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Gobee : Assessments - Technical view</title>
+        <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body class="theme-default aui-theme-default">
+        <div id="page">
+            <div id="main" class="aui-page-panel">
+                <div id="main-header">
+                    <div id="breadcrumb-section">
+                        <ol id="breadcrumbs">
+                            <li class="first">
+                                <span><a href="index.html">Gobee</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="Gobee-Home_65612.html">Gobee Home</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="GOBEE-Documentation_131073.html">GOBEE Documentation</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="Technical-documentation_4685825.html">Technical documentation</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="Teachers-platform---Technical-view_4751361.html">Teachers platform - Technical view</a></span>
+                            </li>
+                                                </ol>
+                    </div>
+                    <h1 id="title-heading" class="pagetitle">
+                                                <span id="title-text">
+                            Gobee : Assessments - Technical view
+                        </span>
+                    </h1>
+                </div>
+
+                <div id="content" class="view">
+                    <div class="page-metadata">
+                        
+        
+    
+        
+    
+        
+        
+            Created by <span class='author'> Estela Ferreira</span>, last modified on Sep 05, 2022
+                        </div>
+                    <div id="main-content" class="wiki-content group">
+                    <style type='text/css'>/*<![CDATA[*/
+div.rbtoc1709200800718 {padding: 0px;}
+div.rbtoc1709200800718 ul {list-style: disc;margin-left: 0px;}
+div.rbtoc1709200800718 li {margin-left: 0px;padding-left: 0px;}
+
+/*]]>*/</style><div class='toc-macro rbtoc1709200800718'>
+<ul class='toc-indentation'>
+<li><a href='#Assessments-Technicalview-Overview'>Overview</a></li>
+<li><a href='#Assessments-Technicalview-Front-end'>Front-end</a>
+<ul class='toc-indentation'>
+<li><a href='#Assessments-Technicalview-Location'>Location</a></li>
+</ul>
+</li>
+<li><a href='#Assessments-Technicalview-Back-end'>Back-end</a>
+<ul class='toc-indentation'>
+<li><a href='#Assessments-Technicalview-Availableendpoints'>Available endpoints</a></li>
+<li><a href='#Assessments-Technicalview-Assessmentsrelatedfeatures'>Assessments related features</a></li>
+<li><a href='#Assessments-Technicalview-Businesslogic'>Business logic</a></li>
+</ul>
+</li>
+</ul>
+</div><h1 id="Assessments-Technicalview-Overview">Overview</h1><p>The assessments page feature enables teachers/supervisors to search, filter by country and language and have an overview of their assessments and public assessments, assessment topics, their questions and data about the student linked to them.</p><h1 id="Assessments-Technicalview-Front-end">Front-end</h1><h2 id="Assessments-Technicalview-Location">Location</h2><div id="expander-125735850" class="expand-container"><div id="expander-control-125735850" class="expand-control"><span class="expand-control-icon"><img style="vertical-align:middle;" class="expand-control-image" src="images/icons/grey_arrow_down.png"></span><span class="expand-control-text">Assessments page</span></div><div id="expander-content-125735850" class="expand-content"><div class="table-wrap"><table data-layout="default" data-local-id="cc3db705-63f6-4348-a2a1-5e3cdbe225aa" class="confluenceTable"><colgroup><col style="width: 120.0px;"/><col style="width: 638.0px;"/></colgroup><tbody><tr><td data-highlight-colour="#f4f5f7" colspan="2" class="confluenceTd"><p><strong>Assessments Overview</strong></p><span class="confluence-embedded-file-wrapper image-center-wrapper"><img class="confluence-embedded-image image-center" loading="lazy" src="attachments/21069837/21004331.png" data-image-src="attachments/21069837/21004331.png" data-height="582" data-width="1536" data-unresolved-comment-count="0" data-linked-resource-id="21004331" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="image-20220901-125707.png" data-base-url="https://warchild-gobee.atlassian.net/wiki" data-linked-resource-content-type="image/png" data-linked-resource-container-id="21069837" data-linked-resource-container-version="5" data-media-id="ebf66b4c-9919-481c-890d-92cbfec778c6" data-media-type="file"></span></td></tr><tr><td class="confluenceTd"><p><strong>URL</strong></p></td><td class="confluenceTd"><p><code>/assessments</code></p></td></tr><tr><td class="confluenceTd"><p><strong>Component</strong></p></td><td class="confluenceTd"><p><strong>AssessmentsComponent</strong></p><p>path: <code>src/app/assessments</code></p></td></tr><tr><td data-highlight-colour="#f4f5f7" colspan="2" class="confluenceTd"><p><strong>Assessments details: Topics</strong></p><span class="confluence-embedded-file-wrapper image-center-wrapper"><img class="confluence-embedded-image image-center" loading="lazy" src="attachments/21069837/21561369.png" data-image-src="attachments/21069837/21561369.png" data-height="542" data-width="1536" data-unresolved-comment-count="0" data-linked-resource-id="21561369" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="image-20220901-131849.png" data-base-url="https://warchild-gobee.atlassian.net/wiki" data-linked-resource-content-type="image/png" data-linked-resource-container-id="21069837" data-linked-resource-container-version="5" data-media-id="e101ac7c-87ea-46c3-ba28-619d96bb9b24" data-media-type="file"></span></td></tr><tr><td class="confluenceTd"><p><strong>URL</strong></p></td><td class="confluenceTd"><p><code>/assessments/&lt;assessment id&gt;</code></p></td></tr><tr><td class="confluenceTd"><p><strong>Component</strong></p></td><td class="confluenceTd"><p><strong>AssessmentDetailComponent</strong></p><p>path: <code>src/app/assessments/assessment-detail</code></p></td></tr><tr><td data-highlight-colour="#f4f5f7" colspan="2" class="confluenceTd"><p><strong>Questions List</strong></p><span class="confluence-embedded-file-wrapper image-center-wrapper"><img class="confluence-embedded-image image-center" loading="lazy" src="attachments/21069837/21102639.png" data-image-src="attachments/21069837/21102639.png" data-height="572" data-width="1536" data-unresolved-comment-count="0" data-linked-resource-id="21102639" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="image-20220901-132701.png" data-base-url="https://warchild-gobee.atlassian.net/wiki" data-linked-resource-content-type="image/png" data-linked-resource-container-id="21069837" data-linked-resource-container-version="5" data-media-id="00cf4d1f-9f57-478f-bdf9-a37c05a2d871" data-media-type="file"></span></td></tr><tr><td class="confluenceTd"><p><strong>URL</strong></p></td><td class="confluenceTd"><p><code>/assessments/&lt;assessment id&gt;/topics/&lt;topic id&gt;</code></p></td></tr><tr><td class="confluenceTd"><p><strong>Component</strong></p></td><td class="confluenceTd"><p><strong>QuestionsListComponent</strong></p><p>path: <code>src/app/assessments/questions-list</code></p></td></tr><tr><td data-highlight-colour="#f4f5f7" colspan="2" class="confluenceTd"><p><strong>Questions Preview</strong></p><span class="confluence-embedded-file-wrapper image-center-wrapper"><img class="confluence-embedded-image image-center" loading="lazy" src="attachments/21069837/21430295.gif" data-image-src="attachments/21069837/21430295.gif" data-height="724" data-width="1630" data-unresolved-comment-count="0" data-linked-resource-id="21430295" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="value.gif" data-base-url="https://warchild-gobee.atlassian.net/wiki" data-linked-resource-content-type="image/gif" data-linked-resource-container-id="21069837" data-linked-resource-container-version="5" data-media-id="50dfb543-326d-4863-b73f-306bbd81c33f" data-media-type="file"></span></td></tr><tr><td class="confluenceTd"><p><strong>Related Components</strong></p></td><td class="confluenceTd"><p><strong>QuestionNumberlineComponent, QuestionDragAndDropComponent,</strong></p><p><strong>QuestionSelectComponent, QuestionInputComponent</strong></p><p>path: <code>src/app/shared/questions/</code></p></td></tr></tbody></table></div></div></div><h1 id="Assessments-Technicalview-Back-end">Back-end</h1><h2 id="Assessments-Technicalview-Availableendpoints">Available endpoints</h2><div id="expander-1246770516" class="expand-container"><div id="expander-control-1246770516" class="expand-control"><span class="expand-control-icon"><img style="vertical-align:middle;" class="expand-control-image" src="images/icons/grey_arrow_down.png"></span><span class="expand-control-text">Available endpoints</span></div><div id="expander-content-1246770516" class="expand-content"><div class="table-wrap"><table data-layout="default" data-local-id="2945437e-05bd-4587-a89e-704a71ccf99f" class="confluenceTable"><colgroup><col style="width: 182.0px;"/><col style="width: 576.0px;"/></colgroup><tbody><tr><td data-highlight-colour="#f4f5f7" colspan="2" class="confluenceTd"><p><strong>Get all allowed assessments for the logged-in supervisor</strong></p></td></tr><tr><td class="confluenceTd"><p><strong>Endpoint</strong></p></td><td class="confluenceTd"><p>GET <code>/visualization/assessments/</code></p></td></tr><tr><td class="confluenceTd"><p><strong>ViewSet method</strong></p></td><td class="confluenceTd"><p>AssessmentTableViewSet.<strong>list</strong></p></td></tr><tr><td class="confluenceTd"><p><strong>Front-end method</strong></p></td><td class="confluenceTd"><p><code>AssessmentService.getAssessmentsList(filteringParams?: object)</code></p></td></tr><tr><td class="confluenceTd"><p><strong>Response</strong></p></td><td class="confluenceTd"><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Confluence" data-theme="Confluence">[
+  {
+    archived: boolean,
+    can_edit: boolean,
+    country_code: string,
+    country_name: string,
+    downloadable: boolean,
+    grade: string,
+    icon: string,
+    id: number,
+    language_code: string,
+    language_name: string,
+    private: boolean,
+    students_count: number,
+    subject: string,
+    title: string,
+    topics_count: number,
+    topics: [{
+      archived: boolean,
+      description: string,
+      icon: string,
+      id: number,
+      order: number,
+      questionsCount: number,
+      title: string
+    }]
+  }
+]</pre>
+</div></div></td></tr><tr><td data-highlight-colour="#f4f5f7" colspan="2" class="confluenceTd"><p><strong>Get a single assessment</strong></p></td></tr><tr><td class="confluenceTd"><p><strong>Endpoint</strong></p></td><td class="confluenceTd"><p>GET <code>/visualization/assessments/&lt;assessment id&gt;/</code></p></td></tr><tr><td class="confluenceTd"><p><strong>ViewSet method</strong></p></td><td class="confluenceTd"><p>AssessmentTableViewSet.<strong>retrieve</strong></p></td></tr><tr><td class="confluenceTd"><p><strong>Front-end method</strong></p></td><td class="confluenceTd"><p><code>AssessmentService.getAssessmentDetails(id: string)</code></p></td></tr><tr><td class="confluenceTd"><p><strong>Response</strong></p></td><td class="confluenceTd"><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Confluence" data-theme="Confluence">[
+  {
+    archived: boolean,
+    can_edit: boolean,
+    country_code: string,
+    country_name: string,
+    downloadable: boolean,
+    grade: string,
+    icon: string,
+    id: number,
+    language_code: string,
+    language_name: string,
+    private: boolean,
+    students_count: number,
+    subject: string,
+    title: string,
+    topics_count: number,
+    topics: [{
+      archived: boolean,
+      description: string,
+      icon: string,
+      id: number,
+      order: number,
+      questionsCount: number,
+      title: string
+    }]
+  }
+]</pre>
+</div></div></td></tr><tr><td data-highlight-colour="#f4f5f7" colspan="2" class="confluenceTd"><p><strong>Get assessment topics</strong></p></td></tr><tr><td class="confluenceTd"><p><strong>Endpoint</strong></p></td><td class="confluenceTd"><p>GET <code>/visualization/assessments/&lt;assessment id&gt;/topics/</code></p></td></tr><tr><td class="confluenceTd"><p><strong>ViewSet method</strong></p></td><td class="confluenceTd"><p><code>AssessmentTopicsTableViewset</code>.<strong>list</strong></p></td></tr><tr><td class="confluenceTd"><p><strong>Front-end method</strong></p></td><td class="confluenceTd"><p><code>AssessmentService.getAssessmentTopics(id: string)</code></p></td></tr><tr><td class="confluenceTd"><p><strong>Response</strong></p></td><td class="confluenceTd"><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Confluence" data-theme="Confluence">[
+  {
+    archived: boolean,
+    assessment_id: number,
+    id: number,
+    name: string,
+    order: number,
+    overall_students_completed_count: number,
+    questions_count: number,
+    students_completed_count: number,
+    students_count: number,
+  }
+]</pre>
+</div></div></td></tr><tr><td data-highlight-colour="#f4f5f7" colspan="2" class="confluenceTd"><p><strong>Get assessment topic questions</strong></p></td></tr><tr><td class="confluenceTd"><p><strong>Endpoint</strong></p></td><td class="confluenceTd"><p>GET <code>/visualization/assessments/&lt;assessment id&gt;/topics/&lt;topic id&gt;/questions/</code></p></td></tr><tr><td class="confluenceTd"><p><strong>ViewSet method</strong></p></td><td class="confluenceTd"><p><code>QuestionsTableViewset</code>.<strong>list</strong></p></td></tr><tr><td class="confluenceTd"><p><strong>Front-end method</strong></p></td><td class="confluenceTd"><p><code>AssessmentService.getTopicQuestions(assessmentId: string, topicId: string)</code></p></td></tr><tr><td class="confluenceTd"><p><strong>Response</strong></p></td><td class="confluenceTd"><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Confluence" data-theme="Confluence">[
+  {
+    // Overall percentage of correct answers on this question on first students&#39; try
+    correct_answers_percentage_first: number,
+    // Overall percentage of correct answers on this question on last students&#39; try
+    correct_answers_percentage_last: number,
+    has_attachment: boolean,
+    id: number,
+    order: number,
+    question_type: string,
+    title: string
+  }
+]</pre>
+</div></div></td></tr><tr><td data-highlight-colour="#f4f5f7" colspan="2" class="confluenceTd"><p><strong>Get a single assessment topic question</strong></p></td></tr><tr><td class="confluenceTd"><p><strong>Endpoint</strong></p></td><td class="confluenceTd"><p>GET <code>/visualization/assessments/&lt;assessment id&gt;/topics/&lt;topic id&gt;/questions/&lt;question id&gt;/</code></p></td></tr><tr><td class="confluenceTd"><p><strong>ViewSet method</strong></p></td><td class="confluenceTd"><p><code>QuestionsTableViewset</code>.<strong>retrieve</strong></p></td></tr><tr><td class="confluenceTd"><p><strong>Front-end method</strong></p></td><td class="confluenceTd"><p><code>AssessmentService.getQuestionDetails(assessmentId: any, topicId: any, questionId: any)</code></p></td></tr><tr><td class="confluenceTd"><p><strong>Response</strong></p></td><td class="confluenceTd"><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Confluence" data-theme="Confluence">{
+  attachments: [
+    {
+      attachment_type: string,
+      background_image: boolean,
+      file: string,
+      id: number,
+      question: number
+    }
+  ],
+  id: number,
+  order: number,
+  question_type: string,
+  title: string,
+  // + response for question type
+}</pre>
+</div></div><p>The response for the question type varies and can be:</p><ul><li><p>Question select:</p></li></ul><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Confluence" data-theme="Confluence">multiple: false,
+options: [
+  {
+    attachments: [
+      {
+        attachment_type: string,
+        file: string,
+        id: number,
+        select_option: number
+      }
+    ]
+    id: number,
+    title: string,
+    valid: boolean,
+    value: string
+  }
+]</pre>
+</div></div><ul><li><p>Question input:</p></li></ul><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Confluence" data-theme="Confluence">valid_answer: string</pre>
+</div></div><ul><li><p>Question numberline:</p></li></ul><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Confluence" data-theme="Confluence">end: number,
+expected_value: number,
+show_ticks: boolean,
+show_value: boolean,
+start: number,
+step: number</pre>
+</div></div><ul><li><p>Question drag and drop:</p></li></ul><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Confluence" data-theme="Confluence">drop_areas:
+  {
+    height: string,
+    id: number,
+    name: string,
+    width: string,
+    x: string,
+    y: string
+  }
+  // draggable options info is obtained with another endpoint as we see in</pre>
+</div></div></td></tr></tbody></table></div><div class="confluence-information-macro confluence-information-macro-information"><span class="aui-icon aui-icon-small aui-iconfont-info confluence-information-macro-icon"></span><div class="confluence-information-macro-body"><p>For the <code>attachments</code> object in the questions responses, only the required fields for each type/option were listed here. All available fields can be found in the <code>Attachments</code> model.</p></div></div><div class="confluence-information-macro confluence-information-macro-information"><span class="aui-icon aui-icon-small aui-iconfont-info confluence-information-macro-icon"></span><div class="confluence-information-macro-body"><p>For the drag and drop questions, the <code>draggable options</code> info is obtained from another endpoint, as seen in <a href="Questions-Types---Technical-view_21069926.html" data-linked-resource-id="21069926" data-linked-resource-version="1" data-linked-resource-type="page">Questions Types - Technical view</a> .</p></div></div></div></div><h2 id="Assessments-Technicalview-Assessmentsrelatedfeatures">Assessments related features</h2><div class="confluence-information-macro confluence-information-macro-information"><span class="aui-icon aui-icon-small aui-iconfont-info confluence-information-macro-icon"></span><div class="confluence-information-macro-body"><p>The Assessments page only displays visualization info about the assessments, therefore only ViewSets from <code>visualization/views.py</code> are used in this section. Endpoints related to the Assessments model and its basic operations (create, edit, delete) are available in the Assessment Builder section using the <code>AssessmentsViewSet</code> located in <code>assessments/views.py</code>.</p></div></div><h2 id="Assessments-Technicalview-Businesslogic">Business logic</h2><div id="expander-786125435" class="expand-container"><div id="expander-control-786125435" class="expand-control"><span class="expand-control-icon"><img style="vertical-align:middle;" class="expand-control-image" src="images/icons/grey_arrow_down.png"></span><span class="expand-control-text">Business logic</span></div><div id="expander-content-786125435" class="expand-content"><div class="table-wrap"><table data-layout="default" data-local-id="911438f5-f6c3-4548-8d64-619a18e6f0cc" class="confluenceTable"><colgroup><col style="width: 146.0px;"/><col style="width: 612.0px;"/></colgroup><tbody><tr><td data-highlight-colour="#f4f5f7" colspan="2" class="confluenceTd"><p><strong>ViewSet</strong></p></td></tr><tr><td data-highlight-colour="#f4f5f7" class="confluenceTd"><p>Assessment</p></td><td class="confluenceTd"><p>visualization.views.<strong>AssessmentTableViewSet</strong></p></td></tr><tr><td data-highlight-colour="#f4f5f7" class="confluenceTd"><p>Topic</p></td><td class="confluenceTd"><p>visualization.views.<strong>AssessmentTopicsTableViewset</strong></p></td></tr><tr><td data-highlight-colour="#f4f5f7" class="confluenceTd"><p>Question</p></td><td class="confluenceTd"><p>visualization.views.<strong>QuestionsTableViewset</strong></p></td></tr><tr><td data-highlight-colour="#f4f5f7" colspan="2" class="confluenceTd"><p><strong>Serializer</strong></p></td></tr><tr><td data-highlight-colour="#f4f5f7" class="confluenceTd"><p>Assessment</p></td><td class="confluenceTd"><p>visualization.serializers.<strong>AssessmentTableSerializer</strong></p></td></tr><tr><td data-highlight-colour="#f4f5f7" class="confluenceTd"><p>Topic</p></td><td class="confluenceTd"><p>visualization.serializers.<strong>AssessmentTopicTableSerializer</strong></p></td></tr><tr><td data-highlight-colour="#f4f5f7" class="confluenceTd"><p>Question</p></td><td class="confluenceTd"><p>visualization.serializers.<strong>QuestionTableSerializer</strong></p></td></tr></tbody></table></div></div></div>
+                    </div>
+
+                                        <div class="pageSection group">
+                        <div class="pageSectionHeader">
+                            <h2 id="attachments" class="pageSectionTitle">Attachments:</h2>
+                        </div>
+
+                        <div class="greybox" align="left">
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/21069837/21004331.png">image-20220901-125707.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/21069837/21561369.png">image-20220901-131849.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/21069837/21102639.png">image-20220901-132701.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/21069837/21430295.gif">value.gif</a> (image/gif)
+                                <br/>
+                                                    </div>
+                    </div>
+                    
+                                                      
+                </div>             </div> 
+            <div id="footer" role="contentinfo">
+                <section class="footer-body">
+                    <p>Document generated by Confluence on Feb 29, 2024 10:00</p>
+                    <div id="footer-logo"><a href="http://www.atlassian.com/">Atlassian</a></div>
+                </section>
+            </div>
+        </div>     </body>
+</html>

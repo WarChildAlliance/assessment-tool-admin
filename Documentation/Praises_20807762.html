@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Gobee : Praises</title>
+        <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body class="theme-default aui-theme-default">
+        <div id="page">
+            <div id="main" class="aui-page-panel">
+                <div id="main-header">
+                    <div id="breadcrumb-section">
+                        <ol id="breadcrumbs">
+                            <li class="first">
+                                <span><a href="index.html">Gobee</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="Gobee-Home_65612.html">Gobee Home</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="GOBEE-Documentation_131073.html">GOBEE Documentation</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="Technical-documentation_4685825.html">Technical documentation</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="Students-platform---Technical-view_4784142.html">Students platform - Technical view</a></span>
+                            </li>
+                                                </ol>
+                    </div>
+                    <h1 id="title-heading" class="pagetitle">
+                                                <span id="title-text">
+                            Gobee : Praises
+                        </span>
+                    </h1>
+                </div>
+
+                <div id="content" class="view">
+                    <div class="page-metadata">
+                        
+        
+    
+        
+    
+        
+        
+            Created by <span class='author'> Nicolas Bernès</span> on Sep 02, 2022
+                        </div>
+                    <div id="main-content" class="wiki-content group">
+                    <style type='text/css'>/*<![CDATA[*/
+div.rbtoc1709200819244 {padding: 0px;}
+div.rbtoc1709200819244 ul {list-style: disc;margin-left: 0px;}
+div.rbtoc1709200819244 li {margin-left: 0px;padding-left: 0px;}
+
+/*]]>*/</style><div class='toc-macro rbtoc1709200819244'>
+<ul class='toc-indentation'>
+<li><a href='#Praises-Overview'>Overview</a></li>
+<li><a href='#Praises-Front-End'>Front-End</a>
+<ul class='toc-indentation'>
+<li><a href='#Praises-Location'>Location</a></li>
+<li><a href='#Praises-Logic'>Logic</a>
+<ul class='toc-indentation'>
+<li><a href='#Praises-Conditionaldisplay'>Conditional display</a></li>
+<li><a href='#Praises-Assettypes'>Asset types</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div><h1 id="Praises-Overview">Overview</h1><p>Praises are images and animations semi-randomly displayed to students when they answer a question correctly inside a topic.</p><h1 id="Praises-Front-End">Front-End</h1><h2 id="Praises-Location">Location</h2><div id="expander-29459543" class="expand-container"><div id="expander-control-29459543" class="expand-control"><span class="expand-control-icon"><img style="vertical-align:middle;" class="expand-control-image" src="images/icons/grey_arrow_down.png"></span><span class="expand-control-text">Location</span></div><div id="expander-content-29459543" class="expand-content"><div class="table-wrap"><table data-layout="default" data-local-id="12b6be57-0b56-49e3-bc04-2a9d09256320" class="confluenceTable"><colgroup><col style="width: 131.0px;"/><col style="width: 125.0px;"/><col style="width: 473.0px;"/></colgroup><tbody><tr><th rowspan="2" class="confluenceTh"><p><strong>Conditional display logic</strong></p></th><td class="confluenceTd"><p> <strong>Component</strong></p></td><td class="confluenceTd"><p><strong>QuestionComponent</strong></p><p>path: <code>src/app/home/assessment/topic/components/question</code></p></td></tr><tr><td class="confluenceTd"><p><strong>Method</strong></p></td><td class="confluenceTd"><p>QuestionComponent.<strong>showPraise()</strong></p></td></tr><tr><th class="confluenceTh"><p><strong>Praise modal</strong></p></th><td class="confluenceTd"><p><strong>Component</strong></p></td><td class="confluenceTd"><p><strong>PraiseDialogComponent</strong></p><p>path: <code>src/app/home/assessment/topic/components/praise/praise-dialog</code></p></td></tr><tr><th rowspan="2" class="confluenceTh"><p><strong>Assets</strong></p></th><td class="confluenceTd"><p><strong>Reference</strong></p></td><td class="confluenceTd"><p>path: <code>src/app/home/assessment/topic/components/praise/praise-dictionnary.ts</code></p></td></tr><tr><td class="confluenceTd"><p><strong>Asset files</strong></p></td><td class="confluenceTd"><p>Audio paths:  <code>src/assets/audios/praise</code></p><p>Visual assets paths: <code>src/assets/praise</code></p></td></tr></tbody></table></div></div></div><h2 id="Praises-Logic">Logic</h2><h3 id="Praises-Conditionaldisplay">Conditional display</h3><p>The probability of praises occurring is closely related to the praise value provided when creating the topic on the admin platform:</p><p><code>praiseProbability = Math.ceil(Math.random() * (this.topic.praise))</code></p><p>When <code>praiseProbability</code> equals 1 the praise dialog is displayed.</p><p>The assets shown inside of the praise dialog are then determined semi-randomly.</p><h3 id="Praises-Assettypes">Asset types</h3><div class="table-wrap"><table data-layout="default" data-local-id="c6761164-2df5-48b0-a383-cf5767cd18ff" class="confluenceTable"><colgroup><col style="width: 144.0px;"/><col style="width: 118.0px;"/><col style="width: 497.0px;"/></colgroup><tbody><tr><th rowspan="2" class="confluenceTh"><p><strong>Animation</strong></p></th><td class="confluenceTd"><p><strong>Video file</strong></p></td><td class="confluenceTd"><p>The video file used for animations must have a transparent background. </p><p>The only formats that currently support transparent backgrounds are <strong>FLV, F4V, AVI</strong>, <strong>MOV and WEBM. MP4 </strong>won’t work.</p><p>Within praise.dictionnary.ts, you might need to specify different fallback formats for the same animation, because of inconsistent browser support, like so:</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Confluence" data-theme="Confluence">    {
+        text: &#39;topics.praise.praise1&#39;,
+        audio: &#39;praise/Praise1.ogg&#39;,
+        animation: {
+            src: {
+                mov: &#39;/assets/praise/animations/gobee-animation.edited.mov&#39;,
+                webm: &#39;/assets/praise/animations/Gobee-ani 2_1.webm&#39;,
+                mp4: &#39;/assets/praise/animations/Gobee-ani 2_1.mp4&#39;
+            }
+        }
+    },</pre>
+</div></div><p>The praise dialog will switch to the subsequent formats specified within the <code>src</code> object if the first one(s) is(are) not well supported.</p></td></tr><tr><td class="confluenceTd"><p><strong>Spritesheet</strong></p></td><td class="confluenceTd"><p>It is otherwise possible to use a spritesheet to dislay an animation. If you use this method, keep in mind that sprites must be layed out horizontally without additionnal padding within the spritesheet, and all frames must have the same size.<br/>You can then specify the frame count in <code>praise.dictionnary.ts</code> like so:</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Confluence" data-theme="Confluence">    {
+        text: &#39;topics.praise.praise14&#39;,
+        audio: &#39;praise/Praise14.ogg&#39;,
+        animation: {
+            src: &#39;/assets/praise/animations/flower_animated.png&#39;,
+            frameCount: 46,
+            loop: false
+        }
+    },</pre>
+</div></div></td></tr><tr><th class="confluenceTh"><p><strong>Image</strong></p></th><td colspan="2" class="confluenceTd"><p>Within <code>praise.dictionnary.ts</code>, specify an <code>image</code> field with the image source:</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Confluence" data-theme="Confluence">    {
+        text: &#39;topics.praise.praise14&#39;,
+        image: &#39;./src/assets/praise/icons/bee-honey.png&#39;,
+        audio: &#39;praise/Praise14.ogg&#39;
+    },</pre>
+</div></div></td></tr><tr><th class="confluenceTh"><p><strong>Audio</strong></p></th><td colspan="2" class="confluenceTd"><p>Within <code>praise.dictionnary.ts</code>, specify an <code>audio</code> field with the audio source:</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Confluence" data-theme="Confluence">    {
+        text: &#39;topics.praise.praise14&#39;,
+        image: &#39;./src/assets/praise/icons/bee-honey.png&#39;,
+        audio: &#39;praise/Praise14.ogg&#39;
+    },</pre>
+</div></div><p /></td></tr></tbody></table></div>
+                    </div>
+
+                    
+                                                      
+                </div>             </div> 
+            <div id="footer" role="contentinfo">
+                <section class="footer-body">
+                    <p>Document generated by Confluence on Feb 29, 2024 10:00</p>
+                    <div id="footer-logo"><a href="http://www.atlassian.com/">Atlassian</a></div>
+                </section>
+            </div>
+        </div>     </body>
+</html>

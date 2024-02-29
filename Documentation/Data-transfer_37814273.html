@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Gobee : Data transfer</title>
+        <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body class="theme-default aui-theme-default">
+        <div id="page">
+            <div id="main" class="aui-page-panel">
+                <div id="main-header">
+                    <div id="breadcrumb-section">
+                        <ol id="breadcrumbs">
+                            <li class="first">
+                                <span><a href="index.html">Gobee</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="Gobee-Home_65612.html">Gobee Home</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="GOBEE-Documentation_131073.html">GOBEE Documentation</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="Technical-documentation_4685825.html">Technical documentation</a></span>
+                            </li>
+                                                </ol>
+                    </div>
+                    <h1 id="title-heading" class="pagetitle">
+                                                <span id="title-text">
+                            Gobee : Data transfer
+                        </span>
+                    </h1>
+                </div>
+
+                <div id="content" class="view">
+                    <div class="page-metadata">
+                        
+        
+    
+        
+    
+        
+        
+            Created by <span class='author'> Estela Ferreira</span>, last modified by <span class='editor'> Hugo Plissonneau</span> on Jan 06, 2023
+                        </div>
+                    <div id="main-content" class="wiki-content group">
+                    <p> To create fixtures from the current populated database and load it into another database:</p><h1 id="Datatransfer-Createthedata">Create the data</h1><p>In a terminal, after securing the SSH key</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Confluence" data-theme="Confluence">ssh -i ~/.ssh/assessment_tool_api.pem azureadmin@assessment-tool-api.westeurope.cloudapp.azure.com</pre>
+</div></div><p>This will connect you to the Azure prod server</p><h1 id="Datatransfer-Exportthedata">Export the data</h1><p>In the backend where you want to export the data run:</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Confluence" data-theme="Confluence">docker-compose run --rm web python manage.py dumpdata --format=json --indent 4 &gt; data.json</pre>
+</div></div><p>This will create a fixture JSON file named <code>data.json</code> with the selected indentation of 4 spaces of all data in the database. </p><ul><li><p><strong>Export a specific app</strong></p></li></ul><p>The following command will export the data in the <code>assessments</code> app into <code>data.json</code> file:</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Confluence" data-theme="Confluence">docker-compose run --rm web python manage.py dumpdata assessments --format=json --indent 4 &gt; data.json</pre>
+</div></div><ul><li><p><strong>Export a specific table</strong></p></li></ul><p>The following command will export only the data in <code>assessments.assessment</code> table into <code>data.json</code> file:</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Confluence" data-theme="Confluence">docker-compose run --rm web python manage.py dumpdata assessments.assessment --format=json --indent 4 &gt; data.json</pre>
+</div></div><ul><li><p><strong>Exclude apps and/or tables of the backup</strong></p></li></ul><p>You can use <code>--exclude</code> option to specify apps/tables which don't need to be exported:</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Confluence" data-theme="Confluence">docker-compose run --rm web python manage.py dumpdata --exclude answers --format=json --indent 4 &gt; data.json</pre>
+</div></div><ul><li><p><strong>How to import only assessments related things for Production</strong></p></li></ul><p>You can use <code>--exclude</code> option to specify apps/tables which don't need to be exported:</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Confluence" data-theme="Confluence">sudo docker-compose run --rm web python manage.py dumpdata assessments --exclude assessments.topic --exclude assessments.numberrange --exclude assessments.learningobjective --exclude assessments.questionsetaccess --format=json --indent 4 &gt; data.json</pre>
+</div></div><h1 id="Datatransfer-Importthedata">Import the data</h1><p>In the backend where you want to load the fixture run:</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Confluence" data-theme="Confluence">docker-compose run --rm web python manage.py loaddata data</pre>
+</div></div><h1 id="Datatransfer-ExportthedatafromProdtolocal">Export the data from Prod to local</h1><p>In a terminal</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Confluence" data-theme="Confluence">scp -i ~/.ssh/assessment_tool_api.pem azureadmin@assessment-tool-api.westeurope.cloudapp.azure.com:/home/azureadmin/assessment-tool-api/data.json data.json</pre>
+</div></div><p />
+                    </div>
+
+                    
+                                                      
+                </div>             </div> 
+            <div id="footer" role="contentinfo">
+                <section class="footer-body">
+                    <p>Document generated by Confluence on Feb 29, 2024 10:00</p>
+                    <div id="footer-logo"><a href="http://www.atlassian.com/">Atlassian</a></div>
+                </section>
+            </div>
+        </div>     </body>
+</html>

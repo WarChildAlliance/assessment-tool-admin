@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Gobee : Groups - Technical view</title>
+        <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body class="theme-default aui-theme-default">
+        <div id="page">
+            <div id="main" class="aui-page-panel">
+                <div id="main-header">
+                    <div id="breadcrumb-section">
+                        <ol id="breadcrumbs">
+                            <li class="first">
+                                <span><a href="index.html">Gobee</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="Gobee-Home_65612.html">Gobee Home</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="GOBEE-Documentation_131073.html">GOBEE Documentation</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="Technical-documentation_4685825.html">Technical documentation</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="Teachers-platform---Technical-view_4751361.html">Teachers platform - Technical view</a></span>
+                            </li>
+                                                </ol>
+                    </div>
+                    <h1 id="title-heading" class="pagetitle">
+                                                <span id="title-text">
+                            Gobee : Groups - Technical view
+                        </span>
+                    </h1>
+                </div>
+
+                <div id="content" class="view">
+                    <div class="page-metadata">
+                        
+        
+    
+        
+    
+        
+        
+            Created by <span class='author'> Nicolas Bernès</span> on Aug 30, 2022
+                        </div>
+                    <div id="main-content" class="wiki-content group">
+                    <style type='text/css'>/*<![CDATA[*/
+div.rbtoc1709200798560 {padding: 0px;}
+div.rbtoc1709200798560 ul {list-style: disc;margin-left: 0px;}
+div.rbtoc1709200798560 li {margin-left: 0px;padding-left: 0px;}
+
+/*]]>*/</style><div class='toc-macro rbtoc1709200798560'>
+<ul class='toc-indentation'>
+<li><a href='#Groups-Technicalview-Overview'>Overview</a></li>
+<li><a href='#Groups-Technicalview-Front-End'>Front-End</a>
+<ul class='toc-indentation'>
+<li><a href='#Groups-Technicalview-Location'>Location</a></li>
+</ul>
+</li>
+<li><a href='#Groups-Technicalview-Backend'>Backend</a>
+<ul class='toc-indentation'>
+<li><a href='#Groups-Technicalview-Availableendpoints'>Available endpoints</a></li>
+<li><a href='#Groups-Technicalview-Businesslogic'>Business logic</a></li>
+<li><a href='#Groups-Technicalview-Group-relatedfeatures'>Group-related features</a></li>
+</ul>
+</li>
+</ul>
+</div><h1 id="Groups-Technicalview-Overview">Overview</h1><p>The group feature enables teachers/supervisors to group students, manage their assessments more efficiently, as well as filter student results on a group-per-group basis.</p><h1 id="Groups-Technicalview-Front-End">Front-End</h1><h2 id="Groups-Technicalview-Location">Location</h2><div id="expander-1097160494" class="expand-container"><div id="expander-control-1097160494" class="expand-control"><span class="expand-control-icon"><img style="vertical-align:middle;" class="expand-control-image" src="images/icons/grey_arrow_down.png"></span><span class="expand-control-text">Group pages</span></div><div id="expander-content-1097160494" class="expand-content"><div class="table-wrap"><table data-layout="default" data-local-id="d5189ef9-59e8-4b79-9d0b-525ac3261893" class="confluenceTable"><colgroup><col style="width: 123.0px;"/><col style="width: 607.0px;"/></colgroup><tbody><tr><td data-highlight-colour="#f4f5f7" colspan="2" class="confluenceTd"><p><strong>Groups Overview</strong></p><span class="confluence-embedded-file-wrapper image-center-wrapper"><img class="confluence-embedded-image image-center" loading="lazy" src="attachments/17104897/19234819.png" data-image-src="attachments/17104897/19234819.png" data-height="671" data-width="1651" data-unresolved-comment-count="0" data-linked-resource-id="19234819" data-linked-resource-version="2" data-linked-resource-type="attachment" data-linked-resource-default-alias="image-20220728-082728.png" data-base-url="https://warchild-gobee.atlassian.net/wiki" data-linked-resource-content-type="image/png" data-linked-resource-container-id="17104897" data-linked-resource-container-version="1" data-media-id="0650045b-0cc8-42a4-befa-97c4e93c085c" data-media-type="file"></span></td></tr><tr><td class="confluenceTd"><p><strong>URL</strong></p></td><td class="confluenceTd"><p><code>/groups</code></p></td></tr><tr><td class="confluenceTd"><p><strong>Component</strong></p></td><td class="confluenceTd"><p><strong>GroupsComponent</strong></p><p>path: <code>src/app/groups</code></p></td></tr><tr><td data-highlight-colour="#f4f5f7" colspan="2" class="confluenceTd"><p><strong>Group details</strong></p><span class="confluence-embedded-file-wrapper image-center-wrapper"><img class="confluence-embedded-image image-center" loading="lazy" src="attachments/17104897/18841611.png" data-image-src="attachments/17104897/18841611.png" data-height="677" data-width="1650" data-unresolved-comment-count="0" data-linked-resource-id="18841611" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="image-20220728-091910.png" data-base-url="https://warchild-gobee.atlassian.net/wiki" data-linked-resource-content-type="image/png" data-linked-resource-container-id="17104897" data-linked-resource-container-version="1" data-media-id="399d3e68-9bc2-44f9-9867-5c439f249fe9" data-media-type="file"></span></td></tr><tr><td class="confluenceTd"><p><strong>URL</strong></p></td><td class="confluenceTd"><p><code>/groups/&lt;group id&gt;</code></p></td></tr><tr><td class="confluenceTd"><p><strong>Component</strong></p></td><td class="confluenceTd"><p><strong>GroupDetailComponent</strong></p><p>path: <code>src/app/groups/group-detail</code></p></td></tr><tr><td data-highlight-colour="#f4f5f7" colspan="2" class="confluenceTd"><p><strong>Add / edit group dialog</strong></p><span class="confluence-embedded-file-wrapper image-center-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image image-center" width="226" loading="lazy" src="attachments/17104897/19398659.png?width=226" data-image-src="attachments/17104897/19398659.png" data-height="429" data-width="534" data-unresolved-comment-count="0" data-linked-resource-id="19398659" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="image-20220728-083558.png" data-base-url="https://warchild-gobee.atlassian.net/wiki" data-linked-resource-content-type="image/png" data-linked-resource-container-id="17104897" data-linked-resource-container-version="1" data-media-id="a3ec5462-efca-4f4b-b4d7-6745706b6235" data-media-type="file"></span></td></tr><tr><td class="confluenceTd"><p><strong>Component</strong></p></td><td class="confluenceTd"><p><strong>GroupDialogComponent</strong></p><p>path: <code>src/app/groups/group-dialog</code></p></td></tr></tbody></table></div></div></div><div id="expander-290694057" class="expand-container"><div id="expander-control-290694057" class="expand-control"><span class="expand-control-icon"><img style="vertical-align:middle;" class="expand-control-image" src="images/icons/grey_arrow_down.png"></span><span class="expand-control-text">Group features on Student pages</span></div><div id="expander-content-290694057" class="expand-content"><div class="table-wrap"><table data-layout="default" data-local-id="3d5c5edd-fa79-4e86-9403-d8e271e17b36" class="confluenceTable"><colgroup><col style="width: 128.0px;"/><col style="width: 630.0px;"/></colgroup><tbody><tr><td data-highlight-colour="#f4f5f7" colspan="2" class="confluenceTd"><p><strong>Assign a topic to a group</strong></p><span class="confluence-embedded-file-wrapper image-center-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image image-center" width="453" loading="lazy" src="attachments/17104897/19398669.png?width=453" data-image-src="attachments/17104897/19398669.png" data-height="685" data-width="1140" data-unresolved-comment-count="0" data-linked-resource-id="19398669" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="image-20220830-101633.png" data-base-url="https://warchild-gobee.atlassian.net/wiki" data-linked-resource-content-type="image/png" data-linked-resource-container-id="17104897" data-linked-resource-container-version="1" data-media-id="3c172987-b1be-4994-8de9-df8f02cf39b7" data-media-type="file"></span></td></tr><tr><td class="confluenceTd"><p><strong>Related component</strong></p></td><td class="confluenceTd"><p><strong>TopicAccessesBuilderComponent</strong></p><p>path: <code>src/app/students/topic-accesses-builder</code></p></td></tr><tr><td data-highlight-colour="#f4f5f7" colspan="2" class="confluenceTd"><p><strong>Assign a group to a student</strong></p><span class="confluence-embedded-file-wrapper image-center-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image image-center" width="340" loading="lazy" src="attachments/17104897/19005455.png?width=340" data-image-src="attachments/17104897/19005455.png" data-height="491" data-width="734" data-unresolved-comment-count="0" data-linked-resource-id="19005455" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="image-20220830-101946.png" data-base-url="https://warchild-gobee.atlassian.net/wiki" data-linked-resource-content-type="image/png" data-linked-resource-container-id="17104897" data-linked-resource-container-version="1" data-media-id="5f0f592c-2a18-4a55-bcc5-d9fafafc6b70" data-media-type="file"></span><p /></td></tr><tr><td class="confluenceTd"><p><strong>Related component</strong></p></td><td class="confluenceTd"><p><strong>StudentDialogComponent</strong></p><p>path: <code>src/app/students/student-dialog</code></p></td></tr></tbody></table></div></div></div><div id="expander-1010402389" class="expand-container"><div id="expander-control-1010402389" class="expand-control"><span class="expand-control-icon"><img style="vertical-align:middle;" class="expand-control-image" src="images/icons/grey_arrow_down.png"></span><span class="expand-control-text">Group features on Dashboard page</span></div><div id="expander-content-1010402389" class="expand-content"><div class="table-wrap"><table data-layout="default" data-local-id="f75645fa-fc36-41ef-aa01-f15a5686e2e5" class="confluenceTable"><colgroup><col style="width: 128.0px;"/><col style="width: 630.0px;"/></colgroup><tbody><tr><td data-highlight-colour="#f4f5f7" colspan="2" class="confluenceTd"><p><strong>Filter results by group</strong></p><span class="confluence-embedded-file-wrapper image-center-wrapper"><img class="confluence-embedded-image image-center" loading="lazy" src="attachments/17104897/17826041.png" data-image-src="attachments/17104897/17826041.png" data-height="128" data-width="288" data-unresolved-comment-count="0" data-linked-resource-id="17826041" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="image-20220629-110645.png" data-base-url="https://warchild-gobee.atlassian.net/wiki" data-linked-resource-content-type="image/png" data-linked-resource-container-id="17104897" data-linked-resource-container-version="1" data-media-id="a60d3e05-0ef8-4eb1-a0d6-fdc173b461fc" data-media-type="file"></span></td></tr><tr><td class="confluenceTd"><p><strong>Related component</strong></p></td><td class="confluenceTd"><p><strong>SelectGroupComponent</strong></p><p>path: <code>src/app/dashboard/select-group</code></p></td></tr></tbody></table></div></div></div><h1 id="Groups-Technicalview-Backend">Backend</h1><h2 id="Groups-Technicalview-Availableendpoints">Available endpoints</h2><div id="expander-1234247170" class="expand-container"><div id="expander-control-1234247170" class="expand-control"><span class="expand-control-icon"><img style="vertical-align:middle;" class="expand-control-image" src="images/icons/grey_arrow_down.png"></span><span class="expand-control-text">Available endpoints</span></div><div id="expander-content-1234247170" class="expand-content"><div class="table-wrap"><table data-layout="default" data-local-id="91aa9677-806e-4bb9-b229-01b889152a79" class="confluenceTable"><colgroup><col style="width: 170.0px;"/><col style="width: 588.0px;"/></colgroup><tbody><tr><th colspan="2" class="confluenceTh"><p><strong>Create a new group</strong></p></th></tr><tr><td class="confluenceTd"><p><strong>Endpoint</strong></p></td><td class="confluenceTd"><p>POST<strong> </strong><code>/users/groups/</code></p></td></tr><tr><td class="confluenceTd"><p><strong>Body</strong></p></td><td class="confluenceTd"><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Confluence" data-theme="Confluence">{
+  name: string,
+  supervisor: string
+}</pre>
+</div></div></td></tr><tr><td class="confluenceTd"><p><strong>ViewSet method</strong></p></td><td class="confluenceTd"><p>GroupsViewSet.<strong>create</strong></p></td></tr><tr><td data-highlight-colour="#f4f5f7" colspan="2" class="confluenceTd"><p><strong>Edit a group</strong></p></td></tr><tr><td class="confluenceTd"><p><strong>Endpoint</strong></p></td><td class="confluenceTd"><p>PUT<strong> </strong><code>/users/groups/&lt;group id&gt;</code></p></td></tr><tr><td class="confluenceTd"><p><strong>Body</strong></p></td><td class="confluenceTd"><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Confluence" data-theme="Confluence">{
+  name: string,
+  supervisor: string
+}</pre>
+</div></div></td></tr><tr><td class="confluenceTd"><p><strong>ViewSet method</strong></p></td><td class="confluenceTd"><p>GroupsViewSet.<strong>update</strong></p></td></tr><tr><td data-highlight-colour="#f4f5f7" colspan="2" class="confluenceTd"><p><strong>Get a single a group</strong></p></td></tr><tr><td class="confluenceTd"><p><strong>Endpoint</strong></p></td><td class="confluenceTd"><p>GET <code>/users/groups/&lt;group id&gt;/</code></p></td></tr><tr><td class="confluenceTd"><p><strong>ViewSet method</strong></p></td><td class="confluenceTd"><p>GroupsViewSet.<strong>retrieve</strong></p></td></tr><tr><td data-highlight-colour="#f4f5f7" colspan="2" class="confluenceTd"><p><strong>Get all groups belonging to the current supervisor</strong></p></td></tr><tr><td class="confluenceTd"><p><strong>Endpoint</strong></p></td><td class="confluenceTd"><p>GET <code>/users/groups/</code></p></td></tr><tr><td class="confluenceTd"><p><strong>ViewSet method</strong></p></td><td class="confluenceTd"><p>GroupsViewSet.<strong>list</strong></p></td></tr><tr><td data-highlight-colour="#f4f5f7" colspan="2" class="confluenceTd"><p><strong>Delete group</strong></p></td></tr><tr><td class="confluenceTd"><p><strong>Endpoint</strong></p></td><td class="confluenceTd"><p>DELETE <code>/users/groups/&lt;group id&gt;/</code></p></td></tr><tr><td class="confluenceTd"><p><strong>ViewSet method</strong></p></td><td class="confluenceTd"><p>GroupsViewSet.<strong>destroy</strong></p></td></tr><tr><td data-highlight-colour="#f4f5f7" colspan="2" class="confluenceTd"><p><strong>Bulk delete groups</strong></p></td></tr><tr><td class="confluenceTd"><p><strong>Endpoint</strong></p></td><td class="confluenceTd"><p>DELETE <code>/users/groups/bulk_delete/</code></p></td></tr><tr><td class="confluenceTd"><p><strong>Body</strong></p></td><td class="confluenceTd"><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Confluence" data-theme="Confluence">{
+  groups: string[] // group ids
+}</pre>
+</div></div></td></tr><tr><td class="confluenceTd"><p><strong>ViewSet method</strong></p></td><td class="confluenceTd"><p>GroupsViewSet.<strong>bulk_delete</strong></p></td></tr></tbody></table></div></div></div><h2 id="Groups-Technicalview-Businesslogic">Business logic</h2><div id="expander-741646410" class="expand-container"><div id="expander-control-741646410" class="expand-control"><span class="expand-control-icon"><img style="vertical-align:middle;" class="expand-control-image" src="images/icons/grey_arrow_down.png"></span><span class="expand-control-text">Business logic</span></div><div id="expander-content-741646410" class="expand-content"><div class="table-wrap"><table data-layout="default" data-local-id="5bf8dcb9-8e8b-4b9c-8ad8-1434a47c610a" class="confluenceTable"><colgroup><col style="width: 191.0px;"/><col style="width: 567.0px;"/></colgroup><tbody><tr><th class="confluenceTh"><p><strong>ViewSet</strong></p></th><td class="confluenceTd"><p>users.views.<strong>GroupsViewSet</strong></p></td></tr><tr><th class="confluenceTh"><p><strong>Serializer</strong></p></th><td class="confluenceTd"><p>users.serializers.<strong>GroupSerializer</strong></p></td></tr><tr><th class="confluenceTh"><p><strong>Model</strong></p></th><td class="confluenceTd"><span class="confluence-embedded-file-wrapper image-center-wrapper"><img class="confluence-embedded-image image-center" loading="lazy" src="attachments/17104897/17826020.png" data-image-src="attachments/17104897/17826020.png" data-height="407" data-width="534" data-unresolved-comment-count="0" data-linked-resource-id="17826020" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="image-20220829-135558.png" data-base-url="https://warchild-gobee.atlassian.net/wiki" data-linked-resource-content-type="image/png" data-linked-resource-container-id="17104897" data-linked-resource-container-version="1" data-media-id="edc4c9a4-f862-4476-bb9d-59c9a9c4554c" data-media-type="file"></span><p>The <strong>Group </strong>model is declared in <code>users/models.py</code>.</p><p>It contains a ‘<em>name</em>’ field, as well as a many-to-one relationship to a supervisor (several groups can belong to one supervisor). </p><p>This model is also pointed at by a ‘<em>group</em>’ field within the <strong>User </strong>instances with UserRole STUDENT, which is a many-to-one relationship (several students can belong to one group).</p></td></tr></tbody></table></div></div></div><h2 id="Groups-Technicalview-Group-relatedfeatures">Group-related features</h2><div id="expander-997606716" class="expand-container"><div id="expander-control-997606716" class="expand-control"><span class="expand-control-icon"><img style="vertical-align:middle;" class="expand-control-image" src="images/icons/grey_arrow_down.png"></span><span class="expand-control-text">Group-related features</span></div><div id="expander-content-997606716" class="expand-content"><p>Several <strong>GET</strong> endpoints of the <code>visualization</code> module allow their responses to be filtered by group, using query parameters (those endpoints are used to display student results on the Dashboard page).<br/>The way those query parameters are handled can be found within the <strong>get_queryset </strong>method<strong> </strong>of several ViewSets in <code>visualization/views.py</code>.</p></div></div>
+                    </div>
+
+                                        <div class="pageSection group">
+                        <div class="pageSectionHeader">
+                            <h2 id="attachments" class="pageSectionTitle">Attachments:</h2>
+                        </div>
+
+                        <div class="greybox" align="left">
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/17104897/17826020.png">image-20220829-135558.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/17104897/19234827.png">image-20220728-082728.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/17104897/19234819.png">image-20220728-082728.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/17104897/18841611.png">image-20220728-091910.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/17104897/19398659.png">image-20220728-083558.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/17104897/19300355.png">image-20220830-101612.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/17104897/19398669.png">image-20220830-101633.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/17104897/19202055.png">image-20220830-101748.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/17104897/19005455.png">image-20220830-101946.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/17104897/17826041.png">image-20220629-110645.png</a> (image/png)
+                                <br/>
+                                                    </div>
+                    </div>
+                    
+                                                      
+                </div>             </div> 
+            <div id="footer" role="contentinfo">
+                <section class="footer-body">
+                    <p>Document generated by Confluence on Feb 29, 2024 09:59</p>
+                    <div id="footer-logo"><a href="http://www.atlassian.com/">Atlassian</a></div>
+                </section>
+            </div>
+        </div>     </body>
+</html>

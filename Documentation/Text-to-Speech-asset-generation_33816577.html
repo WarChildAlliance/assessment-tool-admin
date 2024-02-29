@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Gobee : Text-to-Speech asset generation</title>
+        <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body class="theme-default aui-theme-default">
+        <div id="page">
+            <div id="main" class="aui-page-panel">
+                <div id="main-header">
+                    <div id="breadcrumb-section">
+                        <ol id="breadcrumbs">
+                            <li class="first">
+                                <span><a href="index.html">Gobee</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="Gobee-Home_65612.html">Gobee Home</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="GOBEE-Documentation_131073.html">GOBEE Documentation</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="Technical-documentation_4685825.html">Technical documentation</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="Students-platform---Technical-view_4784142.html">Students platform - Technical view</a></span>
+                            </li>
+                                                </ol>
+                    </div>
+                    <h1 id="title-heading" class="pagetitle">
+                                                <span id="title-text">
+                            Gobee : Text-to-Speech asset generation
+                        </span>
+                    </h1>
+                </div>
+
+                <div id="content" class="view">
+                    <div class="page-metadata">
+                        
+        
+    
+        
+    
+        
+        
+            Created by <span class='author'> Nicolas Bernès</span> on Nov 16, 2022
+                        </div>
+                    <div id="main-content" class="wiki-content group">
+                    <p>In order to generate English, Arabic, and French audio assets from text, the script located under <code>/scripts/text-to-speech</code> can be used.</p><p>This tool utilizes Google Cloud’s Text-to-Speech API, so in order to use it you need to have activated the Text-To-Speech API and created a service account for a Google Cloud project, all of which is explained <a class="external-link" href="https://cloud.google.com/text-to-speech/docs/before-you-begin" rel="nofollow">here</a>.</p><h2 id="Text-to-Speechassetgeneration-Setup">Setup</h2><h3 id="Text-to-Speechassetgeneration-GoogleCloudauthentication">Google Cloud authentication</h3><ol start="1"><li><p><a class="external-link" href="https://cloud.google.com/text-to-speech/docs/before-you-begin#create_a_json_key_for_your_service_account" rel="nofollow">Download a JSON key for your service account</a></p></li><li><p>Create a <strong>.env</strong> file in <code>/scripts/text-to-speech</code>, with the following content:<br/><code>GOOGLE_APPLICATION_CREDENTIALS=&quot;&lt;path to the downloaded service account key&gt;&quot;</code></p></li></ol><h3 id="Text-to-Speechassetgeneration-Dependencies">Dependencies</h3><p>Run <code>npm i</code> to install the script's dependencies.</p><h2 id="Text-to-Speechassetgeneration-Usage">Usage</h2><p>To start the script run <code>npm start</code> .</p><p>You will first be prompted with the path to the directory in which you want the assets to be generated (if you press <em>Enter</em>, the path will default to <code>/script/text-to-speech/output</code>):</p><span class="confluence-embedded-file-wrapper image-center-wrapper"><img class="confluence-embedded-image image-center" loading="lazy" src="attachments/33816577/34701315.png" data-image-src="attachments/33816577/34701315.png" data-height="49" data-width="391" data-unresolved-comment-count="0" data-linked-resource-id="34701315" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="image-20221116-130818.png" data-base-url="https://warchild-gobee.atlassian.net/wiki" data-linked-resource-content-type="image/png" data-linked-resource-container-id="33816577" data-linked-resource-container-version="1" data-media-id="026fd660-a367-40d5-989c-210b53150c7d" data-media-type="file"></span><div class="confluence-information-macro confluence-information-macro-information"><span class="aui-icon aui-icon-small aui-iconfont-info confluence-information-macro-icon"></span><div class="confluence-information-macro-body"><p>The directory you choose stays the same for all assets generated within one script execution (you would have to restart the script to change the destination in which the next assets will be generated)</p></div></div><p>Then follow the next prompts in order to generate the first asset:</p><span class="confluence-embedded-file-wrapper image-center-wrapper"><img class="confluence-embedded-image image-center" loading="lazy" src="attachments/33816577/34766849.png" data-image-src="attachments/33816577/34766849.png" data-height="98" data-width="593" data-unresolved-comment-count="0" data-linked-resource-id="34766849" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="image-20221116-131538.png" data-base-url="https://warchild-gobee.atlassian.net/wiki" data-linked-resource-content-type="image/png" data-linked-resource-container-id="33816577" data-linked-resource-container-version="1" data-media-id="f605da8a-d058-46a2-a362-bcbd55100ab5" data-media-type="file"></span><p>Finally, you will be prompted with a ‘Continue’  prompt:</p><span class="confluence-embedded-file-wrapper image-center-wrapper"><img class="confluence-embedded-image image-center" loading="lazy" src="attachments/33816577/34144267.png" data-image-src="attachments/33816577/34144267.png" data-height="32" data-width="213" data-unresolved-comment-count="0" data-linked-resource-id="34144267" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="image-20221116-131635.png" data-base-url="https://warchild-gobee.atlassian.net/wiki" data-linked-resource-content-type="image/png" data-linked-resource-container-id="33816577" data-linked-resource-container-version="1" data-media-id="c67a6746-f776-4157-9bb2-fcddd8e9d216" data-media-type="file"></span><p>Press <em>y</em> then <em>Enter</em> if you wish to generate another asset within the specified directory, or <em>n</em> then <em>Enter</em> to stop the script.</p><p />
+                    </div>
+
+                                        <div class="pageSection group">
+                        <div class="pageSectionHeader">
+                            <h2 id="attachments" class="pageSectionTitle">Attachments:</h2>
+                        </div>
+
+                        <div class="greybox" align="left">
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/33816577/34701315.png">image-20221116-130818.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/33816577/34766849.png">image-20221116-131538.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/33816577/34144267.png">image-20221116-131635.png</a> (image/png)
+                                <br/>
+                                                    </div>
+                    </div>
+                    
+                                                      
+                </div>             </div> 
+            <div id="footer" role="contentinfo">
+                <section class="footer-body">
+                    <p>Document generated by Confluence on Feb 29, 2024 10:00</p>
+                    <div id="footer-logo"><a href="http://www.atlassian.com/">Atlassian</a></div>
+                </section>
+            </div>
+        </div>     </body>
+</html>

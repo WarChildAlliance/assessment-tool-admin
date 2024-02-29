@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Gobee : Back-end</title>
+        <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body class="theme-default aui-theme-default">
+        <div id="page">
+            <div id="main" class="aui-page-panel">
+                <div id="main-header">
+                    <div id="breadcrumb-section">
+                        <ol id="breadcrumbs">
+                            <li class="first">
+                                <span><a href="index.html">Gobee</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="Gobee-Home_65612.html">Gobee Home</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="GOBEE-Documentation_131073.html">GOBEE Documentation</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="Technical-documentation_4685825.html">Technical documentation</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="How-to-set-up_4653070.html">How to set up</a></span>
+                            </li>
+                                                </ol>
+                    </div>
+                    <h1 id="title-heading" class="pagetitle">
+                                                <span id="title-text">
+                            Gobee : Back-end
+                        </span>
+                    </h1>
+                </div>
+
+                <div id="content" class="view">
+                    <div class="page-metadata">
+                        
+        
+    
+        
+    
+        
+        
+            Created by <span class='author'> Hugo Plissonneau</span>, last modified by <span class='editor'> Estela Ferreira</span> on Dec 13, 2022
+                        </div>
+                    <div id="main-content" class="wiki-content group">
+                    <p>After cloning the repository, follow the steps below to setup the main API:</p><style type='text/css'>/*<![CDATA[*/
+div.rbtoc1709200793396 {padding: 0px;}
+div.rbtoc1709200793396 ul {list-style: decimal;margin-left: 0px;}
+div.rbtoc1709200793396 li {margin-left: 0px;padding-left: 0px;}
+
+/*]]>*/</style><div class='toc-macro rbtoc1709200793396'>
+<ul class='toc-indentation'>
+<li><a href='#Back-end-Addfilelocal.py'>Add file local.py</a></li>
+<li><a href='#Back-end-Applythemigrations'>Apply the migrations</a></li>
+<li><a href='#Back-end-Createsuperuser'>Create superuser</a></li>
+<li><a href='#Back-end-Generatestaticfiles'>Generate static files</a></li>
+<li><a href='#Back-end-Loadfixturesdata'>Load fixtures data</a></li>
+<li><a href='#Back-end-Howtocreatefixturesfromthecurrentdatabase'>How to create fixtures from the current database</a></li>
+<li><a href='#Back-end-Workingontheproject'>Working on the project</a></li>
+</ul>
+</div><div class="confluence-information-macro confluence-information-macro-note"><span class="aui-icon aui-icon-small aui-iconfont-warning confluence-information-macro-icon"></span><div class="confluence-information-macro-body"><p>Be careful with the order.</p></div></div><div class="confluence-information-macro confluence-information-macro-note"><span class="aui-icon aui-icon-small aui-iconfont-warning confluence-information-macro-icon"></span><div class="confluence-information-macro-body"><p>Use the  <code>dev</code> branch for local uses.</p></div></div><h1 id="Back-end-Addfilelocal.py">Add file local.py</h1><p>Add a file called <code>local.py</code> inside <code>admin/settings</code> with the following code:</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: py; gutter: false; theme: Confluence" data-theme="Confluence">from .base import *</pre>
+</div></div><h1 id="Back-end-Applythemigrations">Apply the migrations</h1><p>Run to apply migrations from the newly cloned project:</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: js; gutter: false; theme: Confluence" data-theme="Confluence">docker-compose run --rm web python manage.py migrate</pre>
+</div></div><h1 id="Back-end-Createsuperuser">Create superuser</h1><p>Run to crate superuser:</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: js; gutter: false; theme: Confluence" data-theme="Confluence">docker-compose run --rm web python manage.py createsuperuser</pre>
+</div></div><h1 id="Back-end-Generatestaticfiles">Generate static files</h1><p>Run to generate static files:</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: js; gutter: false; theme: Confluence" data-theme="Confluence">docker-compose run --rm web python manage.py collectstatic</pre>
+</div></div><h1 id="Back-end-Loadfixturesdata">Load fixtures data</h1><p>Run to load the fixtures data:</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: js; gutter: false; theme: Confluence" data-theme="Confluence">docker-compose run --rm web python manage.py loaddata languages_countries
+docker-compose run --rm web python manage.py loaddata topics_learningobjectives</pre>
+</div></div><p /><div class="confluence-information-macro confluence-information-macro-information"><span class="aui-icon aui-icon-small aui-iconfont-info confluence-information-macro-icon"></span><div class="confluence-information-macro-body"><p>You can load more fixtures running:</p><p><code>docker-compose run --rm web python manage.py loaddata &lt;fixture&gt;</code></p><p>Examples:</p><p><code>docker-compose run --rm web python manage.py loaddata users</code></p><p><code>docker-compose run --rm web python manage.py loaddata assessments</code></p></div></div><h1 id="Back-end-Howtocreatefixturesfromthecurrentdatabase">How to create fixtures from the current database</h1><p>See how to export the data from the current populated database and load it into another database on the <a class="external-link" data-card-appearance="inline" href="https://warchild-gobee.atlassian.net/l/cp/3qLBYeUZ" rel="nofollow">https://warchild-gobee.atlassian.net/l/cp/3qLBYeUZ</a> page.</p><h1 id="Back-end-Workingontheproject">Working on the project</h1><p>After setting up the project, you may need:</p><div class="table-wrap"><table data-layout="default" data-local-id="322c4b21-fee9-4c3e-b786-03cdf58b5fe6" class="confluenceTable"><colgroup><col style="width: 209.0px;"/><col style="width: 549.0px;"/></colgroup><tbody><tr><th class="confluenceTh"><p><strong>Run project</strong></p></th><td class="confluenceTd"><p><code>docker-compose up --build</code></p></td></tr><tr><th class="confluenceTh"><p><strong>Add new app</strong></p></th><td class="confluenceTd"><p><code>docker-compose run --rm web python manage.py startapp &lt;app-name&gt;</code></p></td></tr><tr><th class="confluenceTh"><p><strong>Install new packages</strong></p></th><td class="confluenceTd"><p><code>docker-compose run --rm web pipenv install &lt;package-name&gt;</code></p></td></tr><tr><th class="confluenceTh"><p><strong>Create migrations files</strong></p></th><td class="confluenceTd"><p><code>docker-compose run --rm web python manage.py makemigrations</code></p></td></tr><tr><th class="confluenceTh"><p><strong>Apply migrations</strong></p></th><td class="confluenceTd"><p><code>docker-compose run --rm web python manage.py migrate</code></p></td></tr><tr><th class="confluenceTh"><p><strong>Run tests</strong></p></th><td class="confluenceTd"><p><code>docker-compose run --rm web python manage.py test</code></p><div class="panel" style="background-color: #EAE6FF;border-color: #998DD9;border-width: 1px;"><div class="panelContent" style="background-color: #EAE6FF;">
+<p>Tip : use <code>--keepdb</code> optional parameter at the end in order to use the same test database across all tests.</p>
+</div></div></td></tr><tr><th class="confluenceTh"><p><strong>Dump data</strong></p></th><td class="confluenceTd"><p><code>sudo docker-compose run --rm web python manage.py dumpdata assessmentssudo docker-compose run --rm web python manage.py dumpdata assessments &gt; alpha-test.json</code></p></td></tr><tr><th class="confluenceTh"><p><strong>Wipe out DB</strong></p></th><td class="confluenceTd"><p><code>sudo docker-compose down</code></p><p><code>sudo docker volume rm assessment-tool-api_postgres_data</code></p></td></tr></tbody></table></div><p />
+                    </div>
+
+                                        <div class="pageSection group">
+                        <div class="pageSectionHeader">
+                            <h2 id="attachments" class="pageSectionTitle">Attachments:</h2>
+                        </div>
+
+                        <div class="greybox" align="left">
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/5439489/5996549.png">image-20220706-121953.png</a> (image/png)
+                                <br/>
+                                                    </div>
+                    </div>
+                    
+                                                      
+                </div>             </div> 
+            <div id="footer" role="contentinfo">
+                <section class="footer-body">
+                    <p>Document generated by Confluence on Feb 29, 2024 09:59</p>
+                    <div id="footer-logo"><a href="http://www.atlassian.com/">Atlassian</a></div>
+                </section>
+            </div>
+        </div>     </body>
+</html>
